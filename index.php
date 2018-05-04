@@ -1,4 +1,4 @@
 <?
 
-	echo "Easy Aero";
+	echo "Easy Aero v3.0";
 ?>
