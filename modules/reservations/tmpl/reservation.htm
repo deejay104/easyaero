@@ -1,0 +1,261 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<!-- BEGIN: supprimer -->
+	<A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A>
+	<!-- END: supprimer -->
+<!-- END: infos -->
+
+
+<link rel="stylesheet" type="text/css" href="external/jquery/css/timePicker.css" />
+<!-- BEGIN: corps -->
+
+
+
+<script type="text/javascript">
+	$(function() {
+		$("#form_dte_deb").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant",
+			onSelect: function(dateText) {
+				var mid=document.getElementById("instructeur").value;
+				var deb_j=document.getElementById("form_dte_deb").value;
+				var deb_h=document.getElementById("form_hor_deb").value;
+				var tdeb=deb_j.split("/");
+				console.log("deb="+tdeb[2]+"-"+tdeb[1]+"-"+tdeb[0]+" "+deb_h);
+				var deb=new Date(tdeb[2]+"-"+tdeb[1]+"-"+tdeb[0]+" "+deb_h);
+				var fin_j=document.getElementById("form_dte_fin").value;
+				var fin_h=document.getElementById("form_hor_fin").value;
+				var tfin=fin_j.split("/");
+				console.log("fin="+tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
+				var fin=new Date(tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
+
+				document.getElementById("imgdispo").src="api.php?mod=membres&rub=checkdispo&mid="+mid+"&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000+45*60);
+			}
+		});
+
+		$("#form_dte_fin").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+
+    $("#destination").autocomplete({
+        source: "api.php?mod=navigation&rub=getwp&type=Airport",
+        select: function(event, ui) { oFormObject = document.forms['reservation']; oFormObject.elements["destination"].value=ui.item.value; },
+        delay: 0
+    });
+
+    $(document).tooltip({
+      position: {
+        my: "center bottom-10",
+        at: "center top",
+        using: function( position, feedback ) {
+          $( this ).css( position );
+          $( "<div>" )
+            .addClass( "arrow" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+        }
+      }
+    });
+  });
+
+  
+</script>
+
+
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="mod" value="reservations">
+	<INPUT type="hidden" name="rub" value="reservation_sauve">
+	<INPUT type="hidden" name="id" value="{id}">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+
+	<p class="lastupdate">Dernière mise à jour : <a href="" OnMouseOver="ShowPopup('{info_historique}');" OnMouseOut="HidePopup();">{info_maj}</a></p>
+	<p>Potentiel restant à la prise en charge : {potentiel}</p>
+
+	<!-- BEGIN: date_depassee -->
+	<p class="msgaff">
+	<B><FONT color="{color_date}">{texte_date}</FONT></B><br />
+	Merci d'envoyer une copie de votre {nom_date} au président afin de mettre à jour votre profile.
+	</p>
+	<!-- END: date_depassee -->
+	<!-- BEGIN: msg_warning -->
+	<p class="msgwarning">{msg_warning}</p>
+	<!-- END: msg_warning -->
+
+	<!-- BEGIN: msg_error -->
+	<p class="msgerror">{msg_error}</p>
+	<!-- END: msg_error -->
+
+	<!-- BEGIN: aff_reservation -->
+
+	<div class="formulaireTitre">
+	  	Réservation
+	</div>
+
+	<div class="formulaire">
+		<p>
+				<label for="avion">Avion</label> 
+				<SELECT id="avion" name="form_uid_ress" OnChange="reservation.submit();" style='width: 220px;'>
+				<!-- BEGIN: lst_avion -->
+				<OPTION value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
+				<!-- END: lst_avion -->
+				</SELECT>
+				<span class="resaInfos">
+					<a href="index.php?mod=ressources&rub=fiche&uid_avion={uid_avionrmq}">Fiches en cours sur cet avion</a>
+				</span>
+	  	</p>
+		
+		<p>
+			<label for="pilote">Pilote</label>
+			<SELECT id="pilote" name="form_uid_pilote" OnChange="reservation.submit();" style='width: 220px;'>
+				<!-- BEGIN: lst_pilote -->
+				<OPTION value="{uid_pilote}" {chk_pilote}>{nom_pilote}</OPTION>
+				<!-- END: lst_pilote -->
+			</SELECT>
+	  	</p>
+
+		<p>
+			<label for="debite" title="Choisissez un autre compte à débiter. Par exemple dans le cas d'un baptème, c'est le compte du club qui est débité">Débité (si différent)</label>
+			<SELECT id="debite" name="form_uid_debite" style='width: 220px;'>
+				<OPTION value="0">Pilote</OPTION>
+				<!-- BEGIN: lst_debite -->
+				<OPTION value="{uid_debite}" {chk_debite}>{nom_debite}</OPTION>
+				<!-- END: lst_debite -->
+			</SELECT>
+	 	</p>
+
+	<!-- BEGIN: aff_instructeur -->
+		<p>
+			<label for="instructeur">Instructeur</label>
+			<SELECT id="instructeur" name="form_uid_instructeur" OnChange="reservation.submit();" style='width: 220px;'>
+				<!-- BEGIN: lst_instructeur -->
+				<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
+				<!-- END: lst_instructeur -->
+			</SELECT>
+			<img id="imgdispo" src="api.php?mod=membres&rub=checkdispo&mid={form_uid_instructeur}&deb={deb}&fin={fin}" style='height:16px;'>
+		</p>
+	<!-- END: aff_instructeur -->
+
+	<!-- BEGIN: aff_tarif -->
+		<p>
+			<label for="tarif">Tarif</label>
+			<SELECT id="tarif" name="form_tarif" style='width: 220px;'>
+				<!-- BEGIN: lst_tarif -->
+				<OPTION value="{tarif}" {chk_tarif}>{nom_tarif}</OPTION>
+				<!-- END: lst_tarif -->
+			</SELECT>
+		</p>
+	<!-- END: aff_tarif -->
+
+		<p>
+			<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
+			<INPUT id="destination" name="form_destination" value="{form_destination}" style='width: 220px!important;'>
+		</p>
+		<p>
+			<label for="tpsestime" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire.">Temps de vol estimé</label>
+			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style='width: 70px!important;'> (en minutes)
+		</p>
+
+		<p style='padding-top:10px;'>
+			<label for="pob" title="Entrez le nombre de personne à bord, pilote compris (POB)">Nb de personnes</label>
+			<!-- BEGIN: lst_pob -->
+			<input type="radio" name="form_nbpersonne" value="{pob}" {chk_pob}>{pob}
+			<!-- END: lst_pob -->
+		</p>
+
+
+		<p>
+			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
+			<!-- <SELECT id="invite" name="form_invite" style='width: 60px;'> -->
+				<!-- <OPTION value="non" {chk_invite_non}>Non</OPTION> -->
+				<!-- <OPTION value="oui" {chk_invite_oui}>Oui</OPTION> -->
+			<!-- </SELECT> -->
+			<input type="radio" name="form_invite" value="non" {chk_invite_non}>Non
+			<input type="radio" name="form_invite" value="oui" {chk_invite_oui}>Oui
+		</p>
+
+		<p style='padding-top:10px;'>
+			<label for="form_dte_deb">Du</label>
+			<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" style='width: 100px!important;' > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" style='width: 60px!important;'> <FONT color=red>{msg_dtedeb}</FONT>
+		</p>
+		<p>
+			<label for="form_dte_fin">Au</label>
+		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" style='width: 100px!important;'> à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" style='width: 60px!important;'> <FONT color=red>{msg_dtefin}</FONT>
+		</p>
+		<p>&nbsp;</p>
+	
+		<p>
+			<label for="commentaire" style="vertical-align: top;" title="Veuillez préciser le nom des passagers que vous emmenez.">Commentaire(s) :</label>
+			<TEXTAREA id="commentaire" name="form_description" cols="50" rows="6">{form_description}</TEXTAREA>
+		</p>
+	  	  
+		</div>
+
+
+	<div class="formulaireTitre">
+	  	Saisi de l'horamètre
+	</div>
+
+	<div class="formulaire">
+		
+		<div style='float: left; width:500px;'>
+		{aff_horametre}
+		</div>
+		
+		<div >
+		<p>
+			<label for="potentiel">Potentiel fin de vol</label>
+			{form_potentiel} 
+		</p>
+		<p>
+			<label for="potentiel">Correction du potentiel</label>
+			<INPUT type="number" name="form_potentielh" value="{form_potentielh}" style='width: 60px!important;'> h <INPUT type="number" name="form_potentielm" value="{form_potentielm}" style='width: 60px!important;'>
+		</p>
+
+		<p>
+			<label for="carburant">Carburant ajouté Avant</label>
+			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L, Après
+			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L
+		</p>
+		<p>
+			<label for="carburant">Total Carburant</label>
+			<INPUT name="form_prixcarbu" value="{form_prixcarbu}" type="number" style='width: 60px!important;'> €
+		</p>
+		</div>
+	</div>
+	<!-- BEGIN: aff_chkreservation -->
+			<div style="width:800px; border: 1px solid #013366; border-radius: 4px; padding: 6px; margin-top:15px; margin-bottom:15px; clear: left;">
+				<div style="float:left; height:100px; padding:4px;"><input type="checkbox" name="form_accept" value="oui"></div>
+				<div>{TxtValidResa}</div>
+			</div>
+	<!-- END: aff_chkreservation -->
+	<!-- BEGIN: aff_chkreservation_ok -->
+		<input type="hidden" name="form_accept" value="oui">
+	<!-- END: aff_chkreservation_ok -->
+
+	<br />
+		<div  style='clear: left;'>
+	  		<!-- BEGIN: aff_enregistrer -->
+	  		<input type="submit" name="fonc" value="Enregistrer"> <input type="submit" name="fonc" value="Actualiser">  <input type="submit" name="fonc" value="Devis masse" />
+	  		<!-- END: aff_enregistrer -->
+			<input type="submit" name="fonc" value="Annuler">
+		</div>
+	<!-- END: aff_reservation -->
+
+
+	<br />
+</FORM>
+
+<!-- END: corps -->

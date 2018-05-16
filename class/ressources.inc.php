@@ -42,7 +42,7 @@ class ress_class{
 		$this->alertpotentiel=45;
 		$this->marque="";
 		$this->modele="";
-		$this->couleur="A9D7FE";
+		$this->couleur=dechex(rand(0x000000, 0xFFFFFF));
 		$this->description="";
 
 		$this->places="0";
@@ -69,7 +69,7 @@ class ress_class{
 		$this->data["alertpotentiel"]=45;
 		$this->data["marque"]="";
 		$this->data["modele"]="";
-		$this->data["couleur"]="A9D7FE";
+		$this->data["couleur"]=$this->couleur;
 		$this->data["description"]="";
 
 		$this->data["places"]="0";
@@ -217,6 +217,8 @@ class ress_class{
 				}
 		  	  	$ret.="</SELECT>";
 			}
+			else if ($key=="couleur")
+		  	  { $ret="<INPUT id='ress_col' name=\"form_ress[$key]\" value=\"$ret\" style=\"display: inline-block;\" OnKeyUp=\"document.getElementById('ress_showcol').style.backgroundColor='#'+document.getElementById('ress_col').value;\"><div id='ress_showcol' style='margin-left:10px; display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".$ret.";'></div>"; }
 			else
 		  	  { $ret="<INPUT name=\"form_ress[$key]\" value=\"$ret\">"; }
 		  }
@@ -230,6 +232,8 @@ class ress_class{
 			  { $ret=nl2br(htmlentities($ret)); }
 			else if ($key=="centrage")
 			  { $ret=nl2br(htmlentities($ret)); }
+			else if ($key=="couleur")
+			  { $ret="<div style='display: inline-block; width:80px;'>".$ret."</div><div style='display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".$ret.";'></div>"; }
 			else if ($key=="poste")
 			{
 				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE id='".$ret."'";
@@ -261,7 +265,13 @@ class ress_class{
 	  	else if ($k=="tolerance")
 	  	  { $vv=$v; }
 	  	else if ($k=="couleur")
-	  	  { $vv=strtoupper($v); }
+	  	{
+			if ($v=="")
+			{
+				$v=dechex(rand(0x000000, 0xFFFFFF));
+			}
+			$vv=strtoupper($v);
+		}
 	  	else
 	  	  { $vv=strtolower($v); }
 
@@ -352,17 +362,35 @@ class ress_class{
 
 		$t=$respot["tot"]+$resreel["tot"];
 
-		return $t;
+		return $this->maxpotentiel*60-$t;
 	}
 
 	function AffPotentiel()
 	{
 		$t=$this->Potentiel();
+		if (floor($t/60)<0)
+		{
+			$ret="<font color=red>".AffTemps($t)."</font>";
+		}
+		else if (floor($t/60)<$this->alertpotentiel)
+		{
+			$ret="<font color=orange>".AffTemps($t)."</font>";
+		}
+		else
+		{
+			$ret=AffTemps($t);
+		}
+		return $ret;
+	}
+
+	function AffTempsVol()
+	{
+		$t=$this->maxpotentiel*60-$this->Potentiel();
 		if (floor($t/60)>$this->maxpotentiel)
 		{
 			$ret="<font color=red>".AffTemps($t)."</font>";
 		}
-		else if (floor($t/60)>$this->alertpotentiel)
+		else if (floor($t/60)>$this->maxpotentiel-$this->alertpotentiel)
 		{
 			$ret="<font color=orange>".AffTemps($t)."</font>";
 		}

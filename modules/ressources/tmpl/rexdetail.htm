@@ -1,0 +1,84 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<div class="pagetitle pagemenu">
+	<p><A href="index.php?mod=ressources&rub=rex"><IMG src="{path_module}/img/icn32_liste.png" border=0 alt="">Liste</A></p>
+<!-- BEGIN: editer -->
+	<p><A href="index.php?mod=ressources&rub=rexdetail&fonc=editer&id={id}"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A></p>
+<!-- END: editer -->
+<!-- BEGIN: supprimer -->
+	<p><A href="index.php?mod=ressources&rub=rexdetail&fonc=supprimer&id={id}"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">Supprimer</A></p>
+<!-- END: supprimer -->
+</div>
+
+<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+
+<FORM name="rex" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="ressources">
+	<INPUT type="hidden" name="rub" value="rexdetail">
+	<INPUT type="hidden" name="id" value="{id}">
+
+
+	<div class="formulaire">
+		<div class="formulaireTitre">Informations</div>
+		<label>Titre</label> : {form_titre}<br />
+		<label>Date de création</label> : {form_dte_rex}<br />
+		<label>Status</label> : {form_status}<br />
+	</div>
+
+	<div class="formulaire">
+		<div class="formulaireTitre">Descriptif</div>
+		<b>Descriptif de l'événement</b> :<br />
+		<p class='formulaireCadre'>{form_description}</p>
+		<b>Commentaire</b> :<br />
+		<p class='formulaireCadre'>{form_commentaire}</p>
+	</div>
+
+	<div class="formulaire">
+	<div class="formulaireTitre">Classification</div>
+	<table>
+		<tr>
+			<td width="500">
+				<label>Catégorie</label>{form_categorie}<br />
+				<label>Nature du vol</label>{form_nature}<br />
+				<label>Condition Météo</label>{form_mto}<br />
+				<label>Environnement</label>{form_environnement}<br />
+			</td>
+			<td>
+				<label>Phase du vol</label>{form_phase}<br />
+				<label>Type de vol</label>{form_typevol}<br />
+				<label>Type d'événement</label>{form_typeevt}<br />
+				<label>Avion</label>{form_uid_avion}<br />
+			</td>
+		</tr>
+	</table>
+	</div>
+
+	<div class="formulaire">
+	<div class="formulaireTitre">Evaluation du risque</div>
+	<p>{form_risque}</p>
+	</div>
+
+	
+	<div class="formulaire">
+	<div class="formulaireTitre">Conclusion</div>
+	<b>Synthèse</b> :<br />
+	<p class='formulaireCadre'>{form_synthese}</p>
+	<b>Plan d'action</b> :<br />
+	<p class='formulaireCadre'>{form_planaction}</p>
+	</div>
+
+<!-- BEGIN: form_submit -->
+	<input type="submit" name="fonc" value="Enregistrer">
+	<input type="submit" name="fonc" value="Annuler">
+<!-- END: form_submit -->
+</form>
+<!-- END: corps -->

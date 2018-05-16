@@ -1,0 +1,69 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+<script language="JavaScript">
+function Recharge()
+{
+ 	document.location='index.php?mod=comptabilite&rub=echeances&form_id='+document.getElementById('form_id').value;
+}
+function selectAll()
+{
+	var t=false;
+	if (document.getElementById('form_debite').checked==true)
+	{
+		t=true;
+	}
+	<!-- BEGIN: lst_checkbox -->
+	document.getElementById('form_debite_{form_uid}').checked=t;
+	<!-- END: lst_checkbox -->
+}
+</script>
+
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="comptabilite">
+	<INPUT type="hidden" name="rub" value="echeances">
+	<INPUT type="hidden" name="form_id" value="{form_id}">
+
+	<BR>
+	<select id="form_id" OnChange="Recharge();">
+		<option value="0">Choisissez l'échéance</option>
+	<!-- BEGIN: lst_echeance -->
+		<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
+	<!-- END: lst_echeance -->
+	</select>
+
+	<!-- BEGIN: aff_debite -->
+	Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}">
+	<input type="submit" name="fonc" value="Débiter">
+	<!-- END: aff_debite -->
+	
+	<br />
+	<!-- BEGIN: msg_enregistre -->
+	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
+	<!-- END: msg_enregistre -->
+	<br />
+	
+	<!-- BEGIN: aff_visualisation -->
+		<input type="hidden" name="form_date" value="{form_date}">
+		<!-- BEGIN: lst_visualisation -->
+		<input type="hidden" name="form_dteid[{form_mvtid}]" value="{form_dteid}">
+		{enr_mouvement}
+		<!-- END: lst_visualisation -->
+
+		<input type="submit" name="fonc" value="Valider">
+		<input type="submit" name="fonc" value="Annuler">
+	<!-- END: aff_visualisation -->
+	
+	{aff_tableau}
+
+</FORM>
+
+
+
+<!-- END: corps -->

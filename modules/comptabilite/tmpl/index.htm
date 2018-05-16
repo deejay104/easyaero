@@ -1,0 +1,175 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<script type="text/javascript">
+	$(function() {
+		$("#form_date").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+</script>
+
+<script language="JavaScript">
+function Recharge()
+{
+  	var form_poste = document.getElementById("form_poste").value;
+  	var form_tiers = document.getElementById("form_tiers").value;
+  	var form_date = document.getElementById("form_date").value;
+  	var form_commentaire = document.getElementById("form_commentaire").value;
+	document.location='index.php?mod=comptabilite&rub=mouvement&form_poste='+form_poste+'&form_tiers='+form_tiers+'&form_dte='+form_date+'&form_commentaire='+form_commentaire;
+}
+
+function AffVentilation()
+{
+	var form_ventilation = document.getElementById("form_ventilation").value;
+	var form_poste = document.getElementById("form_poste").value;
+	
+	if (form_ventilation == 'non')
+	{
+		document.getElementById("aff_ventilation").style.visibility="hidden";
+		document.getElementById("aff_ventilation").style.height="0";
+	}
+	else
+	{
+		document.getElementById("aff_ventilation").style.visibility="visible";
+		document.getElementById("aff_ventilation").style.height="";
+		document.getElementById("aff_ventilation").value=form_poste;
+	}
+}
+</script>
+
+<FORM name="mouvement" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="comptabilite">
+
+	<BR>
+
+	<!-- BEGIN: enregistre -->
+		<!-- BEGIN: lst_visualisation -->
+		{enr_mouvement}
+		<!-- END: lst_visualisation -->
+		<INPUT type="hidden" name="form_date" id="form_date" value="{form_date}">
+		<INPUT type="hidden" name="form_poste" id="form_poste" value="{form_poste}">
+		<INPUT type="hidden" name="form_tiers" id="form_tiers" value="{form_tiers}">
+		<INPUT type="hidden" name="form_commentaire" id="form_commentaire" value="{form_commentaire}">
+		<INPUT type="hidden" name="form_montant" id="form_montant" value="{form_montant}">
+		<br />
+		<INPUT type="submit" name="fonc" value="Valider"> <INPUT type="submit" name="fonc" value="Annuler">
+		<br /><br />
+	<!-- END: enregistre -->
+
+	<!-- BEGIN: aff_mouvement -->
+	<TABLE>
+	  <tr class="tableauTitre" >
+		<th width=20>&nbsp;</th>
+		<th width=120 >Date</th>
+		<th width=400>Poste</th>
+		<th width=250>Tiers</th>
+		<th width=150>Montant</th>
+	  </tr>
+	
+	<!-- BEGIN: lst_aff_mouvement -->
+	  <TR>
+		<TD style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
+		<TD>
+			<INPUT type="text" name="form_date" id="form_date" size=8 value="{date_mouvement}">
+		</TD>
+		<TD>
+			<SELECT id="form_poste" name="form_poste" OnChange="Recharge();" >
+			<!-- BEGIN: lst_mouvement -->
+				<OPTION value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</OPTION>
+			<!-- END: lst_mouvement -->
+		    </SELECT>
+		</TD>
+		<TD>
+			<SELECT id="form_tiers" name="form_tiers">
+			<OPTION value="0">Aucun</OPTION>
+			<OPTION value="*">Tous</OPTION>
+			<!-- BEGIN: lst_tiers -->
+			<OPTION value="{id_tiers}" {chk_tiers}>{nom_tiers}</OPTION>
+			<!-- END: lst_tiers -->
+		        </SELECT>
+		</TD>
+		<TD>
+			<INPUT name="form_montant" value="{form_montant}" size=10>
+		</TD>
+	  </TR>
+
+	  <TR>
+		<TD style="padding-top:10px;">&nbsp;</TD>
+		<TD>Commentaire</TD>
+		<TD colspan=3>
+			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:777px;">
+		</TD>
+	  </TR>
+
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD colspan=4>&nbsp;</TD>
+	  </TR>	
+	  <TR style="padding-top:10px; padding-bottom:10px;" class="tableauTitre">
+		<TD width=20 style="padding-top:5px; padding-bottom:5px;">&nbsp;</TD>
+		<TD colspan=4>
+			Ventilation du mouvement :
+			<SELECT id="form_ventilation" name="form_ventilation"  OnChange="AffVentilation();">
+			<OPTION value="non">Non</OPTION>
+			<OPTION value="debiteur">Débiteur</OPTION>
+			<OPTION value="crediteur">Créditeur</OPTION>
+	        </SELECT>
+		</TD>
+	  </TR>
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+		<TD colspan=3 style="padding-bottom:10px;">
+			<div id="aff_ventilation" style="visibility: hidden; height:0px;">
+				<!-- BEGIN: lst_ventilation -->
+				<div style="padding-top: 5px;">
+					<SELECT id="form_poste_ventil[{ventilid}]" name="form_poste_ventil[{ventilid}]" >
+					<!-- BEGIN: lst_mouvement -->
+					<OPTION value="{id_mouvement}" {chk_mvt_ventil}>{nom_mouvement}</OPTION>
+					<!-- END: lst_mouvement -->
+					</SELECT>
+					<SELECT id="form_tiers_ventil[{ventilid}]" name="form_tiers_ventil[{ventilid}]" >
+					<OPTION value="0">Aucun</OPTION>
+					<!-- BEGIN: lst_tiers -->
+					<OPTION value="{id_tiers}" {chk_tiers_ventil}>{nom_tiers}</OPTION>
+					<!-- END: lst_tiers -->
+					</SELECT>
+					<INPUT name="form_montant_ventil[{ventilid}]" value="0" size=10>
+				</div>
+				<!-- END: lst_ventilation -->
+			</div>
+		</TD>
+	  </TR>
+	  <TR style="border-top: 1px solid black;">
+		<TD width=20>&nbsp;</TD>
+		<TD colspan=4 >
+			Saisir en Facturation : <input type='checkbox' name='form_facture' value="on"> 
+		</TD>
+	  </TR> 
+   <!-- END: lst_aff_mouvement -->
+	</TABLE>
+	
+
+	<br />
+	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
+	<!-- END: aff_mouvement -->
+</FORM>
+
+
+
+<!-- END: corps -->
+: corps -->
