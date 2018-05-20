@@ -1,7 +1,7 @@
 <?
 /*
-    SoceIt v2.0
-    Copyright (C) 2009 Matthieu Isorez
+    Easy-Aero v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,110 +16,49 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-    ($Author: miniroot $)
-    ($Date: 2013-05-01 00:30:19 +0200 (mer., 01 mai 2013) $)
-    ($Revision: 423 $)
 */
 
-class bapteme_class{
-	# Constructor
+class bapteme_class extends objet_core
+{
+	protected $table="bapteme";
+	protected $mod="aviation";
+	protected $rub="bapteme";
+
+	protected $droit=array();
+	protected $type=array("telephone"=>"tel","mail"=>"mail","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","description"=>"text");
+
+	
+	protected $tabList=array(
+		"status"=>array("0"=>"Nouveau","1"=>"Affecté","2"=>"Planifié","3"=>"Effectué","4"=>"Annulé"),
+		"nb"=>array("1"=>"1","2"=>"2","3"=>"3"),
+		"type"=>array("btm"=>"Baptème","vi"=>"VI")
+	);
+
+			# Constructor
 	function __construct($id=0,$sql){
 		global $MyOpt;
 		global $gl_uid;
 
-		$this->sql=$sql;
-		$this->tbl=$MyOpt["tbl"];
+		$this->data["num"]="";
+		$this->data["nom"]="";
+		$this->data["telephone"]="";
+		$this->data["mail"]="";
+		$this->data["nb"]=0;
+		$this->data["dte"]="";
+		$this->data["status"]="0";
+		$this->data["type"]="btm";
+		$this->data["paye"]="non";
+		$this->data["id_pilote"]="0";
+		$this->data["id_avion"]="0";
+		$this->data["id_resa"]="0";
+		$this->data["description"]="";
 
-		$this->id="";
-		$this->num="";
-		$this->nom="";
-		$this->telephone="";
-		$this->mail="";
-		$this->nb=0;
-		$this->dte="";
-		$this->actif="oui";
-		$this->status="0";
-		$this->type="btm";
-		$this->paye="non";
-		$this->id_pilote="0";
-		$this->id_avion="0";
-		$this->id_resa="0";
-		$this->description="";
-
-		$this->uid_creat="0";
-		$this->dte_creat=date("Y-m-d H:i:s");
-		$this->uid_maj="0";
-		$this->dte_maj=date("Y-m-d H:i:s");
-
-// A recopier à la fin
-		$tabStatus=array();
-		$tabStatus[0]="Nouveau";
-		$tabStatus[1]="Affecté";
-		$tabStatus[2]="Planifié";
-		$tabStatus[3]="Effectué";
-		$tabStatus[4]="Annulé";
-
-		$this->tabStatus=$tabStatus;
-
-		if ($id>0)
-		  {
-			$this->load($id);
-		  }
-	}
-
-	# Load user informations
-	function load($id){
-		$this->id=$id;
-		$sql=$this->sql;
-		$query = "SELECT * FROM ".$this->tbl."_bapteme WHERE id='$id'";
-		$res = $sql->QueryRow($query);
-
-		// Charge les variables
-		$this->num=$res["num"];
-		$this->nom=$res["nom"];
-		$this->nb=$res["nb"];
-		$this->telephone=$res["telephone"];
-		$this->mail=$res["mail"];
-		$this->dte=$res["dte"];
-		$this->actif=$res["actif"];
-		$this->status=$res["status"];
-		$this->type=$res["type"];
-		$this->paye=$res["paye"];
-		$this->id_pilote=$res["id_pilote"];
-		$this->id_avion=$res["id_avion"];
-		$this->id_resa=$res["id_resa"];
-		$this->description=$res["description"];
-
-		$this->uid_creat=$res["uid_creat"];
-		$this->dte_creat=$res["dte_creat"];
-		$this->uid_maj=$res["uid_maj"];
-		$this->dte_maj=$res["dte_maj"];
-	}
-
-	function Create(){
-		global $uid;
-		$sql=$this->sql;
-		$query="INSERT INTO ".$this->tbl."_bapteme SET uid_maj='$uid', dte_maj='".now()."'";
-		$this->id=$sql->Insert($query);
-
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'bapteme', '".$this->tbl."_bapteme', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create bapteme')";
-		$sql->Insert($query);
-	}
-
-	function Delete(){
-		global $uid;
-		$sql=$this->sql;
-		$query="UPDATE ".$this->tbl."_bapteme SET actif='non', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
-		$this->id=$sql->Update($query);
-
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'bapteme', '".$this->tbl."_bapteme', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete bapteme')";
-		$sql->Insert($query);
+		parent::__construct($id,$sql);
 	}
 
 
 	# Show user informations
-	function aff($key,$typeaff="html"){
+	function aff2($key,$typeaff="html"){
 		if ($key=="num")
 		  { $ret=$this->num; }
 		else if ($key=="nb")
@@ -238,7 +177,7 @@ class bapteme_class{
 		return $ret;
 	}
 
-	function Valid($k,$v,$ret=false){
+	function Valid2($k,$v,$ret=false){
 		$vv="**none**";
 
 	  	if ($k=="nb")
@@ -287,7 +226,7 @@ class bapteme_class{
 		  { return addslashes($vv); }
 	}
 
-	function Save(){
+	function Save2(){
 		global $uid;
 		$sql=$this->sql;
 

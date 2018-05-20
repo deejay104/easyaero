@@ -28,11 +28,13 @@
 ?>
 
 <?
-// ---- Initialisation des variables
-
-//	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-	require_once ("class/reservation.inc.php");
 	require_once ("class/echeance.inc.php");
+
+	require_once ($appfolder."/class/reservation.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
+
+// ---- Initialisation des variables
 
   	$ok=1;
 	$msg_err="";
@@ -220,18 +222,18 @@
 		  }
 	  }
 	if ($fonc=="Annuler")  	
-	  {
+	{
 		$ok=0;
 		$affrub="index";
 		$ress=$form_uid_ress;
-	  }
+	}
 
 	if ($fonc=="Devis masse")  	
-	  {
+	{
 		$ok=0;
 		$mod="aviation";
 		$affrub="centrage";
-	  }
+	}
 
 	if ($fonc=="Actualiser")  	
 	  {

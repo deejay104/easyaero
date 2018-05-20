@@ -12,10 +12,10 @@ class user_class extends user_core
 
 	// protected $type=array("description"=>"text","status"=>"enum","module"=>"enum");
 	
-	protected $tabList=array(
-			"type"=>array('pilote'=>'Pilote','eleve'=>'ElÃ¨ve','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'InvitÃ©','employe'=>'EmployÃ©'),
-			"disponibilite"=>array('dispo'=>'Disponible','occupe'=>'OccupÃ©'),
-			"sexe"=>array("M"=>"Masculin","F"=>"FÃ©minin")
+	public $tabList=array(
+			"type"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
+			"disponibilite"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
+			"sexe"=>array("M"=>"Masculin","F"=>"Féminin")
 			);
 	
 	# Constructor
@@ -52,7 +52,7 @@ class user_class extends user_core
 
 	}
 
-	# LachÃ©
+	# Laché
 	function loadLache()
 	{
 		$query = "SELECT avion.id AS aid, lache.id AS lid, lache.uid_creat AS uid FROM ".$this->tbl."_utilisateurs AS usr ";
@@ -103,7 +103,7 @@ class user_class extends user_core
 			  }
 		}
 
-		// VÃ©rifie la diffÃ©rence
+		// Vérifie la différence
 		foreach($tlache as $avion=>$v)
 		{
 			if (($v["bd"]=="") && ($v["new"]=="N"))
@@ -138,19 +138,19 @@ class user_class extends user_core
 			else if ($key=="idcpt")
 		    {
 		    	$ret ="<select id='".$key."'  name=\"".$formname."[$key]\">";
-		    	$ret.="<option value=\"".$this->uid."\" ".(($txt==$this->uid)?"selected":"").">$this->fullname</option>";
-					if (is_array($this->data["enfant"]))
-					  {
-				  	  	foreach($this->data["enfant"] as $enfant)
-				  	  	  {
-				  	  		if ($enfant["id"]>0)
-				  	  		  {
-						  	  	$ret.="<option value=\"".$enfant["id"]."\" ".(($txt==$enfant["id"])?"selected":"").">".$enfant["usr"]->fullname."</option>";
-				  	  		  }
-				  	  	  }
-					  }
-					$ret.="</select>";
-			  }			
+		    	$ret.="<option value=\"".$this->id."\" ".(($txt==$this->id)?"selected":"").">".$this->aff("fullname")."</option>";
+				if (is_array($this->data["enfant"]))
+				{
+				  	foreach($this->data["enfant"] as $enfant)
+					{
+						if ($enfant["id"]>0)
+				  	  	{
+						  	$ret.="<option value=\"".$enfant["id"]."\" ".(($txt==$enfant["id"])?"selected":"").">".$enfant["usr"]->aff("fullname")."</option>";
+				  	  	}
+					}
+				}
+				$ret.="</select>";
+			}		
 		}
 		else
 		{
@@ -219,7 +219,7 @@ class user_class extends user_core
 	}	
 
 	function CheckLache($ress){
-		$query = "SELECT * FROM ".$this->tbl."_lache WHERE uid_pilote='$this->uid' AND id_avion='$ress' AND actif='oui'";
+		$query = "SELECT * FROM ".$this->tbl."_lache WHERE uid_pilote='".$this->id."' AND id_avion='".$ress."' AND actif='oui'";
 		$sql=$this->sql;
 		$res=$sql->QueryRow($query);
 
@@ -229,5 +229,6 @@ class user_class extends user_core
 	}
 
 }
+
 
 ?>

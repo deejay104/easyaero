@@ -78,32 +78,25 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 
 <div class="formulaire">
 	<p>
-		<label for="num">Numéro</label>
-		{form_num}
+		<label>Numéro</label>{form_num}
 	</p>
 	<p>
-		<label for="">Nom</label>
-		{form_nom}
+		<label>Nom</label>{form_nom}
 	</p>
 	<p>
-		<label for="">Nb de personnes</label>
-		{form_nb}
+		<label>Nb de personnes</label>{form_nb}
 	</p>
 	<p>
-		<label for="">Téléphone</label>
-		{form_telephone}
+		<label>Téléphone</label>{form_telephone}
 	</p>
 	<p>
-		<label for="">Mail</label>
-		{form_mail}
+		<label>Mail</label>{form_mail}
 	</p>
 	<p>
-		<label for="">Type</label>
-		{form_type}
+		<label>Type</label>{form_type}
 	</p>
 	<p>
-		<label for="">Payé</label>
-		{form_paye}
+		<label>Payé</label>{form_paye}
 	</p>
 </div>
 
@@ -113,25 +106,20 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 
 <div class="formulaire">
 <p>
- 	<label for="">Statut</label>
-	{form_status}&nbsp;
+ 	<label>Statut</label>{form_status}
 </p>
 <p>
-	<label for="">Pilote</label>
-	{form_id_pilote}&nbsp;
+	<label>Pilote</label>{form_id_pilote}
 </p>
 <p>
-	<label for="">Avion</label>
-	{form_id_avion}&nbsp;
+	<label>Avion</label>{form_id_avion}
 </p>
 <p>
-	<label for="">Date</label>
-	{form_dte_j}&nbsp;{form_dte_h}
+	<label>Date</label>{form_dte}
 </p>
 <!-- BEGIN: lst_dispo -->
 <p>
-	<label for="">{dispo_immat}</label>
-	<img id="imgdispo" src="api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
+	<label>{dispo_immat}</label><img id="imgdispo" src="api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
 </p>
 <!-- END: lst_dispo -->
 </div>

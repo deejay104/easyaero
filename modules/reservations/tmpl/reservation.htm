@@ -8,10 +8,7 @@
 <!-- END: infos -->
 
 
-<link rel="stylesheet" type="text/css" href="external/jquery/css/timePicker.css" />
 <!-- BEGIN: corps -->
-
-
 
 <script type="text/javascript">
 	$(function() {
@@ -54,21 +51,24 @@
         delay: 0
     });
 
-    $(document).tooltip({
-      position: {
-        my: "center bottom-10",
-        at: "center top",
-        using: function( position, feedback ) {
-          $( this ).css( position );
-          $( "<div>" )
-            .addClass( "arrow" )
-            .addClass( feedback.vertical )
-            .addClass( feedback.horizontal )
-            .appendTo( this );
-        }
-      }
-    });
-  });
+	$(document).tooltip({
+		position: {
+			my: "center bottom-10",
+			at: "center top",
+			using: function( position, feedback ) {
+				$( this ).css( position );
+				$( "<div>" )
+					.addClass( "arrow" )
+					.addClass( feedback.vertical )
+					.addClass( feedback.horizontal )
+					.appendTo( this );
+			}
+		},
+		content: function () {
+			return $(this).prop('title');
+		}
+	});
+});
 
   
 </script>
@@ -81,7 +81,7 @@
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 
-	<p class="lastupdate">Dernière mise à jour : <a href="" OnMouseOver="ShowPopup('{info_historique}');" OnMouseOut="HidePopup();">{info_maj}</a></p>
+	<p class="lastupdate">Dernière mise à jour : <label title="{info_historique}">{info_maj}</label></p>
 	<p>Potentiel restant à la prise en charge : {potentiel}</p>
 
 	<!-- BEGIN: date_depassee -->
@@ -104,7 +104,7 @@
 	  	Réservation
 	</div>
 
-	<div class="formulaire">
+	<div class="formulaire"  style=' padding-top: 10px; padding-left: 20px;'>
 		<p>
 				<label for="avion">Avion</label> 
 				<SELECT id="avion" name="form_uid_ress" OnChange="reservation.submit();" style='width: 220px;'>
@@ -208,33 +208,39 @@
 	  	Saisi de l'horamètre
 	</div>
 
-	<div class="formulaire">
-		
-		<div style='float: left; width:500px;'>
-		{aff_horametre}
-		</div>
-		
-		<div >
-		<p>
-			<label for="potentiel">Potentiel fin de vol</label>
-			{form_potentiel} 
-		</p>
-		<p>
-			<label for="potentiel">Correction du potentiel</label>
-			<INPUT type="number" name="form_potentielh" value="{form_potentielh}" style='width: 60px!important;'> h <INPUT type="number" name="form_potentielm" value="{form_potentielm}" style='width: 60px!important;'>
-		</p>
+	<table width='100%' class='formulaire'  >
+	<tr style="padding-left:20px;">
+		<td valign="top" style='width:420px; border: 1px solid #e8e8e8; padding: 5px; padding-left: 20px;'>
 
-		<p>
-			<label for="carburant">Carburant ajouté Avant</label>
-			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L, Après
-			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L
-		</p>
-		<p>
-			<label for="carburant">Total Carburant</label>
-			<INPUT name="form_prixcarbu" value="{form_prixcarbu}" type="number" style='width: 60px!important;'> €
-		</p>
-		</div>
-	</div>
+			<div style='float: left;'>
+			{aff_horametre}
+			</div>
+		</td>
+		<td valign="top" style='border: 1px solid #e8e8e8; padding: 5px;'>
+
+			<p>
+				<label for="potentiel">Potentiel fin de vol</label>
+				{form_potentiel} 
+			</p>
+			<p>
+				<label for="potentiel">Correction du potentiel</label>
+				<INPUT type="number" name="form_potentielh" value="{form_potentielh}" style='width: 60px!important;'> h <INPUT type="number" name="form_potentielm" value="{form_potentielm}" style='width: 60px!important;'>
+			</p>
+
+			<p>
+				<label for="carburant">Carburant ajouté Avant</label>
+				<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L, Après
+				<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L
+			</p>
+			<p>
+				<label for="carburant">Total Carburant</label>
+				<INPUT name="form_prixcarbu" value="{form_prixcarbu}" type="number" style='width: 60px!important;'> €
+			</p>
+		</td>
+	</tr>
+	</table>
+
+	
 	<!-- BEGIN: aff_chkreservation -->
 			<div style="width:800px; border: 1px solid #013366; border-radius: 4px; padding: 6px; margin-top:15px; margin-bottom:15px; clear: left;">
 				<div style="float:left; height:100px; padding:4px;"><input type="checkbox" name="form_accept" value="oui"></div>

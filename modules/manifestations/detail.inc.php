@@ -1,16 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Calendrier des manips : Affiche une manip
-//     ($Author: miniroot $)
-//     ($Date: 2016-04-22 20:48:24 +0200 (ven., 22 avr. 2016) $)
-//     ($Revision: 456 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  :	id : id de la manip
-//			dte: dte de création d'une nouvelle manip
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.2
-    Copyright (C) 2012 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,11 +22,12 @@
 <?
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("detail.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("path_module",$module."/".$mod);
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-	require_once ("class/compte.inc.php");
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 // ---- Année
 
 	$tabmois=array();
@@ -53,9 +45,13 @@
 	$tabmois["12"]="D&eacute;cembre";
 
 // ---- Sauvegarde
-	 if (($fonc=="Enregistrer") && (!is_numeric($id)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-	  	$type="";
+	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	{
+		if (!is_numeric($id))
+		{
+			$id=0;
+		}
+		$type="";
 	  	$s="";
 	  	foreach($mtype as $t=>$v)
 	  	  {
@@ -63,40 +59,57 @@
 	  	  	$s=",";
 	  	  }
 
-		$query ="INSERT INTO ".$MyOpt["tbl"]."_manips SET ";
-		$query.="titre='".addslashes($form_titre)."', ";
-		$query.="comment='".addslashes($form_comment)."', ";
-		$query.="dte_manip='".date2sql($form_date)."', ";
-		$query.="dte_limite='".date2sql($form_date_limite)."', ";
-		$query.="cout='".addslashes($form_cout)."', ";
-		$query.="type='".addslashes($type)."', ";
-		$query.="uid_creat='$uid', ";
-		$query.="dte_creat='".now()."', ";
-		$query.="uid_modif='$uid', ";
-		$query.="dte_modif='".now()."'";
-		$id=$sql->Insert($query);
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
-	 else if (($fonc=="Enregistrer") && ($id>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-	  	$type="";
-	  	$s="";
-	  	foreach($mtype as $t=>$v)
-	  	  {
-	  	  	$type.=$s.$t;
-	  	  	$s=",";
-	  	  }
+		// $query ="INSERT INTO ".$MyOpt["tbl"]."_manips SET ";
+		// $query.="titre='".addslashes($form_titre)."', ";
+		// $query.="comment='".addslashes($form_comment)."', ";
+		// $query.="dte_manip='".date2sql($form_date)."', ";
+		// $query.="dte_limite='".date2sql($form_date_limite)."', ";
+		// $query.="cout='".addslashes($form_cout)."', ";
+		// $query.="type='".addslashes($type)."', ";
+		// $query.="uid_creat='$uid', ";
+		// $query.="dte_creat='".now()."', ";
+		// $query.="uid_modif='$uid', ";
+		// $query.="dte_modif='".now()."'";
+		// $id=$sql->Insert($query);
 
-		$query ="UPDATE ".$MyOpt["tbl"]."_manips SET titre='".addslashes($form_titre)."', ";
-		$query.="comment='".addslashes($form_comment)."', ";
-		$query.="dte_limite='".date2sql($form_date_limite)."', ";
-		$query.="cout='".addslashes($form_cout)."', ";
-		$query.="type='$type', ";
-		$query.="dte_manip='".date2sql($form_date)."', ";
-		$query.="uid_modif='$uid', dte_modif='".now()."' WHERE id='$id'";
-		$sql->Update($query);
+		$t=array();
+		$t["titre"]=addslashes($form_titre);
+		$t["comment"]=addslashes($form_comment);
+		$t["dte_manip"]=date2sql($form_date);
+		$t["dte_limite"]=date2sql($form_date_limite);
+		$t["cout"]=addslashes($form_cout);
+		$t["type"]=addslashes($type);
+		$t["uid_creat"]=$uid;
+		$t["dte_creat"]=now();
+		$t["uid_modif"]=$uid;
+		$t["dte_modif"]=now();
+
+		$id=$sql->Edit("manips",$MyOpt["tbl"]."_manips",$id,$t);
+
+		// $this->id=$sql->Edit($this->table,$this->tbl."_".$this->table,$this->id,array("uid_creat"=>$gl_uid, "dte_creat"=>now(),"uid_maj"=>$gl_uid, "dte_maj"=>now()));		
+		
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
+	}
+	 // else if (($fonc=="Enregistrer") && ($id>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	  // {
+	  	// $type="";
+	  	// $s="";
+	  	// foreach($mtype as $t=>$v)
+	  	  // {
+	  	  	// $type.=$s.$t;
+	  	  	// $s=",";
+	  	  // }
+
+		// $query ="UPDATE ".$MyOpt["tbl"]."_manips SET titre='".addslashes($form_titre)."', ";
+		// $query.="comment='".addslashes($form_comment)."', ";
+		// $query.="dte_limite='".date2sql($form_date_limite)."', ";
+		// $query.="cout='".addslashes($form_cout)."', ";
+		// $query.="type='$type', ";
+		// $query.="dte_manip='".date2sql($form_date)."', ";
+		// $query.="uid_modif='$uid', dte_modif='".now()."' WHERE id='$id'";
+		// $sql->Update($query);
+		// $_SESSION['tab_checkpost'][$checktime]=$checktime;
+	  // }
 
 // ---- Facture la manifestation aux participants
 	if (($fonc=="facture") && ($id>0) && GetDroit("FactureManips"))
@@ -105,23 +118,6 @@
 		$res=$sql->QueryRow($query);
 
 		$txt="1=0 ";
-/*
-		$t=preg_split("/,/",$res["type"]);
-		$s="";
-		foreach($t as $i=>$v)
-		  {
-			$txt.="OR type='$v' ";
-		  }
-
-
-		if (is_array($RestrictMembreComptes))
-		  {
-			foreach($RestrictMembreComptes as $i=>$t)
-			  {
-				$txt.="OR usr.type='$t' ";
-			  }
-		  }
-*/
 
 		$query ="SELECT usr.id,usr.nom, usr.prenom, usr.idcpt, participants.participe, participants.nb ";
 		$query.="FROM ".$MyOpt["tbl"]."_utilisateurs AS usr ";
@@ -131,11 +127,11 @@
 
 		$tabParticipant=array();
 		for($i=0; $i<$sql->rows; $i++)
-		  { 
+		{ 
 			$sql->GetRow($i);
 			
-			$tabParticipant[]=$sql->data;
-		  }
+			$tabParticipant[$i]=$sql->data;
+		}
 
 		$mvt = new compte_class(0,$sql);
 		$tmpl_x->assign("aff_mouvement_detail", $mvt->AfficheEntete());
@@ -278,79 +274,78 @@
 		  	$ttype[$v]="ok";
 		  }
 
-		// Listes de diffusion
-		foreach ($MyOpt["type"] as $typeid=>$typeon)
+		$usr=new user_class(0,$sql);
+
+		foreach ($usr->tabList["type"] as $typeid=>$typenom)
 		{
-		 	if ($typeon=="on")
-		 	{
-				$tmpl_x->assign("forum_type_id", $typeid);
-				$tmpl_x->assign("forum_type_description", $tabTypeNom[$typeid]);
-				$tmpl_x->assign("forum_type_check", ($ttype[$typeid]!="") ? "checked" : "");
-				$tmpl_x->parse("corps.aff_form_titre.lst_type");
-		  }
+			$tmpl_x->assign("forum_type_id", $typeid);
+			$tmpl_x->assign("forum_type_description", $typenom);
+			$tmpl_x->assign("forum_type_check", ($ttype[$typeid]!="") ? "checked" : "");
+			$tmpl_x->parse("corps.aff_form_titre.lst_type");
 		}
 
 		$tmpl_x->parse("corps.aff_form_titre");
 	  }
 	else
-	  {
-	  	$txt="";
-			$t=preg_split("/,/",$res["type"]);
-			$s="";
-			foreach($t as $i=>$v)
-			  {
-				$txt.=$s.$tabTypeNom[$v];
-			  	$s=", ";
-			  }
-	
-			$tmpl_x->assign("form_titre",$res["titre"]);
-			$tmpl_x->assign("form_type", $txt);
-			$tmpl_x->assign("form_date_limite",sql2date($res["dte_limite"]));
-			$tmpl_x->assign("form_cout",AffMontant($res["cout"]));
-			$tmpl_x->parse("corps.aff_form_type");
-	
-			if ($res["cout"]>0)
-			  { $tmpl_x->parse("corps.aff_form_cout"); }
-			if ($res["dte_limite"]!="0000-00-00")
-			  { $tmpl_x->parse("corps.aff_form_date_limite"); }
-	
-	
-			if (($id>0) && (($res["uid_creat"]==$uid) || (GetDroit("ModifManifestation"))))
-			  {
-				$tmpl_x->parse("infos.bouttons.modification");
-				$tmpl_x->parse("infos.bouttons.suppression");
-			  }
-	
-			$t=preg_split("/,/",$res["type"]);
-			$ok=0;
-			foreach($t as $i=>$v)
-			  {
-			  	if ($myuser->type==$v)
-			  	  { $ok=1; }
-				
-			  }
-			if (GetDroit("ModifManifestation"))
-			  {
-			  	$ok=1;
-			  }
-	
-			if ( ($res["facture"]=="non") && ($ok==1) && ((date_diff_txt($res["dte_limite"],date("Y-m-d"))<=0) || ($res["dte_limite"]=="0000-00-00")) )
-			  {
-			  	$tmpl_x->parse("infos.bouttons.participe");
-			  }
-	
-			if (($res["facture"]=="non") && (date_diff_txt($res["dte_manip"],date("Y-m-d"))>=0) && ($res["cout"]<>0) && GetDroit("FactureManips"))
-			  {
-					$tmpl_x->parse("infos.bouttons.facture");
-			  }
-	
-			if ($id>0)
-			  {
-					$tmpl_x->parse("infos.bouttons");
-			  }
-	
-			$tmpl_x->parse("corps.aff_form_comment");
-	  }
+	{
+		$txt="";
+		$usr=new user_class(0,$sql);
+		$t=preg_split("/,/",$res["type"]);
+		$s="";
+		foreach($t as $i=>$v)
+		  {
+			$txt.=$s.$usr->tabList["type"][$v];
+			$s=", ";
+		  }
+
+		$tmpl_x->assign("form_titre",$res["titre"]);
+		$tmpl_x->assign("form_type", $txt);
+		$tmpl_x->assign("form_date_limite",sql2date($res["dte_limite"]));
+		$tmpl_x->assign("form_cout",AffMontant($res["cout"]));
+		$tmpl_x->parse("corps.aff_form_type");
+
+		if ($res["cout"]>0)
+		  { $tmpl_x->parse("corps.aff_form_cout"); }
+		if ($res["dte_limite"]!="0000-00-00")
+		  { $tmpl_x->parse("corps.aff_form_date_limite"); }
+
+
+		if (($id>0) && (($res["uid_creat"]==$uid) || (GetDroit("ModifManifestation"))))
+		  {
+			$tmpl_x->parse("infos.bouttons.modification");
+			$tmpl_x->parse("infos.bouttons.suppression");
+		  }
+
+		$t=preg_split("/,/",$res["type"]);
+		$ok=0;
+		foreach($t as $i=>$v)
+		  {
+			if ($myuser->data["type"]==$v)
+			  { $ok=1; }
+			
+		  }
+		if (GetDroit("ModifManifestation"))
+		  {
+			$ok=1;
+		  }
+
+		if ( ($res["facture"]=="non") && ($ok==1) && ((date_diff_txt($res["dte_limite"],date("Y-m-d"))<=0) || ($res["dte_limite"]=="0000-00-00")) )
+		  {
+			$tmpl_x->parse("infos.bouttons.participe");
+		  }
+
+		if (($res["facture"]=="non") && (date_diff_txt($res["dte_manip"],date("Y-m-d"))>=0) && ($res["cout"]<>0) && GetDroit("FactureManips"))
+		  {
+				$tmpl_x->parse("infos.bouttons.facture");
+		  }
+
+		if ($id>0)
+		  {
+				$tmpl_x->parse("infos.bouttons");
+		  }
+
+		$tmpl_x->parse("corps.aff_form_comment");
+	}
 
 // ---- Affiche la liste des participants
 

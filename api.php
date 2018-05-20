@@ -5,7 +5,8 @@
 	  { require ("config/variables.inc.php"); }
 
 	$corefolder="core";
-	chdir($corefolder);
+	$appfolder="..";
 
+	chdir($corefolder);
 	require("api.php");
 ?>

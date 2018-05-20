@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Liste des membres
-//     ($Author: miniroot $)
-//     ($Date: 2012-11-26 21:01:41 +0100 (lun., 26 nov. 2012) $)
-//     ($Revision: 413 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2007 Matthieu Isorez
+    Easy-Aero v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,11 +22,14 @@
 <?
 	if (!GetDroit("AccesBaptemes")) { FatalError("Accès non autorisé (AccesBaptemes)"); }
 
-	require_once ("class/bapteme.inc.php");
+	require_once ($appfolder."/class/bapteme.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
+	
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("baptemes.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("path_module",$module."/".$mod);
+	$tmpl_x->assign("corefolder",$corefolder);
 
 // ----
 	if (GetDroit("CreeBapteme"))
@@ -116,21 +111,21 @@
 	foreach($lstusr as $i=>$id)
 	  {
 		$btm = new bapteme_class($id,$sql);
-		$tabValeur[$i]["num"]["val"]=$btm->num;
-		$tabValeur[$i]["num"]["aff"]="<a href='index.php?mod=aviation&rub=bapteme&id=".$btm->id."'>".$btm->num."</a>";
-		$tabValeur[$i]["nom"]["val"]=$btm->nom;
-		$tabValeur[$i]["nom"]["aff"]="<a href='index.php?mod=aviation&rub=bapteme&id=".$btm->id."'>".$btm->aff("nom","html")."</a>";
-		$tabValeur[$i]["nb"]["val"]=$btm->nb;
-		$tabValeur[$i]["nb"]["aff"]=$btm->nb;;
-		$tabValeur[$i]["telephone"]["val"]=$btm->telephone;
+		$tabValeur[$i]["num"]["val"]=$btm->val("num");
+		$tabValeur[$i]["num"]["aff"]=$btm->aff("num","html");
+		$tabValeur[$i]["nom"]["val"]=$btm->val("nom");
+		$tabValeur[$i]["nom"]["aff"]=$btm->aff("nom","html");
+		$tabValeur[$i]["nb"]["val"]=$btm->val("nb");
+		$tabValeur[$i]["nb"]["aff"]=$btm->aff("nb","html");
+		$tabValeur[$i]["telephone"]["val"]=$btm->val("telephone");
 		$tabValeur[$i]["telephone"]["aff"]=$btm->aff("telephone","html");
-		$tabValeur[$i]["status"]["val"]=$btm->status;
-		$tabValeur[$i]["status"]["aff"]="<a href='index.php?mod=aviation&rub=bapteme&id=".$btm->id."'>".$btm->aff("status","html")."</a>";
-		$tabValeur[$i]["paye"]["val"]=$btm->paye;
+		$tabValeur[$i]["status"]["val"]=$btm->val("status");
+		$tabValeur[$i]["status"]["aff"]=$btm->aff("status","html");
+		$tabValeur[$i]["paye"]["val"]=$btm->val("paye");
 		$tabValeur[$i]["paye"]["aff"]=$btm->aff("paye","html");
 
-		$tabValeur[$i]["date"]["val"]=strtotime($btm->dte);
-		$tabValeur[$i]["date"]["aff"]=($btm->dte=="0000-00-00 00:00:00") ? "-" : sql2date($btm->dte,"nosec");
+		$tabValeur[$i]["date"]["val"]=strtotime($btm->data["dte"]);
+		$tabValeur[$i]["date"]["aff"]=$btm->aff("dte","html");
 
 		$usr = new user_class($btm->id_pilote,$sql,true);
 
@@ -148,7 +143,7 @@
 		  	$tabValeur[$i]["resa"]["val"]="-";
 			$tabValeur[$i]["resa"]["aff"]="-";
 		  }
-		$tabValeur[$i]["type"]["val"]=$btm->type;
+		$tabValeur[$i]["type"]["val"]=$btm->aff("type","val");
 		$tabValeur[$i]["type"]["aff"]=$btm->aff("type","html");
 
 	  }

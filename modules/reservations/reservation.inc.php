@@ -46,9 +46,11 @@
 // ---- Charge les données de la réservation
 	$res=array();
 
-	$if=($id>0) ? $id : 0;
-
-
+	if (!is_numeric($id))
+	{
+		$id=0;
+	}
+	
 	if (($id>0) && ($ok!=3))
 	{
 		// Charge une nouvelle réservation
@@ -80,11 +82,11 @@
 
 		$resa["resa"]->dte_deb=$dte_deb;
 		$resa["resa"]->dte_fin=$dte_fin;
-		$resa["resa"]->uid_pilote=$uid;
+		$resa["resa"]->uid_pilote=$gl_uid;
 		$resa["resa"]->uid_instructeur=$res["uid_instructeur"];
 		$resa["resa"]->uid_ressource=$ress;
 		$resa["resa"]->type=$res_user["type"];
-		$resa["resa"]->uid_maj=$uid;
+		$resa["resa"]->uid_maj=$gl_uid;
 		$resa["resa"]->dte_maj=date("Y-m-d H:i:s");
 
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
@@ -115,7 +117,7 @@
 	  	$resa["resa"]->nbpersonne=$form_nbpersonne;
 	  	$resa["resa"]->invite=$form_invite;
 	  	$resa["resa"]->description=$form_description;
-		$resa["resa"]->uid_maj=$uid;
+		$resa["resa"]->uid_maj=$gl_uid;
 	  	$resa["resa"]->dte_maj=date("Y-m-d H:i:s");
 
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
@@ -199,8 +201,6 @@
 	{
 		$m ="<b><font color='red'>Le compte du pilote est NEGATIF ($s €).</font></b><br />";
 		$m.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
-  		// $tmpl_x->assign("msg_error", $m);
-		// $tmpl_x->parse("corps.msg_error");
 		affInformation($m,"error");
 
 		if ($id==0)
@@ -213,8 +213,6 @@
 // ---- Vérifie si l'utilisateur est laché sur l'avion
 	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
 	{
-		// $tmpl_x->assign("msg_warning", "<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.");
-		// $tmpl_x->parse("corps.msg_warning");
 		$m="<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.";
 		affInformation($m,"warning");
 
@@ -244,11 +242,11 @@
 
 	// Historique des modifications
 	$lstmaj=$resa["resa"]->Historique();
-	$txtmaj="";
+
 	foreach($lstmaj as $i=>$k)
-	  {
-	     $maj=new user_class($k["uid"],$sql);
-	  	$txtmaj.="&nbsp;&nbsp;".sql2date($k["dte"])." - ";
+	{
+	    $maj=new user_core($k["uid"],$sql);
+	  	$txtmaj.=sql2date($k["dte"])." - ";
 
 		if ($k["type"]=="ADD")
 			$txtmaj.="Création par";
@@ -257,11 +255,10 @@
 		else if ($k["type"]=="DEL")
 			$txtmaj.="Suppression par";
 
-	  	$txtmaj.=" ".$maj->fullname." &nbsp;&nbsp;<br> ";
-	  }
+	  	$txtmaj.=" ".$maj->aff("fullname","val")."<br>";
+	}
 	$tmpl_x->assign("info_historique",$txtmaj);
 
-	
 
 // **************************************
 
@@ -290,17 +287,17 @@
 		$tmpl_x->parse("corps.aff_reservation.lst_avion");
 	}
 	
+
 	// Liste des pilotes	
 	$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite");
-
 	
 	$txt="-";
 	foreach($lst as $i=>$tmpuid)
 	{
 		$resusr=new user_class($tmpuid,$sql);
-		$tmpl_x->assign("uid_pilote", $resusr->uid);
+		$tmpl_x->assign("uid_pilote", $resusr->id);
 		$tmpl_x->assign("nom_pilote", $resusr->Aff("fullname","val"));
-		if ($resa["resa"]->uid_pilote==$resusr->uid)
+		if ($resa["resa"]->uid_pilote==$resusr->id)
 		{
 			$tmpl_x->assign("chk_pilote", "selected");
 			$txt=$resusr->Aff("fullname");
@@ -313,6 +310,7 @@
 	}
 	$tmpl_x->assign("aff_nom_pilote", $txt);
 
+	
 	// Liste des pilotes débité	
 	$lst=ListActiveUsers($sql,"prenom,nom","","");
 
@@ -320,9 +318,9 @@
 	foreach($lst as $i=>$tmpuid)
 	  {
 	  	$resusr=new user_class($tmpuid,$sql);
-			$tmpl_x->assign("uid_debite", $resusr->uid);
+			$tmpl_x->assign("uid_debite", $resusr->id);
 			$tmpl_x->assign("nom_debite", $resusr->Aff("fullname","val"));
-			if ($resa["resa"]->uid_debite==$resusr->uid)
+			if ($resa["resa"]->uid_debite==$resusr->id)
 			  {
 			  	$tmpl_x->assign("chk_debite", "selected");
 			  	$txt=$resusr->Aff("fullname");
@@ -351,9 +349,9 @@
 	foreach($lst as $i=>$tmpuid)
 	{ 
 		$resusr=new user_class($tmpuid,$sql);
-		$tmpl_x->assign("uid_instructeur", $resusr->uid);
+		$tmpl_x->assign("uid_instructeur", $resusr->id);
 		$tmpl_x->assign("nom_instructeur", $resusr->Aff("fullname","val"));
-		if ($resa["resa"]->uid_instructeur==$resusr->uid)
+		if ($resa["resa"]->uid_instructeur==$resusr->id)
 		{
 			$tmpl_x->assign("chk_instructeur", "selected");
 			$txt=$resusr->Aff("fullname");

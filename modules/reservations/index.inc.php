@@ -6,7 +6,7 @@
 //   Variables  :
 // ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v3.0
+    Easy-Aero v3.0
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -28,15 +28,12 @@
 <?
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
-	// require_once ($appfolder."/class/maintenance.inc.php");
-	// require_once ($appfolder."/class/manifestation.inc.php");
-
-
 
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("path_module",$module."/".$mod);
+	$tmpl_x->assign("corefolder",$corefolder);
 
   
 // ---- Définition des constantes
@@ -102,7 +99,7 @@
 		if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
 		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
 	
-		$jour=$myuser->data["aff_jour"];
+		$jour=date2sql($myuser->data["aff_jour"]);
 
 		$tmpl_x->assign("defaultView","agendaTwoWeeks");
 		$tmpl_x->assign("headerListe","agendaMonth,agendaFourWeeks,agendaTwoWeeks,agendaWeek,agendaDay");
