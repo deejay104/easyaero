@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v2.4
+    SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -20,15 +20,16 @@
 ?>
 
 <?
+	require_once ($appfolder."/class/rex.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("rex.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-	require_once ("class/rex.inc.php");
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require("modules/".$mod."/menu.inc.php");
+	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Liste des ressources

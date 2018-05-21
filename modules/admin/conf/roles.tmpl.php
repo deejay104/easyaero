@@ -3,13 +3,18 @@
 //   Définitions des roles
 // ---------------------------------------------------------------------------------------------
 
+
 // ---- Liste des roles disponibles
+
+$tabRoles["TypePilote"]="Pilote";
+$tabRoles["TypeInstructeur"]="Instructeur";
+
 $tabRoles["AccesAbonnements"]="Accès à la liste des abonnements";
 $tabRoles["AccesBaptemes"]="Accès à la page des baptèmes";
 $tabRoles["AccesBapteme"]="Accès à la page d'un baptème";
 $tabRoles["AccesExport"]="Accès à la page des exports";
 $tabRoles["AccesFactures"]="Accès à la liste des factures";
-$tabRoles["AccesComptes"]="Accès au module de comptabilité";
+
 $tabRoles["AccesPageMouvements"]="Accès à la page de saisi d'un mouvement";
 $tabRoles["AccesPageEcheances"]="Accès à la page de suivi des échéances";
 $tabRoles["AccesPageVols"]="Accès à la page des vols (saisi des vols)";
@@ -17,6 +22,13 @@ $tabRoles["AccesPageSuivi"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesPageListeComptes"]="Accès à la page de la liste des comptes";
 $tabRoles["AccesPageListeTarifs"]="Accès à la page des tarifs";
 $tabRoles["AccesPageTableauBord"]="Accès à la page des tableau de bord";
+
+
+$tabRoles["AccesCompte"]="Accès à la page d'affichage du compte";
+$tabRoles["AccesSuivi"]="Accès au module de suivi du club";
+$tabRoles["AccesSuiviComptes"]="Autorise l'affichage de la liste des membres pour les pages de comptes";
+$tabRoles["AccesIndicateurs"]="Accès à la page d'indicateurs";
+
 $tabRoles["AccesPageAccesPageBilan"]="Accès à la page du bilan comptable";
 $tabRoles["AccesPresence"]="Accès à la page des présences";
 $tabRoles["AccesPresences"]="Accès au tableau des présences";
@@ -28,7 +40,10 @@ $tabRoles["AccesFamilles"]="Accès à la liste des familles";
 $tabRoles["AccesComptabilite"]="Accès aux pages de comptabilités";
 $tabRoles["AccesVacances"]="Accès à la page de saisie des vacances";
 $tabRoles["AccesPlage"]="Accès à la page de configuration des plages horaires";
+$tabRoles["AccesVols"]="Accès au suivi des vols";
 $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
+$tabRoles["AccesAvions"]="Accès au suivi des avions";
+
 $tabRoles["AccesConfiguration"]="Accès au module de configuration";
 $tabRoles["AccesConfigVar"]="Accès à la page de configuration des variables";
 $tabRoles["AccesConfigGroupes"]="Accès à la page de configuration des groupes";
@@ -118,7 +133,6 @@ $tabRoles["EnregistreMaintenance"]="Enregistre une maintenance";
 
 
 $tabRoles["ListeVols"]="Autorise l'affichage des vols des membres";
-$tabRoles["ListeComptes"]="Autorise l'affichage de la liste des membres pour les pages de comptes";
 $tabRoles["ListeUserSupprime"]="Autorise l'affichage des membres supprimés";
 $tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres désactivés";
 

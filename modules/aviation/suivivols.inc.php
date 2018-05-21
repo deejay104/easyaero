@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Suivi des heures de vol
-//     ($Author: miniroot $)
-//     ($Date: 2016-04-22 20:48:24 +0200 (ven., 22 avr. 2016) $)
-//     ($Revision: 456 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,16 +20,19 @@
 ?>
 
 <?
+	if (!GetDroit("AccesSuiviVols")) { FatalError("Accès non authorisé (AccesSuiviVols)"); }
+
+	require_once ("class/echeance.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
+	
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("suivivols.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesSuiviVols")) { FatalError("Accès non authorisé"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-	require_once ("class/echeance.inc.php");
 
 // ----
 	if (GetDroit("AccesSuiviVols"))
@@ -97,7 +92,7 @@
 	}
 
 // ---- Liste des membres
-	$lstusr=ListActiveUsers($sql);
+	$lstusr=ListActiveUsers($sql,"std");
 	
 	$tabValeur=array();
 	foreach($lstusr as $i=>$id)
@@ -107,12 +102,12 @@
 		$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
 		$tabValeur[$i]["nom"]["val"]=$usr->nom;
 		$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
-		$tabValeur[$i]["type"]["val"]=$usr->type;
+		$tabValeur[$i]["type"]["val"]=$usr->val("type");
 		$tabValeur[$i]["type"]["aff"]=$usr->aff("type");
-		$tabValeur[$i]["lastyear"]["val"]=$usr->NbHeures12mois();
+		$tabValeur[$i]["lastyear"]["val"]=$usr->AffNbHeures12mois("val");
 		$tabValeur[$i]["lastyear"]["aff"]=$usr->AffNbHeures12mois();
-		$tabValeur[$i]["total"]["val"]=$usr->NbHeuresVol();
-		$tabValeur[$i]["total"]["aff"]=$usr->AffNbHeuresVol();
+		$tabValeur[$i]["total"]["val"]=$usr->NbHeures("0000-00-00");
+		$tabValeur[$i]["total"]["aff"]=AffTemps($usr->NbHeures("0000-00-00"));
 		$dte=$usr->DernierVol();
 		$tabValeur[$i]["lastflight"]["val"]=strtotime($dte["dte"]);
 		$tabValeur[$i]["lastflight"]["aff"]="<a href='index.php?mod=aviation&vols&id=$id'>".$usr->AffDernierVol()."</a>";
@@ -168,26 +163,26 @@
 		// $tabValeur[$i]["med"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_medicale")."</a>";
 		foreach($tabecheance as $ii=>$t)
 		{
-			$dte = new echeance_class(0,$sql,$id);
+			$dte = new echeance_core(0,$sql,$id);
 			$dte->loadtype($ii);
 			$tabValeur[$i]["ech".$ii]["val"]=$dte->Val();
 			$tabValeur[$i]["ech".$ii]["aff"]=$dte->Affiche("val");
 		}
 
 		foreach($tavion as $ii=>$res)
-		  {
+		{
 		  	if ($usr->CheckLache($res->id))
 		  	{
 					$tabValeur[$i]["av".$ii]["val"]="1";
 					$tabValeur[$i]["av".$ii]["aff"]="<a href='membres.php?rub=detail&id=$id'><img src='$module/$mod/img/icn16_ok2.png' alt=''></a>";
-			  }
+			}
 			else
 		  	{
 					$tabValeur[$i]["av".$ii]["val"]="0";
 					$tabValeur[$i]["av".$ii]["aff"]="&nbsp;";
-			  }
-		  }
-	  }
+			}
+		}
+	}
 
 	if ($order=="") { $order="nom"; }
 	if ($trie=="") { $trie="d"; }

@@ -9,7 +9,7 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='index.php?mod=comptabilite&rub=echeances&form_id='+document.getElementById('form_id').value;
+ 	document.location='index.php?mod=suivi&rub=echeances&form_id='+document.getElementById('form_id').value;
 }
 function selectAll()
 {
@@ -26,7 +26,7 @@ function selectAll()
 
 <FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="comptabilite">
+	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="echeances">
 	<INPUT type="hidden" name="form_id" value="{form_id}">
 

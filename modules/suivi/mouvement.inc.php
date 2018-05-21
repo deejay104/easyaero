@@ -1,12 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Saisie des mouvements
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.2
-    Copyright (C) 2017 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,21 +20,23 @@
 ?>
 
 <?
+	if (!GetDroit("AccesSuiviMouvements")) { FatalError("Accès non autorisé (AccesSuiviMouvements)"); }
+	
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
 
-	if (!GetDroit("AccesPageMouvements")) { FatalError("Accès non autorisé"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-	require_once ("class/compte.inc.php");
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Enregistre le mouvement
@@ -166,7 +163,7 @@
 		$montant=0;
 
 		for($i=0; $i<$sql->rows; $i++)
-		  { 
+		{ 
 			$sql->GetRow($i);
 		
 			$tmpl_x->assign("id_mouvement", $sql->data["id"]);
@@ -176,14 +173,13 @@
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_mouvement");
 			if (($form_id==$sql->data["id"]) || ($form_poste==$sql->data["id"]))
 			  { $montant=$sql->data["montant"]; }
-		  }
+		}
 
 		// Liste des tiers
-		$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
-	
+		$lst=ListActiveUsers($sql,"std","","");
 
 		foreach($lst as $i=>$tmpuid)
-		  {
+		{
 			$resusr=new user_class($tmpuid,$sql);
 		
 			$tmpl_x->assign("id_tiers", $resusr->data["idcpt"]);
@@ -191,7 +187,7 @@
 			$tmpl_x->assign("chk_tiers", ($form_tiers==$tmpuid) ? "selected" : "");
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_tiers");
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_tiers");
-		  }
+		}
 
 		$dte=sql2date($form_date);
 

@@ -1,13 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Visualisation des indicateurs
-//   
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,11 +20,12 @@
 ?>
 
 <?
+	require_once ($appfolder."/class/ressources.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("indicateurs.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-	require_once ("class/ressources.inc.php");
 
 // ---- Liste des mois
 	$tabm[1]="Jan";
@@ -236,13 +231,13 @@
 	$query="SELECT DATE_FORMAT(dte_deb,'%Y') AS annee FROM ".$MyOpt["tbl"]."_calendrier GROUP BY DATE_FORMAT(dte_deb,'%Y') ORDER BY DATE_FORMAT(dte_deb,'%Y')";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
-	  { 
+	{ 
 		$sql->GetRow($i);
 
 		$tmpl_x->assign("form_dte", $sql->data["annee"]);
 		$tmpl_x->assign("form_selected", (($sql->data["annee"]==$dte) ? "selected" : "") );
 		$tmpl_x->parse("infos.lst_date");
-	  }
+	}
 
 
 // ---- Affecte les variables d'affichage

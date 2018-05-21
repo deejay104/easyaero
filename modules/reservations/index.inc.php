@@ -1,12 +1,6 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Calendrier des réservations
-//   
-// ---------------------------------------------------------------------------------------------
-//   Variables  :
-// ---------------------------------------------------------------------------------------------
 /*
-    Easy-Aero v3.0
+    SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -26,6 +20,8 @@
 ?>
 
 <?
+	if (!GetDroit("AccesReservations")) { FatalError("Accès non autorisé (AccesReservations)"); }
+
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 

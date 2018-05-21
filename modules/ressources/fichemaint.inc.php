@@ -1,13 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Page de saisie pour la maintenance
-//   
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2007 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +20,7 @@
 ?>
 
 <?
-	require_once ("class/maintenance.inc.php");
+	require_once ($appfolder."/class/maintenance.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("fichemaint.htm"));
@@ -86,7 +80,7 @@
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les templates

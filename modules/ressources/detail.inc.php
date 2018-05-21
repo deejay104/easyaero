@@ -1,13 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Détail d'un utilisateur
-//     ($Author: miniroot $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2009 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,11 +20,13 @@
 ?>
 
 <?
+	require_once ($appfolder."/class/ressources.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("detail.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-	require_once ("class/ressources.inc.php");
 
 // ---- Initialisation des variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
@@ -40,7 +36,7 @@
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Modifie les infos

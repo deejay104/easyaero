@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Page de visualisation des maintenances
-//     ($Author: miniroot $)
-//     ($Date: 2016-02-14 23:17:30 +0100 (dim., 14 févr. 2016) $)
-//     ($Revision: 445 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2007 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,8 +20,9 @@
 ?>
 
 <?
-	require_once ("class/maintenance.inc.php");
-	require_once ("class/ressources.inc.php");
+	require_once ($appfolder."/class/maintenance.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("validation.htm"));
@@ -71,7 +64,7 @@
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les templates
@@ -93,9 +86,9 @@
 	
 		$lstFiche=GetValideFiche($sql,$uid_avion);
 		if (count($lstFiche)>0)
-		  {
+		{
 			foreach($lstFiche as $i=>$id)
-			  {
+			{
 				$fiche = new fichemaint_class($id,$sql,false);
 
 				$tabValeur[$i]["valid"]["val"]="";
@@ -113,10 +106,10 @@
 				$tabValeur[$i]["description"]["val"]=$fiche->description;
 				$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->description);
 		
-			  }
-		  }
+			}
+		}
 		else
-		  {
+		{
 				$tabValeur[$i]["ress"]["val"]="";
 				$tabValeur[$i]["ress"]["aff"]="";
 				$tabValeur[$i]["auteur"]["val"]="";
@@ -125,22 +118,22 @@
 				$tabValeur[$i]["dtecreat"]["aff"]="";
 				$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
 				$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
-		  }
+		}
 		if ($order=="") { $order="ress"; }
 		if ($trie=="") { $trie="d"; }
 	
 		$tmpl_x->assign("aff_tabavalider",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 	if (GetDroit("ValideFichesMaintenance"))
-	  {
+	{
 		$tmpl_x->parse("corps.aff_valide");
-	  }
+	}
 
 // ---- Liste des avions
 	$lst=ListeRessources($sql);
 
 	foreach($lst as $i=>$id)
-	  {
+	{
 		$ress=new ress_class($id,$sql);
 
 		$tmpl_x->assign("uid_avion", $ress->id);
@@ -150,7 +143,7 @@
 		else
 		  { $tmpl_x->assign("chk_avion", ""); }
 		$tmpl_x->parse("corps.lst_avion");
-	  }
+	}
 
 // ---- Affiche la liste des fiches
 
@@ -170,9 +163,9 @@
 
 	$lstFiche=GetActiveFiche($sql,$uid_avion);
 	if (count($lstFiche)>0)
-	  {
+	{
 		foreach($lstFiche as $i=>$id)
-		  {
+		{
 			$fiche = new fichemaint_class($id,$sql);
 
 			$ress = new ress_class($fiche->uid_avion,$sql,false);
@@ -189,32 +182,32 @@
 			$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->description);
 
 			if ($fiche->uid_planif>0)
-			  {
+			{
 			  	$maint = new maint_class($fiche->uid_planif,$sql);
 				$tabValeur[$i]["dteresolv"]["val"]=sql2date($maint->dte_deb,"jour");
 				$tabValeur[$i]["dteresolv"]["aff"]="&nbsp;&nbsp;<a href='maintenance.php?rub=detail&id=".$maint->id."'>".sql2date($maint->dte_deb,"jour")."</a>";
-			  }
+			}
 			else
-			  {
+			{
 				$tabValeur[$i]["dteresolv"]["val"]="0";
 				$tabValeur[$i]["dteresolv"]["aff"]="&nbsp;&nbsp;"."N/A";
-			  }
+			}
 	
-		  }
-	  }
+		}
+	}
 	else
-	  {
-			$tabValeur[$i]["ress"]["val"]="";
-			$tabValeur[$i]["ress"]["aff"]="";
-			$tabValeur[$i]["auteur"]["val"]="";
-			$tabValeur[$i]["auteur"]["aff"]="";
-			$tabValeur[$i]["dtecreat"]["val"]="";
-			$tabValeur[$i]["dtecreat"]["aff"]="";
-			$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
-			$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
-			$tabValeur[$i]["dteresolv"]["val"]="";
-			$tabValeur[$i]["dteresolv"]["aff"]="";
-	  }
+	{
+		$tabValeur[$i]["ress"]["val"]="";
+		$tabValeur[$i]["ress"]["aff"]="";
+		$tabValeur[$i]["auteur"]["val"]="";
+		$tabValeur[$i]["auteur"]["aff"]="";
+		$tabValeur[$i]["dtecreat"]["val"]="";
+		$tabValeur[$i]["dtecreat"]["aff"]="";
+		$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
+		$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
+		$tabValeur[$i]["dteresolv"]["val"]="";
+		$tabValeur[$i]["dteresolv"]["aff"]="";
+	}
 
 
 

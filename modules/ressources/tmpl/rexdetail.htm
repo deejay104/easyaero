@@ -27,23 +27,23 @@
 	<INPUT type="hidden" name="id" value="{id}">
 
 
+	<div class="formulaireTitre">Informations</div>
 	<div class="formulaire">
-		<div class="formulaireTitre">Informations</div>
-		<label>Titre</label> : {form_titre}<br />
-		<label>Date de création</label> : {form_dte_rex}<br />
-		<label>Status</label> : {form_status}<br />
+		<label>Titre</label>{form_titre}<br />
+		<label>Date de création</label>{form_dte_rex}<br />
+		<label>Status</label>{form_status}<br />
 	</div>
 
+	<div class="formulaireTitre">Descriptif</div>
 	<div class="formulaire">
-		<div class="formulaireTitre">Descriptif</div>
 		<b>Descriptif de l'événement</b> :<br />
-		<p class='formulaireCadre'>{form_description}</p>
+		<p style='padding-bottom:10px;'>{form_description}</p>
 		<b>Commentaire</b> :<br />
-		<p class='formulaireCadre'>{form_commentaire}</p>
+		<p style='padding-bottom:10px;'>{form_commentaire}</p>
 	</div>
 
-	<div class="formulaire">
 	<div class="formulaireTitre">Classification</div>
+	<div class="formulaire">
 	<table>
 		<tr>
 			<td width="500">
@@ -62,18 +62,18 @@
 	</table>
 	</div>
 
-	<div class="formulaire">
 	<div class="formulaireTitre">Evaluation du risque</div>
+	<div class="formulaire">
 	<p>{form_risque}</p>
 	</div>
 
 	
-	<div class="formulaire">
 	<div class="formulaireTitre">Conclusion</div>
-	<b>Synthèse</b> :<br />
-	<p class='formulaireCadre'>{form_synthese}</p>
-	<b>Plan d'action</b> :<br />
-	<p class='formulaireCadre'>{form_planaction}</p>
+	<div class="formulaire">
+		<b>Synthèse</b> :<br />
+		<p style='padding-bottom:10px;'>{form_synthese}</p>
+		<b>Plan d'action</b> :<br />
+		<p style='padding-bottom:10px;'>{form_planaction}</p>
 	</div>
 
 <!-- BEGIN: form_submit -->

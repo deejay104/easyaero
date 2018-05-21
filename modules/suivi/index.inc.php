@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Page de suivi des comptes
-//     ($Author: miniroot $)
-//     ($Date: 2013-02-05 20:35:03 +0100 (mar., 05 févr. 2013) $)
-//     ($Revision: 420 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.2
-    Copyright (C) 2012 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,15 +21,15 @@
 
 <?
 
-	if (GetDroit("AccesPageMouvements"))
+	if (GetDroit("AccesSuiviMouvements"))
 	{
 	  	$affrub="mouvement";
 	}
-	else if (GetDroit("AccesPageSuivi"))
+	else if (GetDroit("AccesSuiviBanque"))
 	{
 	  	$affrub="suivi";
 	}
-	else if (GetDroit("AccesPageTableauBord"))
+	else if (GetDroit("AccesSuiviTableauBord"))
 	{
 	  	$affrub="tableaubord";
 	}

@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Saisie des mouvements
-//     ($Author: miniroot $)
-//     ($Date: 2016-02-14 23:17:30 +0100 (dim., 14 fÃ©vr. 2016) $)
-//     ($Revision: 445 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v1.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,18 +20,24 @@
 ?>
 
 <?
+	if (!GetDroit("AccesSuiviComptes")) { FatalError("Accès non autorisé (AccesSuiviComptes)"); }
+
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
+
+	
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("liste.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesPageListeComptes")) { FatalError("Accès non autorisé"); }
+	if (!GetDroit("AccesSuiviComptes")) { FatalError("Accès non autorisé (AccesSuiviComptes)"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche les infos
@@ -73,7 +71,7 @@
 		$tabValeur[$i]["solde"]["align"]="right";
 		if ($MyOpt["module"]["aviation"]=="on")
 		  {
-			$tabValeur[$i]["lastflight"]["val"]=$usr->NbHeures12mois();
+			$tabValeur[$i]["lastflight"]["val"]=$usr->AffNbHeures12mois("val");
 			$tabValeur[$i]["lastflight"]["aff"]=$usr->AffNbHeures12mois()."&nbsp;&nbsp;";
 		  }
 		$tabValeur[$i]["lastflight"]["align"]="right";

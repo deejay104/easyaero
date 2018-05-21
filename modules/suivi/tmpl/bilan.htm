@@ -10,7 +10,7 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='index.php?mod=comptabilite&rub=bilan&dte='+document.getElementById('form_date').value;
+ 	document.location='index.php?mod=suivi&rub=bilan&dte='+document.getElementById('form_date').value;
 }
 
 </script>
@@ -18,7 +18,7 @@ function Recharge()
 
 <FORM name="compte" id="compte" method="post" action="index.php" enctype="multipart/form-data" OnSubmit="return false;">
 
-	<INPUT type="hidden" name="mod" value="comptabilite">
+	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="bilan">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 

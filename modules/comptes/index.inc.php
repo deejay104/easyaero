@@ -1,13 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Visualisation des comptes
-//     (@Revision: $Id$ )
-// ---------------------------------------------------------------------------------------------
-//   Variables  : $id - numéro du compte
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2007 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,41 +20,47 @@
 ?>
 
 <?
+	if (!GetDroit("AccesCompte")) { FatalError("Accès non autorisé (AccesCompte)"); }
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("path_module",$module."/".$mod);
 
 // ---- Initialise les variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-	require_once ("class/compte.inc.php");
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Liste des comptes
 	if (!isset($id))
-	  { $id=$myuser->idcpt; }
+	{
+		$usr=new user_class($gl_uid,$sql);
+		$id=$usr->data["idcpt"];
+	}
 
 	// if ((GetDroit("ListeComptes")) && ($liste==""))
-	if (GetDroit("ListeComptes"))
-	  {
+	if (GetDroit("AccesSuiviComptes"))
+	{
 			$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
 		
 			foreach($lst as $i=>$tmpuid)
 			{
 			  	$resusr=new user_class($tmpuid,$sql);
 	
-				$tmpl_x->assign("id_compte", $resusr->data["id"]);
-				$tmpl_x->assign("chk_compte", ($resusr->data["id"]==$id) ? "selected" : "") ;
-				$tmpl_x->assign("nom_compte", $resusr->fullname);
+				$tmpl_x->assign("id_compte", $resusr->id);
+				$tmpl_x->assign("chk_compte", ($resusr->id==$id) ? "selected" : "") ;
+				$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
 				$tmpl_x->parse("corps.compte.lst_compte");
 			}
 			$tmpl_x->parse("infos.liste_compte");
 			$tmpl_x->parse("corps.compte");
 
-	  }
+	}
 	else
-	  {
+	{
 		if (GetModule("creche"))
-		  {
+		{
 		  	$ok=0;
 		  	$myuser->LoadEnfants();
 			$tmpl_x->assign("id_compte", $myuser->uid);
@@ -86,13 +86,12 @@
 			
 			if ($ok==0)
 			  { $id=$uid; }
-		  }
+		}
 		else
-		  {
+		{
 	  		$id=$uid;
-	  	  }
-	  }
-
+	  	}
+	}
 	$cptusr=new user_class($id,$sql);
 
 
@@ -221,18 +220,6 @@
 	if ($order=="") { $order="date"; }
 	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
 
-	// Total d'heures
-	$tmpl_x->assign("nb_heure", $cptusr->AffNbHeuresVol());
-
-	// ---- Total d'heures 12 derniers mois
-	$tmpl_x->assign("nb_heure_deran", $cptusr->AffNbHeures12mois());
-
-	// Total d'heures année courante
-	$tmpl_x->assign("nb_heure_an", $cptusr->AffNbHeuresAn());
-
-	// Affiche le résultat
-	if ($MyOpt["module"]["aviation"]=="on")
-	  { $tmpl_x->parse("corps.nbheures"); }
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

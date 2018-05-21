@@ -1,13 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Tableaux de bord des comptes
-//   
-// ---------------------------------------------------------------------------------------------
-//   Variables  : $id - numéro du compte
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v1.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,18 +20,21 @@
 ?>
 
 <?
+	if (!GetDroit("AccesSuiviTableauBord")) { FatalError("Accès non autorisé (AccesSuiviTableauBord)"); }
+
+	require_once ($appfolder."/class/user.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("tableaubord.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les droits d'accès
-	if (!GetDroit("AccesPageTableauBord")) { FatalError("Accès non autorisé"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Vérifie les variables
@@ -58,9 +55,9 @@
 	foreach($lst as $i=>$tmpuid)
 	  {
 	  	$resusr=new user_class($tmpuid,$sql);
-		$tmpl_x->assign("id_compte", $resusr->data["id"]);
-		$tmpl_x->assign("chk_compte", ($resusr->data["id"]==$id) ? "selected" : "") ;
-		$tmpl_x->assign("nom_compte", $resusr->fullname);
+		$tmpl_x->assign("id_compte", $resusr->id);
+		$tmpl_x->assign("chk_compte", ($resusr->id==$id) ? "selected" : "") ;
+		$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
 		$tmpl_x->parse("corps.lst_compte");
 	  }
 
@@ -117,7 +114,7 @@
 		  {
 			if ($poste!="_total")
 			  {
-				$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$pwd/$poste&id=$id&dte=$annee\">".$poste."</A>");
+				$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=suivi&rub=tableaubord&poste=$pwd/$poste&id=$id&dte=$annee\">".$poste."</A>");
 				$tmpl_x->assign("date_sousposte", sql2date($mtab["_enr"]["date_valeur"]));
 				$tmpl_x->assign("tot_sousposte", AffMontant($mtab["_total"]));
 				$tmpl_x->assign("old_tot_sousposte", AffMontant($oldtab[$poste]["_total"]));
@@ -139,7 +136,7 @@
 		$t="";
 		foreach ($tmp as $k=>$v)
 		  {
-		  	$tmp[$k]="<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$t$v&id=$id&dte=$annee\">$v</A>";
+		  	$tmp[$k]="<A href=\"index.php?mod=suivi&rub=tableaubord&poste=$t$v&id=$id&dte=$annee\">$v</A>";
 		  	if ($v!="--") { $t.="$v/"; }
 		  }
 	
@@ -157,7 +154,7 @@
 				  {
 					foreach($v as $enr)
 					  {	
-						$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=". $enr["mouvement"]."&id=$id&dte=$annee\">".$enr["commentaire"]."</A>");
+						$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=suivi&rub=tableaubord&poste=". $enr["mouvement"]."&id=$id&dte=$annee\">".$enr["commentaire"]."</A>");
 						$tmpl_x->assign("date_sousposte", sql2date($enr["date_valeur"]));
 						$tmpl_x->assign("tot_sousposte", AffMontant($enr["montant"]));
 				
@@ -170,7 +167,7 @@
 				  }
 				else
 				  {
-					$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$pwd/$p&id=$id\"><U>$p</U></A>");
+					$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=suivi&rub=tableaubord&poste=$pwd/$p&id=$id\"><U>$p</U></A>");
 					$tmpl_x->assign("tot_sousposte", AffMontant($v["_total"]));
 			
 					// Affiche le résultat
@@ -223,7 +220,7 @@
 		$oldtotal=0;
 		foreach($tabposte as $poste=>$tab)
 		  {
-			$tmpl_x->assign("nom_poste", "<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$poste&id=$id&dte=$annee\">$poste</A>");
+			$tmpl_x->assign("nom_poste", "<A href=\"index.php?mod=suivi&rub=tableaubord&poste=$poste&id=$id&dte=$annee\">$poste</A>");
 			$tmpl_x->assign("total_poste", AffMontant($tab["_total"]));
 			$tmpl_x->assign("old_total_poste", AffMontant($taboldposte[$poste]["_total"]));
 			AfficheSousPoste($tab,$taboldposte[$poste],4,$poste);

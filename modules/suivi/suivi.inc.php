@@ -1,12 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Saisie des mouvements
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.2 ($Revision: 445 $)
-    Copyright (C) 2012 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,18 +20,19 @@
 ?>
 
 <?
+	if (!GetDroit("AccesSuiviBanque")) { FatalError("Accès non autorisé (AccesSuiviBanque)"); }
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("suivi.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesPageSuivi")) { FatalError("Accès non autorisé"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 

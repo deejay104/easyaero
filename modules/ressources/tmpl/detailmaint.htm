@@ -2,15 +2,19 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	<!-- BEGIN: supprimemaint -->
-	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt=""> Supprimer la maintenance</a></p>
-	<!-- END: supprimemaint -->
-	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a></p>
+{aff_menu}
 	
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
+
+<div class="pagetitle pagemenu">
+	<!-- BEGIN: supprimemaint -->
+	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt=""> Supprimer la maintenance</a></p>
+	<!-- END: supprimemaint -->
+	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a></p>
+</div>
 
 <script type="text/javascript">
 	$(function() {
@@ -45,81 +49,82 @@
 
 	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
 
-<div class="formulaire">
 	<div class="formulaireTitre">Informations</div>
-	<p>
+	<div class="formulaire">
+		<p>
 			<label>Avion</label>
-      <!-- BEGIN: aff_ressource -->
-      <SELECT name="form_ressource"  OnChange="document.maintenance.submit();">
+		<!-- BEGIN: aff_ressource -->
+				<SELECT name="form_ressource"  OnChange="document.maintenance.submit();">
 				<!-- BEGIN: lst_ressource -->
 				<OPTION value="{uid_ressource}" {chk_ressource}>{nom_ressource}</OPTION>
 				<!-- END: lst_ressource -->
-      </SELECT>
-      <!-- END: aff_ressource -->
+				</SELECT>
+		<!-- END: aff_ressource -->
 
-      <!-- BEGIN: aff_ressource_visu -->
+		<!-- BEGIN: aff_ressource_visu -->
 				{nom_ressource_visu}
-      <!-- END: aff_ressource_visu -->
-	</p>
-	<p>
+		<!-- END: aff_ressource_visu -->
+		</p>
+		<p>
 			<label>Status</label>
 			{form_status}
-	</p>
-	<p>
+		</p>
+		<p>
 			<label>Atelier</label>
 			
-      <!-- BEGIN: aff_atelier -->
-      <select name="form_atelier">
+		<!-- BEGIN: aff_atelier -->
+				<select name="form_atelier">
 				<!-- BEGIN: lst_atelier -->
 				<OPTION value="{uid_atelier}" {chk_atelier}>{nom_atelier}</OPTION>
 				<!-- END: lst_atelier -->
-			</select>
-			<!-- END: aff_atelier -->
-      <!-- BEGIN: aff_atelier_visu -->
+				</select>
+		<!-- END: aff_atelier -->
+		<!-- BEGIN: aff_atelier_visu -->
 			{nom_atelier_visu}
-      <!-- END: aff_atelier_visu -->
-	</p>
-	<p>
+		<!-- END: aff_atelier_visu -->
+		</p>
+		<p>
 			<label>Début de l'intervention</label>
 			{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
-	</p>
-	<p>
+		</p>
+		<p>
 			<label>Fin de l'intervention</label>
 			{form_dte_fin} <FONT color=red>{msg_dtefin}</FONT>
-	</p>
-	<p>
+		</p>
+		<p>
 			<label>Temps consommé</label>
 			{form_potentiel} (nombre minutes réportées à la fin de l'intervention)
-	</p>
-</div>
-<br />
-<div style='width:100%; display: inline-block;'>
-  <div style='width:50%; display: inline-block; padding-bottom: 0px; '>
-	<div class="formulaireTitre">Dernier vol effectué avant la maintenance</div>
-	{aff_resa}
-  </div>
-  <div style='width:50%; display: inline-block; float:right; padding-bottom: 0px; '>
-	<div class="formulaireTitre">Commentaire</div>
-	{form_commentaire}
-  </div>
-</div>
+		</p>
+	</div>
 
-<br />
-<br />
+	<br />
+	<div style='width:100%; display: inline-block;'>
+	  <div style='width:50%; display: inline-block; padding-bottom: 0px; '>
+		<div class="formulaireTitre">Dernier vol effectué avant la maintenance</div>
+		{aff_resa}
+	  </div>
+	  <div style='width:50%; display: inline-block; float:right; padding-bottom: 0px; '>
+		<div class="formulaireTitre">Commentaire</div>
+		{form_commentaire}
+	  </div>
+	</div>
 
-<div class="formulaire">
+	<br />
+	<br />
+
 	<div class="formulaireTitre">Liste des fiches associées</div>
-	{aff_fiche}
-</div>
+	<div class="formulaire">
+		{aff_fiche}
+	</div>
 
 <!-- BEGIN: form_submit -->
-<div class="formulaireSubmit">
-	<!-- BEGIN: aff_bouttons -->
-	<INPUT type="submit" name="fonc" value="Enregistrer">
-	<!-- END: aff_bouttons -->
+	<div class="formulaireSubmit">
+		<!-- BEGIN: aff_bouttons -->
+		<INPUT type="submit" name="fonc" value="Enregistrer">
+		<!-- END: aff_bouttons -->
 
-	<INPUT type="submit" name="fonc" value="Retour">
-</div>
+		<INPUT type="submit" name="fonc" value="Retour">
+	</div>
 <!-- END: form_submit -->
 
 </FORM>

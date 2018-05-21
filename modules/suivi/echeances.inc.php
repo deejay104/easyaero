@@ -1,12 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Saisie des mouvements
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.2 ($Revision: 445 $)
-    Copyright (C) 2012 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,6 +20,8 @@
 ?>
 
 <?
+	if (!GetDroit("AccesPageEcheances")) { FatalError("Accès non autorisé"); }
+
 // ---- Refuse l'accès en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
@@ -34,20 +31,21 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesPageEcheances")) { FatalError("Accès non autorisé"); }
 
 	if (!is_numeric($form_id))
 	{
 		$form_id=0;
 	}
 	require_once ("class/echeance.inc.php");
-	require_once ("class/compte.inc.php");
+
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche les types d'échéance

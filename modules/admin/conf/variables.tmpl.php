@@ -3,66 +3,6 @@
 //   Variables
 // ---------------------------------------------------------------------------------------------
 
-$MyOptTmpl=array();
-$MyOptHelp=array();
-
-$MyOptHelp[""]="";
-
-// Prefixe des tables
-$MyOptTmpl["tbl"]="ea";
-$MyOptHelp["tbl"]="Prefixe des tables dans la base de données";
-
-// Site en maintenance
-$MyOptTmpl["maintenance"]="off";
-$MyOptHelp["maintenance"]="Mettre le site en maintenance (on=site en maintenance, off=site accessible)";
-
-// path
-$MyOptTmpl["mydir"]=htmlentities(preg_replace("/[a-z]*\.php/","",$_SERVER["SCRIPT_FILENAME"]));
-$MyOptHelp["mydir"]="Chemin de l'installation. Utilisé pour l'exécution des scripts";
-
-// Timezone
-$MyOptTmpl["timezone"]=date_default_timezone_get();
-$MyOptHelp["timezone"]="Sélectionner la timezone locale (Europe/Paris)";
-
-
-// Devise
-$MyOptTmpl["devise"]="€";
-$MyOptHelp["devise"]="Devise utilisée";
-
-// URL
-$MyOptTmpl["host"]=htmlentities($_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"].preg_replace("/\/[a-z]*\.php/","",$_SERVER["SCRIPT_NAME"]));
-$MyOptHelp["host"]="Chemin complet du site. Utilisé pour générer les url statiques.";
-
-// Titre du site
-$MyOptTmpl["site_title"]="Easy Aero";
-$MyOptHelp["site_title"]="Titre du site web";
-
-// Logo du site dans le dossier images
-$MyOptTmpl["site_logo"]="logo.png";
-$MyOptHelp["site_logo"]="Nom du fichier pour le logo. Il doit se trouver dans le dossier custom.";
-
-// Active l'envoi de mail (0=ok, 1=nok)
-$MyOptTmpl["sendmail"]="off";
-$MyOptHelp["sendmail"]="Active l'envoi de mail (on=Activé)";
-
-$MyOptTmpl["mail"]["smtp"]="on";
-$MyOptHelp["mail"]["smtp"]="Envoie des mails par SMTP (on=SMTP sinon sendmail)";
-
-$MyOptTmpl["mail"]["host"]="localhost";
-$MyOptHelp["mail"]["host"]="FQDN du serveur SMTP";
-
-$MyOptTmpl["mail"]["port"]="25";
-$MyOptHelp["mail"]["port"]="SMTP port";
-
-$MyOptTmpl["mail"]["username"]="";
-$MyOptHelp["mail"]["username"]="SMTP username";
-
-$MyOptTmpl["mail"]["password"]="";
-$MyOptHelp["mail"]["password"]="SMTP user password";
-
-// Uid Système
-$MyOptTmpl["uid_system"]=2;
-$MyOptHelp["uid_system"]="ID du compte système";
 
 // Uid Banque
 $MyOptTmpl["uid_banque"]=3;
@@ -71,7 +11,6 @@ $MyOptHelp["uid_banque"]="ID du compte Banque";
 // Uid Club
 $MyOptTmpl["uid_club"]=4;
 $MyOptHelp["uid_club"]="ID du compte club";
-
 
 // UID Bapteme
 $MyOptTmpl["uid_bapteme"]=53;
@@ -88,12 +27,6 @@ $MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
 // ID poste pour factures
 $MyOptTmpl["id_PosteFacture"]=0;
 $MyOptHelp["id_PosteFacture"]="ID du poste pour le crédit des factures";
-
-
-
-// Trie par Nom ou par Prénom
-$MyOptTmpl["globalTrie"]="prenom";
-$MyOptHelp["globalTrie"]="Ordre de trie par défault des listes (prenom, nom,...). Mettre le nom du champs pour le trie";
 
 // Coordonnées terrain
 $MyOptTmpl["terrain"]["nom"]="Neuhof";
@@ -144,20 +77,10 @@ $MyOptTmpl["typeMail"]["parent"]="";
 $MyOptTmpl["typeMail"]["enfant"]="";
 $MyOptTmpl["typeMail"]["employe"]="";
 
-// Active la visualisation des membres supprimés
-$MyOptTmpl["showDesactive"]="";
-$MyOptHelp["showDesactive"]="on : Affiche les membres supprimés";
-
-$MyOptTmpl["showSupprime"]="";
-$MyOptHelp["showSupprime"]="on : Affiche les membres supprimés";
 
 // Nombre de lignes affichées pour la ventilation
 $MyOptTmpl["ventilationNbLigne"]="4";
 $MyOptHelp["ventilationNbLigne"]="Nombre de lignes à afficher lors d'une ventilation de mouvement";
-
-// Documents
-$MyOptTmpl["expireCache"]="0";
-$MyOptHelp["expireCache"]="Si supérieur à 0, nombre d'heure durant lesquelles on garde les fichiers en cache. Si 0, on garde indéfiniment.";
 
 
 
@@ -173,31 +96,6 @@ $MyOptTmpl["module"]["facture"]="";
 $MyOptHelp["module"]["facture"]="on : Affiche et active le module facture";
 $MyOptTmpl["module"]["abonnement"]="";
 $MyOptHelp["module"]["abonnement"]="on : Affiche et active le module abonnement";
-
-// Dénini les droits d'accès aux rubriques
-// [vide] : Visible par tous
-// x : Visible pour tous, y compris invité
-// - : Masqué
-// [Role] : Affiché que pour le role
-$MyOptHelp["menu"]["accueil"]="Affichage des menus du site. [vide]: Visible par tous, x : visible pour tous y compris les invités, - : Masqué, [Role] : Affiché uniquement pour le role correspondant";
-
-$MyOptTmpl["menu"]["accueil"]="";
-$MyOptTmpl["menu"]["membres"]="x";
-$MyOptTmpl["menu"]["famille"]="-";
-$MyOptTmpl["menu"]["presence"]="-";
-$MyOptTmpl["menu"]["facture"]="-";
-$MyOptTmpl["menu"]["reservations"]="";
-$MyOptTmpl["menu"]["baptemes"]="AccesBaptemes";
-$MyOptTmpl["menu"]["manips"]="";
-$MyOptTmpl["menu"]["forums"]="";
-$MyOptTmpl["menu"]["comptes"]="";
-$MyOptTmpl["menu"]["suiviclub"]="AccesSuiviClub";
-$MyOptTmpl["menu"]["vols"]="";
-$MyOptTmpl["menu"]["mesinfos"]="x";
-$MyOptTmpl["menu"]["ressources"]="";
-$MyOptTmpl["menu"]["indicateurs"]="";
-$MyOptTmpl["menu"]["configuration"]="AccesConfiguration";
-
 
 // Restreint la liste des membres pour les famille. Types séparés par des virgules (pilote,eleve)
 $MyOptTmpl["restrict"]["famille"]="";

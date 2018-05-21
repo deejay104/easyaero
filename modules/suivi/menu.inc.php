@@ -12,31 +12,31 @@
 
 	
 // ---- Affiche les menus
-	if ((GetDroit("AccesPageMouvements")) && ($theme!="phone"))
+	if ((GetDroit("AccesSuiviMouvements")) && ($theme!="phone"))
 	{
 		$tmpl_menu->parse("infos.mouvement");
 	}
-	if (GetDroit("AccesPageEcheances"))
+	if (GetDroit("AccesSuiviEcheances"))
 	{
 		$tmpl_menu->parse("infos.echeances");
 	}
-	if ((GetDroit("AccesPageVols")) && ($theme!="phone"))
+	if ((GetDroit("AccesSuiviVols")) && ($theme!="phone"))
 	{
 		$tmpl_menu->parse("infos.vols");
 	}	
-	if (GetDroit("AccesPageSuivi"))
+	if (GetDroit("AccesSuiviSuivi"))
 	{
 		$tmpl_menu->parse("infos.suivi");
 	}
-	if (GetDroit("AccesPageListeComptes"))
+	if (GetDroit("AccesSuiviListeComptes"))
 	{
 		$tmpl_menu->parse("infos.liste");
 	}
-	if (GetDroit("AccesPageTableauBord"))
+	if (GetDroit("AccesSuiviTableauBord"))
 	{
 		$tmpl_menu->parse("infos.tableaubord");
 	}
-	if (GetDroit("AccesPageBilan"))
+	if (GetDroit("AccesSuiviBilan"))
 	{
 		$tmpl_menu->parse("infos.bilan");
 	}

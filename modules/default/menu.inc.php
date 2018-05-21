@@ -18,7 +18,36 @@
 		"droit"=>"AccesManifestations",
 		"url"=>"mod=manifestations"
 	);
-
+	$tabMenu["comptes"]=array(
+		"icone"=>"static/modules/comptes/img/icn32_titre.png",
+		"nom"=>"Comptes",
+		"droit"=>"AccesCompte",
+		"url"=>"mod=comptes"
+	);
+	$tabMenu["suivi"]=array(
+		"icone"=>"static/modules/suivi/img/icn32_titre.png",
+		"nom"=>"Suivi Club",
+		"droit"=>"AccesSuivi",
+		"url"=>"mod=suivi"
+	);
+	$tabMenu["suivivols"]=array(
+		"icone"=>"static/modules/aviation/img/icn32_suivivols.png",
+		"nom"=>"Suivi des Vols",
+		"droit"=>"AccesVols",
+		"url"=>"mod=aviation&rub=vols"
+	);
+	$tabMenu["suiviavions"]=array(
+		"icone"=>"static/modules/ressources/img/icn32_titre.png",
+		"nom"=>"Suivi des Avions",
+		"droit"=>"AccesAvions",
+		"url"=>"mod=ressources"
+	);
+	$tabMenu["indicateurs"]=array(
+		"icone"=>"static/modules/aviation/img/icn32_indicateurs.png",
+		"nom"=>"Indicateurs",
+		"droit"=>"AccesIndicateurs",
+		"url"=>"mod=aviation&rub=indicateurs"
+	);
 	
 // ---- Phone
 	// $tabMenuPhone["logs"]["icone"]="static/modules/logs/img/icn48_titre.png";

@@ -1,13 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Tableaux de bord des comptes
-//   
-// ---------------------------------------------------------------------------------------------
-//   Variables  : $id - numéro du compte
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v1.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,18 +20,19 @@
 ?>
 
 <?
+	if (!GetDroit("AccesSuiviBilan")) { FatalError("Accès non autorisé (AccesSuiviBilan)"); }
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("bilan.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les droits d'accès
-	if (!GetDroit("AccesPageBilan")) { FatalError("Accès non autorisé"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 

@@ -1,12 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Saisie des mouvements
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,25 +16,26 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-?>
+*/?>
 
 <?
-	require_once ("class/reservation.inc.php");
-	require_once ("class/compte.inc.php");
+	if (!GetDroit("AccesSuiviVols")) { FatalError("Accès non autorisé (AccesSuiviVols)"); }
+
+	require_once ($appfolder."/class/reservation.inc.php");
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("vols.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesPageVols")) { FatalError("Accès non autorisé"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les tarifs
@@ -421,7 +417,7 @@
 		for($ii=0; $ii<5; $ii++)
 		{ 
 			// Liste des pilotes
-			$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite","");
+			$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"),"");
 		
 			foreach($lst as $i=>$id)
 			{
@@ -433,7 +429,7 @@
 			}
 
 			// Liste des instructeurs
-			$lst=ListActiveUsers($sql,"prenom,nom","instructeur");
+			$lst=ListActiveUsers($sql,"prenom,nom",array("TypeInstructeur"),"");
 			foreach($lst as $i=>$id)
 			{ 
 				$resusr=new user_class($id,$sql);

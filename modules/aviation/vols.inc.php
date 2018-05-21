@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Suivi des heures de vol
-//     ($Author: miniroot $)
-//     ($Date: 2016-04-22 20:48:24 +0200 (ven., 22 avr. 2016) $)
-//     ($Revision: 456 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +20,10 @@
 ?>
 
 <?
-	require_once ("class/reservation.inc.php");
+	if (!GetDroit("AccesVols")) { FatalError("Accès non authorisé (AccesVols)"); }
+
+	require_once ($appfolder."/class/reservation.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 
 // ---- Charge le template

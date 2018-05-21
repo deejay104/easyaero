@@ -8,7 +8,7 @@ class user_class extends user_core
 	protected $rub="detail";
 
 	protected $droit=array("dte_inscription"=>"ModifUserDteInscription","decouvert"=>"ModifUserDecouvert","idcpt"=>"ModifUserIdCpt","tarif"=>"ModifUserTarif","type"=>"ModifUserType");
-	protected $type=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+	protected $type=array("prenom"=>"ucword","nom"=>"uppercase","tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
 
 	// protected $type=array("description"=>"text","status"=>"enum","module"=>"enum");
 	
@@ -218,7 +218,8 @@ class user_class extends user_core
 		return $age;
 	}	
 
-	function CheckLache($ress){
+	function CheckLache($ress)
+	{
 		$query = "SELECT * FROM ".$this->tbl."_lache WHERE uid_pilote='".$this->id."' AND id_avion='".$ress."' AND actif='oui'";
 		$sql=$this->sql;
 		$res=$sql->QueryRow($query);
@@ -228,6 +229,95 @@ class user_class extends user_core
 		return true;
 	}
 
+	function NombreVols($nbmois="3",$type="aff")
+	{
+		$sql=$this->sql;
+		// Compte le nombre de vols
+		$query="SELECT COUNT(*) AS nb FROM `".$this->tbl."_calendrier` WHERE (uid_pilote = ".$this->id." OR uid_instructeur = ".$this->id.") AND (prix>0 OR tpsreel>0) AND dte_deb>'".((date("n")<=$nbmois)?(date("Y")-1):date("Y"))."-".((date("n")<=$nbmois)?(12+date("n")-$nbmois):(date("n")-$nbmois))."-".date("d")."'";
+		$res=$sql->QueryRow($query);
+
+		$ret=$res["nb"];
+
+		if ($type=="val")
+		  { return $ret; }
+		else
+		  {
+			if ($ret>=3)
+			  { $ret="<font color='green'>$ret</font>"; }
+			else
+			  { $ret="<font color='red'><b>$ret</b></font>"; }
+		  	return "<a href='index.php?mod=aviation&rub=vols&id=$this->uid'>".$ret."</a>";
+		  }
+	}
+
+	function NbHeures($dte)
+	{
+		$sql=$this->sql;
+		$query="SELECT SUM( tpsreel ) AS nb FROM `".$this->tbl."_calendrier` WHERE (uid_pilote = '".$this->id."' OR uid_instructeur = '".$this->id."') AND dte_deb>'".$dte."' AND dte_deb<='".date("Y-m-d")."' AND (prix<>0 OR tpsreel<>0)";
+
+		$res=$sql->QueryRow($query);
+
+		return (($res["nb"]>0) ? $res["nb"] : "0");
+	}
+
+	function AffNbHeures12mois($type)
+	{
+		$dte=(date("Y")-1)."-".date("m")."-".date("d");
+		$t=$this->NbHeures($dte);
+
+		if ($type=="val")
+			{
+			return $t;
+		}
+		
+		if ($t>30*60)
+		  { $ret="<font color=green>".AffTemps($t)."</font>"; }
+		else if ($t>0)
+		  { $ret=AffTemps($t); }
+		else
+		  { $ret="0h 00"; }
+		
+		return "<a href='index.php?mod=aviation&rub=vols&id=".$this->id."'>".$ret."</a>";
+	}
+
+	function AffDernierVol()
+	{
+		$sql=$this->sql;
+
+		$res=$this->DernierVol("",0);
+		$dc = (($res["ins"]>0) && ($res["ins"]!=$this->uid)) ? " (DC)" : "";
+		$l=floor((time()-strtotime($res["dte"]))/86400);
+		$d=sql2date($res["dte"],"jour");
+
+		if ($this->type=="eleve")
+		{
+			$ret=(($l<30) ? $d.$dc : (($l<45) ? "<font color=orange>".$d.$dc."</font>" : "<font color=red>$d $dc</font>"));
+		}
+		else if (($this->type!="invite") && ($this->type!="membre"))
+		{
+			$ret=(($l<60) ? $d.$dc : (($l<90) ? "<font color=orange>".$d.$dc."</font>" : "<font color=red>$d</font>"));
+		}
+
+		return $ret;
+	}
+
+	function DernierVol($type="",$tps=0)
+	{
+		$sql=$this->sql;
+		if ($type=="DC")
+		{
+			// Dernier vol en DC
+			$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE uid_pilote = ".$this->id." AND uid_instructeur>0 AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
+			$res=$sql->QueryRow($query);
+		}
+		else
+		{
+			$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE (uid_pilote = '".$this->id."' OR uid_instructeur = '".$this->id."') AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
+			$res=$sql->QueryRow($query);
+		}
+
+		return $res;
+	}
 }
 
 

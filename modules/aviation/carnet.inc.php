@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Suivi des heures de vol
-//     ($Author: miniroot $)
-//     ($Date: 2016-04-22 20:48:24 +0200 (ven., 22 avr. 2016) $)
-//     ($Revision: 456 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2005 Matthieu Isorez
+    SoceIt v3.0
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +20,8 @@
 ?>
 
 <?
-	require_once ("class/reservation.inc.php");
+	require_once ($appfolder."/class/reservation.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 
 // ---- Charge le template
@@ -78,8 +71,10 @@
 		$tabTitre["carbavant"]["width"]=100;
 		$tabTitre["carbapres"]["aff"]="Carburant Après";
 		$tabTitre["carbapres"]["width"]=100;
-		$tabTitre["potentiel"]["aff"]="Total heures de vol";
+		$tabTitre["potentiel"]["aff"]="Potentiel";
 		$tabTitre["potentiel"]["width"]=100;
+		$tabTitre["total"]["aff"]="Total heures de vol";
+		$tabTitre["total"]["width"]=100;
 	}
 		
 // ---- Chargement des données
@@ -175,6 +170,9 @@
 		$tabValeur[$i]["potentiel"]["aff"]=$resa->AffPotentiel("fin");
 		$tabValeur[$i]["potentiel"]["align"]="center";
 
+		$tabValeur[$i]["total"]["val"]=$resa->TempsVols("fin");
+		$tabValeur[$i]["total"]["aff"]=AffTemps($resa->TempsVols("fin"));
+		$tabValeur[$i]["total"]["align"]="center";
 	}
 	
 // ---- Affiche le tableau

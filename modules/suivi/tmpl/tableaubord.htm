@@ -22,7 +22,7 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='index.php?mod=comptabilite&rub=tableaubord&id='+document.getElementById('form_id').value+'&dte='+document.getElementById('form_date').value+'&m='+document.getElementById('form_mois').value;
+ 	document.location='index.php?mod=suivi&rub=tableaubord&id='+document.getElementById('form_id').value+'&dte='+document.getElementById('form_date').value+'&m='+document.getElementById('form_mois').value;
 }
 
 </script>
@@ -30,7 +30,7 @@ function Recharge()
 
 <FORM name="compte" id="compte" method="post" action="index.php" enctype="multipart/form-data" OnSubmit="return false;">
 
-	<INPUT type="hidden" name="mod" value="comptabilite">
+	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="tableaubord">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
