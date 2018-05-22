@@ -22,6 +22,8 @@
 <?
 	if (!GetDroit("AccesSuiviBanque")) { FatalError("Accès non autorisé (AccesSuiviBanque)"); }
 
+	require_once ($appfolder."/class/user.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("suivi.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
@@ -77,7 +79,7 @@
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("ancien_solde", (is_numeric($res["nb"])) ? -$res["nb"] : "0");
 
-	$query = "SELECT ".$MyOpt["tbl"]."_compte.* FROM ".$MyOpt["tbl"]."_compte WHERE (pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."' ORDER BY date_valeur,mouvement,commentaire";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE (pointe IS NULL OR pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."' ORDER BY date_valeur,mouvement,commentaire";
 	$sql->Query($query);
 	$col=50;
 	$myColor[50]="F0F0F0";

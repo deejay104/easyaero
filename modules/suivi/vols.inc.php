@@ -190,10 +190,7 @@
 
 		if ($msg_result!="")
 		{
-			// $tmpl_x->assign("msg_confirmation", $msg_result);
-			// $tmpl_x->assign("msg_confirmation_class", "msgerror");
-			// $tmpl_x->parse("corps.msg_enregistre");
-		affInformation($msg_result,"error");
+			affInformation($msg_result,"error");
 		}
 	  
 		if ($fonc=="Débiter")
@@ -490,7 +487,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 	$pilote = new user_class($uid_pilote,$sql);
 
 	$mvt = new compte_class(0,$sql);
-	$mvt->Generate($pilote->idcpt,$ress->poste,"Vol de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",$dte,$p,array());
+	$mvt->Generate($pilote->data["idcpt"],$ress->poste,"Vol de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",$dte,$p,array());
 	$mvt->Save();
 	$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 
@@ -503,7 +500,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$inst = new user_class($uid_instructeur,$sql);
 	
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($inst->idcpt,$ress->poste,"Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",$dte,-$pi,array());
+		$mvt->Generate($inst->data["idcpt"],$ress->poste,"Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",$dte,-$pi,array());
 		$mvt->Save();
 		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 

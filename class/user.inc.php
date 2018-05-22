@@ -43,13 +43,14 @@ class user_class extends user_core
 		$this->data["disponibilite"]="dispo";
 		$this->data["aff_rapide"]="n";
 		$this->data["aff_mois"]="";
-		$this->data["aff_jour"]="";
+		$this->data["aff_jour"]=date("Y-m-d");
 		$this->data["aff_msg"]="0";
 		$this->data["sexe"]="NA";
 		$this->data["lache"]=array();
 	
 		parent::__construct($id,$sql);
 
+		$this->idcpt=$this->data["idcpt"];
 	}
 
 	# Laché
@@ -186,17 +187,17 @@ class user_class extends user_core
 	function AffSolde(){
 		global $MyOpt;
 		$sql=$this->sql;
-		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='$this->idcpt'";
+		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->data["idcpt"]."'";
 		$res=$sql->QueryRow($query);
 
 		$solde=(($res["total"]=="") ? AffMontant(0) : (($res["total"]<0) ? "<FONT color=red><B>".AffMontant($res["total"])."</B></FONT>" : AffMontant($res["total"])));
 
-		return "<a href=\"index.php?mod=comptes&id=$this->idcpt\">$solde</a>";
+		return "<a href=\"index.php?mod=comptes&id=".$this->data["idcpt"]."\">$solde</a>";
 	}
 
 	function CalcSolde(){
 		$sql=$this->sql;
-		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='$this->idcpt'";
+		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->data["idcpt"]."'";
 		$res=$sql->QueryRow($query);
 
 		$solde=((is_numeric($res["total"])) ? $res["total"] : "0");

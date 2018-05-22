@@ -20,7 +20,12 @@
 ?>
 
 <?
+// ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesPageEcheances")) { FatalError("Accès non autorisé"); }
+
+// ---- Charge les dépendances
+	require_once ("class/echeance.inc.php");
+	require_once ($appfolder."/class/echeance.inc.php");
 
 // ---- Refuse l'accès en direct
 	if ((!isset($token)) || ($token==""))

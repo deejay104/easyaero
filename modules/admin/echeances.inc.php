@@ -1,10 +1,14 @@
 <?
+// ---- Vérifie le droit d'accès
+	if (!GetDroit("AccesConfigEcheances")) { FatalError("Accès non autorisé (AccesConfigEcheances)"); }
+
+// ---- Charge les dépendances
+	require_once ("class/echeance.inc.php");
+	require_once ($appfolder."/class/echeance.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("echeances.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesConfigEcheances")) { FatalError("Accès non autorisé (AccesConfigEcheances)"); }
 
 // ---- Affiche le menu
 	$aff_menu="";
