@@ -78,14 +78,14 @@
 
 				if ($form_fiche[$fid]!="")
 				{
-				  	$fiche->uid_planif=$id;
+				  	$fiche->data["uid_planif"]=$id;
 					if ($maint->status=='cloture')
 					{
 					  	$fiche->traite="oui";
 					}
 				  	$fiche->Save();
 				}
-				else if ($fiche->uid_planif==$id)
+				else if ($fiche->data["uid_planif"]==$id)
 				{
 				  	$fiche->Affecte(0);
 				}
@@ -226,32 +226,32 @@
 		  {
 			$fiche = new fichemaint_class($fid,$sql);
 
-			if ((($maint->data["status"]!="cloture") && (GetDroit("EnregistreMaintenance") && ($maint->data["actif"]=="oui"))) || ($maint->id==$fiche->uid_planif))
+			if ((($maint->data["status"]!="cloture") && (GetDroit("EnregistreMaintenance") && ($maint->data["actif"]=="oui"))) || ($maint->id==$fiche->data["uid_planif"]))
 			  {
 
-				$tabValeur[$i]["chk"]["val"]=(($fiche->uid_planif==$maint->id) ? "1" : "0");
+				$tabValeur[$i]["chk"]["val"]=(($fiche->data["uid_planif"]==$maint->id) ? "1" : "0");
 				if (($maint->data["status"]!="cloture") && ($maint->data["actif"]=="oui") && ($typeaff=="form"))
 				  {
-					$tabValeur[$i]["chk"]["aff"]="<input type='checkbox' name='form_fiche[".$fid."]' ".(($fiche->uid_planif==$maint->id) ? "checked" : "").">";
+					$tabValeur[$i]["chk"]["aff"]="<input type='checkbox' name='form_fiche[".$fid."]' ".(($fiche->data["uid_planif"]==$maint->id) ? "checked" : "").">";
 				} else {
-					$tabValeur[$i]["chk"]["aff"]=($fiche->uid_planif==$maint->id) ? "<img src='".$corefolder."/static/images/icn16_ok.png'>" : "";
+					$tabValeur[$i]["chk"]["aff"]=($fiche->data["uid_planif"]==$maint->id) ? "<img src='".$corefolder."/static/images/icn16_ok.png'>" : "";
 				  }
 				
-				$ress = new ress_class($fiche->uid_avion,$sql,false);
+				$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
 				$tabValeur[$i]["ress"]["val"]=$ress->aff("immatriculation","val");
 				$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
 				
-				$usr = new user_class($fiche->uid_creat,$sql,false);
+				$usr = new user_class($fiche->data["uid_creat"],$sql,false);
 				$tabValeur[$i]["auteur"]["val"]=$usr->aff("fullname","val");
 				$tabValeur[$i]["auteur"]["aff"]=$usr->aff("fullname");
 	
-				$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->dte_creat,"jour");
-				$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
+				$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->data["dte_creat"],"jour");
+				$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->data["dte_creat"],"jour");
 				$tabValeur[$i]["description"]["val"]=$fiche->description;
-				$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->description);
+				$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->data["description"]);
 
-				$tabValeur[$i]["maint"]["val"]=(($fiche->uid_planif>0) ? "1" : "0");
-				$tabValeur[$i]["maint"]["aff"]=((($fiche->uid_planif>0) && ($fiche->uid_planif!=$id)) ? "<a href='maintenance.php?rub=detailmaint&id=$fiche->uid_planif' title='Cette fiche est déjà affectée à une autre maintenance'><img src='images/12_feuilles.gif' border='0'></a>" : " ");
+				$tabValeur[$i]["maint"]["val"]=(($fiche->data["uid_planif"]>0) ? "1" : "0");
+				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='maintenance.php?rub=detailmaint&id=$fiche->uid_planif' title='Cette fiche est déjà affectée à une autre maintenance'><img src='images/12_feuilles.gif' border='0'></a>" : " ");
 			  }	
 		  }
 	  }

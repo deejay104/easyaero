@@ -42,26 +42,22 @@
 	if (($fonc=="Enregistrer") && ($form_avion>0) && ($form_description!="") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
 		$fiche=new fichemaint_class(0,$sql);
-		
-		$fiche->uid_avion=$form_avion;
-		$fiche->uid_valid=0;
-		$fiche->dte_valid="";
-		$fiche->traite="";
-		$fiche->uid_planif=0;
-		$fiche->description=$form_description;
 
+		$msg_erreur="";
+  		$msg_erreur.=$fiche->Valid("uid_avion",$form_avion);
+  		$msg_erreur.=$fiche->Valid("description",$form_description);
 		$fiche->Save();
 
 		if ($fiche->id>0)
-		  {
+		{
 		  	$_SESSION['tab_checkpost'][$checktime]=$checktime;
 		  	$form_description="";
 		  	$msg_ok="Fiche créée.<BR>";
-		  }
+		}
 		else
-		  {
-		  	$msg_erreur="Erreur lors de l'enregistrement !<BR>";
-		  }
+		{
+		  	$msg_erreur.="Erreur lors de l'enregistrement !<BR>";
+		}
 
 	  }
 	else if (($fonc=="Enregistrer") && ($form_avion>0) && ($form_description==""))

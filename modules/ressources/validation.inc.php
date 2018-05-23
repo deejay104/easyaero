@@ -35,32 +35,31 @@
 	$msg_erreur="";
 
 	if ((GetDroit("ValideFichesMaintenance")) && ($fonc=="Accepter") && (is_array($form_valid)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-			foreach($form_valid as $fid=>$k)
-			  {
-				$fiche=new fichemaint_class($fid,$sql);
-				$fiche->uid_valid=$uid;
-				$fiche->traite="non";
-				$fiche->Save();
-			  }	
-	  }
+	{
+		foreach($form_valid as $fid=>$k)
+		{
+			$fiche=new fichemaint_class($fid,$sql);
+			$fiche->data["uid_valid"]=$gl_uid;
+			$fiche->data["traite"]="non";
+			$fiche->Save();
+		}	
+	}
 	else if ((GetDroit("RefuserFicheMaintenance")) && ($fonc=="Refuser") && (is_array($form_valid)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-			foreach($form_valid as $fid=>$k)
-			  {
-				$fiche=new fichemaint_class($fid,$sql);
-				$fiche->uid_valid=$uid;
-				$fiche->traite="ref";
-				$fiche->Save();
-	
-			  }
-	  }
+	{
+		foreach($form_valid as $fid=>$k)
+		{
+			$fiche=new fichemaint_class($fid,$sql);
+			$fiche->data["uid_valid"]=$gl_uid;
+			$fiche->data["traite"]="ref";
+			$fiche->Save();	
+		}
+	}
 
  
 	if ($msg_erreur=="")
-	  {
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
+	{
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+	}
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -101,10 +100,10 @@
 				$usr = new user_class($fiche->uid_creat,$sql,false);
 				$tabValeur[$i]["auteur"]["val"]=$usr->Aff("fullname","val");
 				$tabValeur[$i]["auteur"]["aff"]=$usr->Aff("fullname");
-				$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->dte_creat,"jour");
+				$tabValeur[$i]["dtecreat"]["val"]=strtotime($fiche->aff("dte_creat"));
 				$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
-				$tabValeur[$i]["description"]["val"]=$fiche->description;
-				$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->description);
+				$tabValeur[$i]["description"]["val"]=$fiche->data["description"];
+				$tabValeur[$i]["description"]["aff"]=$fiche->aff("description","val");
 		
 			}
 		}
@@ -144,77 +143,6 @@
 		  { $tmpl_x->assign("chk_avion", ""); }
 		$tmpl_x->parse("corps.lst_avion");
 	}
-
-// ---- Affiche la liste des fiches
-
-	$tabTitre=array();
-	$tabTitre["ress"]["aff"]="Avion";
-	$tabTitre["ress"]["width"]=60;
-	$tabTitre["auteur"]["aff"]="Auteur";
-	$tabTitre["auteur"]["width"]=150;
-	$tabTitre["dtecreat"]["aff"]="Date";
-	$tabTitre["dtecreat"]["width"]=80;
-	$tabTitre["description"]["aff"]="Description";
-	$tabTitre["description"]["width"]=350;
-	$tabTitre["dteresolv"]["aff"]="Prévision";
-	$tabTitre["dteresolv"]["width"]=80;
-
-	$tabValeur=array();
-
-	$lstFiche=GetActiveFiche($sql,$uid_avion);
-	if (count($lstFiche)>0)
-	{
-		foreach($lstFiche as $i=>$id)
-		{
-			$fiche = new fichemaint_class($id,$sql);
-
-			$ress = new ress_class($fiche->uid_avion,$sql,false);
-			$tabValeur[$i]["ress"]["val"]=strtoupper($ress->immatriculation);
-			$tabValeur[$i]["ress"]["aff"]=strtoupper($ress->immatriculation);
-			
-			$usr = new user_class($fiche->uid_creat,$sql,false);
-			$tabValeur[$i]["auteur"]["val"]=$usr->Aff("fullname","val");
-			$tabValeur[$i]["auteur"]["aff"]=$usr->Aff("fullname");
-
-			$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->dte_creat,"jour");
-			$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
-			$tabValeur[$i]["description"]["val"]=$fiche->description;
-			$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->description);
-
-			if ($fiche->uid_planif>0)
-			{
-			  	$maint = new maint_class($fiche->uid_planif,$sql);
-				$tabValeur[$i]["dteresolv"]["val"]=sql2date($maint->dte_deb,"jour");
-				$tabValeur[$i]["dteresolv"]["aff"]="&nbsp;&nbsp;<a href='maintenance.php?rub=detail&id=".$maint->id."'>".sql2date($maint->dte_deb,"jour")."</a>";
-			}
-			else
-			{
-				$tabValeur[$i]["dteresolv"]["val"]="0";
-				$tabValeur[$i]["dteresolv"]["aff"]="&nbsp;&nbsp;"."N/A";
-			}
-	
-		}
-	}
-	else
-	{
-		$tabValeur[$i]["ress"]["val"]="";
-		$tabValeur[$i]["ress"]["aff"]="";
-		$tabValeur[$i]["auteur"]["val"]="";
-		$tabValeur[$i]["auteur"]["aff"]="";
-		$tabValeur[$i]["dtecreat"]["val"]="";
-		$tabValeur[$i]["dtecreat"]["aff"]="";
-		$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
-		$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
-		$tabValeur[$i]["dteresolv"]["val"]="";
-		$tabValeur[$i]["dteresolv"]["aff"]="";
-	}
-
-
-
-	if ($order=="") { $order="ress"; }
-	if ($trie=="") { $trie="d"; }
-
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 
 // ---- Affecte les variables d'affichage

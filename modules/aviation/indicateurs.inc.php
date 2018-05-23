@@ -25,6 +25,7 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("indicateurs.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("corefolder",$corefolder);
 
 
 // ---- Liste des mois

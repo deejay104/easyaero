@@ -173,111 +173,42 @@ function GetAllMaintenance($sql,$ress)
 
 
 // Class Fiche
-class fichemaint_class{
+class fichemaint_class extends objet_core
+{
+	protected $table="maintfiche";
+	protected $mod="";
+	protected $rub="";
+
+	protected $droit=array();
+	protected $type=array("dte_valid"=>"date","description"=>"text");
+	
+	protected $tabList=array(
+	);
+
 	# Constructor
 	function __construct($id=0,$sql)
-	{ global $MyOpt;
-		$this->sql=$sql;
-		$this->tbl=$MyOpt["tbl"];
-
-		$this->id=0;
-		$this->uid_avion=0;
-		$this->uid_valid=0;
-		$this->dte_valid="";
-		$this->traite="";
-		$this->uid_planif=0;
-		$this->uid_creat=0;
-		$this->dte_creat="";
-		$this->uid_maj=0;
-		$this->dte_maj="";
-		$this->description="";
-		if ($id>0)
-		  {
-			$this->load($id);
-		  }
-	}
-
-	# Load user informations
-	function load($id){
-		$this->id=$id;
-		$sql=$this->sql;
-		$query = "SELECT * FROM ".$this->tbl."_maintfiche WHERE id='$id'";
-		$res = $sql->QueryRow($query);
-
-		// Charge les variables
-		$this->uid_avion=$res["uid_avion"];
-		$this->uid_valid=$res["uid_valid"];
-		$this->dte_valid=$res["dte_valid"];
-		$this->traite=$res["traite"];
-		$this->uid_planif=$res["uid_planif"];
-		$this->uid_creat=$res["uid_creat"];
-		$this->dte_creat=$res["dte_creat"];
-		$this->uid_maj=$res["uid_maj"];
-		$this->dte_maj=$res["dte_maj"];
-		$this->description=$res["description"];
-	}
-
-	function Valid($k,$v) 
 	{
-	}
+		global $gl_uid;
+		
+		$this->data["uid_avion"]=0;
+		$this->data["uid_valid"]=0;
+		$this->data["uid_planif"]=0;
+		$this->data["dte_valid"]="0000-00-00";
+		$this->data["traite"]="";
+		$this->data["description"]="";
 
-
-	function Save()
-	{ global $gl_uid;
-		$sql=$this->sql;
-
-		if (!is_numeric($this->uid_avion))
-		  { return "Il faut sélectionner un avion.<br />"; }
-		if ($this->id==0)
-		  {
-			$query="INSERT INTO ".$this->tbl."_maintfiche SET uid_creat=".$gl_uid.", dte_creat='".now()."'";
-			$this->id=$sql->Insert($query);
-
-			$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintfiche', '".$this->id."', '$gl_uid', '".now()."', 'ADD', 'Create maintenance sheet')";
-			$sql->Insert($query);
-		  }
-
-		// Met à jour les infos
-		$query ="UPDATE ".$this->tbl."_maintfiche SET ";
-		$query.="uid_avion='$this->uid_avion',";
-		$query.="description='".addslashes($this->description)."',";
-		$query.="uid_valid='$this->uid_valid',";
-		$query.="dte_valid='$this->dte_valid',";
-		$query.="traite='$this->traite',";
-		$query.="uid_planif='$this->uid_planif',";
-		$query.="uid_maj=$gl_uid, dte_maj='".now()."' ";
-		$query.="WHERE id=$this->id";
-		$sql->Update($query);
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintfiche', '".$this->id."', '$gl_uid', '".now()."', 'MOD', 'Modify maintenance sheet')";
-		$sql->Insert($query);
-
-		return "";
-	}
-
-	function Delete()
-	{ global $uid;
-		$sql=$this->sql;
-		$query="UPDATE ".$this->tbl."_maintfiche SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
-		$sql->Update($query);
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintfiche', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete maintenance sheet')";
-		$sql->Insert($query);
+		parent::__construct($id,$sql);
 	}
 
 	function Affecte($id)
-	{ global $uid;
+	{ global $gl_uid;
 		$sql=$this->sql;
 
-		$this->uid_planif=$id;
+		$this->data["uid_planif"]=$id;
 		$this->Save();
 
 		return "";
 	}
-
 }
 
 
@@ -318,10 +249,9 @@ class atelier_class extends objet_core
 	protected $rub="";
 
 	protected $droit=array();
-	protected $type=array("dte_deb"=>"date","dte_fin"=>"date","status"=>"enum","potentiel"=>"number","commentaire"=>"text");
+	protected $type=array("mail"=>"eùail");
 	
 	protected $tabList=array(
-		"status"=>array('planifie'=>'Planifié','confirme'=>'Confirmé','effectue'=>'Effectué','cloture'=>'Cloturé','supprime'=>'Supprimé'),
 	);
 
 	# Constructor
