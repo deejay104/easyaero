@@ -1,4 +1,20 @@
 <?
+/*
+    Easy-Aero
+    Copyright (C) 2018 Matthieu Isorez
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
 // Classe Utilisateur
 
 class user_class extends user_core
@@ -51,6 +67,11 @@ class user_class extends user_core
 		parent::__construct($id,$sql);
 
 		$this->idcpt=$this->data["idcpt"];
+		
+		if ($setdata)
+		{
+			$this->LoadRoles();
+		}
 	}
 
 	# Laché
@@ -123,10 +144,11 @@ class user_class extends user_core
 	
 	function aff($key,$typeaff="html",$formname="form_data")
 	{
-		$ret=parent::aff($key,$typeaff,$formname);
+		$render=$typeaff;
+		$ret=parent::aff($key,$typeaff,$formname,$render);
 
 		$sql=$this->sql;
-		if ($typeaff=="form")
+		if ($render=="form")
 		{
 			if ($key=="lache")
 			{
@@ -183,7 +205,7 @@ class user_class extends user_core
 		}
 		return $ret;
 	}
-
+	
 	function AffSolde(){
 		global $MyOpt;
 		$sql=$this->sql;

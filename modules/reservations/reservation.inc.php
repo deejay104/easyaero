@@ -1,26 +1,15 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Page de saisie d'une réservation
-//     ($Author: miniroot $)
-//     ($Date: 2016-04-22 20:48:24 +0200 (ven., 22 avr. 2016) $)
-//     ($Revision: 456 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2005 Matthieu Isorez
-
+    Easy-Aero
+    Copyright (C) 2018 Matthieu Isorez
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -176,8 +165,6 @@
 			if ($d["resa"]=="instructeur")
 			{
 				$m.="La présence d'un instructeur est obligatoire.<br />";
-				// $tmpl_x->assign("msg_warning", $m);
-				// $tmpl_x->parse("corps.msg_warning");
 				affInformation($m,"warning");
 
 				$ok_inst=1;
@@ -185,8 +172,6 @@
 			else if ($d["resa"]=="obligatoire")
 			{
 				$m.="La réservation n'est pas possible.<br />";
-				// $tmpl_x->assign("msg_error", $m);
-				// $tmpl_x->parse("corps.msg_error");
 				affInformation($m,"error");
 				$save=1;
 			}
@@ -227,8 +212,6 @@
 // ---- Affiche les messages d'erreurs
 	if ($msg_err!="")
 	{ 
-		// $tmpl_x->assign("msg_error",$msg_err);
-		// $tmpl_x->parse("corps.msg_error");
 		affInformation($msg_err,"error");
 	}
 	
@@ -289,7 +272,7 @@
 	
 
 	// Liste des pilotes	
-	$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite");
+	$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"));
 	
 	$txt="-";
 	foreach($lst as $i=>$tmpuid)
@@ -342,7 +325,7 @@
 
 
 	// Liste des instructeurs
-	$lst=ListActiveUsers($sql,"prenom,nom","instructeur");
+	$lst=ListActiveUsers($sql,"prenom,nom",array("TypeInstructeur"));
 	$tmpl_x->assign("aff_nom_instructeur", "-");
 
 	$txt="-";

@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Page de devis de masse et centrage
-//     ($Author: miniroot $)
-//     ($Date: 2016-02-14 23:17:30 +0100 (dim., 14 fÃ©vr. 2016) $)
-//     ($Revision: 445 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2007 Matthieu Isorez
+    Easy-Aero
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,12 +20,15 @@
 ?>
 
 <?
+	require_once ($appfolder."/class/user.inc.php");
+
+
 // ---- Vérifie si l'on veut quitter la page
 	if ($fonc=="Retour")  	
-	  {
+	{
 		$mod="reservations";
 		$affrub="reservation";
-	  }
+	}
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("centrage.htm"));
@@ -155,30 +150,30 @@
 				$tmpl_x->assign("chk_pax", "selected");
 			  }
 
-			$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite");
+			$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"));
 
 			foreach($lst as $i=>$tmpuid)
 			{
 				// $sql->GetRow($i);
 				$resusr=new user_class($tmpuid,$sql,false,true);
-				$tmpl_x->assign("uid_pilote", $resusr->uid);
-				$tmpl_x->assign("nom_pilote", $resusr->Aff("fullname","val"));
+				$tmpl_x->assign("uid_pilote", $resusr->id);
+				$tmpl_x->assign("nom_pilote", $resusr->aff("fullname","val"));
 				
 				// $tmpl_x->assign("uid_pilote", $sql->data["id"]);
 				// $tmpl_x->assign("nom_pilote", AffInfo($sql->data["prenom"],"prenom")." ".AffInfo($sql->data["nom"],"nom"));
 
-				if ($form_passager_pilote[$k]==$resusr->uid)
+				if ($form_passager_pilote[$k]==$resusr->id)
 				{
 					$tmpl_x->assign("chk_pilote", "selected");
 					if ($tv["poids"]=="")
 					  {
 						$tabplace[$k]["poids"]=$resusr->data["poids"];
 					  }
-					$tabplace[$k]["idpilote"]=$resusr->uid;
+					$tabplace[$k]["idpilote"]=$resusr->id;
 				}
-				else if ( ( (($res["uid_pilote"]==$resusr->uid) && ($tv["type"]=="pilote"))
-				       || ($tv["idpilote"]==$resusr->uid)
-				       || (($res["uid_instructeur"]==$resusr->uid) && ($tv["type"]=="copilote") && ($tv["idpilote"]==0)) )
+				else if ( ( (($res["uid_pilote"]==$resusr->id) && ($tv["type"]=="pilote"))
+				       || ($tv["idpilote"]==$resusr->id)
+				       || (($res["uid_instructeur"]==$resusr->id) && ($tv["type"]=="copilote") && ($tv["idpilote"]==0)) )
 				       && ($form_passager_pilote[$k]=="")
 				   )
 				{
@@ -187,7 +182,7 @@
 					  {
 						$tabplace[$k]["poids"]=$resusr->data["poids"];
 					  }
-					$tabplace[$k]["idpilote"]=$resusr->uid;
+					$tabplace[$k]["idpilote"]=$resusr->id;
 				}
 				else
 				{

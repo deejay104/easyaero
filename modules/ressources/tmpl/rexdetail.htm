@@ -9,7 +9,7 @@
 
 <!-- BEGIN: corps -->
 <div class="pagetitle pagemenu">
-	<p><A href="index.php?mod=ressources&rub=rex"><IMG src="{path_module}/img/icn32_liste.png" border=0 alt="">Liste</A></p>
+	<p><A href="index.php?mod=ressources&rub=rex"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A></p>
 <!-- BEGIN: editer -->
 	<p><A href="index.php?mod=ressources&rub=rexdetail&fonc=editer&id={id}"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A></p>
 <!-- END: editer -->
@@ -35,12 +35,10 @@
 	</div>
 
 	<div class="formulaireTitre">Descriptif</div>
-	<div class="formulaire">
-		<b>Descriptif de l'événement</b> :<br />
-		<p style='padding-bottom:10px;'>{form_description}</p>
-		<b>Commentaire</b> :<br />
-		<p style='padding-bottom:10px;'>{form_commentaire}</p>
-	</div>
+	<div><b>Descriptif de l'événement</b></div>
+	{form_description}
+	<div><b>Commentaire</b></div>
+	{form_commentaire}
 
 	<div class="formulaireTitre">Classification</div>
 	<div class="formulaire">
@@ -67,14 +65,13 @@
 	<p>{form_risque}</p>
 	</div>
 
-	
 	<div class="formulaireTitre">Conclusion</div>
-	<div class="formulaire">
-		<b>Synthèse</b> :<br />
-		<p style='padding-bottom:10px;'>{form_synthese}</p>
-		<b>Plan d'action</b> :<br />
-		<p style='padding-bottom:10px;'>{form_planaction}</p>
-	</div>
+	<div><b>Synthèse</b></div>
+	{form_synthese}
+
+	
+	<div><b>Plan d'action</b></div>
+	{form_planaction}
 
 <!-- BEGIN: form_submit -->
 	<input type="submit" name="fonc" value="Enregistrer">

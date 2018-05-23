@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -48,69 +48,65 @@
 
 	$maint=new maint_class($id,$sql);
 
-	if ($form_ressource>0)
-	  { $maint->uid_ressource=$form_ressource; }
-	if ($form_atelier>0)
-	  { $maint->uid_atelier=$form_atelier; }
-	if ($form_status!="")
-	  { $maint->status=$form_status; }
-	if ($form_commentaire!="")
-	  { $maint->data["commentaire"]=$form_commentaire; }
-	if ($form_dte_deb!="")
-	  { $maint->dte_deb=date2sql($form_dte_deb); }
-	if ($form_dte_fin!="")
-	  { $maint->dte_fin=date2sql($form_dte_fin); }
-	if ($form_potentiel!="")
-	  { $maint->potentiel=$form_potentiel; }
-	if ($form_resa!="")
-	  { $maint->uid_lastresa=$form_resa; }
-
 // ---- Enregistre
 	$msg_erreur="";
 
-	if (GetDroit("EnregistreMaintenance") && ($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-		$msg_erreur=$maint->Save();
+	if (GetDroit("ModifMaintenance") && ($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	{
+		if (count($form_data)>0)
+		{
+			foreach($form_data as $k=>$v)
+		  	{
+		  		$msg_erreur.=$maint->Valid($k,$v);
+		  	}
+			$msg_confirmation.="Vos données ont été enregistrées.<BR>";
+		}
 
+		$msg_erreur=$maint->Save();
+		if ($id==0)
+		{
+			$id=$maint->id;
+		}
+		
 		$lstFiche=GetActiveFiche($sql,$maint->uid_ressource,$maint->id);
 	
 		if (count($lstFiche)>0)
-		  {
+		{
 			foreach($lstFiche as $i=>$fid)
-			  {
+			{
 				$fiche=new fichemaint_class($fid,$sql);
 
 				if ($form_fiche[$fid]!="")
-				  {
+				{
 				  	$fiche->uid_planif=$id;
 					if ($maint->status=='cloture')
-					  {
+					{
 					  	$fiche->traite="oui";
-					  }
+					}
 				  	$fiche->Save();
-				  }
+				}
 				else if ($fiche->uid_planif==$id)
-				  {
+				{
 				  	$fiche->Affecte(0);
-				  }
-			  }
-		  }
+				}
+			}
+		}
 
 
 		if ($msg_erreur=="")
 		  { $msg_ok="Enregistrement effectué."; }
-	  }
+	}
 	else if (GetDroit("SupprimeMaintenance") && ($fonc=="Supprimer"))
-	  {
+	{
 	  	$msg_erreur=$maint->Delete();
-			$mod="ressources";
-			$affrub="liste";
-	  }
+		$mod="ressources";
+		$affrub="liste";
+	}
 	else if ($fonc=="Retour")
-	  {
-			$mod="ressources";
-			$affrub="liste";
-	  }
+	{
+		$mod="ressources";
+		$affrub="liste";
+	}
 // ---- Messages
 	if ($msg_erreur!="")
 	{
@@ -126,66 +122,15 @@
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("id", $maint->id);
 
-	if (($maint->status!="cloture") && ($maint->actif=="oui"))
+	if (($maint->data["status"]!="cloture") && ($maint->data["actif"]=="oui") && (GetDroit("ModifMaintenance")))
 	  { $typeaff="form"; }
 	else
 	  { $typeaff="html"; }
 
-// ---- Liste les avions
-	$lst=ListeRessources($sql);
-
-	foreach($lst as $i=>$rid)
-	  {
-			$resr=new ress_class($rid,$sql);
-	
-			$tmpl_x->assign("uid_ressource", $resr->id);
-			$tmpl_x->assign("nom_ressource", $resr->aff("immatriculation","val"));
-	
-			if ($resr->id==$maint->uid_ressource)
-			  {
-					$tmpl_x->assign("chk_ressource", "selected");
-					$tmpl_x->assign("nom_ressource_visu", $resr->aff("immatriculation"));
-			  }
-			else
-			  {
-					$tmpl_x->assign("chk_ressource", "");
-				}
-			$tmpl_x->parse("corps.aff_ressource.lst_ressource");
-  	}
-
-	if (($maint->status!="cloture") && ($maint->actif=="oui"))
-	  { $tmpl_x->parse("corps.aff_ressource"); }
-	else
-	  { $tmpl_x->parse("corps.aff_ressource_visu"); }
 
 // ---- Infos de dernières maj
 	$usrmaj = new user_class($maint->uid_maj,$sql);
 	$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($maint->dte_maj));
-
-// ---- Liste les ateliers
-	$lst=GetActiveAteliers($sql);
-
-	foreach($lst as $i=>$aid)
-	  {
-		$atelier=new atelier_class($aid,$sql);
-
-		$tmpl_x->assign("uid_atelier", $atelier->id);
-		$tmpl_x->assign("nom_atelier", $atelier->nom);
-
-		if ($atelier->id==$maint->uid_atelier)
-		  {
-			$tmpl_x->assign("chk_atelier", "selected");
-			$tmpl_x->assign("nom_atelier_visu", $atelier->nom);
-		  }
-		else
-		  { $tmpl_x->assign("chk_atelier", ""); }
-		$tmpl_x->parse("corps.lst_atelier");
-		$tmpl_x->parse("corps.aff_atelier.lst_atelier");
-	  }
-	if (($maint->status!="cloture") && ($maint->actif=="oui"))
-	  { $tmpl_x->parse("corps.aff_atelier"); }
-	else
-	  { $tmpl_x->parse("corps.aff_atelier_visu"); }
 
 // ---- Affiche les informations
 
@@ -207,26 +152,33 @@
 
 	$tabValeur=array();
 
-	$lstFiche=ListLastReservation($sql,0,$maint->uid_ressource,5,$maint->dte_deb);
+	$lstFiche=ListLastReservation($sql,0,$maint->data["uid_ressource"],5,$maint->data["dte_deb"]);
 
 	$chk="";
 
 	if (count($lstFiche)>0)
-	  {
-		if ($maint->uid_lastresa==0)
-		  {
-			$maint->uid_lastresa=$lstFiche[0];
-		  }
+	{
+		if ($maint->data["uid_lastresa"]==0)
+		{
+			$maint->data["uid_lastresa"]=$lstFiche[0];
+		}
 
 		$ii=0;
 
 		foreach($lstFiche as $i=>$fid)
-		  {
+		{
 			$resa = new resa_class($fid,$sql);
 
 			$tabValeur[$ii]["chk"]["val"]="";
-			$tabValeur[$ii]["chk"]["aff"]="<input type='radio' name='form_resa' ".(($resa->id==$maint->uid_lastresa) ? "checked='checked'" : "")." value='".$resa->id."'>";
-			if ($resa->id==$maint->uid_lastresa)
+			if ($typeaff=="form")
+			{
+				$tabValeur[$ii]["chk"]["aff"]="<input type='radio' name='form_data[uid_lastresa]' ".(($resa->id==$maint->data["uid_lastresa"]) ? "checked='checked'" : "")." value='".$resa->id."'>";
+			}
+			else
+			{
+				$tabValeur[$ii]["chk"]["aff"]=($resa->id==$maint->data["uid_lastresa"]) ? "<img src='".$corefolder."/static/images/icn16_ok.png'>" : "";
+			}
+			if ($resa->id==$maint->data["uid_lastresa"])
 			  { $chk="ok"; }
 
 			$usr = new user_class($resa->uid_pilote,$sql,false);
@@ -240,8 +192,8 @@
 			$tabValeur[$ii]["temps"]["aff"]=$resa->AffTempsReel();
 			
 			$ii++;
-		  }
-	  }
+		}
+	}
 
 	if ($orderv=="") { $orderv="dtecreat"; }
 	if ($triev=="") { $triev="d"; }
@@ -266,7 +218,7 @@
 
 	$tabValeur=array();
 
-	$lstFiche=GetActiveFiche($sql,$maint->uid_ressource,$maint->id);
+	$lstFiche=GetActiveFiche($sql,$maint->data["uid_ressource"],$maint->id);
 
 	if (count($lstFiche)>0)
 	  {
@@ -274,15 +226,15 @@
 		  {
 			$fiche = new fichemaint_class($fid,$sql);
 
-			if ((($maint->status!="cloture") && (GetDroit("EnregistreMaintenance") && ($maint->actif=="oui"))) || ($maint->id==$fiche->uid_planif))
+			if ((($maint->data["status"]!="cloture") && (GetDroit("EnregistreMaintenance") && ($maint->data["actif"]=="oui"))) || ($maint->id==$fiche->uid_planif))
 			  {
 
 				$tabValeur[$i]["chk"]["val"]=(($fiche->uid_planif==$maint->id) ? "1" : "0");
-				if (($maint->status!="cloture") && ($maint->actif=="oui"))
+				if (($maint->data["status"]!="cloture") && ($maint->data["actif"]=="oui") && ($typeaff=="form"))
 				  {
 					$tabValeur[$i]["chk"]["aff"]="<input type='checkbox' name='form_fiche[".$fid."]' ".(($fiche->uid_planif==$maint->id) ? "checked" : "").">";
 				} else {
-					$tabValeur[$i]["chk"]["aff"]=" ";
+					$tabValeur[$i]["chk"]["aff"]=($fiche->uid_planif==$maint->id) ? "<img src='".$corefolder."/static/images/icn16_ok.png'>" : "";
 				  }
 				
 				$ress = new ress_class($fiche->uid_avion,$sql,false);
@@ -327,7 +279,7 @@
 
 	$tmpl_x->assign("aff_fiche",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
-	if (($maint->status!="cloture") && (GetDroit("EnregistreMaintenance")) && ($maint->actif=="oui"))
+	if (($maint->data["status"]!="cloture") && (GetDroit("ModifMaintenance")) && ($maint->data["actif"]=="oui"))
 	  {
 			$tmpl_x->parse("corps.form_submit.aff_bouttons");
 	  }

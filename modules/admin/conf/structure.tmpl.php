@@ -508,8 +508,8 @@ $tabTmpl=Array
 		"dte_rex" => Array("Type" => "date", "Default" => "0000-00-00" ),
 		"uid_creat" => Array("Type" => "int(10) unsigned","Index"=>1 ),
 		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
-		"uid_modif" => Array("Type" => "int(10) unsigned","Index"=>1 ),
-		"dte_modif" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
+		"uid_maj" => Array("Type" => "int(10) unsigned","Index"=>1 ),
+		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
 	),
 	"roles" => Array
 	(

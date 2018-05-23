@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -20,6 +20,8 @@
 ?>
 
 <?
+	if (!GetDroit("AccesRex")) { FatalError("Accès non autorisé (AccesRex)"); }
+	
 	require_once ($appfolder."/class/rex.inc.php");
 
 // ---- Charge le template
@@ -63,7 +65,11 @@
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
-	
+	if (GetDroit("CreeRex"))
+	{
+			$tmpl_x->parse("corps.creerex");
+	}
+
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");

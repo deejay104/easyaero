@@ -10,7 +10,15 @@
 // ---- Sélectionne le menu courant
 	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
 
-	
+	if (GetDroit("AccesMaintenances"))
+	{
+		$tmpl_menu->parse("infos.maintenance");
+	}
+	if (GetDroit("AccesRex"))
+	{
+		$tmpl_menu->parse("infos.rex");
+	}
+		
 // ---- Affiche les menus
 
 

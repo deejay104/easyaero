@@ -46,9 +46,9 @@
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$rex=new rex_class($id,$sql);
-		if (count($form_rex)>0)
+		if (count($form_data)>0)
 		{
-			foreach($form_rex as $k=>$v)
+			foreach($form_data as $k=>$v)
 		  	{
 		  		$msg_erreur.=$rex->Valid($k,$v);
 		  	}
@@ -104,7 +104,8 @@
 	}
 
 // ---- Menu
-	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->data["uid_creat"]))
+
+	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat))
 	{
 		$tmpl_x->parse("corps.editer");
 	}
@@ -114,8 +115,8 @@
 	}
 
 // ---- Infos de dernières maj
-	$usrmaj = new user_class($rex->data["uid_modif"],$sql);
-	$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($rex->data["dte_modif"]));
+	$usrmaj = new user_class($rex->uid_maj,$sql);
+	$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($rex->dte_maj));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

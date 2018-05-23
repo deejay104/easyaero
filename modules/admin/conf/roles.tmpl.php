@@ -6,6 +6,7 @@
 
 // ---- Liste des roles disponibles
 
+$tabRoles["TypeMembre"]="Pilote";
 $tabRoles["TypePilote"]="Pilote";
 $tabRoles["TypeInstructeur"]="Instructeur";
 
@@ -14,19 +15,25 @@ $tabRoles["AccesBaptemes"]="Accès à la page des baptèmes";
 $tabRoles["AccesBapteme"]="Accès à la page d'un baptème";
 $tabRoles["AccesExport"]="Accès à la page des exports";
 $tabRoles["AccesFactures"]="Accès à la liste des factures";
+$tabRoles["AccesReservations"]="Accès au calendrier de réservations";
+$tabRoles["AccesBaptemes"]="Accès à la liste des baptèmes";
+$tabRoles["AccesManifestations"]="Accès au calendrier des manifestations";
+$tabRoles["AccesMaintenances"]="Accès à la liste des maintenances";
 
-$tabRoles["AccesPageMouvements"]="Accès à la page de saisi d'un mouvement";
-$tabRoles["AccesPageEcheances"]="Accès à la page de suivi des échéances";
-$tabRoles["AccesPageVols"]="Accès à la page des vols (saisi des vols)";
-$tabRoles["AccesPageSuivi"]="Accès à la page de suivi des comptes";
-$tabRoles["AccesPageListeComptes"]="Accès à la page de la liste des comptes";
-$tabRoles["AccesPageListeTarifs"]="Accès à la page des tarifs";
-$tabRoles["AccesPageTableauBord"]="Accès à la page des tableau de bord";
+
+$tabRoles["AccesSuivi"]="Accès au module de suivi du club";
+$tabRoles["AccesSuiviMouvements"]="Accès à la page de saisi d'un mouvement";
+$tabRoles["AccesSuiviEcheances"]="Accès à la page de suivi des échéances";
+$tabRoles["AccesSuiviVols"]="Accès à la page des vols (saisi des vols)";
+$tabRoles["AccesSuiviSuivi"]="Accès à la page de suivi des comptes";
+$tabRoles["AccesSuiviListeComptes"]="Accès à la page de la liste des comptes";
+$tabRoles["AccesSuiviListeTarifs"]="Accès à la page des tarifs";
+$tabRoles["AccesSuiviTableauBord"]="Accès à la page des tableau de bord";
+$tabRoles["AccesSuiviComptes"]="Autorise l'affichage de la liste des membres pour les pages de comptes";
+$tabRoles["AccesSuiviBilan"]="Accès à la page de suivi des comptes";
 
 
 $tabRoles["AccesCompte"]="Accès à la page d'affichage du compte";
-$tabRoles["AccesSuivi"]="Accès au module de suivi du club";
-$tabRoles["AccesSuiviComptes"]="Autorise l'affichage de la liste des membres pour les pages de comptes";
 $tabRoles["AccesIndicateurs"]="Accès à la page d'indicateurs";
 
 $tabRoles["AccesPageAccesPageBilan"]="Accès à la page du bilan comptable";
@@ -60,18 +67,9 @@ $tabRoles["AccesSuiviClub"]="Accès aux pages de suivi du club";
 $tabRoles["AffUserComptes"]="Afficher le solde du compte sur la fiche du membre";
 $tabRoles["AffUserHeures"]="Afficher les heure de vol sur la fiche du membre";
 
-$tabRoles["ModifUser"]="Ouvre la modification des informations des membres";
-$tabRoles["ModifUserSauve"]="Sauvegarder la fiche d'un membre";
 $tabRoles["ModifUserLache"]="Lacher des membres sur les ressources (avions)";
-$tabRoles["ModifUserDonnees"]="Modification des données complémentaires des utilisateurs";
-$tabRoles["ModifUserAll"]="Modification de toutes les entrées d'un membre";
-$tabRoles["ModifUserPassword"]="Modifier les mots de passe des membres";
 $tabRoles["ModifUserDecouvert"]="Modifier le découvert d'un membre";
 $tabRoles["ModifUserTarif"]="Modifier le taux de remboursement horaire d'un instructeur";
-$tabRoles["ModifUserDroits"]="Modifier les droits des utilisateurs";
-$tabRoles["ModifUserDteMedicale"]="Modifier la date de la visite médicale";
-$tabRoles["ModifUserDteLicence"]="Modifier la date de la licence";
-$tabRoles["ModifUserDteInscription"]="Modifier la date de l'inscription";
 $tabRoles["ModifUserIdCpt"]="Modifier le compte de saisie";
 $tabRoles["ModifUserType"]="Modifier le type du membre";
 $tabRoles["ModifDisponibilite"]="Modifier les disponibilités";
@@ -82,7 +80,6 @@ $tabRoles["ModifRessource"]="Modifier les ressources (avion)";
 $tabRoles["ModifRessourceParametres"]="Modification des paramètres d'une ressource";
 $tabRoles["ModifMessage"]="Modification d'un message dans le module document";
 $tabRoles["ModifClasseur"]="Modification d'un classeur dans le module document";
-$tabRoles["ModifGroupe"]="Modification d'un groupe (roles et informations)";
 
 $tabRoles["ModifFamilleCree"]="Créer une famille";
 
@@ -94,56 +91,49 @@ $tabRoles["ModifBapteme"]="Modifier un baptème";
 $tabRoles["ModifActualite"]="Modifier une actualite";
 $tabRoles["ModifWaypoint"]="Import de waypoints";
 $tabRoles["ModifNavigation"]="Modification d'une navigation";
-$tabRoles["ModifMaintenance"]="Modification d'une fiche de maintenance";
 $tabRoles["ModifWeb"]="Modification de la partie publique";
 
+$tabRoles["AccesRex"]="Accès à la liste des REX";
+$tabRoles["CreeRex"]="Création d'un REX";
 $tabRoles["ModifRex"]="Modification des REX";
 $tabRoles["ModifRexAll"]="Modification REX e tous les champs";
 $tabRoles["ModifRexSynthese"]="Modification de la synthèse d'un REX";
 $tabRoles["ModifRexStatus"]="Modication du status d'un REX";
-
 $tabRoles["SupprimeRex"]="Suppression d'un REX";
 
 $tabRoles["CreeFacture"]="Créer une nouvelle facture";
-$tabRoles["CreeForum"]="Créer un nouveau forum";
-$tabRoles["CreeMaintenance"]="Création d'une fiche de maintenance";
-$tabRoles["CreeBapteme"]="Création d'une fiche de maintenance";
-$tabRoles["CreeUser"]="Créer un nouveau membre";
+$tabRoles["CreeBapteme"]="Création d'un baptème";
+
 $tabRoles["CreeFamille"]="Créer une famille";
 $tabRoles["CreeRessource"]="Créer une nouvelle ressource (avion)";
 $tabRoles["CreeClasseur"]="Créer un nouveau classeur dans le module document";
-$tabRoles["CreeGroupe"]="Créer un nouveau groupe";
 $tabRoles["CreeNavigation"]="Créer une navigation";
 
-
 $tabRoles["SupprimeActualite"]="Suppression d'une actualite";
-$tabRoles["SupprimeMaintenance"]="Suppression d'une maintenance";
 $tabRoles["SupprimeBapteme"]="Suppression d'un baptème";
 $tabRoles["SupprimeUser"]="Supprimer un membre";
 $tabRoles["SupprimeRessource"]="Supprimer une ressource (avion)";
 $tabRoles["SupprimeMessage"]="Supprimer un message dans le module document";
 $tabRoles["SupprimeGroupe"]="Supprimer un groupe";
 
-
-$tabRoles["DesactiveUser"]="Désactiver un membre";
-$tabRoles["Desactive"]="Désactiver une ressource (avion)";
-
 $tabRoles["EnregistreFacture"]="Droit d'enregistrer une facture";
-$tabRoles["EnregistreMaintenance"]="Enregistre une maintenance";
-
 
 $tabRoles["ListeVols"]="Autorise l'affichage des vols des membres";
 $tabRoles["ListeUserSupprime"]="Autorise l'affichage des membres supprimés";
 $tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres désactivés";
 
-
+$tabRoles["CreeMaintenance"]="Création d'une fiche de maintenance";
+$tabRoles["ModifMaintenance"]="Modification d'une fiche de maintenance";
+$tabRoles["PlanifieMaintenance"]="Planification d'une maintenance";
 $tabRoles["ValideFichesMaintenance"]="Valider une fiche de maintenance";
 $tabRoles["RefuserFicheMaintenance"]="Refuser une fiche de maintenance";
+$tabRoles["SupprimeMaintenance"]="Suppression d'une maintenance";
+
+
+
 $tabRoles["ListeFactures"]="Lister l'ensemble des factures";
 $tabRoles["PayerFacture"]="Payer des factures";
-$tabRoles["VisuDocument"]="Visualisation de tous les documents";
 $tabRoles["FactureManips"]="Facture une manifestation";
-$tabRoles["PlanifieMaintenance"]="Planification d'une maintenance";
 $tabRoles["AfficheDetailMouvement"]="Affiche le détail d'un mouvement";
 $tabRoles["AfficheSignatureCompte"]="Vérifie la signature des transactions";
 

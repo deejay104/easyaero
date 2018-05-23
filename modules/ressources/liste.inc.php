@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -58,39 +58,36 @@
 	$tabValeur=array();
 
 	if (count($lstFiche)>0)
-	  {
+	{
 		foreach($lstFiche as $i=>$id)
-		  {
+		{
 			$maint = new maint_class($id,$sql);
 
-			$ress = new ress_class($maint->uid_ressource,$sql,false);
+			$ress = new ress_class($maint->data["uid_ressource"],$sql,false);
 			$tabValeur[$i]["ress"]["val"]=$ress->aff("immatriculation","val");
 			$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
 			
-			$tabValeur[$i]["dte_deb"]["val"]=strtotime($maint->dte_deb);
-			$tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("dte_deb")."</a>";
-			$tabValeur[$i]["dte_fin"]["val"]=strtotime($maint->dte_fin);
-			$tabValeur[$i]["dte_fin"]["aff"]="<a href='index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("dte_fin")."</a>";
+			$tabValeur[$i]["dte_deb"]["val"]=strtotime($maint->data["dte_deb"]);
+			$tabValeur[$i]["dte_deb"]["aff"]=$maint->aff("dte_deb");
+			$tabValeur[$i]["dte_fin"]["val"]=strtotime($maint->data["dte_fin"]);
+			$tabValeur[$i]["dte_fin"]["aff"]=$maint->aff("dte_fin");
 
 			$tabValeur[$i]["status"]["val"]=$maint->aff("status");
-			$tabValeur[$i]["status"]["aff"]="<a href='index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("status")."</a>";
+			$tabValeur[$i]["status"]["aff"]=$maint->aff("status");
 
-			$tabValeur[$i]["atelier"]["val"]=$maint->nom_atelier;
-			$tabValeur[$i]["atelier"]["aff"]=$maint->nom_atelier;
-	
-		  }
+			$tabValeur[$i]["atelier"]["val"]=$maint->val("uid_atelier");
+			$tabValeur[$i]["atelier"]["aff"]=$maint->aff("uid_atelier");
+		}
 
 		if ($order=="") { $order="dte_deb"; }
 		if ($trie=="") { $trie="i"; }
 		
 		$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
-	  }
+	}
 	else
-	  {
+	{
 		$tmpl_x->assign("aff_tableau","-Aucune maintenance de saisie-");
-	  }
-
-
+	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

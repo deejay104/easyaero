@@ -50,73 +50,46 @@
 
 	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
 
-	<div class="formulaireTitre">Informations</div>
-	<div class="formulaire">
-		<p>
-			<label>Avion</label>
-		<!-- BEGIN: aff_ressource -->
-				<SELECT name="form_ressource"  OnChange="document.maintenance.submit();">
-				<!-- BEGIN: lst_ressource -->
-				<OPTION value="{uid_ressource}" {chk_ressource}>{nom_ressource}</OPTION>
-				<!-- END: lst_ressource -->
-				</SELECT>
-		<!-- END: aff_ressource -->
-
-		<!-- BEGIN: aff_ressource_visu -->
-				{nom_ressource_visu}
-		<!-- END: aff_ressource_visu -->
-		</p>
-		<p>
-			<label>Status</label>
-			{form_status}
-		</p>
-		<p>
-			<label>Atelier</label>
-			
-		<!-- BEGIN: aff_atelier -->
-				<select name="form_atelier">
-				<!-- BEGIN: lst_atelier -->
-				<OPTION value="{uid_atelier}" {chk_atelier}>{nom_atelier}</OPTION>
-				<!-- END: lst_atelier -->
-				</select>
-		<!-- END: aff_atelier -->
-		<!-- BEGIN: aff_atelier_visu -->
-			{nom_atelier_visu}
-		<!-- END: aff_atelier_visu -->
-		</p>
-		<p>
-			<label>Début de l'intervention</label>
-			{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
-		</p>
-		<p>
-			<label>Fin de l'intervention</label>
-			{form_dte_fin} <FONT color=red>{msg_dtefin}</FONT>
-		</p>
-		<p>
-			<label>Temps consommé</label>
-			{form_potentiel} (nombre minutes réportées à la fin de l'intervention)
-		</p>
-	</div>
+	<table width="100%">
+		<tr valign="top">
+		<td width="50%">
+			<div class="formulaireTitre">Informations</div>
+			<div class="formulaire">
+				<p>
+					<label>Avion</label>{form_uid_ressource}
+				</p>
+				<p>
+					<label>Status</label>{form_status}
+				</p>
+				<p>
+					<label>Atelier</label>{form_uid_atelier}
+				</p>
+				<p>
+					<label>Début de l'intervention</label>{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
+				</p>
+				<p>
+					<label>Fin de l'intervention</label>{form_dte_fin} <FONT color=red>{msg_dtefin}</FONT>
+				</p>
+				<p>
+					<label title="Nombre minutes reportées à la fin de l'intervention">Temps consommé</label>{form_potentiel}&nbsp;
+				</p>
+			</div>
+		</td>
+		<td >
+			<div class="formulaireTitre">Commentaire</div>
+			<div style="padding-left:10px;">{form_commentaire}</div>
+		</td>
+		</tr>
+	</table>
 
 	<br />
-	<div style='width:100%; display: inline-block;'>
-	  <div style='width:50%; display: inline-block; padding-bottom: 0px; '>
-		<div class="formulaireTitre">Dernier vol effectué avant la maintenance</div>
-		{aff_resa}
-	  </div>
-	  <div style='width:50%; display: inline-block; float:right; padding-bottom: 0px; '>
-		<div class="formulaireTitre">Commentaire</div>
-		{form_commentaire}
-	  </div>
-	</div>
+	<div class="formulaireTitre">Dernier vol effectué avant la maintenance</div>
+	{aff_resa}
 
-	<br />
 	<br />
 
 	<div class="formulaireTitre">Liste des fiches associées</div>
-	<div class="formulaire">
-		{aff_fiche}
-	</div>
+	{aff_fiche}
 
 <!-- BEGIN: form_submit -->
 	<div class="formulaireSubmit">

@@ -1,6 +1,6 @@
 <?
 /*
-    Easy-Aero v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify

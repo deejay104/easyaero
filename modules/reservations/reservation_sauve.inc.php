@@ -1,26 +1,15 @@
-<?h
-// ---------------------------------------------------------------------------------------------
-//   Script de sauvegarde d'une réservation
-//     ($Author: miniroot $)
-//     ($Date: 2016-02-14 23:17:30 +0100 (dim., 14 fÃ©vr. 2016) $)
-//     ($Revision: 445 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
+<?
 /*
-    SoceIt v2.0
-    Copyright (C) 2005 Matthieu Isorez
-
+    Easy-Aero
+    Copyright (C) 2018 Matthieu Isorez
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -75,14 +64,14 @@
 		if ( $s < -$resa["pilote"]->data["decouvert"])
 		{
 		  	$msg_err.="<u>Le compte du pilote est NEGATIF ($s €)</u>.<br />";
-		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+		  	$msg_err.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 			$ok=4;
 		}
 
 		if ($resa["resa"]->edite=='non')
 		{
 		  	$msg_err.="<u>Réservation déjà saisie en compta</u>.<br />";
-		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta.<br />";
+		  	$msg_err.="Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta.<br />";
 			$ok=3;
 		}
 
@@ -90,23 +79,23 @@
 		if ((!$resa["pilote"]->CheckLache($form_uid_ress)) && ($form_uid_instructeur==0))
 		{
 		  	$msg_err.="<u>Réservation impossible</u>.<br />";
-		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Le pilote sélectionné n'est pas laché sur cet avion.<br />";
-		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Il n'est pas possible de réserver sans instructeur.<br />";
+		  	$msg_err.="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
+		  	$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
 			$ok=3;
 		}
 
 		// Vérifie si le pilote est autorisé
-		if (($resa["pilote"]->data["type"]=="invite") || ($resa["pilote"]->data["type"]=="membre"))
+		if (!$resa["pilote"]->CheckDroit("TypePilote"))
 		{ 
 		  	$msg_err.="<u>Réservation impossible</u>.<br />";
-			$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion<BR>";
+			$msg_err.="Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion<BR>";
 			$ok=3;
 		}
 
 		if ($resa["resa"]->edite!='non')
-		  {
+		{
 		  	if ($ok==1)
-		  	  {
+			{
 				$resa["resa"]->description=$form_description;
 				$resa["resa"]->uid_pilote=$form_uid_pilote;
 				$resa["resa"]->uid_debite=$form_uid_debite;
@@ -129,12 +118,12 @@
 				$resa["resa"]->carbavant=$form_carbavant;
 				$resa["resa"]->carbapres=$form_carbapres;
 				$resa["resa"]->prixcarbu=$form_prixcarbu;
-			  }
+			}
 
 
 			// On peut mettre à jour les données de vols même si on est en négatif.
 			if (($id>0) && ($ok==4) && (($form_tpsreel!="") || ($form_horadeb!="") || ($form_horafin!="")))
-			  {
+			{
 				$ok=1;
 
 				$resa["resa"]->dte_deb=sql2date($resa["resa"]->dte_deb);
@@ -143,9 +132,9 @@
 				$resa["resa"]->tpsreel=$form_tpsreel;
 				$resa["resa"]->horadeb=$form_horadeb;
 				$resa["resa"]->horafin=$form_horafin;
-			  }
-		  }
-	  }
+			}
+		}
+	}
 
 // ---- Supprime la réservation
 	else if (($fonc=="delete") && ($id>0))
