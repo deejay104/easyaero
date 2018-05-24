@@ -17,7 +17,6 @@ $tabRoles["AccesExport"]="Accès à la page des exports";
 $tabRoles["AccesFactures"]="Accès à la liste des factures";
 $tabRoles["AccesReservations"]="Accès au calendrier de réservations";
 $tabRoles["AccesBaptemes"]="Accès à la liste des baptèmes";
-$tabRoles["AccesManifestations"]="Accès au calendrier des manifestations";
 $tabRoles["AccesMaintenances"]="Accès à la liste des maintenances";
 
 
@@ -83,8 +82,6 @@ $tabRoles["ModifClasseur"]="Modification d'un classeur dans le module document";
 
 $tabRoles["ModifFamilleCree"]="Créer une famille";
 
-$tabRoles["ModifManifestation"]="Modification des manifestations";
-$tabRoles["ModifParticipant"]="Ajout/Suppression de participants à une manifestation";
 $tabRoles["ModifForum"]="Modifier la liste de forum (et suppression)";
 $tabRoles["ModifFamilleSauve"]="Sauvegarder une famille";
 $tabRoles["ModifBapteme"]="Modifier un baptème";
@@ -129,6 +126,12 @@ $tabRoles["ValideFichesMaintenance"]="Valider une fiche de maintenance";
 $tabRoles["RefuserFicheMaintenance"]="Refuser une fiche de maintenance";
 $tabRoles["SupprimeMaintenance"]="Suppression d'une maintenance";
 
+
+$tabRoles["AccesManifestations"]="Accès au calendrier des manifestations";
+$tabRoles["CreeManifestation"]="Création d'une manifestation";
+$tabRoles["ModifManifestation"]="Modification des manifestations";
+$tabRoles["ModifParticipant"]="Ajout/Suppression de participants à une manifestation";
+$tabRoles["SupprimeManifestation"]="Suppression d'une manifestation";
 
 
 $tabRoles["ListeFactures"]="Lister l'ensemble des factures";

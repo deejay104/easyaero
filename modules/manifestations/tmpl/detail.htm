@@ -56,124 +56,72 @@
 	<input type="hidden" name="checktime" value="{form_checktime}" />
 
 
-<!-- BEGIN: aff_form_titre -->
 <div class="formulaireTitre">Informations</div>
 
 <div class="formulaire">
 	<p>
-			<label for="titre">Titre</label><input id="titre" name="form_titre" value="{form_titre}" size="40" />
+		<label>Titre</label>{form_titre}
+	</p>
+	<p>
+		<label>Date de la manifestation</label>{form_dte_manip}
+	</p>
+	<p>
+		<label>Type de participants</label>{form_type}
 	</p>
 
 	<p>
-			<label for="form_date">Date de la manifestation</label><input id="form_date" name="form_date" value="{form_date}" size="10" />
+		<label>Date limite d'inscription</label>{form_dte_limite}
 	</p>
-
 	<p>
-			<label for="form_date_limite">Date limite d'inscription</label><input id="form_date_limite" name="form_date_limite" value="{form_date_limite}" size="10" />
-	</p>
-
-	<p>
-			<label for="cout">Cout par personne</label><input id="cout" name="form_cout" value="{form_cout}" id="form_cout" size="5" /> €<br/><br/>
-	</p>
-
-	<p>
-			<label for="destinataire">Type de participants</label>
-			<span id="destinataire">
-			<!-- BEGIN: lst_type -->
-				<INPUT type="checkbox" name="mtype[{forum_type_id}]" {forum_type_check}> {forum_type_description}.<br />
-			<!-- END: lst_type -->
-			</span>
-	</p>
-
-	<p>
-			<label for="commentaire">Description</label>
-			<span id="commentaire">
-				{aff_detail_manip}
-				<textarea name="form_comment" cols=60 rows=5>{form_comment}</textarea>
-			</span>
+		<label>Cout par personne</label>{form_cout}
 	</p>
 </div>
 
+<div class="formulaireTitre">Description</div>
+
+{form_comment}
+
+<!-- BEGIN: aff_retour -->
+	<a href="index.php?mod=manifestations">Retourner à la liste des manifestations</a><br /><br />
+<!-- END: aff_retour -->
+
+<!-- BEGIN: submit -->
 <div class="formulaireSubmit">
-			<input type="submit" name="fonc" value="Enregistrer" />&nbsp;
-			<input type="submit" name="fonc" value="Annuler" />
+	<input type="submit" name="fonc" value="Enregistrer" />&nbsp;
+	<input type="submit" name="fonc" value="Annuler" />
 </div>
-
 <br />
-<!-- END: aff_form_titre -->
+<!-- END: submit -->
 
 <!-- BEGIN: msg_enregistre -->
 	<!-- BEGIN: lst_enregistre -->
 	{aff_mouvement_detail}
 	<!-- END: lst_enregistre -->
-<div class="{msg_confirmation_class}">{msg_confirmation}</div>
 <!-- END: msg_enregistre -->
 
-
-<!-- BEGIN: aff_form_type -->
-<div class="formulaireTitre">Informations</div>
-
-<div class="formulaire">
-	<p>
-			<label>Titre</label>
-			{form_titre}
-	</p>
-	<p>
-			<label>Type de participants</label>
-			{form_type}
-	</p>
-<!-- END: aff_form_type -->
-
-<!-- BEGIN: aff_form_date_limite -->
-	<p>
-			<label>Date limite d'inscription</label>
-			{form_date_limite}
-	</p>
-<!-- END: aff_form_date_limite -->
-
-<!-- BEGIN: aff_form_cout -->
-	<p>
-			<label>Cout par personne</label>
-			{form_cout}
-	</p>
-<!-- END: aff_form_cout -->
-
-<!-- BEGIN: aff_form_comment -->
-	<p>
-			<label>Descriptif</label>
-			<span>{aff_detail_manip}</span>
-	</p>
-<!-- END: aff_form_comment -->
-
-<!-- BEGIN: aff_retour -->
-			<a href="index.php?mod=manifestations">Retourner à la liste des manifestations</a><br /><br />
-<!-- END: aff_retour -->
-</div>
-
-
-
 <!-- BEGIN: participants -->
-		<div class="formulaireTitre">Participants ({aff_nbok})</div>
-		<div  class="formulaireListe">
-			{aff_participants_manip}
-		</div>
+	<div class="formulaireTitre">Participants ({aff_nbok})</div>
+	<div  class="formulaireListe">
+		{aff_participants_manip}
+	</div>
+	<br />
 <!-- END: participants -->
 
 <!-- BEGIN: absents -->
-		<div class="formulaireTitre">Absents ({aff_nbnok})</div>
-		<div  class="formulaireListe">
-			{aff_absents_manip}
-		</div>
+	<div class="formulaireTitre">Absents ({aff_nbnok})</div>
+	<div  class="formulaireListe">
+		{aff_absents_manip}
+	</div>
+	<br />
 <!-- END: absents -->
 
 <!-- BEGIN: na -->
-		<div class="formulaireTitre">Non répondus</div>
-		<div  class="formulaireListe">
-			{aff_na_manip}
-		</div>
+	<div class="formulaireTitre">Non répondus</div>
+	<div  class="formulaireListe">
+		{aff_na_manip}
+	</div>
+	<br />
 <!-- END: na -->
-
-<br />
 
 <!-- BEGIN: autre_manip -->
 <div class="formulaireTitre">Autre(s) manifestation(s) ayant lieu le meme jour</div>
