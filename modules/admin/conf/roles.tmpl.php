@@ -51,14 +51,9 @@ $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
 $tabRoles["AccesAvions"]="Accès au suivi des avions";
 
 $tabRoles["AccesConfiguration"]="Accès au module de configuration";
-$tabRoles["AccesConfigVar"]="Accès à la page de configuration des variables";
-$tabRoles["AccesConfigGroupes"]="Accès à la page de configuration des groupes";
-$tabRoles["AccesConfigEcheances"]="Accès à la gestion des échéances";
 $tabRoles["AccesConfigComptes"]="Accès à la page de modification des numéro de comptes";
 $tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
 $tabRoles["AccesConfigTarifs"]="Accès à la page de configuration des tarifs";
-$tabRoles["AccesConfigDonneesUser"]="Accès à la page de configuration des données utilisateurs personnalisées";
-$tabRoles["AccesConfigCrontab"]="Accès à la page de gestion des taches planifiées";
 $tabRoles["AccesConfigPrevisions"]="Accès à la page de gestion des prévisions";
 $tabRoles["AccesSuiviClub"]="Accès aux pages de suivi du club";
 

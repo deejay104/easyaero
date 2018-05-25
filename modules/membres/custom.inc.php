@@ -19,7 +19,7 @@
 */
 
 	$tmpl_custom = new XTemplate (MyRep("custom.htm"));
-	$tmpl_x->assign("path_module",$corefolder."/".$module."/".$mod);
+	$tmpl_custom->assign("path_module",$corefolder."/".$module."/".$mod);
 
 // ---- Charge l'utilisateur
 	require_once ($appfolder."/class/user.inc.php");

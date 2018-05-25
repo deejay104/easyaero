@@ -1,0 +1,144 @@
+<!-- BEGIN: custom -->
+<link href='{corefolder}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+
+<script src='{corefolder}/external/fullcalendar/lib/moment.min.js'></script>
+<script src='{corefolder}/external/fullcalendar/fullcalendar.min.js'></script>
+<script src='{corefolder}/external/fullcalendar/locale/fr.js'></script>
+<style>
+	#script-warning {
+		display: none;
+		background: #eee;
+		border-bottom: 1px solid #ddd;
+		padding: 0 10px;
+		line-height: 40px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: red;
+	}
+
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	#calendar {
+		width: 100%;
+		padding: 0px;
+	}
+
+	.fc-time-grid .fc-slats td {
+		height: 1em;
+		font-size: 10px;
+	}
+
+	.fc-time {	color: #000000; }
+	.fc-title {	color: black; }
+	.fc-end-resizer { color: #777777; }
+
+	.fc-toolbar { display: none; }
+	.fc-day-grid { display: none; }
+	.fc-axis { width: 60px; }
+</style>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+		$('#calendar').fullCalendar({
+			defaultDate: '{form_jour}',
+			defaultView: '{defaultView}',
+			defaultEventMinutes: 60,
+			slotDuration: '01:00:00',
+			timeFormat: 'H:mm',
+			lang: 'fr',
+			editable: true,
+			selectable: true,
+			selectHelper: true,
+			minTime: '{form_debjour}:00:00',
+			maxTime: '{form_finjour}:00:00',
+			scrollTime: '{form_debjour}:00:00',
+			axisFormat: 'HH:mm',
+			height: 400,
+			slotEventOverlap: false,
+
+			header: {
+				left: '',
+				center: '',
+				right: ''
+			},
+
+			businessHours:
+	       {
+			   start: '0:00', // a start time (10am in this example)
+			   end: '23:59', // an end time (12pm in this example)
+			   dow: [ 1,2,3,4,5 ]
+			},
+
+		   views: {
+				agendaFourWeeks: {
+					type: 'agenda',
+					duration: {weeks: 4},
+					buttonText: 'Default',
+					columnFormat: 'DD'
+				}
+			},
+
+			select: function(start, end) {
+				document.location="index.php?mod=reservations&rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
+			},
+
+			eventClick: function(event, element) {
+				document.location="index.php?mod=reservations&rub=reservation&id="+event.id;
+		    },
+
+			eventResize: function(event, dayDelta, minuteDelta ) {
+				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+			eventDrop: function(event,dayDelta,minuteDelta) {
+				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+
+			events: {
+				url: 'api.php?mod=reservations&rub=getcal&ress=0',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
+		
+	});
+	
+</script>
+
+
+	<div class="encadreInfos">
+		<div class="encadreTitre">Mes Informations</div>
+		<!-- BEGIN: mod_compta_detail -->
+		<p><label>Solde du compte pilote</label>{solde}</p>
+		<!-- END: mod_compta_detail -->
+		<!-- BEGIN: mod_aviation_detail -->
+		<p><label>Nombre de vols dans les 3 derniers mois</label>{nb_vols} vols</p>
+		<!-- END: mod_aviation_detail -->
+	</div>
+	
+<!-- BEGIN: aff_reservation -->
+	<div class="encadreInfos" style='height:440px;'>
+		<div class="encadreTitre">Réservations du jour</div>
+		
+		<div id='script-warning'>
+			Erreur : <code>api.php</code> doit être accessible.
+		</div>
+
+		<div id='loading'>loading...</div>
+
+		<div id='calendar'></div>
+	</div>
+<!-- END: aff_reservation -->
+
+<!-- END: custom -->

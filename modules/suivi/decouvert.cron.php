@@ -7,7 +7,7 @@
 	if ($gl_mode!="batch")
 	  { FatalError("Acces refuse","Ne peut etre execute qu'en arriere plan"); }
 
-  	require_once ("class/echeance.inc.php");
+  	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Mail du trésorier
 	$query="SELECT mail FROM ".$MyOpt["tbl"]."_utilisateurs WHERE droits LIKE '%TRE%' AND actif='oui'";
@@ -26,7 +26,9 @@
 	}
 	else
 	{
-		FatalError("Erreur","Impossible de trouver le mail du tresorier");
+		// FatalError("Erreur","Impossible de trouver le mail du tresorier");
+		$tabPre[0]=$MyOpt["from_email"];
+		$mailtre=$tabTre[0];
 	}
 
 	myPrint("Tresorier : '$mailtre'");
@@ -40,14 +42,14 @@
 		$usr = new user_class($id,$sql,false,true);
 		$ret=true;
 		$solde=$usr->CalcSolde();
-		if (($solde<-$usr->data["decouvert"]) && ($usr->mail!="") && ($usr->virtuel=="non"))
+		if (($solde<-$usr->data["decouvert"]) && ($usr->data["mail"]!="") && ($usr->data["virtuel"]=="non"))
 		{
 			myPrint($usr->fullname." - Solde: ".$solde);
 
 			$tabvar=array();
 			$tabvar["solde"]=$solde;
 			
-			SendMailFromFile($mailtre,$usr->mail,$tabTre,"[".$MyOpt["site_title"]."] : Compte à découvert",$tabvar,"decouvert");
+			SendMailFromFile($mailtre,$usr->data["mail"],$tabTre,"[".$MyOpt["site_title"]."] : Compte à découvert",$tabvar,"decouvert");
 
 		}
 		if (!$ret)
