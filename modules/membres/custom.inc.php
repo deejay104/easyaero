@@ -73,6 +73,22 @@
 	  	$tmpl_custom->parse("left.mod_aviation_lache");
 	}
 
+// ---- Informations
+
+
+  	if (GetModule("compta"))
+	{
+		$tmpl_custom->assign("aff_solde", $usrcus->AffSolde());
+	  	$tmpl_custom->parse("right.compta");
+	}  	
+	if (GetModule("aviation"))
+	{
+		$tmpl_custom->assign("aff_voltotal", $usrcus->AffNbHeures("0000-00-00"));
+		$tmpl_custom->assign("aff_volannee", $usrcus->AffNbHeures(date("Y-01-01")));
+		$tmpl_custom->assign("aff_vol12mois", $usrcus->AffNbHeures12mois());
+	  	$tmpl_custom->parse("right.aviation");
+	}
+
 // ---- Affiche la page
 	$tmpl_custom->parse("left");
 	$left=$tmpl_custom->text("left");

@@ -40,7 +40,78 @@
 			nextText: "Suivant"
 		});
 	});
+
+	$( function() {
+		var dialog, form,
+	 
+		// From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+		timeRegex = /^(([0-9])+)?([:h])?([0-9])+$/i,
+
+		form_atelier_nom = $( "#form_atelier_nom" ),
+		form_atelier_mail = $("#form_atelier_mail"),
+		allFields = $( [] ).add(form_atelier_nom).add(form_atelier_mail),
+		tips = $( ".validateTips" );
+		
+		function addFlight() {
+		  var valid = true;
+		  allFields.removeClass( "ui-state-error" );
+
+		  if ( valid ) {
+			document.getElementById("atelier").submit();
+			dialog.dialog( "close" );
+		  }
+		  return valid;
+		}
+	 
+		dialog = $( "#dialog-form" ).dialog({
+		  autoOpen: false,
+		  height: 300,
+		  width: 1200,
+		  top: 10,
+		  modal: true,
+		  buttons: {
+			"Ajouter": addFlight,
+			Cancel: function() {
+			  dialog.dialog( "close" );
+			}
+		  },
+		  close: function() {
+			form[ 0 ].reset();
+			allFields.removeClass( "ui-state-error" );
+		  }
+		});
+	 
+		form = dialog.find( "form" ).on( "submit", function( event ) {
+		  event.preventDefault();
+		  addFlight();
+		});
+	 
+		$( "#ajouter" ).on( "click", function() {
+		  dialog.dialog( "open" );
+		});
+	});
+
 </script>
+
+
+<div id="dialog-form" title="Ajouter un vol" class="formulaire">
+  <p class="validateTips">Saisissez le nom et l'email de l'atelier.</p>
+ 
+  <form id="atelier" method="post" action="index.php" enctype="multipart/form-data">
+    <fieldset>
+		<INPUT type="hidden" name="checktime" value="{form_checktime}">
+		<input type="hidden" name="mod" value="ressources">
+		<input type="hidden" name="rub" value="detailmaint">
+		<input type="hidden" name="fonc" value="ajoutatelier">
+		<p><label>Nom</label><input name="form_atelier[nom]" id="form_atelier_nom"  value=""></p>
+		<p><label>Email</label><input type="email" name="form_atelier[mail]" id="form_atelier_mail"  value=""></p>
+
+		<!-- Allow form submission with keyboard without duplicating the dialog button -->
+		<input type="submit" name="fonc" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+
 
 <FORM name="maintenance" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
@@ -62,7 +133,7 @@
 					<label>Status</label>{form_status}
 				</p>
 				<p>
-					<label>Atelier</label>{form_uid_atelier}
+					<label>Atelier</label>{form_uid_atelier} <a id="ajouter">-Ajouter un atelier-</a>
 				</p>
 				<p>
 					<label>Début de l'intervention</label>{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>

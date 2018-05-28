@@ -50,18 +50,16 @@
 
 // ---- Enregistre
 	$msg_erreur="";
+	if (count($form_data)>0)
+	{
+		foreach($form_data as $k=>$v)
+		{
+			$msg_erreur.=$maint->Valid($k,$v);
+		}
+	}
 
 	if (GetDroit("ModifMaintenance") && ($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		if (count($form_data)>0)
-		{
-			foreach($form_data as $k=>$v)
-		  	{
-		  		$msg_erreur.=$maint->Valid($k,$v);
-		  	}
-			$msg_confirmation.="Vos données ont été enregistrées.<BR>";
-		}
-
 		$msg_erreur=$maint->Save();
 		if ($id==0)
 		{
@@ -107,6 +105,25 @@
 		$mod="ressources";
 		$affrub="liste";
 	}
+
+// ---- Ajout d'un atelier
+	if (GetDroit("CreeAtelier") && ($fonc=="ajoutatelier") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	{
+		$atelier=new atelier_class(0,$sql);
+		
+		if (count($form_atelier)>0)
+		{
+			foreach($form_atelier as $k=>$v)
+		  	{
+		  		$msg_erreur.=$atelier->Valid($k,$v);
+		  	}
+			$msg_ok="Atelier ajouté.<BR>";
+			$atelier->Save();
+		}
+		
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;		
+	}
+
 // ---- Messages
 	if ($msg_erreur!="")
 	{
@@ -251,7 +268,7 @@
 				$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->data["description"]);
 
 				$tabValeur[$i]["maint"]["val"]=(($fiche->data["uid_planif"]>0) ? "1" : "0");
-				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='maintenance.php?rub=detailmaint&id=$fiche->uid_planif' title='Cette fiche est déjà affectée à une autre maintenance'><img src='images/12_feuilles.gif' border='0'></a>" : " ");
+				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='index.php?mod=ressources&rub=detailmaint&id=".$fiche->data["uid_planif"]."' title='Cette fiche est déjà affectée à une autre maintenance'><img src='".$corefolder."/static/images/icn16_liste	.png'></a>" : " ");
 			  }	
 		  }
 	  }

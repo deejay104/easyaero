@@ -283,7 +283,18 @@ class user_class extends user_core
 		return (($res["nb"]>0) ? $res["nb"] : "0");
 	}
 
-	function AffNbHeures12mois($type)
+	function AffNbHeures($dte)
+	{
+		$t=$this->NbHeures($dte);
+
+		if ($t>0)
+		  { $ret=AffTemps($t); }
+		else
+		  { $ret="0h 00"; }
+		return "<a href='index.php?mod=aviation&rub=vols&id=".$this->id."'>".$ret."</a>";
+	}
+
+	function AffNbHeures12mois($type="")
 	{
 		$dte=(date("Y")-1)."-".date("m")."-".date("d");
 		$t=$this->NbHeures($dte);

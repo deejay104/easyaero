@@ -297,6 +297,10 @@ $tabTmpl=Array
 		"nom" => Array("Type" => "varchar(200)", ),
 		"mail" => Array("Type" => "varchar(200)", ),
 		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
+		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
+		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 	),
 	"maintenance" => Array
 	(

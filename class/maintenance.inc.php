@@ -249,7 +249,7 @@ class atelier_class extends objet_core
 	protected $rub="";
 
 	protected $droit=array();
-	protected $type=array("mail"=>"eùail");
+	protected $type=array("nom"=>"varchar","mail"=>"email");
 	
 	protected $tabList=array(
 	);
