@@ -133,9 +133,9 @@
 	if (($fonc=="supprimer") && ($id>0))
 	{
 		$manip->Delete();
-			$query= "DELETE FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='".$id."'";
-			$sql->Delete($query);
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		$query= "DELETE FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='".$id."'";
+		$sql->Delete($query);
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
 // ---- Inscription à la manifestation

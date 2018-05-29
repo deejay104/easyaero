@@ -142,7 +142,7 @@ class user_class extends user_core
 	}
 
 	
-	function aff($key,$typeaff="html",$formname="form_data")
+	function aff($key,$typeaff="html",$formname="form_data",&$render="")
 	{
 		$render=$typeaff;
 		$ret=parent::aff($key,$typeaff,$formname,$render);

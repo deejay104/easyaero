@@ -3,6 +3,12 @@
 //   Variables
 // ---------------------------------------------------------------------------------------------
 
+// Titre du site
+$MyOptTmpl["site_title"]="Easy-Aero";
+
+// email par défault d'envoie des mails
+$MyOptTmpl["from_email"]="noreply@easy-aero.fr";
+
 
 // Uid Banque
 $MyOptTmpl["uid_banque"]=3;

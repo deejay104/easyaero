@@ -5,36 +5,35 @@
 ?>
 <?
 	if ($gl_mode!="batch")
-	  { FatalError("Acces refuse","Ne peut etre execute qu'en arriere plan"); }
+	  { FatalError("Acces refusé","Ne peut etre executé qu'en arriere plan"); }
 
   	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Mail du trésorier
-	$query="SELECT mail FROM ".$MyOpt["tbl"]."_utilisateurs WHERE droits LIKE '%TRE%' AND actif='oui'";
-	$sql->Query($query);
-	
-	$tabTre=array();
-	for($i=0; $i<$sql->rows; $i++)
-	{ 
-		$sql->GetRow($i);
-	
-		$tabTre[$i]=$sql->data["mail"];
-	}
-	if (isset($tabTre[0]))
+
+	$mailtre=array();
+	$mailtre["name"]=$MyOpt["site_title"];
+	$mailtre["mail"]=$MyOpt["from_email"];
+	if ($mailtre=="")
 	{
-		$mailtre=$tabTre[0];
-	}
-	else
-	{
-		// FatalError("Erreur","Impossible de trouver le mail du tresorier");
-		$tabPre[0]=$MyOpt["from_email"];
-		$mailtre=$tabTre[0];
+		return;
 	}
 
-	myPrint("Tresorier : '$mailtre'");
+	$tabTre=array();
+	$lst=ListActiveUsers($sql,"",array("NotifDecouvert"),"non");
+	foreach($lst as $i=>$id)
+	{
+		$usr = new user_class($id,$sql,false,true);
+		if ($usr->data["mail"]!="")
+		{
+			$tabTre[]=$usr->data["mail"];
+		}
+	}
+
+	myPrint("Notification Découvert : ".implode(",",$tabTre));
 
 // ---- Liste les comptes actifs
-	$lstusr=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
+	$lstusr=ListActiveUsers($sql,"std",array(),"non");
 	$gl_res="OK";
 
 	foreach($lstusr as $i=>$id)
@@ -45,12 +44,10 @@
 		if (($solde<-$usr->data["decouvert"]) && ($usr->data["mail"]!="") && ($usr->data["virtuel"]=="non"))
 		{
 			myPrint($usr->fullname." - Solde: ".$solde);
-
 			$tabvar=array();
 			$tabvar["solde"]=$solde;
 			
-			SendMailFromFile($mailtre,$usr->data["mail"],$tabTre,"[".$MyOpt["site_title"]."] : Compte à découvert",$tabvar,"decouvert");
-
+			SendMailFromFile($mailtre,$usr->data["mail"],$tabTre,"[".$MyOpt["site_title"]."] Compte à découvert",$tabvar,"decouvert");
 		}
 		if (!$ret)
 		{

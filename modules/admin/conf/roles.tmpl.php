@@ -137,4 +137,8 @@ $tabRoles["AfficheSignatureCompte"]="Vérifie la signature des transactions";
 
 
 
+$tabRoles["NotifDecouvert"]="Personne à mettre en copie des notifications de découvert";
+
+
+
 ?>
