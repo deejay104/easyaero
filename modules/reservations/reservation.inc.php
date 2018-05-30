@@ -490,7 +490,10 @@
 	}
 
 	// Affiche le boutton supprimer
-	$tmpl_x->parse("infos.supprimer");
+	if ($resa["resa"]->edite!="non")
+	{
+		$tmpl_x->parse("infos.supprimer");
+	}
 
 
 	if ($ok_aff==0)

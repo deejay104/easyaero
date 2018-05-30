@@ -1,5 +1,5 @@
 <?
-$tabTmpl=Array
+$tabCustom=Array
 (
 	"abo_ligne" => Array (
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -515,12 +515,6 @@ $tabTmpl=Array
 		"uid_maj" => Array("Type" => "int(10) unsigned","Index"=>1 ),
 		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
 	),
-	"roles" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"groupe" => Array("Type" => "varchar(5)", "Index" => "1", ),
-		"role" => Array("Type" => "varchar(40)", "Index" => "1", ),
-	),
 	"tarifs" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -558,16 +552,9 @@ $tabTmpl=Array
 	"utilisateurs" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"nom" => Array("Type" => "varchar(40)", ),
-		"prenom" => Array("Type" => "varchar(40)", ),
-		"initiales" => Array("Type" => "char(3)", ),
-		"password" => Array("Type" => "varchar(50)", ),
-		"idcpt" => Array("Type" => "int(10) unsigned", "Default" => 0, "Index" => "1"),
 		"sexe" => Array("Type" => "enum('M','F','NA')", "Default" => "NA", ),
 		"pere" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1"),
 		"mere" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1"),
-		"mail" => Array("Type" => "varchar(104)", ),
-		"notification" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
 		"disponibilite" => Array("Type" => "enum('dispo','occupe')", "Default" => "dispo", ),
 		"tel_fixe" => Array("Type" => "varchar(20)", ),
 		"tel_portable" => Array("Type" => "varchar(20)", ),
@@ -582,14 +569,10 @@ $tabTmpl=Array
 		"avatar" => Array("Type" => "varchar(50)", ),
 		"droits" => Array("Type" => "varchar(2)", ),
 		"lache" => Array("Type" => "varchar(2)", ),
-		"actif" => Array("Type" => "enum('oui','non','off')", "Default" => "oui", "Index" => "1", ),
-		"virtuel" => Array("Type" => "enum('oui','non')", "Default" => "non", "Index" => "1", ),
 		"type" => Array("Type" => "enum('pilote','eleve','instructeur','invite','membre','parent','enfant','employe')", "Default" => "pilote", "Index" => "1", ),
 		"decouvert" => Array("Type" => "smallint(6)", "Default" => "0", ),
 		"tarif" => Array("Type" => "smallint(6)", "Default" => "0", ),
 		"dte_naissance" => Array("Type" => "date", "Default" => "0000-00-00", ),
-		"dte_licence" => Array("Type" => "date", "Default" => "0000-00-00", ),
-		"dte_medicale" => Array("Type" => "date", "Default" => "0000-00-00", ),
 		"dte_inscription" => Array("Type" => "date", "Default" => "0000-00-00"),
 		"dte_login" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 		"poids" => Array("Type" => "tinyint(3) unsigned", "Default" => "75", ),
@@ -597,8 +580,6 @@ $tabTmpl=Array
 		"aff_mois" => Array("Type" => "char(1)", ),
 		"aff_jour" => Array("Type" => "date", "Default" => "0000-00-00", ),
 		"aff_msg" => Array("Type" => "tinyint(3) unsigned", "Default" => "0", ),
-		"uid_maj" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),
 	"vacances" => Array
 	(
