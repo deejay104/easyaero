@@ -20,12 +20,17 @@
 ?>
 
 <?
-	require_once ("class/maintenance.inc.php");
-	require_once ("class/ressources.inc.php");
+	require_once ($appfolder."/class/maintenance.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("fiche.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Vérification des données
 	if (!is_numeric($uid_avion))
@@ -56,65 +61,65 @@
 
 	$tabTitre=array();
 	$tabTitre["ress"]["aff"]="Avion";
-	$tabTitre["ress"]["width"]=60;
+	$tabTitre["ress"]["width"]=70;
 	$tabTitre["auteur"]["aff"]="Auteur";
 	$tabTitre["auteur"]["width"]=150;
 	$tabTitre["dtecreat"]["aff"]="Date";
-	$tabTitre["dtecreat"]["width"]=80;
+	$tabTitre["dtecreat"]["width"]=100;
 	$tabTitre["description"]["aff"]="Description";
 	$tabTitre["description"]["width"]=350;
 	$tabTitre["dteresolv"]["aff"]="Prévision";
-	$tabTitre["dteresolv"]["width"]=80;
+	$tabTitre["dteresolv"]["width"]=100;
 
 	$tabValeur=array();
 
 	$lstFiche=GetActiveFiche($sql,$uid_avion);
 	if (count($lstFiche)>0)
-	  {
+	{
 		foreach($lstFiche as $i=>$id)
-		  {
+		{
 			$fiche = new fichemaint_class($id,$sql);
 
-			$ress = new ress_class($fiche->uid_avion,$sql,false);
-			$tabValeur[$i]["ress"]["val"]=strtoupper($ress->immatriculation);
-			$tabValeur[$i]["ress"]["aff"]=strtoupper($ress->immatriculation);
+			$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
+			$tabValeur[$i]["ress"]["val"]=strtoupper($ress->data["immatriculation"]);
+			$tabValeur[$i]["ress"]["aff"]=strtoupper($ress->data["immatriculation"]);
 			
-			$usr = new user_class($fiche->uid_creat,$sql,false);
+			$usr = new user_core($fiche->uid_creat,$sql,false);
 			$tabValeur[$i]["auteur"]["val"]=$usr->Aff("fullname","val");
 			$tabValeur[$i]["auteur"]["aff"]=$usr->Aff("fullname");
 
 			$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->dte_creat,"jour");
 			$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
-			$tabValeur[$i]["description"]["val"]=$fiche->description;
+			$tabValeur[$i]["description"]["val"]=$fiche->data["description"];
 			$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->description);
 
-			if ($fiche->uid_planif>0)
-			  {
-			  	$maint = new maint_class($fiche->uid_planif,$sql);
-				$tabValeur[$i]["dteresolv"]["val"]=sql2date($maint->dte_deb,"jour");
-				$tabValeur[$i]["dteresolv"]["aff"]="&nbsp;&nbsp;<a href='maintenance.php?rub=detail&id=".$maint->id."'>".sql2date($maint->dte_deb,"jour")."</a>";
-			  }
+			if ($fiche->data["uid_planif"]>0)
+			{
+			 	$maint = new maint_class($fiche->data["uid_planif"],$sql);
+				$tabValeur[$i]["dteresolv"]["val"]=sql2date($maint->data["dte_deb"],"jour");
+				$tabValeur[$i]["dteresolv"]["aff"]="<a href='maintenance.php?rub=detail&id=".$maint->id."'>".sql2date($maint->data["dte_deb"],"jour")."</a>";
+			}
 			else
-			  {
+			{
 				$tabValeur[$i]["dteresolv"]["val"]="0";
-				$tabValeur[$i]["dteresolv"]["aff"]="&nbsp;&nbsp;"."N/A";
-			  }
+				$tabValeur[$i]["dteresolv"]["aff"]="N/A";
+			}
 	
-		  }
-	  }
+		}
+	}
 	else
-	  {
-			$tabValeur[$i]["ress"]["val"]="";
-			$tabValeur[$i]["ress"]["aff"]="";
-			$tabValeur[$i]["auteur"]["val"]="";
-			$tabValeur[$i]["auteur"]["aff"]="";
-			$tabValeur[$i]["dtecreat"]["val"]="";
-			$tabValeur[$i]["dtecreat"]["aff"]="";
-			$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
-			$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
-			$tabValeur[$i]["dteresolv"]["val"]="";
-			$tabValeur[$i]["dteresolv"]["aff"]="";
-	  }
+	{
+		$tabValeur[$i]["ress"]["val"]="";
+		$tabValeur[$i]["ress"]["aff"]="";
+		$tabValeur[$i]["auteur"]["val"]="";
+		$tabValeur[$i]["auteur"]["aff"]="";
+		$tabValeur[$i]["dtecreat"]["val"]="";
+		$tabValeur[$i]["dtecreat"]["aff"]="";
+		$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
+		$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
+		$tabValeur[$i]["dteresolv"]["val"]="";
+		$tabValeur[$i]["dteresolv"]["aff"]="";
+	}
 
 
 	if ($order=="") { $order="ress"; }

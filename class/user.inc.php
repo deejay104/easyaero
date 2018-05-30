@@ -24,7 +24,7 @@ class user_class extends user_core
 	protected $rub="detail";
 
 	protected $droit=array("dte_inscription"=>"ModifUserDteInscription","decouvert"=>"ModifUserDecouvert","idcpt"=>"ModifUserIdCpt","tarif"=>"ModifUserTarif","type"=>"ModifUserType","lache"=>"ModifUserLache");
-	protected $type=array("prenom"=>"ucword","nom"=>"uppercase","tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+	protected $type=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
 
 	// protected $type=array("description"=>"text","status"=>"enum","module"=>"enum");
 	
@@ -252,6 +252,38 @@ class user_class extends user_core
 		return true;
 	}
 
+	function CheckDisponibilite($deb,$fin)
+	{
+		$this->load($this->id,true,$this->me);
+		if ($this->data["disponibilite"]=="dispo")
+		{
+			$nb=false;
+			$zero=true;
+		}
+		else
+		{
+			$nb=true;
+			$zero=false;
+		}
+		
+		$query = "SELECT * FROM ".$this->tbl."_disponibilite AS dispo ";
+		$query.= "WHERE uid='".$this->id."' ";
+		$query.= "AND dte_deb<='".$fin."' ";
+		$query.= "AND dte_fin>='".$deb."' ";
+
+		$sql=$this->sql;
+		$sql->Query($query);
+
+		if ($sql->rows>0)
+		{ 
+			return $nb;
+		}
+		else
+		{
+			return $zero;
+		}	
+	}
+	
 	function NombreVols($nbmois="3",$type="aff")
 	{
 		$sql=$this->sql;

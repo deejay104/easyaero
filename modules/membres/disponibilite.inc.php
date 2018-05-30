@@ -23,8 +23,8 @@
 	if (!is_numeric($id))
       { $id=0; }
 
-	if ( (!GetDroit("AccesMembre")) && (!GetMyId($id)) )
-	  { FatalError("Accès non autorisé (AccesMembre)"); }
+	if ( (!GetDroit("AccesDisponibilites")) && (!GetMyId($id)) )
+	  { FatalError("Accès non autorisé (AccesDisponibilites)"); }
 
   	if ($id>0)
 	  { $usr = new user_class($id,$sql,((GetMyId($id)) ? true : false)); }

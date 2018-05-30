@@ -34,6 +34,8 @@
 //	$fin=strtotime("2013-08-07 18:00");
 
 // ---- Charge les informations sur le chargement
+	require_once ($appfolder."/class/user.inc.php");
+
 	if (($mid>0) && ($deb>0) && ($fin>0))
 	{
 		$dte_deb=date("Y-m-d H:i:s",$deb);
@@ -82,8 +84,8 @@
 	$textcolor = imagecolorallocate($img, 0, 0, 0);
 	imagefill($img,0,0,$white); 
 
-	$logo = imagecreatefrompng($module."/".$mod."/img/icn16_$ok.png");
-	list($width, $height) = getimagesize($module."/".$mod."/img/icn16_".$ok.".png");
+	$logo = imagecreatefrompng($appfolder."/static/".$module."/".$mod."/img/icn16_$ok.png");
+	list($width, $height) = getimagesize($appfolder."/static/".$module."/".$mod."/img/icn16_".$ok.".png");
 	imagecopy($img,$logo,2,2,0,0,$width,$height);
 
 	imagestring($img, 2, 20, 2, $txt, $textcolor);
@@ -97,8 +99,8 @@
 function erreur($txt)
   {
 	$error = imagecreate(320, 16);
-	$logo = imagecreatefrompng($module."/".$mod."/img/icn16_erreur.png");
-	list($width, $height) = getimagesize($module."/".$mod."/img/icn16_erreur.png");
+	$logo = imagecreatefrompng($appfolder."/".$module."/".$mod."/img/icn16_erreur.png");
+	list($width, $height) = getimagesize($appfolder."/static/".$module."/".$mod."/img/icn16_erreur.png");
 	$white = imagecolorallocate ($error, 255, 255, 255);
 	$textcolor = imagecolorallocate($error, 255, 0, 0);
 

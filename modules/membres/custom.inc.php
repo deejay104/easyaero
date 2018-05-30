@@ -75,6 +75,7 @@
 
 // ---- Informations
 
+	$tmpl_custom->assign("unitPoids", $MyOpt["unitPoids"]);
 
   	if (GetModule("compta"))
 	{

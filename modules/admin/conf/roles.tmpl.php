@@ -49,6 +49,7 @@ $tabRoles["AccesPlage"]="Accès à la page de configuration des plages horaires";
 $tabRoles["AccesVols"]="Accès au suivi des vols";
 $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
 $tabRoles["AccesAvions"]="Accès au suivi des avions";
+$tabRoles["AccesDisponibilites"]="Accès à la page de saisi des disponibilités";
 
 $tabRoles["AccesConfiguration"]="Accès au module de configuration";
 $tabRoles["AccesConfigComptes"]="Accès à la page de modification des numéro de comptes";

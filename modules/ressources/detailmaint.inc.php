@@ -258,12 +258,12 @@
 				$tabValeur[$i]["ress"]["val"]=$ress->aff("immatriculation","val");
 				$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
 				
-				$usr = new user_class($fiche->data["uid_creat"],$sql,false);
+				$usr = new user_class($fiche->uid_creat,$sql,false);
 				$tabValeur[$i]["auteur"]["val"]=$usr->aff("fullname","val");
 				$tabValeur[$i]["auteur"]["aff"]=$usr->aff("fullname");
 	
-				$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->data["dte_creat"],"jour");
-				$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->data["dte_creat"],"jour");
+				$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->dte_creat,"jour");
+				$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
 				$tabValeur[$i]["description"]["val"]=$fiche->description;
 				$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->data["description"]);
 
