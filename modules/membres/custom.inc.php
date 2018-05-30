@@ -24,6 +24,7 @@
 // ---- Charge l'utilisateur
 	require_once ($appfolder."/class/user.inc.php");
 	$usrcus = new user_class($id,$sql,true);
+	$usrcus->LoadRoles();
   	if (GetModule("aviation"))
 	{
 		$usrcus->LoadLache();
@@ -73,9 +74,16 @@
 	  	$tmpl_custom->parse("left.mod_aviation_lache");
 	}
 
+	if (($usrcus->CheckDroit("TypeInstructeur")) && (GetDroit("ModifUserDisponibilite")))
+	{
+		$tmpl_custom->assign("form_id", $id);
+	  	$tmpl_custom->parse("left.disponibilite");
+	}
+	
 // ---- Informations
 
 	$tmpl_custom->assign("unitPoids", $MyOpt["unitPoids"]);
+
 
   	if (GetModule("compta"))
 	{

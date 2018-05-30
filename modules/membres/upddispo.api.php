@@ -38,22 +38,6 @@
 	
 	$sql->Edit("disponibilite",$MyOpt["tbl"]."_disponibilite",$id,$t);
 
-	
-	// if ($_GET["id"]==0)
-	// {
-		// $query="INSERT ".$MyOpt["tbl"]."_disponibilite SET uid='".$mid."', dte_deb='".$jstart."',dte_fin='".$jend."', uid_maj='".$gl_uid."', dte_maj='".now()."'";
-		// $sql->Insert($query);
-	// }
-	// else
-	// {
-		// if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-			// die("Please provide an event id.");
-		// }
-
-
-		// $query="UPDATE ".$MyOpt["tbl"]."_disponibilite SET dte_deb='".$jstart."',dte_fin='".$jend."' WHERE id='".$id."'";
-		// $sql->Update($query);
-	// }
-echo json_encode(array('updated' => true));
+	echo json_encode(array('updated' => true));
 
 ?>

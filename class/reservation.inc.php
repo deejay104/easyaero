@@ -202,7 +202,7 @@ class resa_class{
 	}
 	
 	function Save($ValidResa=false)
-	{ global $uid,$MyOpt;
+	{ global $gl_uid,$MyOpt;
 
 		$sql=$this->sql;
 
@@ -421,7 +421,7 @@ class resa_class{
 			"carbavant"=>$this->carbavant,
 			"carbapres"=>$this->carbapres,
 			"prixcarbu"=>$this->prixcarbu,
-			"uid_maj"=>$uid,
+			"uid_maj"=>$gl_uid,
 			"dte_maj"=>now()
 		);
 

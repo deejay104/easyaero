@@ -23,8 +23,25 @@ class user_class extends user_core
 	protected $mod="membres";
 	protected $rub="detail";
 
-	protected $droit=array("dte_inscription"=>"ModifUserDteInscription","decouvert"=>"ModifUserDecouvert","idcpt"=>"ModifUserIdCpt","tarif"=>"ModifUserTarif","type"=>"ModifUserType","lache"=>"ModifUserLache");
 	protected $type=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+	protected $droit=array(
+		"dte_inscription"=>"ModifUserDteInscription",
+		"decouvert"=>"ModifUserDecouvert",
+		"idcpt"=>"ModifUserIdCpt",
+		"tarif"=>"ModifUserTarif",
+		"type"=>"ModifUserType",
+		"lache"=>"ModifUserLache",
+		"sexe"=>array("owner","ModifUserInfos"),
+		"tel_fixe"=>array("owner","ModifUserInfos"),
+		"tel_portable"=>array("owner","ModifUserInfos"),
+		"tel_bureau"=>array("owner","ModifUserInfos"),
+		"adresse1"=>array("owner","ModifUserInfos"),
+		"adresse2"=>array("owner","ModifUserInfos"),
+		"ville"=>array("owner","ModifUserInfos"),
+		"codepostal"=>array("owner","ModifUserInfos"),
+		"dte_naissance"=>array("owner","ModifUserInfos"),
+		"poids"=>array("owner","ModifUserInfos"),
+	);
 
 	// protected $type=array("description"=>"text","status"=>"enum","module"=>"enum");
 	
@@ -107,7 +124,8 @@ class user_class extends user_core
 		global $gl_uid;
 		$sql=$this->sql;
 		// Charge les enregistrements
-		$query = "SELECT id FROM ".$this->tbl."_lache WHERE uid_pilote='".$this->id."'";
+		$query = "SELECT id,id_avion FROM ".$this->tbl."_lache WHERE uid_pilote='".$this->id."' AND actif='oui'";
+
 		$sql->Query($query);
 		$tlache=array();
 		for($i=0; $i<$sql->rows; $i++)
@@ -120,9 +138,9 @@ class user_class extends user_core
 		if (is_array($tablache))
 		{
 			foreach($tablache as $avion=>$lid)
-			  {
+			{
 				$tlache[$avion]["new"]=$lid;
-			  }
+			}
 		}
 
 		// Vérifie la différence
@@ -148,6 +166,7 @@ class user_class extends user_core
 		$ret=parent::aff($key,$typeaff,$formname,$render);
 
 		$sql=$this->sql;
+
 		if ($render=="form")
 		{
 			if ($key=="lache")
@@ -177,6 +196,7 @@ class user_class extends user_core
 		}
 		else
 		{
+			$txt=$this->data[$key];
 			if ($key=="lache")
 			{
 				$ret="";
@@ -189,7 +209,7 @@ class user_class extends user_core
 			}
 			else if ($key=="idcpt")
 			{
-				if ($txt==$this->uid)
+				if ($txt==$this->id)
 				{
 					$ret=$this->fullname;
 				}

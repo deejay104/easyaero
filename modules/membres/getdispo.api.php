@@ -20,6 +20,7 @@
 	$input_arrays=array();
 
 // ---- Charge les disponibilités
+	require_once ($appfolder."/class/user.inc.php");
 	$usr=new user_class($mid,$sql,false,true);
 
 	$q="SELECT * FROM ".$MyOpt["tbl"]."_disponibilite WHERE dte_fin>='".$start." 00:00:00' AND dte_deb<='".$end." 00:00:00' AND uid='".$mid."'";

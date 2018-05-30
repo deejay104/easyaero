@@ -159,7 +159,6 @@
 	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
 		$msg_err2.=$resa["resa"]->Save();
-
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 
 		if (($id==0) && ($resa["resa"]->invite=='oui'))

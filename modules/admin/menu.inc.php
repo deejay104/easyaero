@@ -6,28 +6,13 @@
 // ---- Charge le template
   	$tmpl_menu = new XTemplate (MyRep("menu.htm"));
 	$tmpl_menu->assign("path_module","$module/$mod");
+	$tmpl_menu->assign("id", $id);
 
 // ---- Sélectionne le menu courant
 	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
 
 	
 // ---- Affiche les menus
-	if (GetDroit("AccesConfigVar"))
-	{
-		$tmpl_menu->parse("infos.config");
-	}
-	if (GetDroit("AccesConfigBase"))
-	{
-		$tmpl_menu->parse("infos.base");
-	}
-	if (GetDroit("AccesConfigGroupes"))
-	{
-		$tmpl_menu->parse("infos.groupes");
-	}
-	if (GetDroit("AccesConfigEcheances"))
-	{
-		$tmpl_menu->parse("infos.echeances");
-	}
 	if (GetDroit("AccesConfigComptes"))
 	{
 		$tmpl_menu->parse("infos.comptes");
@@ -54,6 +39,6 @@
 	}
 
 	$tmpl_menu->parse("infos");
-	$aff_menu=$tmpl_menu->text("infos");
+	$aff_menu.=$tmpl_menu->text("infos");
 	
 ?>

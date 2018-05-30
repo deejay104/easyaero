@@ -26,6 +26,8 @@
 	if ( (!GetDroit("AccesDisponibilites")) && (!GetMyId($id)) )
 	  { FatalError("Accès non autorisé (AccesDisponibilites)"); }
 
+  	require_once ($appfolder."/class/user.inc.php");
+
   	if ($id>0)
 	  { $usr = new user_class($id,$sql,((GetMyId($id)) ? true : false)); }
 
@@ -33,27 +35,16 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("disponibilite.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("corefolder",$corefolder);
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche les menus
   	$tmpl_x->assign("id",$id);
 
-	if ((GetMyId($id)) || (GetDroit("ModifUser")))
-	  { $tmpl_x->parse("infos.modification"); }
-
-	if ((GetMyId($id)) || (GetDroit("ModifUserPassword")))
-	  { $tmpl_x->parse("infos.password"); }
-
-	if (GetDroit("CreeUser"))
-	  { $tmpl_x->parse("infos.ajout"); }
-
-	if ((GetDroit("DesactiveUser")) && ($usr->actif=="oui"))
-	  { $tmpl_x->parse("infos.desactive"); }
-
-  	if ((GetDroit("DesactiveUser")) && ($usr->actif=="off"))
-	  { $tmpl_x->parse("infos.active"); }
-
-	if ((GetDroit("SupprimeUser")) && ($usr->actif=="off"))
-	  { $tmpl_x->parse("infos.suppression"); }
 
 // ---- Variable du calendrier
 		

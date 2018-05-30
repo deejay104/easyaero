@@ -56,11 +56,12 @@
 				$resa["ress"]=new ress_class($resa["resa"]->uid_ressource,$sql);
 			
 				$col="";
-				if (($resa["instructeur"]->data["type"]=="instructeur") && ($resa["instructeur"]->uid==$myuser->id))
+				$resa["instructeur"]->LoadRoles();
+				if (($resa["instructeur"]->CheckDroit("TypeInstructeur")) && ($resa["instructeur"]->id==$myuser->id))
 				{
 					$col=$MyOpt["tabcolresa"]["own"];
 				}
-				else if ($resa["pilote"]->uid==$myuser->id)
+				else if ($resa["pilote"]->id==$myuser->id)
 				{
 					$col=$MyOpt["tabcolresa"]["own"];
 				}
@@ -74,10 +75,10 @@
 				}
 	
 				$input_arrays[$ii]["id"]=$resa["resa"]->id;
-				$input_arrays[$ii]["title"]=utf8_encode((($d==1) ? $resa["ress"]->immatriculation." : \n" : "").$resa["pilote"]->Aff($affnom,"val").(($resa["instructeur"]->uid>0) ? " + ".($resa["instructeur"]->Aff($affnom,"val")) : "")).(($resa["resa"]->invite=="oui") ? " <img src='static/modules/reservations/img/icn16_invite.png'>" : "");
+				$input_arrays[$ii]["title"]=utf8_encode((($d==1) ? $resa["ress"]->immatriculation." : \n" : "").$resa["pilote"]->Aff($affnom,"val").(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->Aff($affnom,"val")) : "")).(($resa["resa"]->invite=="oui") ? " <img src='static/modules/reservations/img/icn16_invite.png'>" : "");
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
 				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
-				$input_arrays[$ii]["description"]=utf8_encode($resa["ress"]->immatriculation." de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->uid>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : ""));
+				$input_arrays[$ii]["description"]=utf8_encode($resa["ress"]->immatriculation." de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->id>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : ""));
 				$input_arrays[$ii]["editable"]=($resa["resa"]->edite=='non') ? false : true;
 				if ($col!="") { $input_arrays[$ii]["color"]='#'.$col; }
 				$ii=$ii+1;
@@ -95,9 +96,9 @@
 			$m=new manip_class($r,$sql);
 
 			$input_arrays[$ii]["id"]="M".$m->id;
-			$input_arrays[$ii]["title"]=utf8_encode($m->titre);
-			$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_manip." 00:00:00"));
-			$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_manip." 23:59:59"));
+			$input_arrays[$ii]["title"]=utf8_encode($m->data["titre"]);
+			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_manip"]." 00:00:00"));
+			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_manip"]." 23:59:59"));
 			$input_arrays[$ii]["color"]='#'.$MyOpt["tabcolresa"]["meeting"];
 			$input_arrays[$ii]["rendering"]='background';
 			$ii=$ii+1;
@@ -115,9 +116,9 @@
 
 			$input_arrays[$ii]["id"]="M".$m->id;
 			$input_arrays[$ii]["title"]=utf8_encode("Maintenance");
-			$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_deb));
-			$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_fin)+86400);
-			$input_arrays[$ii]["color"]='#'.(($m->status>1) ? $MyOpt["tabcolresa"]["maintconf"] : $MyOpt["tabcolresa"]["maintplan"]);
+			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_deb"]));
+			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_fin"])+86400);
+			$input_arrays[$ii]["color"]='#'.(($m->data["status"]>1) ? $MyOpt["tabcolresa"]["maintconf"] : $MyOpt["tabcolresa"]["maintplan"]);
 			$input_arrays[$ii]["rendering"]='background';
 
 			$ii=$ii+1;
@@ -126,7 +127,7 @@
 
 	// Affichage du jour et de la nuit
 	for($i=floor(strtotime($start)/86400)*86400; $i<=floor(strtotime($end)/86400)*86400; $i=$i+86400)
-	  {
+	{
 			$tabcs=CalculSoleil($i,-$MyOpt["terrain"]["longitude"],$MyOpt["terrain"]["latitude"]);
 
 			$input_arrays[$ii]["title"]="";
@@ -141,7 +142,7 @@
 			$input_arrays[$ii]["color"]='gray';
 			$input_arrays[$ii]["rendering"]='background';
 			$ii=$ii+1;
-	  }
+	}
 
 	// Send JSON to the client.
 	echo json_encode($input_arrays);
@@ -150,7 +151,7 @@
 // ---- Calcul du lever/coucher du soleil
 
 function CalculSoleil($jour,$lo,$la)
-  {
+{
 	// Constantes
 	$fh=0;
 	$k = 0.0172024;
@@ -228,7 +229,7 @@ function CalculSoleil($jour,$lo,$la)
 //echo " $hs:$pm, ";	
 	$res["cs"]=$hs*3600+$pm*60;
 	return $res;
-  }
+}
 
 
 ?>
