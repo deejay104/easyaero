@@ -32,14 +32,25 @@ class manip_class extends objet_core
 	function __construct($id=0,$sql)
 	{
 		global $MyOpt;
-		foreach($MyOpt["type"] as $k=>$v)
-		{
-			if ($v=="on")
+		// foreach($MyOpt["type"] as $k=>$v)
+		// {
+			// if ($v=="on")
+			// {
+				// $this->tabList["type"][$k]=ucwords($k);
+			// }
+		// }
+		$query="SELECT id,groupe, description FROM ".$MyOpt["tbl"]."_groupe WHERE principale='oui' ORDER BY description";
+		$sql->Query($query);
+
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			if ($sql->data["groupe"]!="SYS")
 			{
-				$this->tabList["type"][$k]=ucwords($k);
+				$this->tabList["type"][strtoupper($sql->data["groupe"])]=$sql->data["description"];
 			}
 		}
-
+		
 		$this->data["titre"]="Nouvelle manifestation";
 		$this->data["comment"]="";
 		$this->data["type"]="";

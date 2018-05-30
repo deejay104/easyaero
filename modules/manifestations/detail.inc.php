@@ -234,12 +234,12 @@
 	if ($id>0)
 	{
 	  	$txt="1=0 ";
-		$t=preg_split("/,/",$manip->data["type"]);
+		$t=explode(",",$manip->data["type"]);
 		$s="";
 		foreach($t as $i=>$v)
-		  {
-			$txt.="OR type='$v' ";
-		  }
+		{
+			$txt.="OR groupe='$v' ";
+		}
 
 		$order=(($MyOpt["globalTrie"]=="nom") ? "nom,prenom" : "prenom,nom");
 

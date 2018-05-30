@@ -23,8 +23,8 @@ class user_class extends user_core
 	protected $mod="membres";
 	protected $rub="detail";
 
-	protected $droit=array("dte_inscription"=>"ModifUserDteInscription","decouvert"=>"ModifUserDecouvert","idcpt"=>"ModifUserIdCpt","tarif"=>"ModifUserTarif","type"=>"ModifUserType");
-	protected $type=array("prenom"=>"ucword","nom"=>"uppercase","tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+	protected $droit=array("dte_inscription"=>"ModifUserDteInscription","decouvert"=>"ModifUserDecouvert","idcpt"=>"ModifUserIdCpt","tarif"=>"ModifUserTarif","type"=>"ModifUserType","lache"=>"ModifUserLache");
+	protected $type=array("prenom"=>"ucword","nom"=>"uppercase","tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
 
 	// protected $type=array("description"=>"text","status"=>"enum","module"=>"enum");
 	
