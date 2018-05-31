@@ -14,7 +14,7 @@
 	$usrcus = new user_class($id,$sql,true);
 	$usrcus->LoadRoles();
 
-	if (($usrcus->CheckDroit("TypeInstructeur")) && ((GetMyId($id)) || (GetDroit("ModifUserDisponibilite"))))
+	if (($usrcus->TstDroit("TypeInstructeur")) && ((GetMyId($id)) || (GetDroit("ModifUserDisponibilite"))))
 	{
 		$tmpl_menu->assign("form_id", $id);
 	  	$tmpl_menu->parse("infos.disponibilite");

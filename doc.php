@@ -10,6 +10,7 @@
 
 	require("version.php");
 
+	$appfolder="..";
 	$corefolder="core";
 
 	chdir($corefolder);

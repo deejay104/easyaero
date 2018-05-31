@@ -74,7 +74,7 @@
 	  	$tmpl_custom->parse("left.mod_aviation_lache");
 	}
 
-	if (($usrcus->CheckDroit("TypeInstructeur")) && (GetDroit("ModifUserDisponibilite")))
+	if (($usrcus->TstDroit("TypeInstructeur")) && (GetDroit("ModifUserDisponibilite")))
 	{
 		$tmpl_custom->assign("form_id", $id);
 	  	$tmpl_custom->parse("left.disponibilite");
