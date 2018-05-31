@@ -60,8 +60,8 @@
 		$tabValeur[$i]["categorie"]["aff"]=$d["categorie"];
 	}
 
-	if ($order=="") { $order="nom"; }
-	if ($trie=="") { $trie="d"; }
+	if ($order=="") { $order="dte"; }
+	if ($trie=="") { $trie="i"; }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 

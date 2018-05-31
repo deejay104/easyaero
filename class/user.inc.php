@@ -23,8 +23,8 @@ class user_class extends user_core
 	protected $mod="membres";
 	protected $rub="detail";
 
-	protected $type=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
-	protected $droit=array(
+	protected $typeea=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+	protected $droitea=array(
 		"dte_inscription"=>"ModifUserDteInscription",
 		"decouvert"=>"ModifUserDecouvert",
 		"idcpt"=>"ModifUserIdCpt",
@@ -80,9 +80,13 @@ class user_class extends user_core
 		$this->data["aff_msg"]="0";
 		$this->data["sexe"]="NA";
 		$this->data["lache"]=array();
-	
-		parent::__construct($id,$sql);
 
+
+		$this->type=array_merge($this->typeea, $this->type); 
+		$this->droit=array_merge($this->droitea, $this->droit); 
+
+		parent::__construct($id,$sql);
+		
 		$this->idcpt=$this->data["idcpt"];
 		
 		if ($setdata)
@@ -90,7 +94,7 @@ class user_class extends user_core
 			$this->LoadRoles();
 		}
 	}
-
+	
 	# Laché
 	function loadLache()
 	{

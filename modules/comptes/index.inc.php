@@ -40,7 +40,7 @@
 	}
 
 	// if ((GetDroit("ListeComptes")) && ($liste==""))
-	if (GetDroit("AccesSuiviComptes"))
+	if (GetDroit("AccesSuiviListeComptes"))
 	{
 			$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
 		

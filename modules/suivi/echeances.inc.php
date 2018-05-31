@@ -21,7 +21,7 @@
 
 <?
 // ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesPageEcheances")) { FatalError("Accès non autorisé"); }
+	if (!GetDroit("AccesSuiviEcheances")) { FatalError("Accès non autorisé (AccesSuiviEcheances)"); }
 
 // ---- Charge les dépendances
 	require_once ("class/echeance.inc.php");

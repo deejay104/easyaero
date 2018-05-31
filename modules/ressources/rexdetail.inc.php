@@ -33,7 +33,7 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- VÃ©rifie les variables
+// ---- Vérifie les variables
 	if (!is_numeric($id))
 	{ $id=0; }
 
@@ -55,12 +55,14 @@
 			$msg_confirmation.="Vos données ont été enregistrées.<BR>";
 		}
 
-		$rex->Save();
-		if ($id==0)
+		if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat)) 
 		{
-			$id=$rex->id;
+			$rex->Save();
+			if ($id==0)
+			{
+				$id=$rex->id;
+			}
 		}
-
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 

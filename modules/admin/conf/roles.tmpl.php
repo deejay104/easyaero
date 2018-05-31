@@ -24,11 +24,10 @@ $tabRoles["AccesSuivi"]="Accès au module de suivi du club";
 $tabRoles["AccesSuiviMouvements"]="Accès à la page de saisi d'un mouvement";
 $tabRoles["AccesSuiviEcheances"]="Accès à la page de suivi des échéances";
 $tabRoles["AccesSuiviVols"]="Accès à la page des vols (saisi des vols)";
-$tabRoles["AccesSuiviSuivi"]="Accès à la page de suivi des comptes";
+$tabRoles["AccesSuiviBanque"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesSuiviListeComptes"]="Accès à la page de la liste des comptes";
 $tabRoles["AccesSuiviListeTarifs"]="Accès à la page des tarifs";
 $tabRoles["AccesSuiviTableauBord"]="Accès à la page des tableau de bord";
-$tabRoles["AccesSuiviComptes"]="Autorise l'affichage de la liste des membres pour les pages de comptes";
 $tabRoles["AccesSuiviBilan"]="Accès à la page de suivi des comptes";
 
 
@@ -68,6 +67,7 @@ $tabRoles["ModifUserTarif"]="Modifier le taux de remboursement horaire d'un inst
 $tabRoles["ModifUserIdCpt"]="Modifier le compte de saisie";
 $tabRoles["ModifUserType"]="Modifier le type du membre";
 $tabRoles["ModifUserDisponibilite"]="Modifier les disponibilités";
+$tabRoles["ModifUserDteInscription"]="Modifier la date d'inscription";
 
 $tabRoles["ModifParents"]="Modifier les parents";
 $tabRoles["ModifRessourceSauve"]="Sauvegarde une ressource (avion)";

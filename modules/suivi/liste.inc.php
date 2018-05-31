@@ -20,7 +20,7 @@
 ?>
 
 <?
-	if (!GetDroit("AccesSuiviComptes")) { FatalError("Accès non autorisé (AccesSuiviComptes)"); }
+	if (!GetDroit("AccesSuiviListeComptes")) { FatalError("Accès non autorisé (AccesSuiviListeComptes)"); }
 
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
@@ -31,8 +31,6 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesSuiviComptes")) { FatalError("Accès non autorisé (AccesSuiviComptes)"); }
-
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
