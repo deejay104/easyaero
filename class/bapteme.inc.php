@@ -25,7 +25,7 @@ class bapteme_class extends objet_core
 	protected $rub="bapteme";
 
 	protected $droit=array();
-	protected $type=array("telephone"=>"tel","mail"=>"mail","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","description"=>"text");
+	protected $type=array("nom"=>"varchar","telephone"=>"tel","mail"=>"email","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","description"=>"text");
 
 	
 	protected $tabList=array(

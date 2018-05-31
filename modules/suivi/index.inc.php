@@ -20,17 +20,33 @@
 ?>
 
 <?
-
-	if (GetDroit("AccesSuiviMouvements"))
+	
+	if ((GetDroit("AccesSuiviMouvements")) && ($theme!="phone"))
 	{
 	  	$affrub="mouvement";
 	}
+	else if (GetDroit("AccesSuiviEcheances"))
+	{
+	  	$affrub="echeances";
+	}
+	else if ((GetDroit("AccesSuiviVols")) && ($theme!="phone"))
+	{
+	  	$affrub="vols";
+	}	
 	else if (GetDroit("AccesSuiviBanque"))
 	{
 	  	$affrub="suivi";
 	}
+	else if (GetDroit("AccesSuiviListeComptes"))
+	{
+	  	$affrub="liste";
+	}
 	else if (GetDroit("AccesSuiviTableauBord"))
 	{
 	  	$affrub="tableaubord";
+	}
+	else if (GetDroit("AccesSuiviBilan"))
+	{
+	  	$affrub="bilan";
 	}
 ?>

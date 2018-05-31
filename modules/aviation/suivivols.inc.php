@@ -58,8 +58,8 @@
 	$tabTitre["prenom"]["width"]=150;
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=210;
-	$tabTitre["type"]["aff"]="Type";
-	$tabTitre["type"]["width"]=100;
+	$tabTitre["type"]["aff"]="Groupe";
+	$tabTitre["type"]["width"]=140;
 	$tabTitre["total"]["aff"]="Total";
 	$tabTitre["total"]["width"]=100;
 	$tabTitre["lastyear"]["aff"]="12 mois";
@@ -102,8 +102,8 @@
 		$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
 		$tabValeur[$i]["nom"]["val"]=$usr->nom;
 		$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
-		$tabValeur[$i]["type"]["val"]=$usr->val("type");
-		$tabValeur[$i]["type"]["aff"]=$usr->aff("type");
+		$tabValeur[$i]["type"]["val"]=$usr->val("groupe");
+		$tabValeur[$i]["type"]["aff"]=$usr->aff("groupe");
 		$tabValeur[$i]["lastyear"]["val"]=$usr->AffNbHeures12mois("val");
 		$tabValeur[$i]["lastyear"]["aff"]=$usr->AffNbHeures12mois();
 		$tabValeur[$i]["total"]["val"]=$usr->NbHeures("0000-00-00");
