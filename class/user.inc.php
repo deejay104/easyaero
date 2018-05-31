@@ -325,7 +325,7 @@ class user_class extends user_core
 			  { $ret="<font color='green'>$ret</font>"; }
 			else
 			  { $ret="<font color='red'><b>$ret</b></font>"; }
-		  	return "<a href='index.php?mod=aviation&rub=vols&id=$this->uid'>".$ret."</a>";
+		  	return "<a href='index.php?mod=aviation&rub=vols&id=$this->id'>".$ret."</a>";
 		  }
 	}
 
@@ -375,7 +375,7 @@ class user_class extends user_core
 		$sql=$this->sql;
 
 		$res=$this->DernierVol("",0);
-		$dc = (($res["ins"]>0) && ($res["ins"]!=$this->uid)) ? " (DC)" : "";
+		$dc = (($res["ins"]>0) && ($res["ins"]!=$this->id)) ? " (DC)" : "";
 		$l=floor((time()-strtotime($res["dte"]))/86400);
 		$d=sql2date($res["dte"],"jour");
 
