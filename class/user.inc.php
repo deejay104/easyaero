@@ -170,7 +170,11 @@ class user_class extends user_core
 		$ret=parent::aff($key,$typeaff,$formname,$render);
 
 		$sql=$this->sql;
-
+		$txt="";
+		if (isset($this->data[$key]))
+		{
+			$txt=$this->data[$key];
+		}
 		if ($render=="form")
 		{
 			if ($key=="lache")
@@ -185,7 +189,7 @@ class user_class extends user_core
 		    {
 		    	$ret ="<select id='".$key."'  name=\"".$formname."[$key]\">";
 		    	$ret.="<option value=\"".$this->id."\" ".(($txt==$this->id)?"selected":"").">".$this->aff("fullname")."</option>";
-				if (is_array($this->data["enfant"]))
+				if ((isset($this->data["enfant"])) && (is_array($this->data["enfant"])))
 				{
 				  	foreach($this->data["enfant"] as $enfant)
 					{
@@ -200,7 +204,6 @@ class user_class extends user_core
 		}
 		else
 		{
-			$txt=$this->data[$key];
 			if ($key=="lache")
 			{
 				$ret="";
@@ -217,7 +220,7 @@ class user_class extends user_core
 				{
 					$ret=$this->fullname;
 				}
-				else if (is_array($this->data["enfant"]))
+				else if ((isset($this->data["enfant"])) && (is_array($this->data["enfant"])))
 				{
 					foreach($this->data["enfant"] as $enfant)
 					{
@@ -408,6 +411,21 @@ class user_class extends user_core
 
 		return $res;
 	}
+
+	function AffTel()
+	{
+		if ($this->data["tel_fixe"]!="")
+		  { $tel=$this->data["tel_fixe"]; }
+		else if ($this->data["tel_portable"]!="")
+		  { $tel=$this->data["tel_portable"]; }
+		else if ($this->data["tel_bureau"]!="")
+		  { $tel=$this->data["tel_bureau"]; }
+		else
+		  { $tel="-"; }
+
+		return AffTelephone($tel);
+	}
+	
 }
 
 
