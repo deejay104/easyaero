@@ -27,6 +27,9 @@
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
+// ---- Vérifie les variables
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -52,9 +55,9 @@
 	foreach($lstusr as $i=>$id)
 	  {
 		$usr = new ress_class($id,$sql,false);
-		$tabValeur[$i]["immatriculation"]["val"]=$usr->immatriculation;
+		$tabValeur[$i]["immatriculation"]["val"]=$usr->val("immatriculation");
 		$tabValeur[$i]["immatriculation"]["aff"]=$usr->aff("immatriculation");
-		$tabValeur[$i]["nom"]["val"]=$usr->nom;
+		$tabValeur[$i]["nom"]["val"]=$usr->val("nom");
 		$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
 
 

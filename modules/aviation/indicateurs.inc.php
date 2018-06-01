@@ -27,6 +27,9 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 	$tmpl_x->assign("corefolder",$corefolder);
 
+	
+// ---- Vérification des données
+	$dte=checkVar("dte","varchar");
 
 // ---- Liste des mois
 	$tabm[1]="Jan";
@@ -44,7 +47,7 @@
 
 
 // ---- Affiche la courbe des heures
-	if ((!isset($dte)) && (!preg_match("/[0-9]{4}/",$dte)))
+	if (($dte=="") && (!preg_match("/[0-9]{4}/",$dte)))
 	{
 	  	$dte=date("Y");
 		$dte2=(date("Y")+1);
@@ -82,8 +85,8 @@
 	foreach($tabHeures as $id=>$md)
 	{
 	  	$ress = new ress_class($id,$sql);
-		$tabHeures[$id]["avion"]=$ress->immatriculation;
-		$tabHeures[$id]["couleur"]=(($ress->couleur=="") ? dechex(rand(0x000000, 0xFFFFFF)) : $ress->couleur);
+		$tabHeures[$id]["avion"]=$ress->aff("immatriculation");
+		$tabHeures[$id]["couleur"]=(($ress->val("couleur")=="") ? dechex(rand(0x000000, 0xFFFFFF)) : $ress->val("couleur"));
 		$col.=$s."'#".$tabHeures[$id]["couleur"]."','#".$tabHeures[$id]["couleur"]."'";
 		$s=",";
 		for($i=1; $i<=12; $i++)

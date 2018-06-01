@@ -91,6 +91,27 @@
 		});
 	});
 
+	$( function() {
+		$(document).tooltip({
+			position: {
+				my: "center bottom-10",
+				at: "center top",
+				using: function( position, feedback ) {
+					$( this ).css( position );
+					$( "<div>" )
+						.addClass( "arrow" )
+						.addClass( feedback.vertical )
+						.addClass( feedback.horizontal )
+						.appendTo( this );
+				}
+			},
+			content: function () {
+				return $(this).prop('title');
+			}
+		});
+	});
+
+  
 </script>
 
 
@@ -142,7 +163,7 @@
 					<label>Fin de l'intervention</label>{form_dte_fin} <FONT color=red>{msg_dtefin}</FONT>
 				</p>
 				<p>
-					<label title="Nombre minutes reportées à la fin de l'intervention">Temps consommé</label>{form_potentiel}&nbsp;
+					<label title="Nombre de minutes reportées à la fin de l'intervention. Ces minutes sont déduites du potentiel.">Temps consommé</label>{form_potentiel}&nbsp;
 				</p>
 			</div>
 		</td>

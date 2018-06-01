@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -24,14 +24,15 @@
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("vols.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
-
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+	$idavion=checkVar("idavion","varchar");
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -263,26 +264,26 @@
 		{
 			$ress=new ress_class($id,$sql);
 
+			if ($idavion==0)
+			{
+				$idavion=$id;
+			}
+
 			$tab_avions[$id]=$ress->data;
 			$tmpl_x->assign("id_avion", $id);
 			if ($id==$idavion)
 			{
 				$tmpl_x->assign("sel_avion", "selected");
-				$tmpl_x->assign("nom_avion", $ress->Aff("immatriculation","val")." *");
+				$tmpl_x->assign("nom_avion", $ress->val("immatriculation")." *");
 			}
 			else
 			{
 			  	$tmpl_x->assign("sel_avion", "");
-				$tmpl_x->assign("nom_avion", $ress->Aff("immatriculation","val"));
+				$tmpl_x->assign("nom_avion", $ress->val("immatriculation"));
 			}
 			$tmpl_x->parse("corps.aff_vols.lst_avion");
 		}
 		
-		if ((!isset($idavion)) || (!is_numeric($idavion)))
-		{
-			$t=current($tab_avions); 
-			$idavion=$t["id"];
-		}
 
 		$tmpl_x->assign("nom_avion_edt",$tab_avions[$idavion]["immatriculation"]);
 
@@ -487,7 +488,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 	$pilote = new user_class($uid_pilote,$sql);
 
 	$mvt = new compte_class(0,$sql);
-	$mvt->Generate($pilote->data["idcpt"],$ress->poste,"Vol de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",$dte,$p,array());
+	$mvt->Generate($pilote->data["idcpt"],$ress->data["poste"],"Vol de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,$p,array());
 	$mvt->Save();
 	$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 
@@ -500,7 +501,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$inst = new user_class($uid_instructeur,$sql);
 	
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($inst->data["idcpt"],$ress->poste,"Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",$dte,-$pi,array());
+		$mvt->Generate($inst->data["idcpt"],$ress->data["poste"],"Remb. vol d'instruction de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,-$pi,array());
 		$mvt->Save();
 		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 

@@ -22,45 +22,33 @@
     ($Revision: 460 $)
 */
 
-class ress_class{
+class ress_class extends objet_core
+{
 	# Constructor
+	protected $table="ressources";
+	protected $mod="ressources";
+	protected $rub="detail";
+
+	protected $type=array(
+		"immatriculation"=>"uppercase",
+		"nom"=>"varchar",
+		"couleur"=>"uppercase",
+		"modele"=>"uppercase",
+		"marque"=>"uppercase",
+		"typehora"=>"enum",
+		"description"=>"text",
+		"centrage"=>"text",
+	);
+
+	protected $tabList=array(
+		"typehora"=>array("dix"=>"Dixième","cen"=>"Centième","min"=>"Minute"),
+	);
+
 	function __construct($id=0,$sql)
 	{
 		global $MyOpt;
 		global $gl_uid;
-
-		$this->sql=$sql;
-		$this->tbl=$MyOpt["tbl"];
-		$this->myuid=$gl_uid;
-
-		$this->id="";
-		$this->nom="";
-		$this->immatriculation="";
-		$this->actif="oui";
-		$this->poste=0;
-		$this->maxpotentiel=50;
-		$this->alertpotentiel=45;
-		$this->marque="";
-		$this->modele="";
-		$this->couleur=dechex(rand(0x000000, 0xFFFFFF));
-		$this->description="";
-
-		$this->places="0";
-		$this->puissance="0";
-		$this->massemax="0";
-		$this->vitesse="0";
-		$this->tolerance="0";
-		$this->centrage="0";
-
-		$this->tarif="0";
-		$this->tarif_reduit="0";
-		$this->tarif_double="0";
-		$this->tarif_nue="0";
-
-		$this->typehora="";
-		$this->uid_maj="0";
-		$this->dte_maj=date("Y-m-d H:i:s");
-		
+	
 		$this->data["nom"]="";
 		$this->data["immatriculation"]="";
 		$this->data["actif"]="oui";
@@ -69,7 +57,7 @@ class ress_class{
 		$this->data["alertpotentiel"]=45;
 		$this->data["marque"]="";
 		$this->data["modele"]="";
-		$this->data["couleur"]=$this->couleur;
+		$this->data["couleur"]=dechex(rand(0x000000, 0xFFFFFF));
 		$this->data["description"]="";
 
 		$this->data["places"]="0";
@@ -84,127 +72,31 @@ class ress_class{
 		$this->data["tarif_double"]="0";
 		$this->data["tarif_nue"]="0";
 
-		$this->data["typehora"]="";
+		$this->data["typehora"]="dix";
 
-		$this->data["uid_maj"]="0";
-		$this->data["dte_maj"]=date("Y-m-d H:i:s");
 
-		if ($id>0)
-		  {
-			$this->load($id);
-		  }
+		parent::__construct($id,$sql);
 	}
 
-	# Load user informations
-	function load($id){
-		$this->id=$id;
-		$sql=$this->sql;
-		$query = "SELECT * FROM ".$this->tbl."_ressources WHERE id='$id'";
-		$res = $sql->QueryRow($query);
-
-		// Charge les variables
-		$this->nom=$res["nom"];
-		$this->immatriculation=strtoupper($res["immatriculation"]);
-		$this->actif=$res["actif"];
-		$this->poste=$res["poste"];
-		$this->maxpotentiel=$res["maxpotentiel"];
-		$this->alertpotentiel=$res["alertpotentiel"];
-		$this->marque=$res["marque"];
-		$this->modele=$res["modele"];
-		$this->couleur=$res["couleur"];
-		$this->description=$res["description"];
-
-		$this->places=$res["places"];
-		$this->puissance=$res["puissance"];
-		$this->massemax=$res["massemax"];
-		$this->vitesse=$res["vitesse"];
-		$this->tolerance=$res["tolerance"];
-		$this->centrage=$res["centrage"];
-
-		$this->tarif=$res["tarif"];
-		$this->tarif_reduit=$res["tarif_reduit"];
-		$this->tarif_double=$res["tarif_double"];
-		$this->tarif_nue=$res["tarif_nue"];
-
-		$this->typehora=$res["typehora"];
-
-		$this->uid_maj=$res["uid_maj"];
-		$this->dte_maj=$res["dte_maj"];
-		
-		$this->data=$res;
-	}
-
-	function Create(){
-		global $uid;
-		$sql=$this->sql;
-		$query="INSERT INTO ".$this->tbl."_ressources SET uid_maj='$uid', dte_maj='".now()."'";
-		$this->id=$sql->Insert($query);
-
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', '".$this->tbl."_ressources', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create ressource')";
-		$sql->Insert($query);
-	}
-
-	function Delete(){
-		global $uid;
-		$sql=$this->sql;
-		$query="UPDATE ".$this->tbl."_ressources SET actif='non', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
-		$this->id=$sql->Update($query);
-
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', '".$this->tbl."_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete ressource')";
-		$sql->Insert($query);
-	}
-
-	function Desactive()
+	# Show informations
+	function aff($key,$typeaff="html",$formname="form_data",&$render="")
 	{
-		global $uid;
+		$render=$typeaff;
+		$ret=parent::aff($key,$typeaff,$formname,$render);
+
 		$sql=$this->sql;
-		$query="UPDATE ".$this->tbl."_ressources SET actif='off', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
-		$this->id=$sql->Update($query);
-
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', '".$this->tbl."_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Disable ressource')";
-		$sql->Insert($query);
-	}
-
-	# Show user informations
-	function aff($key,$typeaff="html")
-	{
-		$sql=$this->sql;
-		$txt=$this->data[$key];
-
-		if ($key=="immatriculation")
-		  { $ret=strtoupper($txt); }
-		else if ($key=="modele")
-		  { $ret=strtoupper($txt); }
-		else if ($key=="marque")
-		  { $ret=strtoupper($txt); }
-		else if ($key=="couleur")
-		  { $ret=strtoupper($txt); }
-		else if ($key=="typehora")
-		  {
-	  	  	if ($txt=="dix")
-	  	  	  { $ret="Dixième"; }
-	  	  	else if ($txt=="cen")
-	  	  	  { $ret="Centième"; }
-	  	  	else if ($txt=="min")
-	  	  	  { $ret="Minute"; }
-		  }
-		else
-		  { $ret=$txt; }
+		$txt="";
+		if (isset($this->data[$key]))
+		{
+			$txt=$this->data[$key];
+		}
 
 		if ($typeaff=="form")
-		  {
-			if ($key=="description")
-		  	  { $ret="<TEXTAREA name=\"form_ress[$key]\" cols=60 rows=5>$ret</TEXTAREA>"; }
-			else if ($key=="centrage")
-		  	  { $ret="<TEXTAREA name=\"form_ress[$key]\" cols=60 rows=5>$ret</TEXTAREA>"; }
-			else if ($key=="typehora")
-			  {
-		  	  	$ret ="<SELECT name=\"form_ress[$key]\">";
-		  	  	$ret.="<OPTION value=\"dix\" ".(($txt=="dix")?"selected":"").">Dixième</OPTION>";
-		  	  	$ret.="<OPTION value=\"cen\" ".(($txt=="cen")?"selected":"").">Centième</OPTION>";
-		  	  	$ret.="<OPTION value=\"min\" ".(($txt=="min")?"selected":"").">Minute</OPTION>";
-		  	  	$ret.="</SELECT>";
-			  }
+		{
+			if ($key=="couleur")
+		  	{
+				$ret="<INPUT id='ress_col' name=\"".$formname."[$key]\" value=\"".strtoupper($txt)."\" style=\"display: inline-block;\" OnKeyUp=\"document.getElementById('ress_showcol').style.backgroundColor='#'+document.getElementById('ress_col').value;\"><div id='ress_showcol' style='margin-left:10px; display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".strtoupper($txt).";'></div>";
+			}
 			else if ($key=="poste")
 			{
 				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE actif='oui' ORDER BY ordre,description";
@@ -217,115 +109,53 @@ class ress_class{
 				}
 		  	  	$ret.="</SELECT>";
 			}
-			else if ($key=="couleur")
-		  	  { $ret="<INPUT id='ress_col' name=\"form_ress[$key]\" value=\"$ret\" style=\"display: inline-block;\" OnKeyUp=\"document.getElementById('ress_showcol').style.backgroundColor='#'+document.getElementById('ress_col').value;\"><div id='ress_showcol' style='margin-left:10px; display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".$ret.";'></div>"; }
-			else
-		  	  { $ret="<INPUT name=\"form_ress[$key]\" value=\"$ret\">"; }
-		  }
-		else if ($typeaff=="val")
-		  {
-
-		  }
+		}
 		else
-		  {
-			if ($key=="description")
-			  { $ret=nl2br(htmlentities($ret)); }
-			else if ($key=="centrage")
-			  { $ret=nl2br(htmlentities($ret)); }
-			else if ($key=="couleur")
-			  { $ret="<div style='display: inline-block; width:80px;'>".$ret."</div><div style='display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".$ret.";'></div>"; }
+		{
+			if ($key=="couleur")
+			{
+				$ret="<div style='display: inline-block; width:80px;'>".strtoupper($txt)."</div><div style='display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".strtoupper($txt).";'></div>";
+			}
 			else if ($key=="poste")
 			{
 				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE id='".$ret."'";
 				$res=$sql->QueryRow($query);
 				$ret=$res["description"];
 			}
-			else
-		  	  { $ret="<a href=\"index.php?mod=ressources&rub=detail&id=".$this->id."\">".$ret."</a>"; }
-		  }
-
+		}
 		return $ret;
 	}
+	
+	function CalcHorametre($deb,$fin)
+	{
+		preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$deb,$tdeb);
+		preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$fin,$tfin);
 
-	function Valid($k,$v,$ret=false){
-		$vv="**none**";
-
-	  	if ($k=="tarif")
-	  	  { $vv=(is_numeric($v)?$v:0); }
-	  	else if ($k=="tarif_double")
-	  	  { $vv=(is_numeric($v)?$v:0); }
-	  	else if ($k=="tarif_reduit")
-	  	  { $vv=(is_numeric($v)?$v:0); }
-	  	else if ($k=="tarif_nue")
-	  	  { $vv=(is_numeric($v)?$v:0); }
-	  	else if ($k=="description")
-	  	  { $vv=$v; }
-	  	else if ($k=="centrage")
-	  	  { $vv=$v; }
-	  	else if ($k=="tolerance")
-	  	  { $vv=$v; }
-	  	else if ($k=="couleur")
-	  	{
-			if ($v=="")
-			{
-				$v=dechex(rand(0x000000, 0xFFFFFF));
-			}
-			$vv=strtoupper($v);
+		if (!isset($tdeb[3]))
+		{
+			$tdeb[3]=0;
 		}
-	  	else
-	  	  { $vv=strtolower($v); }
+		if (!isset($tfin[3]))
+		{
+			$tfin[3]=0;
+		}
 
-		if ( (!is_numeric($k)) && ("($vv)"!="(**none**)") && ($ret==false))
-		  { $this->data[$k]=$vv; }
-		else if ($ret==true)
-		  { return addslashes($vv); }
-	}
-
-	function Save(){
-		global $uid;
-		$sql=$this->sql;
-
-		$query ="UPDATE ".$this->tbl."_ressources SET ";
-		foreach($this->data as $k=>$v)
-		  { 
-			if (!is_numeric($k))
-			  {
-				$vv=$this->Valid($k,$v,true);
-			  	$query.="$k='$vv',";
-			  }
-		  }
-		$query.="uid_maj=$uid, dte_maj='".now()."' ";
-		$query.="WHERE id='$this->id'";
-		$sql->Update($query);
-
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', '".$this->tbl."_ressources', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify ressource')";
-		$sql->Insert($query);
-	}
-
-	function CalcHorametre($deb,$fin){
 		if ($this->typehora=="min")
-		  {
-		  	preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$deb,$tdeb);
-		  	preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$fin,$tfin);
-
+		{
 			$t=round(($tfin[1]-$tdeb[1])*60+($tfin[3]-$tdeb[3]));
-		  }
+		}
 		else if ($this->typehora=="dix")
-		  {
-		  	preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$deb,$tdeb);
-		  	preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$fin,$tfin);
-
+		{
 			$t=round(($tfin[1]-$tdeb[1])*60+($tfin[3]-$tdeb[3])*6);
-		  }
+		}
 		else if ($this->typehora=="cen")
-		  {
-		  	preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$deb,$tdeb);
-		  	preg_match("/^([0-9]*)(\.([0-9]{1,2}))?$/",$fin,$tfin);
-
+		{
 			$t=round((($tfin[1]-$tdeb[1])*100+($tfin[3]-$tdeb[3]))*60/100);
-		  }
+		}
 		else
-		  { $t=($fin-$deb)*60; }
+		{
+			$t=($fin-$deb)*60;
+		}
 
 		return $t;
 	}
@@ -362,7 +192,7 @@ class ress_class{
 
 		$t=$respot["tot"]+$resreel["tot"];
 
-		return $this->maxpotentiel*60-$t;
+		return $this->data["maxpotentiel"]*60-$t;
 	}
 
 	function AffPotentiel()
@@ -372,7 +202,7 @@ class ress_class{
 		{
 			$ret="<font color=red>".AffTemps($t)."</font>";
 		}
-		else if (floor($t/60)<$this->alertpotentiel)
+		else if (floor($t/60)<$this->data["alertpotentiel"])
 		{
 			$ret="<font color=orange>".AffTemps($t)."</font>";
 		}
@@ -385,12 +215,12 @@ class ress_class{
 
 	function AffTempsVol()
 	{
-		$t=$this->maxpotentiel*60-$this->Potentiel();
-		if (floor($t/60)>$this->maxpotentiel)
+		$t=$this->data["maxpotentiel"]*60-$this->Potentiel();
+		if (floor($t/60)>$this->data["maxpotentiel"])
 		{
 			$ret="<font color=red>".AffTemps($t)."</font>";
 		}
-		else if (floor($t/60)>$this->maxpotentiel-$this->alertpotentiel)
+		else if (floor($t/60)>$this->data["maxpotentiel"]-$this->data["alertpotentiel"])
 		{
 			$ret="<font color=orange>".AffTemps($t)."</font>";
 		}
@@ -429,7 +259,7 @@ class ress_class{
 		{
 			$sql->GetRow($i);
 
-			if (floor($t/60)>=$this->maxpotentiel)
+			if (floor($t/60)>=$this->data["maxpotentiel"])
 			{
 				$i=$sql->rows;
 			}

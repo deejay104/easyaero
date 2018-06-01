@@ -32,6 +32,7 @@ class resa_class{
 		$this->horadeb="0";
 		$this->horafin="0";
 		$this->tpsestime="";
+		$this->tempsreel="";
 		$this->destination="LOCAL";
 		$this->nbpersonne=1;
 		$this->invite="non";

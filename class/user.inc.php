@@ -23,13 +23,12 @@ class user_class extends user_core
 	protected $mod="membres";
 	protected $rub="detail";
 
-	protected $typeea=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","type"=>"enum","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+	protected $typeea=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
 	protected $droitea=array(
 		"dte_inscription"=>"ModifUserDteInscription",
 		"decouvert"=>"ModifUserDecouvert",
 		"idcpt"=>"ModifUserIdCpt",
 		"tarif"=>"ModifUserTarif",
-		"type"=>"ModifUserType",
 		"lache"=>"ModifUserLache",
 		"sexe"=>array("ownerid","ModifUserInfos"),
 		"tel_fixe"=>array("ownerid","ModifUserInfos"),
@@ -67,7 +66,6 @@ class user_class extends user_core
 		$this->data["ville"]="";
 		$this->data["codepostal"]="";
 		$this->data["avatar"]="";
-		$this->data["type"]="pilote";
 		$this->data["decouvert"]="0";
 		$this->data["zone"]="";
 		$this->data["dte_inscription"]=date("Y-m-d");
@@ -136,6 +134,7 @@ class user_class extends user_core
 		{ 
 			$sql->GetRow($i);
 			$tlache[$sql->data["id_avion"]]["bd"]=$sql->data["id"];
+			$tlache[$sql->data["id_avion"]]["new"]="";
 		}
 		
 		// Charge les nouvelles valeurs
@@ -144,15 +143,19 @@ class user_class extends user_core
 			foreach($tablache as $avion=>$lid)
 			{
 				$tlache[$avion]["new"]=$lid;
+				if (!isset($tlache[$avion]["bd"]))
+				{
+					$tlache[$avion]["bd"]=0;
+				}
 			}
 		}
 
 		// Vérifie la différence
 		foreach($tlache as $avion=>$v)
 		{
-			if (($v["bd"]=="") && ($v["new"]=="N"))
+			if (($v["bd"]==0) && ($v["new"]=="N"))
 			{
-				$t=array("id_avion"=>$avion, "uid_pilote"=>$this->id, actif=>"oui","uid_creat"=>$gl_uid, "dte_creat"=>now());
+				$t=array("id_avion"=>$avion, "uid_pilote"=>$this->id, "actif"=>"oui","uid_creat"=>$gl_uid, "dte_creat"=>now());
 				$sql->Edit("user",$this->tbl."_lache",0,$t);
 			}
 			else if (($v["bd"]>0) && ($v["new"]==""))
@@ -182,7 +185,7 @@ class user_class extends user_core
 				$ret="";
 		  	  	foreach($this->data[$key] as $avion)
 		  	  	  {
-		  	  		$ret.="<input type='checkbox' name='form_lache[".$avion["idavion"]."]' ".(($avion["idlache"]>0) ? "checked" : "")." value='".(($avion["idlache"]>0) ? $avion["idlache"] : "N")."' /> ".$avion["avion"]->immatriculation."<br />";
+		  	  		$ret.="<input type='checkbox' name='form_lache[".$avion["idavion"]."]' ".(($avion["idlache"]>0) ? "checked" : "")." value='".(($avion["idlache"]>0) ? $avion["idlache"] : "N")."' /> ".$avion["avion"]->val("immatriculation")."<br />";
 		  	  	  }
 			}
 			else if ($key=="idcpt")
@@ -210,7 +213,7 @@ class user_class extends user_core
 				foreach($this->data[$key] as $avion)
 				{
 					if ($avion["idlache"]>0)
-					{ $ret.=$avion["avion"]->immatriculation." <font size=1><i>(par ".$avion["usr"]->fullname.")</i></font><br />"; }
+					{ $ret.=$avion["avion"]->aff("immatriculation")." <font size=1><i>(par ".$avion["usr"]->aff("fullname").")</i></font><br />"; }
 				}
 				if ($ret=="") { $ret="Aucun"; }
 			}

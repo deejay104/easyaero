@@ -1,15 +1,7 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Saisie des mouvements
-//     ($Author: miniroot $)
-//     ($Date: 2016-02-14 23:17:30 +0100 (dim., 14 fÃ©vr. 2016) $)
-//     ($Revision: 445 $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v1.0
-    Copyright (C) 2005 Matthieu Isorez
+    Easy-Aero
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,14 +20,17 @@
 ?>
 
 <?
+	if (!GetDroit("AccesConfigTarifs")) { FatalError("Accès non autorisé (AccesConfigTarifs)"); }
+
+	require_once ($appfolder."/class/ressources.inc.php");
+	
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("tarifs.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesConfigTarifs")) { FatalError("Accès non autorisé (AccesConfigTarifs)"); }
 
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -112,7 +107,7 @@
 		$tab_avions[$id]=$ress->data;
 		$tmpl_x->assign("id_avion", $id);
 	  	$tmpl_x->assign("sel_avion", "");
-		$tmpl_x->assign("nom_avion", $ress->Aff("immatriculation","val"));
+		$tmpl_x->assign("nom_avion", $ress->val("immatriculation"));
 		$tmpl_x->parse("corps.aff_tarifs.lst_avion");
 	  }
 

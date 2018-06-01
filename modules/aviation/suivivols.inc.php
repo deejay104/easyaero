@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -24,14 +24,17 @@
 
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 	
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("suivivols.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-// ---- Vérifie les variables
-
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+
+// ---- Vérifie les variables
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
 
 // ----
@@ -84,7 +87,7 @@
 		foreach($lstres as $i=>$id)
 		{ 
 			$tavion[$i]=new ress_class($id, $sql);
-			$txt=substr($tavion[$i]->immatriculation,strlen($tavion[$i]->immatriculation)-2,2);
+			$txt=substr($tavion[$i]->val("immatriculation"),strlen($tavion[$i]->val("immatriculation"))-2,2);
 
 			$tabTitre["av".$i]["aff"]=$txt;
 			$tabTitre["av".$i]["width"]=30;
@@ -92,7 +95,7 @@
 	}
 
 // ---- Liste des membres
-	$lstusr=ListActiveUsers($sql,"std");
+	$lstusr=ListActiveUsers($sql,"std","");
 	
 	$tabValeur=array();
 	foreach($lstusr as $i=>$id)
@@ -117,21 +120,21 @@
 		
 		$lastdc=$usr->DernierVol("DC",60);
 
-		$daystodc=floor((strtotime($usr->data["dte_licence"])-strtotime($lastdc["dte"]))/86400);
-		$daystolic=floor((time()-strtotime($usr->data["dte_licence"]))/86400);
+		// $daystodc=floor((strtotime($usr->data["dte_licence"])-strtotime($lastdc["dte"]))/86400);
+		// $daystolic=floor((time()-strtotime($usr->data["dte_licence"]))/86400);
 		
-		if ($usr->data["dte_licence"]=="0000-00-00")
-		  {
-				$tabValeur[$i]["prorogation"]["val"]="0";
-				$tabValeur[$i]["prorogation"]["aff"]="-";
-		  }
-		else if ($daystolic>0)
-		  {
-				$tabValeur[$i]["prorogation"]["val"]="2";
-				$tabValeur[$i]["prorogation"]["aff"]=" ";
-		  }
-		else if ($daystolic>-365)
-		  {
+		// if ($usr->data["dte_licence"]=="0000-00-00")
+		  // {
+				// $tabValeur[$i]["prorogation"]["val"]="0";
+				// $tabValeur[$i]["prorogation"]["aff"]="-";
+		  // }
+		// else if ($daystolic>0)
+		  // {
+				// $tabValeur[$i]["prorogation"]["val"]="2";
+				// $tabValeur[$i]["prorogation"]["aff"]=" ";
+		  // }
+		// else if ($daystolic>-365)
+		  // {
 /*
 				if ($daystodc>365)
 					{
@@ -139,23 +142,23 @@
 						$tabValeur[$i]["prorogation"]["aff"]="<img src='images/valid_non.gif' alt='' border='0' />";
 				  }
 */
-				if ( ($daystodc<365) && ($daystodc>0))
-				  {
-						$tabValeur[$i]["prorogation"]["val"]="4";
-						$tabValeur[$i]["prorogation"]["aff"]="<a href='reservations.php?rub=reservation&id=".$lastdc["id"]."'><img src='$module/$mod/img/icn16_ok.png' alt='' /></a>";
-				  }
-				else
-				  {
+				// if ( ($daystodc<365) && ($daystodc>0))
+				  // {
+						// $tabValeur[$i]["prorogation"]["val"]="4";
+						// $tabValeur[$i]["prorogation"]["aff"]="<a href='reservations.php?rub=reservation&id=".$lastdc["id"]."'><img src='$module/$mod/img/icn16_ok.png' alt='' /></a>";
+				  // }
+				// else
+				  // {
 		
-						$tabValeur[$i]["prorogation"]["val"]="3";
-						$tabValeur[$i]["prorogation"]["aff"]="<img src='$module/$mod/img/icn16_nc.png' />";
-					}
-		  }
-		else
-		  {
-				$tabValeur[$i]["prorogation"]["val"]="2";
-				$tabValeur[$i]["prorogation"]["aff"]=" ";
-		  }
+						// $tabValeur[$i]["prorogation"]["val"]="3";
+						// $tabValeur[$i]["prorogation"]["aff"]="<img src='$module/$mod/img/icn16_nc.png' />";
+					// }
+		  // }
+		// else
+		  // {
+				// $tabValeur[$i]["prorogation"]["val"]="2";
+				// $tabValeur[$i]["prorogation"]["aff"]=" ";
+		  // }
 
 		// $tabValeur[$i]["lic"]["val"]=$usr->data["dte_licence"];
 		// $tabValeur[$i]["lic"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_licence")."</a>";

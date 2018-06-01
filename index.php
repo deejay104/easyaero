@@ -31,7 +31,7 @@
 
 	require("version.php");
 
-	require ("class/ressources.inc.php");
+	// require ("class/ressources.inc.php");
 
 	$appfolder="..";
 	$corefolder="core";

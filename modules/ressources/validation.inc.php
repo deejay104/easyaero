@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -29,8 +29,10 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérification des données
-	if (!is_numeric($uid_avion))
-	  { $uid_avion=0; }
+	$uid_avion=checkVar("uid_avion","numeric");
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
+
 // ---- Enregistre
 	$msg_erreur="";
 
@@ -56,7 +58,7 @@
 	}
 
  
-	if ($msg_erreur=="")
+	if (($fonc!="") && ($msg_erreur==""))
 	{
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
@@ -93,9 +95,9 @@
 				$tabValeur[$i]["valid"]["val"]="";
 				$tabValeur[$i]["valid"]["aff"]="<input type='checkbox' name='form_valid[".$id."]'>";
 
-				$ress = new ress_class($fiche->uid_avion,$sql,false);
-				$tabValeur[$i]["ress"]["val"]=strtoupper($ress->immatriculation);
-				$tabValeur[$i]["ress"]["aff"]=strtoupper($ress->immatriculation);
+				$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
+				$tabValeur[$i]["ress"]["val"]=$ress->val("immatriculation");
+				$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
 				
 				$usr = new user_class($fiche->uid_creat,$sql,false);
 				$tabValeur[$i]["auteur"]["val"]=$usr->Aff("fullname","val");
@@ -136,7 +138,7 @@
 		$ress=new ress_class($id,$sql);
 
 		$tmpl_x->assign("uid_avion", $ress->id);
-		$tmpl_x->assign("nom_avion", strtoupper($ress->immatriculation));
+		$tmpl_x->assign("nom_avion", $ress->val("immatriculation"));
 		if ($uid_avion==$ress->id)
 		  { $tmpl_x->assign("chk_avion", "selected"); }
 		else

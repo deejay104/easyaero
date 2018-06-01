@@ -29,6 +29,7 @@
 
 	require_once ($appfolder."/class/bapteme.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("bapteme.htm"));

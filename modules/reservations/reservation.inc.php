@@ -26,20 +26,21 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("reservation.htm"));
 
-	if (!is_numeric($ress))
-	{
-		$ress=0;
-	}
+// ---- Vérifie les variables
+	$id=checkVar("id","numeric");
+	$ress=checkVar("ress","numeric");
+	$heure=checkVar("heure","numeric");
+	$jour=checkVar("jour","date");
 
+
+	$res=array();
+	$msg_err="";
+	if (!isset($ok))
+	{
+		$ok=0;
+	}
 	
 // ---- Charge les données de la réservation
-	$res=array();
-
-	if (!is_numeric($id))
-	{
-		$id=0;
-	}
-	
 	if (($id>0) && ($ok!=3))
 	{
 		// Charge une nouvelle réservation
@@ -51,7 +52,7 @@
 	{
 		$id="";
 		if ($heure=="") { $heure="8"; }
-		if ($jour=="") { $jour=date("Y-m-d"); }
+		if ($jour=="0000-00-00") { $jour=date("Y-m-d"); }
 
 		$dte_deb=$jour." ".$heure.":00:00";
 		$dte_fin=$jour." ".($heure+1).":00:00";
@@ -72,7 +73,8 @@
 		$resa["resa"]->dte_deb=$dte_deb;
 		$resa["resa"]->dte_fin=$dte_fin;
 		$resa["resa"]->uid_pilote=$gl_uid;
-		$resa["resa"]->uid_instructeur=$res["uid_instructeur"];
+		// $resa["resa"]->uid_instructeur=$res["uid_instructeur"];
+		$resa["resa"]->uid_instructeur=0;
 		$resa["resa"]->uid_ressource=$ress;
 		$resa["resa"]->type=$res_user["type"];
 		$resa["resa"]->uid_maj=$gl_uid;
@@ -220,12 +222,12 @@
 
 	// Dernière mise à jour
 	$maj=new user_class($resa["resa"]->uid_maj,$sql);
-	$tmpl_x->assign("info_maj", $maj->fullname." le ".sql2date($resa["resa"]->dte_maj));
+	$tmpl_x->assign("info_maj", $maj->aff("fullname")." le ".sql2date($resa["resa"]->dte_maj));
 
 
 	// Historique des modifications
 	$lstmaj=$resa["resa"]->Historique();
-
+	$txtmaj="";
 	foreach($lstmaj as $i=>$k)
 	{
 	    $maj=new user_core($k["uid"],$sql);
@@ -258,12 +260,12 @@
 
 		// Rempli la liste dans le template
 		$tmpl_x->assign("uid_avion", $resr->id);
-		$tmpl_x->assign("nom_avion", strtoupper($resr->immatriculation));
+		$tmpl_x->assign("nom_avion", strtoupper($resr->val("immatriculation")));
 		if ($resa["resa"]->uid_ressource==$resr->id)
 		{
 			$tmpl_x->assign("chk_avion", "selected");
 			$tmpl_x->assign("uid_avionrmq", $resr->id);
-			$tmpl_x->assign("aff_nom_avion", strtoupper($resr->immatriculation));
+			$tmpl_x->assign("aff_nom_avion", strtoupper($resr->val("immatriculation")));
 		}
 		else
 		  { $tmpl_x->assign("chk_avion", ""); }
@@ -408,7 +410,7 @@
 	}
 	
 	$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
-	for ($i=1;$i<=$resr->places;$i++)
+	for ($i=1;$i<=$resr->data["places"];$i++)
 	{
 		$tmpl_x->assign("pob", $i);
 		$tmpl_x->assign("chk_pob", ($resa["resa"]->nbpersonne==$i) ? "checked='checked'" : "");
@@ -473,7 +475,7 @@
 	// Texte d'acceptation
 	if ($MyOpt["ChkValidResa"]=="on")
 	{
-		if ($resa["pilote"]->NombreVols(3,"val",$resa["resa"]->uid_ressource,$ddeb)>0)
+		if ($resa["pilote"]->NombreVols(3,"val",$resa["resa"]->uid_ressource)>0)
 		{
 			$tmpl_x->parse("corps.aff_reservation.aff_chkreservation_ok");
 		}

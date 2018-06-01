@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -22,22 +22,23 @@
 <?
 	require_once ($appfolder."/class/rex.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("rexdetail.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+// ---- Vérifie les variables
+	$id=checkVar("id","numeric");
 
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Vérifie les variables
-	if (!is_numeric($id))
-	{ $id=0; }
+	
 
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 	$msg_erreur="";
 	$msg_confirmation="";

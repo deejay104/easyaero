@@ -61,33 +61,9 @@ $MyOptTmpl["ChkValidResa"]="on";
 $MyOptHelp["ChkValidResa"]="Active l'affichage du texte à confirmer (on=Activé)";
 
 
-// Liste des types de membres
-$MyOptTmpl["type"]["pilote"]="on";
-$MyOptHelp["type"]["pilote"]="Active (on) ou non (vide) le type de membre correspondant";
-$MyOptTmpl["type"]["eleve"]="on";
-$MyOptTmpl["type"]["instructeur"]="on";
-$MyOptTmpl["type"]["membre"]="on";
-$MyOptTmpl["type"]["invite"]="on";
-$MyOptTmpl["type"]["parent"]="";
-$MyOptTmpl["type"]["enfant"]="";
-$MyOptTmpl["type"]["employe"]="";
-
-// Choix par défaut pour l'envoie d'emails
-$MyOptTmpl["typeMail"]["pilote"]="on";
-$MyOptHelp["typeMail"]["pilote"]="Configure le choix par défaut pour l'envoie des mails. 'on': on coche la case, 'vide': on ne la coche pas";
-$MyOptTmpl["typeMail"]["eleve"]="on";
-$MyOptTmpl["typeMail"]["instructeur"]="on";
-$MyOptTmpl["typeMail"]["membre"]="";
-$MyOptTmpl["typeMail"]["invite"]="";
-$MyOptTmpl["typeMail"]["parent"]="";
-$MyOptTmpl["typeMail"]["enfant"]="";
-$MyOptTmpl["typeMail"]["employe"]="";
-
-
 // Nombre de lignes affichées pour la ventilation
 $MyOptTmpl["ventilationNbLigne"]="4";
 $MyOptHelp["ventilationNbLigne"]="Nombre de lignes à afficher lors d'une ventilation de mouvement";
-
 
 
 // Modules

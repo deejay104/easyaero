@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -26,14 +26,16 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("detail.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 
 // ---- Initialisation des variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+  	$id=checkVar("id","numeric");
+	$form_data=checkVar("form_data","array");
 
 	$msg_erreur="";
 	$msg_confirmation="";
-
+	
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
@@ -49,44 +51,45 @@
 		$typeaff="html";
 	  }
 
-// ---- Vérifie la valeur d'entrée
-	if ((is_numeric($id)) && ($id>0))
-	  {
+// ---- Charge la ressource
+
+	if ($id>0)
+	{
 	  	$ress = new ress_class($id,$sql);
-	  }
+	}
 	else if (GetDroit("CreeRessource"))
-	  {
+	{
 	  	$ress = new ress_class(0,$sql);
 		$typeaff="form";
-	  }
+	}
 	else
-	  {
+	{
 		FatalError("Paramètre d'id non valide");
-	  }
+	}
 
 // ---- Sauvegarde les infos
-	if (($fonc=="Enregistrer") && ($id=="") && ((GetDroit("CreeRessource"))) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-			$ress->Create();
-			$id=$ress->id;
-	  }
-	else if (($fonc=="Enregistrer") && ($id=="") && (isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	if (($fonc=="Enregistrer") && (isset($_SESSION['tab_checkpost'][$checktime])))
+	{
 			$typeaff="html";
-	  }
+	}
 
 	if (($fonc=="Enregistrer") && (GetDroit("ModifRessourceSauve")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
 		// Sauvegarde les données
-		if (count($form_ress)>0)
-		  {
-				foreach($form_ress as $k=>$v)
-		  	  {
+		if (count($form_data)>0)
+		{
+			foreach($form_data as $k=>$v)
+		  	{
 		  			$msg_erreur.=$ress->Valid($k,$v);
-		  	  }
-		  }
+		  	}
+		}
 
-		$ress->Save($uid);
+		$ress->Save();
+		if ($id==0)
+		{
+			$id=$ress->id;
+		}
+		
 		$msg_confirmation.="Vos données ont été enregistrées.<BR>";
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
@@ -95,66 +98,66 @@
 
 // ---- Supprimer la ressource
 	if (($fonc=="delete") && ($id>0) && (GetDroit("SupprimeRessource")))
-	  {
+	{
 			$ress->Delete();
-			$rub="index";
+			$affrub="index";
 			include("modules/ressources/index.inc.php");
-			exit;
-	  }
+			return;
+	}
 
 	if (($fonc=="desactive") && ($id>0) && (GetDroit("DesactiveRessource")))
-	  {
+	{
 		$ress->Desactive();
-	  }
+	}
 	
 // ---- Affiche les infos
-	if ((is_numeric($id)) && ($id>0))
-	  {
+	// if ((is_numeric($id)) && ($id>0))
+	// {
 		$ress = new ress_class($id,$sql);
 		$usrmaj = new user_class($ress->uid_maj,$sql);
 
 		$tmpl_x->assign("id", $id);
-		$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($ress->dte_maj));
+		$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." ".$ress->LastUpdate());
 	
-	  }
-	else if (GetDroit("CreeRessource"))
-	  {
-		$tmpl_x->assign("titre", "Saisie d'une nouvelle ressource");
+	// }
+	// else if (GetDroit("CreeRessource"))
+	// {
+		// $tmpl_x->assign("titre", "Saisie d'une nouvelle ressource");
 
-		$ress = new ress_class("0",$sql);
-		$usrmaj = new user_class($usr->uid_maj,$sql);
+		// $ress = new ress_class("0",$sql);
+		// $usrmaj = new user_class($usr->uid_maj,$sql);
 
-		$tmpl_x->assign("id", "");
-		$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($usr->dte_maj));
+		// $tmpl_x->assign("id", "");
+		// $tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." ".$ress->LastUpdate());
 
-		$typeaff="form";
-	  }
+		// $typeaff="form";
+	// }
 
 	foreach($ress->data as $k=>$v)
 	  { $tmpl_x->assign("form_$k", $ress->aff($k,$typeaff)); }
 
 	 $tmpl_x->assign("bk_couleur",$ress->data["couleur"]);
 	  
-	if (($id==$uid) || (GetDroit("ModifRessource")))
+	if (($id==$gl_uid) || (GetDroit("ModifRessource")))
 	  { $tmpl_x->parse("corps.modification"); }
 
 	if (GetDroit("CreeRessource"))
 	  { $tmpl_x->parse("corps.ajout"); }
 
-	if ((GetDroit("DesactiveRessource")) && ($ress->actif=="oui"))
+	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="oui"))
 	  { $tmpl_x->parse("corps.desactive"); }
 
-	if ((GetDroit("SupprimeRessource")) && ($ress->actif=="off"))
+	if ((GetDroit("SupprimeRessource")) && ($ress->data["actif"]=="off"))
 	  { $tmpl_x->parse("corps.suppression"); }
 
 	if ($typeaff=="form")
 	  {
 		$tmpl_x->parse("corps.submit");
 		if ((is_numeric($id)) && ($id>0))
-		  { $tmpl_x->assign("titre", "Modification : ".$ress->nom); }
+		  { $tmpl_x->assign("titre", "Modification : ".$ress->data["nom"]); }
 	  }
 	else if ($typeaff=="html")
-	  {	$tmpl_x->assign("titre", "Détail de ".$ress->immatriculation); }
+	  {	$tmpl_x->assign("titre", "Détail de ".$ress->data["immatriculation"]); }
 
 	
 	$tmpl_x->parse("corps.caracteristique");

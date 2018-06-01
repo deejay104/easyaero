@@ -22,11 +22,16 @@
 <?
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/maintenance.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("liste.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
+// ---- Vérifie les variables
+	$ress=checkVar("trie","numeric");
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -64,7 +69,7 @@
 			$maint = new maint_class($id,$sql);
 
 			$ress = new ress_class($maint->data["uid_ressource"],$sql,false);
-			$tabValeur[$i]["ress"]["val"]=$ress->aff("immatriculation","val");
+			$tabValeur[$i]["ress"]["val"]=$ress->val("immatriculation");
 			$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
 			
 			$tabValeur[$i]["dte_deb"]["val"]=strtotime($maint->data["dte_deb"]);

@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -22,14 +22,19 @@
 <?
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("carnet.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+	$id=checkVar("id","numeric");
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
+	$ts=checkVar("trie","numeric");
 
 
 	if (GetDroit("AccesSuiviVols"))
@@ -78,7 +83,7 @@
 	}
 		
 // ---- Chargement des données
-
+	$tabValeur=array();
 	$lstress=ListeRessources($sql);
 
 	foreach($lstress as $i=>$rid)
@@ -86,14 +91,14 @@
 		$resr=new ress_class($rid,$sql);
 
 		// Initilialise l'id de ressouce s'il est vide
-		if (!is_numeric($id))
+		if ($id==0)
 		{
 			$id=$rid;
 		}
 
 		// Rempli la liste dans le template
 		$tmpl_x->assign("uid_avion", $resr->id);
-		$tmpl_x->assign("nom_avion", strtoupper($resr->immatriculation));
+		$tmpl_x->assign("nom_avion", $resr->val("immatriculation"));
 		if ($rid==$id)
 		{
 			$tmpl_x->assign("chk_avion", "selected");

@@ -33,13 +33,14 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Vérification des données
-	if (!is_numeric($uid_avion))
-	  { $uid_avion=0; }
+	$uid_avion=checkVar("uid_avion","numeric");
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
+	
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-	$tmpl_x->assign("msg_erreur", $msg_erreur);
-
+	
 
 // ---- Liste des avions
 	$lst=ListeRessources($sql,array("oui"));
@@ -49,7 +50,7 @@
 		$ress=new ress_class($id,$sql);
 
 		$tmpl_x->assign("uid_avion", $ress->id);
-		$tmpl_x->assign("nom_avion", strtoupper($ress->immatriculation));
+		$tmpl_x->assign("nom_avion", $ress->val("immatriculation"));
 		if ($uid_avion==$ress->id)
 		  { $tmpl_x->assign("chk_avion", "selected"); }
 		else
@@ -91,7 +92,7 @@
 			$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->dte_creat,"jour");
 			$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
 			$tabValeur[$i]["description"]["val"]=$fiche->data["description"];
-			$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->description);
+			$tabValeur[$i]["description"]["aff"]=$fiche->aff("description");
 
 			if ($fiche->data["uid_planif"]>0)
 			{

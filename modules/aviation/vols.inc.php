@@ -1,6 +1,6 @@
 <?
 /*
-    SoceIt v3.0
+    Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -24,22 +24,27 @@
 
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("vols.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Vérifie les variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+// ---- Vérifie les variables
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
+	$ts=checkVar("trie","numeric");
+
+
 // ---- Vérification des paramètres
-	if ((GetDroit("ListeVols")) && ($liste==""))
-  {
+	if (GetDroit("ListeVols"))
+	{
 		if (!isset($id))
 		  { $id=$uid; }
 
-		$lstusr=ListActiveUsers($sql,"prenom");
+		$lstusr=ListActiveUsers($sql,"prenom","");
 
 		foreach($lstusr as $i=>$tid)
 		{ 
@@ -50,11 +55,11 @@
 			$tmpl_x->parse("corps.listeVols.lst_user");
 		}
 		$tmpl_x->parse("corps.listeVols");
-  }
+	}
 	else
-  {
-  	$id=$uid;
-  }
+	{
+		$id=$gl_uid;
+	}
 
 	if (GetDroit("AccesSuiviVols"))
 	{
@@ -81,8 +86,7 @@
 // ---- Chargement des données
 	if ($order=="") { $order="dte_deb"; }
 	if ($trie=="") { $trie="i"; }
-	if (!is_numeric($ts))
-	  { $ts = 0; }
+
 	$tl=40;
 	$lstresa=ListReservationVols($sql,$id,$order,$trie,$ts,$tl);
 	$usr=new user_class($id,$sql);
@@ -111,8 +115,8 @@
 
 		$tabValeur[$i]["dte_deb"]["val"]=strtotime($resa->dte_deb);
 		$tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".$dte."</a>";
-		$tabValeur[$i]["immat"]["val"]=$ress->nom;
-		$tabValeur[$i]["immat"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".$ress->immatriculation."</a>";
+		$tabValeur[$i]["immat"]["val"]=$ress->val("nom");
+		$tabValeur[$i]["immat"]["aff"]=$ress->aff("immatriculation");
 		$tabValeur[$i]["tpsreel"]["val"]=$resa->tpsreel;
 		$tabValeur[$i]["tpsreel"]["aff"]=$resa->AffTempsReel();
 		$tabValeur[$i]["temps"]["val"]=$resa->temps;

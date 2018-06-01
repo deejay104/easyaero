@@ -65,7 +65,6 @@ $tabRoles["ModifUserLache"]="Lacher des membres sur les ressources (avions)";
 $tabRoles["ModifUserDecouvert"]="Modifier le découvert d'un membre";
 $tabRoles["ModifUserTarif"]="Modifier le taux de remboursement horaire d'un instructeur";
 $tabRoles["ModifUserIdCpt"]="Modifier le compte de saisie";
-$tabRoles["ModifUserType"]="Modifier le type du membre";
 $tabRoles["ModifUserDisponibilite"]="Modifier les disponibilités";
 $tabRoles["ModifUserDteInscription"]="Modifier la date d'inscription";
 

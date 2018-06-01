@@ -23,6 +23,20 @@
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
+
+// ---- Vérifie les variables
+	$id=checkVar("id","numeric");
+	$uid_ressource=checkVar("uid_ressource","numeric");
+	$form_data=checkVar("form_data","array");
+
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
+	$orderv=checkVar("order","varchar");
+	$triev=checkVar("trie","varchar");
+
+	$msg_erreur="";
+	$msg_ok="";
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("detailmaint.htm"));
@@ -30,7 +44,12 @@
 
 	if ($fonc=="imprimer")
 	{
-		$tmpl_prg = new XTemplate (MyRep("print.htm"));
+		$tmpl_prg = new XTemplate (MyRep("print.htm","default"));
+		$tmpl_prg->assign("corefolder", $corefolder);
+		$tmpl_prg->assign("username", $myuser->aff("fullname"));
+		$tmpl_prg->assign("style_url", GenereStyle("print"));
+		$tmpl_prg->assign("version", $version."-".$core_version.(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : "")." le ".date("d/m/Y")." à ".date("H:i"));
+		$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
 	}
 
 // ---- Affiche le menu
@@ -38,18 +57,10 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Vérification des données
-	if (!is_numeric($uid_ressource))
-	  { $uid_ressource=0; }
-
 // ---- Charge les infos
-	if (!is_numeric($id))
-	  { $id=0; }
-
 	$maint=new maint_class($id,$sql);
 
 // ---- Enregistre
-	$msg_erreur="";
 	if (count($form_data)>0)
 	{
 		foreach($form_data as $k=>$v)
@@ -264,8 +275,8 @@
 	
 				$tabValeur[$i]["dtecreat"]["val"]=sql2date($fiche->dte_creat,"jour");
 				$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
-				$tabValeur[$i]["description"]["val"]=$fiche->description;
-				$tabValeur[$i]["description"]["aff"]=htmlentities($fiche->data["description"]);
+				$tabValeur[$i]["description"]["val"]=$fiche->val("description");
+				$tabValeur[$i]["description"]["aff"]=$fiche->aff("description");
 
 				$tabValeur[$i]["maint"]["val"]=(($fiche->data["uid_planif"]>0) ? "1" : "0");
 				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='index.php?mod=ressources&rub=detailmaint&id=".$fiche->data["uid_planif"]."' title='Cette fiche est déjà affectée à une autre maintenance'><img src='".$corefolder."/static/images/icn16_liste	.png'></a>" : " ");
@@ -313,17 +324,17 @@
 
 // ---- Affecte les variables d'affichage
 	if (($fonc!="Retour") && ($fonc!="Supprimer"))
-	  {
-			$tmpl_x->parse("icone");
-			$icone=$tmpl_x->text("icone");
-			$tmpl_x->parse("infos");
-			$infos=$tmpl_x->text("infos");
-			$tmpl_x->parse("corps");
-			$corps=$tmpl_x->text("corps");
-	  }
+	{
+		$tmpl_x->parse("icone");
+		$icone=$tmpl_x->text("icone");
+		$tmpl_x->parse("infos");
+		$infos=$tmpl_x->text("infos");
+		$tmpl_x->parse("corps");
+		$corps=$tmpl_x->text("corps");
+	}
 	else
-	  {
+	{
 	  	$order="dte_deb";
 	  	$trie="i";
-	  }
+	}
 ?>

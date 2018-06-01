@@ -50,7 +50,7 @@ class maint_class extends objet_core
 		parent::__construct($id,$sql);
 	}
 	
-	function aff($key,$typeaff="html",$formname="form_data")
+	function aff($key,$typeaff="html",$formname="form_data",&$render="")
 	{
 		$ret=parent::aff($key,$typeaff,$formname,$render);
 		$sql=$this->sql;
@@ -78,7 +78,7 @@ class maint_class extends objet_core
 				foreach($lst as $i=>$aid)
 				{
 					$atelier=new atelier_class($aid,$sql);
-					$ret.="<option value='".$aid."' ".(($aid==$this->data["uid_atelier"]) ? "selected" : "").">".$atelier->aff("nom")."</option>";
+					$ret.="<option value='".$aid."' ".(($aid==$this->data["uid_atelier"]) ? "selected" : "").">".$atelier->val("nom")."</option>";
 				}
 				$ret.="</select>";
 			}

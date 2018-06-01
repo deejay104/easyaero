@@ -37,7 +37,7 @@ class rex_class extends objet_core
 	protected $rub="rexdetail";
 
 	protected $droit=array("status"=>"ModifRexStatus","planaction"=>"ModifRexSynthese","synthese"=>"ModifRexSynthese");
-	protected $type=array("titre"=>"varchar","status"=>"enum","description"=>"text","commentaire"=>"text","synthese"=>"text","planaction"=>"text");
+	protected $type=array("titre"=>"varchar","status"=>"enum","description"=>"text","commentaire"=>"text","synthese"=>"text","planaction"=>"text","dte_rex"=>"date");
 
 	protected $tabList=array(
 		"status"=>array('new'=>'Nouveau','inprg'=>'En cours','close'=>'Cloturé','cancel'=>'Annulé'),
@@ -70,7 +70,7 @@ class rex_class extends objet_core
 	}	
 
 	
-	function aff($key,$typeaff="html",$formname="form_data")
+	function aff($key,$typeaff="html",$formname="form_data",&$render="")
 	{
 		$ret=parent::aff($key,$typeaff,$formname,$render);
 		$sql=$this->sql;

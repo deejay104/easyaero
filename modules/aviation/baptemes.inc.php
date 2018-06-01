@@ -24,6 +24,7 @@
 
 	require_once ($appfolder."/class/bapteme.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 	
 // ---- Charge le template
@@ -70,7 +71,7 @@
 // ----
 	$tabTitre=array();
 	$tabTitre["num"]["aff"]="Numéro";
-	$tabTitre["num"]["width"]=150;
+	$tabTitre["num"]["width"]=120;
 
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=200;
@@ -93,10 +94,10 @@
 			$tabTitre["paye"]["width"]=60;
 		
 			$tabTitre["date"]["aff"]="Date";
-			$tabTitre["date"]["width"]=150;
+			$tabTitre["date"]["width"]=170;
 		
 			$tabTitre["pilote"]["aff"]="Pilote";
-			$tabTitre["pilote"]["width"]=150;
+			$tabTitre["pilote"]["width"]=180;
 		
 			$tabTitre["type"]["aff"]="Type";
 			$tabTitre["type"]["width"]=150;
@@ -127,22 +128,22 @@
 		$tabValeur[$i]["date"]["val"]=strtotime($btm->data["dte"]);
 		$tabValeur[$i]["date"]["aff"]=$btm->aff("dte","html");
 
-		$usr = new user_class($btm->id_pilote,$sql,true);
+		$usr = new user_class($btm->data["id_pilote"],$sql,true);
 
-		$tabValeur[$i]["pilote"]["val"]=$btm->id_pilote;
-		$tabValeur[$i]["pilote"]["aff"]=($btm->id_pilote>0) ? $usr->Aff("fullname") : "-";
+		$tabValeur[$i]["pilote"]["val"]=$btm->val("id_pilote");
+		$tabValeur[$i]["pilote"]["aff"]=($btm->data["id_pilote"]>0) ? $usr->Aff("fullname") : "-";
 
-		if ($btm->id_avion>0)
-		  {
-			$ress = new ress_class($btm->id_avion,$sql);
-			$tabValeur[$i]["resa"]["val"]=strtoupper($ress->immatriculation);
-			$tabValeur[$i]["resa"]["aff"]=strtoupper($ress->immatriculation);
-		  }
+		if ($btm->data["id_avion"]>0)
+		{
+			$ress = new ress_class($btm->data["id_avion"],$sql);
+			$tabValeur[$i]["resa"]["val"]=$ress->val("immatriculation");
+			$tabValeur[$i]["resa"]["aff"]=$ress->aff("immatriculation");
+		}
 		else
-		  {
+		{
 		  	$tabValeur[$i]["resa"]["val"]="-";
 			$tabValeur[$i]["resa"]["aff"]="-";
-		  }
+		}
 		$tabValeur[$i]["type"]["val"]=$btm->aff("type","val");
 		$tabValeur[$i]["type"]["aff"]=$btm->aff("type","html");
 

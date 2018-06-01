@@ -28,6 +28,9 @@
 	$tmpl_x = new XTemplate (MyRep("rex.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
+// ---- Vérification des données
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -39,25 +42,26 @@
 	$tabTitre["dte"]["aff"]="Date";
 	$tabTitre["dte"]["width"]=150;
 	$tabTitre["titre"]["aff"]="Titre";
-	$tabTitre["titre"]["width"]=150;
+	$tabTitre["titre"]["width"]=350;
 	$tabTitre["status"]["aff"]="Status";
-	$tabTitre["status"]["width"]=150;
+	$tabTitre["status"]["width"]=100;
 	$tabTitre["categorie"]["aff"]="Catégorie";
 	$tabTitre["categorie"]["width"]=150;
 
-	$lst=ListRex($sql,array("dte_rex","titre","status","categorie"));
+	$lst=ListRex($sql,array());
 
 	$tabValeur=array();
 	foreach($lst as $i=>$d)
 	{
-		$tabValeur[$i]["dte"]["val"]=strtotime($d["dte_rex"]);
-		$tabValeur[$i]["dte"]["aff"]="<a href='index.php?mod=ressources&rub=rexdetail&id=".$d["id"]."'>".sql2date($d["dte_rex"])."</a>";
-		$tabValeur[$i]["titre"]["val"]=$d["titre"];
-		$tabValeur[$i]["titre"]["aff"]=$d["titre"];
-		$tabValeur[$i]["status"]["val"]=$d["status"];
-		$tabValeur[$i]["status"]["aff"]=$tabValeurRex[$d["status"]];
-		$tabValeur[$i]["categorie"]["val"]=$d["categorie"];
-		$tabValeur[$i]["categorie"]["aff"]=$d["categorie"];
+		$rex=new rex_class($d["id"],$sql);
+		$tabValeur[$i]["dte"]["val"]=strtotime($rex->val("dte_rex"));
+		$tabValeur[$i]["dte"]["aff"]=$rex->aff("dte_rex");
+		$tabValeur[$i]["titre"]["val"]=$rex->val("titre");
+		$tabValeur[$i]["titre"]["aff"]=$rex->aff("titre");
+		$tabValeur[$i]["status"]["val"]=$rex->val("status");
+		$tabValeur[$i]["status"]["aff"]=$rex->aff("status");
+		$tabValeur[$i]["categorie"]["val"]=$rex->val("categorie");
+		$tabValeur[$i]["categorie"]["aff"]=$rex->aff("categorie");
 	}
 
 	if ($order=="") { $order="dte"; }

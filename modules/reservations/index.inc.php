@@ -38,6 +38,10 @@
 	  	$ress=0;
 	}
 
+	$ress=checkVar("ress","numeric");
+	$jour=checkVar("jour","date");
+
+	
 	$h=30;
 	$debjour=($MyOpt["debjour"]!="") ? $MyOpt["debjour"] : "6";
 	$finjour=($MyOpt["finjour"]!="") ? $MyOpt["finjour"] : "22";
@@ -52,7 +56,7 @@
 		$tress[$ii]=new ress_class($rid, $sql);
 
 		$tmpl_x->assign("uid_ress", $rid);
-		$tmpl_x->assign("nom_ress", $tress[$ii]->immatriculation);
+		$tmpl_x->assign("nom_ress", $tress[$ii]->val("immatriculation"));
 		if ($ress==$rid)
 		  { $tmpl_x->assign("chk_ress", "selected"); }
 		else
@@ -71,7 +75,7 @@
 	
 	if ($theme=="phone")
 	{
-		if ($jour=="-")
+		if ($jour=="0000-00-00")
 		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
 		else if ($jour!="")
 		  { $myuser->Valid("aff_jour",$jour); }
@@ -86,7 +90,7 @@
 	}
 	else
 	{
-		if ($jour=="-")
+		if ($jour=="0000-00-00")
 		  { $myuser->Valid("aff_jour",date("Y-m-d",time()-24*3600*2)); }
 		  // { $myuser->Valid("aff_jour",date("Y-m-d")); }
 		else if ($jour!="")

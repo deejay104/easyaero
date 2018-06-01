@@ -292,7 +292,7 @@ class compte_class{
 			$txt.="<td width='120'>".sql2date($this->date_valeur)."</td>";
 			$txt.="<td width='350'>".$res["description"]."</td>";
 			$txt.="<td width='350'>".$this->commentaire."</td>";
-			$txt.="<td width='200'>".$deb->fullname."</td>";
+			$txt.="<td width='200'>".$deb->aff("fullname")."</td>";
 			$txt.="<td width='100' style='border-left:1px solid black; text-align:right; padding-right:10px;'>".AffMontant($d["montant"])."</td>";
 			$txt.="</tr>";
 			$c=1-$c;

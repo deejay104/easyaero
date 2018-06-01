@@ -3,7 +3,7 @@
 <!-- END: icone -->
 <!-- BEGIN: infos -->
 	<!-- BEGIN: supprimer -->
-	<A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A>
+	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
 	<!-- END: supprimer -->
 <!-- END: infos -->
 
@@ -45,32 +45,30 @@
 			nextText: "Suivant"
 		});
 
-    $("#destination").autocomplete({
-        source: "api.php?mod=navigation&rub=getwp&type=Airport",
-        select: function(event, ui) { oFormObject = document.forms['reservation']; oFormObject.elements["destination"].value=ui.item.value; },
-        delay: 0
-    });
+		$("#destination").autocomplete({
+			source: "api.php?mod=navigation&rub=getwp&type=Airport",
+			select: function(event, ui) { oFormObject = document.forms['reservation']; oFormObject.elements["destination"].value=ui.item.value; },
+			delay: 0
+		});
 
-	$(document).tooltip({
-		position: {
-			my: "center bottom-10",
-			at: "center top",
-			using: function( position, feedback ) {
-				$( this ).css( position );
-				$( "<div>" )
-					.addClass( "arrow" )
-					.addClass( feedback.vertical )
-					.addClass( feedback.horizontal )
-					.appendTo( this );
+		$(document).tooltip({
+			position: {
+				my: "center bottom-10",
+				at: "center top",
+				using: function( position, feedback ) {
+					$( this ).css( position );
+					$( "<div>" )
+						.addClass( "arrow" )
+						.addClass( feedback.vertical )
+						.addClass( feedback.horizontal )
+						.appendTo( this );
+				}
+			},
+			content: function () {
+				return $(this).prop('title');
 			}
-		},
-		content: function () {
-			return $(this).prop('title');
-		}
-	});
-});
-
-  
+		});
+	});  
 </script>
 
 
