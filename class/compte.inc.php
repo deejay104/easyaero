@@ -208,19 +208,22 @@ class compte_class{
 		$totmnt=0;
 		foreach($this->mvt as $i=>$m)
 		{
+			// Récupère la dernière transaction
 			$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte";
 			$res=$sql->QueryRow($query);
-			$maxid=$res["maxid"];
-			$query="SELECT id,signature FROM ".$this->tbl."_compte WHERE id='".$maxid."'";
+			$prev_id=$res["maxid"];
+
+			// Charge les données de la transaction précédente
+			$query="SELECT id,hash FROM ".$this->tbl."_compte WHERE id='".$prev_id."'";
 			$res=$sql->QueryRow($query);
-			$precedent=$res["signature"];
+			$prev_hash=$res["hash"];
 
 			$montant=number_format($m["montant"],2,'.','');
-
+			$dte_creat=now();
 
 			$query="SELECT description FROM ".$this->tbl."_mouvement WHERE id='".$m["poste"]."'";
 			$res=$sql->QueryRow($query);
-
+			
 			$query ="INSERT ".$this->tbl."_compte SET ";
 			$query.="mid='".$this->id."', ";
 			$query.="uid='".$m["uid"]."', ";
@@ -233,18 +236,40 @@ class compte_class{
 			$query.="compte='".$this->compte."', ";
 			$query.="facture='".$m["facture"]."', ";
 			$query.="rembfact='".$m["rembfact"]."', ";
-			$query.="uid_creat=".$this->uid_creat.", date_creat='".now()."'";
-			// echo "$query<BR>";
+			$query.="uid_creat=".$this->uid_creat.", date_creat='".$dte_creat."'";
 			$id=$sql->Insert($query);
 
 			// Signe la transaction
-			$signature=md5($id."_".$m["uid"]."_".$m["tiers"]."_".$montant."_".$this->date_valeur."_".$maxid."_".$precedent);
+			$key=openssl_pkey_new(array("private_key_bits"=>1024,"private_key_type"=>OPENSSL_KEYTYPE_RSA));
+			openssl_pkey_export($key,$priv_key);
+			$details=openssl_pkey_get_details($key);
+			$public_key=$details["key"];
+			
+			$hash=md5($prev_hash."-".$public_key);
+			
+			$data =$hash;
+			$data.="-".$prev_id;
+			$data.="-".$id;
+			$data.="-".$m["uid"];
+			$data.="-".$this->id;
+			$data.="-".$montant;
+			$data.="-".$this->date_valeur;
+			$data.="-".$this->uid_creat;
+			$data.="-".$dte_creat;
+			$sign="";
+			openssl_sign($data,$sign,$priv_key,OPENSSL_ALGO_SHA256);
 
-			$query="UPDATE ".$this->tbl."_compte SET ";
-			$query.="signature='".$signature."', ";
-			$query.="precedent='".$precedent."' ";
-			$query.="WHERE id='".$id."'";
-			$sql->Update($query);
+			$q="UPDATE ".$this->tbl."_compte SET clepublic='".$public_key."',hash='".$hash."', signature='".base64_encode($sign)."', precedent='".$prev_id."' WHERE id='".$id."'";
+			$sql->Update($q);
+
+			// Signe la transaction
+			// $signature=md5($id."_".$m["uid"]."_".$m["tiers"]."_".$montant."_".$this->date_valeur."_".$maxid."_".$precedent);
+
+			// $query="UPDATE ".$this->tbl."_compte SET ";
+			// $query.="signature='".$signature."', ";
+			// $query.="precedent='".$precedent."' ";
+			// $query.="WHERE id='".$id."'";
+			// $sql->Update($query);
 
 			$this->nbmvt++;
 			$totmnt=$totmnt+$form_montant[$k];
@@ -349,23 +374,50 @@ function AfficheDetailMouvement($id,$mid)
 }
 
 function AfficheSignatureCompte($lid)
-{ global $MyOpt,$sql;
+{
+	global $MyOpt,$sql;
+	
+	$ret="nok";
+	
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE id='".$lid."'";
 	$res_l=$sql->QueryRow($query);
 
-	$query="SELECT id,signature FROM ".$MyOpt["tbl"]."_compte WHERE signature='".$res_l["precedent"]."'";
+	$query="SELECT id,hash FROM ".$MyOpt["tbl"]."_compte WHERE id='".$res_l["precedent"]."'";
 	$res_p=$sql->QueryRow($query);
 
-	$sign_l=md5($res_l["id"]."_".$res_l["uid"]."_".$res_l["tiers"]."_".$res_l["montant"]."_".$res_l["date_valeur"]."_".$res_p["id"]."_".$res_p["signature"]);
+	$hash=md5($res_p["hash"]."-".$res_l["clepublic"]);
 
-	if ($sign_l==$res_l["signature"])
+	$data =$hash;
+	$data.="-".$res_l["precedent"];
+	$data.="-".$res_l["id"];
+	$data.="-".$res_l["uid"];
+	$data.="-".$res_l["mid"];
+	$data.="-".$res_l["montant"];
+	$data.="-".$res_l["date_valeur"];
+	$data.="-".$res_l["uid_creat"];
+	$data.="-".$res_l["date_creat"];
+	
+	if (openssl_verify($data, base64_decode($res_l["signature"]), $res_l["clepublic"], "sha256WithRSAEncryption"))
 	{
-		return "ok";
+		$ret="ok";
 	}
 	else
 	{
-		return "nok";
+		$ret="nok";
 	}
+
+	if ($res_l["mid"]>0)
+	{
+		$query="SELECT SUM(montant) AS total FROM ".$MyOpt["tbl"]."_compte WHERE mid='".$res_l["mid"]."'";
+		$res=$sql->QueryRow($query);
+
+		if ($res["total"]<>0)
+		{
+			$ret="nok";
+		}
+	}
+
+	return $ret;
 }
 
 ?>

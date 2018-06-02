@@ -91,7 +91,7 @@ $tabCustom=Array
 	),
 	"compte" => Array
 	(
-		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"mid" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"uid" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
 		"tiers" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
@@ -104,8 +104,10 @@ $tabCustom=Array
 		"pointe" => Array("Type" => "char(1)", "Default" => ""),
 		"facture" => Array("Type" => "varchar(10)", "Index" => "1", ),
 		"rembfact" => Array("Type" => "varchar(10)", "Index" => "1", ),
-		"signature" => Array("Type" => "varchar(64)", "Index" => "1", ),
-		"precedent" => Array("Type" => "varchar(64)", ),
+		"hash" => Array("Type" => "varchar(64)", ),
+		"signature" => Array("Type" => "varchar(172)", ),
+		"precedent" => Array("Type" => "int(10) unsigned", ),
+		"clepublic" => Array("Type" => "varchar(280)", ),
 		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"date_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),

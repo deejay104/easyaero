@@ -67,7 +67,7 @@
 			$tmpl_x->assign("chk_compte", ($myuser->uid==$id) ? "selected" : "") ;
 			$tmpl_x->assign("nom_compte", $myuser->fullname);
 			$tmpl_x->parse("corps.compte.lst_compte");
-			if ($myuser->uid==$id)
+			if ($myuser->id==$id)
 			  { $ok=1; }
 
 	  	  	foreach($myuser->data["enfant"] as $enfant)
@@ -85,11 +85,11 @@
 			$tmpl_x->parse("corps.compte");
 			
 			if ($ok==0)
-			  { $id=$uid; }
+			  { $id=$gl_uid; }
 		}
 		else
 		{
-	  		$id=$uid;
+	  		$id=$gl_uid;
 	  	}
 	}
 	$cptusr=new user_class($id,$sql);
@@ -146,6 +146,8 @@
 	{
 		$tabTitre["releve"]["aff"]="&nbsp;";
 		$tabTitre["releve"]["width"]=40;
+		$tabTitre["hash"]["aff"]="&nbsp;";
+		$tabTitre["hash"]["width"]=5;
 	}
 	
 
@@ -168,7 +170,7 @@
 	$solde=$res["solde"];
 	
 	// Affiche les lignes
-	$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
+	$query = "SELECT id,mid,uid,date_valeur,mouvement,commentaire,montant,hash FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
 	$sql->Query($query);
 	$col=50;
 	for($i=0; $i<$sql->rows; $i++)
@@ -196,6 +198,7 @@
 			$solde=$solde-$sql->data["montant"];
 		  }
 		$tabValeur[$i]["releve"]["val"]=$sql->data["pointe"];
+		$tabValeur[$i]["hash"]["val"]=$sql->data["hash"];
 
 	}
 
@@ -210,10 +213,28 @@
 
 	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
 	{
+		$tmpl_x->assign("form_id", $id);
+		$tmpl_x->parse("infos.affiche_signature");
+
 		foreach($tabValeur as $i=>$d)
 		{
-			$tabValeur[$i]["signature"]["val"]=AfficheSignatureCompte($d["lid"]["val"]);
-			$tabValeur[$i]["signature"]["aff"]=($tabValeur[$i]["signature"]["val"]=="ok") ? "<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>" : "<a title='Transaction potentiellement altérée'><img src='static/images/icn16_warning.png' /></a>";
+			$confirm=AfficheSignatureCompte($d["lid"]["val"]);
+			$aff="";
+			if ($confirm=="ok")
+			{
+				$aff="<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>";
+				if ($fonc!="showhash")
+				{
+					$tabValeur[$i]["hash"]["val"]="";
+				}
+			}
+			else
+			{
+				$aff="<a title='Transaction potentiellement altérée\nID:".$d["lid"]["val"]." Signature:".$d["hash"]["val"]."'><img src='static/images/icn16_warning.png' /></a>";
+			}
+			
+			$tabValeur[$i]["signature"]["val"]=$confirm;
+			$tabValeur[$i]["signature"]["aff"]=$aff;
 		}
 	}
 	
