@@ -209,7 +209,7 @@ class compte_class{
 		foreach($this->mvt as $i=>$m)
 		{
 			// Récupère la dernière transaction
-			$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte";
+			$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte WHERE uid='".$m["uid"]."'";
 			$res=$sql->QueryRow($query);
 			$prev_id=$res["maxid"];
 
@@ -245,9 +245,7 @@ class compte_class{
 			$details=openssl_pkey_get_details($key);
 			$public_key=$details["key"];
 			
-			$hash=md5($prev_hash."-".$public_key);
-			
-			$data =$hash;
+			$data =md5($prev_hash."-".$public_key);
 			$data.="-".$prev_id;
 			$data.="-".$id;
 			$data.="-".$m["uid"];
@@ -256,6 +254,9 @@ class compte_class{
 			$data.="-".$this->date_valeur;
 			$data.="-".$this->uid_creat;
 			$data.="-".$dte_creat;
+
+			$hash=md5($data);
+
 			$sign="";
 			openssl_sign($data,$sign,$priv_key,OPENSSL_ALGO_SHA256);
 
@@ -377,7 +378,10 @@ function AfficheSignatureCompte($lid)
 {
 	global $MyOpt,$sql;
 	
-	$ret="nok";
+	$ret=array();
+	$ret["res"]="ok";
+	$ret["hash"]="";
+	$ret["total"]=0;
 	
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE id='".$lid."'";
 	$res_l=$sql->QueryRow($query);
@@ -385,9 +389,19 @@ function AfficheSignatureCompte($lid)
 	$query="SELECT id,hash FROM ".$MyOpt["tbl"]."_compte WHERE id='".$res_l["precedent"]."'";
 	$res_p=$sql->QueryRow($query);
 
-	$hash=md5($res_p["hash"]."-".$res_l["clepublic"]);
+	if ($res_l["mid"]>0)
+	{
+		$query="SELECT SUM(montant) AS total FROM ".$MyOpt["tbl"]."_compte WHERE mid='".$res_l["mid"]."'";
+		$res=$sql->QueryRow($query);
 
-	$data =$hash;
+		if ($res["total"]<>0)
+		{
+			$ret["res"]="mvt";
+			$ret["total"]=$res["total"];
+		}
+	}
+
+	$data =md5($res_p["hash"]."-".$res_l["clepublic"]);
 	$data.="-".$res_l["precedent"];
 	$data.="-".$res_l["id"];
 	$data.="-".$res_l["uid"];
@@ -399,22 +413,12 @@ function AfficheSignatureCompte($lid)
 	
 	if (openssl_verify($data, base64_decode($res_l["signature"]), $res_l["clepublic"], "sha256WithRSAEncryption"))
 	{
-		$ret="ok";
+		$ret["hash"]=md5($data);
 	}
 	else
 	{
-		$ret="nok";
-	}
-
-	if ($res_l["mid"]>0)
-	{
-		$query="SELECT SUM(montant) AS total FROM ".$MyOpt["tbl"]."_compte WHERE mid='".$res_l["mid"]."'";
-		$res=$sql->QueryRow($query);
-
-		if ($res["total"]<>0)
-		{
-			$ret="nok";
-		}
+		$ret["res"]="nok";
+		$ret["hash"]=md5($data);
 	}
 
 	return $ret;

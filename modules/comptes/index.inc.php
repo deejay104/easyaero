@@ -170,7 +170,7 @@
 	$solde=$res["solde"];
 	
 	// Affiche les lignes
-	$query = "SELECT id,mid,uid,date_valeur,mouvement,commentaire,montant,hash FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
+	$query = "SELECT id,mid,uid,date_valeur,mouvement,commentaire,montant,hash,precedent FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
 	$sql->Query($query);
 	$col=50;
 	for($i=0; $i<$sql->rows; $i++)
@@ -181,6 +181,7 @@
 		$tabValeur[$i]["date_valeur"]["val"]=CompleteTxt($i,"20","0");
 		$tabValeur[$i]["date_valeur"]["aff"]=date("d/m/Y",strtotime($sql->data["date_valeur"]));
 		$tabValeur[$i]["mid"]["val"]=$sql->data["mid"];
+		$tabValeur[$i]["precedent"]["val"]=$sql->data["precedent"];
 		$tabValeur[$i]["date_creat"]["val"]=$sql->data["date_creat"];
 		$tabValeur[$i]["mouvement"]["val"]=$sql->data["mouvement"];
 		$tabValeur[$i]["commentaire"]["val"]=$sql->data["commentaire"];
@@ -220,7 +221,7 @@
 		{
 			$confirm=AfficheSignatureCompte($d["lid"]["val"]);
 			$aff="";
-			if ($confirm=="ok")
+			if ($confirm["res"]=="ok")
 			{
 				$aff="<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>";
 				if ($fonc!="showhash")
@@ -228,9 +229,14 @@
 					$tabValeur[$i]["hash"]["val"]="";
 				}
 			}
-			else
+			else if ($confirm["res"]=="nok")
 			{
-				$aff="<a title='Transaction potentiellement altérée\nID:".$d["lid"]["val"]." Signature:".$d["hash"]["val"]."'><img src='static/images/icn16_warning.png' /></a>";
+				$aff="<a title='Cette transaction ou la précédente sont altérées.\nID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."'><img src='static/images/icn16_warning.png' /></a>";
+				$tabValeur[$i]["hash"]["aff"]="<s>".$tabValeur[$i]["hash"]["val"]."</s><br />".$confirm["hash"];
+			}
+			else if ($confirm["res"]=="mvt")
+			{
+				$aff="<a title=\"Le mouvement n'a pas un total nul. Une des transaction a pu être altérée.\nMouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\"><img src='static/images/icn16_warning.png' /></a>";
 			}
 			
 			$tabValeur[$i]["signature"]["val"]=$confirm;
