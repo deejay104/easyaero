@@ -4,6 +4,10 @@
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 	set_time_limit(0);
+	
+	error_reporting(E_ALL);
+	ini_set("display_errors", 1);
+
 // ----
 	
 	if (GetDroit("SYS"))
@@ -19,8 +23,11 @@
 			// return;
 		// }
 
+		$id=checkVar("id","numeric");
+		
 		// Récupère la liste des utilisateurs
-		$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs";
+		$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs ".(($id>0) ? "WHERE id=".$id." " : "")." ORDER BY id";
+		$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id>48 ORDER BY id";
 		$sql->Query($query);
 		$tabUser=array();
 		for($i=0; $i<$sql->rows; $i++)
@@ -34,7 +41,7 @@
 		foreach($tabUser as $i=>$id)
 		{
 			echo "Signature des transactions pour utilisateur id:".$id."\n";
-			$q="UPDATE ".$MyOpt["tbl"]."_compte SET precedent=0, signature='',hash='',clepublic='' WHERE uid='".$id."'";
+			$q="UPDATE ".$MyOpt["tbl"]."_compte SET precedent='0', signature='',hash='',clepublic='' WHERE uid='".$id."'";
 			$sql->Update($q);
 
 			// Créé la première entrée
