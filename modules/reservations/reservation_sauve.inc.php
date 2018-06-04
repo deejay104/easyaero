@@ -31,9 +31,10 @@
 //echo "Mettre le test de résa ici";
 
 // --- Charge la réservation
-	if (!is_numeric($id))
-	  { $id=0; }
-
+	$id=checkVar("id","numeric");
+	$form_accept=checkVar("form_accept","varchar",3);
+	
+	
 	$resa["resa"]=new resa_class($id,$sql);
 
 // ---- Vérifie les infos

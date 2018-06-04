@@ -112,7 +112,7 @@ class rex_class extends objet_core
 				foreach($lstress as $i=>$rid)
 				{
 					$resr=new ress_class($rid,$this->sql);
-					$ret.="<option value='".$rid."' ".(($txt==$rid) ? "selected" : "").">".$resr->immatriculation."</option>";
+					$ret.="<option value='".$rid."' ".(($txt==$rid) ? "selected" : "").">".$resr->val("immatriculation")."</option>";
 				}
 				$ret.="</select>";
 			}

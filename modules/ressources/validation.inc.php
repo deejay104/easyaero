@@ -111,14 +111,15 @@
 		}
 		else
 		{
-				$tabValeur[$i]["ress"]["val"]="";
-				$tabValeur[$i]["ress"]["aff"]="";
-				$tabValeur[$i]["auteur"]["val"]="";
-				$tabValeur[$i]["auteur"]["aff"]="";
-				$tabValeur[$i]["dtecreat"]["val"]="";
-				$tabValeur[$i]["dtecreat"]["aff"]="";
-				$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
-				$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
+			$i=0;
+			$tabValeur[$i]["ress"]["val"]="";
+			$tabValeur[$i]["ress"]["aff"]="";
+			$tabValeur[$i]["auteur"]["val"]="";
+			$tabValeur[$i]["auteur"]["aff"]="";
+			$tabValeur[$i]["dtecreat"]["val"]="";
+			$tabValeur[$i]["dtecreat"]["aff"]="";
+			$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
+			$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
 		}
 		if ($order=="") { $order="ress"; }
 		if ($trie=="") { $trie="d"; }

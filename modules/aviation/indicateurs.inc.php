@@ -29,7 +29,9 @@
 
 	
 // ---- Vérification des données
-	$dte=checkVar("dte","varchar");
+	$dte=checkVar("dte","varchar",4);
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
 // ---- Liste des mois
 	$tabm[1]="Jan";
@@ -99,6 +101,10 @@
 			{
 				$tabHeures[$id]["prev"][$i]=0;
 			}
+			if (!isset($tabHeures[$id]["total"][$i-1]))
+			{
+				$tabHeures[$id]["total"][$i-1]=0;
+			}
 			$tabHeures[$id]["total"][$i]=$tabHeures[$id]["total"][$i-1]+$tabHeures[$id]["nb"][$i];
 		}
 	}
@@ -145,8 +151,11 @@
 	$tot=0;
 	foreach($tabTitre as $i=>$md)
 	{
-		$tot=$tot+$tabTitre[$i]["bottom"];
-		$tabTitre[$i]["bottom"]=AffTemps($tabTitre[$i]["bottom"],"no");
+		if (isset($tabTitre[$i]["bottom"]))
+		{
+			$tot=$tot+$tabTitre[$i]["bottom"];
+			$tabTitre[$i]["bottom"]=AffTemps($tabTitre[$i]["bottom"],"no");
+		}
 	}
 	$tabTitre["avion"]["bottom"]="Total";
 	$tabTitre["total"]["bottom"]=AffTemps($tot,"no");

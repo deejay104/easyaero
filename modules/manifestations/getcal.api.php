@@ -20,7 +20,7 @@
 	
 	// Affichage des manifestations
 	$tmanip=GetManifestation($sql,$start,$end);
-
+	$input_arrays=array();
 	if (is_array($tmanip))
 	  {
 			foreach($tmanip as $r)
@@ -28,9 +28,9 @@
 					$m=new manip_class($r,$sql);
 		
 					$input_arrays[$ii]["id"]=$m->id;
-					$input_arrays[$ii]["title"]=utf8_encode($m->aff("titre","val"));
-					$input_arrays[$ii]["start"]=date("c",strtotime($m->aff("dte_manip","val")));
-					$input_arrays[$ii]["end"]=date("c",strtotime($m->aff("dte_manip","val")));
+					$input_arrays[$ii]["title"]=utf8_encode($m->val("titre"));
+					$input_arrays[$ii]["start"]=date("c",strtotime($m->val("dte_manip")));
+					$input_arrays[$ii]["end"]=date("c",strtotime($m->val("dte_manip")));
 					$input_arrays[$ii]["color"]='#38a9e3';
 					$ii=$ii+1;
 			  }

@@ -75,7 +75,7 @@
 
 				$hash=md5($data);
 
-				echo $hash."<br/>\n";
+				echo $hash."\n";
 
 				$sign="";
 				openssl_sign($data,$sign,$priv_key,OPENSSL_ALGO_SHA256);
@@ -85,7 +85,6 @@
 				
 				$prev_id=$sql->data["id"];
 				$prev_hash=$hash;
-				
 			}
 		}
 	}

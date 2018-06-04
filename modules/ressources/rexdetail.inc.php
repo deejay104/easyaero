@@ -93,7 +93,7 @@
 	}
 	
 	$ress=new ress_class($rex->data["uid_avion"],$sql);
-	$tmpl_x->assign("form_avion",$ress->Aff("Immat","html"));
+	$tmpl_x->assign("form_avion",$ress->Aff("immatriculation"));
 	
 // ---- Messages
 	if ($msg_erreur!="")

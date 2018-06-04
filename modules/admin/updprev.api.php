@@ -8,64 +8,51 @@
 	if (!isset($_GET["mois"]))
 	{
 		$ret["result"]=utf8_encode("NOK");
+		$ret["msg"]=utf8_encode("mois not provided.");
 		echo json_encode($ret);
-		error_log("mois not provided.");
 	  	exit;
 	}
 	$mois=$_GET["mois"];
+	$dte=checkVar("dte","numeric");
 
 	if (!isset($_GET["dte"]))
 	{
 		$ret["result"]=utf8_encode("NOK");
+		$ret["msg"]=utf8_encode("dte not provided.");
 		echo json_encode($ret);
-		error_log("dte not provided.");
 	  	exit;
 	}
-	$dte=$_GET["dte"];
+	$ress=checkVar("dte","varchar",4);
 
 	if (!isset($_GET["ress"]))
 	{
 		$ret["result"]=utf8_encode("NOK");
+		$ret["msg"]=utf8_encode("ress not provided.");
 		echo json_encode($ret);
-		error_log("ress not provided.");
 	  	exit;
 	}
-	$ress=$_GET["ress"];
+	$ress=checkVar("ress","numeric");
 
-	if (!isset($_GET["var"]))
-	{
-		$ret["result"]=utf8_encode("NOK");
-		echo json_encode($ret);
-		error_log("var not provided.");
-	  	exit;
-	}
-	$var=$_GET["var"];
+	$var=checkVar("var","numeric");
 
-	if ((!is_numeric($mois)) && (($mois<1) || ($mois>12)))
+	if ((!is_numeric($mois)) || ($mois<1) || ($mois>12))
 	{
 		$ret["result"]=utf8_encode("NOK");
-		error_log("mois is not a number");
+		$ret["msg"]=utf8_encode("mois is not a valid month");
 		echo json_encode($ret);
 	  	exit;
 	}
-	if ((!is_numeric($dte)) && ($mois<1))
+	if ((!is_numeric($dte)) || ($dte==0))
 	{
 		$ret["result"]=utf8_encode("NOK");
-		error_log("dte is not a number");
+		$ret["msg"]=utf8_encode("dte is not a year");
 		echo json_encode($ret);
 	  	exit;
 	}
-	if ((!is_numeric($ress)) && ($ress<1))
+	if ($ress==0)
 	{
 		$ret["result"]=utf8_encode("NOK");
-		error_log("ress is not a number");
-		echo json_encode($ret);
-	  	exit;
-	}
-	if ((!is_numeric($var)) && ($var<1))
-	{
-		$ret["result"]=utf8_encode("NOK");
-		error_log("var is not a number");
+		$ret["msg"]=utf8_encode("Invalid ressource");
 		echo json_encode($ret);
 	  	exit;
 	}
@@ -79,11 +66,11 @@
 
 	if ($res["id"]>0)
 	{
-		$r=$sql->Edit("_prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("heures"=>$var));
+		$r=$sql->Edit("prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("heures"=>$var));
 	}
 	else
 	{
-		$r=$sql->Edit("_prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("annee"=>$dte,"mois"=>$mois,"avion"=>$ress,"heures"=>$var));
+		$r=$sql->Edit("prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("annee"=>$dte,"mois"=>$mois,"avion"=>$ress,"heures"=>$var));
 	}
 
 	if ($r=="NOK")

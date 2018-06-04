@@ -17,17 +17,18 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesConfigPrevisions")) { FatalError("Accès non autorisé (AccesConfigPrevisions)"); }
-
-	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("previsions.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-
+// ---- Vérifie les variables
+	$dte=checkVar("dte","varchar",4);
+	
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once("modules/".$mod."/menu.inc.php");
@@ -35,7 +36,7 @@
 
 // ---- Liste des années
 
-	if ((!isset($dte)) && (!preg_match("/[0-9]{4}/",$dte)))
+	if (($dte=="") || (!preg_match("/[0-9]{4}/",$dte)))
 	{
 	  	$dte=date("Y");
 	}
@@ -116,7 +117,7 @@
 		foreach($tabRess as $rid=>$i)
 		{
 			$tmpl_x->assign("aff_ress",$rid);
-			$tmpl_x->assign("aff_val",$tabPrev[$m][$rid]);
+			$tmpl_x->assign("aff_val",(isset($tabPrev[$m][$rid])) ? $tabPrev[$m][$rid] : "");
 			$tmpl_x->parse("corps.lst_mois.lst_ress");
 		}
 		$tmpl_x->parse("corps.lst_mois");

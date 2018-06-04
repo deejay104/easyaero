@@ -6,7 +6,7 @@
 // ---- 
 	$result=array();
 
-	$query="SELECT nom,description FROM ".$MyOpt["tbl"]."_navpoints WHERE (nom LIKE '%".$_REQUEST["term"]."%' OR description LIKE '%".$_REQUEST["term"]."%') ".(($_REQUEST["type"]!="") ? " AND icone='".addslashes($_REQUEST["type"])."'" : "")." LIMIT 0,20";
+	$query="SELECT nom,description FROM ".$MyOpt["tbl"]."_navpoints WHERE (nom LIKE '%".$_REQUEST["term"]."%' OR description LIKE '%".$_REQUEST["term"]."%') ".(($_REQUEST["type"]!="") ? " AND icone='".addslashes($_REQUEST["type"])."'" : "")." LIMIT 0,10";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	{

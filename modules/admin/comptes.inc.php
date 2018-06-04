@@ -20,15 +20,16 @@
 ?>
 
 <?
+	if (!GetDroit("AccesConfigComptes")) { FatalError("Accès non autorisé (AccesConfigComptes)"); }
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("comptes.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
+	$checktime=checkVar("checktime","numeric");
 
-	if (!GetDroit("AccesConfigComptes")) { FatalError("Accès non autorisé (AccesConfigComptes)"); }
-
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -45,6 +46,7 @@
 				$sql->Edit("numcompte",$MyOpt["tbl"]."_numcompte",$id,array("numcpt"=>$num,"description"=>$form_description[$id]));
 			}
 		}
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
 // ---- Supprime un poste
@@ -75,7 +77,6 @@
 	$tmpl_x->assign("form_description", "");
 	$tmpl_x->parse("corps.lst_mouvement");
 
-	$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
 
 	$tmpl_x->parse("corps.aff_mouvement");

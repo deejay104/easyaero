@@ -140,15 +140,15 @@ class ress_class extends objet_core
 			$tfin[3]=0;
 		}
 
-		if ($this->typehora=="min")
+		if ($this->data["typehora"]=="min")
 		{
 			$t=round(($tfin[1]-$tdeb[1])*60+($tfin[3]-$tdeb[3]));
 		}
-		else if ($this->typehora=="dix")
+		else if ($this->data["typehora"]=="dix")
 		{
 			$t=round(($tfin[1]-$tdeb[1])*60+($tfin[3]-$tdeb[3])*6);
 		}
-		else if ($this->typehora=="cen")
+		else if ($this->data["typehora"]=="cen")
 		{
 			$t=round((($tfin[1]-$tdeb[1])*100+($tfin[3]-$tdeb[3]))*60/100);
 		}

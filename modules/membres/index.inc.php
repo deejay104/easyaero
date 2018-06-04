@@ -29,12 +29,16 @@
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
 	$tmpl_x->assign("path_module",$corefolder."/".$module."/".$mod);
 
+// ---- Valide les variables
+	$aff=checkVar("aff","varchar");
+
 // ---- Trombino
 	if ($fonc=="trombi")
 	{
 		$tmpl_x->assign("aff_trombi","class='pageTitleSelected'");
-		$lstusr=ListActiveUsers($sql,"nom");
+		$lstusr=ListActiveUsers($sql,"nom","");
 
+		$col=0;
 		foreach($lstusr as $i=>$id)
 		  {
 			$usr = new user_core($id,$sql,false);
@@ -143,7 +147,7 @@
 	if (GetDroit("CreeUser"))
 	  { $tmpl_x->parse("infos.ajout"); }
 	
-	if (GetDroit("ADM"))
+	if (GetDroit("AccesMembresVirtuel"))
 	{
 		if ($aff=="virtuel")
 		{

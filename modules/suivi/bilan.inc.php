@@ -20,14 +20,12 @@
 ?>
 
 <?
+// ---- Vérifie les droits d'accès
 	if (!GetDroit("AccesSuiviBilan")) { FatalError("Accès non autorisé (AccesSuiviBilan)"); }
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("bilan.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Vérifie les droits d'accès
-
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
@@ -37,13 +35,14 @@
 
 
 // ---- Vérifie les variables
-	if ((isset($dte)) && (preg_match("/[0-9]{4}/",$dte)))
-	  { $annee=$dte; }
-	if ((!isset($annee)) && (!preg_match("/[0-9]{4}/",$annee)))
-	  { $annee=date("Y"); }
-	$tmpl_x->assign("annee", $annee);
-	$dte=$annee;
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
+	$dte=checkVar("trie","varchar",4);
 
+	if (!preg_match("/[0-9]{4}/",$dte))
+	{
+		$dte=date("Y");
+	}
 
 // ---- Liste des années
 
@@ -61,8 +60,6 @@
 			
 			$tmpl_x->parse("corps.lst_annee");
 	  }
-		
-	$tmpl_x->assign("cur_annee", $dte);
 
 // ---- Affiche les infos
 	$tabTitre=array();
@@ -76,7 +73,7 @@
 // ---- Récupère la liste
 	$query = "SELECT num.description, cpt.compte,SUM(cpt.montant) AS total FROM ".$MyOpt["tbl"]."_compte AS cpt ";
 	$query.= "LEFT JOIN ".$MyOpt["tbl"]."_numcompte AS num ON num.numcpt=cpt.compte ";
-	$query.= "WHERE uid=".$MyOpt["uid_club"]." AND date_valeur>='$annee-01-01' AND date_valeur<'".($annee+1)."-01-01' GROUP BY compte ORDER BY compte";
+	$query.= "WHERE uid=".$MyOpt["uid_club"]." AND date_valeur>='".$dte."-01-01' AND date_valeur<'".($dte+1)."-01-01' GROUP BY compte ORDER BY compte";
 
 	$total=0;
 

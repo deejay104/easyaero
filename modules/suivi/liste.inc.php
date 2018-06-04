@@ -29,9 +29,11 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("liste.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
 // ---- Affiche le menu
 	$aff_menu="";

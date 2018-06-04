@@ -25,7 +25,7 @@
 	$tmpl_x->assign("path_module",$module."/".$mod);
 	$tmpl_x->assign("corefolder",$corefolder);
 
-
+	$dte=checkVar("dte","varchar");
 	$dte=($dte!="") ? $dte : date("Y-m-01");
 
 	$tmpl_x->assign("form_jour",$dte);

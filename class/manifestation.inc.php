@@ -39,7 +39,7 @@ class manip_class extends objet_core
 				// $this->tabList["type"][$k]=ucwords($k);
 			// }
 		// }
-		$query="SELECT id,groupe, description FROM ".$MyOpt["tbl"]."_groupe WHERE principale='oui' ORDER BY description";
+		$query="SELECT id,groupe,description FROM ".$MyOpt["tbl"]."_groupe WHERE principale='oui' ORDER BY description";
 		$sql->Query($query);
 
 		for($i=0; $i<$sql->rows; $i++)
@@ -47,7 +47,7 @@ class manip_class extends objet_core
 			$sql->GetRow($i);
 			if ($sql->data["groupe"]!="SYS")
 			{
-				$this->tabList["type"][strtoupper($sql->data["groupe"])]=$sql->data["description"];
+				$this->tabList["type"][strtolower($sql->data["groupe"])]=$sql->data["description"];
 			}
 		}
 		
@@ -91,10 +91,10 @@ function GetManifestation($sql,$start,$end)
 	$res=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
-	  {
-			$sql->GetRow($i);
-			$res[$i]=$sql->data["id"];
-	  }
+	{
+		$sql->GetRow($i);
+		$res[$i]=$sql->data["id"];
+	}
 
 	return $res;
 }

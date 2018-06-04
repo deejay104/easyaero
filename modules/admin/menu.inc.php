@@ -6,7 +6,6 @@
 // ---- Charge le template
   	$tmpl_menu = new XTemplate (MyRep("menu.htm"));
 	$tmpl_menu->assign("path_module","$module/$mod");
-	$tmpl_menu->assign("id", $id);
 
 // ---- Sélectionne le menu courant
 	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");

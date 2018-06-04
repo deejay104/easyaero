@@ -26,27 +26,20 @@
 // ---- Charge les dépendances
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/echeance.inc.php");
-
-// ---- Refuse l'accès en direct
-	if ((!isset($token)) || ($token==""))
-	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("echeances.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
 
-	if (!is_numeric($form_id))
-	{
-		$form_id=0;
-	}
-	require_once ("class/echeance.inc.php");
+	$form_id=checkVar("form_id","numeric");
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
 
-	require_once ($appfolder."/class/compte.inc.php");
-	require_once ($appfolder."/class/user.inc.php");
-
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";

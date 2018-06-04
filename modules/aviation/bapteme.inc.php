@@ -69,7 +69,7 @@
 		  	}
 		}
 
-		if ( ($form_info["id_pilote"]>0) && ($form_info["id_avion"]>0) && ($form_info["dte_j"]!='0000-00-00') && ($form_info["dte_h"]!='00:00') )
+		if ( ($form_data["id_pilote"]>0) && ($form_data["id_avion"]>0) && ($form_data["dte"]["date"]!='0000-00-00') && ($form_data["dte"]["time"]!='00:00') )
 		  { $btm->Valid("status","2"); }
 
 		$btm->Save();
@@ -84,11 +84,11 @@
 	}
 	else if (($fonc=="Enregistrer") && (($btm->data["status"]==0) || ($btm->data["status"]==1) || ($btm->data["status"]==2)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$btm->Valid("id_pilote",$form_info["id_pilote"],false);
-		$btm->Valid("id_avion",$form_info["id_avion"],false);
-		$btm->Valid("dte",date2sql($form_info["dte_j"])." ".$form_info["dte_h"],false);
+		$btm->Valid("id_pilote",$form_data["id_pilote"],false);
+		$btm->Valid("id_avion",$form_data["id_avion"],false);
+		$btm->Valid("dte",date2sql($form_data["dte_j"])." ".$form_data["dte_h"],false);
 
-		if ( ($form_info["id_pilote"]>0) && ($form_info["id_avion"]>0) && ($form_info["dte_j"]!='0000-00-00') && ($form_info["dte_h"]!='00:00') )
+		if ( ($form_data["id_pilote"]>0) && ($form_data["id_avion"]>0) && ($form_data["dte_j"]!='0000-00-00') && ($form_data["dte_h"]!='00:00') )
 		  { $btm->Valid("status","2"); }
 
 		$btm->Save();
@@ -123,11 +123,7 @@
 		$btm->data["status"]=2;
 		$btm->Save();
 
-
 		$msg_confirmation.=($msg_resa!="") ? $msg_resa : "Réservation confirmée.<BR>";
-
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-
 	}
 
 // ---- Attribuer le bapteme
@@ -233,7 +229,7 @@
 	{
 		$usr = new user_core($btm->data["id_pilote"],$sql,true);
 		$tmpl_x->assign("form_id_pilote", $usr->Aff("fullname"));
-		$tmpl_x->assign("form_id_avion", strtoupper($ress->immatriculation));
+		$tmpl_x->assign("form_id_avion", strtoupper($ress->val("immatriculation")));
 	}
 	else
 	{
@@ -247,7 +243,7 @@
 	  {
 		$ress = new ress_class($id,$sql);
 		$tmpl_x->assign("lst_uid_avion", $id);
-		$tmpl_x->assign("dispo_immat", $ress->immatriculation);
+		$tmpl_x->assign("dispo_immat", $ress->val("immatriculation"));
 		$tmpl_x->parse("corps.lst_dispo");
 		
 	  }

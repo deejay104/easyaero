@@ -24,12 +24,15 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("detail.htm"));
 	$tmpl_x->assign("path_module",$module."/".$mod);
-
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 
+// ---- Vérifie les variables
 	$id=checkVar("id","numeric");
-
+	$jstart=checkVar("jstart","numeric");
+	$jstart=checkVar("jstart","numeric");
+	$idusr=checkVar("idusr","numeric");
+	
 // ---- Sauvegarde
 	$manip=new manip_class($id,$sql);
 
@@ -139,7 +142,7 @@
 	}
 
 // ---- Inscription à la manifestation
-	if ( (!GetDroit("ModifParticipant")) || (!is_numeric($idusr)) )
+	if ( (!GetDroit("ModifParticipant")) || ($idusr==0) )
 	{
 		$idusr=$gl_uid;
 	}
@@ -199,7 +202,7 @@
 
 
 
-	if ( ($manip->data["facture"]=="non") && ((date_diff_txt($manip->data["dte_limite"],date("Y-m-d"))<=0) || ($manip->data["dte_limite"]=="0000-00-00")) )
+	if  ( ($manip->data["facture"]=="non") && ((date_diff_txt($manip->data["dte_limite"],date("Y-m-d"))<=0) || ($manip->data["dte_limite"]=="0000-00-00")) )
 	{
 		$tmpl_x->parse("infos.bouttons.participe");
 	}

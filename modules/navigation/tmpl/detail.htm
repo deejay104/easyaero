@@ -17,8 +17,6 @@
 	.waypoint label:hover { background-color: #eeeeee; }
 	.waypoint span { display: inline-block; width:50px; text-align:center; }
 	.waypoint div { display: inline-block; position: relative;top: -15px; background-color:#ffffff; border:1px solid black; width:50px; text-align: center; }
-	.waypoint a { display: inline-block; width:20px; text-align:center;}
-	.waypoint a:hover { background-color: #38a9e3; border-radius: 4px; }
 	.waypointth { background-color: #dddddd;  }
 	.waypointth li { padding-top:5px; }
 	.waypointth span { border: 0px; }
@@ -110,7 +108,7 @@ $(function() {
 		<li id="id_{aff_id}">
 			<label>{aff_nom}</label>
 			<span style="width:300px; text-align:left;">{aff_description}</span>
-			<span><a href="index.php?mod=navigation&rub=detail&id={form_id}&fonc=supprimer&idpoint={aff_id}"><img src="{path_module}/img/icn12_supprimer.png" /></a></span>
+			<span><a href="index.php?mod=navigation&rub=detail&id={form_id}&fonc=supprimer&idpoint={aff_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" /></a></span>
 			<div >{aff_distance}</div>
 			<div>{aff_rm}</div>
 			<div>{aff_tsv}</div>

@@ -41,6 +41,11 @@
 	error_log($q);
 	$res=$sql->QueryRow($query);
 
+	$r=$h;
+	if ($res["maxx"]-$res["minx"]>$res["maxy"]-$res["miny"])
+	{
+		$r=$l;
+	}
 
 	$query="SELECT rte.id,rte.nom,wpt.description,wpt.lon,wpt.lat FROM ".$MyOpt["tbl"]."_navroute AS rte LEFT JOIN ".$MyOpt["tbl"]."_navpoints AS wpt ON rte.nom=wpt.nom WHERE rte.idnav='".$nid."' ORDER BY ordre";
 	$sql->Query($query);
@@ -51,24 +56,28 @@
 	$lastx=0;
 	$lasty=0;
 
+	imageline($img,0,0,$l,0,$black);
+	imageline($img,$l,0,$l,$h,$black);
+	imageline($img,0,0,0,$h,$black);
+	imageline($img,0,$h,$l,$h,$black);
+
 	for($i=0; $i<$sql->rows; $i++)
 	{
 		$sql->GetRow($i);
 		
-		$newx=10+($sql->data["lon"]-$res["minx"])*($l-50)/($res["maxx"]-$res["minx"]);
-		$newy=$h-($sql->data["lat"]-$res["miny"])*$h/($res["maxy"]-$res["miny"]);
+		$newx=10+($sql->data["lon"]-$res["minx"])*$r/($res["maxx"]-$res["minx"]);
+		$newy=$h-($sql->data["lat"]-$res["miny"])*$r/($res["maxy"]-$res["miny"]);
 
 		error_log("TRACE: minx:".$res["minx"]." maxx:".$res["maxx"]." x:".$sql->data["lon"]." newx:".$newx);		
-		if ($lastx==0)
+		if (($lastx==0) && ($lasty==0))
 		{
-			$lastx=$newx;
+			imagestring($img, 2, $newx, $newy, $sql->data["nom"], $textcolor);
 		}
-		if ($lasty==0)
+		else
 		{
-			$lasty=$newy;
+			imageline($img,$lastx,$lasty,$newx,$newy,$black);
+			imagestring($img, 2, $newx, $newy, $sql->data["nom"], $textcolor);
 		}
-		imageline($img,$lastx,$lasty,$newx,$newy,$black);
-		imagestring($img, 2, $newx, $newy, $sql->data["nom"], $textcolor);
 
 		$lastx=$newx;
 		$lasty=$newy;

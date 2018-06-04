@@ -21,22 +21,23 @@
 
 <?
 	require_once ($appfolder."/class/maintenance.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("fichemaint.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérification des données
-	if (!is_numeric($uid_avion))
-	  { $uid_avion=0; }
-	if (!is_numeric($form_avion))
-	  { $form_avion=0; }
-
+	$uid_avion=checkVar("uid_avion","numeric");
+	$form_avion=checkVar("form_avion","numeric");
+	$form_description=checkVar("form_description","text");
+  
 	$form_description=preg_replace("/<BR[^>]*>/i","\n",$form_description);
 	$form_description=preg_replace("/<[^>]*>/i","",$form_description);
 
 	
 // ---- Enregistre
+	$msg_ok="";
 	$msg_erreur="";
 	$affrub="";
 	if (($fonc=="Enregistrer") && ($form_avion>0) && ($form_description!="") && (!isset($_SESSION['tab_checkpost'][$checktime])))
@@ -101,7 +102,7 @@
 		$resr=new ress_class($rid,$sql);
 		
 		$tmpl_x->assign("uid_avion", $resr->id);
-		$tmpl_x->assign("nom_avion", $resr->aff("immatriculation","val"));
+		$tmpl_x->assign("nom_avion", $resr->val("immatriculation"));
 		if ($uid_avion==$resr->id)
 		  { $tmpl_x->assign("chk_avion", "selected"); }
 		else

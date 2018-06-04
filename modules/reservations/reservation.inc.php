@@ -34,11 +34,11 @@
 
 
 	$res=array();
-	$msg_err="";
-	if (!isset($ok))
+	if (!isset($msg_err))
 	{
-		$ok=0;
+		$msg_err="";
 	}
+	$ok=checkVar("ok","numeric");
 	
 // ---- Charge les données de la réservation
 	if (($id>0) && ($ok!=3))

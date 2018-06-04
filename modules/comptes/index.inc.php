@@ -170,7 +170,7 @@
 	$solde=$res["solde"];
 	
 	// Affiche les lignes
-	$query = "SELECT id,mid,uid,date_valeur,mouvement,commentaire,montant,hash,precedent FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
+	$query = "SELECT id,mid,uid,date_valeur,date_creat,mouvement,commentaire,montant,hash,precedent,pointe FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
 	$sql->Query($query);
 	$col=50;
 	for($i=0; $i<$sql->rows; $i++)

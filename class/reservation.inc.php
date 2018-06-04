@@ -31,6 +31,7 @@ class resa_class{
 		$this->edite="oui";
 		$this->horadeb="0";
 		$this->horafin="0";
+		$this->temps="";
 		$this->tpsestime="";
 		$this->tempsreel="";
 		$this->destination="LOCAL";
@@ -38,6 +39,12 @@ class resa_class{
 		$this->invite="non";
 		$this->carburant="";
 		$this->prixcarbu="";
+		$this->accept="non";
+		$this->carbavant="";
+		$this->carbapres="";
+		$this->potentiel=0;
+		$this->potentielh=0;
+		$this->potentielm=0;
 
 		if ($id>0)
 		  {
