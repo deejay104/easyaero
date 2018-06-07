@@ -147,7 +147,6 @@
 	$ok_save=0;
 	$ok_inst=0;
 	
-echo $form_uid_pilote." ".$resa["resa"]->uid_pilote;
 	$resusr=new user_class($resa["resa"]->uid_pilote,$sql,true);
 	$resa["resa"]->pilote_data=$resusr->data;
 
