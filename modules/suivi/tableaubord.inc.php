@@ -27,9 +27,6 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("tableaubord.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Vérifie les droits d'accès
-
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
@@ -45,7 +42,8 @@
 	$tmpl_x->assign("annee", $annee);
 	$dte=$annee;
 
-	
+	$show=checkVar("show","date");
+
 // ---- Liste des comptes
 	if (!isset($id))
 	  { $id=$MyOpt["uid_tableaubord"]; }
@@ -186,11 +184,11 @@
 	$tabposte=array();
 	$taboldposte=array();
 
-	if ((isset($m)) && (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/",$m)))
-	  {
-		$tmpl_x->assign("form_mois", $m);
-	  	$mois=preg_replace("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/","$2-$1",$m);
-	  }
+	if ((isset($show)) && (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/",$show)))
+	{
+		$tmpl_x->assign("form_mois", $show);
+	  	$mois=preg_replace("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/","$2-$1",$show);
+	}
 
 	if (!isset($poste))
 	  {

@@ -32,13 +32,15 @@
 	$heure=checkVar("heure","numeric");
 	$jour=checkVar("jour","date");
 
-
 	$res=array();
 	if (!isset($msg_err))
 	{
 		$msg_err="";
 	}
-	$ok=checkVar("ok","numeric");
+	if (!is_numeric($ok))
+	{
+		$ok=checkVar("ok","numeric");
+	}
 	
 // ---- Charge les données de la réservation
 	if (($id>0) && ($ok!=3))
@@ -144,7 +146,8 @@
 	$ok_aff=0;
 	$ok_save=0;
 	$ok_inst=0;
-
+	
+echo $form_uid_pilote." ".$resa["resa"]->uid_pilote;
 	$resusr=new user_class($resa["resa"]->uid_pilote,$sql,true);
 	$resa["resa"]->pilote_data=$resusr->data;
 
