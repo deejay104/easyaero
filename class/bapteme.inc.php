@@ -24,8 +24,8 @@ class bapteme_class extends objet_core
 	protected $mod="aviation";
 	protected $rub="bapteme";
 
-	protected $droit=array();
-	protected $type=array("nom"=>"varchar","telephone"=>"tel","mail"=>"email","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","description"=>"text");
+	protected $droit=array("paye"=>"ModifBaptemePaye","dte_paye"=>"ModifBaptemePaye");
+	protected $type=array("nom"=>"varchar","telephone"=>"tel","mail"=>"email","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","dte_paye"=>"date","description"=>"text");
 
 	
 	protected $tabList=array(
@@ -48,6 +48,7 @@ class bapteme_class extends objet_core
 		$this->data["status"]="0";
 		$this->data["type"]="btm";
 		$this->data["paye"]="non";
+		$this->data["dte_paye"]="0000-00-00";
 		$this->data["id_pilote"]="0";
 		$this->data["id_avion"]="0";
 		$this->data["id_resa"]="0";

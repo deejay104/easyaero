@@ -21,19 +21,6 @@ $tabCustom=Array
 		"uid_maj" => Array("Type" => "int(10) unsigned", ),
 		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 	),
-	"actualites" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"titre" => Array("Type" => "varchar(150)", "Default" => "Titre" ),
-		"message" => Array("Type" => "text", ),
-		"dte_mail" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"mail" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"uid_modif" => Array("Type" => "int(11)", ),
-		"dte_modif" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
 	"bapteme" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -47,6 +34,7 @@ $tabCustom=Array
 		"status" => Array("Type" => "tinyint(3) unsigned", "Index"=>1 ),
 		"type" => Array("Type" => "enum('btm','vi')", "Default" => "btm", ),
 		"paye" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
+		"dte_paye" => Array("Type" => "date", "Default" => "0000-00-00", ),
 		"id_pilote" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"id_avion" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"id_resa" => Array("Type" => "int(10) unsigned", "Index"=>1),

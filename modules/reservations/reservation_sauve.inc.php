@@ -182,21 +182,39 @@
 
 		if (($msg_err2=="") && ($msg_err==""))
 		{
-			// Email l'instructeur
+			$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
+
+				// Email l'instructeur
 			if ($resa["resa"]->uid_instructeur>0)
 			{
 				$resi=new user_class($resa["resa"]->uid_instructeur,$sql);
-				$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 				
 				$tabvar=array();
 				$tabvar["pilote"]=$resa["pilote"]->Aff("fullname","val");
-				$tabvar["avion"]=strtoupper($resr->immatriculation);
+				$tabvar["avion"]=strtoupper($resr->val("immatriculation"));
 				$tabvar["dte_deb"]=sql2date($resa["resa"]->dte_deb);
 				$tabvar["dte_fin"]=sql2date($resa["resa"]->dte_fin);
 				$tabvar["url"]=$MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;
 
-				SendMailFromFile($resa["pilote"]->mail,$resi->mail,array(),"[".$MyOpt["site_title"]."] : Notification de réservation",$tabvar,"instructeur");
+				$ics = new ICS();
+				$ics->set(array(
+					'summary' => "Réservation ".strtoupper($resr->val("immatriculation"))." avec ".$resa["pilote"]->val("fullname"),
+					'description' => preg_replace("/\s\s+/","\\n",$resa["resa"]->description),
+					'dtstart' => gmdate("Y-m-d H:i",strtotime($resa["resa"]->dte_deb)),
+					'dtend' => gmdate("Y-m-d H:i",strtotime($resa["resa"]->dte_fin)),
+					'url' => $MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id,
+				));
+
+				$f=array();
+				$f[0]["type"]="text";
+				$f[0]["nom"]="reservation.ics";
+				$f[0]["data"]=$ics->to_string();
+
+				SendMailFromFile($resa["pilote"]->mail,$resi->mail,array(),"[".$MyOpt["site_title"]."] : Notification de réservation",$tabvar,"resa_inst",$f);
 			}
+	
+// echo $MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;	
+// MyMail($resa["pilote"]->mail,"matthieu.isorez@gadz.org","","Réservation","Réservation confirmée","",$f);
 			
 			// Valide la page
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;

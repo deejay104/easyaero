@@ -91,7 +91,7 @@
 	if ($theme!="phone")
 		{
 			$tabTitre["paye"]["aff"]="Payé";
-			$tabTitre["paye"]["width"]=60;
+			$tabTitre["paye"]["width"]=100;
 		
 			$tabTitre["date"]["aff"]="Date";
 			$tabTitre["date"]["width"]=170;
@@ -122,8 +122,17 @@
 		$tabValeur[$i]["telephone"]["aff"]=$btm->aff("telephone","html");
 		$tabValeur[$i]["status"]["val"]=$btm->val("status");
 		$tabValeur[$i]["status"]["aff"]=$btm->aff("status","html");
-		$tabValeur[$i]["paye"]["val"]=$btm->val("paye");
-		$tabValeur[$i]["paye"]["aff"]=$btm->aff("paye","html");
+
+		if ($btm->val("dte_paye")!="0000-00-00")
+		{
+			$tabValeur[$i]["paye"]["val"]=$btm->val("dte_paye");
+			$tabValeur[$i]["paye"]["aff"]=$btm->aff("dte_paye","html");
+		}
+		else
+		{
+			$tabValeur[$i]["paye"]["val"]=$btm->val("paye");
+			$tabValeur[$i]["paye"]["aff"]=$btm->aff("paye","html");
+		}
 
 		$tabValeur[$i]["date"]["val"]=strtotime($btm->data["dte"]);
 		$tabValeur[$i]["date"]["aff"]=$btm->aff("dte","html");
@@ -144,7 +153,7 @@
 		  	$tabValeur[$i]["resa"]["val"]="-";
 			$tabValeur[$i]["resa"]["aff"]="-";
 		}
-		$tabValeur[$i]["type"]["val"]=$btm->aff("type","val");
+		$tabValeur[$i]["type"]["val"]=$btm->val("type");
 		$tabValeur[$i]["type"]["aff"]=$btm->aff("type","html");
 
 	  }
