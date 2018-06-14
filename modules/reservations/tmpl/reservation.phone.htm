@@ -70,7 +70,7 @@
 	<!-- END: aff_tarif -->
 		<p>
 			<label for="destination">Destination</label>
-			<INPUT id="destination" name="form_destination" value="{form_destination}" style="width: 287px;" title="Préciser la destination ou LOCAL pour un vol local.">
+			<INPUT id="destination" name="form_destination" value="{form_destination}" title="Préciser la destination ou LOCAL pour un vol local.">
 		</p>
 
 		<p>
@@ -80,18 +80,23 @@
 			<!-- END: lst_pob -->
 		</p>
 		<p>
+			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
+			<input type="radio" name="form_invite" value="non" {chk_invite_non}>Non
+			<input type="radio" name="form_invite" value="oui" {chk_invite_oui}>Oui
+		</p>
+		<p>
 			<label for="tpsestime">Tps estimée</label>
 			<INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style="width: 70px;" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire."> (en minutes)
 		</p>
 
 		<p>
   		<label>Du</label>
-  		<INPUT name="form_dte_deb" id="form_dte_deb" value="{form_dte_debsql}" type="date" style="width:180px;"> 
+  		<INPUT name="form_dte_deb" id="form_dte_deb" value="{form_dte_debsql}" type="date" style="width:140px;"> 
   		à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" type="time" style="width:80px;"> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
 		<p>
 			<label>Au</label>
-			<INPUT name="form_dte_fin" id="form_dte_fin" value="{form_dte_finsql}" type="date" style="width:180px;"> 
+			<INPUT name="form_dte_fin" id="form_dte_fin" value="{form_dte_finsql}" type="date" style="width:140px;"> 
 			à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" type="time" style="width:80px;"> <FONT color=red>{msg_dtefin}</FONT>
 		</p>
 

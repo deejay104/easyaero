@@ -52,9 +52,11 @@
 		});
 
 		$(document).tooltip({
+			hide: { duration:0 },
+			show: { duration:0 },
 			position: {
-				my: "center bottom-10",
-				at: "center top",
+				my: "center bottom-8",
+				at: "center top-2",
 				using: function( position, feedback ) {
 					$( this ).css( position );
 					$( "<div>" )
@@ -176,10 +178,6 @@
 
 		<p>
 			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
-			<!-- <SELECT id="invite" name="form_invite" style='width: 60px;'> -->
-				<!-- <OPTION value="non" {chk_invite_non}>Non</OPTION> -->
-				<!-- <OPTION value="oui" {chk_invite_oui}>Oui</OPTION> -->
-			<!-- </SELECT> -->
 			<input type="radio" name="form_invite" value="non" {chk_invite_non}>Non
 			<input type="radio" name="form_invite" value="oui" {chk_invite_oui}>Oui
 		</p>

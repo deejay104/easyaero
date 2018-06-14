@@ -34,7 +34,7 @@
 	$id=checkVar("id","numeric");
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
-	$ts=checkVar("trie","numeric");
+	$ts=checkVar("ts","numeric");
 
 
 	if (GetDroit("AccesSuiviVols"))

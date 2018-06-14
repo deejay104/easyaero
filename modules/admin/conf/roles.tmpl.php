@@ -11,12 +11,9 @@ $tabRoles["TypePilote"]="Pilote";
 $tabRoles["TypeInstructeur"]="Instructeur";
 
 $tabRoles["AccesAbonnements"]="Accès à la liste des abonnements";
-$tabRoles["AccesBaptemes"]="Accès à la page des baptèmes";
-$tabRoles["AccesBapteme"]="Accès à la page d'un baptème";
 $tabRoles["AccesExport"]="Accès à la page des exports";
 $tabRoles["AccesFactures"]="Accès à la liste des factures";
 $tabRoles["AccesReservations"]="Accès au calendrier de réservations";
-$tabRoles["AccesBaptemes"]="Accès à la liste des baptèmes";
 $tabRoles["AccesMaintenances"]="Accès à la liste des maintenances";
 
 
@@ -79,7 +76,6 @@ $tabRoles["ModifFamilleCree"]="Créer une famille";
 
 $tabRoles["ModifForum"]="Modifier la liste de forum (et suppression)";
 $tabRoles["ModifFamilleSauve"]="Sauvegarder une famille";
-$tabRoles["ModifBapteme"]="Modifier un baptème";
 $tabRoles["ModifActualite"]="Modifier une actualite";
 $tabRoles["ModifWaypoint"]="Import de waypoints";
 $tabRoles["ModifNavigation"]="Modification d'une navigation";
@@ -94,7 +90,6 @@ $tabRoles["ModifRexStatus"]="Modication du status d'un REX";
 $tabRoles["SupprimeRex"]="Suppression d'un REX";
 
 $tabRoles["CreeFacture"]="Créer une nouvelle facture";
-$tabRoles["CreeBapteme"]="Création d'un baptème";
 
 $tabRoles["CreeFamille"]="Créer une famille";
 $tabRoles["CreeRessource"]="Créer une nouvelle ressource (avion)";
@@ -102,7 +97,6 @@ $tabRoles["CreeClasseur"]="Créer un nouveau classeur dans le module document";
 $tabRoles["CreeNavigation"]="Créer une navigation";
 
 $tabRoles["SupprimeActualite"]="Suppression d'une actualite";
-$tabRoles["SupprimeBapteme"]="Suppression d'un baptème";
 $tabRoles["SupprimeUser"]="Supprimer un membre";
 $tabRoles["SupprimeRessource"]="Supprimer une ressource (avion)";
 $tabRoles["SupprimeMessage"]="Supprimer un message dans le module document";
@@ -134,6 +128,14 @@ $tabRoles["PayerFacture"]="Payer des factures";
 $tabRoles["FactureManips"]="Facture une manifestation";
 $tabRoles["AfficheDetailMouvement"]="Affiche le détail d'un mouvement";
 $tabRoles["AfficheSignatureCompte"]="Vérifie la signature des transactions";
+
+// Baptèmes
+$tabRoles["CreeBapteme"]="Création d'un baptème";
+$tabRoles["AccesBaptemes"]="Accès à la page des baptèmes";
+$tabRoles["AccesBapteme"]="Accès à la page d'un baptème";
+$tabRoles["ModifBapteme"]="Modifier un baptème";
+$tabRoles["ModifBaptemePaye"]="Modification de la date de paiement d'un baptème";
+$tabRoles["SupprimeBapteme"]="Suppression d'un baptème";
 
 
 

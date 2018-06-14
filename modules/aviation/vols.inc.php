@@ -35,7 +35,7 @@
 // ---- Vérifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
-	$ts=checkVar("trie","numeric");
+	$ts=checkVar("ts","numeric");
 
 
 // ---- Vérification des paramètres
