@@ -17,14 +17,6 @@
 	<p class="lastupdate">Dernière mise à jour : <a href="" OnMouseOver="ShowPopup('{info_historique}');" OnMouseOut="HidePopup();">{info_maj}</a></p>
 	<p>Potentiel restant à la prise en charge : {potentiel}</p>
 
-	<!-- BEGIN: texte_erreur -->
-	<p class="msgerror">{texte_date}</p>
-	<!-- END: texte_erreur -->
-
-	<!-- BEGIN: msg_error -->
-	<p class="msgerror">{msg_error}</p>
-	<!-- END: msg_error -->
-
 	<!-- BEGIN: aff_reservation -->
 		<div class="formulaireTitre">
 	  	Réservation
@@ -32,57 +24,47 @@
 
 		<div class="formulaire">
 			<p>
-				<label for="avion">Avion</label> 
-				{aff_nom_avion}
-	  	</p>
+				<label for="avion">Avion</label>{aff_nom_avion}
+			</p>
 
 			<p>&nbsp;</p>
 			
-		  <p>
-				<label for="pilote">Pilote</label>
-				{aff_nom_pilote}
-	  	</p>
+			<p>
+			<label for="pilote">Pilote</label>{aff_nom_pilote}
+			</p>
 
-		  <p>
-				<label for="debite">Débité (si différent)</label>
-				{aff_nom_debite}
+			<p>
+				<label for="debite">Débité (si différent)</label>{aff_nom_debite}
 		 	</p>
 
 	<!-- BEGIN: aff_instructeur -->
-		  <p>
-				<label for="instructeur">Instructeur</label>
-			  {aff_nom_instructeur}
+			<p>
+				<label for="instructeur">Instructeur</label>{aff_nom_instructeur}
 			</p>
 	<!-- END: aff_instructeur -->
-		  <p>
-				<label for="destination">Destination</label>
-			  {form_destination}
-		  </p>
-		  <p>
-				<label for="tpsestime">Temps de vol estimé</label>
-			  {form_tpsestime} min
-		  </p>
-		  <p>
-				<label for="pob">Nb de personnes</label>
-				{form_nbpassager}
+			<p>
+				<label for="destination">Destination</label>{form_destination}
+			</p>
+			<p>
+				<label for="tpsestime">Temps de vol estimé</label>{form_tpsestime} min
+			</p>
+			<p>
+				<label for="pob">Nb de personnes</label>{form_nbpassager}
 			</p>
 
 
 			<p>&nbsp;</p>
 			<p>
-				<label for="form_dte_deb">Du</label>
-		  	{form_dte_deb} à {form_hor_deb}
-		  </p>
-		  <p>
-				<label for="form_dte_fin">Au</label>
-		  	{form_dte_fin} à {form_hor_fin}
-		  </p>
+				<label for="form_dte_deb">Du</label>{form_dte_deb} à {form_hor_deb}
+			</p>
+			<p>
+				<label for="form_dte_fin">Au</label>{form_dte_fin} à {form_hor_fin}
+			</p>
 			<p>&nbsp;</p>
 	
-		  <p>
-				<label for="commentaire" style="vertical-align: top;">Commentaire(s) :</label>
-				{form_description}
-		  </p>
+			<p>
+				<label for="commentaire" style="vertical-align: top;">Commentaire(s) :</label>{form_description}
+			</p>
 	  	  
 		</div>
 
@@ -96,16 +78,13 @@
 			{aff_horametre}
 
 			<p>
-				<label for="carburant">Carburant Avant</label>
-				{form_carbavant} Litres
+				<label for="carburant">Carburant Avant</label>{form_carbavant} Litres
 			</p>
 			<p>
-				<label for="carburant">Carburant Après</label>
-				{form_carbapres} Litres
+				<label for="carburant">Carburant Après</label>{form_carbapres} Litres
 			</p>
 			<p>
-				<label for="prixcarbu">Total</label>
-				{form_prixcarbu} €
+				<label for="prixcarbu">Total</label>{form_prixcarbu} €
 			</p>
 
 		</div>

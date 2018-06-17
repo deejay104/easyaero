@@ -283,11 +283,10 @@
 	{
 		$resusr=new user_class($tmpuid,$sql);
 		$tmpl_x->assign("uid_pilote", $resusr->id);
-		$tmpl_x->assign("nom_pilote", $resusr->Aff("fullname","val"));
+		$tmpl_x->assign("nom_pilote", $resusr->val("fullname"));
 		if ($resa["resa"]->uid_pilote==$resusr->id)
 		{
 			$tmpl_x->assign("chk_pilote", "selected");
-			$txt=$resusr->Aff("fullname");
 		}
 		else
 		{
@@ -295,7 +294,9 @@
 		}
 		$tmpl_x->parse("corps.aff_reservation.lst_pilote");
 	}
-	$tmpl_x->assign("aff_nom_pilote", $txt);
+	
+	$resusr=new user_class($resa["resa"]->uid_pilote,$sql);
+	$tmpl_x->assign("aff_nom_pilote", $resusr->aff("fullname"));
 
 	
 	// Liste des pilotes débité	
@@ -306,17 +307,20 @@
 	  {
 	  	$resusr=new user_class($tmpuid,$sql);
 			$tmpl_x->assign("uid_debite", $resusr->id);
-			$tmpl_x->assign("nom_debite", $resusr->Aff("fullname","val"));
+			$tmpl_x->assign("nom_debite", $resusr->val("fullname"));
 			if ($resa["resa"]->uid_debite==$resusr->id)
-			  {
+			{
 			  	$tmpl_x->assign("chk_debite", "selected");
-			  	$txt=$resusr->Aff("fullname");
-			  }
+			}
 			else
-			  { $tmpl_x->assign("chk_debite", ""); }
+			{
+				$tmpl_x->assign("chk_debite", "");
+			}
 			$tmpl_x->parse("corps.aff_reservation.lst_debite");
-	  }
-	$tmpl_x->assign("aff_nom_debite", $txt);
+	}
+
+	$resusr=new user_class($resa["resa"]->uid_debite,$sql);
+	$tmpl_x->assign("aff_nom_debite", $resusr->aff("fullname"));
 
 	
 	if ($ok_inst==0)
@@ -355,7 +359,10 @@
 
 		$tmpl_x->parse("corps.aff_reservation.aff_instructeur.lst_instructeur");
 	}
-	$tmpl_x->assign("aff_nom_instructeur", $txt);
+
+	$resusr=new user_class($resa["resa"]->uid_instructeur,$sql);
+	$tmpl_x->assign("aff_nom_instructeur", $resusr->aff("fullname"));
+
 	$tmpl_x->assign("form_uid_instructeur", $resa["resa"]->uid_instructeur);
 
 	if ($ok==2)
@@ -472,7 +479,7 @@
 
 	$tmpl_x->assign("form_carbavant", $resa["resa"]->carbavant);
 	$tmpl_x->assign("form_carbapres", $resa["resa"]->carbapres);
-	$tmpl_x->assign("form_prixcarbu", $resa["resa"]->prixcarbu);
+	$tmpl_x->assign("form_prixcarbu", ($resa["resa"]->prixcarbu>0) ? $resa["resa"]->prixcarbu : "0");
 
 	// Texte d'acceptation
 	if ($MyOpt["ChkValidResa"]=="on")
