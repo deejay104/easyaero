@@ -39,11 +39,11 @@
 		<th align='center'>Sa</th>
 		<th align='center'>Vac</th>
 	<!-- END: aff_jour -->
-		<th>&nbsp;</th>
+		<th width="24">&nbsp;</th>
 	  </TR>
 
 	<!-- BEGIN: lst_mouvement -->
-	  <TR>
+	<tr OnMouseOver="document.getElementById('del_{form_id}').style.display='block';" OnMouseOut="document.getElementById('del_{form_id}').style.display='none';">
 		<TD width=20>&nbsp;</TD>
 		<TD>
 			<INPUT type="text" name="form_ordre[{form_id}]" style="width:50px;" value="{ordre_poste}" maxlength="4">
@@ -103,7 +103,7 @@
 		</TD>
 	<!-- END: aff_jour_ligne -->
 		<TD>
-			<a href="index.php?mod=admin&rub=postes&fonc=delete&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
+			<a id='del_{form_id}' href="index.php?mod=admin&rub=postes&fonc=delete&id={form_id}" class='imgDelete' style='display:none;'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
 		</TD>
 		
 	  </TR>

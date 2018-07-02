@@ -34,6 +34,10 @@ $MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
 $MyOptTmpl["id_PosteFacture"]=0;
 $MyOptHelp["id_PosteFacture"]="ID du poste pour le crédit des factures";
 
+// ID poste pour les transfère
+$MyOptTmpl["id_PosteTransfere"]=0;
+$MyOptHelp["id_PosteTransfere"]="ID du poste pour le transfère vers le compte d'un autre membre";
+
 // Coordonnées terrain
 $MyOptTmpl["terrain"]["nom"]="Neuhof";
 $MyOptHelp["terrain"]["nom"]="Nom du terrain d'origine";

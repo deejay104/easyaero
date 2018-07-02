@@ -117,14 +117,13 @@
 			   end: '23:59', // an end time (12pm in this example)
 			   dow: [ 1,2,3,4,5 ]
 			},
-
 			views: {
 				agendaDay: {
-					type: 'agenda',
+					type: 'timeline',
 					duration: { days: 1 },
 					buttonText: 'Jour',
 					dateIncrement: { days: 1 },
-					eventLimit: 5
+					eventLimit: 5,
 				},
 				agendaWeek: {
 					type: 'agenda',

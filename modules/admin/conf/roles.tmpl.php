@@ -29,6 +29,7 @@ $tabRoles["AccesSuiviBilan"]="Accès à la page de suivi des comptes";
 
 
 $tabRoles["AccesCompte"]="Accès à la page d'affichage du compte";
+$tabRoles["AccesTransfert"]="Accès à la page de transfert d'un compte à l'autre";
 $tabRoles["AccesIndicateurs"]="Accès à la page d'indicateurs";
 
 $tabRoles["AccesPageAccesPageBilan"]="Accès à la page du bilan comptable";

@@ -32,12 +32,20 @@
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Liste des comptes
-	if (!isset($id))
+// ---- Récupère les variables
+	$id=checkVar("id","numeric");
+	if ($id==0)
 	{
 		$usr=new user_class($gl_uid,$sql);
 		$id=$usr->data["idcpt"];
 	}
+	
+// ---- Affiche le menu
+	$aff_menu="";
+	require($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Liste des comptes
 
 	// if ((GetDroit("ListeComptes")) && ($liste==""))
 	if (GetDroit("AccesSuiviListeComptes"))
@@ -53,7 +61,6 @@
 				$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
 				$tmpl_x->parse("corps.compte.lst_compte");
 			}
-			$tmpl_x->parse("infos.liste_compte");
 			$tmpl_x->parse("corps.compte");
 
 	}
@@ -214,9 +221,6 @@
 
 	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
 	{
-		$tmpl_x->assign("form_id", $id);
-		$tmpl_x->parse("infos.affiche_signature");
-
 		foreach($tabValeur as $i=>$d)
 		{
 			$confirm=AfficheSignatureCompte($d["lid"]["val"]);

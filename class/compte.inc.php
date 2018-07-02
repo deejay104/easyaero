@@ -211,7 +211,14 @@ class compte_class{
 			// Récupère la dernière transaction
 			$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte WHERE uid='".$m["uid"]."'";
 			$res=$sql->QueryRow($query);
-			$prev_id=$res["maxid"];
+			if ($res["maxid"]>0)
+			{
+				$prev_id=$res["maxid"];
+			}
+			else
+			{
+				$prev_id=0;
+			}
 
 			// Charge les données de la transaction précédente
 			$query="SELECT id,hash FROM ".$this->tbl."_compte WHERE id='".$prev_id."'";
@@ -339,7 +346,7 @@ class compte_class{
 	function AfficheEntete()
 	{
 		$txt ="<table>";
-		$txt.="<tr style='height:30px; border-bottom:1px solid black; background-color:#cccccc; text-decoration: bold;'>";
+		$txt.="<tr class='tableauTitre'>";
 		$txt.="<th width=120>Date</th>";
 		$txt.="<th width=350>Poste</th>";
 		$txt.="<th width=350>Commentaire</th>";

@@ -29,11 +29,12 @@
 			<th width=70><B>Réduction (min)</B></th>
 			<th width=70><B>Défaut Pilote</B></th>
 			<th width=70><B>Défaut Instructeur</B></th>
-			<th width=10>&nbsp;</TD>
+			<th width=24>&nbsp;</TD>
 		  </TR>
 
 		<!-- BEGIN: lst_tarifs -->
-		  <TR <!-- BEGIN: lst_espace -->style='border-top: 1px solid #000000; padding-top:5px;'<!-- END: lst_espace --> >
+		  <TR OnMouseOver="document.getElementById('del_{id_tarifs}').style.display='block';" OnMouseOut="document.getElementById('del_{id_tarifs}').style.display='none';" <!-- BEGIN: lst_espace -->style='border-top: 1px solid #000000; padding-top:5px;'<!-- END: lst_espace --> >
+
 			<TD width=20>&nbsp;</TD>
 			<TD>{tarif_immat}</TD>
 			<TD><INPUT type="text" name="tarif_code[{id_tarifs}]" value="{tarif_code}" size=2></TD>
@@ -44,7 +45,7 @@
 			<TD><INPUT type="text" name="tarif_reduction[{id_tarifs}]" value="{tarif_reduction}" size=5></TD>
 			<TD><INPUT type="radio" name="tarif_defaut_pil[{id_avion}]" value="{id_tarifs}" {tarif_defautpil_selected} size=5></TD>
 			<TD><INPUT type="radio" name="tarif_defaut_ins[{id_avion}]" value="{id_tarifs}" {tarif_defautins_selected} size=5></TD>
-			<TD><span class="bouttonSupprime"><a href="index.php?mod=admin&rub=tarifs&fonc=delete&id={id_tarifs}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png"></a></span></TD>
+			<TD><a id='del_{id_tarifs}' href="index.php?mod=admin&rub=tarifs&fonc=delete&id={id_tarifs}" class='imgDelete' style='display:none;'><img src="{path_module}/img/icn16_supprimer.png"></a></TD>
 		  </TR>
 		<!-- END: lst_tarifs -->
 		  <TR style='border-top: 1px solid #000000; height:35px;'>
