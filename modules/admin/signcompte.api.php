@@ -27,7 +27,7 @@
 		
 		// Récupère la liste des utilisateurs
 		$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs ".(($id>0) ? "WHERE id=".$id." " : "")." ORDER BY id";
-		$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id>48 ORDER BY id";
+		// $query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id>=47 ORDER BY id";
 		$sql->Query($query);
 		$tabUser=array();
 		for($i=0; $i<$sql->rows; $i++)
@@ -38,7 +38,7 @@
 		
 		$sql_upd = new mysql_core($mysqluser, $mysqlpassword, $hostname, $db, $port);
 
-		foreach($tabUser as $i=>$id)
+		foreach($tabUser as $ii=>$id)
 		{
 			echo "Signature des transactions pour utilisateur id:".$id."\n";
 			$q="UPDATE ".$MyOpt["tbl"]."_compte SET precedent='0', signature='',hash='',clepublic='' WHERE uid='".$id."'";
@@ -89,6 +89,9 @@
 
 				$q="UPDATE ".$MyOpt["tbl"]."_compte SET clepublic='".$public_key."',hash='".$hash."', signature='".base64_encode($sign)."', precedent='".$prev_id."' WHERE id=".$sql->data["id"];
 				$sql_upd->Update($q);
+
+				openssl_pkey_free ($key);
+				unset($key);
 				
 				$prev_id=$sql->data["id"];
 				$prev_hash=$hash;
