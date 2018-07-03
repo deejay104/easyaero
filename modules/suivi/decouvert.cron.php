@@ -45,7 +45,7 @@
 		{
 			myPrint($usr->fullname." - Solde: ".$solde);
 			$tabvar=array();
-			$tabvar["solde"]=$solde;
+			$tabvar["solde"]=AffMontant($solde);
 			
 			SendMailFromFile($mailtre,$usr->data["mail"],$tabTre,"[".$MyOpt["site_title"]."] Compte à découvert",$tabvar,"decouvert");
 		}
