@@ -57,28 +57,33 @@
 			// $q="INSERT ".$MyOpt["tbl"]."_compte SET mid='0', uid='0', clepublic='".$public_key."',hash='".$hash."', uid_creat='".$gl_uid."',date_creat='".now()."'";
 			// $prev_id=$sql->Insert($q);
 
-			$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid='".$id."' ORDER BY mid";
+			$tabCpt=array();
+			$query = "SELECT id,uid,mid,montant,date_valeur,uid_creat,date_creat FROM ".$MyOpt["tbl"]."_compte WHERE uid='".$id."' ORDER BY mid";
 			$sql->Query($query);
 			for($i=0; $i<$sql->rows; $i++)
 			{ 
 				$sql->GetRow($i);
-
+				$tabCpt[$i]=$sql->data;
+			}
+			
+			foreach($tabCpt as $i=>$d)
+			{
 				$key=openssl_pkey_new(array("private_key_bits"=>1024,"private_key_type"=>OPENSSL_KEYTYPE_RSA));
 				openssl_pkey_export($key,$priv_key);
 				$details=openssl_pkey_get_details($key);
 				$public_key=$details["key"];
 				
-				echo $sql->data["id"]." ";
+				echo $d["id"]." ";
 				
 				$data =md5($prev_hash."-".$public_key);
 				$data.="-".$prev_id;
-				$data.="-".$sql->data["id"];
-				$data.="-".$sql->data["uid"];
-				$data.="-".$sql->data["mid"];
-				$data.="-".$sql->data["montant"];
-				$data.="-".$sql->data["date_valeur"];
-				$data.="-".$sql->data["uid_creat"];
-				$data.="-".$sql->data["date_creat"];
+				$data.="-".$d["id"];
+				$data.="-".$d["uid"];
+				$data.="-".$d["mid"];
+				$data.="-".$d["montant"];
+				$data.="-".$d["date_valeur"];
+				$data.="-".$d["uid_creat"];
+				$data.="-".$d["date_creat"];
 
 				$hash=md5($data);
 
@@ -87,13 +92,13 @@
 				$sign="";
 				openssl_sign($data,$sign,$priv_key,OPENSSL_ALGO_SHA256);
 
-				$q="UPDATE ".$MyOpt["tbl"]."_compte SET clepublic='".$public_key."',hash='".$hash."', signature='".base64_encode($sign)."', precedent='".$prev_id."' WHERE id=".$sql->data["id"];
-				$sql_upd->Update($q);
+				$q="UPDATE ".$MyOpt["tbl"]."_compte SET clepublic='".$public_key."',hash='".$hash."', signature='".base64_encode($sign)."', precedent='".$prev_id."' WHERE id=".$d["id"];
+				$sql->Update($q);
 
 				openssl_pkey_free ($key);
 				unset($key);
 				
-				$prev_id=$sql->data["id"];
+				$prev_id=$d["id"];
 				$prev_hash=$hash;
 			}
 		}
