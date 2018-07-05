@@ -176,7 +176,7 @@
 		$tabValeur[$i]["potentiel"]["align"]="center";
 
 		$tabValeur[$i]["total"]["val"]=$resa->TempsVols("fin");
-		$tabValeur[$i]["total"]["aff"]=AffTemps($resa->TempsVols("fin"));
+		$tabValeur[$i]["total"]["aff"]=$resa->AffTempsVols("fin");
 		$tabValeur[$i]["total"]["align"]="center";
 	}
 	

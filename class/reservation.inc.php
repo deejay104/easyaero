@@ -165,6 +165,31 @@ class resa_class{
 		return $ret;
 	}
 
+	function AffTempsVols($affvol="deb")
+	{ global $MyOpt;
+		$sql=$this->sql;
+
+		$query="SELECT alertpotentiel,maxpotentiel FROM ".$this->tbl."_ressources WHERE id='".$this->uid_ressource."'";
+		$res=$sql->QueryRow($query);
+
+		$t=$this->TempsVols($affvol);
+		if ($t>$res["maxpotentiel"]*60)
+		{
+			$ret="<font color=red>".AffTemps($t)."</font>";
+		}
+		else if ($t>($res["maxpotentiel"]-$res["alertpotentiel"])*60)
+		{
+			$ret="<font color=orange>".AffTemps($t)."</font>";
+		}
+		else
+		{
+			$ret=AffTemps($t);
+		}
+		return $ret;
+	}	
+	
+	
+	
 	function TempsVols($affvol="deb")
 	{ global $MyOpt;
 		$sql=$this->sql;
