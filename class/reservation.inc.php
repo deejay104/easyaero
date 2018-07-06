@@ -139,7 +139,7 @@ class resa_class{
 		  { $dte=$t1." (".sql2time($this->dte_deb,"nosec")." à ".sql2time($this->dte_fin,"nosec").")"; }
 		else
 		  { $dte=$t1." (N/A)"; }
-		return "<a href='reservations.php?rub=reservation&id=".$this->id."'>".$dte."</a>";
+		return "<a href='index.php?mod=reservations&rub=reservation&id=".$this->id."'>".$dte."</a>";
 	}
 
 	function AffPotentiel($affvol="deb")
@@ -197,14 +197,29 @@ class resa_class{
 		{
 			return $this->potentiel;
 		}
+		$query="SELECT dte_deb,dte_fin,idmaint FROM ".$this->tbl."_calendrier WHERE idmaint>0 AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<'".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$resvol=$sql->QueryRow($query);
 
-		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$query="SELECT potentiel AS tot FROM ".$this->tbl."_maintenance WHERE id='".$resvol["idmaint"]."'";
+
+		$resmaint=$sql->QueryRow($query);
+
+		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_deb>'".$resvol["dte_deb"]."' AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 		$respot=$sql->QueryRow($query);
 
-		$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
-		$resreel=$sql->QueryRow($query);
+		if ($respot["tot"]>0)
+		{
+			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
+			$resreel=$sql->QueryRow($query);
 
-		$t=$respot["tot"]+$resreel["tot"];
+			$t=$respot["tot"]+$resreel["tot"];
+		}
+		else
+		{
+			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>'".$resvol["dte_deb"]."' AND dte_deb<'".$this->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
+			$resreel=$sql->QueryRow($query);
+			$t=$resmaint["tot"]+$resreel["tot"];
+		}
 
 		if (($affvol=="prev") || ($affvol=="estime"))
 		{
@@ -231,6 +246,7 @@ class resa_class{
 		{
 			$t=$t+$this->tpsreel;
 		}		
+
 		return $t;
 	}
 	

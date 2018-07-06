@@ -215,11 +215,13 @@
 		<td valign="top" style='border: 1px solid #e8e8e8; padding: 5px;'>
 
 			<p>
-				<label for="potentiel">Potentiel fin de vol</label>
-				{form_potentiel} 
+				<label for="potentiel">Potentiel (fin de vol)</label>{form_potentiel}
 			</p>
 			<p>
-				<label for="potentiel">Correction du potentiel</label>
+				<label for="tpsvols">Temps de vol (fin de vol)</label>{form_tpsvol}
+			</p>
+			<p>
+				<label for="potentiel" title="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant">Correction</label>
 				<INPUT type="number" name="form_potentielh" value="{form_potentielh}" style='width: 60px!important;'> h <INPUT type="number" name="form_potentielm" value="{form_potentielm}" style='width: 60px!important;'>
 			</p>
 
@@ -229,7 +231,7 @@
 				<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L
 			</p>
 			<p>
-				<label for="carburant">Total Carburant</label>
+				<label for="carburant">Prix total Carburant</label>
 				<INPUT name="form_prixcarbu" value="{form_prixcarbu}" type="number" style='width: 60px!important;'> €
 			</p>
 		</td>

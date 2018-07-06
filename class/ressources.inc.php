@@ -179,20 +179,47 @@ class ress_class extends objet_core
 		  	return true;
 		  }
 	}
+
+	function TempsVols()
+	{ global $MyOpt;
+		$sql=$this->sql;
+
+		$query="SELECT dte_deb,dte_fin,idmaint FROM ".$this->tbl."_calendrier WHERE idmaint>0 AND dte_deb<'".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$resvol=$sql->QueryRow($query);
+
+		$query="SELECT potentiel AS tot FROM ".$this->tbl."_maintenance WHERE id='".$resvol["idmaint"]."'";
+		$resmaint=$sql->QueryRow($query);
+
+		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_deb>'".$resvol["dte_deb"]."' AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$respot=$sql->QueryRow($query);
+
+		if ($respot["tot"]>0)
+		{
+			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
+			$resreel=$sql->QueryRow($query);
+
+			$t=$respot["tot"]+$resreel["tot"];
+		}
+		else
+		{
+			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>'".$resvol["dte_deb"]."' AND dte_deb<'".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
+			$resreel=$sql->QueryRow($query);
+			$t=$resmaint["tot"]+$resreel["tot"];
+		}
+
+		if ($this->tpsreel>0)
+		{
+			$t=$t+$this->tpsreel;
+		}		
+
+		return $t;
+	}
 	
 	function Potentiel()
 	{ global $MyOpt;
 		$sql=$this->sql;
 
-		$query="SELECT dte_fin,potentiel AS tot FROM ".$MyOpt["tbl"]."_calendrier WHERE potentiel>0 AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
-		$respot=$sql->QueryRow($query);
-
-		$query="SELECT SUM(tpsreel) AS tot FROM ".$MyOpt["tbl"]."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
-		$resreel=$sql->QueryRow($query);
-
-		$t=$respot["tot"]+$resreel["tot"];
-
-		return $this->data["maxpotentiel"]*60-$t;
+		return $this->data["maxpotentiel"]*60-$this->TempsVols();
 	}
 
 	function AffPotentiel()
@@ -215,7 +242,7 @@ class ress_class extends objet_core
 
 	function AffTempsVol()
 	{
-		$t=$this->data["maxpotentiel"]*60-$this->Potentiel();
+		$t=$this->TempsVols();
 		if (floor($t/60)>$this->data["maxpotentiel"])
 		{
 			$ret="<font color=red>".AffTemps($t)."</font>";

@@ -474,6 +474,9 @@
 	$tmpl_x->assign("potentiel", $resa["resa"]->AffPotentiel("prev"));
 	
 	$tmpl_x->assign("form_potentiel", $resa["resa"]->AffPotentiel("estime"));
+
+	$tmpl_x->assign("form_tpsvol", $resa["resa"]->AffTempsVols("estime"));
+
 	$tmpl_x->assign("form_potentielh", $resa["resa"]->potentielh);
 	$tmpl_x->assign("form_potentielm", $resa["resa"]->potentielm);
 

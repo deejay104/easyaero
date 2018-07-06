@@ -56,6 +56,8 @@
 	$tabTitre["dte_fin"]["width"]=100;
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=100;
+	$tabTitre["cout"]["aff"]="Cout";
+	$tabTitre["cout"]["width"]=100;
 	$tabTitre["atelier"]["aff"]="Atelier";
 	$tabTitre["atelier"]["width"]=220;
 
@@ -77,8 +79,10 @@
 			$tabValeur[$i]["dte_fin"]["val"]=strtotime($maint->data["dte_fin"]);
 			$tabValeur[$i]["dte_fin"]["aff"]=$maint->aff("dte_fin");
 
-			$tabValeur[$i]["status"]["val"]=$maint->aff("status");
+			$tabValeur[$i]["status"]["val"]=$maint->val("status");
 			$tabValeur[$i]["status"]["aff"]=$maint->aff("status");
+			$tabValeur[$i]["cout"]["val"]=$maint->val("cout");
+			$tabValeur[$i]["cout"]["aff"]=$maint->aff("cout");
 
 			$tabValeur[$i]["atelier"]["val"]=$maint->val("uid_atelier");
 			$tabValeur[$i]["atelier"]["aff"]=$maint->aff("uid_atelier");

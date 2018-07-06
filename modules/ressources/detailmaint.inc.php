@@ -72,6 +72,7 @@
 	if (GetDroit("ModifMaintenance") && ($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$msg_erreur=$maint->Save();
+		$maint->SetIntervention();
 		if ($id==0)
 		{
 			$id=$maint->id;
@@ -177,12 +178,13 @@
 	$tabTitre["pilote"]["width"]=150;
 	$tabTitre["temps"]["aff"]="Temps";
 	$tabTitre["temps"]["width"]=80;
+	$tabTitre["tarif"]["aff"]="Tarifs";
+	$tabTitre["tarif"]["width"]=140;
 
 	$tabValeur=array();
 
 	$lstFiche=ListLastReservation($sql,0,$maint->data["uid_ressource"],5,$maint->data["dte_deb"]);
 
-	$chk="";
 
 	if (count($lstFiche)>0)
 	{
@@ -206,27 +208,32 @@
 			{
 				$tabValeur[$ii]["chk"]["aff"]=($resa->id==$maint->data["uid_lastresa"]) ? "<img src='".$corefolder."/static/images/icn16_ok.png'>" : "";
 			}
-			if ($resa->id==$maint->data["uid_lastresa"])
-			  { $chk="ok"; }
+
 
 			$usr = new user_class($resa->uid_pilote,$sql,false);
 			$tabValeur[$ii]["pilote"]["val"]=$usr->aff("fullname","val");
 			$tabValeur[$ii]["pilote"]["aff"]=$usr->aff("fullname");
 			
-			$tabValeur[$ii]["dtecreat"]["val"]="aa".$ii;
+			$tabValeur[$ii]["dtecreat"]["val"]="a".strtotime($resa->dte_deb);
 			$tabValeur[$ii]["dtecreat"]["aff"]=$resa->AffDate();
 
 			$tabValeur[$ii]["temps"]["val"]=$resa->temps;
 			$tabValeur[$ii]["temps"]["aff"]=$resa->AffTempsReel();
-			
+
+			$query="SELECT * FROM ".$MyOpt["tbl"]."_tarifs WHERE code='".$resa->tarif."' AND ress_id='".$resa->uid_ressource."'";
+			$res=$sql->QueryRow($query);
+
+			$tabValeur[$ii]["tarif"]["val"]=$resa->tarif;
+			$tabValeur[$ii]["tarif"]["aff"]=$res["reservation"];
+		
 			$ii++;
 		}
 	}
 
-	if ($orderv=="") { $orderv="dtecreat"; }
-	if ($triev=="") { $triev="d"; }
+	if ($order=="") { $order="dtecreat"; }
+	if ($trie=="") { $trie="d"; }
 
-	$tmpl_x->assign("aff_resa",AfficheTableau($tabValeur,$tabTitre,$orderv,$triev));
+	$tmpl_x->assign("aff_resa",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"id=".$id));
 
 // ---- Affiche la liste des fiches
 
@@ -305,7 +312,7 @@
 	if ($order=="") { $order="dtecreat"; }
 	if ($trie=="") { $trie="d"; }
 
-	$tmpl_x->assign("aff_fiche",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+	$tmpl_x->assign("aff_fiche",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"id=".$id));
 
 	if (($maint->data["status"]!="cloture") && (GetDroit("ModifMaintenance")) && ($maint->data["actif"]=="oui"))
 	  {

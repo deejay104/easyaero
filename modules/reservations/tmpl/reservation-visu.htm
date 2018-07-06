@@ -73,22 +73,33 @@
 		Saisi de l'horamètre
 		</div>
 
-		<div class="formulaire">
-		
-			{aff_horametre}
+		<table width='100%' class='formulaire'  >
+		<tr style="padding-left:20px;">
+			<td valign="top" style='width:420px; border: 1px solid #e8e8e8; padding: 5px; padding-left: 20px;'>
 
-			<p>
-				<label for="carburant">Carburant Avant</label>{form_carbavant} Litres
-			</p>
-			<p>
-				<label for="carburant">Carburant Après</label>{form_carbapres} Litres
-			</p>
-			<p>
-				<label for="prixcarbu">Total</label>{form_prixcarbu} €
-			</p>
-
-		</div>
-
+				<div style='float: left;'>
+				{aff_horametre}
+				</div>
+			</td>
+			<td valign="top" style='border: 1px solid #e8e8e8; padding: 5px;'>
+				<p>
+					<label for="potentiel">Potentiel fin de vol</label>{form_potentiel} 
+				</p>
+				<p>
+					<label for="potentiel">Correction</label>{form_potentielh}h {form_potentielm}
+				</p>
+				<p>
+					<label for="carburant">Carburant Avant</label>{form_carbavant} Litres
+				</p>
+				<p>
+					<label for="carburant">Carburant Après</label>{form_carbapres} Litres
+				</p>
+				<p>
+					<label for="prixcarbu">Total</label>{form_prixcarbu} €
+				</p>
+			</td>
+		</tr>
+	</table>
 
 	<!-- END: aff_reservation -->
 

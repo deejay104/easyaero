@@ -26,7 +26,7 @@ class maint_class extends objet_core
 	protected $rub="detailmaint";
 
 	protected $droit=array();
-	protected $type=array("dte_deb"=>"date","dte_fin"=>"date","status"=>"enum","potentiel"=>"duration","commentaire"=>"text");
+	protected $type=array("dte_deb"=>"date","dte_fin"=>"date","status"=>"enum","potentiel"=>"duration","commentaire"=>"text","cout"=>"price");
 	
 	protected $tabList=array(
 		"status"=>array('planifie'=>'Planifié','confirme'=>'Confirmé','effectue'=>'Effectué','cloture'=>'Cloturé','supprime'=>'Supprimé'),
@@ -41,6 +41,7 @@ class maint_class extends objet_core
 		$this->data["dte_deb"]=date("Y-m-d");
 		$this->data["dte_fin"]=date("Y-m-d");
 		$this->data["potentiel"]=0;
+		$this->data["cout"]=0;
 		$this->data["status"]="planifie";
 		$this->data["commentaire"]="";
 		$this->data["uid_ressource"]=0;
@@ -100,7 +101,7 @@ class maint_class extends objet_core
 	}
 
 
-	function SetIntervention()
+	function SetIntervention2()
 	{
 		$sql=$this->sql;
 
@@ -123,6 +124,24 @@ class maint_class extends objet_core
 		echo "'$query'";
 	}
 
+	function SetIntervention()
+	{
+		$sql=$this->sql;
+		
+		$query="UPDATE ".$this->tbl."_calendrier SET idmaint='0' WHERE idmaint='".$this->id."'";
+		$res=$sql->Update($query);
+
+		if ($this->data["uid_lastresa"]>0)
+		{
+			$query="SELECT tpsreel FROM ".$this->tbl."_calendrier WHERE id='".$this->data["uid_lastresa"]."'";
+			$res=$sql->QueryRow($query);
+
+			// $query="UPDATE ".$this->tbl."_calendrier SET idmaint='".$this->id."',potentiel='".($this->data["potentiel"]+$res["tpsreel"])."' WHERE id='".$this->data["uid_lastresa"]."'";
+			$query="UPDATE ".$this->tbl."_calendrier SET idmaint='".$this->id."' WHERE id='".$this->data["uid_lastresa"]."'";
+			$sql->Update($query);
+			// echo $query;
+		}
+	}
 }
 
 

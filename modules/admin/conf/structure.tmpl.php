@@ -302,6 +302,7 @@ $tabCustom=Array
 		"dte_deb" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 		"dte_fin" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 		"potentiel" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		"cout" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
 		"commentaire" => Array("Type" => "text" ),
 		"uid_lastresa" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
