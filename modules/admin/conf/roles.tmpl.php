@@ -25,14 +25,14 @@ $tabRoles["AccesSuiviBanque"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesSuiviListeComptes"]="Accès à la page de la liste des comptes";
 $tabRoles["AccesSuiviListeTarifs"]="Accès à la page des tarifs";
 $tabRoles["AccesSuiviTableauBord"]="Accès à la page des tableau de bord";
-$tabRoles["AccesSuiviBilan"]="Accès à la page de suivi des comptes";
+$tabRoles["AccesSuiviBilan"]="Accès à la page du bilan comptable";
 
 
 $tabRoles["AccesCompte"]="Accès à la page d'affichage du compte";
 $tabRoles["AccesTransfert"]="Accès à la page de transfert d'un compte à l'autre";
+$tabRoles["AccesCredite"]="Accès à la page de crédit de son compte";
 $tabRoles["AccesIndicateurs"]="Accès à la page d'indicateurs";
 
-$tabRoles["AccesPageAccesPageBilan"]="Accès à la page du bilan comptable";
 $tabRoles["AccesPresence"]="Accès à la page des présences";
 $tabRoles["AccesPresences"]="Accès au tableau des présences";
 $tabRoles["AccesPresencePonctuelle"]="Accès à la page de saisie d'une présence ponctuelle";

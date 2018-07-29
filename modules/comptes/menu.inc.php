@@ -19,6 +19,10 @@
 	{
 		$tmpl_menu->parse("infos.transfert");
 	}
+	if (GetDroit("AccesCredite"))
+	{
+		$tmpl_menu->parse("infos.credite");
+	}
 
 	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone") && ($rub=="index"))
 	{

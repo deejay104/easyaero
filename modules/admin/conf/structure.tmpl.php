@@ -104,6 +104,7 @@ $tabCustom=Array
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"deb" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"cre" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		"tiers" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"ventilation" => Array("Type" => "text", ),
 		"montant" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
 		"poste" => Array("Type" => "int(10)", "Default" => "0", ),
@@ -186,10 +187,6 @@ $tabCustom=Array
 		"dte_echeance" => Array("Type" => "date", ),
 		"paye" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
 		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1 ),
-		"dte_create" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"uid_create" => Array("Type" => "int(10) unsigned", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"uid_maj" => Array("Type" => "int(10) unsigned", ),
 	),
 	"echeancetype" => Array
 	(

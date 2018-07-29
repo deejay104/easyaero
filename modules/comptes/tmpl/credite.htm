@@ -12,9 +12,55 @@
 <form name="compte" method="post" action="index.php" enctype="multipart/form-data">
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="compte">
+	<input type="hidden" name="mod" value="comptes">
 	<input type="hidden" name="rub" value="credite">
 
+	<div class='formulaire' style='width:630px;'>
+	<p>Vous pouvez effectuer un crédit sur votre compte. La somme sera effectivement crédité sur votre compte après validation par le trésorier, mais en attendant vous pourrez effectuer une réservation.
+	Vous pouvez laisser un commentaire sur votre crédit afin que qu'il soit identifiable plus facilement.</p>
+	</div>
+	
+	<table>
+	  <tr class="tableauTitre" >
+		<th width=10>&nbsp;</th>
+		<th width=100>Type</th>
+		<th width=110>Montant</th>
+		<th width=410>Commentaire</th>
+	  </tr>
+	
+	  <tr>
+		<td style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
+		<TD>
+			<select id="form_type" name="form_type">
+				<option value="virement">Virement</option>
+				<option value="cheque">Chèque</option>
+				<option value="espece">Espèce</option>
+		    </select>
+		</TD>
+		<TD>
+			<INPUT id="form_montant" name="form_montant" value="{form_montant}" style="width:100px;">
+		</TD>
+		<TD>
+			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:400px;">
+		</TD>
+	  </TR>
+
+	  <TR style='border-top:1px solid #{FormulaireBackgroundNormal};'>
+		<TD></TD>
+		<TD colspan=3>
+			Solde actuel du compte {montant_max}.
+		</TD>
+	  </TR>
+
+	</table>
+
+	<br />
+	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
+	
 </form>
 
+<script>
+	document.getElementById("form_montant").focus();
+	document.getElementById("form_montant").select();
+</script>
 <!-- END: corps -->

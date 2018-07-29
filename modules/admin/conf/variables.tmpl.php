@@ -38,6 +38,10 @@ $MyOptHelp["id_PosteFacture"]="ID du poste pour le crédit des factures";
 $MyOptTmpl["id_PosteTransfere"]=0;
 $MyOptHelp["id_PosteTransfere"]="ID du poste pour le transfère vers le compte d'un autre membre";
 
+// ID poste pour les crédits de compte
+$MyOptTmpl["id_PosteCredite"]=0;
+$MyOptHelp["id_PosteCredite"]="ID du poste pour le crédit de son compte";
+
 // Coordonnées terrain
 $MyOptTmpl["terrain"]["nom"]="Neuhof";
 $MyOptHelp["terrain"]["nom"]="Nom du terrain d'origine";

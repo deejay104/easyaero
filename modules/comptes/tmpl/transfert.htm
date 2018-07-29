@@ -29,15 +29,14 @@
 	
 	<table>
 	  <tr class="tableauTitre" >
-		<th width=20>&nbsp;</th>
-		<th width=120></th>
-		<th width=300>Tiers</th>
-		<th width=100>Montant</th>
+		<th width=10>&nbsp;</th>
+		<th width=250>Tiers</th>
+		<th width=110>Montant</th>
+		<th width=410>Commentaire</th>
 	  </tr>
 	
 	  <tr>
 		<Td style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
-		<td></td>
 		<TD>
 			<select id="form_tiers" name="form_tiers">
 			<!-- BEGIN: lst_compte -->
@@ -46,22 +45,17 @@
 		    </select>
 		</TD>
 		<TD>
-			<INPUT name="form_montant" value="{form_montant}" style="width:100px;">
+			<INPUT id="form_montant" name="form_montant" value="{form_montant}" style="width:100px;">
 		</TD>
-	  </TR>
-
-	  <TR>
-		<TD style="padding-top:10px;">&nbsp;</TD>
-		<TD>Commentaire</TD>
-		<TD colspan=2>
+		<TD>
 			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:400px;">
 		</TD>
 	  </TR>
-	  <TR>
-		<TD style="padding-top:10px;">&nbsp;</TD>
-		<TD></TD>
-		<TD colspan=2>
-			Solde du compte {montant_max}.
+
+	  <TR style='border-top:1px solid #{FormulaireBackgroundNormal};'>
+		<td></td>
+		<TD colspan=3>
+			Solde ctuel du compte {montant_max}.
 		</TD>
 	  </TR>
 
@@ -72,4 +66,8 @@
 	
 </form>
 
+<script>
+	document.getElementById("form_montant").focus();
+	document.getElementById("form_montant").select();
+</script>
 <!-- END: corps -->

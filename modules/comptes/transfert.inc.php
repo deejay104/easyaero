@@ -22,15 +22,15 @@
 <?
 	if (!GetDroit("AccesTransfert")) { FatalError("Accès non autorisé (AccesTransfert)"); }
 
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("transfert.htm"));
 	$tmpl_x->assign("path_module",$module."/".$mod);
 
 // ---- Initialise les variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-	require_once ($appfolder."/class/compte.inc.php");
-	require_once ($appfolder."/class/user.inc.php");
 
 	$form_tiers=checkVar("form_tiers","numeric");
 	$form_montant=checkVar("form_montant","numeric");
@@ -118,7 +118,9 @@
 		$tmpl_x->parse("corps.lst_compte");
 	}
 
+	$tmpl_x->assign("form_montant", "0.00");
 	$tmpl_x->assign("form_commentaire", "Crédité par ".$myuser->val("fullname"));
+	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 	
 	
 // ---- Affecte les variables d'affichage

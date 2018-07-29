@@ -43,6 +43,7 @@ class compte_class{
 		$query = "SELECT * FROM ".$this->tbl."_comptetemp WHERE id='$id'";
 		$res = $sql->QueryRow($query);
 
+		$this->tiers=$res["tiers"];
 		$this->poste=$res["poste"];
 		$this->commentaire=$res["commentaire"];
 		$this->montant=$res["montant"];
@@ -66,6 +67,8 @@ class compte_class{
 		$res=$sql->QueryRow($query);
 		$compte=$res["compte"];
 
+		$this->tiers=$uid;
+		
 		$deb=array();
 		if ($res["debiteur"]=="B")
 		  { $deb[0]=$MyOpt["uid_banque"]; }
@@ -182,12 +185,12 @@ class compte_class{
 		$sql=$this->sql;
 		if ($this->id==0)
 		{
-			$query="INSERT INTO ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', facture='".$this->facture."', rembfact='".$this->rembfact."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."'";
+			$query="INSERT INTO ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', tiers='".$this->tiers."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', facture='".$this->facture."', rembfact='".$this->rembfact."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 		}
 		else
 		{
-			$query="UPDATE ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', facture='".$this->facture."', rembfact='".$this->rembfact."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."' WHERE id='".$this->id."'";
+			$query="UPDATE ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', tiers='".$this->tiers."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', facture='".$this->facture."', rembfact='".$this->rembfact."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."' WHERE id='".$this->id."'";
 			$sql->Update($query);
 		}
 	}

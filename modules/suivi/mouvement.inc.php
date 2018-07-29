@@ -39,18 +39,33 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
+// ---- Initialise les variables
+
+	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
+	
 // ---- Enregistre le mouvement
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$msg_result="";
+
+		$mvt = new compte_class(0,$sql);
+		$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
+		$tmpl_x->parse("corps.enregistre.lst_visualisation");
+
+		foreach($form_temp_select as $id=>$d)
+		{
+			$mvt = new compte_class($id,$sql);
+			$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
+			$tmpl_x->parse("corps.enregistre.lst_visualisation");
+		}
+
+
 		$dte=date2sql($form_date);
 		if ($dte=="nok")
 		{
 		  	$msg_result="DATE INVALIDE !!!";
 		  	$dte="";
 		}
-		$mvt = new compte_class(0,$sql);
-		$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
-		$tmpl_x->parse("corps.enregistre.lst_visualisation");
 
 		$ventil=array();
 		$ventil["ventilation"]=$form_ventilation;
@@ -65,12 +80,14 @@
 			}
 		}
 
-		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($form_tiers,$form_poste,trim($form_commentaire),date2sql($form_date),$form_montant,$ventil,($form_facture=="") ? "NOFAC" : "");
-		$mvt->Save();
-		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
-		$tmpl_x->parse("corps.enregistre.lst_visualisation");
-
+		if ($form_montant<>0)
+		{
+			$mvt = new compte_class(0,$sql);
+			$mvt->Generate($form_tiers,$form_poste,trim($form_commentaire),date2sql($form_date),$form_montant,$ventil,($form_facture=="") ? "NOFAC" : "");
+			$mvt->Save();
+			$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
+			$tmpl_x->parse("corps.enregistre.lst_visualisation");
+		}
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
@@ -128,10 +145,77 @@
 			}
 		}
 	}
+	else if ($fonc=="deltemp")
+	{
+		$id=checkVar("id","numeric");
+		if ($id>0)
+		{
+			$mvt = new compte_class($id,$sql);
+			$mvt->Annule();
+		}
+	}
 
-// ---- Affiche la page demandée
+	
+// ---- Liste des mouvements
+	$tabMvt=array();
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
+	$sql->Query($query);
+
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tabMvt[$sql->data["id"]]=$sql->data;
+	}
+
+// ---- Affiche la saisi d'un mouvement
 	if ($fonc!="Enregistrer")
 	{
+		// Edite un brouillon
+		if ($fonc=="edit")
+		{
+			$id=checkVar("id","numeric");
+			if ($id>0)
+			{
+				$mvt = new compte_class($id,$sql);
+				
+				$form_tiers=$mvt->tiers;
+				$form_id=$mvt->id;
+				$form_poste=$mvt->poste;
+				$form_date=sql2date($mvt->date_valeur);
+				$form_montant=$mvt->montant;
+				$form_commentaire=$mvt->commentaire;
+				
+				$mvt->Annule();
+			}
+		}
+
+		// Affiche la saisie des mouvements en attente
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_comptetemp WHERE status='brouillon' ORDER BY date_valeur,id";
+		$sql->Query($query);
+		
+		$tabBrouillon=array();
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			$tabBrouillon[$sql->data["id"]]=$sql->data;
+		}
+		
+		foreach($tabBrouillon as $id=>$d)
+		{
+			$usr=new user_class($gl_uid,$sql);
+			
+			$tmpl_x->assign("form_id", $d["id"]);
+			$tmpl_x->assign("form_date", $d["date_valeur"]);
+			$tmpl_x->assign("form_poste", $tabMvt[$d["poste"]]["description"]);
+			$tmpl_x->assign("form_tiers", $usr->aff("fullname"));
+			$tmpl_x->assign("form_montant", AffMontant($d["montant"]));
+			$tmpl_x->assign("form_commentaire", $d["commentaire"]);
+
+			$tmpl_x->parse("corps.aff_mouvement.lst_aff_brouillon");
+		}
+
+
+		// Affiche la saisie d'un mouvement vide
 		if (!isset($form_tiers))
 		{
 			$form_tiers=0;
@@ -157,22 +241,18 @@
 			$form_commentaire="";
 		}		
 
-		// Liste des mouvements
-		$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
-		$sql->Query($query);
 		$montant=0;
-
-		for($i=0; $i<$sql->rows; $i++)
-		{ 
-			$sql->GetRow($i);
-		
-			$tmpl_x->assign("id_mouvement", $sql->data["id"]);
-			$tmpl_x->assign("nom_mouvement", $sql->data["description"].((($sql->data["debiteur"]=="0") || ($sql->data["crediteur"]=="0")) ? "" : " (sans tiers)"));
-			$tmpl_x->assign("chk_mouvement", (($form_id==$sql->data["id"]) || ($form_poste==$sql->data["id"])) ? "selected" : "");
+		foreach($tabMvt as $id=>$d)
+		{
+			$tmpl_x->assign("id_mouvement", $d["id"]);
+			$tmpl_x->assign("nom_mouvement", $d["description"].((($d["debiteur"]=="0") || ($d["crediteur"]=="0")) ? "" : " (sans tiers)"));
+			$tmpl_x->assign("chk_mouvement", (($form_id==$d["id"]) || ($form_poste==$d["id"])) ? "selected" : "");
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_mouvement");
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_mouvement");
-			if (($form_id==$sql->data["id"]) || ($form_poste==$sql->data["id"]))
-			  { $montant=$sql->data["montant"]; }
+			if (($form_id==$d["id"]) || ($form_poste==$d["id"]))
+			{
+				$montant=$d["montant"];
+			}
 		}
 
 		// Liste des tiers
@@ -189,12 +269,13 @@
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_tiers");
 		}
 
-		$dte=sql2date($form_date);
-
-		if ((isset($_REQUEST["form_dte"])) && ($_REQUEST["form_dte"]!=''))
-		  { $dte=$_REQUEST["form_dte"]; }
-		if ($dte=="")
-		  { $dte=date("d/m/Y"); }
+		$dte=checkVar("form_dte","date");
+		// if ((isset($_REQUEST["form_dte"])) && ($_REQUEST["form_dte"]!=''))
+		  // { $dte=$_REQUEST["form_dte"]; }
+		if ($dte=="0000-00-00")
+		{
+			$dte=date("d/m/Y");
+		}
 
 		$tmpl_x->assign("date_mouvement", $dte);
 		$tmpl_x->assign("form_montant", (($form_montant<>0) ? $form_montant : $montant));

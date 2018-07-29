@@ -239,8 +239,7 @@
 	  }
 	else
 	  {
-		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid=$id AND date_valeur>='$annee-01-01' AND date_valeur<'".($annee+1)."-01-01' AND mouvement LIKE '$poste%' ORDER BY mouvement";
-
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid=$id AND date_valeur>='$annee-01-01' AND date_valeur<'".($annee+1)."-01-01' AND mouvement LIKE '$poste%' ORDER BY mouvement,date_valeur";
 		$total=0;
 
 		$sql->Query($query);

@@ -31,12 +31,72 @@
 
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+
+	$form_tiers=checkVar("form_tiers","numeric");
+	$form_montant=checkVar("form_montant","numeric");
+	$form_commentaire=checkVar("form_commentaire","varchar");
+	$form_type=checkVar("form_type","varchar");
+
+	$tabType["virement"]="Virement";
+	$tabType["cheque"]="Chèque";
+	$tabType["espece"]="Espèce";
 	
-// ---- Menu
-	if (GetDroit("AccesSuiviListeComptes"))
+// ---- Affiche le menu
+	$aff_menu="";
+	require($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Enregistre
+	$usr=new user_class($gl_uid,$sql);
+	$max=$usr->CalcSolde();
+	$tmpl_x->assign("montant_max",AffMontant($max));
+	$val=abs($form_montant);
+
+	if (($fonc=="Enregistrer") && ($val>0) && ($MyOpt["id_PosteCredite"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$tmpl_x->parse("infos.liste_compte");
+		$dte=date("Y-m-d");
+	
+		$ventil=array();
+		if ($form_commentaire=="")
+		{
+			$form_commentaire="Crédit compte pilote ".$usr->val("fullname");
+		}
+	
+		$mvt = new compte_class(0,$sql);
+		$mvt->Generate($usr->data["idcpt"],$MyOpt["id_PosteCredite"],$tabType[$form_type]." : ".$form_commentaire,$dte,$val,$ventil);
+		$mvt->Save();
+		// $nbmvt=$mvt->Debite();
+		
+		if ($mvt->erreur!="")
+		{
+			$ret.=$mvt->erreur;
+			$ok=1;
+		}
+		
+		if ($ret!="")
+		{
+			affInformation("Erreur : ".$ret,"error");
+		}
+		else
+		{
+			affInformation("Votre compte a été autorisé pour un crédit de ".AffMontant($val).". Cette somme sera crédité définitivement sur votre compte après validation par le trésorier.","ok");
+		}
+
+		
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
+	else if ($MyOpt["id_PosteCredite"]==0)
+	{
+		affInformation("L'id du poste pour le crédit n'est pas renseigné. Contactez votre administrateur.","error");
+	}
+
+	
+// ---- Affiche la liste des membres
+
+	$tmpl_x->assign("form_montant", "0.00");
+	$tmpl_x->assign("form_commentaire", "Crédit ".$usr->val("fullname"));
+	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
+
 	
 	
 // ---- Affecte les variables d'affichage

@@ -74,16 +74,53 @@ function AffVentilation()
 	<!-- BEGIN: aff_mouvement -->
 	<TABLE>
 	  <tr class="tableauTitre" >
-		<th width=20>&nbsp;</th>
+		<th width=30>&nbsp;</th>
 		<th width=120 >Date</th>
 		<th width=400>Poste</th>
 		<th width=250>Tiers</th>
 		<th width=150>Montant</th>
+		<th width=48>&nbsp;</th>
 	  </tr>
-	
+
+	<!-- BEGIN: lst_aff_brouillon -->
+	  <tr OnMouseOver="document.getElementById('mod_{form_id}').style.display='block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
+		<TD>
+			<INPUT type="checkbox" name="form_temp_select[{form_id}]" value="oui" {form_select}>			
+		</TD>	
+		<TD>
+			{form_date}
+		</TD>
+		<TD>
+			{form_poste}
+		</TD>
+		<TD>
+			{form_tiers}
+		</TD>
+		<TD>
+			{form_montant}
+		</TD>
+		<TD>
+			<div id='mod_{form_id}'  style='display:none;'>
+			<a href="index.php?mod=suivi&rub=mouvement&fonc=edit&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_editer.png" border=0 /></a>
+			<a href="index.php?mod=suivi&rub=mouvement&fonc=deltemp&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
+			</div>
+		</TD>
+	  </TR>
+
+	  <tr style='border-bottom: 1px solid #{FormulaireBackgroundNormal};' OnMouseOver="document.getElementById('mod_{form_id}').style.display='block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
+		<TD>&nbsp;</TD>
+		<TD></TD>
+		<TD colspan=3 style='padding-bottom: 10px;'>
+			{form_commentaire}
+		</TD>
+		<TD></TD>
+	  </tr>
+   <!-- END: lst_aff_brouillon -->
+
+	  
 	<!-- BEGIN: lst_aff_mouvement -->
 	  <TR>
-		<TD style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
+		<TD style="padding-top:30px;">&nbsp;</TD>
 		<TD>
 			<INPUT type="text" name="form_date" id="form_date" size=8 value="{date_mouvement}">
 		</TD>
@@ -109,7 +146,7 @@ function AffVentilation()
 	  </TR>
 
 	  <TR>
-		<TD style="padding-top:10px;">&nbsp;</TD>
+		<TD>&nbsp;</TD>
 		<TD>Commentaire</TD>
 		<TD colspan=3>
 			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:777px;">
@@ -130,6 +167,7 @@ function AffVentilation()
 			<OPTION value="crediteur">Créditeur</OPTION>
 	        </SELECT>
 		</TD>
+		<TD></TD>
 	  </TR>
 	  <TR>
 		<TD width=20>&nbsp;</TD>
@@ -155,11 +193,12 @@ function AffVentilation()
 			</div>
 		</TD>
 	  </TR>
-	  <TR style="border-top: 1px solid black;">
+	  <TR style="border-top: 1px solid #{FormulaireBackgroundNormal};">
 		<TD width=20>&nbsp;</TD>
 		<TD colspan=4 >
 			Saisir en Facturation : <input type='checkbox' name='form_facture' value="on"> 
 		</TD>
+		<TD></TD>
 	  </TR> 
    <!-- END: lst_aff_mouvement -->
 	</TABLE>

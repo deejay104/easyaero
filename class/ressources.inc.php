@@ -125,6 +125,13 @@ class ress_class extends objet_core
 		}
 		return $ret;
 	}
+
+	function Desactive(){
+		global $gl_uid;
+		$sql=$this->sql;
+		$this->actif="off";
+		$sql->Edit("ressource",$this->tbl."_ressources",$this->id,array("actif"=>'off', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
+	}
 	
 	function CalcHorametre($deb,$fin)
 	{
@@ -203,6 +210,7 @@ class ress_class extends objet_core
 		else
 		{
 			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>'".$resvol["dte_deb"]."' AND dte_deb<'".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
+			$resreel=$sql->QueryRow($query);
 			$resreel=$sql->QueryRow($query);
 			$t=$resmaint["tot"]+$resreel["tot"];
 		}
