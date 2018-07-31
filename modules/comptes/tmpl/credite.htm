@@ -15,7 +15,10 @@
 	<input type="hidden" name="mod" value="comptes">
 	<input type="hidden" name="rub" value="credite">
 
-	<div class='formulaire' style='width:630px;'>
+	<div class='formulaireTitre'>Créditer votre compte</div>
+
+	
+	<div class='formulaire' style='width:730px;'>
 	<p>Vous pouvez effectuer un crédit sur votre compte. La somme sera effectivement crédité sur votre compte après validation par le trésorier, mais en attendant vous pourrez effectuer une réservation.
 	Vous pouvez laisser un commentaire sur votre crédit afin que qu'il soit identifiable plus facilement.</p>
 	</div>
@@ -23,7 +26,7 @@
 	<table>
 	  <tr class="tableauTitre" >
 		<th width=10>&nbsp;</th>
-		<th width=100>Type</th>
+		<th width=200>Type</th>
 		<th width=110>Montant</th>
 		<th width=410>Commentaire</th>
 	  </tr>
@@ -32,9 +35,9 @@
 		<td style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
 		<TD>
 			<select id="form_type" name="form_type">
-				<option value="virement">Virement</option>
-				<option value="cheque">Chèque</option>
-				<option value="espece">Espèce</option>
+			<!-- BEGIN: lst_type -->
+				<option value="{form_type}">{form_typename}</option>
+			<!-- END: lst_type -->
 		    </select>
 		</TD>
 		<TD>

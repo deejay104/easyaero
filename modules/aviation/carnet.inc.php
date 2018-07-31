@@ -43,8 +43,11 @@
 	}
 
 	$tabTitre=array();
-	$tabTitre["dte_deb"]["aff"]="Date";
-	$tabTitre["dte_deb"]["width"]=100;
+	if ($theme!="phone")
+	{
+		$tabTitre["dte_deb"]["aff"]="Date";
+		$tabTitre["dte_deb"]["width"]=100;
+	}
 	$tabTitre["nom"]["aff"]="Equipage";
 	$tabTitre["nom"]["width"]=350;
 
@@ -63,11 +66,11 @@
 	$tabTitre["heure"]["width"]=100;
 	if ($theme=="phone")
 	{
-		$tabTitre["carbavant"]["aff"]="Avant";
+		$tabTitre["carbavant"]["aff"]="Carb Avant";
 		$tabTitre["carbavant"]["width"]=100;
-		$tabTitre["carbapres"]["aff"]="Après";
+		$tabTitre["carbapres"]["aff"]="Carb Après";
 		$tabTitre["carbapres"]["width"]=100;
-		$tabTitre["potentiel"]["aff"]="Total";
+		$tabTitre["potentiel"]["aff"]="Potentiel";
 		$tabTitre["potentiel"]["width"]=100;
 	}
 	else

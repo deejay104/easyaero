@@ -187,7 +187,7 @@ class ress_class extends objet_core
 		  }
 	}
 
-	function TempsVols()
+	function TempsVols($affvol="")
 	{ global $MyOpt;
 		$sql=$this->sql;
 
@@ -215,10 +215,10 @@ class ress_class extends objet_core
 			$t=$resmaint["tot"]+$resreel["tot"];
 		}
 
-		if ($this->tpsreel>0)
-		{
-			$t=$t+$this->tpsreel;
-		}		
+		// if ($this->tpsreel>0)
+		// {
+			// $t=$t+$this->tpsreel;
+		// }		
 
 		return $t;
 	}

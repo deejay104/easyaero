@@ -202,7 +202,7 @@
 		
 		foreach($tabBrouillon as $id=>$d)
 		{
-			$usr=new user_class($gl_uid,$sql);
+			$usr=new user_class($d["tiers"],$sql);
 			
 			$tmpl_x->assign("form_id", $d["id"]);
 			$tmpl_x->assign("form_date", $d["date_valeur"]);

@@ -41,7 +41,7 @@
 		$usr = new user_class($id,$sql,false,true);
 		$ret=true;
 		$solde=$usr->CalcSolde();
-		if (($solde<-$usr->data["decouvert"]) && ($usr->data["mail"]!="") && ($usr->data["virtuel"]=="non"))
+		if (($usr->isSoldeNegatif()) && ($usr->data["mail"]!="") && ($usr->data["virtuel"]=="non"))
 		{
 			myPrint($usr->fullname." - Solde: ".$solde);
 			$tabvar=array();

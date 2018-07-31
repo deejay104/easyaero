@@ -185,9 +185,11 @@
 
 // ---- Vérifie si le compte est provisionné
 
-	$s=$resa["pilote"]->CalcSolde();
-	if ($s<-$resa["pilote"]->data["decouvert"])
+	// $s=$resa["pilote"]->CalcSolde();
+	// if ($s<-$resa["pilote"]->data["decouvert"])
+	if ($resa["pilote"]->isSoldeNegatif())
 	{
+		$s=$resa["pilote"]->CalcSolde();
 		$m ="<b><font color='red'>Le compte du pilote est NEGATIF ($s €).</font></b><br />";
 		$m.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 		affInformation($m,"error");

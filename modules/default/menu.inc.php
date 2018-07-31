@@ -61,5 +61,11 @@
 		"droit"=>"AccesReservations",
 		"url"=>"mod=reservations"
 	);
+	$tabMenuPhone["suivivols"]=array(
+		"icone"=>"static/modules/aviation/img/icn48_suivivols.png",
+		"nom"=>"Suivi des Vols",
+		"droit"=>"AccesVols",
+		"url"=>"mod=aviation&rub=vols"
+	);
 
 ?>

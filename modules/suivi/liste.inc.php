@@ -45,14 +45,17 @@
 	$tabTitre["prenom"]["aff"]="Prénom";
 	$tabTitre["prenom"]["width"]=150;
 	$tabTitre["nom"]["aff"]="Nom";
-	$tabTitre["nom"]["width"]=250;
-	$tabTitre["solde"]["aff"]="Solde";
-	$tabTitre["solde"]["width"]=120;
+	$tabTitre["nom"]["width"]=200;
 	if (($MyOpt["module"]["aviation"]=="on") && ($theme!="phone"))
-	  {
+	{
 		$tabTitre["lastflight"]["aff"]="Vols/12mois";
 		$tabTitre["lastflight"]["width"]=80;
-	  }
+	}
+	$tabTitre["solde"]["aff"]="Solde";
+	$tabTitre["solde"]["width"]=120;
+	$tabTitre["soldetmp"]["aff"]="En attente";
+	$tabTitre["soldetmp"]["width"]=120;
+
 	$tabTitre["decouvert"]["aff"]="Découvert";
 	$tabTitre["decouvert"]["width"]=70;
 
@@ -69,11 +72,17 @@
 		$tabValeur[$i]["solde"]["val"]=$usr->CalcSolde();
 		$tabValeur[$i]["solde"]["aff"]=$usr->AffSolde()."&nbsp;&nbsp;";
 		$tabValeur[$i]["solde"]["align"]="right";
+
+		$s=$usr->CalcSoldeTemp();
+		$tabValeur[$i]["soldetmp"]["val"]=$s;
+		$tabValeur[$i]["soldetmp"]["aff"]=AffMontant($s)."&nbsp;&nbsp;";
+		$tabValeur[$i]["soldetmp"]["align"]="right";
+
 		if ($MyOpt["module"]["aviation"]=="on")
-		  {
+		{
 			$tabValeur[$i]["lastflight"]["val"]=$usr->AffNbHeures12mois("val");
 			$tabValeur[$i]["lastflight"]["aff"]=$usr->AffNbHeures12mois()."&nbsp;&nbsp;";
-		  }
+		}
 		$tabValeur[$i]["lastflight"]["align"]="right";
 		$tabValeur[$i]["decouvert"]["val"]=$usr->data["decouvert"];
 		$tabValeur[$i]["decouvert"]["aff"]=$usr->data["decouvert"]."&nbsp;&nbsp;";

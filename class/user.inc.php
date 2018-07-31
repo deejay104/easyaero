@@ -257,6 +257,36 @@ class user_class extends user_core
 		return $solde;
 	}
 
+
+	function CalcSoldeTemp()
+	{
+		$sql=$this->sql;
+
+		$query = "SELECT SUM(montant) AS total FROM ".$this->tbl."_comptetemp WHERE tiers='".$this->data["idcpt"]."' AND status='brouillon'";
+		$res=$sql->QueryRow($query);
+		
+		return $res["total"];
+	}
+
+
+	function isSoldeNegatif()
+	{
+		$sql=$this->sql;
+		$s=$this->CalcSolde();
+		$s=$s+$this->data["decouvert"];
+
+		$query = "SELECT SUM(montant) AS total FROM ".$this->tbl."_comptetemp WHERE tiers='".$this->data["idcpt"]."' AND status='brouillon'";
+		$res=$sql->QueryRow($query);
+		
+		$s=$s+$res["total"];
+
+		if ($s>=0)
+		{
+			return false;
+		}
+		return true;
+	}
+	
 	function CalcAge($dte){
 		global $uid;
 		if ($this->dte_naissance!="0000-00-00")

@@ -49,7 +49,7 @@
 	// Sauvegarde le lache
 	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserLache")))
 	{
-		if (!is_array($form_lache))
+		if ((!isset($form_lache)) || (!is_array($form_lache)))
 		{
 			$form_lache=array();
 		}

@@ -37,9 +37,11 @@
 	$form_commentaire=checkVar("form_commentaire","varchar");
 	$form_type=checkVar("form_type","varchar");
 
+	$tabType=array();
 	$tabType["virement"]="Virement";
 	$tabType["cheque"]="Chèque";
 	$tabType["espece"]="Espèce";
+	$tabType["vacances"]="Chèque vacances";
 	
 // ---- Affiche le menu
 	$aff_menu="";
@@ -52,7 +54,7 @@
 	$tmpl_x->assign("montant_max",AffMontant($max));
 	$val=abs($form_montant);
 
-	if (($fonc=="Enregistrer") && ($val>0) && ($MyOpt["id_PosteCredite"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if (($fonc=="Enregistrer") && ($val>0) && ($MyOpt["PosteCredite"][$form_type]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$dte=date("Y-m-d");
 	
@@ -63,7 +65,7 @@
 		}
 	
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($usr->data["idcpt"],$MyOpt["id_PosteCredite"],$tabType[$form_type]." : ".$form_commentaire,$dte,$val,$ventil);
+		$mvt->Generate($usr->data["idcpt"],$MyOpt["PosteCredite"][$form_type],$form_commentaire,$dte,$val,$ventil);
 		$mvt->Save();
 		// $nbmvt=$mvt->Debite();
 		
@@ -85,16 +87,22 @@
 		
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
-	else if ($MyOpt["id_PosteCredite"]==0)
-	{
-		affInformation("L'id du poste pour le crédit n'est pas renseigné. Contactez votre administrateur.","error");
-	}
 
+// ---- Affiche les types
+	foreach($tabType as $id=>$aff)
+	{
+		if ($MyOpt["PosteCredite"][$id]>0)
+		{
+			$tmpl_x->assign("form_type", $id);
+			$tmpl_x->assign("form_typename", $aff);
+			$tmpl_x->parse("corps.lst_type");
+		}
+	}
 	
 // ---- Affiche la liste des membres
 
 	$tmpl_x->assign("form_montant", "0.00");
-	$tmpl_x->assign("form_commentaire", "Crédit ".$usr->val("fullname"));
+	$tmpl_x->assign("form_commentaire", "Crédit compte ".$usr->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 
 	

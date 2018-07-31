@@ -82,17 +82,20 @@
 			$tabTitre["ech".$i]["aff"]=$t;
 			$tabTitre["ech".$i]["width"]=100;
 		}
+	}
+	$lstres=ListeRessources($sql,array("oui"));
+	foreach($lstres as $i=>$id)
+	{ 
+		$tavion[$i]=new ress_class($id, $sql);
+		$txt=substr($tavion[$i]->val("immatriculation"),strlen($tavion[$i]->val("immatriculation"))-2,2);
 
-		$lstres=ListeRessources($sql,array("oui"));
-		foreach($lstres as $i=>$id)
-		{ 
-			$tavion[$i]=new ress_class($id, $sql);
-			$txt=substr($tavion[$i]->val("immatriculation"),strlen($tavion[$i]->val("immatriculation"))-2,2);
-
+		if ($theme!="phone")
+		{
 			$tabTitre["av".$i]["aff"]=$txt;
 			$tabTitre["av".$i]["width"]=30;
 		}
 	}
+
 
 // ---- Liste des membres
 	$lstusr=ListActiveUsers($sql,"std","");

@@ -39,8 +39,14 @@ $MyOptTmpl["id_PosteTransfere"]=0;
 $MyOptHelp["id_PosteTransfere"]="ID du poste pour le transfère vers le compte d'un autre membre";
 
 // ID poste pour les crédits de compte
-$MyOptTmpl["id_PosteCredite"]=0;
-$MyOptHelp["id_PosteCredite"]="ID du poste pour le crédit de son compte";
+$MyOptTmpl["PosteCredite"]["virement"]=0;
+$MyOptHelp["PosteCredite"]["virement"]="ID du poste pour le crédit de son comptepar virement";
+$MyOptTmpl["PosteCredite"]["cheque"]=0;
+$MyOptHelp["PosteCredite"]["cheque"]="ID du poste pour le crédit de son compte par chèque";
+$MyOptTmpl["PosteCredite"]["espece"]=0;
+$MyOptHelp["PosteCredite"]["espece"]="ID du poste pour le crédit de son compte par espèces";
+$MyOptTmpl["PosteCredite"]["vacances"]=0;
+$MyOptHelp["PosteCredite"]["vacances"]="ID du poste pour le crédit de son compte par chèque vacances";
 
 // Coordonnées terrain
 $MyOptTmpl["terrain"]["nom"]="Neuhof";

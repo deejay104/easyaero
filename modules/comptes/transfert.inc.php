@@ -119,7 +119,7 @@
 	}
 
 	$tmpl_x->assign("form_montant", "0.00");
-	$tmpl_x->assign("form_commentaire", "Crédité par ".$myuser->val("fullname"));
+	$tmpl_x->assign("form_commentaire", "Transféré par ".$myuser->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 	
 	
