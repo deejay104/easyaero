@@ -434,4 +434,19 @@ function AfficheSignatureCompte($lid)
 	return $ret;
 }
 
+function listCompteAttente($uid=0)
+{
+	global $MyOpt,$sql;
+	$query = "SELECT id FROM ".$MyOpt["tbl"]."_comptetemp WHERE status='brouillon' ".(($uid>0) ? "AND tiers='".$uid."'" : "")." ORDER BY date_valeur,id";
+	$sql->Query($query);
+	
+	$tab=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tab[$sql->data["id"]]=$sql->data["id"];
+	}
+	return $tab;
+}
+
 ?>

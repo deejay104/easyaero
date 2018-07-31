@@ -190,26 +190,20 @@
 		}
 
 		// Affiche la saisie des mouvements en attente
-		$query = "SELECT * FROM ".$MyOpt["tbl"]."_comptetemp WHERE status='brouillon' ORDER BY date_valeur,id";
-		$sql->Query($query);
-		
-		$tabBrouillon=array();
-		for($i=0; $i<$sql->rows; $i++)
-		{ 
-			$sql->GetRow($i);
-			$tabBrouillon[$sql->data["id"]]=$sql->data;
-		}
+		$tabBrouillon=listCompteAttente(0);
+
 		
 		foreach($tabBrouillon as $id=>$d)
 		{
-			$usr=new user_class($d["tiers"],$sql);
+			$mvt = new compte_class($id,$sql);
+			$usr=new user_class($mvt->tiers,$sql);
 			
-			$tmpl_x->assign("form_id", $d["id"]);
-			$tmpl_x->assign("form_date", $d["date_valeur"]);
-			$tmpl_x->assign("form_poste", $tabMvt[$d["poste"]]["description"]);
+			$tmpl_x->assign("form_id", $id);
+			$tmpl_x->assign("form_date", sql2date($mvt->date_valeur));
+			$tmpl_x->assign("form_poste", $tabMvt[$mvt->poste]["description"]);
 			$tmpl_x->assign("form_tiers", $usr->aff("fullname"));
-			$tmpl_x->assign("form_montant", AffMontant($d["montant"]));
-			$tmpl_x->assign("form_commentaire", $d["commentaire"]);
+			$tmpl_x->assign("form_montant", AffMontant($mvt->montant));
+			$tmpl_x->assign("form_commentaire", $mvt->commentaire);
 
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_brouillon");
 		}

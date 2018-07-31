@@ -52,7 +52,7 @@
 
 	$ii=1;
 	foreach($t as $rid)
-	  {
+	{
 		$tress[$ii]=new ress_class($rid, $sql);
 
 		$tmpl_x->assign("uid_ress", $rid);
@@ -61,9 +61,13 @@
 		  { $tmpl_x->assign("chk_ress", "selected"); }
 		else
 		  { $tmpl_x->assign("chk_ress", ""); }
+
+		$tmpl_x->assign("couleur_col", $tress[$ii]->val("couleur"));
+		$tmpl_x->assign("couleur_nom", $tress[$ii]->aff("immatriculation"));
 		$tmpl_x->parse("infos.lst_ress");
+		$tmpl_x->parse("corps.lst_couleur");
 		$ii=$ii+1;
-	  }
+	}
 
 
 
@@ -116,7 +120,7 @@
 
 	$tmpl_x->assign("form_debjour",$debjour);
 	$tmpl_x->assign("form_finjour",$finjour);
-	$tmpl_x->assign("terrain_nom",$MyOpt["terrain"]["nom"]);
+	$tmpl_x->assign("terrain_nom",$MyOpt["terrain"]["nom"]);	
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

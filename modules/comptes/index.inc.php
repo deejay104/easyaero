@@ -114,8 +114,6 @@
 	$tmpl_x->assign("nom_compte", $cptusr->Aff("prenom")." ".$cptusr->Aff("nom"));
 
 	// Définition des variables
-	$myColor[50]="F0F0F0";
-	$myColor[60]="F7F7F7";
 	if ((!isset($ts)) || (!is_numeric($ts)))
 	  { $ts = 0; }
 
@@ -163,7 +161,7 @@
 	$tl=50;
 
 	// Affiche le solde du compte
-	$tmpl_x->assign("solde_compte", AffMontant($cptusr->CalcSolde()));
+	$tmpl_x->assign("solde_compte", $cptusr->AffSolde());
 	
 	
 	// Calcul le nombre ligne totale

@@ -50,8 +50,6 @@
 
 // ---- Enregistre
 	$usr=new user_class($gl_uid,$sql);
-	$max=$usr->CalcSolde();
-	$tmpl_x->assign("montant_max",AffMontant($max));
 	$val=abs($form_montant);
 
 	if (($fonc=="Enregistrer") && ($val>0) && ($MyOpt["PosteCredite"][$form_type]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
@@ -99,13 +97,43 @@
 		}
 	}
 	
-// ---- Affiche la liste des membres
+// ---- Affiche les valeurs
+	$s=$usr->CalcSolde();
+	$tmpl_x->assign("solde_reel",AffMontant($s));
+	$s=$s+$usr->CalcSoldeTemp();
+	$tmpl_x->assign("solde_temp",AffMontant($s));
 
 	$tmpl_x->assign("form_montant", "0.00");
 	$tmpl_x->assign("form_commentaire", "Crédit compte ".$usr->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 
-	
+// ---- Liste des mouvements
+	$tabMvt=array();
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
+	$sql->Query($query);
+
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tabMvt[$sql->data["id"]]=$sql->data["description"];
+	}
+
+// ---- Affiche la liste des mouvements en attente
+	$tabBrouillon=listCompteAttente($gl_uid);
+
+	if (count($tabBrouillon)>0)
+	{
+		foreach($tabBrouillon as $id=>$d)
+		{
+			$mvt = new compte_class($id,$sql);
+			$tmpl_x->assign("lst_date", sql2date($mvt->date_valeur));
+			$tmpl_x->assign("lst_poste", $tabMvt[$mvt->poste]);
+			$tmpl_x->assign("lst_montant", AffMontant($mvt->montant));
+			$tmpl_x->assign("lst_commentaire", $mvt->commentaire);
+			$tmpl_x->parse("corps.brouillon.lst_mvt");
+		}
+		$tmpl_x->parse("corps.brouillon");
+	}
 	
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

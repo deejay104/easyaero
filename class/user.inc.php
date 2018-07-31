@@ -236,18 +236,14 @@ class user_class extends user_core
 		return $ret;
 	}
 	
-	function AffSolde(){
-		global $MyOpt;
-		$sql=$this->sql;
-		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->data["idcpt"]."'";
-		$res=$sql->QueryRow($query);
-
-		$solde=(($res["total"]=="") ? AffMontant(0) : (($res["total"]<0) ? "<FONT color=red><B>".AffMontant($res["total"])."</B></FONT>" : AffMontant($res["total"])));
-
-		return "<a href=\"index.php?mod=comptes&id=".$this->data["idcpt"]."\">$solde</a>";
+	function AffSolde()
+	{
+		$s=$this->CalcSolde();
+		return "<a href=\"index.php?mod=comptes&id=".$this->data["idcpt"]."\">".(($s<0) ? "<FONT color=red><B>".AffMontant($s)."</B></FONT>" : AffMontant($s))."</a>";
 	}
 
-	function CalcSolde(){
+	function CalcSolde()
+	{
 		$sql=$this->sql;
 		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->data["idcpt"]."'";
 		$res=$sql->QueryRow($query);

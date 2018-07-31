@@ -253,7 +253,9 @@ Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moin
 .afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
 </style>
 	
-
+<table>
+<tr>
+<td>
 <p class="afficheLegende">
 	<label style="background-color: #{maintconf}; "></label>
 	<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
@@ -267,5 +269,16 @@ Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moin
 	<label style="background-color: #{meeting};"></label>
 	Une manifestation est prévue ce jour là.
 </p>
+</td>
+<td>
 
+<!-- BEGIN: lst_couleur -->
+<p class="afficheLegende" style="width:120px; padding-left:20px;">
+	<label style="background-color: #{couleur_col}; "></label>
+	<span>{couleur_nom}</span>
+</p>
+<!-- END: lst_couleur -->
+</td>
+</tr>
+</table>
 <!-- END: corps -->
