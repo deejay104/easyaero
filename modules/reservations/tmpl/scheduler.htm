@@ -97,7 +97,11 @@
 				{
 					labelText: 'Potentiel',
 					field: 'potentiel',
-					width: '80px'
+					width: '80px',
+					render: function( event, element, view ) {
+						var title = element.find( '.fc-cell-text' );
+						title.html( title.text() );
+					}
 				}
 			],
 
@@ -145,7 +149,6 @@
 				var title = element.find( '.fc-title' );
 				title.html( title.text() );
 			},
-
 
 			<!-- BEGIN: aff_tooltips -->
 			eventMouseover: function(event, jsEvent) {

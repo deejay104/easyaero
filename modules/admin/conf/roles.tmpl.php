@@ -6,7 +6,7 @@
 
 // ---- Liste des roles disponibles
 
-$tabRoles["TypeMembre"]="Pilote";
+$tabRoles["TypeMembre"]="Membre";
 $tabRoles["TypePilote"]="Pilote";
 $tabRoles["TypeInstructeur"]="Instructeur";
 
