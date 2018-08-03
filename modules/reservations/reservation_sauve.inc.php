@@ -32,6 +32,7 @@
 
 // --- Charge la réservation
 	$id=checkVar("id","numeric");
+	$prev=checkVar("prev","varchar");
 	$form_accept=checkVar("form_accept","varchar",3);
 	
 	
@@ -139,17 +140,36 @@
 
 // ---- Supprime la réservation
 	else if (($fonc=="delete") && ($id>0))
-	  {
+	{
 		$ok=0;
 		$resa["resa"]=new resa_class($id,$sql);
+
+		if ($resa["resa"]->uid_pilote!=$gl_uid)
+		{
+			$resp=new user_class($resa["resa"]->uid_pilote,$sql);
+			$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
+		
+			$tabvar=array();
+			$tabvar["pilote"]=$resp->Aff("fullname","val");
+			$tabvar["editeur"]=$myuser->Aff("fullname","val");
+			$tabvar["avion"]=strtoupper($resr->val("immatriculation"));
+			$tabvar["dte_deb"]=sql2date($resa["resa"]->dte_deb);
+			$tabvar["dte_fin"]=sql2date($resa["resa"]->dte_fin);
+			$tabvar["url"]=$MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;
+
+			SendMailFromFile("",$resp->mail,array(),"",$tabvar,"resa_supp","");
+
+			affInformation($resp->Aff("fullname","val")." a été notifié".(($resp->data["sexe"]=="F") ? "e" : "")." que sa réservation a été supprimée.","ok");
+		}
+
 		$ress=$resa["resa"]->uid_ressource;
 		$resa["resa"]->Delete();
 		$affrub="index";
-	  }
+	}
 	else
-	  {
+	{
 	  	$ok=3;
-	  }
+	}
 
 
 
@@ -184,7 +204,24 @@
 		{
 			$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 
-				// Email l'instructeur
+			if ($resa["resa"]->uid_pilote!=$gl_uid)
+			{
+				// $resp=new user_class($resa["resa"]->uid_pilote,$sql);
+				
+				$tabvar=array();
+				$tabvar["pilote"]=$resa["pilote"]->Aff("fullname","val");
+				$tabvar["editeur"]=$myuser->Aff("fullname","val");
+				$tabvar["avion"]=strtoupper($resr->val("immatriculation"));
+				$tabvar["dte_deb"]=sql2date($resa["resa"]->dte_deb);
+				$tabvar["dte_fin"]=sql2date($resa["resa"]->dte_fin);
+				$tabvar["url"]=$MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;
+
+				SendMailFromFile("",$resa["pilote"]->mail,array(),"",$tabvar,"resa_modif","");
+
+				affInformation($resa["pilote"]->Aff("fullname","val")." a été notifié".(($resa["pilote"]->data["sexe"]=="F") ? "e" : "")." que sa réservation a été mise à jour.","ok");
+			}
+			
+			// Email l'instructeur
 			if ($resa["resa"]->uid_instructeur>0)
 			{
 				$resi=new user_class($resa["resa"]->uid_instructeur,$sql);
@@ -210,7 +247,7 @@
 				$f[0]["nom"]="reservation.ics";
 				$f[0]["data"]=$ics->to_string();
 
-				SendMailFromFile($resa["pilote"]->mail,$resi->mail,array(),"[".$MyOpt["site_title"]."] : Notification de réservation",$tabvar,"resa_inst",$f);
+				SendMailFromFile($resa["pilote"]->mail,$resi->mail,array(),"",$tabvar,"resa_inst",$f);
 			}
 	
 // echo $MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;	
@@ -218,7 +255,7 @@
 			
 			// Valide la page
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;
-			$affrub="index";
+			$affrub=($prev=="scheduler") ? "scheduler" : "index";
 			$ress=$form_uid_ress;
 			$ok=0;
 		}
@@ -231,7 +268,7 @@
 	if ($fonc=="Annuler")  	
 	{
 		$ok=0;
-		$affrub="index";
+		$affrub=($prev=="scheduler") ? "scheduler" : "index";
 		$ress=$form_uid_ress;
 	}
 

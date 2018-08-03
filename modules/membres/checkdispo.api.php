@@ -26,10 +26,10 @@
 	$h = 16;
 
 // ---- Récupère les paramètres
-	$mid=(is_numeric($_REQUEST["mid"]) ? $_REQUEST["mid"] : 0);
-	$deb=(is_numeric($_REQUEST["deb"]) ? $_REQUEST["deb"] : 0);
-	$fin=(is_numeric($_REQUEST["fin"]) ? $_REQUEST["fin"] : 0);
-
+	$mid=checkVar("mid","numeric");
+	$deb=checkVar("deb","numeric");
+	$fin=checkVar("fin","numeric");
+	
 //	$deb=strtotime("2013-08-07 17:00");
 //	$fin=strtotime("2013-08-07 18:00");
 
@@ -41,7 +41,6 @@
 		$dte_deb=date("Y-m-d H:i:s",$deb);
 		$dte_fin=date("Y-m-d H:i:s",$fin);
 		$usr_inst=new user_class($mid,$sql,false,true);
-
 		if ($usr_inst->CheckDisponibilite($dte_deb,$dte_fin))
 		{
 			$ok="ok";

@@ -1,9 +1,37 @@
 <!-- BEGIN: aff_horametre -->
+<script language="JavaScript">
+function calcHorametre()
+{
+	var horadeb=document.getElementById('horadebut').value;
+	var horafin=document.getElementById('horafin').value;
+	
+	var tdeb=horadeb.split('.');
+	var tfin=horafin.split('.');
+	tps=parseInt(tfin[0]*60)+parseInt(tfin[1])-(parseInt(tdeb[0]*60)+parseInt(tdeb[1]));
+
+	var h=parseInt(tps/60);
+	var m=tps-h*60;
+	var z="";
+	if (m<10)
+	{ z="0"; }
+	
+	
+	document.getElementById('tpshora').innerHTML=h+"h "+z+m;
+	if (document.getElementById('tpsreel').value>0)
+	{
+	}
+	else
+	{
+		document.getElementById('tpsreel').value=tps;
+	}
+}
+</script>
+
 <p>
-	<label for="horadebut">Horamètre début</label><INPUT id="horadebut" name="form_horadeb" value="{form_horadeb}" style='width:80px!important;'>
+	<label for="horadebut">Horamètre début</label><INPUT id="horadebut" name="form_horadeb" value="{form_horadeb}" style='width:80px!important;' OnChange="calcHorametre();">
 </p>
 <p>
-	<label for="horafin">Horamètre fin</label><INPUT id="horafin" name="form_horafin" value="{form_horafin}" style='width:80px!important;'> = {tps_hora}
+	<div style='disply:inline-block; float: left;'><label for="horafin">Horamètre fin</label><INPUT id="horafin" name="form_horafin" value="{form_horafin}" style='width:80px!important;' OnChange="calcHorametre();"> =&nbsp;</div><div id='tpshora' style='display:inline-block;'>{tps_hora}</div>
 </p>
 <p>
 	<label for="tpsreel">Temps de vol réel</label><INPUT id="tpsreel" type="number" name="form_tpsreel" value="{form_tpsreel}" style='width:80px!important;'> (en minutes)

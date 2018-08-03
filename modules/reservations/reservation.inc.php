@@ -28,6 +28,7 @@
 
 // ---- Vérifie les variables
 	$id=checkVar("id","numeric");
+	$prev=checkVar("prev","varchar");
 	$ress=checkVar("ress","numeric");
 	$heure=checkVar("heure","numeric");
 	$jour=checkVar("jour","date");
@@ -37,7 +38,7 @@
 	{
 		$msg_err="";
 	}
-	if (!is_numeric($ok))
+	if ((!isset($ok)) || (!is_numeric($ok)))
 	{
 		$ok=checkVar("ok","numeric");
 	}
@@ -78,7 +79,7 @@
 		// $resa["resa"]->uid_instructeur=$res["uid_instructeur"];
 		$resa["resa"]->uid_instructeur=0;
 		$resa["resa"]->uid_ressource=$ress;
-		$resa["resa"]->type=$res_user["type"];
+		// $resa["resa"]->type=$res_user["type"];
 		$resa["resa"]->uid_maj=$gl_uid;
 		$resa["resa"]->dte_maj=date("Y-m-d H:i:s");
 
@@ -103,8 +104,8 @@
 	  	$resa["resa"]->horafin=$form_horafin;
 	  	$resa["resa"]->potentielh=$form_potentielh;
 	  	$resa["resa"]->potentielm=$form_potentielm;
-	  	$resa["resa"]->carbavant=$carbavant;
-	  	$resa["resa"]->carbapres=$carbapres;
+	  	$resa["resa"]->carbavant=$form_carbavant;
+	  	$resa["resa"]->carbapres=$form_carbapres;
 	  	$resa["resa"]->prixcarbu=$form_prixcarbu;
 	  	$resa["resa"]->destination=$form_destination;
 	  	$resa["resa"]->nbpersonne=$form_nbpersonne;
@@ -212,6 +213,7 @@
 	
 // ---- Initialisation des variables
 	$tmpl_x->assign("id", $id);
+	$tmpl_x->assign("prev", $prev);
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("path_module","$module/$mod");
 
@@ -374,8 +376,8 @@
 	}
 	else
 	{
-		$tmpl_x->assign("deb", strtotime(date2sql($resa["resa"]->dte_deb)));
-		$tmpl_x->assign("fin", strtotime(date2sql($resa["resa"]->dte_fin)));
+		$tmpl_x->assign("deb", strtotime($resa["resa"]->dte_deb));
+		$tmpl_x->assign("fin", strtotime($resa["resa"]->dte_fin));
 	}
 
 	$tmpl_x->parse("corps.aff_reservation.aff_instructeur");

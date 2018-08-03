@@ -22,14 +22,15 @@
 	}
 
 	$id=$_GET['id'];
-
+	$ress=checkVar("ress","numeric");
 
 	$query="SELECT edite FROM ".$MyOpt["tbl"]."_calendrier WHERE id='".$id."'";
 	$res=$sql->QueryRow($query);
 
 	if ($res["edite"]=='oui')
 	{	
-		$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET dte_deb='".$jstart."',dte_fin='".$jend."' WHERE id='".$id."'";
+		$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET dte_deb='".$jstart."',dte_fin='".$jend."'".(($ress>0) ? ",uid_avion='".$ress."'" : "")." WHERE id='".$id."'";
+		error_log($query);
 		$sql->Update($query);
 	}
 

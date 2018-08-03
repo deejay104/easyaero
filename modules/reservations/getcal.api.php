@@ -13,16 +13,14 @@
 
 	// Short-circuit if the client did not give us a date range.
 	if (!isset($_GET['start']) || !isset($_GET['end'])) {
-		die("Please provide a date range.");
+		$input_arrays["error"]="Please provide a date range";
+		echo json_encode($input_arrays);
+		exit;
 	}
 
-	if (!isset($_GET['ress']) || !is_numeric($_GET['ress'])) {
-		die("Please provide a ressource id.");
-	}
-
-	$start=$_GET['start'];
-	$end=$_GET['end'];
-	$ress=$_GET['ress'];
+	$start=checkVar("start","varchar");
+	$end=checkVar("end","varchar");
+	$ress=checkVar("ress","numeric");
 
 	$ii=0;
 
@@ -75,6 +73,7 @@
 				}
 	
 				$input_arrays[$ii]["id"]=$resa["resa"]->id;
+				$input_arrays[$ii]["resourceId"]=$resa["resa"]->uid_ressource;
 				$input_arrays[$ii]["title"]=utf8_encode((($d==1) ? $resa["ress"]->val("immatriculation")." : \n" : "").$resa["pilote"]->val($affnom).(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->val($affnom)) : "")).(($resa["resa"]->invite=="oui") ? " <img src='static/modules/reservations/img/icn16_invite.png'>" : "");
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
 				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));

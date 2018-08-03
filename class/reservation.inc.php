@@ -29,11 +29,12 @@ class resa_class{
 		$this->actif="oui";
 		$this->reel="oui";
 		$this->edite="oui";
+		$this->description="";
 		$this->horadeb="0";
 		$this->horafin="0";
 		$this->temps="";
 		$this->tpsestime="";
-		$this->tempsreel="";
+		$this->tpsreel=0;
 		$this->destination="LOCAL";
 		$this->nbpersonne=1;
 		$this->invite="non";
@@ -45,6 +46,10 @@ class resa_class{
 		$this->potentiel=0;
 		$this->potentielh=0;
 		$this->potentielm=0;
+		$this->uid_pilote=0;
+		$this->uid_debite=0;
+		$this->uid_instructeur=0;
+		$this->uid_ressource=0;
 
 		if ($id>0)
 		  {

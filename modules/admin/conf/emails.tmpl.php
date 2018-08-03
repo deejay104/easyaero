@@ -20,6 +20,44 @@ A bientôt au club
 // *****************************************************************
 
 // *****************************************************************
+	$tabMails["resa_modif"]=Array
+	(
+		"titre"=>"Modification de votre réservation",
+		"balise"=>"avion,dte_deb,dte_fin,url,pilote,editeur",
+		"mail"=>
+"Bonjour,
+
+La réservation suivante a été modifiée par {editeur} :
+
+{avion} du {dte_deb} au {dte_fin}
+
+<a href='{url}'>Voir plus de détail</a>
+
+A bientôt au club
+"
+	);
+// *****************************************************************
+// *****************************************************************
+	$tabMails["resa_supp"]=Array
+	(
+		"titre"=>"Suppression de votre réservation",
+		"balise"=>"avion,dte_deb,dte_fin,url,pilote,editeur",
+		"mail"=>
+"Bonjour,
+
+La réservation suivante a été supprimée par {editeur} :
+
+{avion} du {dte_deb} au {dte_fin}
+
+<a href='{url}'>Voir plus de détail</a>
+
+A bientôt au club
+"
+	);
+// *****************************************************************
+
+
+// *****************************************************************
 	$tabMails["decouvert"]=Array
 	(
 		"titre"=>"Compte à découvert",
