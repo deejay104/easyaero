@@ -124,5 +124,9 @@ $MyOptHelp["tabcolresa"]["maintconf"]="Couleur pour une maintenance confirmée";
 $MyOptTmpl["tabcolresa"]["maintplan"]="eec89e";
 $MyOptHelp["tabcolresa"]["maintplan"]="Couleur pour ses maintenance planifiée";
 
+// Maintiens l'heure bloc égale à l'horametre
+$MyOptTmpl["updateBloc"]="";
+$MyOptHelp["updateBloc"]="Maintiens le temps bloc égale à celui de l'horametre";
+
 
 ?>

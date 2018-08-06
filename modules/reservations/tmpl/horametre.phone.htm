@@ -2,28 +2,37 @@
 <script language="JavaScript">
 function calcHorametre()
 {
+	var id=document.getElementById('avion').value;
 	var horadeb=document.getElementById('horadebut').value;
 	var horafin=document.getElementById('horafin').value;
 	
-	var tdeb=horadeb.split('.');
-	var tfin=horafin.split('.');
-	tps=parseInt(tfin[0]*60)+parseInt(tfin[1])-(parseInt(tdeb[0]*60)+parseInt(tdeb[1]));
+	$(function() {
+		$.ajax({
+			url:'api.php?mod=ressources&rub=gethora&id='+id+'&deb='+horadeb+'&fin='+horafin,
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				document.getElementById('tpshora').innerHTML=response.aff;
+				if (document.getElementById('tpsreel').value>0)
+				{
+<!-- BEGIN: updateBloc -->
+					document.getElementById('tpsreel').value=response.tps;
+<!-- END: updateBloc -->
+				}
+				else
+				{
+					document.getElementById('tpsreel').value=response.tps;
+				}
+			},
+			error : function(response)
+			{
 
-	var h=parseInt(tps/60);
-	var m=tps-h*60;
-	var z="";
-	if (m<10)
-	{ z="0"; }
+			}
+		});
+	});
 	
 	
-	document.getElementById('tpshora').innerHTML=h+"h "+z+m;
-	if (document.getElementById('tpsreel').value>0)
-	{
-	}
-	else
-	{
-		document.getElementById('tpsreel').value=tps;
-	}
 }
 </script>
 

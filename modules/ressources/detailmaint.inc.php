@@ -71,7 +71,11 @@
 
 	if (GetDroit("ModifMaintenance") && ($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$msg_erreur=$maint->Save();
+		$ok=$maint->Save();
+		if ($ok<>1)
+		{
+			$msg_erreur.="Erreur lors de la sauvegarde des données";
+		}
 		$maint->SetIntervention();
 		if ($id==0)
 		{

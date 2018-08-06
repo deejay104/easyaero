@@ -468,6 +468,11 @@
 	
 	$tmpl_hora->assign("tps_hora", (($t>0) ? AffTemps($t) : "0h 00"));
 
+	if ($MyOpt["updateBloc"]=="on")
+	{
+		$tmpl_hora->parse("aff_horametre.updateBloc");
+	}
+	
 	$tmpl_hora->parse("aff_horametre");
 	$tmpl_x->assign("aff_horametre", $tmpl_hora->text("aff_horametre"));
 
