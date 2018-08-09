@@ -204,8 +204,14 @@
 			$solde=$solde-$sql->data["montant"];
 		  }
 		$tabValeur[$i]["releve"]["val"]=$sql->data["pointe"];
-		$tabValeur[$i]["hash"]["val"]=$sql->data["hash"];
-
+		if (GetDroit("AfficheSignatureCompte"))
+		{
+			$tabValeur[$i]["hash"]["val"]=$sql->data["hash"];
+		}
+		else
+		{
+			$tabValeur[$i]["hash"]["val"]="";
+		}
 	}
 
 	if (GetDroit("AfficheDetailMouvement"))
