@@ -67,6 +67,18 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
+// ---- Notifer
+	if ($fonc=="notifier")
+	{
+		$rex=new rex_class($id,$sql);
+		$tabvar=array(
+			"url"=>$rex->url(),
+		);
+
+		SendMailFromFile("","",array(),$rex->val("titre"),$tabvar,"rex","","actualite");
+		$msg_confirmation.="Les membres vont être notifié de ce REX";
+	}
+
 // ---- Suppression
 	if ($fonc=="supprimer")
 	{
@@ -115,6 +127,10 @@
 	if (GetDroit("SupprimeRex"))
 	{
 		$tmpl_x->parse("corps.supprimer");
+	}	
+	if ((GetDroit("NotifierRex")) && ($rex->data["status"]=="close"))
+	{
+		$tmpl_x->parse("corps.notifier");
 	}
 
 // ---- Infos de dernières maj

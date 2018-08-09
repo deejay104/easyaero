@@ -20,7 +20,6 @@
 ?>
 
 <?
-	if (!GetDroit("AccesAvions")) { FatalError("Accès non authorisé (AccesAvions)"); }
 	require_once ($appfolder."/class/ressources.inc.php");
 
 // ---- Charge le template
@@ -35,6 +34,9 @@
 	$aff_menu="";
 	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Droit d'accès
+	if (!GetDroit("AccesAvions")) { FatalError("Accès non authorisé (AccesAvions)"); }
 
 // ---- Liste des ressources
 	$tabTitre=array();

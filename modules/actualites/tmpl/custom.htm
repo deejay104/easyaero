@@ -99,7 +99,10 @@
 			eventDrop: function(event,dayDelta,minuteDelta) {
 				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
 			},
-
+			eventRender: function( event, element, view ) {
+				var title = element.find( '.fc-title' );
+				title.html( title.text() );
+			},
 			events: {
 				url: 'api.php?mod=reservations&rub=getcal&ress=0',
 				error: function() {

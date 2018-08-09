@@ -10,6 +10,20 @@
 // ---- Sélectionne le menu courant
 	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
 
+	
+	if (GetDroit("AccesAvions"))
+	{
+		$tmpl_menu->parse("infos.listeavions");
+	}	
+	if (GetDroit("AccesFichesMaintenance"))
+	{
+		$tmpl_menu->parse("infos.fiche");
+	}	
+	
+	if (GetDroit("AccesFichesValidation"))
+	{
+		$tmpl_menu->parse("infos.validation");
+	}	
 	if (GetDroit("AccesMaintenances"))
 	{
 		$tmpl_menu->parse("infos.maintenance");

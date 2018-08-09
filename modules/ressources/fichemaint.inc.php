@@ -27,6 +27,14 @@
 	$tmpl_x = new XTemplate (MyRep("fichemaint.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Droit d'accès
+	if (!GetDroit("AccesFichesMaintenance")) { FatalError("Accès non authorisé (AccesFichesMaintenance)"); }
+
 // ---- Vérification des données
 	$uid_avion=checkVar("uid_avion","numeric");
 	$form_avion=checkVar("form_avion","numeric");
@@ -74,11 +82,6 @@
 	  {
 	  	$form_description="";
 	  }
-
-// ---- Affiche le menu
-	$aff_menu="";
-	require_once($appfolder."/modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);

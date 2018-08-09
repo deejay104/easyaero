@@ -76,4 +76,37 @@ Le Trésorier"
 	);
 // *****************************************************************
 
+// *****************************************************************
+	$tabMails["rex"]=Array
+	(
+		"titre"=>"",
+		"balise"=>"url,editeur",
+		"mail"=>
+"Bonjour,
+
+Un nouveau REX a été publié. Je t'invite à en prendre connaissance.
+{url}
+
+A bientôt
+{editeur}
+"
+	);
+// *****************************************************************
+
+// *****************************************************************
+	$tabMails["invite"]=Array
+	(
+		"titre"=>"Recherche passager(s)",
+		"balise"=>"dte_deb,dte_deb_heure,dte_fin_heure,pilote",
+		"mail"=>
+"Bonjour,
+
+Il me reste des places dans mon vol du {dte_deb} de {dte_deb_heure} à {dte_fin_heure}. Faites moi savoir si cela vous intéresse.
+
+A bientôt
+{pilote}
+"
+	);
+// *****************************************************************
+
 ?>

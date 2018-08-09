@@ -28,6 +28,14 @@
 	$tmpl_x = new XTemplate (MyRep("validation.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Droit d'accès
+	if (!GetDroit("AccesFichesValidation")) { FatalError("Accès non authorisé (AccesFichesValidation)"); }
+
 // ---- Vérification des données
 	$uid_avion=checkVar("uid_avion","numeric");
 	$order=checkVar("order","varchar");
@@ -63,10 +71,6 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
-// ---- Affiche le menu
-	$aff_menu="";
-	require_once($appfolder."/modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);

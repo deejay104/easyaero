@@ -42,6 +42,12 @@
 		"droit"=>"AccesAvions",
 		"url"=>"mod=ressources"
 	);
+	$tabMenu["rex"]=array(
+		"icone"=>"static/modules/ressources/img/icn32_rex.png",
+		"nom"=>"REX",
+		"droit"=>"AccesRex",
+		"url"=>"mod=ressources&rub=rex"
+	);
 	$tabMenu["indicateurs"]=array(
 		"icone"=>"static/modules/aviation/img/icn32_indicateurs.png",
 		"nom"=>"Indicateurs",

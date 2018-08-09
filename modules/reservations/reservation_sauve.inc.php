@@ -184,17 +184,26 @@
 
 		if (($id==0) && ($resa["resa"]->invite=='oui'))
 		{
-			$t=array(
-				"titre"=>"Recherche passager(s)",
-				"message"=>addslashes("Bonjour,\n\nIl me reste des places dans mon vol du ".sql2date($resa["resa"]->dte_deb).". Faites moi savoir si cela vous interresse.\n\n".$resa["pilote"]->Aff("fullname","val")),
-				"mail" =>"non",
-				"uid_creat"=>$resa["resa"]->uid_pilote,
-				"dte_creat"=>now(),
-				"uid_modif"=>$gl_uid,
-				"dte_modif"=>now(),
+			// $t=array(
+				// "titre"=>"Recherche passager(s)",
+				// "message"=>addslashes("Bonjour,\n\nIl me reste des places dans mon vol du ".sql2date($resa["resa"]->dte_deb).". Faites moi savoir si cela vous interresse.\n\n".$resa["pilote"]->Aff("fullname","val")),
+				// "mail" =>"non",
+				// "uid_creat"=>$resa["resa"]->uid_pilote,
+				// "dte_creat"=>now(),
+				// "uid_modif"=>$gl_uid,
+				// "dte_modif"=>now(),
+			// );
+
+			// $sql->Edit("actualites",$MyOpt["tbl"]."_actualites",0,$t);
+			$tabvar=array(
+				"dte_deb"=>sql2date($resa["resa"]->dte_deb,"jour"),
+				"dte_deb_heure"=>sql2date($resa["resa"]->dte_deb,"heure"),
+				"dte_fin_heure"=>sql2date($resa["resa"]->dte_fin,"heure"),
+				"pilote"=>$resa["pilote"]->Aff("fullname","val"),
 			);
 
-			$sql->Edit("actualites",$MyOpt["tbl"]."_actualites",0,$t);
+			SendMailFromFile("","",array(),"",$tabvar,"invite","","actualite");
+			
 		}
 		
 		if ($id==0)

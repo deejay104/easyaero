@@ -45,7 +45,6 @@ $tabRoles["AccesVacances"]="Accès à la page de saisie des vacances";
 $tabRoles["AccesPlage"]="Accès à la page de configuration des plages horaires";
 $tabRoles["AccesVols"]="Accès au suivi des vols";
 $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
-$tabRoles["AccesAvions"]="Accès au suivi des avions";
 $tabRoles["AccesDisponibilites"]="Accès à la page de saisi des disponibilités";
 
 $tabRoles["AccesConfiguration"]="Accès au module de configuration";
@@ -54,6 +53,7 @@ $tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
 $tabRoles["AccesConfigTarifs"]="Accès à la page de configuration des tarifs";
 $tabRoles["AccesConfigPrevisions"]="Accès à la page de gestion des prévisions";
 $tabRoles["AccesSuiviClub"]="Accès aux pages de suivi du club";
+
 
 
 $tabRoles["AffUserComptes"]="Afficher le solde du compte sur la fiche du membre";
@@ -108,6 +108,10 @@ $tabRoles["EnregistreFacture"]="Droit d'enregistrer une facture";
 $tabRoles["ListeVols"]="Autorise l'affichage des vols des membres";
 $tabRoles["ListeUserSupprime"]="Autorise l'affichage des membres supprimés";
 $tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres désactivés";
+
+$tabRoles["AccesAvions"]="Accès au suivi des avions";
+$tabRoles["AccesFichesMaintenance"]="Accès à la page de saisi d'une fiche de maintenance";
+$tabRoles["AccesFichesMaintenance"]="Accès à la page de validation des fiches de maintenance";
 
 $tabRoles["CreeMaintenance"]="Création d'une fiche de maintenance";
 $tabRoles["ModifMaintenance"]="Modification d'une fiche de maintenance";
