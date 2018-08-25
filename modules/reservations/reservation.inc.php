@@ -496,7 +496,7 @@
 	// Texte d'acceptation
 	if ($MyOpt["ChkValidResa"]=="on")
 	{
-		if ($resa["pilote"]->NombreVols(3,"val",$resa["resa"]->uid_ressource)>0)
+		if ($resa["pilote"]->NombreVols(floor($MyOpt["maxDernierVol"]/30),"val",$resa["resa"]->uid_ressource)>0)
 		{
 			$tmpl_x->parse("corps.aff_reservation.aff_chkreservation_ok");
 		}

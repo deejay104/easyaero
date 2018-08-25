@@ -27,7 +27,10 @@
 	$myuser = new user_class($gl_uid,$sql,true);
 
 	$tmpl_custom->assign("solde", $myuser->AffSolde());
-	$tmpl_custom->assign("nb_vols", $myuser->NombreVols("3"));
+	$nbmois=floor($MyOpt["maxDernierVol"]/30);
+
+	$tmpl_custom->assign("nb_vols", $myuser->NombreVols($nbmois));
+	$tmpl_custom->assign("nb_mois", $nbmois);
 
 
   	if (GetModule("compta"))

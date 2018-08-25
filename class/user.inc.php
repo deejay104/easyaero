@@ -404,6 +404,8 @@ class user_class extends user_core
 
 	function AffDernierVol()
 	{
+		global $MyOpt;
+		
 		$sql=$this->sql;
 
 		$res=$this->DernierVol("",0);
@@ -417,7 +419,7 @@ class user_class extends user_core
 		}
 		else if (($this->type!="invite") && ($this->type!="membre"))
 		{
-			$ret=(($l<60) ? $d.$dc : (($l<90) ? "<font color=orange>".$d.$dc."</font>" : "<font color=red>$d</font>"));
+			$ret=(($l<floor($MyOpt["maxDernierVol"]*2/3)) ? $d.$dc : (($l<$MyOpt["maxDernierVol"]) ? "<font color=orange>".$d.$dc."</font>" : "<font color=red><b>".$d."</b></font>"));
 		}
 
 		return $ret;

@@ -11,12 +11,13 @@
 <script language="JavaScript">
 function calcHorametre(id)
 {
+	var idavion=document.getElementById('idavion').value;
 	var horadeb=document.getElementById('form_horadeb_'+id).value;
 	var horafin=document.getElementById('form_horafin_'+id).value;
 		
 	$(function() {
 		$.ajax({
-			url:'api.php?mod=ressources&rub=gethora&id='+id+'&deb='+horadeb+'&fin='+horafin,
+			url:'api.php?mod=ressources&rub=gethora&id='+idavion+'&deb='+horadeb+'&fin='+horafin,
 			type: 'html',
 			dataType: 'JSON',
 			success: function(response)

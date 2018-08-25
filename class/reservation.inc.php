@@ -124,7 +124,7 @@ class resa_class{
 		$t=abs($this->tpsreel);
 
 		$signe="";
-		if ($this->tempsreel<0)
+		if ($this->tpsreel<0)
 		  { $signe="-"; }
 		  	
 		return $signe.AffTemps($t);

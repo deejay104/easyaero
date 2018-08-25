@@ -68,6 +68,11 @@ $MyOptHelp["unitPoids"]="Unité des poids";
 $MyOptTmpl["unitVol"]="L";
 $MyOptHelp["unitVol"]="Unité des volumes";
 
+// Dernier vol
+$MyOptTmpl["maxDernierVol"]=90;
+$MyOptHelp["maxDernierVol"]="Nombre jours maximum entre 2 vols.";
+
+
 // Texte à accepter pour une réservation
 $MyOptTmpl["TxtValidResa"]="Pilote, il est de votre responsabilité de vérifier que vous respectez bien les conditions d’expérience récente pour voler sur cet avion. Au delà de 3 mois maximum sans voler : un vol avec un instructeur du club est obligatoire.<br />Confirmer que vous avez volé depuis moins de 3 mois sur cet avion ou assimilé.";
 $MyOptHelp["TxtValidResa"]="Texte à afficher si les conditions de vol pour le pilote ne sont pas satisfaites";

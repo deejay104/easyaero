@@ -336,30 +336,32 @@
 
 			$tmpl_x->assign("id_ligne", $id);
 
-			foreach ($tabTarif[$idavion] as $c=>$t)
-			{ 
-				$tmpl_x->assign("tarif_code", $c);
-				$tmpl_x->assign("tarif_nom", $t["nom"]);
+			if (isset($tabTarif[$idavion]))
+			{
+				foreach ($tabTarif[$idavion] as $c=>$t)
+				{ 
+					$tmpl_x->assign("tarif_code", $c);
+					$tmpl_x->assign("tarif_nom", $t["nom"]);
 
-				if ($c==$resa["resa"]->tarif)
-				  {
-					$tmpl_x->assign("tarif_selected", "selected");
-				  }
-				else if ( ($t["defaut_ins"]=="oui") && ($resa["resa"]->uid_instructeur>0) && ($resa["resa"]->tarif=="") )
-				  {
-					$tmpl_x->assign("tarif_selected", "selected");
-				  }
-				else if ( ($t["defaut_pil"]=="oui") && ($resa["resa"]->tarif=="") )
-				  {
-					$tmpl_x->assign("tarif_selected", "selected");
-				  }
-				else
-				  {
-					$tmpl_x->assign("tarif_selected", "");
-				  }
-				$tmpl_x->parse("corps.aff_vols.lst_vols.lst_tarifs");	
+					if ($c==$resa["resa"]->tarif)
+					  {
+						$tmpl_x->assign("tarif_selected", "selected");
+					  }
+					else if ( ($t["defaut_ins"]=="oui") && ($resa["resa"]->uid_instructeur>0) && ($resa["resa"]->tarif=="") )
+					  {
+						$tmpl_x->assign("tarif_selected", "selected");
+					  }
+					else if ( ($t["defaut_pil"]=="oui") && ($resa["resa"]->tarif=="") )
+					  {
+						$tmpl_x->assign("tarif_selected", "selected");
+					  }
+					else
+					  {
+						$tmpl_x->assign("tarif_selected", "");
+					  }
+					$tmpl_x->parse("corps.aff_vols.lst_vols.lst_tarifs");	
+				}
 			}
-
 
 	
 			if ($resa["resa"]->temps>0)
@@ -441,7 +443,7 @@
 				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_instructeur");
 			}
 
-			if (is_array($tabTarif[$idavion]))
+			if ((isset($tabTarif[$idavion])) && (is_array($tabTarif[$idavion])))
 			{
 				foreach ($tabTarif[$idavion] as $c=>$t)
 				{ 
