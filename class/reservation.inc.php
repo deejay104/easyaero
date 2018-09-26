@@ -383,18 +383,19 @@ class resa_class{
 	
 
 		$sql->Query($query);
-		$msg_err_t="<U>Cette réservation est à la même heure que la/les réservations suivantes</U> :<BR>";
+		$msg_err_t="<U>L'avion est déja réservé</U> :<BR>";
 		$okresa=0;
 		for($i=0; $i<$sql->rows; $i++)
 		  { 
 			$sql->GetRow($i);
-			$msg_err_t.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;".$sql->data["immatriculation"]." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
+			$msg_err_t.="<p style='padding-left:20px;'>*&nbsp;".strtoupper($sql->data["immatriculation"])." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
 			if ($sql->data["insnom"]!="")
 				{
 					$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
 				}
-			$msg_err_t.="de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</ br>";
+			$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
 
+		  	return $msg_err_t;
 			$okresa=1;
 		  }
 
@@ -419,18 +420,18 @@ class resa_class{
 			for($i=0; $i<$sql->rows; $i++)
 			{ 
 				$sql->GetRow($i);
-				$msg_err_t.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;".$sql->data["immatriculation"]." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
+				$msg_err_t.="<p style='padding-left:20px;'>*&nbsp;".strtoupper($sql->data["immatriculation"])." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
 				if ($sql->data["insnom"]!="")
 				{
 					$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
 				}
-				$msg_err_t.="de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</ br>";
+				$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
 	
 				$okresa=1;
 			}
 			if ($okresa==1)
 			{
-				$msg_err_t="<U>L'instructeur a déjà une réservation à cette heure là</U> :<BR>".$msg_err_t;
+				return "<U>L'instructeur a déjà une réservation</U> :<BR>".$msg_err_t;
 			}
 		}
 			  
@@ -439,8 +440,8 @@ class resa_class{
 			$usr_inst=new user_class($this->uid_instructeur,$sql,false,true);
 			if (!$usr_inst->CheckDisponibilite($this->dte_deb,$this->dte_fin))
 			{
-				$msg_err_t.="<U>L'instructeur n'est pas disponible</U><BR>";
 				$okresa=1;
+				return "<U>L'instructeur n'est pas disponible</U><BR>";
 			}
 		}
 

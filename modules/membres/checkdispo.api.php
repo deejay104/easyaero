@@ -85,7 +85,7 @@
 
 	$logo = imagecreatefrompng($appfolder."/static/".$module."/".$mod."/img/icn16_$ok.png");
 	list($width, $height) = getimagesize($appfolder."/static/".$module."/".$mod."/img/icn16_".$ok.".png");
-	imagecopy($img,$logo,2,2,0,0,$width,$height);
+	imagecopy($img,$logo,0,0,0,0,$width,$height);
 
 	imagestring($img, 2, 20, 2, $txt, $textcolor);
 

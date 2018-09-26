@@ -169,11 +169,41 @@
 				document.location="index.php?mod=reservations&rub=reservation&id="+event.id;
 			},
 
-			eventResize: function(event, dayDelta, minuteDelta ) {
-				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			eventResize: function(event, dayDelta, revertFunc) {
+				$.ajax({
+					url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					dataType: 'JSON',
+					success : function(response)
+					{
+						if (response.result=="NOK")
+						{
+							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
+							revertFunc();
+						}
+					},
+					error : function(response)
+					{
+						revertFunc();
+					}
+				});
 			},
-			eventDrop: function(event,dayDelta,minuteDelta) {
-				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			eventDrop: function(event,dayDelta,revertFunc) {
+				$.ajax({
+					url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					dataType: 'JSON',
+					success : function(response)
+					{
+						if (response.result=="NOK")
+						{
+							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
+							revertFunc();
+						}
+					},
+					error : function(response)
+					{
+						revertFunc();
+					}
+				});
 			},
 
 			events: {

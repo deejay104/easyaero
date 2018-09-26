@@ -34,6 +34,7 @@
 	$id=checkVar("id","numeric");
 	$prev=checkVar("prev","varchar");
 	$form_accept=checkVar("form_accept","varchar",3);
+	$form_uid_ress=checkVar("form_uid_ress","numeric");
 	
 	
 	$resa["resa"]=new resa_class($id,$sql);
@@ -61,10 +62,10 @@
 			$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
 		}
 
-		$s=$resa["pilote"]->CalcSolde();
-
-		if ( $s < -$resa["pilote"]->data["decouvert"])
+		
+		if ($resa["pilote"]->isSoldeNegatif())
 		{
+			$s=$resa["pilote"]->CalcSolde();
 		  	$msg_err.="<u>Le compte du pilote est NEGATIF ($s €)</u>.<br />";
 		  	$msg_err.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 			$ok=4;
@@ -178,39 +179,27 @@
 	$jour=$resa["resa"]->dte_deb;
 	$msg_err2="";
 	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 		$msg_err2.=$resa["resa"]->Save();
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 
-		if (($id==0) && ($resa["resa"]->invite=='oui'))
-		{
-			// $t=array(
-				// "titre"=>"Recherche passager(s)",
-				// "message"=>addslashes("Bonjour,\n\nIl me reste des places dans mon vol du ".sql2date($resa["resa"]->dte_deb).". Faites moi savoir si cela vous interresse.\n\n".$resa["pilote"]->Aff("fullname","val")),
-				// "mail" =>"non",
-				// "uid_creat"=>$resa["resa"]->uid_pilote,
-				// "dte_creat"=>now(),
-				// "uid_modif"=>$gl_uid,
-				// "dte_modif"=>now(),
-			// );
-
-			// $sql->Edit("actualites",$MyOpt["tbl"]."_actualites",0,$t);
-			$tabvar=array(
-				"dte_deb"=>sql2date($resa["resa"]->dte_deb,"jour"),
-				"dte_deb_heure"=>sql2date($resa["resa"]->dte_deb,"heure"),
-				"dte_fin_heure"=>sql2date($resa["resa"]->dte_fin,"heure"),
-				"pilote"=>$resa["pilote"]->Aff("fullname","val"),
-			);
-
-			SendMailFromFile("","",array(),"",$tabvar,"invite","","actualite");
-			
-		}
-		
-		if ($id==0)
-		  {	$id=$resa["resa"]->id; }
-
 		if (($msg_err2=="") && ($msg_err==""))
 		{
+			if (($id==0) && ($resa["resa"]->invite=='oui'))
+			{
+				$tabvar=array(
+					"dte_deb"=>sql2date($resa["resa"]->dte_deb,"jour"),
+					"dte_deb_heure"=>sql2date($resa["resa"]->dte_deb,"heure"),
+					"dte_fin_heure"=>sql2date($resa["resa"]->dte_fin,"heure"),
+					"pilote"=>$resa["pilote"]->Aff("fullname","val"),
+				);
+
+				SendMailFromFile("","",array(),"",$tabvar,"invite","","actualite");
+			}
+			
+			if ($id==0)
+			  {	$id=$resa["resa"]->id; }
+
 			$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 
 			if ($resa["resa"]->uid_pilote!=$gl_uid)
@@ -242,7 +231,7 @@
 				$tabvar["dte_fin"]=sql2date($resa["resa"]->dte_fin);
 				$tabvar["url"]=$MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;
 
-				$ics = new ICS();
+				$ics = new ICS(array());
 				$ics->set(array(
 					'summary' => "Réservation ".strtoupper($resr->val("immatriculation"))." avec ".$resa["pilote"]->val("fullname"),
 					'description' => preg_replace("/\s\s+/","\\n",$resa["resa"]->description),
@@ -258,9 +247,6 @@
 
 				SendMailFromFile($resa["pilote"]->mail,$resi->mail,array(),"",$tabvar,"resa_inst",$f);
 			}
-	
-// echo $MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;	
-// MyMail($resa["pilote"]->mail,"matthieu.isorez@gadz.org","","Réservation","Réservation confirmée","",$f);
 			
 			// Valide la page
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;
