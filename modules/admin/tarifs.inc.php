@@ -30,7 +30,13 @@
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
-
+	$tarif_code=checkVar("tarif_code","array");
+	$tarif_pilote=checkVar("tarif_pilote","array");
+	$tarif_instructeur=checkVar("tarif_instructeur","array");
+	$tarif_reduction=checkVar("tarif_reduction","array");
+	$tarif_nom=checkVar("tarif_nom","array");
+	$tarif_reservation=checkVar("tarif_reservation","array");
+	$tarif_poste=checkVar("tarif_poste","array");
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -51,6 +57,7 @@
 					"code"=>substr($tarif_code[$i],0,2),
 					"nom"=>substr($tarif_nom[$i],0,20),
 					"reservation"=>substr($tarif_reservation[$i],0,20),
+					"poste"=>(is_numeric($tarif_poste[$i])) ? $tarif_poste[$i] : 0,
 					"defaut_pil"=>'non',
 					"defaut_ins"=>'non'
 				);
@@ -111,6 +118,17 @@
 		$tmpl_x->parse("corps.aff_tarifs.lst_avion");
 	  }
 
+// ---- Affiche la liste des postes
+	$tabMvt=array();
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
+	$sql->Query($query);
+
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tabMvt[$sql->data["id"]]=$sql->data;
+	}
+
 // ---- Affiche la page demandée
 	$query = "SELECT tarifs.*,ressources.id as idavion,ressources.immatriculation FROM ".$MyOpt["tbl"]."_tarifs AS tarifs LEFT JOIN ".$MyOpt["tbl"]."_ressources AS ressources ON tarifs.ress_id=ressources.id WHERE ressources.actif='oui' ORDER BY ressources.immatriculation,tarifs.nom";
 	$sql->Query($query);
@@ -132,15 +150,33 @@
 		$tmpl_x->assign("tarif_defautins_selected", ($sql->data["defaut_ins"]=="oui") ? "checked" : "");
 
 		if ($ress!=strtoupper($sql->data["immatriculation"]))
-		  {
+		{
 	  		$tmpl_x->parse("corps.aff_tarifs.lst_tarifs.lst_espace");
 	  		$ress=strtoupper($sql->data["immatriculation"]);
-	  	  }
+	  	}
 
+		foreach($tabMvt as $id=>$d)
+		{
+			$tmpl_x->assign("id_mouvement", $d["id"]);
+			$tmpl_x->assign("nom_mouvement", $d["description"].((($d["debiteur"]=="0") || ($d["crediteur"]=="0")) ? "" : " (sans tiers)"));
+			$tmpl_x->assign("chk_mouvement", ($sql->data["poste"]==$d["id"]) ? "selected" : "");
+			$tmpl_x->parse("corps.aff_tarifs.lst_tarifs.lst_poste");
+		}
+		  
 	  	$tmpl_x->parse("corps.aff_tarifs.lst_tarifs");
 	  }
 	$tmpl_x->assign("form_page", "tarifs");
-  $tmpl_x->parse("corps.aff_tarifs");
+
+	foreach($tabMvt as $id=>$d)
+	{
+		$tmpl_x->assign("id_mouvement", $d["id"]);
+		$tmpl_x->assign("nom_mouvement", $d["description"].((($d["debiteur"]=="0") || ($d["crediteur"]=="0")) ? "" : " (sans tiers)"));
+		$tmpl_x->assign("chk_mouvement", "");
+		$tmpl_x->parse("corps.aff_tarifs.lst_poste");
+	}
+
+
+	$tmpl_x->parse("corps.aff_tarifs");
 
 // ---- Affecte les variables d'affichage
 	if (GetModule("aviation"))

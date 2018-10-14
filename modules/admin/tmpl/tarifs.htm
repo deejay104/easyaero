@@ -24,6 +24,7 @@
 			<th width=40><B>Code</B></th>
 			<th width=160><B>Nom</B></th>
 			<th width=160><B>Aff. Réservation</B></th>
+			<th width=160><B>Poste</B></th>
 			<th width=70><B>Pilote</B></th>
 			<th width=70><B>Instructeur</B></th>
 			<th width=70><B>Réduction (min)</B></th>
@@ -40,6 +41,13 @@
 			<TD><INPUT type="text" name="tarif_code[{id_tarifs}]" value="{tarif_code}" size=2></TD>
 			<TD><INPUT type="text" name="tarif_nom[{id_tarifs}]" value="{tarif_nom}" size=20></TD>
 			<TD><INPUT type="text" name="tarif_reservation[{id_tarifs}]" value="{tarif_reservation}" size=20></TD>
+			<td>
+				<select name="tarif_poste[{id_tarifs}]">
+				<!-- BEGIN: lst_poste -->
+					<option value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</option>
+				<!-- END: lst_poste -->
+				</select>
+			</td>
 			<TD><INPUT type="text" name="tarif_pilote[{id_tarifs}]" value="{tarif_pilote}" size=6></TD>
 			<TD><INPUT type="text" name="tarif_instructeur[{id_tarifs}]" value="{tarif_instructeur}" size=6></TD>
 			<TD><INPUT type="text" name="tarif_reduction[{id_tarifs}]" value="{tarif_reduction}" size=5></TD>
@@ -60,6 +68,13 @@
 			<TD><INPUT type="text" name="tarif_code[0]" value="" size=2></TD>
 			<TD><INPUT type="text" name="tarif_nom[0]" value="" size=20></TD>
 			<TD><INPUT type="text" name="tarif_reservation[0]" value="" size=20></TD>
+			<td>
+				<select name="tarif_poste[0]">
+				<!-- BEGIN: lst_poste -->
+					<option value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</option>
+				<!-- END: lst_poste -->
+				</select>
+			</td>
 			<TD><INPUT type="text" name="tarif_pilote[0]" value="0" size=6></TD>
 			<TD><INPUT type="text" name="tarif_instructeur[0]" value="0" size=6></TD>
 			<TD><INPUT type="text" name="tarif_reduction[0]" value="0" size=5></TD>

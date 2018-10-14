@@ -41,11 +41,13 @@
 
 // ---- Charge les tarifs
   	$tabTarif=array();
-	$query="SELECT * FROM ".$MyOpt["tbl"]."_tarifs";		
+	$query="SELECT tarifs.*,mvt.debiteur FROM ".$MyOpt["tbl"]."_tarifs AS tarifs LEFT JOIN ".$MyOpt["tbl"]."_mouvement AS mvt ON tarifs.poste=mvt.id";		
 	$sql->Query($query);		
 	for($i=0; $i<$sql->rows; $i++)
 	{ 
 		$sql->GetRow($i);
+		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["poste"]=$sql->data["poste"];
+		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["tier"]=$sql->data["debiteur"];
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["pilote"]=$sql->data["pilote"];
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["instructeur"]=$sql->data["instructeur"];
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["reduction"]=$sql->data["reduction"];
@@ -53,7 +55,6 @@
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["defaut_ins"]=$sql->data["defaut_ins"];
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["nom"]=$sql->data["nom"];
 	}
-
 
 // ---- Valide les vols à enregistrer
 	if ((($fonc=="Enregistrer") || ($fonc=="Débiter")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
@@ -69,8 +70,6 @@
 			{
 				if ($tps!="")
 				{
-				  	// $query="SELECT * FROM ".$MyOpt["tbl"]."_calendrier WHERE id=$k";
-					// $res=$sql->QueryRow($query);
 					$res=new resa_class($k,$sql);
 
 					// Récupérer tarifs pilote depuis la base
@@ -96,8 +95,6 @@
 						$p=round($tabTarif[$res->uid_ressource][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$res->uid_ressource][$form_tarif[$k]]["reduction"])/60,2);
 					}
 			
-				  	// $query="UPDATE ".$MyOpt["tbl"]."_calendrier SET temps='$tps', tpsreel='".$form_blocresa[$k]."', tarif='".$form_tarif[$k]."' WHERE id=$k";
-				  	// $sql->Update($query);
 					$res->horadeb=$form_horadeb[$k];
 					$res->horafin=$form_horafin[$k];
 					$res->temps=$tps;
@@ -158,8 +155,6 @@
 
 					  	if (!isset($_SESSION['tab_checkpost'][$checktime]))
 						{
-							// $query="INSERT INTO ".$MyOpt["tbl"]."_calendrier SET dte_deb='$dte', dte_fin='$dte', uid_pilote='$uid_p', uid_instructeur='$uid_i', uid_avion='$uid_a', tarif='$tarif', temps='$tps', reel='non', horadeb='$horadeb', horafin='$horafin', dte_maj='".now()."', uid_maj=$uid, actif='oui'";
-						  	// $id=$sql->Insert($query);
 							$res=new resa_class(0,$sql);
 							$res->uid_pilote=$uid_p;
 							$res->uid_debite=0;
@@ -489,13 +484,36 @@
 
 function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p,$pi,$dte)
 {
-	global $MyOpt, $uid,$tmpl_x,$sql;
+	global $MyOpt, $uid,$tmpl_x,$sql,$tabTarif;
 
 	$ress = new ress_class($idavion,$sql);
 	$pilote = new user_class($uid_pilote,$sql);
+	$poste=$ress->data["poste"];
 
+	$ventil=array();
+	if ($poste!=$tabTarif[$idavion][$tarif]["poste"])
+	{
+		if ($tabTarif[$idavion][$tarif]["tier"]=="0")
+		{
+			$tier=$pilote->data["idcpt"];
+		}
+		else if ($tabTarif[$idavion][$tarif]["tier"]=="C")
+		{
+			$tier=$MyOpt["uid_club"];
+		}
+		else if ($tabTarif[$idavion][$tarif]["tier"]=="B")
+		{
+			$tier=$MyOpt["uid_banque"];
+		}
+
+		$ventil["ventilation"]="debiteur";
+		$ventil["data"][0]["poste"]=$tabTarif[$idavion][$tarif]["poste"];
+		$ventil["data"][0]["tiers"]=$tier;
+		$ventil["data"][0]["montant"]=$p;
+	}
+	
 	$mvt = new compte_class(0,$sql);
-	$mvt->Generate($pilote->data["idcpt"],$ress->data["poste"],"Vol de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,$p,array());
+	$mvt->Generate($pilote->data["idcpt"],$poste,"Vol de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,$p,$ventil);
 	$mvt->Save();
 	$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 
@@ -508,7 +526,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$inst = new user_class($uid_instructeur,$sql);
 	
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($inst->data["idcpt"],$ress->data["poste"],"Remb. vol d'instruction de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,-$pi,array());
+		$mvt->Generate($inst->data["idcpt"],$poste,"Remb. vol d'instruction de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,-$pi,array());
 		$mvt->Save();
 		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 

@@ -515,6 +515,7 @@ $tabCustom=Array
 		"pilote" => Array("Type" => "varchar(6)", ),
 		"instructeur" => Array("Type" => "varchar(6)", ),
 		"reduction" => Array("Type" => "int(11)", ),
+		"poste" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"defaut_pil" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
 		"defaut_ins" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
 	),
