@@ -491,7 +491,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 	$poste=$ress->data["poste"];
 
 	$ventil=array();
-	if ($poste!=$tabTarif[$idavion][$tarif]["poste"])
+	if (($poste!=$tabTarif[$idavion][$tarif]["poste"]) && ($tabTarif[$idavion][$tarif]["poste"]>0))
 	{
 		if ($tabTarif[$idavion][$tarif]["tier"]=="0")
 		{
