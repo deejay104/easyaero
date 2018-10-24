@@ -20,13 +20,13 @@
 ?>
 
 <?
-	if (!GetDroit("AccesMembres")) { FatalError("Accès non autorisé (AccesMembres)"); }
+	if (!GetDroit("AccesMembres")) { FatalError($tabLang["lang_accessdenied"]." (AccesMembres)"); }
 
 	require_once ("class/document.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("index.htm"));
+	// $tmpl_x = new XTemplate (MyRep("index.htm"));
 	$tmpl_x->assign("path_module",$corefolder."/".$module."/".$mod);
 
 // ---- Valide les variables

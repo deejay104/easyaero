@@ -90,6 +90,15 @@ $tabRoles["ModifRexSynthese"]="Modification de la synthèse d'un REX";
 $tabRoles["ModifRexStatus"]="Modication du status d'un REX";
 $tabRoles["SupprimeRex"]="Suppression d'un REX";
 
+
+$tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";
+$tabRoles["CreeSynthese"]="Création d'un fiche de synthèse de vol";
+$tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthèse de vol";
+$tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse";
+
+
+
+
 $tabRoles["CreeFacture"]="Créer une nouvelle facture";
 
 $tabRoles["CreeFamille"]="Créer une famille";

@@ -1,0 +1,25 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_synthese.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+&nbsp;Fiches de synthèse des vols d'entrainement
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<!-- BEGIN: users -->
+	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=aviation&rub=syntheses&id='+id;">
+	<!-- BEGIN: lst_users -->
+	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+	<!-- END: lst_users -->
+	</select>
+	<br />
+	<br />
+<!-- END: users -->
+
+
+{aff_tableau}
+
+<!-- END: corps -->

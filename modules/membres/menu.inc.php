@@ -4,7 +4,7 @@
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 // ---- Charge le template
-  	$tmpl_menu = new XTemplate (MyRep("menu.htm"));
+  	$tmpl_menu = LoadTemplate("menu");
 	$tmpl_menu->assign("path_module","$module/$mod");
 
 // ---- Sélectionne le menu courant
@@ -14,9 +14,9 @@
 	$usrcus = new user_class($id,$sql,true);
 	$usrcus->LoadRoles();
 
+	$tmpl_menu->assign("form_id", $id);
 	if (($usrcus->TstDroit("TypeInstructeur")) && ((GetMyId($id)) || (GetDroit("ModifUserDisponibilite"))))
 	{
-		$tmpl_menu->assign("form_id", $id);
 	  	$tmpl_menu->parse("infos.disponibilite");
 	}
 
