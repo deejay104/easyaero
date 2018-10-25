@@ -27,7 +27,7 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 	
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("suivivols.htm"));
+	// $tmpl_x = new XTemplate (MyRep("suivivols.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
@@ -41,8 +41,7 @@
 	if (GetDroit("AccesSuiviVols"))
 	{
 		$tmpl_x->parse("infos.suiviVols");
-	}
-
+	}	
 	
 // ---- Liste des échéances
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype WHERE resa='instructeur' ORDER BY description";

@@ -361,10 +361,32 @@ class user_class extends user_core
 		  }
 	}
 
-	function NbHeures($dte)
+	function NbHeures($dte,$dtef="",$type="")
 	{
+		if ($type=="cdb")
+		{
+			$q="(uid_pilote = '".$this->id."' AND uid_instructeur = '0')";
+		}
+		else if ($type=="dc")
+		{
+			$q="(uid_pilote = '".$this->id."' AND uid_instructeur <> '0')";
+		}
+		else if ($type=="inst")
+		{
+			$q="uid_instructeur = '".$this->id."'";
+		}
+		else
+		{
+			$q="(uid_pilote = '".$this->id."' OR uid_instructeur = '".$this->id."')";
+		}
+		
+		if ($dtef=="")
+		{
+			$dtef=date("Y-m-d");
+		}
+		
 		$sql=$this->sql;
-		$query="SELECT SUM( tpsreel ) AS nb FROM `".$this->tbl."_calendrier` WHERE (uid_pilote = '".$this->id."' OR uid_instructeur = '".$this->id."') AND dte_deb>'".$dte."' AND dte_deb<='".date("Y-m-d")."' AND (prix<>0 OR tpsreel<>0)";
+		$query="SELECT SUM( tpsreel ) AS nb FROM `".$this->tbl."_calendrier` WHERE ".$q." AND dte_deb>='".$dte."' AND dte_deb<'".$dtef."' AND (prix<>0 OR tpsreel<>0)";
 
 		$res=$sql->QueryRow($query);
 

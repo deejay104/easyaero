@@ -23,17 +23,20 @@
 	if (!GetDroit("AccesSuiviMouvements")) { FatalError("Accès non autorisé (AccesSuiviMouvements)"); }
 	
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("index.htm"));
+	$tmpl_x = LoadTemplate("index");
 	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Vérifie les variables
-
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
+// ---- Vérifie les variables
+	$form_poste=checkVar("form_poste","numeric");
+	$form_tiers=checkVar("form_tiers","numeric");
+	$form_commentaire=checkVar("form_commentaire","varchar");
+	$form_date=checkVar("form_date","date");
+	
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
@@ -46,6 +49,13 @@
 // ---- Enregistre le mouvement
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$form_montant=checkVar("form_montant","varchar");
+		$form_ventilation=checkVar("form_ventilation","numeric");
+		$form_poste_ventil=checkVar("form_poste_ventil","array");
+		$form_tiers_ventil=checkVar("form_tiers_ventil","array");
+		$form_montant_ventil=checkVar("form_montant_ventil","array");
+		$form_temp_select=checkVar("form_temp_select","array");
+	
 		$msg_result="";
 
 		$mvt = new compte_class(0,$sql);
@@ -113,6 +123,9 @@
 // ---- Enregistre les opérations
 	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$form_mid=checkVar("form_mid","array");
+		$form_montant=checkVar("form_montant","varchar");
+
 		$ret="";
 		$nbmvt="";
 		$ok=0;
@@ -136,6 +149,9 @@
 // ---- Annule les enregistrements
 	else if ($fonc=="Annuler")
 	{
+		$form_mid=checkVar("form_mid","array");
+		$form_montant=checkVar("form_montant","varchar");
+
 		if (is_array($form_mid))
 		{
 			foreach ($form_mid as $id=>$d)
@@ -263,9 +279,9 @@
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_tiers");
 		}
 
-		$dte=checkVar("form_dte","date");
 		// if ((isset($_REQUEST["form_dte"])) && ($_REQUEST["form_dte"]!=''))
 		  // { $dte=$_REQUEST["form_dte"]; }
+		$dte=$form_date;
 		if ($dte=="0000-00-00")
 		{
 			$dte=date("d/m/Y");

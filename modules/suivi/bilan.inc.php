@@ -24,7 +24,6 @@
 	if (!GetDroit("AccesSuiviBilan")) { FatalError("Accès non autorisé (AccesSuiviBilan)"); }
 
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("bilan.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
@@ -37,7 +36,7 @@
 // ---- Vérifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
-	$dte=checkVar("trie","varchar",4);
+	$dte=checkVar("dte","varchar",4);
 
 	if (!preg_match("/[0-9]{4}/",$dte))
 	{
@@ -56,8 +55,7 @@
 	for($i=$dte1; $i<=date("Y"); $i++)
 	  { 
 			$tmpl_x->assign("dte_annee", $i);
-			$tmpl_x->assign("chk_annee", ($i==$dte) ? "selected" : "") ;
-			
+			$tmpl_x->assign("chk_annee", ($i==$dte) ? "selected" : "") ;	
 			$tmpl_x->parse("corps.lst_annee");
 	  }
 
@@ -93,10 +91,10 @@
 
 	$tmpl_x->assign("total",AffMontant($total));
 
-	if ($order=="") { $order="nom"; }
+	if ($order=="") { $order="compte"; }
 	if ($trie=="") { $trie="d"; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"dte=".$dte));
 
 // ---- Affecte les variables d'affichage
 	if (GetModule("aviation"))

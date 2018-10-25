@@ -26,7 +26,6 @@
 
 
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("carnet.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 

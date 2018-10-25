@@ -78,6 +78,10 @@
 
 	if ($fonc=="Débiter")
 	{
+		$form_date=checkVar("form_date","varchar");
+		$form_cout=checkVar("form_cout","varchar");
+		$form_debite=checkVar("form_debite","array");
+
 		$tmpl_x->assign("form_date",$form_date);
 
 		$mvt = new compte_class(0,$sql);
@@ -107,6 +111,9 @@
 // ---- Enregistre le débit des échéances
 	if ($fonc=="Valider")
 	{
+		$form_date=checkVar("form_date","varchar");
+		$form_mid=checkVar("form_mid","array");
+		$form_dteid=checkVar("form_dteid","array");
 		$ret="";
 		$nbmvt="";
 		$ok=0;

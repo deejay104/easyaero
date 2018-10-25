@@ -32,7 +32,7 @@
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
-	$idavion=checkVar("idavion","varchar");
+	$idavion=checkVar("idavion","numeric");
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -59,6 +59,18 @@
 // ---- Valide les vols à enregistrer
 	if ((($fonc=="Enregistrer") || ($fonc=="Débiter")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$form_tarif=checkVar("form_tarif","array");
+		$form_horadeb=checkVar("form_horadeb","array");
+		$form_horafin=checkVar("form_horafin","array");
+		$form_tempsresa=checkVar("form_tempsresa","array");
+		$form_blocresa=checkVar("form_blocresa","array");
+		$form_date=checkVar("form_date","array");
+		$form_pilote=checkVar("form_pilote","array");
+		$form_instructeur=checkVar("form_instructeur","array");
+		$form_temps=checkVar("form_temps","array");
+		$form_bloc=checkVar("form_bloc","array");
+
+
 		$mvt = new compte_class(0,$sql);
 		$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
 		$tmpl_x->parse("corps.enregistre.lst_enregistre");
@@ -198,7 +210,10 @@
 
 // ---- Enregistre les opérations
 	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
+		$form_calid=checkVar("form_calid","array");
+		$form_mid=checkVar("form_mid","array");
+
 		if (is_array($form_mid))
 		{
 			$ret="";

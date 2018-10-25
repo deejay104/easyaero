@@ -32,6 +32,7 @@
 	$jstart=checkVar("jstart","numeric");
 	$jstart=checkVar("jstart","numeric");
 	$idusr=checkVar("idusr","numeric");
+	$form_data=checkVar("form_data","array");
 	
 // ---- Sauvegarde
 	$manip=new manip_class($id,$sql);

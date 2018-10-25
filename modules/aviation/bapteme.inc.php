@@ -38,6 +38,9 @@
 // ---- Initialisation des variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+	$id=checkVar("id","numeric");
+	$form_data=checkVar("form_data","array");
+
 	$msg_erreur="";
 	$msg_confirmation="";
 

@@ -20,12 +20,14 @@ $tabRoles["AccesMaintenances"]="Accès à la liste des maintenances";
 $tabRoles["AccesSuivi"]="Accès au module de suivi du club";
 $tabRoles["AccesSuiviMouvements"]="Accès à la page de saisi d'un mouvement";
 $tabRoles["AccesSuiviEcheances"]="Accès à la page de suivi des échéances";
-$tabRoles["AccesSuiviVols"]="Accès à la page des vols (saisi des vols)";
 $tabRoles["AccesSuiviBanque"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesSuiviListeComptes"]="Accès à la page de la liste des comptes";
 $tabRoles["AccesSuiviListeTarifs"]="Accès à la page des tarifs";
 $tabRoles["AccesSuiviTableauBord"]="Accès à la page des tableau de bord";
 $tabRoles["AccesSuiviBilan"]="Accès à la page du bilan comptable";
+
+$tabRoles["AccesSuiviVols"]="Accès à la page de suivi des membres par les instructeur pour les vols";
+$tabRoles["AccesSuiviAnnuel"]="Accès à la page de suivi annuel des vols pour tous les membres";
 
 
 $tabRoles["AccesCompte"]="Accès à la page d'affichage du compte";

@@ -23,7 +23,7 @@ class manip_class extends objet_core
 	protected $mod="manifestations";
 	protected $rub="detail";
 
-	protected $type=array("titre"=>"varchar","dte_manip"=>"date","dte_limite"=>"date","facture"=>"bool","comment"=>"text","type"=>"multi");
+	protected $type=array("titre"=>"varchar","dte_manip"=>"date","dte_limite"=>"date","facture"=>"bool","comment"=>"text","type"=>"multi","cout"=>"price");
 	protected $tabList=array(
 		"type"=>array(),
 	);

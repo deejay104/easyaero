@@ -9,6 +9,11 @@
 
 
 <script language="JavaScript">
+function Recharge()
+{
+ 	document.location='index.php?mod=suivi&rub=vols&idavion='+document.getElementById('idavion').value;
+}
+
 function calcHorametre(id)
 {
 	var idavion=document.getElementById('idavion').value;
@@ -41,8 +46,6 @@ function calcHorametre(id)
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="vols">
 
-	<BR>
-
 	<!-- BEGIN: msg_enregistre -->
 	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
 	<!-- END: msg_enregistre -->
@@ -60,21 +63,16 @@ function calcHorametre(id)
 	<!-- END: enregistre -->
 
 	<!-- BEGIN: aff_vols -->
-		<TABLE border="0" cellspacing="0" cellpadding="0" background="">
-		  <TR height=20>
-			<TD width=20>&nbsp;</TD>
-			<TD colspan=5>Changer d'avion 
-				<SELECT id="idavion" name="idavion">
-				<!-- BEGIN: lst_avion -->
-				<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
-				<!-- END: lst_avion -->
-			        </SELECT>
-			        <INPUT type="submit" name="fonc2" value="Changer"><BR><BR>
-			</TD>
-		  </TR>
-		</TABLE>
-		<TABLE  class='tableauAff'>
-		  <tr>
+	<p>
+		Avion : 
+		<SELECT id="idavion" name="idavion" OnChange="Recharge();">
+			<!-- BEGIN: lst_avion -->
+			<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
+			<!-- END: lst_avion -->
+		</SELECT>
+	</p>
+	<TABLE  class='tableauAff'>
+		<tr>
 			<th width=20>&nbsp;</TD>
 			<th width=165><B>Date</B></TD>
 			<th width=240><B>Pilote</B></TD>
@@ -85,9 +83,9 @@ function calcHorametre(id)
 			<th width=70><B>Bloc (min.)</B></TD>
 			<th width=100><B>Destination</B></TD>
 			<th width=100><B>Distance</B></TD>
-		  </tr>
+		</tr>
 		<!-- BEGIN: lst_vols -->
-		  <TR>
+		<TR>
 			<TD width=20>&nbsp;</TD>
 			<TD><a href="index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
 			<TD>{pilote_vols}</TD>
@@ -106,11 +104,11 @@ function calcHorametre(id)
 			<TD>{bloc_vols}</TD>
 			<TD>{destination_vols}</TD>
 			<TD>{distance_vols}</TD>
-		  </TR>
+		</TR>
 		<!-- END: lst_vols -->
 
 		<!-- BEGIN: lst2_vols -->
-		  <TR>
+		<TR>
 			<TD>&nbsp;</TD>
 			<TD><INPUT type="date" name="form_date[{id_new}]" style='width: 160px!important;'></TD>
 			<TD>
@@ -142,11 +140,11 @@ function calcHorametre(id)
 			<TD><INPUT type="text" name="form_bloc[{id_new}]" style='width:65px;'></TD>
 			<TD>&nbsp;</TD>
 			<TD>&nbsp;</TD>
-		  </TR>
+		</TR>
 		<!-- END: lst2_vols -->
-		</TABLE>
-		<br />
-		<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Débiter"> <INPUT type="submit" name="fonc" value="Annuler">
+	</TABLE>
+	<br />
+	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Débiter"> <INPUT type="submit" name="fonc" value="Annuler">
 	<!-- END: aff_vols -->
 
 </FORM>
