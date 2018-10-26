@@ -37,11 +37,10 @@
 	$trie=checkVar("trie","varchar");
 
 
-// ----
-	if (GetDroit("AccesSuiviVols"))
-	{
-		$tmpl_x->parse("infos.suiviVols");
-	}	
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 	
 // ---- Liste des échéances
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype WHERE resa='instructeur' ORDER BY description";

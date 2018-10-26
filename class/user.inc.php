@@ -369,7 +369,7 @@ class user_class extends user_core
 		}
 		else if ($type=="dc")
 		{
-			$q="(uid_pilote = '".$this->id."' AND uid_instructeur <> '0')";
+			$q="(uid_pilote = '".$this->id."' AND uid_instructeur <> '0'  AND uid_instructeur <> '".$this->id."')";
 		}
 		else if ($type=="inst")
 		{

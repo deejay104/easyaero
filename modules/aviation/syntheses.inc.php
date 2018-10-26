@@ -32,19 +32,24 @@
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Initialise les variables
-	$id=checkVar("id","numeric");
+	$uid=checkVar("uid","numeric");
 
-	if ($id==0)
+	if ($uid==0)
 	{
-		$id=$gl_uid;
+		$uid=$gl_uid;
 	}
-	if ((!GetDroit("AccesSynthese")) && ($id!=$gl_uid))
+	if ((!GetDroit("AccesSynthese")) && ($uid!=$gl_uid))
 	{
-		$id=$gl_uid;
+		$uid=$gl_uid;
 	}
-		
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+	
 // ---- Liste des membres
-	if (GetDroit(AccesSynthese))
+	if (GetDroit("AccesSynthese"))
 	{
 			$lst=ListActiveUsers($sql,"std","","");
 		
@@ -53,7 +58,7 @@
 			  	$resusr=new user_class($tmpuid,$sql);
 	
 				$tmpl_x->assign("id_compte", $resusr->id);
-				$tmpl_x->assign("chk_compte", ($resusr->id==$id) ? "selected" : "") ;
+				$tmpl_x->assign("chk_compte", ($resusr->id==$uid) ? "selected" : "") ;
 				$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
 				$tmpl_x->parse("corps.users.lst_users");
 			}
@@ -62,7 +67,7 @@
 
 	
 // ---- Affiche la liste	
-	$lst=ListMySynthese($sql,$id);
+	$lst=ListMySynthese($sql,$uid);
 
 	$tabTitre=array(
 		"ress" => array("aff"=>"Avion","width"=>80),
@@ -74,24 +79,18 @@
 	$tabValeur=array();
 	foreach($lst as $fid=>$d)
 	{
-		// $tabValeur[$id]["sid"]["val"]=$id;
-		// $tabValeur[$id]["sid"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=$id'>".$id."</a>";
 		$fiche = new synthese_class($fid,$sql);
 		$resa=new resa_class($fiche->val("idvol"),$sql);
 		$ress=new ress_class($fiche->val("uid_avion"),$sql);
 		$inst=new user_class($fiche->val("uid_instructeur"),$sql);
 		
-	// $pil=new user_class($resa->uid_pilote,$sql);
-	// $ins=new user_class($resa->uid_instructeur,$sql);
-		
 		$tabValeur[$fid]["ress"]["val"]=$ress->val("immatriculation");
-		$tabValeur[$fid]["ress"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$id."'>".$ress->val("immatriculation")."</a>";
-		// $tabValeur[$id]["ress"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=$id'>".$id."</a>";
+		$tabValeur[$fid]["ress"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$ress->val("immatriculation")."</a>";
 		$tabValeur[$fid]["dte"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$fid]["dte"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$id."'>".sql2date($resa->dte_deb,"jour")."</a>";
+		$tabValeur[$fid]["dte"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".sql2date($resa->dte_deb,"jour")."</a>";
 		
 		$tabValeur[$fid]["inst"]["val"]=$inst->val("fullname");
-		$tabValeur[$fid]["inst"]["val"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$id."'>".$inst->val("fullname")."</a>";
+		$tabValeur[$fid]["inst"]["val"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
 	
 
 		$tabValeur[$fid]["vol"]["val"]=$fiche->val("nbvol");
@@ -103,7 +102,7 @@
 	if ((!isset($order)) || ($order=="")) { $order="dte"; }
 	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,"action"));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,""));
 
 	
 // ---- Affecte les variables d'affichage

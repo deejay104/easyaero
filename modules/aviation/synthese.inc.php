@@ -114,15 +114,10 @@
 
 // ---- Affiche le menu
 	$aff_menu="";
-	if (file_exists("modules/".$mod."/menu.inc.php"))
-	{
-		require("modules/".$mod."/menu.inc.php");
-	}
+	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 
-
-	
 // ---- Modifie les infos
 
 	if ($idvol>0)
@@ -185,6 +180,13 @@
 	$tmpl_x->assign("form_instructeur",$ins->aff("fullname"));
 	$tmpl_x->assign("form_dtevol",sql2date($resa->dte_deb,"jour"));
 
+	
+	if (GetDroit("SupprimeSynthese"))
+	{
+		$tmpl_x->parse("corps.supprimer");
+	}
+
+	
 	if ($fiche->val("lecon")!="")
 	{
 		$tmpl_x->assign("form_img_lecon","ok");

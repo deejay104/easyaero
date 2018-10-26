@@ -37,8 +37,12 @@
 	$trie=checkVar("trie","varchar");
 	$ts=checkVar("ts","numeric");
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Vérification des paramètres
+// ---- Affiche la liste des membres
 	if (GetDroit("ListeVols"))
 	{
 		if (!isset($id))
@@ -61,10 +65,7 @@
 		$id=$gl_uid;
 	}
 
-	if (GetDroit("AccesSuiviVols"))
-	{
-		$tmpl_x->parse("infos.suiviVols");
-	}
+// ---- Titre
 
 	$tabTitre=array();
 	$tabTitre["dte_deb"]["aff"]="Date";

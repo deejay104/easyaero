@@ -3,14 +3,14 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-&nbsp;Fiches de synthèse des vols d'entrainement
+{aff_menu}
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
 <!-- BEGIN: users -->
-	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=aviation&rub=syntheses&id='+id;">
+	<select id="form_id" name="form_id" OnChange="document.location='index.php?mod=aviation&rub=syntheses&uid='+document.getElementById('form_id').value;">
 	<!-- BEGIN: lst_users -->
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
 	<!-- END: lst_users -->

@@ -36,11 +36,12 @@
 	$ts=checkVar("ts","numeric");
 
 
-	if (GetDroit("AccesSuiviVols"))
-	{
-		$tmpl_x->parse("infos.suiviVols");
-	}
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
+// ---- Titre
 	$tabTitre=array();
 	if ($theme!="phone")
 	{

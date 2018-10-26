@@ -35,18 +35,34 @@
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 	$dte=checkVar("dte","varchar",4);
+	$type=checkVar("type","varchar",2);
 
 	if (!preg_match("/[0-9]{4}/",$dte))
 	{
 		$dte=date("Y");
 	}
 
-// ----
-	if (GetDroit("AccesSuiviVols"))
-	{
-		$tmpl_x->parse("infos.suiviVols");
-	}	
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
+// ---- Date début et fin
+
+	if ($type=="12")
+	{
+		$tmpl_x->assign("chk_12mois", "checked");
+		$dte=date("Y");
+		$ddeb=($dte-1)."-".date("m-d");
+		$dfin=$dte."-".date("m-d");
+	}
+	else
+	{
+		$tmpl_x->assign("chk_annuel", "checked");
+
+		$ddeb=$dte."-01-01";
+		$dfin=($dte+1)."-01-01";
+	}
 	
 // ---- Liste des années
 
@@ -125,22 +141,23 @@
 		$tabValeur[$i]["type"]["val"]=$usr->val("groupe");
 		$tabValeur[$i]["type"]["aff"]=$usr->aff("groupe");
 
-		$t=$usr->NbHeures($dte."-01-01",($dte+1)."-01-01","");
+
+		$t=$usr->NbHeures($ddeb,$dfin,"");
 		$tabValeur[$i]["total"]["val"]=$t;
 		$tabValeur[$i]["total"]["aff"]=AffTemps($t);
 		$tabTotal["total"]=$tabTotal["total"]+$t;
 
-		$t=$usr->NbHeures($dte."-01-01",($dte+1)."-01-01","cdb");
+		$t=$usr->NbHeures($ddeb,$dfin,"cdb");
 		$tabValeur[$i]["cdb"]["val"]=$t;
 		$tabValeur[$i]["cdb"]["aff"]=AffTemps($t);
 		$tabTotal["cdb"]=$tabTotal["cdb"]+$t;
 		
-		$t=$usr->NbHeures($dte."-01-01",($dte+1)."-01-01","dc");
+		$t=$usr->NbHeures($ddeb,$dfin,"dc");
 		$tabValeur[$i]["dc"]["val"]=$t;
 		$tabValeur[$i]["dc"]["aff"]=AffTemps($t);
 		$tabTotal["dc"]=$tabTotal["dc"]+$t;
 
-		$t=$usr->NbHeures($dte."-01-01",($dte+1)."-01-01","inst");
+		$t=$usr->NbHeures($ddeb,$dfin,"inst");
 		$tabValeur[$i]["inst"]["val"]=$t;
 		$tabValeur[$i]["inst"]["aff"]=AffTemps($t);
 		$tabTotal["inst"]=$tabTotal["inst"]+$t;

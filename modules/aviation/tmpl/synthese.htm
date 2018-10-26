@@ -3,16 +3,20 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
+
 {aff_menu}
-	<p><A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A></p>
-<!-- BEGIN: supprimer -->
-	<p><A href="index.php?mod=projets&rub=detail&id={form_id}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A></p>
-<!-- END: supprimer -->
 
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
+<div class="pagetitle pagemenu">
+	<p><A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A></p>
+<!-- BEGIN: supprimer -->
+	<p><A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A></p>
+<!-- END: supprimer -->
+</div>
+<br />
 
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="aviation">
