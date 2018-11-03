@@ -73,7 +73,7 @@
 	}
 
 // ---- Signe
-	if (($fonc=="Signature Instructeur") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ((($fonc=="Signature Instructeur")|| ($fonc=="Sign. Instructeur")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$fiche=new synthese_class($id,$sql);
 
@@ -93,7 +93,7 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 	
-	if (($fonc=="Signature Elève") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ((($fonc=="Signature Elève") || ($fonc=="Sign. Elève")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$fiche=new synthese_class($id,$sql);
 
@@ -126,7 +126,7 @@
 	}
 	else if ($uid>0)
 	{
-		$tmpl_x->assign("prev","mod=aviation&rub=syntheses&id=".$uid);
+		$tmpl_x->assign("prev","mod=aviation&rub=syntheses&uid=".$uid);
 	}
 	else
 	{
