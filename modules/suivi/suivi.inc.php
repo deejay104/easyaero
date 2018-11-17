@@ -79,7 +79,7 @@
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("ancien_solde", (is_numeric($res["nb"])) ? -$res["nb"] : "0");
 
-	$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE (pointe IS NULL OR pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."' ORDER BY date_valeur,mouvement,commentaire";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE (pointe IS NULL OR pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."' ORDER BY date_valeur,id";
 	$sql->Query($query);
 	$col=50;
 	$myColor[50]="F0F0F0";

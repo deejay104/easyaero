@@ -23,7 +23,7 @@
 	if (!GetDroit("AccesSuiviMouvements")) { FatalError("Accès non autorisé (AccesSuiviMouvements)"); }
 	
 // ---- Charge le template
-	$tmpl_x = LoadTemplate("index");
+	// $tmpl_x = LoadTemplate("index");
 	$tmpl_x->assign("path_module","$module/$mod");
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
@@ -50,7 +50,7 @@
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$form_montant=checkVar("form_montant","varchar");
-		$form_ventilation=checkVar("form_ventilation","numeric");
+		$form_ventilation=checkVar("form_ventilation","varchar");
 		$form_poste_ventil=checkVar("form_poste_ventil","array");
 		$form_tiers_ventil=checkVar("form_tiers_ventil","array");
 		$form_montant_ventil=checkVar("form_montant_ventil","array");
