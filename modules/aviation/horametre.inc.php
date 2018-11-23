@@ -105,6 +105,7 @@
 	foreach($lstresa as $i=>$rid)
 	{
 		$resa = new resa_class($rid,$sql,false);
+		$resa_next = new resa_class($lstresa[$i+1],$sql,false);
 		$ress = new ress_class($resa->uid_ressource,$sql);
 		$usrpil = new user_class($resa->uid_pilote,$sql);
 		if ($resa->uid_instructeur>0)
@@ -145,11 +146,12 @@
 		}
 
 		$tabValeur[$i]["horadeb"]["val"]=$resa->horadeb;
-		$tabValeur[$i]["horadeb"]["aff"]=($resa->horadeb!=$horadeb_prec) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horadeb."</div>" : $resa->horadeb;
+		$tabValeur[$i]["horadeb"]["aff"]=$resa->horadeb;
+		$tabValeur[$i]["horadeb"]["aff"]=($resa_next->horafin!=$resa->horadeb) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horadeb."</div>" : $resa->horadeb;
 		$tabValeur[$i]["horafin"]["val"]=$resa->horafin;
-		$tabValeur[$i]["horafin"]["aff"]=$resa->horafin;
+		$tabValeur[$i]["horafin"]["aff"]=($resa->horafin!=$horadeb_prec) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horafin."</div>" : $resa->horafin;
 
-		$horadeb_prec=$resa->horafin;
+		$horadeb_prec=$resa->horadeb;
 
 	}
 	
