@@ -12,6 +12,10 @@
 	{
 		$tmpl_menu->parse("infos.suiviVols");
 	}
+	if (GetDroit("AccesSuiviHorametre"))
+	{
+		$tmpl_menu->parse("infos.horametre");
+	}
 	
 	
 // ---- Affiche le menu	

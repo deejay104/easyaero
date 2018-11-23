@@ -23,18 +23,17 @@
 
 	require_once ($appfolder."/class/ressources.inc.php");
 
+	$form_lache=CheckVar("form_lache","array");
+	
 // ---- Charge l'utilisateur
 	require_once ($appfolder."/class/user.inc.php");
 	$usrcus = new user_class($id,$sql,true);
 	$usrcus->LoadRoles();
-  	if (GetModule("aviation"))
-	{
-		$usrcus->LoadLache();
-	}
+	$usrcus->LoadLache();
 
 // ---- Sauvegarde
 	// Sauvegarde les infos spécifiques
-	if (($fonc=="Enregistrer") && ((GetMyId($id)) || (GetDroit("ModifUserSauve"))))
+	if (($fonc==$tabLang["lang_save"]) && ((GetMyId($id)) || (GetDroit("ModifUserSauve"))))
 	{
 		// Sauvegarde les données
 		if (count($form_data)>0)
@@ -47,13 +46,8 @@
 		$usrcus->Save();		
 	}
 	// Sauvegarde le lache
-	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserLache")))
+	if (($fonc==$tabLang["lang_save"]) && ($id>0) && (GetDroit("ModifUserLache")))
 	{
-		if ((!isset($form_lache)) || (!is_array($form_lache)))
-		{
-			$form_lache=array();
-		}
-		
 		$msg_erreur.=$usrcus->SaveLache($form_lache);
 		$usrcus->LoadLache();
 	}

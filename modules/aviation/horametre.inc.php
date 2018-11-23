@@ -53,37 +53,16 @@
 
 	if ($theme!="phone")
 	{
-		$tabTitre["tarif"]["aff"]="Tarif";
-		$tabTitre["tarif"]["width"]=50;
 		$tabTitre["dest"]["aff"]="Lieu";
 		$tabTitre["dest"]["width"]=100;
-		$tabTitre["heure_deb"]["aff"]="Départ";
-		$tabTitre["heure_deb"]["width"]=70;
-		$tabTitre["heure_fin"]["aff"]="Arrivée";
-		$tabTitre["heure_fin"]["width"]=70;
 	}
 	$tabTitre["heure"]["aff"]="Temps de vol";
-	$tabTitre["heure"]["width"]=110;
-	if ($theme=="phone")
-	{
-		$tabTitre["carbavant"]["aff"]="Carb Avant";
-		$tabTitre["carbavant"]["width"]=100;
-		$tabTitre["carbapres"]["aff"]="Carb Après";
-		$tabTitre["carbapres"]["width"]=100;
-		$tabTitre["potentiel"]["aff"]="Potentiel";
-		$tabTitre["potentiel"]["width"]=100;
-	}
-	else
-	{
-		$tabTitre["carbavant"]["aff"]="Carburant Avant";
-		$tabTitre["carbavant"]["width"]=100;
-		$tabTitre["carbapres"]["aff"]="Carburant Après";
-		$tabTitre["carbapres"]["width"]=100;
-		$tabTitre["potentiel"]["aff"]="Potentiel";
-		$tabTitre["potentiel"]["width"]=100;
-		$tabTitre["total"]["aff"]="Total heures de vol";
-		$tabTitre["total"]["width"]=100;
-	}
+	$tabTitre["heure"]["width"]=140;
+
+	$tabTitre["horadeb"]["aff"]="Hora Début";
+	$tabTitre["horadeb"]["width"]=110;
+	$tabTitre["horafin"]["aff"]="Hora Fin";
+	$tabTitre["horafin"]["width"]=110;
 		
 // ---- Chargement des données
 	$tabValeur=array();
@@ -122,6 +101,7 @@
 	$totligne=ListCarnetNbLignes($sql,$id);
 	
 	$tabresa=array();
+	$horadeb_prec=0;
 	foreach($lstresa as $i=>$rid)
 	{
 		$resa = new resa_class($rid,$sql,false);
@@ -154,33 +134,23 @@
 
 		$tabValeur[$i]["dest"]["val"]=$resa->destination;
 		$tabValeur[$i]["dest"]["aff"]=$resa->destination;
-
-		$tabValeur[$i]["heure_deb"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$i]["heure_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".sql2time($resa->dte_deb,"nosec")."</a>";
-		$tabValeur[$i]["heure_deb"]["align"]="center";
-		$tabValeur[$i]["heure_fin"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$i]["heure_fin"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".sql2time($resa->dte_fin,"nosec")."</a>";
-		$tabValeur[$i]["heure_fin"]["align"]="center";
 	
 		$tabValeur[$i]["heure"]["val"]=$resa->tpsreel;
 		$tabValeur[$i]["heure"]["aff"]=$resa->AffTempsReel();
 		$tabValeur[$i]["heure"]["align"]="center";
 
-		$tabValeur[$i]["carbavant"]["val"]=$resa->carbavant;
-		$tabValeur[$i]["carbavant"]["aff"]=($resa->carbavant>0) ? $resa->carbavant."L" : " ";
-		$tabValeur[$i]["carbavant"]["align"]="center";
+		if ($horadeb_prec==0)
+		{
+			$horadeb_prec=$resa->horadeb;
+		}
 
-		$tabValeur[$i]["carbapres"]["val"]=$resa->carbapres;
-		$tabValeur[$i]["carbapres"]["aff"]=($resa->carbapres>0) ? $resa->carbapres."L" : " ";
-		$tabValeur[$i]["carbapres"]["align"]="center";
+		$tabValeur[$i]["horadeb"]["val"]=$resa->horadeb;
+		$tabValeur[$i]["horadeb"]["aff"]=($resa->horadeb!=$horadeb_prec) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horadeb."</div>" : $resa->horadeb;
+		$tabValeur[$i]["horafin"]["val"]=$resa->horafin;
+		$tabValeur[$i]["horafin"]["aff"]=$resa->horafin;
 
-		$tabValeur[$i]["potentiel"]["val"]="";
-		$tabValeur[$i]["potentiel"]["aff"]=$resa->AffPotentiel("fin");
-		$tabValeur[$i]["potentiel"]["align"]="center";
+		$horadeb_prec=$resa->horafin;
 
-		$tabValeur[$i]["total"]["val"]=$resa->TempsVols("fin");
-		$tabValeur[$i]["total"]["aff"]=$resa->AffTempsVols("fin");
-		$tabValeur[$i]["total"]["align"]="center";
 	}
 	
 // ---- Affiche le tableau
