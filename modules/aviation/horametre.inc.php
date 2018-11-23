@@ -59,11 +59,12 @@
 	$tabTitre["heure"]["aff"]="Temps de vol";
 	$tabTitre["heure"]["width"]=140;
 
-	$tabTitre["horadeb"]["aff"]="Hora Début";
-	$tabTitre["horadeb"]["width"]=110;
 	$tabTitre["horafin"]["aff"]="Hora Fin";
 	$tabTitre["horafin"]["width"]=110;
-		
+
+	$tabTitre["horadeb"]["aff"]="Hora Début";
+	$tabTitre["horadeb"]["width"]=110;
+	
 // ---- Chargement des données
 	$tabValeur=array();
 	$lstress=ListeRessources($sql);
@@ -95,7 +96,7 @@
 	if ($trie=="") { $trie="i"; }
 	if (!is_numeric($ts))
 	  { $ts = 0; }
-	$tl=40;
+	$tl=50;
 	$lstresa=ListCarnetVols($sql,$id,$order,$trie,$ts,$tl);
 	
 	$totligne=ListCarnetNbLignes($sql,$id);
@@ -111,7 +112,7 @@
 		}
 		else
 		{
-			$resa_next = new resa_class($rid,$sql,false);
+			continue;
 		}
 			
 		$ress = new ress_class($resa->uid_ressource,$sql);
