@@ -628,7 +628,7 @@ function ListReservationVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
 
 function ListCarnetVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
 { global $MyOpt;
-	$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier WHERE uid_avion='$id' AND tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "") : "")." ".(($tl>0) ? "LIMIT $ts,$tl" : "");
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier WHERE uid_avion='$id' AND tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "") : "")." ".(($tl>0) ? "LIMIT $ts,".($tl+1) : "");
 
 	$res=array();
 	$sql->Query($query);

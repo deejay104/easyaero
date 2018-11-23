@@ -105,7 +105,15 @@
 	foreach($lstresa as $i=>$rid)
 	{
 		$resa = new resa_class($rid,$sql,false);
-		$resa_next = new resa_class($lstresa[$i+1],$sql,false);
+		if ($lstresa[$i+1]>0)
+		{
+			$resa_next = new resa_class($lstresa[$i+1],$sql,false);
+		}
+		else
+		{
+			$resa_next = new resa_class($rid,$sql,false);
+		}
+			
 		$ress = new ress_class($resa->uid_ressource,$sql);
 		$usrpil = new user_class($resa->uid_pilote,$sql);
 		if ($resa->uid_instructeur>0)
@@ -142,7 +150,7 @@
 
 		if ($horadeb_prec==0)
 		{
-			$horadeb_prec=$resa->horadeb;
+			$horadeb_prec=$resa->horafin;
 		}
 
 		$tabValeur[$i]["horadeb"]["val"]=$resa->horadeb;
