@@ -1,4 +1,4 @@
-# Easy Aero (http://www.easy-aero.fr)
+# Easy Aero (https://www.easy-aero.fr)
 Outil de gestion complet pour les associations.
 Modules disponibles : crèches, aéroclub
 
