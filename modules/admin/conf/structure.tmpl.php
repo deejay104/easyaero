@@ -21,62 +21,6 @@ $tabCustom=Array
 		"uid_maj" => Array("Type" => "int(10) unsigned", ),
 		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 	),
-	"bapteme" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"num" => Array("Type" => "varchar(20)", ),
-		"nom" => Array("Type" => "varchar(50)", ),
-		"telephone" => Array("Type" => "varchar(14)", ),
-		"mail" => Array("Type" => "varchar(100)", ),
-		"nb" => Array("Type" => "tinyint(3) unsigned", ),
-		"dte" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
-		"status" => Array("Type" => "tinyint(3) unsigned", "Index"=>1 ),
-		"type" => Array("Type" => "enum('btm','vi')", "Default" => "btm", ),
-		"paye" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"dte_paye" => Array("Type" => "date", "Default" => "0000-00-00", ),
-		"id_pilote" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"id_avion" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"id_resa" => Array("Type" => "int(10) unsigned", "Index"=>1),
-		"description" => Array("Type" => "text", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"uid_maj" => Array("Type" => "int(10) unsigned", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
-	"calendrier" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"description" => Array("Type" => "text", ),
-		"dte_deb" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"dte_fin" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"uid_pilote" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
-		"uid_debite" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"uid_instructeur" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
-		"uid_avion" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index" => "1", ),
-		"destination" => Array("Type" => "varchar(50)", ),
-		"nbpersonne" => Array("Type" => "tinyint(3) unsigned", "Default" => "1", ),
-		"invite" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"accept" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"temps" => Array("Type" => "int(11)", "Default" => "0", ),
-		"tarif" => Array("Type" => "char(2)", ),
-		"prix" => Array("Type" => "float", "Default" => "0", ),
-		"tpsestime" => Array("Type" => "int(11)", ),
-		"tpsreel" => Array("Type" => "int(11)", ),
-		"horadeb" => Array("Type" => "varchar(10)", "Default" => "0", ),
-		"horafin" => Array("Type" => "varchar(10)", "Default" => "0", ),
-		"idmaint" => Array("Type" => "int(10) unsigned", "Default" => 0),
-		"potentiel" => Array("Type" => "int(10) unsigned", "Default" => 0),
-		"carburant" => Array("Type" => "varchar(8)", ),
-		"carbavant" => Array("Type" => "int(10) unsigned", "Default" => 0),
-		"carbapres" => Array("Type" => "int(10) unsigned", "Default" => 0),
-		"prixcarbu" => Array("Type" => "varchar(8)" ),
-		"reel" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
-		"edite" => Array("Type" => "enum('oui','non')", "Default" => "non", "Index"=>1),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
-	),
 	"compte" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -321,22 +265,6 @@ $tabCustom=Array
 		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),
-	"manips" => Array
-	(
-		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
-		"titre" => Array("Type" => "varchar(100)", ),
-		"comment" => Array("Type" => "text", ),
-		"type" => Array("Type" => "varchar(100)", ),
-		"cout" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
-		"facture" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
-		"dte_manip" => Array("Type" => "date", "Default" => "0000-00-00", ),
-		"dte_limite" => Array("Type" => "date", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-	),
 	"masses" => Array
 	(
 		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
@@ -380,14 +308,6 @@ $tabCustom=Array
 		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 		"uid_modif" => Array("Type" => "int(10) unsigned", ),
 		"dte_modif" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
-	"navpoints" => Array
-	(
-		"nom" => Array("Type" => "varchar(20)", "Index" => "PRIMARY", ),
-		"description" => Array("Type" => "varchar(200)", ),
-		"lat" => Array("Type" => "varchar(10)", ),
-		"lon" => Array("Type" => "varchar(10)", ),
-		"icone" => Array("Type" => "varchar(20)", ),
 	),
 	"navroute" => Array
 	(
@@ -612,8 +532,103 @@ $tabCustom=Array
 		"comment" => Array("Type" => "text", ),
 	),
 
+	// "bapteme" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "num" => Array("Type" => "varchar(20)", ),
+		// "nom" => Array("Type" => "varchar(50)", ),
+		// "telephone" => Array("Type" => "varchar(14)", ),
+		// "mail" => Array("Type" => "varchar(100)", ),
+		// "nb" => Array("Type" => "tinyint(3) unsigned", ),
+		// "dte" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
+		// "status" => Array("Type" => "tinyint(3) unsigned", "Index"=>1 ),
+		// "type" => Array("Type" => "enum('btm','vi')", "Default" => "btm", ),
+		// "paye" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
+		// "dte_paye" => Array("Type" => "date", "Default" => "0000-00-00", ),
+		// "id_pilote" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
+		// "id_avion" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
+		// "id_resa" => Array("Type" => "int(10) unsigned", "Index"=>1),
+		// "description" => Array("Type" => "text", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+	// ),
+	// "navpoints" => Array
+	// (
+		// "nom" => Array("Type" => "varchar(20)", "Index" => "1", ),
+		// "description" => Array("Type" => "varchar(200)", ),
+		// "lat" => Array("Type" => "varchar(10)", ),
+		// "lon" => Array("Type" => "varchar(10)", ),
+		// "icone" => Array("Type" => "varchar(20)", ),
+	// ),
+	// "manips" => Array
+	// (
+		// "id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		// "titre" => Array("Type" => "varchar(100)", ),
+		// "comment" => Array("Type" => "text", ),
+		// "type" => Array("Type" => "varchar(100)", ),
+		// "cout" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
+		// "facture" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
+		// "dte_manip" => Array("Type" => "date", "Default" => "0000-00-00", ),
+		// "dte_limite" => Array("Type" => "date", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+	// ),
+	// "calendrier" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "description" => Array("Type" => "text", ),
+		// "dte_deb" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "dte_fin" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "uid_pilote" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
+		// "uid_debite" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "uid_instructeur" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
+		// "uid_avion" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index" => "1", ),
+		// "destination" => Array("Type" => "varchar(50)", ),
+		// "nbpersonne" => Array("Type" => "tinyint(3) unsigned", "Default" => "1", ),
+		// "invite" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
+		// "accept" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
+		// "temps" => Array("Type" => "int(11)", "Default" => "0", ),
+		// "tarif" => Array("Type" => "char(2)", ),
+		// "prix" => Array("Type" => "float", "Default" => "0", ),
+		// "tpsestime" => Array("Type" => "int(11)", ),
+		// "tpsreel" => Array("Type" => "int(11)", ),
+		// "horadeb" => Array("Type" => "varchar(10)", "Default" => "0", ),
+		// "horafin" => Array("Type" => "varchar(10)", "Default" => "0", ),
+		// "idmaint" => Array("Type" => "int(10) unsigned", "Default" => 0),
+		// "potentiel" => Array("Type" => "int(10) unsigned", "Default" => 0),
+		// "carburant" => Array("Type" => "varchar(8)", ),
+		// "carbavant" => Array("Type" => "int(10) unsigned", "Default" => 0),
+		// "carbapres" => Array("Type" => "int(10) unsigned", "Default" => 0),
+		// "prixcarbu" => Array("Type" => "varchar(8)" ),
+		// "reel" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
+		// "edite" => Array("Type" => "enum('oui','non')", "Default" => "non", "Index"=>1),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
+	// ),
 );
 
 
+	require_once ($appfolder."/class/bapteme.inc.php");
+	$obj=new bapteme_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+
+	require_once ($appfolder."/class/navigation.inc.php");
+	$obj=new navpoint_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+
+	require_once ($appfolder."/class/manifestation.inc.php");
+	$obj=new manip_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+
+	require_once ($appfolder."/class/reservation.inc.php");
+	$obj=new resa_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
 
 ?>

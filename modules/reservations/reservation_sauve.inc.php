@@ -33,9 +33,32 @@
 // --- Charge la réservation
 	$id=checkVar("id","numeric");
 	$prev=checkVar("prev","varchar");
+
+	$form_data=checkVar("form_data","array");
+
 	$form_accept=checkVar("form_accept","varchar",3);
 	$form_uid_ress=checkVar("form_uid_ress","numeric");
-	
+	$form_uid_pilote=checkVar("form_uid_pilote","numeric");
+	$form_uid_debite=checkVar("form_uid_debite","numeric");
+	$form_uid_instructeur=checkVar("form_uid_instructeur","numeric");
+	$form_tarif=checkVar("form_tarif","varchar");
+	$form_destination=checkVar("form_destination","varchar");
+	$form_tpsestime=checkVar("form_tpsestime","numeric");
+	$form_nbpersonne=checkVar("form_nbpersonne","numeric");
+	$form_invite=checkVar("form_invite","varchar");
+	$form_dte_deb=checkVar("form_dte_deb","varchar");
+	$form_hor_deb=checkVar("form_hor_deb","varchar");
+	$form_dte_fin=checkVar("form_dte_fin","varchar");
+	$form_hor_fin=checkVar("form_hor_fin","varchar");
+	$form_description=checkVar("form_description","text");
+	$form_horadeb=checkVar("form_horadeb","varchar");
+	$form_horafin=checkVar("form_horafin","varchar");
+	$form_tpsreel=checkVar("form_tpsreel","varchar");
+	$form_potentielh=checkVar("form_potentielh","varchar");
+	$form_potentielm=checkVar("form_potentielm","varchar");
+	$form_carbavant=checkVar("form_carbavant","varchar");
+	$form_carbapres=checkVar("form_carbapres","varchar");
+	$form_prixcarbu=checkVar("form_prixcarbu","varchar");
 	
 	$resa["resa"]=new resa_class($id,$sql);
 
@@ -121,6 +144,9 @@
 				$resa["resa"]->carbavant=$form_carbavant;
 				$resa["resa"]->carbapres=$form_carbapres;
 				$resa["resa"]->prixcarbu=$form_prixcarbu;
+
+		  		$resa["resa"]->Valid("taxe",$form_data["taxe"]);
+
 			}
 
 

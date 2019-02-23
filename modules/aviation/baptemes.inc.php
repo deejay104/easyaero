@@ -93,14 +93,17 @@
 			$tabTitre["paye"]["aff"]="Payé";
 			$tabTitre["paye"]["width"]=100;
 		
-			$tabTitre["date"]["aff"]="Date";
+			$tabTitre["date"]["aff"]="Date prévue";
 			$tabTitre["date"]["width"]=170;
 		
 			$tabTitre["pilote"]["aff"]="Pilote";
 			$tabTitre["pilote"]["width"]=180;
 		
 			$tabTitre["type"]["aff"]="Type";
-			$tabTitre["type"]["width"]=150;
+			$tabTitre["type"]["width"]=100;
+
+			$tabTitre["bonkdo"]["aff"]="Bon KDO";
+			$tabTitre["bonkdo"]["width"]=90;
 		
 			$tabTitre["resa"]["aff"]="Réservation";
 			$tabTitre["resa"]["width"]=100;
@@ -155,10 +158,12 @@
 		}
 		$tabValeur[$i]["type"]["val"]=$btm->val("type");
 		$tabValeur[$i]["type"]["aff"]=$btm->aff("type","html");
+		$tabValeur[$i]["bonkdo"]["val"]=$btm->val("bonkdo");
+		$tabValeur[$i]["bonkdo"]["aff"]=$btm->aff("bonkdo","html");
 
 	  }
 
-	if ((!isset($order)) || ($order=="")) { $order="nom"; }
+	if ((!isset($order)) || ($order=="")) { $order="status"; }
 	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"form_status=".$form_status));

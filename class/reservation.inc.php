@@ -16,7 +16,54 @@
 */
 
 // Class Reservation
-class resa_class{
+class resa_class extends objet_core
+{
+	protected $table="calendrier";
+	protected $mod="reservations";
+	protected $rub="reservation";
+
+	
+	protected $fields=array(
+		"description" => Array("type" => "text", ),
+		"dte_deb" => Array("type" => "datetime", "default" => "0000-00-00 00:00:00", ),
+		"dte_fin" => Array("type" => "datetime", "default" => "0000-00-00 00:00:00", ),
+		"uid_pilote" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"uid_debite" => Array("type" => "number", "default" => "0", ),
+		"uid_instructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"uid_avion" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"destination" => Array("type" => "varchar","len"=>50, ),
+		"taxe" => Array("type" => "enum","default"=>"none", ),
+		"nbpersonne" => Array("type" => "number", "default" => "1", ),
+		"invite" => Array("type" => "bool", "default" => "non", ),
+		"accept" => Array("type" => "bool", "default" => "non", ),
+		"temps" => Array("type" => "number", "default" => "0", ),
+		"tarif" => Array("type" => "varchar", "len"=>2 ),
+		"prix" => Array("type" => "price" ),
+		"tpsestime" => Array("type" => "number", ),
+		"tpsreel" => Array("type" => "number", ),
+		"horadeb" => Array("type" => "varchar", "len"=>10, "default" => "0", ),
+		"horafin" => Array("type" => "varchar", "len"=>10, "default" => "0", ),
+		"idmaint" => Array("type" => "number"),
+		"potentiel" => Array("type" => "number"),
+		"carburant" => Array("type" => "varchar", "len"=>8 ),
+		"carbavant" => Array("type" => "number"),
+		"carbapres" => Array("type" => "number"),
+		"prixcarbu" => Array("type" => "varchar", "len"=>8 ),
+		"reel" => Array("type" => "bool", "default" => "oui", "index"=>1),
+		"edite" => Array("type" => "bool", "default" => "non", "index"=>1),
+		"dte_maj" => Array("type" => "datetime" ),
+		"uid_maj" => Array("type" => "number" ),
+		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
+		"uid_creat" => Array("type" => "number"),
+		"dte_creat" => Array("type" => "datetime"),
+		"uid_modif" => Array("type" => "number"),
+		"dte_modif" => Array("type" => "datetime")
+	);
+
+	protected $tabList=array(
+		"taxe"=>array("none"=>"Pas de taxe","notpaid"=>"Taxe pas payée","paid"=>"Taxe payée sur place"),
+	);
+	
 	# Constructor
 	function __construct($id=0,$sql){
 		global $MyOpt;
@@ -51,6 +98,8 @@ class resa_class{
 		$this->uid_instructeur=0;
 		$this->uid_ressource=0;
 
+		parent::__construct($id,$sql);
+
 		if ($id>0)
 		  {
 			$this->load($id);
@@ -58,56 +107,56 @@ class resa_class{
 	}
 
 	# Load user informations
-	function load($id){
+	function load($id)
+	{
+		parent::load($id);
+
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT * FROM ".$this->tbl."_calendrier WHERE id='$id'";
-		$res = $sql->QueryRow($query);
+		// $query = "SELECT * FROM ".$this->tbl."_calendrier WHERE id='$id'";
+		// $res = $sql->QueryRow($query);
 
 		// Charge les variables
-		$this->description=$res["description"];
-		$this->actif=$res["actif"];
-		$this->reel=$res["reel"];
-		$this->tarif=$res["tarif"];
-		$this->prix=$res["prix"];
-		$this->temps=$res["temps"];
-		$this->tpsestime=$res["tpsestime"];
-		$this->tpsreel=$res["tpsreel"];
-		$this->horadeb=$res["horadeb"];
-		$this->horafin=$res["horafin"];
-		$this->edite=$res["edite"];
-		$this->dte_deb=$res["dte_deb"];
-		$this->dte_fin=$res["dte_fin"];
-		$this->uid_pilote=$res["uid_pilote"];
-		$this->uid_debite=$res["uid_debite"];
-		$this->uid_instructeur=$res["uid_instructeur"];
-		$this->uid_ressource=$res["uid_avion"];
-		$this->destination=$res["destination"];
-		$this->nbpersonne=$res["nbpersonne"];
-		$this->invite=$res["invite"];
-		$this->accept=$res["accept"];
-		$this->carbavant=$res["carbavant"];
-		$this->carbapres=$res["carbapres"];
-		$this->prixcarbu=$res["prixcarbu"];
-		$this->uid_maj=$res["uid_maj"];
-		$this->dte_maj=$res["dte_maj"];
+		$this->description=$this->data["description"];
+		$this->actif=$this->data["actif"];
+		$this->reel=$this->data["reel"];
+		$this->tarif=$this->data["tarif"];
+		$this->prix=$this->data["prix"];
+		$this->temps=$this->data["temps"];
+		$this->tpsestime=$this->data["tpsestime"];
+		$this->tpsreel=$this->data["tpsreel"];
+		$this->horadeb=$this->data["horadeb"];
+		$this->horafin=$this->data["horafin"];
+		$this->edite=$this->data["edite"];
+		$this->dte_deb=$this->data["dte_deb"];
+		$this->dte_fin=$this->data["dte_fin"];
+		$this->uid_pilote=$this->data["uid_pilote"];
+		$this->uid_debite=$this->data["uid_debite"];
+		$this->uid_instructeur=$this->data["uid_instructeur"];
+		$this->uid_ressource=$this->data["uid_avion"];
+		$this->destination=$this->data["destination"];
+		$this->nbpersonne=$this->data["nbpersonne"];
+		$this->invite=$this->data["invite"];
+		$this->accept=$this->data["accept"];
+		$this->carbavant=$this->data["carbavant"];
+		$this->carbapres=$this->data["carbapres"];
+		$this->prixcarbu=$this->data["prixcarbu"];
+		$this->uid_maj=$this->data["uid_maj"];
+		$this->dte_maj=$this->data["dte_maj"];
 
 		
-		$this->potentiel=$res["potentiel"];
+		$this->potentiel=$this->data["potentiel"];
 		$this->potentielh=floor($this->potentiel/60);
 		$this->potentielm=$this->potentiel-$this->potentielh*60;
 
 		if ($this->horadeb==0)
 		  {
-				$query = "SELECT horafin FROM ".$this->tbl."_calendrier WHERE dte_fin<='".$res["dte_deb"]."' AND uid_avion='".$res["uid_avion"]."' ORDER BY dte_fin DESC LIMIT 0,1";
+				$query = "SELECT horafin FROM ".$this->tbl."_calendrier WHERE dte_fin<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 				$res2 = $sql->QueryRow($query);
 				$this->horadeb=$res2["horafin"];
+				$this->horadeb_orig=$res2["horafin"];
 		  }
 
-	}
-
-	function Valid($k,$v) 
-	{
 	}
 
 	function AffTemps(){
@@ -354,8 +403,12 @@ class resa_class{
 		if (!is_numeric($this->horafin))
 	  	  { $this->horafin=0; }
 
-		if ($this->horafin==0)
-				{ $this->horadeb=0; }
+  		$query ="SELECT horadeb FROM ".$this->tbl."_calendrier AS cal WHERE id=".$this->id;
+		$res=$sql->QueryRow($query);
+
+		// if ((($res["horadeb"]==$this->horadeb) || ($res["horadeb"]==0)) && ($this->horafin==0))
+		if (($this->horadeb==$this->horadeb_orig) && ($this->horafin==0))
+		  { $this->horadeb=0; }
 
 		// Tps horametre >= Tps réel
 		// Deb horametre >= dernier vol
@@ -462,6 +515,7 @@ class resa_class{
 			"uid_instructeur"=>$this->uid_instructeur,
 			"uid_avion"=>$this->uid_ressource,
 			"destination"=>$this->destination,
+			"taxe"=>$this->data["taxe"],
 			"nbpersonne"=>$this->nbpersonne,
 			"invite"=>$this->invite,
 			"accept"=>$this->accept,

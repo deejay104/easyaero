@@ -100,6 +100,12 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
+	if (($fonc=="Annuler") && ($id==0))
+	{
+			$mod="aviation";
+			$affrub="baptemes";
+	}
+
 // ---- Réserve l'avion
 	if (($fonc=="reserver") && ($btm->data["id_resa"]==0))
 	{

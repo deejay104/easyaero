@@ -254,6 +254,10 @@
 
 // **************************************
 
+	$resa["resa"]->Render("form","form");
+
+// **************************************
+	
 	$tmpl_x->assign("form_uid_ress", $resa["resa"]->uid_ressource);
 
 	// Récupère la liste des ressources
@@ -520,26 +524,28 @@
 	}
 	
 	// Ajoute une synthèse de vol
-	if (GetDroit("CreeSynthese"))
+	if ((GetDroit("CreeSynthese")) && ($id>0))
 	{
 		$tmpl_x->parse("infos.synthese"); 
 	}
 
 	// Liste les fiches de synthèse du vol
-	$t=ListSyntheseVol($sql,$id);
-
-	if (count($t)>0)
+	if ($id>0)
 	{
-		foreach($t as $i=>$d)
+		$t=ListSyntheseVol($sql,$id);
+
+		if (count($t)>0)
 		{
-			$tmpl_x->assign("sid", $i);
-			$tmpl_x->assign("synt_nbvol", $d["nbvol"]);
-			$tmpl_x->assign("synt_type", ($d["type"]=="double") ? "double commande" : "vol solo");
-			$tmpl_x->parse("corps.aff_reservation.aff_syntheses.lst_synthese");		
+			foreach($t as $i=>$d)
+			{
+				$tmpl_x->assign("sid", $i);
+				$tmpl_x->assign("synt_nbvol", $d["nbvol"]);
+				$tmpl_x->assign("synt_type", ($d["type"]=="double") ? "double commande" : "vol solo");
+				$tmpl_x->parse("corps.aff_reservation.aff_syntheses.lst_synthese");		
+			}
+			$tmpl_x->parse("corps.aff_reservation.aff_syntheses");
 		}
-		$tmpl_x->parse("corps.aff_reservation.aff_syntheses");
 	}
-	
 		
 	if ($ok_aff==0)
 	{ 

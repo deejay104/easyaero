@@ -24,14 +24,38 @@ class bapteme_class extends objet_core
 	protected $mod="aviation";
 	protected $rub="bapteme";
 
-	protected $droit=array("paye"=>"ModifBaptemePaye","dte_paye"=>"ModifBaptemePaye");
-	protected $type=array("nom"=>"varchar","telephone"=>"tel","mail"=>"email","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","dte_paye"=>"date","description"=>"text");
+	protected $droit=array("num"=>"[readonly]", "paye"=>"ModifBaptemePaye","dte_paye"=>"ModifBaptemePaye");
+	// protected $type=array("nom"=>"varchar","telephone"=>"tel","mail"=>"email","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","dte_paye"=>"date","description"=>"text");
+
+	protected $fields=array(
+		"num" => Array("type" => "varchar", "len"=>20 ),
+		"nom" => Array("type" => "varchar", "len"=>50 ),
+		"passager" => Array("type" => "varchar", "len"=>50 ),
+		"telephone" => Array("type" => "varchar", "len"=>14 ),
+		"mail" => Array("type" => "varchar", "len"=>100 ),
+		"nb" => Array("type" => "radio", "default"=>1),
+		"dte" => Array("type" => "datetime"),
+		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
+		"status" => Array("type" => "enum", "default"=>"0", "index"=>1 ),
+		"type" => Array("type" => "enum", "default" => "btm", ),
+		"bonkdo" => Array("type" => "bool", "default" => "non", ),
+		"paye" => Array("type" => "bool", "default" => "non", ),
+		"dte_paye" => Array("type" => "date" ),
+		"id_pilote" => Array("type" => "number", "index" => "1", ),
+		"id_avion" => Array("type" => "number", "index" => "1", ),
+		"id_resa" => Array("type" => "number", "index"=>1),
+		"description" => Array("type" => "text" ),
+	);
 
 	
 	protected $tabList=array(
-		"status"=>array("0"=>"Nouveau","1"=>"Affecté","2"=>"Planifié","3"=>"Effectué","4"=>"Annulé"),
+		"status"=>array("0"=>"Nouveau","1"=>"Analyse","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé"),
 		"nb"=>array("1"=>"1","2"=>"2","3"=>"3"),
-		"type"=>array("btm"=>"Baptème","vi"=>"VI")
+		"type"=>array("btm"=>"Baptème","vi"=>"VI"),
+		"nb"=>array(
+			"fr"=>array("1"=>"1","2"=>"2","3"=>"3"),
+			"en"=>array("1"=>"1","2"=>"2","3"=>"3")
+		)
 	);
 
 			# Constructor
@@ -39,22 +63,19 @@ class bapteme_class extends objet_core
 		global $MyOpt;
 		global $gl_uid;
 
-		$this->data["num"]="";
-		$this->data["nom"]="";
-		$this->data["telephone"]="";
-		$this->data["mail"]="";
-		$this->data["nb"]=0;
-		$this->data["dte"]="";
-		$this->data["status"]="0";
-		$this->data["type"]="btm";
-		$this->data["paye"]="non";
-		$this->data["dte_paye"]="0000-00-00";
-		$this->data["id_pilote"]="0";
-		$this->data["id_avion"]="0";
-		$this->data["id_resa"]="0";
-		$this->data["description"]="";
-
 		parent::__construct($id,$sql);
+
+		if ($this->data["num"]=="")
+		{
+			$res["num"]="xxxxxx";
+			while($res["num"]!="")
+			{
+				$this->data["num"]=mt_rand(100000, 999999);
+			
+				$query="SELECT num FROM ".$MyOpt["tbl"]."_bapteme WHERE num='".$this->data["num"]."'";
+				$res=$sql->QueryRow($query);
+			}
+		}
 	}
 
 }

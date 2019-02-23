@@ -23,7 +23,19 @@ class manip_class extends objet_core
 	protected $mod="manifestations";
 	protected $rub="detail";
 
-	protected $type=array("titre"=>"varchar","dte_manip"=>"date","dte_limite"=>"date","facture"=>"bool","comment"=>"text","type"=>"multi","cout"=>"price");
+	// protected $type=array("titre"=>"varchar","dte_manip"=>"date","dte_limite"=>"date","facture"=>"bool","comment"=>"text","type"=>"multi","cout"=>"price");
+	
+	protected $fields=array(
+		"titre" => Array("type" => "varchar", "len"=>100, "default"=>"Nouvelle manifestation"),
+		"comment" => Array("type" => "text", ),
+		"type" => Array("type" => "multi", "len"=>100, ),
+		"cout" => Array("type" => "price", "default" => "0.00", ),
+		"facture" => Array("type" => "bool", "default" => "non", ),
+		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
+		"dte_manip" => Array("type" => "date", ),
+		"dte_limite" => Array("type" => "date", )
+	);
+	
 	protected $tabList=array(
 		"type"=>array(),
 	);
@@ -32,13 +44,7 @@ class manip_class extends objet_core
 	function __construct($id=0,$sql)
 	{
 		global $MyOpt;
-		// foreach($MyOpt["type"] as $k=>$v)
-		// {
-			// if ($v=="on")
-			// {
-				// $this->tabList["type"][$k]=ucwords($k);
-			// }
-		// }
+
 		$query="SELECT id,groupe,description FROM ".$MyOpt["tbl"]."_groupe WHERE principale='oui' ORDER BY description";
 		$sql->Query($query);
 
@@ -51,13 +57,7 @@ class manip_class extends objet_core
 			}
 		}
 		
-		$this->data["titre"]="Nouvelle manifestation";
-		$this->data["comment"]="";
-		$this->data["type"]="";
-		$this->data["cout"]="0";
-		$this->data["facture"]="non";
 		$this->data["dte_manip"]=date("Y-m-d");
-		$this->data["dte_limite"]="0000-00-00";
 	
 		parent::__construct($id,$sql);
 	}
