@@ -33,6 +33,7 @@ class resa_class extends objet_core
 		"uid_avion" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"destination" => Array("type" => "varchar","len"=>50, ),
 		"taxe" => Array("type" => "enum","default"=>"none", ),
+		"taxeok" => Array("type" => "bool","default"=>"non", ),
 		"nbpersonne" => Array("type" => "number", "default" => "1", ),
 		"invite" => Array("type" => "bool", "default" => "non", ),
 		"accept" => Array("type" => "bool", "default" => "non", ),

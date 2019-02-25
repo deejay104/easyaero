@@ -24,6 +24,10 @@
 	{
 		$tmpl_menu->parse("infos.vols");
 	}	
+	if ((GetDroit("AccesSuiviTaxeAT")) && ($theme!="phone"))
+	{
+		$tmpl_menu->parse("infos.taxeat");
+	}	
 	if (GetDroit("AccesSuiviSuivi"))
 	{
 		$tmpl_menu->parse("infos.suivi");

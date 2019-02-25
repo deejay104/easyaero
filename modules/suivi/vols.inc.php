@@ -481,11 +481,6 @@
 	}
 
 // ---- Affecte les variables d'affichage
-	if (GetModule("aviation"))
-	{
-		$tmpl_x->parse("infos.vols");
-	}
-
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");
 	$tmpl_x->parse("infos");
