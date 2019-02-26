@@ -28,13 +28,9 @@
 	{
 		$tmpl_menu->parse("infos.previsions");
 	}
-	if (GetDroit("AccesConfigDonneesUser"))
+	if (GetDroit("AccesConfigNavigation"))
 	{
-		$tmpl_menu->parse("infos.utildonnees");
-	}
-	if (GetDroit("AccesConfigCrontab"))
-	{
-		$tmpl_menu->parse("infos.crontab");
+		$tmpl_menu->parse("infos.navigation");
 	}
 
 	$tmpl_menu->parse("infos");

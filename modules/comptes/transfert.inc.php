@@ -55,7 +55,7 @@
 	{
 		affInformation("Le montant du transfert est supérieur au solde du compte.","error");
 	}
-	else if (($fonc=="Enregistrer") && ($form_tiers>0) && ($val>0) && ($MyOpt["id_PosteTransfere"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if (($fonc=="Enregistrer") && ($form_tiers>0) && ($val>0) && ($MyOpt["id_PosteTransfert"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$res=new user_class($form_tiers,$sql);
 		
@@ -67,12 +67,12 @@
 	
 		$ventil=array();
 		$ventil["ventilation"]="debiteur";
-		$ventil["data"][0]["poste"]=$MyOpt["id_PosteTransfere"];
+		$ventil["data"][0]["poste"]=$MyOpt["id_PosteTransfert"];
 		$ventil["data"][0]["tiers"]=$gl_uid;
 		$ventil["data"][0]["montant"]=$val;
 	
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($res->data["idcpt"],$MyOpt["id_PosteTransfere"],$form_commentaire,$dte,$val,$ventil);
+		$mvt->Generate($res->data["idcpt"],$MyOpt["id_PosteTransfert"],$form_commentaire,$dte,$val,$ventil);
 		$mvt->Save();
 		$nbmvt=$mvt->Debite();
 
@@ -99,7 +99,7 @@
 		
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
-	else if ($MyOpt["id_PosteTransfere"]==0)
+	else if ($MyOpt["id_PosteTransfert"]==0)
 	{
 		affInformation("L'id du poste pour le transfère n'est pas renseigné. Contactez votre administrateur.","error");
 	}

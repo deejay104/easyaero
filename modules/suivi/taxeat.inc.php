@@ -57,16 +57,65 @@
 		$dest=checkVar("ddest","varchar");
 		$taxe=checkVar("dtaxe","varchar");
 		$date=checkVar("ddate","date");
-
+		$pilote=checkVar("dpilote","numeric");
+			
 		$id=checkVar("id","numeric");
 		if ($id>0)
 		{
 			$objresa=new resa_class($id,$sql);
 			$dest=$objresa->val("destination");
 			$date=$objresa->val("dte_deb");
+			$pilote=$objresa->val("uid_pilote");
+
+			$query = "SELECT id FROM ".$MyOpt["tbl"]."_navpoints AS wp WHERE nom='".$objresa->Val("destination")."'";
+			$res=$sql->QueryRow($query);
+
+			$objwp=new navpoint_class($res["id"],$sql);
+			$taxe=$objwp->Val("taxe");
+
+			$objresa->Valid("taxeok","oui");
+			$objresa->Save();
 		}
-		
-		echo "Taxe AT ".$dest." du ".$date;
+
+		if ($pilote>0)
+		{
+			$usr=new user_class($pilote,$sql);
+
+			$txt="Taxe AT ".$dest." du ".$date;
+
+			$mvt = new compte_class(0,$sql);
+			$mvt->Generate($usr->Val("idcpt"),$MyOpt["id_PosteTaxeAT"],$txt,date("Y-m-d"),$taxe,array());
+			$mvt->Save();
+			$mvt->Debite();
+			
+			// A voir si cette partie est nécessaire ?
+			$tmpl_x->assign("aff_mouvement_detail", $mvt->Affiche());
+			$tmpl_x->parse("corps.aff_mvt_detail");
+		}
+	}
+
+	if ($fonc=="taxeok")
+	{
+		$id=checkVar("id","numeric");
+
+		if ($id>0)
+		{
+			$objresa=new resa_class($id,$sql);
+			$objresa->Valid("taxeok","oui");
+			$objresa->Save();
+		}
+	}
+	
+// ---- Liste des pilotes
+	$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"),"");
+
+	foreach($lst as $i=>$id)
+	{
+		$resusr=new user_class($id,$sql);
+
+		$tmpl_x->assign("id_pilote", $resusr->idcpt);
+		$tmpl_x->assign("nom_pilote",  $resusr->Aff("fullname","val"));
+		$tmpl_x->parse("corps.lst_pilote");
 	}
 
 // ---- Liste des vols avec une destination avec taxe

@@ -30,13 +30,17 @@ $MyOptHelp["uid_tableaubord"]="Compte par défaut pour le tableau de bord";
 $MyOptTmpl["id_PosteManip"]=0;
 $MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
 
-// ID poste pour factures
+// ID poste pour les factures
 $MyOptTmpl["id_PosteFacture"]=0;
 $MyOptHelp["id_PosteFacture"]="ID du poste pour le crédit des factures";
 
-// ID poste pour les transfère
-$MyOptTmpl["id_PosteTransfere"]=0;
-$MyOptHelp["id_PosteTransfere"]="ID du poste pour le transfère vers le compte d'un autre membre";
+// ID poste pour les transfèrts
+$MyOptTmpl["id_PosteTransfert"]=0;
+$MyOptHelp["id_PosteTransfert"]="ID du poste pour le transfert vers le compte d'un autre membre";
+
+// ID poste pour les taxes d'atterrissage
+$MyOptTmpl["id_PosteTaxeAT"]=0;
+$MyOptHelp["id_PosteTaxeAT"]="ID du poste pour les taxes d'atterrissage";
 
 // ID poste pour les crédits de compte
 $MyOptTmpl["PosteCredite"]["virement"]=0;

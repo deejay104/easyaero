@@ -39,3 +39,8 @@ class navpoint_class extends objet_core
 		parent::__construct($id,$sql);
 	}
 }
+
+function ListWaypoints($sql)
+{
+	return ListeObjets($sql,"navpoints",array("id"),array());
+}

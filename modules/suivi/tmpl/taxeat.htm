@@ -71,6 +71,7 @@ function SubmitDialog()
 	document.getElementById("dia_date").value=document.getElementById("date_0").value;
 	document.getElementById("dia_dest").value=document.getElementById("dest_0").value;
 	document.getElementById("dia_taxe").value=document.getElementById("taxe_0").value;
+	document.getElementById("dia_pilote").value=document.getElementById("pilote_0").value;
 	document.getElementById("debite").submit();
 	dialog.dialog( "close" );
 }
@@ -96,6 +97,7 @@ function HideLine(id)
 	<INPUT type="hidden" id="dia_dest" name="ddest" value="">
 	<INPUT type="hidden" id="dia_taxe" name="dtaxe" value="">
 	<INPUT type="hidden" id="dia_date" name="ddate" value="">
+	<INPUT type="hidden" id="dia_pilote" name="dpilote" value="">
 	<div id="dialog-form" title="Débiter Taxe d'atterrissage" class="formulaire" style="display:none;">
 		<br />
 		<TABLE  class='tableauAff'>
@@ -109,14 +111,28 @@ function HideLine(id)
 			<TR>
 				<TD width=20>&nbsp;</TD>
 				<TD><input id="date_0" type="date" value="{today}" style="width:180px!important;"></TD>
-				<TD>{pilote_vols}</TD>
+				<TD>
+					<SELECT id="pilote_0">
+						<OPTION value="">...</OPTION>
+						<!-- BEGIN: lst_pilote -->
+						<OPTION value="{id_pilote}">{nom_pilote}</OPTION>
+						<!-- END: lst_pilote -->
+					</SELECT>
+				</TD>
 				<TD><input id="dest_0" value="" style="width:160px!important; "></TD>
 				<TD><input id="taxe_0" value="0.00" style="width:70px!important;"></TD>
 			</TR>
 		</TABLE>
 	</div>
 </form>
-		
+
+<!-- BEGIN: aff_mvt_detail -->
+<div style='border: 1px solid #000000;'>
+{aff_mouvement_detail}
+</div>
+<br />
+<!-- END: aff_mvt_detail -->
+
 <FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="suivi">
@@ -148,7 +164,7 @@ function HideLine(id)
 			<TD><input id="dest_{id}" name="dest[{id}]" value="{destination_vols}" style="width:160px; "></TD>
 			<TD>{status_vols}</TD>
 			<TD><input id="taxe_{id}" name="taxe[{id}]" type="hidden" value="{taxe_vols}" style="width:70px;"><div id="taxeaff_{id}">{taxe_vols}</div></TD>
-			<td><a id='hide_{id}' href="index.php?mod=suivi&rub=taxeat&fonc=taxeok" class='imgDelete' style='display:none;'><img src="{path_module}/img/icn16_cacher.png"></a></td>
+			<td><a id='hide_{id}' href="index.php?mod=suivi&rub=taxeat&fonc=taxeok&id={id}" class='imgDelete' style='display:none;'><img src="{path_module}/img/icn16_cacher.png"></a></td>
 			<td><a id='pay_{id}' href="index.php?mod=suivi&rub=taxeat&fonc=debite&id={id}" class='imgDelete' style='display:none;'><img src="{path_module}/img/icn16_debiter.png"></a></td>
 		</TR>
 		<!-- END: lst_vols -->

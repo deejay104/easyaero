@@ -517,6 +517,7 @@ class resa_class extends objet_core
 			"uid_avion"=>$this->uid_ressource,
 			"destination"=>$this->destination,
 			"taxe"=>$this->data["taxe"],
+			"taxeok"=>$this->data["taxeok"],
 			"nbpersonne"=>$this->nbpersonne,
 			"invite"=>$this->invite,
 			"accept"=>$this->accept,
