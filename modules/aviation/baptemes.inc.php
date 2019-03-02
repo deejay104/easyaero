@@ -42,7 +42,7 @@
 	$form_status=checkVar("form_status","numeric");
 	  
 // ---- Liste des status
-	if ((!isset($form_status)) || (!is_numeric($form_status)))
+	if (!isset($_REQUEST["form_status"]))
 	  { $form_status=-2; }
 
   	$btm = new bapteme_class(0,$sql);
