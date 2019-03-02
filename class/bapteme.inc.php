@@ -78,6 +78,10 @@ class bapteme_class extends objet_core
 		}
 	}
 
+	function ListeStatus()
+	{
+		return $this->tabList["status"];
+	}
 }
 
 
@@ -94,18 +98,19 @@ function ListeBaptemes($sql,$actif=array("oui"),$status)
 	  { $status=-2; }
 	if ($status==-2)
 	  {
-	  	$st="status<>4 AND status<>3";
+	  	$st="status<>'5' AND status<>'6'";
 	  }
 	else if ($status==-1)
 	  {
-	  	$st="1";
+	  	$st="1=1";
 	  }
 	else
 	  {
-	  	$st="status=".$status;
+	  	$st="status='".$status."'";
 	  }
 
 	$query = "SELECT id FROM ".$MyOpt["tbl"]."_bapteme WHERE ($txt) AND ($st)";
+
 	$sql->Query($query);
 	$res=array();
 	for($i=0; $i<$sql->rows; $i++)
@@ -114,18 +119,6 @@ function ListeBaptemes($sql,$actif=array("oui"),$status)
 		$res[$i]=$sql->data["id"];
 	  }
 	return $res;
-}
-
-function ListeStatus()
-{
-	$tabStatus=array();
-	$tabStatus[0]="Nouveau";
-	$tabStatus[1]="Affecté";
-	$tabStatus[2]="Planifié";
-	$tabStatus[3]="Effectué";
-	$tabStatus[4]="Annulé";
-
-	return $tabStatus;
 }
 
 ?>

@@ -38,11 +38,15 @@
 	  	$tmpl_x->parse("infos.ajout");
 	  }
 
+// ----
+	$form_status=checkVar("form_status","numeric");
+	  
 // ---- Liste des status
 	if ((!isset($form_status)) || (!is_numeric($form_status)))
 	  { $form_status=-2; }
 
-	$tabStatus=ListeStatus();
+  	$btm = new bapteme_class(0,$sql);
+	$tabStatus=$btm->ListeStatus();
 	foreach($tabStatus as $id=>$txt)
 	  {
 		$tmpl_x->assign("form_statusid", $id);

@@ -1,13 +1,13 @@
 <?
-// ---- Refuse l'accÃ¨s en direct
+// ---- Refuse l'accès en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- VÃ©rifie les paramÃ¨tres
+// ---- Vérifie les paramètres
 	$id=checkVar("id","numeric");
 	$fonc=checkVar("fonc","varchar");
 
-// ---- RÃ©cupÃ¨re les infos
+// ---- Récupère les infos
 	$ret=array();
 	$ret["type"]=$fonc;
 
@@ -48,7 +48,7 @@
 		$ret["result"]="OK";
 	}
 	
-// ---- Renvoie le rÃ©sultat
+// ---- Renvoie le résultat
 	echo json_encode($ret);
 ?><?
 
