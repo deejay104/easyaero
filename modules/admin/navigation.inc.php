@@ -38,16 +38,29 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Liste des waypoints
-	$tabTitre=array();
-	$tabTitre["nom"]["aff"]="Nom";
-	$tabTitre["nom"]["width"]=120;
-	$tabTitre["description"]["aff"]="Description";
-	$tabTitre["description"]["width"]=350;
-	$tabTitre["icone"]["aff"]="Type";
-	$tabTitre["icone"]["width"]=100;
-	$tabTitre["taxe"]["aff"]="Taxe";
-	$tabTitre["taxe"]["width"]=100;
-	
+
+	$tabTitre=array(
+		"nom"=>array(
+			"aff"=>"Nom",
+			"width"=>120
+		),
+		"description"=>array(
+			"aff"=>"Description",
+			"width"=>350
+		),
+		"icone"=>array(
+			"aff"=>"Type",
+			"width"=>100
+		),
+		"taxe"=>array(
+			"aff"=>"Taxe",
+			"width"=>100
+		),
+		"action"=>array(
+			"aff"=>"",
+			"width"=>40
+		),
+	);
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar",1);
 	$ts=checkVar("ts","numeric");
@@ -79,14 +92,22 @@
 	{ 
 		$sql->GetRow($i);
 		
-		$tabValeur[$i]["nom"]["val"]=$sql->data["nom"];
-		$tabValeur[$i]["description"]["val"]=$sql->data["description"];
-		$tabValeur[$i]["icone"]["val"]=$sql->data["icone"];
-		$tabValeur[$i]["taxe"]["val"]=$sql->data["taxe"];
+		$tabValeur[$i]["id"]["val"]=$sql->data["id"];
 
+		$tabValeur[$i]["nom"]["val"]="<div id='nom_".$sql->data["id"]."'>".$sql->data["nom"]."</div>";
+		$tabValeur[$i]["description"]["val"]="<div id='description_".$sql->data["id"]."'>".$sql->data["description"]."</div>";
+		$tabValeur[$i]["icone"]["val"]=$sql->data["icone"];
+		$tabValeur[$i]["taxe"]["val"]="<div id='taxe_".$sql->data["id"]."'>".$sql->data["taxe"]."</div>";
+
+		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
+		$tabValeur[$i]["action"]["aff"]="<div id='action_".$sql->data["id"]."' style='display:none;'><a id='edit_".$sql->data["id"]."' class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a></div>";
+
+		$tmpl_x->assign("lst_id",$sql->data["id"]);
+		$tmpl_x->parse("corps.lst_edit");
 	}
 	
-	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,"",$ts,$tl,$totligne,true));
+
+	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,"",$ts,$tl,$totligne,true,true,"action"));
 
 	
 // ---- Affecte les variables d'affichage

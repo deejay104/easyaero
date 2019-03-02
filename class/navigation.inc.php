@@ -29,6 +29,8 @@ class navpoint_class extends objet_core
 		"lon"=>array("type"=>"varchar","len"=>10),
 		"icone"=>array("type"=>"enum","len"=>20),
 		"taxe"=>array("type"=>"price","default"=>0),
+		"uid_maj"=>array("type"=>"number"),
+		"dte_maj"=>array("type"=>"datetime"),
 	);
 	protected $tabList=array(
 		"icone"=>array("Airport"=>"Aéroport","Waypoint"=>"Point de passage","Navaid"=>"Point personalisé"),

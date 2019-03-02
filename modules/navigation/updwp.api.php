@@ -4,12 +4,12 @@
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 // ----
-  	$nid=$_GET['nid'];
+  	$nid=checkVar("nid","numeric");
 
-	if (!is_numeric($nid))
+	if ($nid==0)
 	{
 	  	echo "ID not provided.";
-		error_log("ID not provided. : ".$nid);
+		error_log("ID not provided.");
 	  	exit;
 	}
 
@@ -43,3 +43,4 @@
 	  	echo("Access denied.");
 	}
 ?>
+

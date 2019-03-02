@@ -173,7 +173,7 @@
 	$tabTitre["inst"]["bottom"]=AffTemps($tabTotal["inst"]);
 
 
-	$tmpl_x->assign("tab_liste",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+	$tmpl_x->assign("tab_liste",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"type=".$type."&dte=".$dte));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

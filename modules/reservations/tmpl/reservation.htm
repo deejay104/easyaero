@@ -51,7 +51,19 @@
 
 		$("#destination").autocomplete({
 			source: "api.php?mod=navigation&rub=getwp&type=Airport",
-			select: function(event, ui) { oFormObject = document.forms['reservation']; oFormObject.elements["destination"].value=ui.item.value; },
+			select: function(event, ui) { 
+				oFormObject = document.forms['reservation']; 
+				oFormObject.elements["destination"].value=ui.item.value; 
+				
+				if ((ui.item.taxe>0) && (document.getElementById("taxe").value=='none'))
+				{
+					document.getElementById("taxe").value='notpaid';
+				}
+				if (ui.item.taxe==0)				{
+					document.getElementById("taxe").value='none';
+				}
+
+			},
 			delay: 0
 		});
 

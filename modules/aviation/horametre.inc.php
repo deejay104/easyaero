@@ -106,7 +106,7 @@
 	foreach($lstresa as $i=>$rid)
 	{
 		$resa = new resa_class($rid,$sql,false);
-		if ($lstresa[$i+1]>0)
+		if ((isset($lstresa[$i+1])) && ($lstresa[$i+1]>0))
 		{
 			$resa_next = new resa_class($lstresa[$i+1],$sql,false);
 		}

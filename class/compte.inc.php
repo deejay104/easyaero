@@ -129,20 +129,23 @@ class compte_class{
 					// Parcours les ventilations
 					$tot["debiteur"]=$montant;
 					$tot["crediteur"]=$montant;
-					foreach ($ventilation["data"] as $i=>$v)
+					if ((isset($ventitation)) && (is_array($ventilation)))
 					{
-						// Vérifie le montant
-						preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$v["montant"],$t);
-						$m=$t[1].".".$t[2];
-						// Créé les lignes de mouvement
-						$this->mvt[$i]["uid"]=$v["tiers"];
-						$this->mvt[$i]["tiers"]=($ventilation["ventilation"]=="debiteur") ? $d : $c;
-						$this->mvt[$i]["montant"]=($ventilation["ventilation"]=="debiteur") ? -$m : $m;
-						$this->mvt[$i]["poste"]=$v["poste"];
-						$this->mvt[$i]["facture"]=$facture;
-						$this->mvt[$i]["rembfact"]=$rembfact;
-						$i=$i+1;
-						$tot[$ventilation["ventilation"]]=$tot[$ventilation["ventilation"]]-$m;
+						foreach ($ventilation["data"] as $i=>$v)
+						{
+							// Vérifie le montant
+							preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$v["montant"],$t);
+							$m=$t[1].".".$t[2];
+							// Créé les lignes de mouvement
+							$this->mvt[$i]["uid"]=$v["tiers"];
+							$this->mvt[$i]["tiers"]=($ventilation["ventilation"]=="debiteur") ? $d : $c;
+							$this->mvt[$i]["montant"]=($ventilation["ventilation"]=="debiteur") ? -$m : $m;
+							$this->mvt[$i]["poste"]=$v["poste"];
+							$this->mvt[$i]["facture"]=$facture;
+							$this->mvt[$i]["rembfact"]=$rembfact;
+							$i=$i+1;
+							$tot[$ventilation["ventilation"]]=$tot[$ventilation["ventilation"]]-$m;
+						}
 					}
 					
 					// Complète s'il y a un reste
@@ -283,7 +286,7 @@ class compte_class{
 			// $sql->Update($query);
 
 			$this->nbmvt++;
-			$totmnt=$totmnt+$form_montant[$k];
+			$totmnt=$totmnt+$montant;
 
 		}
 

@@ -7,6 +7,111 @@
 
 <!-- BEGIN: corps -->
 
+
+<script>
+$( function() {
+
+	function loadNavpoint(id) {
+		$.ajax({
+			type: 'GET',
+			url: 'api.php?mod=navigation&rub=getwp&id='+id,
+			dataType: 'JSON',
+
+			success: function(response) {
+				document.getElementById('form_id').value=response[0].id;
+				document.getElementById('form_nom').value=response[0].nom;
+				document.getElementById('form_description').value=response[0].description;
+				document.getElementById('form_taxe').value=response[0].taxe;
+				document.getElementById('form_lat').value=response[0].lat;
+				document.getElementById('form_lon').value=response[0].lon;
+			},
+			error: function(response) {
+				console.log("error");
+				console.log(response);
+			}
+		});   
+	}
+
+    function saveNavpoint() {
+		var valid = true;
+
+		if ( valid ) {
+			dialog.dialog( "close" );
+
+			var id=document.getElementById('form_id').value;
+			console.log("edit: "+id);
+			data = {};
+			data["nom"]=document.getElementById('form_nom').value;
+			data["description"]=document.getElementById('form_description').value;
+			data["taxe"]=document.getElementById('form_taxe').value;
+			data["lon"]=document.getElementById('form_lon').value;
+			data["lat"]=document.getElementById('form_lat').value;
+
+			document.getElementById('nom_'+id).innerHTML=data["nom"];
+			document.getElementById('description_'+id).innerHTML=data["description"];
+			document.getElementById('taxe_'+id).innerHTML=data["taxe"];
+
+			$.ajax({
+				url:'api.php?mod=navigation&rub=updnav&fonc=post&id='+id,
+				type: 'POST',
+				data: data,
+				dataType: 'JSON',
+				success: function(response)
+				{
+					if (response.result=="OK")
+					{
+						console.log("ok");
+						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>Le point de navigation a été enregistré</div>";
+					}
+					else
+					{
+						console.log("nok");
+						document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde ("+response.result+")</div>";
+					}
+				},
+				error : function()
+				{
+					console.log("nok");
+					document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde</div>";
+				}
+			});
+		}
+		return valid;
+    }
+
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 500,
+	  top: 10,
+      modal: true,
+      buttons: {
+        "Enregistrer": saveNavpoint,
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+    });
+
+<!-- BEGIN: lst_edit -->
+	$( "#edit_{lst_id}" ).on( "click", function() {
+		loadNavpoint({lst_id});
+		dialog.dialog( "open" );
+    });
+<!-- END: lst_edit -->
+});
+</script>
+
+<div id="dialog-form" title="Editer un point de navigation" class="formulaire" style="display:none;">
+	<input id="form_id" type="hidden" value="">
+	<p><label>Nom</label><input id="form_nom" value=""></span></p>
+	<p><label>Description</label><input id="form_description" value=""></p>
+	<p><label>Taxe</label><input id="form_taxe" value=""></p>
+	<p><label>Longitude</label><input id="form_lon" value=""></p>
+	<p><label>Latitide</label><input id="form_lat" value=""></p>
+	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+</div>
+
 <FORM id="form_tableau" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="admin">
