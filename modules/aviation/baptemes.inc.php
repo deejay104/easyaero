@@ -82,11 +82,17 @@
 
 	if ($theme!="phone")
 		{
+			$tabTitre["type"]["aff"]="Type";
+			$tabTitre["type"]["width"]=100;
+
+			$tabTitre["bonkdo"]["aff"]="Bon KDO";
+			$tabTitre["bonkdo"]["width"]=90;
+
 			$tabTitre["nb"]["aff"]="Nb";
 			$tabTitre["nb"]["width"]=30;
 		
-			$tabTitre["telephone"]["aff"]="Téléphone";
-			$tabTitre["telephone"]["width"]=120;
+			$tabTitre["dte_creat"]["aff"]="Date création";
+			$tabTitre["dte_creat"]["width"]=120;
 		}
 
 	$tabTitre["status"]["aff"]="Status";
@@ -94,6 +100,8 @@
 
 	if ($theme!="phone")
 		{
+			$tabTitre["line1"]["aff"]="<line>";
+
 			$tabTitre["paye"]["aff"]="Payé";
 			$tabTitre["paye"]["width"]=100;
 		
@@ -102,13 +110,7 @@
 		
 			$tabTitre["pilote"]["aff"]="Pilote";
 			$tabTitre["pilote"]["width"]=180;
-		
-			$tabTitre["type"]["aff"]="Type";
-			$tabTitre["type"]["width"]=100;
-
-			$tabTitre["bonkdo"]["aff"]="Bon KDO";
-			$tabTitre["bonkdo"]["width"]=90;
-		
+				
 			$tabTitre["resa"]["aff"]="Réservation";
 			$tabTitre["resa"]["width"]=100;
 		}
@@ -125,12 +127,14 @@
 		$tabValeur[$i]["nom"]["aff"]=$btm->aff("nom","html");
 		$tabValeur[$i]["nb"]["val"]=$btm->val("nb");
 		$tabValeur[$i]["nb"]["aff"]=$btm->aff("nb","html");
-		$tabValeur[$i]["telephone"]["val"]=$btm->val("telephone");
-		$tabValeur[$i]["telephone"]["aff"]=$btm->aff("telephone","html");
+		$tabValeur[$i]["dte_creat"]["val"]=$btm->dte_creat;
+		$tabValeur[$i]["dte_creat"]["aff"]=$btm->aff("dte_creat","html");
 		$tabValeur[$i]["status"]["val"]=$btm->val("status");
 		$tabValeur[$i]["status"]["aff"]=$btm->aff("status","html");
 
-		if ($btm->val("dte_paye")!="0000-00-00")
+		$tabValeur[$i]["line1"]["val"]="<line>";
+
+			if ($btm->val("dte_paye")!="0000-00-00")
 		{
 			$tabValeur[$i]["paye"]["val"]=$btm->val("dte_paye");
 			$tabValeur[$i]["paye"]["aff"]=$btm->aff("dte_paye","html");
