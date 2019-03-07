@@ -494,6 +494,7 @@ $tabCustom=Array
 	),
 	"utilisateurs" => Array
 	(
+		"idcpt" => Array("Type" => "int(10) unsigned", "Default" => "0"),
 		"sexe" => Array("Type" => "enum('M','F','NA')", "Default" => "NA", ),
 		"pere" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1"),
 		"mere" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1"),
