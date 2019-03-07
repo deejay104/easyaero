@@ -12,13 +12,13 @@
 	$res=$sql->QueryRow($query);
 	if ($res["id"]==0)
 	{		
-		$q[]="INSERT INTO `".$MyOpt["tbl"]."_utilisateurs` SET id=1, nom='club', prenom='', initiales='', password='', notification='non', droits='', actif='oui', virtuel='oui', uid_maj=1, dte_maj=NOW()";
+		$q[]="INSERT INTO `".$MyOpt["tbl"]."_utilisateurs` SET nom='club', prenom='', initiales='', password='', notification='non', droits='', actif='oui', virtuel='oui', uid_maj=1, dte_maj=NOW()";
 	}
 	$query="SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE nom='banque'";
 	$res=$sql->QueryRow($query);
 	if ($res["id"]==0)
 	{		
-		$q[]="INSERT INTO `".$MyOpt["tbl"]."_utilisateurs` SET id=2, nom='banque', prenom='', initiales='', password='', notification='non', droits='', actif='oui', virtuel='oui', uid_maj=1, dte_maj=NOW()";
+		$q[]="INSERT INTO `".$MyOpt["tbl"]."_utilisateurs` SET nom='banque', prenom='', initiales='', password='', notification='non', droits='', actif='oui', virtuel='oui', uid_maj=1, dte_maj=NOW()";
 	}
 	
   	foreach($q as $i=>$query)
