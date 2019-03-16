@@ -34,19 +34,14 @@
 	$idusr=checkVar("idusr","numeric");
 	$form_data=checkVar("form_data","array");
 	
+	$msg_erreur="";
+	$msg_confirmation="";
+	
 // ---- Sauvegarde
 	$manip=new manip_class($id,$sql);
 
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$type="";
-	  	$s="";
-	  	foreach($mtype as $t=>$v)
-	  	  {
-	  	  	$type.=$s.$t;
-	  	  	$s=",";
-	  	  }
-
 		if (count($form_data)>0)
 		{
 			foreach($form_data as $k=>$v)

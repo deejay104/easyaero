@@ -53,7 +53,8 @@ class manip_class extends objet_core
 			$sql->GetRow($i);
 			if ($sql->data["groupe"]!="SYS")
 			{
-				$this->tabList["type"][strtolower($sql->data["groupe"])]=$sql->data["description"];
+				$this->tabList["type"]["fr"][strtolower($sql->data["groupe"])]=$sql->data["description"];
+				$this->tabList["type"]["en"][strtolower($sql->data["groupe"])]=$sql->data["description"];
 			}
 		}
 		

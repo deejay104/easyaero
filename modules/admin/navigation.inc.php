@@ -68,23 +68,36 @@
 	$tl=20;
 	
 	if ($order=="") { $order="nom"; }
+	if ($trie=="")
+	{
+		$tabsearch["taxe"]="*";
+		$trie="d";
+	}
 
-	// Calcul le nombre ligne totale
-	$query = "SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_navpoints";
-	$res=$sql->QueryRow($query);
-	$totligne=$res["nb"];
-
+	
+	// Génération des conditions
 	$q="";
 	$op="";
 	foreach($tabsearch as $k=>$v)
 	{
-		if ($v!="")
+		if ($v=="*")
+		{
+			$q.=$op." ".$k." <> ''";
+			$op="AND";
+		}
+		else if ($v!="")
 		{
 			$q.=$op." ".$k." LIKE '%".addslashes($v)."%'";
 			$op="AND";
 		}
 	}
 
+	// Calcul le nombre ligne totale
+	$query = "SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_navpoints WHERE ".$q;
+	$res=$sql->QueryRow($query);
+	$totligne=$res["nb"];
+
+	// Récupération des lignes
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_navpoints ".(($q!="") ? "WHERE ".$q : "")." ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT ".$ts.",".$tl;
 	$sql->Query($query);
 	$tabValeur=array();
