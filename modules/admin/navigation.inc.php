@@ -76,19 +76,17 @@
 
 	
 	// Génération des conditions
-	$q="";
+	$q="1=1 ";
 	$op="";
 	foreach($tabsearch as $k=>$v)
 	{
 		if ($v=="*")
 		{
-			$q.=$op." ".$k." <> ''";
-			$op="AND";
+			$q.="AND ".$k." <> ''";
 		}
 		else if ($v!="")
 		{
-			$q.=$op." ".$k." LIKE '%".addslashes($v)."%'";
-			$op="AND";
+			$q.="AND ".$k." LIKE '%".addslashes($v)."%'";
 		}
 	}
 
