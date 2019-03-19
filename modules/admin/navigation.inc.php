@@ -68,16 +68,11 @@
 	$tl=20;
 	
 	if ($order=="") { $order="nom"; }
-	if ($trie=="")
-	{
-		$tabsearch["taxe"]="*";
-		$trie="d";
-	}
+
 
 	
 	// Génération des conditions
 	$q="1=1 ";
-	$op="";
 	foreach($tabsearch as $k=>$v)
 	{
 		if ($v=="*")
@@ -86,8 +81,14 @@
 		}
 		else if ($v!="")
 		{
-			$q.="AND ".$k." LIKE '%".addslashes($v)."%'";
+			$q.="AND ".$k." LIKE '%".addslashes($v)."%' ";
 		}
+	}
+
+	if ($trie=="")
+	{
+		$trie="d";
+		$q.="AND taxe <> '' ";
 	}
 
 	// Calcul le nombre ligne totale
