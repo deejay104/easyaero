@@ -72,8 +72,8 @@
 		  	}
 		}
 
-		if ( ($form_data["id_pilote"]>0) && ($form_data["id_avion"]>0) && ($form_data["dte"]["date"]!='0000-00-00') && ($form_data["dte"]["time"]!='00:00') )
-		  { $btm->Valid("status","2"); }
+		if ( ($form_data["id_pilote"]>0) && ($form_data["id_avion"]>0) && ($form_data["dte"]["date"]!='0000-00-00') && ($form_data["dte"]["time"]!='00:00') && ($btm->val("status")<4) )
+		  { $btm->Valid("status","4"); }
 
 		$btm->Save();
 
