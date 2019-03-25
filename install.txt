@@ -1,5 +1,5 @@
-Easy Aero 2.14 Installation
--------------------
+Easy Aero 3.0 Installation
+--------------------------
 
 1. Prérequis
 
@@ -35,3 +35,4 @@ Editer les informations du fichier
 
 - Ouvrir l'url du site
 La création des tables se fait automatiquement
+
