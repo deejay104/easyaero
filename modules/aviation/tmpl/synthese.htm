@@ -40,26 +40,36 @@
 		<p><label>Type de vol</label>{form_type}</p>
 		<p><label>Phase de progression</label>{form_phase}</p>
 	</div>
-	<div class='formulaire' style='float:left; width:50%; height:35px;'>
-		<p><label>Vol n°</label>{form_nbvol}</p>
-	</div>
 
-	<div class='formulaire' style='float:left; width:50%;height:35px;'>
-		<p><label style='width:100px;'>Date du vol</label>{form_dtevol}</p>
-	</div>
+	<table width='100%'>
+	<tr>
+		<td width=50%>
+			<div class='formulaire' style='height:35px;'>
+				<p><label>Vol n°</label>{form_nbvol}</p>
+			</div>
+		</td>
+		<td>
+			<div class='formulaire' style='height:35px; margin-left:10px;'>
+				<p><label style='width:100px;'>Date du vol</label>{form_dtevol}</p>
+			</div>
+		</td>
+	</tr>
 
-	<div class='formulaire' style='clear: left; float:left; width:50%; height:65px;'>
-		<p><label>Eleve</label>{form_eleve}</p>
-		<p><label>Instructeur</label>{form_instructeur}</p>
-	</div>
-
-	<div class='formulaire' style='float:left; width:50%; height:65px;'>
-		<p><label style='width:100px;'>Leçon n°</label><img src='{path_module}/img/icn16_{form_img_lecon}.png'> {form_lecon}</p>
-		<p><label style='width:100px;'>Autre</label><img src='{path_module}/img/icn16_{form_img_autre}.png'> Vol de révision, de reprise, etc...</p>
-	</div>
-
-	<div style='clear: left;'>
-	</div>
+	<tr>
+		<td>
+			<div class='formulaire' style='height:65px;'>
+				<p><label>Eleve</label>{form_eleve}</p>
+				<p><label>Instructeur</label>{form_instructeur}</p>
+			</div>
+		</td>
+		<td>
+			<div class='formulaire' style='height:65px; margin-left:10px;'>
+				<p><label style='width:100px;'>Leçon n°</label><img src='{path_module}/img/icn16_{form_img_lecon}.png'> {form_lecon}</p>
+				<p><label style='width:100px;'>Autre</label><img src='{path_module}/img/icn16_{form_img_autre}.png'> Vol de révision, de reprise, etc...</p>
+			</div>
+		</td>
+	</tr>
+	</table>
 
 	<div class='formulaireTitre'>
 		COMPETENCES (Remarques)
@@ -77,17 +87,22 @@
 	<div class='formulaireTitre'>
 		GESTION DE LA MENACE ET DE L'ERREUR
 	</div>
-	<div style='float:left; width:50%; padding-right:10px;'>
-		MENACE (identification, mesures en atténuation)
-		{form_menace}
-	</div>
-	<div style='float:left; width:50%;'>
-		ERREUR (Détection, correction,...)
-		{form_erreur}
-	</div>
-	
-	<div style='clear: left;'>
-	</div>
+	<table width='100%'>
+	<tr>
+		<td width=50%>
+			<div>
+				MENACE (identification, mesures en atténuation)
+				{form_menace}
+			</div>
+		</td>
+		<td>
+			<div style='margin-left: 10px;'>
+				ERREUR (Détection, correction,...)
+				{form_erreur}
+			</div>
+		</td>
+	</tr>
+	</table>
 
 <!-- BEGIN: submit -->
 	<div class="formulaireSubmit" style=" padding-left:55px;">
@@ -100,29 +115,33 @@
 	<div class='formulaireTitre'>
 		VISAS
 	</div>
-	<div class='formulaire' style='float:left; width:50%;'>
-		<b>Instructeur</b><br />
+	<table width='100%'>
+	<tr>
+		<td width='50%'>
+			<div class='formulaire'>
+				<b>Instructeur</b><br />
 <!-- BEGIN: signinst -->
-		<input type="submit" name="fonc" value="Signature Instructeur">
+		<		input type="submit" name="fonc" value="Signature Instructeur">
 <!-- END: signinst -->
 <!-- BEGIN: signedinst -->
-		<br />Signé par {form_signinst_name} le {form_signinst_dte}<br />
-		(Clé: {form_signinst_key})
+				<br />Signé par {form_signinst_name} le {form_signinst_dte}<br />
+				(Clé: {form_signinst_key})
 <!-- END: signedinst -->
-	</div>
-	<div class='formulaire' style='float:left; width:50%;'>
-		<b>Eleve</b><br />
+			</div>
+		</td>
+		<td>
+			<div class='formulaire' style='margin-left:10px;'>
+				<b>Eleve</b><br />
 <!-- BEGIN: signeleve -->
-		<input type="submit" name="fonc" value="Signature Elève">
+				<input type="submit" name="fonc" value="Signature Elève">
 <!-- END: signeleve -->
 <!-- BEGIN: signedeleve -->
-		<br />Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
-		(Clé: {form_signeleve_key})
+				<br />Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
+				(Clé: {form_signeleve_key})
 <!-- END: signedeleve -->
-		<br />
-		<br />
-	</div>
-
+			</div>
+		</td>
+	</table>
 </form>
 <br />
 
