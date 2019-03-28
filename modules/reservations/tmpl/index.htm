@@ -83,12 +83,53 @@
 		height: 100px!important;
 	}
 		
+	.afficheLegende { line-height:16px; margin: 5px; }
+	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
+
+	
+
+		.preloader5 {
+		}
+		.preloader5 span {
+		   vertical-align:middle;
+		   border-radius:100%;
+		   background:#000000;
+		   display:inline-block;
+		   width:8px;
+		   height:8px;
+		   margin:3px 2px;
+		   -webkit-animation:preloader5 0.08s linear infinite alternate;
+		   animation:preloader5 0.08s linear infinite alternate;
+		}
+		.preloader5 span:nth-child(1) {
+		   -webkit-animation-delay:-0.08s;
+		   animation-delay:-0.08s;
+		}
+		.preloader5 span:nth-child(2) {
+		   -webkit-animation-delay:-0.053333s;
+		   animation-delay:-0.053333s;
+		}
+		.preloader5 span:nth-child(3) {
+		   -webkit-animation-delay:-0.026666s;
+		   animation-delay:-0.026666s;
+		}
+		@keyframes preloader5 {
+		   from {transform: scale(0, 0);}
+		   to {transform: scale(1, 1);}
+		}
+		@-webkit-keyframes preloader5 {
+		   from {-webkit-transform: scale(0, 0);}
+		   to {-webkit-transform: scale(1, 1);}
+		}
+	
 </style>
 
 <script>
 	var oldView="old";
 	
-	$(document).ready(function() {
+	$(document).ready(function() { showCalendar(); });
+	
+	function showCalendar() {
 		$('#calendar').fullCalendar({
 			defaultDate: '{form_jour}',
 			defaultView: '{defaultView}',
@@ -263,7 +304,7 @@ console.log(view.name+" "+oldView);
 			}
 		});
 		
-	});
+	}
 
 </script>
 
@@ -273,46 +314,45 @@ console.log(view.name+" "+oldView);
 		Erreur : <code>api.php</code> doit être accessible.
 	</div>
 
-	<div id='loading'>loading...</div>
+	<div id='loading' class="preloader5">
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
 
-	<div id='calendar'></div>
+	<div id='calendar' style='min-height: 620px;'></div>
 
 
-<p style="font-size: 10px; line-height:12px;">
-Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
-</p>
-
-<style>
-.afficheLegende { line-height:16px; margin: 5px; }
-.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
-</style>
+	<p style="font-size: 10px; line-height:12px;">
+	Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
+	</p>
 	
 <table>
 <tr>
-<td>
-<p class="afficheLegende">
-	<label style="background-color: #{maintconf}; "></label>
-	<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
-</p>
+	<td>
+		<p class="afficheLegende">
+			<label style="background-color: #{maintconf}; "></label>
+			<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
+		</p>
 
-<p class="afficheLegende">
-	<label style="background-color: #{maintplan};"></label>
-	Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
-</p>
-<p class="afficheLegende">
-	<label style="background-color: #{meeting};"></label>
-	Une manifestation est prévue ce jour là.
-</p>
-</td>
-<td>
+		<p class="afficheLegende">
+			<label style="background-color: #{maintplan};"></label>
+			Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
+		</p>
+		<p class="afficheLegende">
+			<label style="background-color: #{meeting};"></label>
+			Une manifestation est prévue ce jour là.
+		</p>
+	</td>
+	<td>
 
-<!-- BEGIN: lst_couleur -->
-<p class="afficheLegende" style="width:120px; padding-left:20px;">
-	<label style="background-color: #{couleur_col}; "></label>
-	<span>{couleur_nom}</span>
-</p>
-<!-- END: lst_couleur -->
-</td>
+	<!-- BEGIN: lst_couleur -->
+	<p class="afficheLegende" style="width:120px; padding-left:20px;">
+		<label style="background-color: #{couleur_col}; "></label>
+		<span>{couleur_nom}</span>
+	</p>
+	<!-- END: lst_couleur -->
+	</td>
 </tr>
 </table>
 <!-- END: corps -->
