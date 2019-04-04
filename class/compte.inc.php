@@ -129,7 +129,7 @@ class compte_class{
 					// Parcours les ventilations
 					$tot["debiteur"]=$montant;
 					$tot["crediteur"]=$montant;
-					if ((isset($ventitation)) && (is_array($ventilation)))
+					if ((isset($ventilation)) && (is_array($ventilation)))
 					{
 						foreach ($ventilation["data"] as $i=>$v)
 						{
