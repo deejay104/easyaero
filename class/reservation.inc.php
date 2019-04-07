@@ -408,8 +408,11 @@ class resa_class extends objet_core
 		$res=$sql->QueryRow($query);
 
 		// if ((($res["horadeb"]==$this->horadeb) || ($res["horadeb"]==0)) && ($this->horafin==0))
-		if (($this->horadeb==$this->horadeb_orig) && ($this->horafin==0))
-		  { $this->horadeb=0; }
+		if (isset($this->horadeb_orig))
+		{
+			if (($this->horadeb==$this->horadeb_orig) && ($this->horafin==0))
+			  { $this->horadeb=0; }
+		}
 
 		// Tps horametre >= Tps réel
 		// Deb horametre >= dernier vol

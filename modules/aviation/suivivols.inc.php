@@ -70,6 +70,7 @@
 	{
 		$tabTitre["lastflight"]["aff"]="Dernier vol";
 		$tabTitre["lastflight"]["width"]=140;
+		$tabTitre["lastflight"]["mobile"]="no";
 
 		// $tabTitre["lic"]["aff"]="Licence";
 		// $tabTitre["lic"]["width"]=100;

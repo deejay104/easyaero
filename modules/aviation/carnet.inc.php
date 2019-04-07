@@ -46,7 +46,7 @@
 	if ($theme!="phone")
 	{
 		$tabTitre["dte_deb"]["aff"]="Date";
-		$tabTitre["dte_deb"]["width"]=100;
+		$tabTitre["dte_deb"]["width"]=110;
 	}
 	$tabTitre["nom"]["aff"]="Equipage";
 	$tabTitre["nom"]["width"]=350;
@@ -55,13 +55,18 @@
 	{
 		$tabTitre["tarif"]["aff"]="Tarif";
 		$tabTitre["tarif"]["width"]=50;
+		$tabTitre["tarif"]["mobile"]="no";
 		$tabTitre["dest"]["aff"]="Lieu";
 		$tabTitre["dest"]["width"]=100;
+		$tabTitre["dest"]["mobile"]="no";
 		$tabTitre["heure_deb"]["aff"]="Départ";
 		$tabTitre["heure_deb"]["width"]=70;
+		$tabTitre["heure_deb"]["mobile"]="no";
 		$tabTitre["heure_fin"]["aff"]="Arrivée";
 		$tabTitre["heure_fin"]["width"]=70;
+		$tabTitre["heure_fin"]["mobile"]="no";
 	}
+
 	$tabTitre["heure"]["aff"]="Temps de vol";
 	$tabTitre["heure"]["width"]=110;
 	if ($theme=="phone")
@@ -72,6 +77,8 @@
 		$tabTitre["carbapres"]["width"]=100;
 		$tabTitre["potentiel"]["aff"]="Potentiel";
 		$tabTitre["potentiel"]["width"]=100;
+		// $tabTitre["total"]["aff"]="Total";
+		// $tabTitre["total"]["width"]=100;
 	}
 	else
 	{

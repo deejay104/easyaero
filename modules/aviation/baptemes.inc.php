@@ -101,18 +101,23 @@
 	if ($theme!="phone")
 		{
 			$tabTitre["line1"]["aff"]="<line>";
+			$tabTitre["line1"]["mobile"]="no";
 
 			$tabTitre["paye"]["aff"]="Payé";
 			$tabTitre["paye"]["width"]=100;
+			$tabTitre["paye"]["mobile"]="no";
 		
 			$tabTitre["date"]["aff"]="Date prévue";
 			$tabTitre["date"]["width"]=170;
+			$tabTitre["date"]["mobile"]="no";
 		
 			$tabTitre["pilote"]["aff"]="Pilote";
 			$tabTitre["pilote"]["width"]=180;
+			$tabTitre["pilote"]["mobile"]="no";
 				
 			$tabTitre["resa"]["aff"]="Réservation";
 			$tabTitre["resa"]["width"]=100;
+			$tabTitre["resa"]["mobile"]="no";
 		}
 
 	$lstusr=ListeBaptemes($sql,array("oui"),$form_status);

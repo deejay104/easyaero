@@ -85,14 +85,14 @@
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
-	else if (($fonc=="Enregistrer") && (($btm->data["status"]==0) || ($btm->data["status"]==1) || ($btm->data["status"]==2)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if (($fonc=="Enregistrer") && (($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$btm->Valid("id_pilote",$form_data["id_pilote"],false);
 		$btm->Valid("id_avion",$form_data["id_avion"],false);
-		$btm->Valid("dte",date2sql($form_data["dte_j"])." ".$form_data["dte_h"],false);
+		$btm->Valid("dte",$form_data["dte"],false);
 
-		if ( ($form_data["id_pilote"]>0) && ($form_data["id_avion"]>0) && ($form_data["dte_j"]!='0000-00-00') && ($form_data["dte_h"]!='00:00') )
-		  { $btm->Valid("status","2"); }
+		if ( ($form_data["id_pilote"]>0) && ($form_data["id_avion"]>0) && ($form_data["dte"]!='0000-00-00 00:00') )
+		  { $btm->Valid("status","4"); }
 
 		$btm->Save();
 		$msg_confirmation.="Vos données ont été enregistrées.<BR>";
@@ -129,7 +129,7 @@
 		$msg_resa=$resa->Save(true);
 
 		$btm->data["id_resa"]=$resa->id;
-		$btm->data["status"]=2;
+		$btm->data["status"]=4;
 		$btm->Save();
 
 		$msg_confirmation.=($msg_resa!="") ? $msg_resa : "Réservation confirmée.<BR>";
@@ -139,14 +139,14 @@
 	if (($fonc=="affecte") && ($id>0))
 	  {
 		$btm->data["id_pilote"]=$gl_uid;
-		$btm->data["status"]=1;
+		$btm->data["status"]=3;
 		$btm->Save();
 	  }
 
 // ---- Vol effectué
 	if (($fonc=="effectue") && ($id>0))
 	{
-		$btm->data["status"]=3;
+		$btm->data["status"]=5;
 		$btm->Save();
 	}
 
@@ -205,28 +205,32 @@
 	
 	$ress = new ress_class($btm->data["id_avion"],$sql);
 
-	if ($btm->data["id_pilote"]==0)
+	if (($btm->data["id_pilote"]==0) && ($btm->data["status"]>0))
 	  {
 	  	$tmpl_x->parse("infos.affecter");
+		$tmpl_x->parse("corps.info_prendre");
 	  }
 
-	if (($btm->data["status"]==1) || ($btm->data["id_resa"]==0))
+	if (($btm->data["status"]==2) || ($btm->data["status"]==3) || (($btm->data["status"]==4) && ($btm->data["id_resa"]==0)))
 	{
 		$tmpl_x->parse("infos.planifier");
+		$tmpl_x->parse("corps.info_planifier");
 	}
 
 	if (($ress->CheckDispo(strtotime($btm->data["dte"]),strtotime($btm->data["dte"])+45*60)) && ($btm->data["id_pilote"]>0) && ($btm->data["id_avion"]>0) && ($btm->data["dte"]!='0000-00-00 00:00'))
 	{
 	  	$tmpl_x->parse("infos.reserver");
+		$tmpl_x->parse("corps.info_reserver");
 	}
 
-	if ($btm->data["status"]==2)
+	if ( ($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4) )
 	{
 	  	$tmpl_x->parse("infos.effectue");
+		$tmpl_x->parse("corps.info_effectuer");
 	}
 
 
-	if (($fonc=="planifier") && (($btm->data["status"]==0) || ($btm->data["status"]==1) || ($btm->data["status"]==2)))
+	if (($fonc=="planifier") && (($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4)))
 	{
 		$tmpl_x->assign("form_id_pilote", AffListeMembres($sql,$btm->data["id_pilote"],"form_data[id_pilote]",$type="",$sexe="",$order="std",$virtuel="non"));
 		$tmpl_x->assign("form_id_avion",AffListeRessources($sql,$btm->data["id_avion"],"form_data[id_avion]",array("oui")));

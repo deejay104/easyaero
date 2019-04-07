@@ -55,6 +55,7 @@
 	{
 		$tabTitre["dest"]["aff"]="Lieu";
 		$tabTitre["dest"]["width"]=100;
+		$tabTitre["dest"]["mobile"]="no";
 	}
 	$tabTitre["heure"]["aff"]="Temps de vol";
 	$tabTitre["heure"]["width"]=140;

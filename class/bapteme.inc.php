@@ -86,7 +86,7 @@ class bapteme_class extends objet_core
 
 
 
-function ListeBaptemes($sql,$actif=array("oui"),$status)
+function ListeBaptemes($sql,$actif=array("oui"),$status=-2)
 { global $MyOpt;
 	$txt="1=0";
 	foreach($actif as $a)
@@ -96,9 +96,14 @@ function ListeBaptemes($sql,$actif=array("oui"),$status)
 
 	if (!is_numeric($status))
 	  { $status=-2; }
-	if ($status==-2)
+
+	if (($status==-2) && (GetDroit("ModifBapteme")))
 	  {
 	  	$st="status<>'5' AND status<>'6'";
+	  }
+	else if ($status==-2)
+	  {
+	  	$st="status<>'0' AND status<>'1' AND status<>'5' AND status<>'6'";
 	  }
 	else if ($status==-1)
 	  {

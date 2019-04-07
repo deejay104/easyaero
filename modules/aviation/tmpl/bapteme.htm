@@ -2,27 +2,27 @@
 	<img src="{path_module}/img/icn48_baptemes.png" alt="" />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-<A href="index.php?mod=aviation&rub=baptemes"><IMG src="{path_module}/img/icn32_retour.png" alt="">&nbsp;Liste</A>
+<p><A href="index.php?mod=aviation&rub=baptemes"><IMG src="{path_module}/img/icn32_retour.png" alt="">&nbsp;Liste</A></p>
 <!-- BEGIN: affecter -->
-<A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=affecte"><IMG src="{path_module}/img/icn32_affecte.png" alt="">&nbsp;Prendre</A>
+<p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=affecte"><IMG src="{path_module}/img/icn32_affecte.png" alt="">&nbsp;Prendre</A></p>
 <!-- END: affecter -->
 <!-- BEGIN: planifier -->
-<A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=planifier"><IMG src="{path_module}/img/icn32_planifie.png" alt="">&nbsp;Planifier</A>
+<p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=planifier"><IMG src="{path_module}/img/icn32_planifie.png" alt="">&nbsp;Planifier</A></p>
 <!-- END: planifier -->
 <!-- BEGIN: reserver -->
-<a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=reserver"><IMG src="{path_module}/img/icn32_reservation.png" alt="">&nbsp;Réserver</A>
+<p><a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=reserver"><IMG src="{path_module}/img/icn32_reservation.png" alt="">&nbsp;Réserver</A></p>
 <!-- END: reserver -->
 <!-- BEGIN: effectue -->
-<a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=effectue"><IMG src="{path_module}/img/icn32_effectue.png" alt="">&nbsp;Effectué</A>
+<p><a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=effectue"><IMG src="{path_module}/img/icn32_effectue.png" alt="">&nbsp;Effectué</A></p>
 <!-- END: effectue -->
 <!-- BEGIN: ajout -->
-<A href="index.php?mod=aviation&rub=bapteme&fonc=add&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="">&nbsp;Ajouter</A>
+<p><A href="index.php?mod=aviation&rub=bapteme&fonc=add&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="">&nbsp;Ajouter</A></p>
 <!-- END: ajout -->
 <!-- BEGIN: modification -->
-<A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" alt="">&nbsp;Modifier</A>
+<p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" alt="">&nbsp;Modifier</A></p>
 <!-- END: modification -->
 <!-- BEGIN: suppression -->
-<A href="#" OnClick="ConfirmeClick('index.php?mod=aviation&rub=bapteme&id={id}&fonc=delete','Voulez-vous supprimer ce baptème ?');"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">&nbsp;Supprimer</A>
+<p><A href="#" OnClick="ConfirmeClick('index.php?mod=aviation&rub=bapteme&id={id}&fonc=delete','Voulez-vous supprimer ce baptème ?');"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">&nbsp;Supprimer</A></p>
 <!-- END: suppression -->
 <!-- END: infos -->
 
@@ -73,6 +73,9 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 <div id="msgok">{msg_confirmation}</div>
 <!-- END: msgok -->
 
+<table>
+<tr>
+<td style='min-width:400px; width:800px;'>
 
 <div class="formulaireTitre">Informations</div>
 
@@ -142,6 +145,49 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 	<input type="submit" name="fonc" id="annuler" value="Annuler">
 </div>
 <!-- END: submit -->
+
+</td>
+<td valign='top'>
+
+	<!-- BEGIN: info_prendre -->
+	<div class='formulaireInformation'>
+		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<div style='margin-left: 40px;'>
+		Le menu '<u>Prendre</u>' vous affecte le baptème. Son status sera alors changé à affecté. 
+		</div>
+	</div>
+	<!-- END: info_prendre -->
+
+	<!-- BEGIN: info_planifier -->
+	<div class='formulaireInformation'>
+		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<div style='margin-left: 40px;'>
+		Le menu '<u>Planifier</u>' vous permet de saisir les informations sur le vol : avion, pilote, la date et l'heure. 
+		</div>
+	</div>
+	<!-- END: info_planifier -->
+
+	<!-- BEGIN: info_reserver -->
+	<div class='formulaireInformation'>
+		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<div style='margin-left: 40px;'>
+		Le menu '<u>Réserver</u>' vous permet de saisir automatiquement la réservation de l'avion en fonction des données d'affectation saisies dans la fiche de baptème. 
+		</div>
+	</div>
+	<!-- END: info_reserver -->
+
+	<!-- BEGIN: info_effectuer -->
+	<div class='formulaireInformation'>
+		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<div style='margin-left: 40px;'>
+		Le menu '<u>Effectué</u>' change le status du baptème à effectué. Il est a utiliser lorsque le baptème a été réalisé.
+		</div>
+	</div>
+	<!-- END: info_effectuer -->
+
+</td>
+</tr>
+</table>
 
 </FORM>
 

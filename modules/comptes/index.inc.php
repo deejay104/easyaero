@@ -120,11 +120,12 @@
 	// Entete du tableau d'affichage
 	$tabTitre=array();
 	$tabTitre["date_valeur"]["aff"]="Date";
-	$tabTitre["date_valeur"]["width"]=100;
+	$tabTitre["date_valeur"]["width"]=110;
 	if ($theme!="phone")
 	  {
 		$tabTitre["mouvement"]["aff"]="Mouvement";
 		$tabTitre["mouvement"]["width"]=350;
+		$tabTitre["mouvement"]["mobile"]="no";
 		$tabTitre["commentaire"]["aff"]="Commentaire";
 		$tabTitre["commentaire"]["width"]=400;
 	  }
@@ -153,6 +154,7 @@
 		$tabTitre["releve"]["width"]=40;
 		$tabTitre["hash"]["aff"]="&nbsp;";
 		$tabTitre["hash"]["width"]=5;
+		$tabTitre["hash"]["mobile"]="no";
 	}
 	
 
