@@ -44,7 +44,7 @@ $MyOptHelp["id_PosteTaxeAT"]="ID du poste pour les taxes d'atterrissage";
 
 // ID poste pour les crédits de compte
 $MyOptTmpl["PosteCredite"]["virement"]=0;
-$MyOptHelp["PosteCredite"]["virement"]="ID du poste pour le crédit de son comptepar virement";
+$MyOptHelp["PosteCredite"]["virement"]="ID du poste pour le crédit de son compte par virement";
 $MyOptTmpl["PosteCredite"]["cheque"]=0;
 $MyOptHelp["PosteCredite"]["cheque"]="ID du poste pour le crédit de son compte par chèque";
 $MyOptTmpl["PosteCredite"]["espece"]=0;
@@ -104,13 +104,13 @@ $MyOptHelp["module"]["abonnement"]="on : Affiche et active le module abonnement"
 
 // Restreint la liste des membres pour les famille. Types séparés par des virgules (pilote,eleve)
 $MyOptTmpl["restrict"]["famille"]="";
-$MyOptHelp["restrict"]["famille"]="Restreint l'affichage de la liste des membres pour la page des famille. Saisir les types séparés par des virgules (pilote,eleve)";
+$MyOptHelp["restrict"]["famille"]="Restreint l'affichage de la liste des membres pour la page des familles. Saisir les types séparés par des virgules (pilote,eleve)";
 // Restreint la liste des membres pour les factures.
 $MyOptTmpl["restrict"]["facturation"]="";
-$MyOptHelp["restrict"]["facturation"]="Restreint l'affichage de la liste des membres pour la page des famille. Saisir les types séparés par des virgules (pilote,eleve)";
+$MyOptHelp["restrict"]["facturation"]="Restreint l'affichage de la liste des membres pour la page des facturations. Saisir les types séparés par des virgules (pilote,eleve)";
 // Restreint la liste des membres pour les comptes.
 $MyOptTmpl["restrict"]["comptes"]="";
-$MyOptHelp["restrict"]["comptes"]="Restreint l'affichage de la liste des membres pour la page des famille. Saisir les types séparés par des virgules (pilote,eleve)";
+$MyOptHelp["restrict"]["comptes"]="Restreint l'affichage de la liste des membres pour la page des comptes. Saisir les types séparés par des virgules (pilote,eleve)";
 
 // Saisir les vols en facturation
 $MyOptTmpl["facturevol"]="";

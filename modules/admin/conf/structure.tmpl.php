@@ -1,4 +1,4 @@
-<?
+<?php
 $tabCustom=Array
 (
 	"abo_ligne" => Array (
@@ -60,12 +60,6 @@ $tabCustom=Array
 		"status" => Array("Type" => "varchar(10)", "Default" => "0", "Index"=>1),
 		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"date_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-	),
-	"config" => Array
-	(
-		"param" => Array("Type" => "varchar(20)", ),
-		"value" => Array("Type" => "varchar(20)", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
 	),
 	"conso" => Array
 	(
