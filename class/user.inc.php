@@ -69,7 +69,7 @@ class user_class extends user_core
 		$this->data["decouvert"]="0";
 		$this->data["zone"]="";
 		$this->data["dte_inscription"]=date("Y-m-d");
-		$this->data["dte_naissance"]="0000-00-00";
+		$this->data["dte_naissance"]=date("Y-m-d");
 		$this->data["poids"]="75";
 		$this->data["disponibilite"]="dispo";
 		$this->data["aff_rapide"]="n";
