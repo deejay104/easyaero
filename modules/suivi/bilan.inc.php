@@ -76,6 +76,7 @@
 	$total=0;
 
 	$sql->Query($query);
+	$tabValeur=array();
 	for($i=0; $i<$sql->rows; $i++)
 	{ 
 		$sql->GetRow($i);

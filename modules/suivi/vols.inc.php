@@ -299,8 +299,10 @@
 			$tmpl_x->parse("corps.aff_vols.lst_avion");
 		}
 		
-
-		$tmpl_x->assign("nom_avion_edt",$tab_avions[$idavion]["immatriculation"]);
+		if (isset($tab_avions[$idavion]))
+		{
+			$tmpl_x->assign("nom_avion_edt",$tab_avions[$idavion]["immatriculation"]);
+		}
 
 		// Récupère la plus vieille date de saisie des vols
 		$query = "SELECT dte_deb,horafin FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
