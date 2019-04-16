@@ -20,7 +20,7 @@
 ?>
 
 <?
-	if (!GetDroit("AccesSuiviVols")) { FatalError("Accès non authorisé (AccesSuiviVols)"); }
+	if (!GetDroit("AccesSuiviVolsMembres")) { FatalError("Accès non authorisé (AccesSuiviVolsMembres)"); }
 
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");

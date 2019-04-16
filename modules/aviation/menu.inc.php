@@ -8,7 +8,7 @@
 	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
 
 // ---- Affiche les menus
-	if (GetDroit("AccesSuiviVols"))
+	if (GetDroit("AccesSuiviVolsMembres"))
 	{
 		$tmpl_menu->parse("infos.suiviVols");
 	}

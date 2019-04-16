@@ -269,39 +269,39 @@ class ress_class extends objet_core
 	function EstimeMaintenance()
 	{ global $MyOpt;
 		$sql=$this->sql;
-
-		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
-		$respot=$sql->QueryRow($query);
-
-		$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
-		$resreel=$sql->QueryRow($query);
-
-		$t=$respot["tot"]+$resreel["tot"];
-
-		$query="SELECT dte_fin FROM ".$this->tbl."_calendrier WHERE tpsreel<>0 AND dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
-		$reslast=$sql->QueryRow($query);
-		if ($reslast["dte_fin"]=="")
-		{
-			$reslast=array();
-			$reslast["dte_fin"]=$respot["dte_fin"];
-		}
-
-		$dte=$reslast["dte_fin"];
 		
-		$query="SELECT dte_fin,tpsestime FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$reslast["dte_fin"]."' AND tpsreel=0 AND actif='oui' AND uid_avion='".$this->id."' ORDER BY dte_deb";
+		$tps=$this->TempsVols();
+		// $query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		// $respot=$sql->QueryRow($query);
+
+		// $query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
+		// $resreel=$sql->QueryRow($query);
+
+		// $t=$respot["tot"]+$resreel["tot"];
+
+		// $query="SELECT dte_fin FROM ".$this->tbl."_calendrier WHERE tpsreel<>0 AND dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		// $reslast=$sql->QueryRow($query);
+		// if ($reslast["dte_fin"]=="")
+		// {
+			// $reslast=array();
+			// $reslast["dte_fin"]=$respot["dte_fin"];
+		// }
+
+		// $dte=$reslast["dte_fin"];
+		
+		$dte=now();
+		$query="SELECT dte_deb,dte_fin,tpsestime FROM ".$this->tbl."_calendrier WHERE dte_deb>='".now()."' AND actif='oui' AND uid_avion='".$this->id."' ORDER BY dte_deb";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
 		{
 			$sql->GetRow($i);
+			
+			$dte=$sql->data["dte_deb"];
+			$tps=$tps+$sql->data["tpsestime"];
 
-			if (floor($t/60)>=$this->data["maxpotentiel"])
+			if (floor($tps/60)>=$this->data["maxpotentiel"])
 			{
 				$i=$sql->rows;
-			}
-			else
-			{
-				$dte=$sql->data["dte_fin"];
-				$t=$t+$sql->data["tpsestime"];
 			}
 		}
 			

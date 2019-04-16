@@ -27,7 +27,7 @@ $tabRoles["AccesSuiviListeTarifs"]="Accès à la page des tarifs";
 $tabRoles["AccesSuiviTableauBord"]="Accès à la page des tableau de bord";
 $tabRoles["AccesSuiviBilan"]="Accès à la page du bilan comptable";
 
-$tabRoles["AccesSuiviVols"]="Accès à la page de suivi des membres par les instructeur pour les vols";
+$tabRoles["AccesSuiviVolsMembres"]="Accès à la page de suivi des membres par les instructeur pour les vols";
 $tabRoles["AccesSuiviHorametre"]="Accès à la page de suivi des horamètres";
 $tabRoles["AccesSuiviAnnuel"]="Accès à la page de suivi annuel des vols pour tous les membres";
 $tabRoles["AccesSuiviTaxeAT"]="Accès à la page de saisie des taxes d'atterrissage";

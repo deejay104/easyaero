@@ -20,6 +20,8 @@
 ?>
 
 <?
+	if (!GetDroit("AccesSuiviHorametre")) { FatalError("Accès non authorisé (AccesSuiviHorametre)"); }
+
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
