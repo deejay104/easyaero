@@ -274,7 +274,7 @@
 
 		// Liste les ressources
 		$lst=ListeRessources($sql,array("oui","off"));
-	
+		$tab_avions=array();
 		foreach($lst as $i=>$id)
 		{
 			$ress=new ress_class($id,$sql);

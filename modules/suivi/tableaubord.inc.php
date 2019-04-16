@@ -35,18 +35,26 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Vérifie les variables
-	if ((isset($dte)) && (preg_match("/[0-9]{4}/",$dte)))
+	$id=checkVar("id","numeric");
+	$dte=checkVar("dte","varchar",4);
+	$annee=checkVar("annee","varchar",4);
+	$show=checkVar("show","date");
+	$poste=checkVar("poste","varchar");
+
+	if (preg_match("/[0-9]{4}/",$dte))
 	  { $annee=$dte; }
-	if ((!isset($annee)) && (!preg_match("/[0-9]{4}/",$annee)))
+	if (($annee=="") && (!preg_match("/[0-9]{4}/",$annee)))
 	  { $annee=date("Y"); }
-	$tmpl_x->assign("annee", $annee);
 	$dte=$annee;
 
-	$show=checkVar("show","date");
+	if ($poste=="--")
+	  { $poste=""; }
+	
+	if ($id==0)
+	  { $id=$MyOpt["uid_tableaubord"]; }
+
 
 // ---- Liste des comptes
-	if (!isset($id))
-	  { $id=$MyOpt["uid_tableaubord"]; }
 
 	$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
 
@@ -59,8 +67,6 @@
 		$tmpl_x->parse("corps.lst_compte");
 	  }
 
-	if ($poste=="--")
-	  { unset($poste); }
 
 // ---- Liste des années
 
@@ -79,6 +85,7 @@
 			$tmpl_x->parse("corps.lst_annee");
 	  }
 		
+  	$tmpl_x->assign("annee", $annee);
 	$tmpl_x->assign("cur_annee", $dte);
 	$tmpl_x->assign("old_annee", $dte-1);
 
@@ -86,10 +93,17 @@
 
 
 	function somme($tab,$tmp,$val,$consval=false)
-	  {
-	  	if ($tmp[0]!="")
-	  	  {
-	  		$tab[$tmp[0]]["_total"]=$tab[$tmp[0]]["_total"]+$val["montant"];
+	{
+	  	if ((isset($tmp[0])) && ($tmp[0]!=""))
+	  	{
+			if (!isset($tab[$tmp[0]]["_total"]))
+			{
+			  $tab[$tmp[0]]["_total"]=0;
+			}
+			if (isset($val["montant"]))
+			{
+				$tab[$tmp[0]]["_total"]=$tab[$tmp[0]]["_total"]+$val["montant"];
+			}
 	
 			$t=array();
 			foreach($tmp as $k=>$v)
@@ -98,13 +112,13 @@
 			  }
 				
 			$tab[$tmp[0]]=somme($tab[$tmp[0]],$t,$val,$consval);
-		  }
+		}
 		else if ($consval==true)
-		  {
+		{
 			$tab["_enr"][$val["id"]]=$val;
-		  }
+		}
 		return $tab;
-	  }
+	}
 
 	function AfficheSousPoste($tab,$oldtab,$dep,$pwd)
 	  { global $tmpl_x,$id, $annee;
@@ -113,15 +127,15 @@
 			if ($poste!="_total")
 			  {
 				$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=suivi&rub=tableaubord&poste=$pwd/$poste&id=$id&dte=$annee\">".$poste."</A>");
-				$tmpl_x->assign("date_sousposte", sql2date($mtab["_enr"]["date_valeur"]));
+				$tmpl_x->assign("date_sousposte", (isset($mtab["_enr"]["date_valeur"])) ? sql2date($mtab["_enr"]["date_valeur"]) : "");
 				$tmpl_x->assign("tot_sousposte", AffMontant($mtab["_total"]));
-				$tmpl_x->assign("old_tot_sousposte", AffMontant($oldtab[$poste]["_total"]));
+				$tmpl_x->assign("old_tot_sousposte", (isset($oldtab[$poste]["_total"])) ? AffMontant($oldtab[$poste]["_total"]) : AffMontant(0));
 	
 				// Affiche le résultat
 				$tmpl_x->parse("corps.lst_poste.lst_sousposte.lst_old_sousposte");
 				$tmpl_x->parse("corps.lst_poste.lst_sousposte");
 	
-				AfficheSousPoste($mtab,$oldtab[$poste],$dep+4,$pwd."/".$poste);
+				AfficheSousPoste($mtab,isset($oldtab[$poste]) ? $oldtab[$poste] : array(),$dep+4,$pwd."/".$poste);
 			  }
 		  }
 	  }
@@ -184,13 +198,14 @@
 	$tabposte=array();
 	$taboldposte=array();
 
+	$mois="";
 	if ((isset($show)) && (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/",$show)))
 	{
 		$tmpl_x->assign("form_mois", $show);
 	  	$mois=preg_replace("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/","$2-$1",$show);
 	}
 
-	if (!isset($poste))
+	if ($poste=="")
 	  {
 		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid=$id AND date_valeur>='".($annee-1)."-01-01' AND date_valeur<='".(($mois=="") ? "$annee-01-01" : ($annee-1)."-".$mois )."' ORDER BY mouvement";
 		$sql->Query($query);
@@ -217,11 +232,16 @@
 		$total=0;
 		$oldtotal=0;
 		foreach($tabposte as $poste=>$tab)
-		  {
+		{
+			if (!isset($taboldposte[$poste]["_total"]))
+			{
+				$taboldposte[$poste]["_total"]=0;
+			}
+			
 			$tmpl_x->assign("nom_poste", "<A href=\"index.php?mod=suivi&rub=tableaubord&poste=$poste&id=$id&dte=$annee\">$poste</A>");
 			$tmpl_x->assign("total_poste", AffMontant($tab["_total"]));
 			$tmpl_x->assign("old_total_poste", AffMontant($taboldposte[$poste]["_total"]));
-			AfficheSousPoste($tab,$taboldposte[$poste],4,$poste);
+			AfficheSousPoste($tab,isset($taboldposte[$poste]) ? $taboldposte[$poste] : array(),4,$poste);
 	
 			$total=$total+$tab["_total"];
 			$oldtotal=$oldtotal+$taboldposte[$poste]["_total"];
@@ -254,12 +274,17 @@
 
 		$tmp=explode("/",$poste);
 		foreach($tmp as $v)
-		  {
+		{
 		  	$oldp=$v;
+			if (!isset($tabposte[$v]))
+			{
+				$tabposte[$v]=array();
+				$tabposte[$v]["_total"]=0;
+			}
 		  	$tabposte=$tabposte[$v];
 		  	$tot=$tabposte["_total"];
 		  	unset($tabposte["_total"]);
-		  }
+		}
 
 		$last=0;
 		if (!isset($tabposte["_total"]))

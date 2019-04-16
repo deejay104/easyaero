@@ -47,7 +47,7 @@ class user_class extends user_core
 	public $tabList=array(
 			"type"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
 			"disponibilite"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
-			"sexe"=>array("M"=>"Masculin","F"=>"Féminin")
+			"sexe"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné")
 			);
 	
 	# Constructor
@@ -210,10 +210,13 @@ class user_class extends user_core
 			if ($key=="lache")
 			{
 				$ret="";
-				foreach($this->data[$key] as $avion)
+				if (is_array($this->data[$key]))
 				{
-					if ($avion["idlache"]>0)
-					{ $ret.=$avion["avion"]->aff("immatriculation")." <font size=1><i>(par ".$avion["usr"]->aff("fullname").")</i></font><br />"; }
+					foreach($this->data[$key] as $avion)
+					{
+						if ($avion["idlache"]>0)
+						{ $ret.=$avion["avion"]->aff("immatriculation")." <font size=1><i>(par ".$avion["usr"]->aff("fullname").")</i></font><br />"; }
+					}
 				}
 				if ($ret=="") { $ret="Aucun"; }
 			}

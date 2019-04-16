@@ -96,6 +96,7 @@
 	$totligne=ListReservationNbLignes($sql,$id);
 	
 	$tabresa=array();
+	$tabValeur=array();
 	foreach($lstresa as $i=>$rid)
 	{
 		$resa = new resa_class($rid,$sql,false);

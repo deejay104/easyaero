@@ -83,6 +83,7 @@
 		}
 	}
 	$lstres=ListeRessources($sql,array("oui"));
+	$tavion=array();
 	foreach($lstres as $i=>$id)
 	{ 
 		$tavion[$i]=new ress_class($id, $sql);
