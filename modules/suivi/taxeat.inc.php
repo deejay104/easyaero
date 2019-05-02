@@ -31,6 +31,7 @@
 	$tmpl_x = new XTemplate (MyRep("taxeat.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+	$tmpl_x->assign("FormulaireBackgroundNormal",$MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 
 
 // ---- Affiche le menu
@@ -84,12 +85,18 @@
 			$txt="Taxe AT ".$dest." du ".$date;
 
 			$mvt = new compte_class(0,$sql);
+			$tmpl_x->assign("aff_mouvement_detail",$mvt->AfficheEntete());
+			$tmpl_x->parse("corps.aff_mvt_detail.aff_mvt_ligne");
+
+			
+			$mvt = new compte_class(0,$sql);
 			$mvt->Generate($usr->Val("idcpt"),$MyOpt["id_PosteTaxeAT"],$txt,date("Y-m-d"),$taxe,array());
 			$mvt->Save();
 			$mvt->Debite();
 			
 			// A voir si cette partie est nécessaire ?
 			$tmpl_x->assign("aff_mouvement_detail", $mvt->Affiche());
+			$tmpl_x->parse("corps.aff_mvt_detail.aff_mvt_ligne");
 			$tmpl_x->parse("corps.aff_mvt_detail");
 		}
 	}

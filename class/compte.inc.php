@@ -131,20 +131,24 @@ class compte_class{
 					$tot["crediteur"]=$montant;
 					if ((isset($ventilation)) && (is_array($ventilation)))
 					{
-						foreach ($ventilation["data"] as $i=>$v)
+						if ((isset($ventilation["data"])) && (is_array($ventilation["data"])))
 						{
-							// Vérifie le montant
-							preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$v["montant"],$t);
-							$m=$t[1].".".$t[2];
-							// Créé les lignes de mouvement
-							$this->mvt[$i]["uid"]=$v["tiers"];
-							$this->mvt[$i]["tiers"]=($ventilation["ventilation"]=="debiteur") ? $d : $c;
-							$this->mvt[$i]["montant"]=($ventilation["ventilation"]=="debiteur") ? -$m : $m;
-							$this->mvt[$i]["poste"]=$v["poste"];
-							$this->mvt[$i]["facture"]=$facture;
-							$this->mvt[$i]["rembfact"]=$rembfact;
-							$i=$i+1;
-							$tot[$ventilation["ventilation"]]=$tot[$ventilation["ventilation"]]-$m;
+
+							foreach ($ventilation["data"] as $i=>$v)
+							{
+								// Vérifie le montant
+								preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$v["montant"],$t);
+								$m=$t[1].".".$t[2];
+								// Créé les lignes de mouvement
+								$this->mvt[$i]["uid"]=$v["tiers"];
+								$this->mvt[$i]["tiers"]=($ventilation["ventilation"]=="debiteur") ? $d : $c;
+								$this->mvt[$i]["montant"]=($ventilation["ventilation"]=="debiteur") ? -$m : $m;
+								$this->mvt[$i]["poste"]=$v["poste"];
+								$this->mvt[$i]["facture"]=$facture;
+								$this->mvt[$i]["rembfact"]=$rembfact;
+								$i=$i+1;
+								$tot[$ventilation["ventilation"]]=$tot[$ventilation["ventilation"]]-$m;
+							}
 						}
 					}
 					
