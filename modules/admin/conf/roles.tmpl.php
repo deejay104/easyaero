@@ -125,7 +125,7 @@ $tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres désactivés";
 
 $tabRoles["AccesAvions"]="Accès au suivi des avions";
 $tabRoles["AccesFichesMaintenance"]="Accès à la page de saisi d'une fiche de maintenance";
-$tabRoles["AccesFichesMaintenance"]="Accès à la page de validation des fiches de maintenance";
+$tabRoles["AccesFichesValidation"]="Accès à la page de validation des fiches de maintenance";
 
 $tabRoles["CreeMaintenance"]="Création d'une fiche de maintenance";
 $tabRoles["ModifMaintenance"]="Modification d'une fiche de maintenance";
