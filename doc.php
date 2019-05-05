@@ -8,8 +8,6 @@
 		require ("config/variables.inc.php");
 	}
 
-	require("version.php");
-
 	$appfolder="..";
 	$corefolder="core";
 
