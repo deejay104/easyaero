@@ -40,35 +40,36 @@
 
 // ---- Enregistre le suivi
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
+		$form_releve=checkVar("form_releve","array");
 		$tabmaj=array();
 		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE (pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."'";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
-		  { 
+		{ 
 			$sql->GetRow($i);
 			$tabmaj[$sql->data["id"]]="";
-		  }
+		}
 
 		if (is_array($form_releve))
-		  {
+		{
 			foreach ($form_releve as $k=>$p)
 			  { $tabmaj[$k]="P"; }
-		  }
+		}
 
 		foreach ($tabmaj as $k=>$p)
-		  {
+		{
 			$query="UPDATE ".$MyOpt["tbl"]."_compte SET pointe='$p' WHERE id='$k'";
 			//echo "$query<BR>";
 			$sql->Update($query);
-		  }
+		}
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
+	}
 	else if (($fonc=="Clore") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 		$query="UPDATE ".$MyOpt["tbl"]."_compte SET pointe='R' WHERE pointe='P' AND uid='".$MyOpt["uid_banque"]."'";
 		$sql->Update($query);
-	  }
+	}
 
 
 // ---- Affiche les infos
@@ -77,7 +78,14 @@
 
 	$query = "SELECT SUM(montant) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE pointe='R' AND uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
-	$tmpl_x->assign("ancien_solde", (is_numeric($res["nb"])) ? -$res["nb"] : "0");
+	if ($res["nb"]<0)
+	{
+		$tmpl_x->assign("ancien_credit", AffMontant(-$res["nb"]));
+	}
+	else
+	{
+		$tmpl_x->assign("ancien_debit", AffMontant(-$res["nb"]));
+	}
 
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE (pointe IS NULL OR pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."' ORDER BY date_valeur,id";
 	$sql->Query($query);
@@ -102,7 +110,16 @@
 		$tier = new user_class($d["tiers"],$sql,false);
 		$tmpl_x->assign("tiers_suivi", $tier->Aff("fullname"));
 
-		$tmpl_x->assign("montant_suivi", AffMontant(-$d["montant"]));
+		if ($d["montant"]<=0)
+		{
+			$tmpl_x->assign("montant_credit", AffMontant(-$d["montant"]));
+			$tmpl_x->assign("montant_debit", "");
+		}
+		else
+		{
+			$tmpl_x->assign("montant_credit", "");
+			$tmpl_x->assign("montant_debit", AffMontant(-$d["montant"]));
+		}
 
 		if ($d["pointe"]=="P")
 		  { $tmpl_x->assign("chk_suivi", "checked"); }
@@ -116,8 +133,15 @@
 
 	$query = "SELECT SUM(montant) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
-	$tmpl_x->assign("nouveau_solde", (is_numeric($res["nb"])) ? AffMontant(-$res["nb"]) : "-");
-
+	if ($res["nb"]<0)
+	{
+		$tmpl_x->assign("nouveau_credit", AffMontant(-$res["nb"]));
+	}
+	else
+	{
+		$tmpl_x->assign("nouveau_debit", AffMontant(-$res["nb"]));
+	}
+	
 	$query = "SELECT SUM(montant) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE (pointe='R' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("pointe_solde", (is_numeric($res["nb"])) ? AffMontant(-$res["nb"]) : "-");

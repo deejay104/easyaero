@@ -462,14 +462,8 @@
 					$tmpl_x->assign("tarif_code", $c);
 					$tmpl_x->assign("tarif_nom", $t["nom"]);
 
-					if ( ($t["defaut_pil"]=="oui") && ($resa["resa"]->tarif=="") )
-					{
-						$tmpl_x->assign("tarif_selected", "selected");
-					}
-					else
-					{
-						$tmpl_x->assign("tarif_selected", "");
-					}
+					$tmpl_x->assign("tarif_selected", "");
+
 					$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_tarifs");	
 				}
 			}

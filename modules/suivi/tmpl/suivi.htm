@@ -36,16 +36,18 @@
 				<th width=250>Mouvement</th>
 				<th width=10>&nbsp;</th>
 				<th width=400>Commentaire</th>
-				<th width=110 align=right>Montant</th>
+				<th width=110 align=right>Débit</th>
+				<th width=110 align=right>Crédit</th>
 				<th width=10>&nbsp;</th>
 				<th width=80 align=right>Relevé</th>
 			</tr>
 			<TR class="tableauTitre">
-				<th >&nbsp;</th>
-				<th colspan=4 align=right><I>Ancien solde</I>&nbsp;</th>
-				<th align=right><I>{ancien_solde} €</I></th>
-				<th>&nbsp;</th>
-				<th>&nbsp;</th>
+				<td >&nbsp;</td>
+				<td colspan=4 align="right"><I>Ancien solde</I>&nbsp;</td>
+				<td align="right" class="tableauBorderLeft"><I>{ancien_debit}</I></td>
+				<td align="right"><I>{ancien_credit}</I></td>
+				<td>&nbsp;</td>
+				<td class="tableauBorderLeft">&nbsp;</td>
 			</TR>
 	
 		<!-- BEGIN: lst_suivi -->
@@ -55,17 +57,19 @@
 			<TD>{mouvement_suivi}<BR><I><FONT size=1>{tiers_suivi}</FONT></I></TD>
 			<TD>&nbsp;</TD>
 			<TD>{commentaire_suivi}</TD>
-			<TD align=right class="tableauBorderLeft">{montant_suivi}</TD>
+			<TD align="right" class="tableauBorderLeft">{montant_debit}</TD>
+			<TD align="right">{montant_credit}</TD>
 			<TD>&nbsp;</TD>
-			<TD align=center><INPUT type="checkbox" name="form_releve[{id_suivi}]" {chk_suivi}></TD>
+			<TD align=center class="tableauBorderLeft"><INPUT type="checkbox" name="form_releve[{id_suivi}]" {chk_suivi}></TD>
 		  </TR>
 		<!-- END: lst_suivi -->
 		  <TR class="tableauBas">
 				<TD>&nbsp;</TD>
 				<TD colspan=4 align=right><B><I>Solde</I></B>&nbsp;</TD>
-				<TD align=right class="tableauBorderLeft"><B><I>{nouveau_solde}</I></B></TD>
+				<TD align="right" class="tableauBorderLeft"><B><I>{nouveau_debit}</I></B></TD>
+				<TD align="right"><B><I>{nouveau_credit}</I></B></TD>
 				<TD>&nbsp;</TD>
-				<TD align=right><B><I>{pointe_solde}</I></B></TD>
+				<TD align=right class="tableauBorderLeft"><B><I>{pointe_solde}</I></B></TD>
 		  </TR>
 		</TABLE>
 		<br />
