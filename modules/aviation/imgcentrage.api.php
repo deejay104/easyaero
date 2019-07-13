@@ -48,45 +48,16 @@
 
 // ---- Récupère les paramètres
 	$id=checkVar("id","numeric");
+	$rid=checkVar("rid","numeric");
+
+	$tabplace=array();
 	
-// ---- Charge les informations sur le chargement
+// ---- Charge les informations de l'avion
 	if ($id>0)
-	  {
+	{
 		$query="SELECT cal.dte_deb, cal.dte_fin,avion.immatriculation,avion.tolerance,avion.centrage FROM ".$MyOpt["tbl"]."_calendrier AS cal LEFT JOIN ".$MyOpt["tbl"]."_ressources AS avion ON cal.uid_avion=avion.id WHERE cal.id='$id'";
 		$resvol=$sql->QueryRow($query);
-
-		// Décode les données de l'avion
-		$data=$resvol["centrage"];
-		$parser = xml_parser_create();
-		xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
-		xml_parser_set_option($parser,XML_OPTION_SKIP_WHITE,1);
-		xml_parse_into_struct($parser,$data,$values,$tags);
-		xml_parser_free($parser);
-
-		$tabplace=array();
-
-		// boucle à travers les structures
-		foreach ($tags as $key=>$val)
-		  {
-			if ($key == "place")
-			  {
-				$ranges = $val;
-				// each contiguous pair of array entries are the
-				// lower and upper range for each molecule definition
-				for ($i=0; $i < count($ranges); $i+=2)
-				  {
-					$offset = $ranges[$i] + 1;
-					$len = $ranges[$i + 1] - $offset;
-					$t = parsePlace(array_slice($values, $offset, $len));
-					$tabplace[$t["id"]]=$t;
-				  }
-			  }
-			else
-			  {
-				continue;
-			  }
-		  }
-
+		
 		// Récupère la liste des passagers
 		$query = "SELECT * FROM ".$MyOpt["tbl"]."_masses WHERE uid_vol='$id'";
 		$sql->Query($query);
@@ -97,14 +68,62 @@
 			$tabplace[$sql->data["uid_place"]]["poids"]=$sql->data["poids"];
 			$tabplace[$sql->data["uid_place"]]["idenr"]=$sql->data["id"];
 		  }
-
-//print_r($tabplace);
-	  }
+	}
+	else if ($rid>0)
+	{
+		$query="SELECT avion.immatriculation,avion.tolerance,avion.centrage FROM ".$MyOpt["tbl"]."_ressources AS avion WHERE id='$rid'";
+		$resvol=$sql->QueryRow($query);
+	}
 	else
-	  {
+	{
 		erreur("Les paramètres sont incorrects.");
 		exit;
-	  }
+	}
+	
+// ---- Charge le plan de centrage de l'avion
+	$data=$resvol["centrage"];
+	$parser = xml_parser_create();
+	xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
+	xml_parser_set_option($parser,XML_OPTION_SKIP_WHITE,1);
+	xml_parse_into_struct($parser,$data,$values,$tags);
+	xml_parser_free($parser);
+
+	// boucle à travers les structures
+	foreach ($tags as $key=>$val)
+	{
+		if ($key == "place")
+		{
+			$ranges = $val;
+			// each contiguous pair of array entries are the
+			// lower and upper range for each molecule definition
+			for ($i=0; $i < count($ranges); $i+=2)
+			{
+				$offset = $ranges[$i] + 1;
+				$len = $ranges[$i + 1] - $offset;
+				$t = parsePlace(array_slice($values, $offset, $len));
+				$tabplace[$t["id"]]["id"]=$t["id"];
+				$tabplace[$t["id"]]["name"]=$t["name"];
+				$tabplace[$t["id"]]["bras"]=$t["bras"];
+				$tabplace[$t["id"]]["coef"]=$t["coef"];
+				$tabplace[$t["id"]]["type"]=$t["type"];
+
+				if ($tabplace[$t["id"]]["poids"]==0)
+				{
+					$tabplace[$t["id"]]["poids"]=$t["poids"];
+				}
+
+				// print_r($t);
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+
+
+//print_r($tabplace);
+
 
 // ---- Affiche le graph
 	$img = imagecreate($l, $h);

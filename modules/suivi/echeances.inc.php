@@ -47,24 +47,23 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche les types d'échéance
-	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype ORDER BY description";
-	$sql->Query($query);
+	$lstEcheance=ListEcheanceType($sql,"user");
 
 	$form_poste=0;
 	$form_description="";
-	for($i=0; $i<$sql->rows; $i++)
+	foreach($lstEcheance as $i=>$d)
 	{
-		$sql->GetRow($i);
-		$tmpl_x->assign("form_echeanceid",$sql->data["id"]);
-		$tmpl_x->assign("form_echeance",$sql->data["description"]);
-		$tmpl_x->assign("select_echeance",($sql->data["id"]==$form_id) ? "selected" : "");
+		$ech = new echeancetype_class($d["id"],$sql);
+		$tmpl_x->assign("form_echeanceid",$ech->id);
+		$tmpl_x->assign("form_echeance",$ech->data["description"]);
+		$tmpl_x->assign("select_echeance",($ech->id==$form_id) ? "selected" : "");
 
-		if ( ($sql->data["id"]==$form_id) && ($sql->data["poste"]>0))
+		if ( ($ech->id==$form_id) && ($ech->data["poste"]>0))
 		{
-			$form_poste=$sql->data["poste"];
-			$form_commentaire=$sql->data["description"];
-			$tmpl_x->assign("form_cout",$sql->data["cout"]);
-			if (($fonc!="Débiter") && (GetDroit($sql->data["droit"])))
+			$form_poste=$ech->data["poste"];
+			$form_commentaire=$ech->data["description"];
+			$tmpl_x->assign("form_cout",$ech->data["cout"]);
+			if (($fonc!="Débiter") && (GetDroit($ech->data["droit"])))
 			{
 				$tmpl_x->parse("corps.aff_debite");
 			}
@@ -133,9 +132,6 @@
 			$dte->Save();
 		}
 
-		// $tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
-		// $tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");		
-		// $tmpl_x->parse("corps.msg_enregistre");
 		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 	}
 	
@@ -152,12 +148,14 @@
 		$tabTitre["debiter"]["aff"]="<input type='checkbox' id='form_debite' OnClick='selectAll();'> Débiter";
 		$tabTitre["debiter"]["width"]=100;
 
-		$lstdte=array();
-		if ($form_id>0)
-		{
-			$lstdte=ListeEcheanceType($sql,$form_id);
-		}
-
+		// $lstdte=array();
+		// if ($form_id>0)
+		// {
+			// $lstdte=ListeEcheanceParType($sql,$form_id,"user");
+		// }
+		$ech=new echeancetype_core($form_id,$sql);
+		$lstdte=$ech->ListeEcheance("user");
+		
 		$tabValeur=array();
 		foreach($lstdte as $i=>$id)
 		{

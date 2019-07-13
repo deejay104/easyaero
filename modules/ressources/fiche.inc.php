@@ -40,7 +40,14 @@
 	
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-	
+
+// ---- Supprime une fiche
+	$delid=checkVar("delid","numeric");
+	if ($delid>0)
+	{
+		$fiche = new fichemaint_class($delid,$sql);
+		$fiche->Delete();
+	}
 
 // ---- Liste des avions
 	$lst=ListeRessources($sql,array("oui"));
@@ -60,17 +67,33 @@
 
 // ---- Affiche la liste des fiches
 
-	$tabTitre=array();
-	$tabTitre["ress"]["aff"]="Avion";
-	$tabTitre["ress"]["width"]=70;
-	$tabTitre["auteur"]["aff"]="Auteur";
-	$tabTitre["auteur"]["width"]=150;
-	$tabTitre["dtecreat"]["aff"]="Date";
-	$tabTitre["dtecreat"]["width"]=100;
-	$tabTitre["description"]["aff"]="Description";
-	$tabTitre["description"]["width"]=350;
-	$tabTitre["dteresolv"]["aff"]="Prévision";
-	$tabTitre["dteresolv"]["width"]=100;
+	$tabTitre=array(
+		"ress"=>array(
+			"aff"=>"Avion",
+			"width"=>70
+		),
+		"auteur"=>array(
+			"aff"=>"Auteur",
+			"width"=>150
+		),
+		"dtecreat"=>array(
+			"aff"=>"Date",
+			"width"=>100
+		),
+		"description"=>array(
+			"aff"=>"Description",
+			"width"=>350
+		),
+		"dteresolv"=>array(
+			"aff"=>"Prévision",
+			"width"=>100
+		),
+		"action"=>array(
+			"aff"=>"&nbsp;",
+			"width"=>20
+		)
+	);
+
 
 	$tabValeur=array();
 
@@ -105,7 +128,11 @@
 				$tabValeur[$i]["dteresolv"]["val"]="0";
 				$tabValeur[$i]["dteresolv"]["aff"]="N/A";
 			}
-	
+
+			$tabValeur[$i]["id"]["val"]=$id;
+			$tabValeur[$i]["action"]["val"]=$id;
+			$tabValeur[$i]["action"]["aff"]="<div id='action_".$id."' style='display:none;'><a id='edit_".$id."' class='imgDelete' href='index.php?mod=ressources&rub=fiche&delid=".$id."'><img src='".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+			
 		}
 	}
 	else
@@ -120,13 +147,15 @@
 		$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
 		$tabValeur[$i]["dteresolv"]["val"]="";
 		$tabValeur[$i]["dteresolv"]["aff"]="";
+		$tabValeur[$i]["action"]["val"]=0;
+		$tabValeur[$i]["action"]["aff"]="";
 	}
 
 
 	if ($order=="") { $order="ress"; }
 	if ($trie=="") { $trie="d"; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,"action"));
 
 
 // ---- Affecte les variables d'affichage

@@ -29,19 +29,38 @@ class ress_class extends objet_core
 	protected $mod="ressources";
 	protected $rub="detail";
 
-	protected $type=array(
-		"immatriculation"=>"uppercase",
-		"nom"=>"varchar",
-		"couleur"=>"uppercase",
-		"modele"=>"uppercase",
-		"marque"=>"uppercase",
-		"typehora"=>"enum",
-		"description"=>"text",
-		"centrage"=>"text",
+	protected $fields=array
+	(
+		"nom" => Array("type" => "varchar", "len"=>20),
+		"immatriculation" => Array("type" => "uppercase", "len"=>6 ),
+		"marque" => Array("type" => "uppercase", "len"=>20 ),
+		"modele" => Array("type" => "uppercase", "len"=>20 ),
+		"couleur" => Array("type" => "uppercase", "len"=>6 ),
+		"actif" => Array("type" => "enum", "default" => "oui", "index"=>1),
+		"poste" => Array("type" => "number", "index" => "1", ),
+		"maxpotentiel" => Array("type" => "number", "default" => 50 ),
+		"alertpotentiel" => Array("type" => "number", "default" => 45 ),
+		"tarif" => Array("type" => "varchar", "len"=>6, "default" => 0 ),
+		"tarif_reduit" => Array("type" => "varchar", "len"=>6, "default" => "0", ),
+		"tarif_double" => Array("type" => "varchar", "len"=>6, "default" => "0", ),
+		"tarif_inst" => Array("type" => "varchar", "len"=>6, "default" => "0", ),
+		"tarif_nue" => Array("type" => "varchar", "len"=>6, "default" => "0", ),
+		"typehora" => Array("type" => "enum", "default" => "min", ),
+		"description" => Array("type" => "text", ),
+		"places" => Array("type" => "number", "default" => "0", ),
+		"puissance" => Array("type" => "number", "default" => "0", ),
+		"charge" => Array("type" => "number", "default" => "0", ),
+		"massemax" => Array("type" => "number", "default" => "0", ),
+		"vitesse" => Array("type" => "number", "default" => "0", ),
+		"autonomie" => Array("type" => "number", "default" => "0", ),
+		"tolerance" => Array("type" => "varchar", ),
+		"centrage" => Array("type" => "text", ),
+		"maintenance" => Array("type" => "varchar", "len"=>200 ),
 	);
 
 	protected $tabList=array(
 		"typehora"=>array("dix"=>"Dixième","cen"=>"Centième","min"=>"Minute"),
+		"actif"=>array("oui"=>"oui","non"=>"non","off"=>"off")
 	);
 
 	function __construct($id=0,$sql)
@@ -49,33 +68,13 @@ class ress_class extends objet_core
 		global $MyOpt;
 		global $gl_uid;
 	
-		$this->data["nom"]="";
-		$this->data["immatriculation"]="";
-		$this->data["actif"]="oui";
-		$this->data["poste"]=0;
-		$this->data["maxpotentiel"]=50;
-		$this->data["alertpotentiel"]=45;
-		$this->data["marque"]="";
-		$this->data["modele"]="";
-		$this->data["couleur"]=dechex(rand(0x000000, 0xFFFFFF));
-		$this->data["description"]="";
-
-		$this->data["places"]="0";
-		$this->data["puissance"]="0";
-		$this->data["massemax"]="0";
-		$this->data["vitesse"]="0";
-		$this->data["tolerance"]="";
-		$this->data["centrage"]="";
-
-		$this->data["tarif"]="0";
-		$this->data["tarif_reduit"]="0";
-		$this->data["tarif_double"]="0";
-		$this->data["tarif_nue"]="0";
-
-		$this->data["typehora"]="dix";
-
-
 		parent::__construct($id,$sql);
+
+		if ($this->data["couleur"]=="")
+		{
+			$this->data["couleur"]=dechex(rand(0x000000, 0xFFFFFF));
+		}
+
 	}
 
 	# Show informations
@@ -101,7 +100,7 @@ class ress_class extends objet_core
 			{
 				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE actif='oui' ORDER BY ordre,description";
 				$sql->Query($query);
-		  	  	$ret ="<SELECT name=\"form_ress[$key]\">";
+		  	  	$ret ="<SELECT name=\"".$formname."[$key]\">";
 				for($i=0; $i<$sql->rows; $i++)
 				{ 
 					$sql->GetRow($i);
@@ -118,7 +117,7 @@ class ress_class extends objet_core
 			}
 			else if ($key=="poste")
 			{
-				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE id='".$ret."'";
+				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE id='".$txt."'";
 				$res=$sql->QueryRow($query);
 				$ret=$res["description"];
 			}

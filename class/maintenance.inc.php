@@ -199,7 +199,17 @@ class fichemaint_class extends objet_core
 	protected $rub="";
 
 	protected $droit=array();
-	protected $type=array("dte_valid"=>"date","description"=>"text");
+
+
+	protected $fields=array
+	(
+		"uid_avion" => Array("type" => "number", "default" => "0", "Index"=>1),
+		"description" => Array("type" => "text", ),
+		"uid_valid" => Array("type" => "number", "default" => "0", ),
+		"dte_valid" => Array("type" => "datetime", "default" => "0000-00-00 00:00:00"),
+		"traite" => Array("type" => "enum('oui','non','ann','ref')", "default" => "non", ),
+		"uid_planif" => Array("type" => "number", ),
+	);
 	
 	protected $tabList=array(
 	);
@@ -208,13 +218,6 @@ class fichemaint_class extends objet_core
 	function __construct($id=0,$sql)
 	{
 		global $gl_uid;
-		
-		$this->data["uid_avion"]=0;
-		$this->data["uid_valid"]=0;
-		$this->data["uid_planif"]=0;
-		$this->data["dte_valid"]="0000-00-00";
-		$this->data["traite"]="";
-		$this->data["description"]="";
 
 		parent::__construct($id,$sql);
 	}
@@ -233,7 +236,7 @@ class fichemaint_class extends objet_core
 
 function GetActiveFiche($sql,$ress=0,$maint=0)
 { global $MyOpt;
-	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintfiche WHERE uid_valid>0 AND (traite='non' ".(($maint>0) ? " OR uid_planif='$maint'" : "").") ".(($ress>0) ? " AND uid_avion='$ress'" : "")." ORDER BY dte_creat DESC";
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintfiche WHERE actif='oui' AND uid_valid>0 AND (traite='non' ".(($maint>0) ? " OR uid_planif='$maint'" : "").") ".(($ress>0) ? " AND uid_avion='$ress'" : "")." ORDER BY dte_creat DESC";
 	$lstfiche=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
@@ -247,7 +250,7 @@ function GetActiveFiche($sql,$ress=0,$maint=0)
 
 function GetValideFiche($sql,$ress)
 { global $MyOpt;
-	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintfiche WHERE uid_valid=0 ORDER BY dte_creat DESC";
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintfiche WHERE actif='oui' AND uid_valid=0 ORDER BY dte_creat DESC";
 
 	$lstfiche=array();
 	$sql->Query($query);

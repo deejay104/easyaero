@@ -37,10 +37,10 @@ function calcHorametre()
 </script>
 
 	<p>
-		<label for="horadebut">Début</label><INPUT id="horadebut" name="form_horadeb" value="{form_horadeb}" style="width:100px;"  OnChange="calcHorametre();">
+		<label for="horadebut">Début</label><INPUT id="horadebut" name="form_horadeb" value="{form_horadeb}" style="width:100px;" type="number" step="0.01"  OnChange="calcHorametre();">
 	</p>
 	<p>
-		<div style='padding-left:10px; disply:inline-block; float: left;'><label for="horafin">Fin</label><INPUT id="horafin" name="form_horafin" value="{form_horafin}" style="width:100px;"  OnChange="calcHorametre();"> =&nbsp;</div><div id='tpshora' style='display:inline-block;'>{tps_hora}</div>
+		<div style='padding-left:10px; disply:inline-block; float: left;'><label for="horafin">Fin</label><INPUT id="horafin" name="form_horafin" value="{form_horafin}" style="width:100px;" type="number" step="0.01"  OnChange="calcHorametre();"> =&nbsp;</div><div id='tpshora' style='display:inline-block;'>{tps_hora}</div>
 	</p>
 	<p>
 		<label for="tpsreel">Temps de vol</label><INPUT id="tpsreel" type="number" name="form_tpsreel" value="{form_tpsreel}" style="width:100px;"> (en minutes)

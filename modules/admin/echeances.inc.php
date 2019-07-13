@@ -1,35 +1,19 @@
 <?
-/*
-    Easy-Aero
-    Copyright (C) 2018 Matthieu Isorez
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
-
-// ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesConfigEcheances")) { FatalError("Accès non autorisé (AccesConfigEcheances)"); }
-
-// ---- Charge les dépendances
-	require_once ("class/echeance.inc.php");
-	require_once ($appfolder."/class/echeance.inc.php");
+	require_once("class/echeance.inc.php");
+	require_once($appfolder."/class/echeance.inc.php");
 
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("echeances.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
+	$tmpl_x = LoadTemplate ("echeances");
+	$tmpl_x->assign("path_module",$corefolder."/".$module."/".$mod);
 
+// ---- Vérifie le droit d'accès
+	if (!GetDroit("AccesConfigEcheances")) { FatalError($tabLang["lang_accessdenied"]." (AccesConfigEcheances)"); }
+
+// ---- Variables
+	$order=checkVar("order","varchar");
+	$trie=checkVar("trie","varchar");
+
+	
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once("modules/".$mod."/menu.inc.php");
@@ -38,105 +22,127 @@
 // ---- Sauvegarde
 	if ($fonc=="Enregistrer")
 	{
-		foreach($form_description as $id=>$d)
+		$form_description=checkVar("form_description","array");
+		$form_data=checkVar("form_data","array");
+		foreach($form_data as $id=>$d)
 		{
-			if(trim($d)!="")
+			if (($id>0) || ($d["description"]!=""))
 			{
-				$t=array(
-					"description"=>$d,
-					"poste"=>$form_poste[$id],
-					"droit"=>$form_droit[$id],
-					"resa"=>$form_resa[$id],
-					"multi"=>$form_multi[$id],
-					"cout"=>$form_cout[$id],
-					"notif"=>$form_notif[$id],
-					"delai"=>$form_delai[$id]
-				);
-				$sql->Edit("echeance",$MyOpt["tbl"]."_echeancetype",$id,$t);
+				$ech = new echeancetype_class($id,$sql);
+				foreach($d as $k=>$v)
+				{
+					$err=$ech->Valid($k,$v);
+					affInformation($err,"error");
+				}
+				$ech->Save();
 			}
 		}
 	}
+
 // ---- Supprime une échéance
 	if (($fonc=="delete") && ($id>0))
 	{
-		$sql->Edit("echeance",$MyOpt["tbl"]."_echeancetype",$id,array("actif"=>"non"));		
+		$ech = new echeancetype_class($id,$sql);
+		$ech->Delete();
 	}
 
-// ---- Liste des postes
-	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
-	$sql->Query($query);
-	$tabposte=array();
-	for($i=0; $i<$sql->rows; $i++)
-	{ 
-		$sql->GetRow($i);
-		$tabposte[$sql->data["id"]]=$sql->data;
-	}
-
-// ---- Liste des groupes
-	$query = "SELECT groupe FROM ".$MyOpt["tbl"]."_groupe ORDER BY description";
-	$sql->Query($query);
-	$tabgrp=array();
-	for($i=0; $i<$sql->rows; $i++)
-	{ 
-		$sql->GetRow($i);
-		$tabgrp[$sql->data["groupe"]]=$sql->data["groupe"];
-	}
 	
-// ---- Affiche les types d'échéance
-	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype ORDER BY description";
-	$sql->Query($query);
+	$tabTitre=array(
+		"description"=>array(
+			"aff"=>$tabLang["lang_description"],
+			"width"=>220
+		),
+		"calendar"=>array(
+			"aff"=>$tabLang["lang_calendar"],
+			"width"=>120
+		),
+		"multi"=>array(
+			"aff"=>$tabLang["lang_multi"],
+			"width"=>70
+		),
+		"poste"=>array(
+			"aff"=>"Poste",
+			"width"=>300
+		),
+		"cout"=>array(
+			"aff"=>"Cout",
+			"width"=>100
+		),
+		"right"=>array(
+			"aff"=>$tabLang["lang_right"],
+			"width"=>150
+		),
+		"notif"=>array(
+			"aff"=>$tabLang["lang_notif"],
+			"width"=>70
+		),
+		"recipient"=>array(
+			"aff"=>$tabLang["lang_recipient"],
+			"width"=>150
+		),
+		"delay"=>array(
+			"aff"=>$tabLang["lang_delay"],
+			"width"=>90
+		),
+		"context"=>array(
+			"aff"=>"Contexte",
+			"width"=>220
+		),
+		"action"=>array(
+			"aff"=>"&nbsp;",
+			"width"=>20
+		)
+	);
 
-	for($i=0; $i<$sql->rows; $i++)
+
+	$tabValeur=array();
+
+	// $lstFiche=GetActiveFiche($sql,$uid_avion);
+	$lstEcheance=ListEcheanceType($sql,"");
+	$lstEcheance[]["id"]=0;
+
+	foreach($lstEcheance as $i=>$d)
 	{
-		$sql->GetRow($i);
-		$tmpl_x->assign("form_id",$sql->data["id"]);
-		$tmpl_x->assign("form_description",$sql->data["description"]);
-		$tmpl_x->assign("form_droit",$sql->data["droit"]);
-		$tmpl_x->assign("form_cout",$sql->data["cout"]);
-		$tmpl_x->assign("form_delai",$sql->data["delai"]);
+		$id=$d["id"];
+		$ech = new echeancetype_class($id,$sql);
 
-		$tmpl_x->assign("select_resa_instructeur","");
-		$tmpl_x->assign("select_resa_obligatoire","");
-		$tmpl_x->assign("select_resa_facultatif","");
-		$tmpl_x->assign("select_multi_oui","");
-		$tmpl_x->assign("select_multi_non","");
+		$tabValeur[$i]["description"]["val"]=$ech->val("description");
+		$tabValeur[$i]["description"]["aff"]=$ech->aff("description","form","form_data[".$id."]");
 
-		$tmpl_x->assign("select_notif_oui","");
-		$tmpl_x->assign("select_notif_non","");
+		$tabValeur[$i]["calendar"]["val"]=$ech->val("resa");
+		$tabValeur[$i]["calendar"]["aff"]=$ech->aff("resa","form","form_data[".$id."]");
 
-		$tmpl_x->assign("select_resa_".$sql->data["resa"],"selected");
-		$tmpl_x->assign("select_multi_".$sql->data["multi"],"selected");
-		$tmpl_x->assign("select_notif_".$sql->data["notif"],"selected");
+		$tabValeur[$i]["right"]["val"]=$ech->val("droit");
+		$tabValeur[$i]["right"]["aff"]=$ech->aff("droit","form","form_data[".$id."]");
 
-		foreach($tabposte as $id=>$d)
-		{
-			$tmpl_x->assign("form_poste",$d["description"]);
-			$tmpl_x->assign("form_posteid",$id);
-			$tmpl_x->assign("select_poste",($sql->data["poste"]==$id) ? "selected" : "");
-			
-			$tmpl_x->parse("corps.lst_echeance.lst_poste");
-		}
-
-		foreach($tabgrp as $grp=>$d)
-		{
-			$tmpl_x->assign("form_groupe",$grp);
-			$tmpl_x->assign("select_groupe",($sql->data["droit"]==$grp) ? "selected" : "");
-			
-			$tmpl_x->parse("corps.lst_echeance.lst_groupe");
-		}
+		$tabValeur[$i]["multi"]["val"]=$ech->val("multi");
+		$tabValeur[$i]["multi"]["aff"]=$ech->aff("multi","form","form_data[".$id."]");
+		$tabValeur[$i]["notif"]["val"]=$ech->val("notif");
+		$tabValeur[$i]["notif"]["aff"]=$ech->aff("notif","form","form_data[".$id."]");
+		$tabValeur[$i]["recipient"]["val"]=$ech->val("recipient");
+		$tabValeur[$i]["recipient"]["aff"]=$ech->aff("recipient","form","form_data[".$id."]");
+		$tabValeur[$i]["delay"]["val"]=$ech->val("delai");
+		$tabValeur[$i]["delay"]["aff"]=$ech->aff("delai","form","form_data[".$id."]");
 		
-		$tmpl_x->parse("corps.lst_echeance");
+		$tabValeur[$i]["id"]["val"]=$id;
+		$tabValeur[$i]["action"]["val"]=$id;
+		$tabValeur[$i]["action"]["aff"]="<div id='action_".$id."' style='display:none;'><a id='edit_".$id."' class='imgDelete' href='index.php?mod=admin&rub=echeances&fonc=delete&id=".$id."'><img src='".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+
+
+		$tabValeur[$i]["poste"]["val"]=$ech->val("poste");
+		$tabValeur[$i]["poste"]["aff"]=$ech->aff("poste","form","form_data[".$id."]");
+		$tabValeur[$i]["cout"]["val"]=$ech->val("cout");
+		$tabValeur[$i]["cout"]["aff"]=$ech->aff("cout","form","form_data[".$id."]");
+		$tabValeur[$i]["context"]["val"]=$ech->val("context");
+		$tabValeur[$i]["context"]["aff"]=$ech->aff("context","form","form_data[".$id."]");
+		
 	}
 
-	foreach($tabposte as $id=>$d)
-	{
-		$tmpl_x->assign("form_poste",$d["description"]);
-		$tmpl_x->assign("form_posteid",$id);
-		$tmpl_x->assign("select_poste",($sql->data["poste"]==$id) ? "selected" : "");
-		
-		$tmpl_x->parse("corps.lst_poste");
-	}
-	
+	if ($order=="") { $order="context"; }
+	if ($trie=="") { $trie="d"; }
+
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,"action"));
+
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");

@@ -60,13 +60,13 @@
 
 		$dte_deb=$jour." ".$heure.":00:00";
 		$dte_fin=$jour." ".($heure+1).":00:00";
-		if ($jstart>0)
-		  {
-				$fh=date("O",floor($jstart)/1000+4*3600)/100;
-				$dte_deb=date("Y-m-d H:i:s",floor($jstart)/1000-$fh*3600);
-			}
+		if ((isset($jstart)) && ($jstart>0))
+		{
+			$fh=date("O",floor($jstart)/1000+4*3600)/100;
+			$dte_deb=date("Y-m-d H:i:s",floor($jstart)/1000-$fh*3600);
+		}
 			
-		if ($jend>0)
+		if ((isset($jend)) && ($jend>0))
 		  {
 				$fh=date("O",floor($jend)/1000+4*3600)/100;
 				$dte_fin=date("Y-m-d H:i:s",floor($jend)/1000-$fh*3600);
@@ -153,7 +153,7 @@
 	$resa["resa"]->pilote_data=$resusr->data;
 
 // ---- Vérifie les échéances
-	$lstdte=VerifEcheance($sql,$resa["resa"]->uid_pilote);
+	$lstdte=VerifEcheance($sql,$resa["resa"]->uid_pilote,"user");
 
 	if ( (is_array($lstdte)) && (count($lstdte)>0) )
 	{

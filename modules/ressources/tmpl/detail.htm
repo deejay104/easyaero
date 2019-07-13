@@ -7,9 +7,11 @@
 <!-- END: infos -->
 
 
+
 <!-- BEGIN: corps -->
 
 <div class="pagetitle pagemenu">
+	<p><a href="index.php?mod=ressources"><img src="{path_module}/img/icn32_retour.png" alt="">Liste</a></p>
 	<!-- BEGIN: ajout -->
 	<A href="index.php?mod=ressources&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
 	<!-- END: ajout -->
@@ -58,67 +60,86 @@
 	</p>
 </div>
 
-<div class="formulaireTitre">Caractéristiques</div>
+<table width='100%'>
+<tr>
+	<td width='50%' valign="top" style='padding: 5px;'>
 
-<div class="formulaire">
-	<p>
-		<label>Nb de place</label>
-		{form_places}
-	</p>
-	<p>
-		<label>Puissance</label>
-		{form_puissance}
-	</p>
-	<p>
-		<label>Masse max.</label>
-		{form_massemax}
-	</p>
-	<p>
-		<label>Vitesse max.</label>
-		{form_vitesse}
-	</p>
-	<p>
-		<label>Avertissement potentiel</label>
-		{form_alertpotentiel}
-	</p>
-	<p>
-		<label>Potentiel Maximum</label>
-		{form_maxpotentiel}
-	</p>
-</div>
+		<div class="formulaireTitre">Description</div>
+		{form_description}
 
-<div class="formulaireTitre">Tarifs</div>
+		<div class="formulaireTitre">Paramètres</div>
+		<!-- BEGIN: parametres -->
+		<div class="formulaire">
+			<p>
+				<label>Tolérance</label>
+				{form_tolerance}
+			</p>
+		</div>
+		{form_centrage}
+		<!-- END: parametres -->
+		<img src="api.php?mod=aviation&rub=imgcentrage&rid={id}" />
 
-<div class="formulaire">
-	<p>
-		<label>Poste</label>
-		{form_poste}
-	</p>
-	<p>
-		<label>Type horamètre</label>
-		{form_typehora}
-	</p>
-	
-</div>
+	</td>
+	<td width='50%' valign="top" style='padding: 5px;'>
 
+		<div class="formulaireTitre">Tarifs</div>
+		<div class="formulaire">
+			<p>
+				<label>Poste</label>
+				{form_poste}
+			</p>
+			<p>
+				<label>Type horamètre</label>
+				{form_typehora}
+			</p>
+		</div>
 
-<div class="formulaireTitre">Description</div>
+		<div class="formulaireTitre">{lang_documents}</div>
+		<div class="formulaire" style="padding-left: 20px; padding-bottom: 2px;">
+			<!-- BEGIN: lst_document -->
+			{form_document}
+			<!-- END: lst_document -->
+		</div>
 
-{form_description}
-
-
-<!-- BEGIN: parametres -->
-<div class="formulaireTitre">Paramètres</div>
-
-<div class="formulaire">
-	<p>
-		<label>Tolérance</label>
-		{form_tolerance}
-	</p>
-</div>
-	{form_centrage}
-
-<!-- END: parametres -->
+		<!-- BEGIN: aff_echeances -->
+		<div class="formulaireTitre">{lang_deadline}</div>
+		<div class="formulaire" style="padding-left: 20px;">
+			<!-- BEGIN: lst_echeance -->
+			{form_echeance}
+			<!-- END: lst_echeance -->
+		</div>
+		<!-- END: aff_echeances -->
+		
+		<div class="formulaireTitre">Caractéristiques</div>
+		<div class="formulaire">
+			<p>
+				<label>Nb de place</label>
+				{form_places}
+			</p>
+			<p>
+				<label>Puissance</label>
+				{form_puissance}
+			</p>
+			<p>
+				<label>Masse max.</label>
+				{form_massemax}
+			</p>
+			<p>
+				<label>Vitesse max.</label>
+				{form_vitesse}
+			</p>
+			<p>
+				<label>Avertissement potentiel</label>
+				{form_alertpotentiel}
+			</p>
+			<p>
+				<label>Potentiel Maximum</label>
+				{form_maxpotentiel}
+			</p>
+		</div>
+	</td>
+</tr>
+</table>
 
 
 <!-- BEGIN: submit -->

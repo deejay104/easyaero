@@ -76,7 +76,7 @@
 	else if ($fonc=="Retour")
 	  {
 	  	$form_description="";
-	  	$affrub="index";
+	  	$affrub="fiche";
 	  }
 	else
 	  {

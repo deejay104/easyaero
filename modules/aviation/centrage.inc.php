@@ -37,6 +37,11 @@
 // ---- Initialisation des variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+	$id=checkVar("id","numeric");
+	$form_passager_pilote=checkVar("form_passager_pilote","array");
+	$form_passager_poids=checkVar("form_passager_poids","array");
+	$maj=checkVar("maj","numeric");
+	
 
 // ---- Vérifie les variables
 	if (!is_numeric($id)) { FatalError("Les paramètres de la page sont incorrectes."); }
@@ -67,9 +72,9 @@
 
 	// boucle à travers les structures
 	foreach ($tags as $key=>$val)
-	  {
+	{
 		if ($key == "place")
-		  {
+		{
 			$ranges = $val;
 			// each contiguous pair of array entries are the
 			// lower and upper range for each molecule definition
@@ -79,20 +84,22 @@
 				$len = $ranges[$i + 1] - $offset;
 				$t = parsePlace(array_slice($values, $offset, $len));
 				$tabplace[$t["id"]]=$t;
+				$tabplace[$t["id"]]["idpilote"]=0;
+				$tabplace[$t["id"]]["idenr"]=0;
 			  }
-		  }
+		}
 		else
-		  {
+		{
 			continue;
-		  }
-	  }
+		}
+	}
 
 	function parsePlace($mvalues)
-	  {
+	{
 		for ($i=0; $i < count($mvalues); $i++)
 		$t[$mvalues[$i]["tag"]] = $mvalues[$i]["value"];
 		return $t;
-	  }
+	}
 
 	// Récupère la liste des passagers
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_masses WHERE uid_vol='$id'";
@@ -137,68 +144,71 @@
 
 		$tmpl_x->reset("corps.lst_pilote");
 		$tmpl_x->assign("passager_unite", $MyOpt["unitPoids"]);
-		$coef=($tv["coef"]>0) ? $tv["coef"] : 1;
+		$coef=((isset($tv["coef"])) && ($tv["coef"]>0)) ? $tv["coef"] : 1;
 
 
 		// Liste des pilotes
-		if ( ($tv["type"]=="pilote") || ($tv["type"]=="copilote") || ($tv["type"]=="passager") )
-		  {
-			$tmpl_x->assign("chk_pax", "");
-			if ($tv["idpilote"]==65535)
-			  {
-				$tabplace[$k]["idpilote"]=65535;
-				$tmpl_x->assign("chk_pax", "selected");
-			  }
-
-			$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"));
-
-			foreach($lst as $i=>$tmpuid)
+		if (isset($tv["type"]))
+		{
+			if ( ($tv["type"]=="pilote") || ($tv["type"]=="copilote") || ($tv["type"]=="passager") )
 			{
-				// $sql->GetRow($i);
-				$resusr=new user_class($tmpuid,$sql,false,true);
-				$tmpl_x->assign("uid_pilote", $resusr->id);
-				$tmpl_x->assign("nom_pilote", $resusr->aff("fullname","val"));
-				
-				// $tmpl_x->assign("uid_pilote", $sql->data["id"]);
-				// $tmpl_x->assign("nom_pilote", AffInfo($sql->data["prenom"],"prenom")." ".AffInfo($sql->data["nom"],"nom"));
+				$tmpl_x->assign("chk_pax", "");
+				if ($tv["idpilote"]==65535)
+				  {
+					$tabplace[$k]["idpilote"]=65535;
+					$tmpl_x->assign("chk_pax", "selected");
+				  }
 
-				if ($form_passager_pilote[$k]==$resusr->id)
+				$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"));
+
+				foreach($lst as $i=>$tmpuid)
 				{
-					$tmpl_x->assign("chk_pilote", "selected");
-					if ($tv["poids"]=="")
-					  {
-						$tabplace[$k]["poids"]=$resusr->data["poids"];
-					  }
-					$tabplace[$k]["idpilote"]=$resusr->id;
-				}
-				else if ( ( (($res["uid_pilote"]==$resusr->id) && ($tv["type"]=="pilote"))
-				       || ($tv["idpilote"]==$resusr->id)
-				       || (($res["uid_instructeur"]==$resusr->id) && ($tv["type"]=="copilote") && ($tv["idpilote"]==0)) )
-				       && ($form_passager_pilote[$k]=="")
-				   )
-				{
-					$tmpl_x->assign("chk_pilote", "selected");
-					if ($tv["poids"]=="")
-					  {
-						$tabplace[$k]["poids"]=$resusr->data["poids"];
-					  }
-					$tabplace[$k]["idpilote"]=$resusr->id;
-				}
-				else
-				{
-					$tmpl_x->assign("chk_pilote", "");
-				}
+					// $sql->GetRow($i);
+					$resusr=new user_class($tmpuid,$sql,false,true);
+					$tmpl_x->assign("uid_pilote", $resusr->id);
+					$tmpl_x->assign("nom_pilote", $resusr->aff("fullname","val"));
+					
+					// $tmpl_x->assign("uid_pilote", $sql->data["id"]);
+					// $tmpl_x->assign("nom_pilote", AffInfo($sql->data["prenom"],"prenom")." ".AffInfo($sql->data["nom"],"nom"));
+
+					if ($form_passager_pilote[$k]==$resusr->id)
+					{
+						$tmpl_x->assign("chk_pilote", "selected");
+						if ($tv["poids"]=="")
+						  {
+							$tabplace[$k]["poids"]=$resusr->data["poids"];
+						  }
+						$tabplace[$k]["idpilote"]=$resusr->id;
+					}
+					else if ( ( (($res["uid_pilote"]==$resusr->id) && ($tv["type"]=="pilote"))
+						   || ($tv["idpilote"]==$resusr->id)
+						   || (($res["uid_instructeur"]==$resusr->id) && ($tv["type"]=="copilote") && ($tv["idpilote"]==0)) )
+						   && ($form_passager_pilote[$k]=="")
+					   )
+					{
+						$tmpl_x->assign("chk_pilote", "selected");
+						if ($tv["poids"]=="")
+						  {
+							$tabplace[$k]["poids"]=$resusr->data["poids"];
+						  }
+						$tabplace[$k]["idpilote"]=$resusr->id;
+					}
+					else
+					{
+						$tmpl_x->assign("chk_pilote", "");
+					}
 
 
-				$tmpl_x->parse("corps.lst_passager.aff_pilote.lst_pilote");
-			  }
-	
-			$tmpl_x->parse("corps.lst_passager.aff_pilote");
-		  }
-		else if ($tv["type"]=="essence")
-		  {
-			$tmpl_x->assign("passager_unite", $MyOpt["unitVol"]." (=".round($tabplace[$k]["poids"]*$coef,0)." ".$MyOpt["unitPoids"].")");
-		  }
+					$tmpl_x->parse("corps.lst_passager.aff_pilote.lst_pilote");
+				  }
+		
+				$tmpl_x->parse("corps.lst_passager.aff_pilote");
+			}
+			else if ($tv["type"]=="essence")
+			{
+				$tmpl_x->assign("passager_unite", $MyOpt["unitVol"]." (=".round($tabplace[$k]["poids"]*$coef,0)." ".$MyOpt["unitPoids"].")");
+			}
+		}
 		$tmpl_x->assign("passager_poids", $tabplace[$k]["poids"]);
 		$tot=$tot+round($tabplace[$k]["poids"]*$coef,0);
 
@@ -209,11 +219,11 @@
 
 	if ($tot<=$resavion["massemax"])
 	  {
-		$tmpl_x->assign("masse_max", "$unitPoids <font color=\"green\"> &lt; ".$resavion["massemax"]." ".$MyOpt["unitPoids"]."</font>");
+		$tmpl_x->assign("masse_max", $MyOpt["unitPoids"]." <font color=\"green\"> &lt; ".$resavion["massemax"]." ".$MyOpt["unitPoids"]."</font>");
 	  }
 	else
 	  {
-		$tmpl_x->assign("masse_max", "$unitPoids <font color=\"red\"> &gt; ".$resavion["massemax"]." ".$MyOpt["unitPoids"]."</font>");
+		$tmpl_x->assign("masse_max", $MyOpt["unitPoids"]." <font color=\"red\"> &gt; ".$resavion["massemax"]." ".$MyOpt["unitPoids"]."</font>");
 	  }
 
 
@@ -239,13 +249,13 @@
 	  }
 
 // ---- Affecte les variables d'affichage
-	if ($form!="Retour")
-	  {
+	if ($fonc!="Retour")
+	{
 		$tmpl_x->parse("icone");
 		$icone=$tmpl_x->text("icone");
 		$tmpl_x->parse("infos");
 		$infos=$tmpl_x->text("infos");
 		$tmpl_x->parse("corps");
 		$corps=$tmpl_x->text("corps");
-	  }
+	}
 ?>

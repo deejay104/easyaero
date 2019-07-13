@@ -245,20 +245,20 @@ $tabCustom=Array
 		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),
-	"maintfiche" => Array
-	(
-		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
-		"uid_avion" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index"=>1),
-		"description" => Array("Type" => "text", ),
-		"uid_valid" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_valid" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"traite" => Array("Type" => "enum('oui','non','ann','ref')", "Default" => "non", ),
-		"uid_planif" => Array("Type" => "mediumint(8) unsigned", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-	),
+	// "maintfiche" => Array
+	// (
+		// "id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		// "uid_avion" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index"=>1),
+		// "description" => Array("Type" => "text", ),
+		// "uid_valid" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_valid" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+		// "traite" => Array("Type" => "enum('oui','non','ann','ref')", "Default" => "non", ),
+		// "uid_planif" => Array("Type" => "mediumint(8) unsigned", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+	// ),
 	"masses" => Array
 	(
 		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
@@ -361,39 +361,39 @@ $tabCustom=Array
 		"avion" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index"=>1),
 		"heures" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
 	),
-	"ressources" => Array
-	(
-		"id" => Array("Type" => "smallint(6)", "Index" => "PRIMARY", ),
-		"nom" => Array("Type" => "varchar(20)", ),
-		"immatriculation" => Array("Type" => "varchar(6)", ),
-		"marque" => Array("Type" => "varchar(20)", ),
-		"modele" => Array("Type" => "varchar(20)", ),
-		"couleur" => Array("Type" => "varchar(6)", ),
-		"actif" => Array("Type" => "enum('oui','non','off')", "Default" => "oui", "Index"=>1),
-		"poste" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"maxpotentiel" => Array("Type" => "int(10) unsigned", "Default" => 50 ),
-		"alertpotentiel" => Array("Type" => "int(10) unsigned", "Default" => 45 ),
-		"tarif" => Array("Type" => "varchar(6)", "Default" => "0", ),
-		"tarif_reduit" => Array("Type" => "varchar(6)", "Default" => "0", ),
-		"tarif_double" => Array("Type" => "varchar(6)", "Default" => "0", ),
-		"tarif_inst" => Array("Type" => "varchar(6)", "Default" => "0", ),
-		"tarif_nue" => Array("Type" => "varchar(6)", "Default" => "0", ),
-		"typehora" => Array("Type" => "varchar(3)", "Default" => "min", ),
-		"description" => Array("Type" => "text", ),
-		"places" => Array("Type" => "tinyint(3) unsigned", "Default" => "0", ),
-		"puissance" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
-		"charge" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
-		"massemax" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
-		"vitesse" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
-		"autonomie" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
-		"tolerance" => Array("Type" => "tinytext", ),
-		"centrage" => Array("Type" => "text", ),
-		"maintenance" => Array("Type" => "varchar(200)", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
+	// "ressources" => Array
+	// (
+		// "id" => Array("Type" => "smallint(6)", "Index" => "PRIMARY", ),
+		// "nom" => Array("Type" => "varchar(20)", ),
+		// "immatriculation" => Array("Type" => "varchar(6)", ),
+		// "marque" => Array("Type" => "varchar(20)", ),
+		// "modele" => Array("Type" => "varchar(20)", ),
+		// "couleur" => Array("Type" => "varchar(6)", ),
+		// "actif" => Array("Type" => "enum('oui','non','off')", "Default" => "oui", "Index"=>1),
+		// "poste" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
+		// "maxpotentiel" => Array("Type" => "int(10) unsigned", "Default" => 50 ),
+		// "alertpotentiel" => Array("Type" => "int(10) unsigned", "Default" => 45 ),
+		// "tarif" => Array("Type" => "varchar(6)", "Default" => "0", ),
+		// "tarif_reduit" => Array("Type" => "varchar(6)", "Default" => "0", ),
+		// "tarif_double" => Array("Type" => "varchar(6)", "Default" => "0", ),
+		// "tarif_inst" => Array("Type" => "varchar(6)", "Default" => "0", ),
+		// "tarif_nue" => Array("Type" => "varchar(6)", "Default" => "0", ),
+		// "typehora" => Array("Type" => "varchar(3)", "Default" => "min", ),
+		// "description" => Array("Type" => "text", ),
+		// "places" => Array("Type" => "tinyint(3) unsigned", "Default" => "0", ),
+		// "puissance" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
+		// "charge" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
+		// "massemax" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
+		// "vitesse" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
+		// "autonomie" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
+		// "tolerance" => Array("Type" => "tinytext", ),
+		// "centrage" => Array("Type" => "text", ),
+		// "maintenance" => Array("Type" => "varchar(200)", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+	// ),
 	"rex" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -621,5 +621,20 @@ $tabCustom=Array
 	require_once ($appfolder."/class/reservation.inc.php");
 	$obj=new resa_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
+
+	require_once ($appfolder."/class/ressources.inc.php");
+	$obj=new ress_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+
+	require_once ($appfolder."/class/maintenance.inc.php");
+	$obj=new fichemaint_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+
+	require_once ("class/echeance.inc.php");
+	require_once ($appfolder."/class/echeance.inc.php");
+	$obj=new echeance_class(0,$sql);
+	$obj->genSqlTab($tabTmpl);
+	$obj=new echeancetype_class(0,$sql);
+	$obj->genSqlTab($tabTmpl);
 
 ?>
