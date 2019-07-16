@@ -78,7 +78,7 @@
 				{
 					if ($d["resa"]=="obligatoire")
 					{
-						$txt="Aucune Ã©chÃ©ance pour ".$d["description"];
+						$txt="Aucune échéance pour ".$d["description"];
 						$tmpl_custom->assign("form_echeance_avion", $txt);
 						$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
 						$nb++;
