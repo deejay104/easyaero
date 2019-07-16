@@ -21,12 +21,14 @@
 
 <?
 	require_once ($appfolder."/class/ressources.inc.php");
+	require_once ("class/echeance.inc.php");
+	require_once ($appfolder."/class/echeance.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-// ---- VÃ©rifie les variables
+// ---- Vérifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 
@@ -35,8 +37,8 @@
 	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Droit d'accÃ¨s
-	if (!GetDroit("AccesAvions")) { FatalError("AccÃ¨s non authorisÃ© (AccesAvions)"); }
+// ---- Droit d'accès
+	if (!GetDroit("AccesAvions")) { FatalError("Accès non authorisé (AccesAvions)"); }
 
 // ---- Liste des ressources
 	$tabTitre=array();
@@ -50,6 +52,8 @@
 	$tabTitre["potentiel"]["width"]=150;
 	$tabTitre["estimemaint"]["aff"]="Estimation Prochaine maintenance";
 	$tabTitre["estimemaint"]["width"]=150;
+	$tabTitre["echeance"]["aff"]="Echéance(s)";
+	$tabTitre["echeance"]["width"]=350;
 
 	$lstusr=ListeRessources($sql);
 
@@ -78,6 +82,36 @@
 		}
 		$tabValeur[$i]["estimemaint"]["val"]=$t;
 		$tabValeur[$i]["estimemaint"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".sql2date($t,"jour")."</a>";
+		
+		$lstdte=VerifEcheance($sql,$id,"ressources",true);
+		$nb=0;
+		if (count($lstdte)>0)
+		{
+			$tabValeur[$i]["echeance"]["val"]="NOK";
+			$tabValeur[$i]["echeance"]["aff"]="";
+			foreach($lstdte as $ii=>$d)
+			{
+				if ($d["id"]>0)
+				{
+					$dte=new echeance_class($d["id"],$sql);
+					$tabValeur[$i]["echeance"]["aff"].=$dte->Affiche()."<br/>";
+					$nb++;
+				}
+				else
+				{
+					if ($d["resa"]=="obligatoire")
+					{
+						$tabValeur[$i]["echeance"]["aff"].="Aucune échéance pour ".$d["description"]."<br/>";
+						$nb++;
+					}
+				}
+			}
+		}
+		if ($nb==0)
+		{
+			$tabValeur[$i]["echeance"]["val"]="OK";
+		}
+						// $tabValeur[$i]["echeance"]["aff"]=print_r($lstdte,true);
 	}
 
 	if ($order=="") { $order="nom"; }

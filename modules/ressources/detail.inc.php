@@ -108,6 +108,7 @@
 
 		// Sauvegarde des échéances
 		$form_echeance=checkVar("form_echeance","array");
+		$form_echeance_type=checkVar("form_echeance_type","array");
 		foreach($form_echeance as $i=>$d)
 		{
 			$dte = new echeance_core($i,$sql);
@@ -212,7 +213,7 @@
 	}
 
 // ---- Affiche les échéances
-	$lstdte=ListEcheance($sql,$id,"avion");
+	$lstdte=ListEcheance($sql,$id,"ressources");
 
 	if ((is_numeric($id)) && ($id>0))
 	{ 
@@ -220,7 +221,7 @@
 		{
 			$dte = new echeance_core(0,$sql,$id);
 			$dte->editmode="form";
-			$dte->context="avion";
+			$dte->context="ressources";
 			$tmpl_x->assign("form_echeance",$dte->Affiche());
 			$tmpl_x->parse("corps.aff_echeances.lst_echeance");
 		}

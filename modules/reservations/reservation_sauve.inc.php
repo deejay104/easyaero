@@ -202,7 +202,7 @@
 
 // ---- Enregistre
 	$affrub="index";
-	$jour=$resa["resa"]->dte_deb;
+	$jour=(isset($resa["resa"]->dte_deb)) ? $resa["resa"]->dte_deb : now();
 	$msg_err2="";
 	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{

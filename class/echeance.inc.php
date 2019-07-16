@@ -36,12 +36,15 @@ class echeancetype_class extends echeancetype_core
 		"cout" => Array("type" => "price","default"=>"0.00"),
 	);
 
+	protected $tabList_loc=array(
+		"context"=>array('utilisateurs'=>'Utilisateur','ressources'=>'Avion'),
+	);
+
 	function __construct($id=0,$sql)
 	{
-
 		$this->fields=array_merge($this->fields,$this->fields_loc); 
+		$this->tabList=array_merge($this->tabList,$this->tabList_loc); 
 		parent::__construct($id,$sql);
-		
 	}
 
 	function aff($key,$typeaff="html",$formname="form_data",&$render="")

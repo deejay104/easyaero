@@ -153,7 +153,7 @@
 	$resa["resa"]->pilote_data=$resusr->data;
 
 // ---- Vérifie les échéances
-	$lstdte=VerifEcheance($sql,$resa["resa"]->uid_pilote,"user");
+	$lstdte=VerifEcheance($sql,$resa["resa"]->uid_pilote,"utilisateurs");
 
 	if ( (is_array($lstdte)) && (count($lstdte)>0) )
 	{

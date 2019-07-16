@@ -117,27 +117,6 @@ $tabCustom=Array
 		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => 0, ),
 		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 	),
-	"echeance" => Array
-	(
-		"id" => Array("Type" => "bigint(20) unsigned", "Index" => "PRIMARY", ),
-		"typeid" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"uid" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"dte_echeance" => Array("Type" => "date", ),
-		"paye" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1 ),
-	),
-	"echeancetype" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"description" => Array("Type" => "varchar(100)", ),
-		"poste" => Array("Type" => "int(11)", "Index" => "1", ),
-		"cout" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
-		"resa" => Array("Type" => "enum('obligatoire','instructeur','facultatif')", ),
-		"droit" => Array("Type" => "varchar(3)", ),
-		"multi" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"notif" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
-		"delai" => Array("Type" => "tinyint(3) unsigned", "Default" => "30", ),
-	),
 	"export" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -182,12 +161,6 @@ $tabCustom=Array
 		"forum_msg" => Array("Type" => "mediumint(8) unsigned", "Index" => "1", ),
 		"forum_usr" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"forum_date" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
-	"groupe" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"groupe" => Array("Type" => "varchar(5)" ),
-		"description" => Array("Type" => "varchar(200)", ),
 	),
 	"historique" => Array
 	(
@@ -633,8 +606,8 @@ $tabCustom=Array
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/echeance.inc.php");
 	$obj=new echeance_class(0,$sql);
-	$obj->genSqlTab($tabTmpl);
+	$obj->genSqlTab($tabCustom);
 	$obj=new echeancetype_class(0,$sql);
-	$obj->genSqlTab($tabTmpl);
+	$obj->genSqlTab($tabCustom);
 
 ?>

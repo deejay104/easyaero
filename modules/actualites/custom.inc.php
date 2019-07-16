@@ -22,8 +22,11 @@
 	$tmpl_custom->assign("path_module",$corefolder."/".$module."/".$mod);
 	$tmpl_custom->assign("corefolder",$corefolder);
 
-// ---- Charge l'utilisateur
 	require_once ($appfolder."/class/user.inc.php");
+	require_once ($appfolder."/class/echeance.inc.php");
+	require_once ($appfolder."/class/ressources.inc.php");
+
+// ---- Charge l'utilisateur
 	$myuser = new user_class($gl_uid,$sql,true);
 
 	$tmpl_custom->assign("solde", $myuser->AffSolde());
@@ -50,8 +53,47 @@
 		$tmpl_custom->assign("form_finjour",$finjour);
 
 	  	$tmpl_custom->parse("custom.aff_reservation");
-	}
+		
+		
+		$lstdte=VerifEcheance($sql,0,"ressources",true);
+	
+		$txt="";
+		$nb=0;
+		if (count($lstdte)>0)
+		{
+			foreach($lstdte as $ii=>$d)
+			{
+				if ($d["id"]>0)
+				{
+					$dte=new echeance_class($d["id"],$sql);
+					$ress=new ress_class($dte->uid,$sql);
 
+					$txt=$dte->Affiche()." pour ".$ress->aff("immatriculation");
+					$tmpl_custom->assign("form_echeance_avion", $txt);
+					$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
+
+					$nb++;
+				}
+				else
+				{
+					if ($d["resa"]=="obligatoire")
+					{
+						$txt="Aucune échéance pour ".$d["description"];
+						$tmpl_custom->assign("form_echeance_avion", $txt);
+						$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
+						$nb++;
+					}
+				}
+			}
+		}
+
+		if ($nb>0)
+		{
+			$tmpl_custom->parse("custom.aff_echeance_avion");
+		}
+	
+	}
+	
 // ---- Affiche la page
 	$tmpl_custom->parse("custom");
 	$custom=$tmpl_custom->text("custom");

@@ -129,6 +129,18 @@
 		<p><label>Nombre de vols dans les {nb_mois} derniers mois</label>{nb_vols} vols</p>
 		<!-- END: mod_aviation_detail -->
 	</div>
+<style>
+.lstecheance p { display: block; }
+</style>
+<!-- BEGIN: aff_echeance_avion -->
+	<div class="encadreInfos" >
+		<div class="encadreTitre">Echéances avions</div>
+
+		<!-- BEGIN: lst_echeance -->
+		<p class="lstecheance">{form_echeance_avion}</p>
+		<!-- END: lst_echeance -->	
+	</div>
+<!-- END: aff_echeance_avion -->
 	
 <!-- BEGIN: aff_reservation -->
 	<div class="encadreInfos" style='height:440px;'>

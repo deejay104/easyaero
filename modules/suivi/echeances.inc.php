@@ -47,7 +47,7 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche les types d'échéance
-	$lstEcheance=ListEcheanceType($sql,"user");
+	$lstEcheance=ListEcheanceType($sql,"utilisateurs");
 
 	$form_poste=0;
 	$form_description="";
@@ -148,13 +148,8 @@
 		$tabTitre["debiter"]["aff"]="<input type='checkbox' id='form_debite' OnClick='selectAll();'> Débiter";
 		$tabTitre["debiter"]["width"]=100;
 
-		// $lstdte=array();
-		// if ($form_id>0)
-		// {
-			// $lstdte=ListeEcheanceParType($sql,$form_id,"user");
-		// }
 		$ech=new echeancetype_core($form_id,$sql);
-		$lstdte=$ech->ListeEcheance("user");
+		$lstdte=$ech->ListeEcheance();
 		
 		$tabValeur=array();
 		foreach($lstdte as $i=>$id)
@@ -162,16 +157,19 @@
 			$dte = new echeance_class($id,$sql,0);
 			$usr = new user_class($dte->uid,$sql,false);
 
-			$tabValeur[$i]["prenom"]["val"]=$usr->prenom;
-			$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
-			$tabValeur[$i]["nom"]["val"]=$usr->nom;
-			$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
-			$tabValeur[$i]["echeance"]["val"]=$dte->Val();
-			$tabValeur[$i]["echeance"]["aff"]=$dte->Affiche();
-			$tabValeur[$i]["debiter"]["aff"]="<input type='checkbox' id='form_debite_".$id."' name='form_debite[".$id."]'>";
+			if ($usr->actif=="oui")
+			{
+				$tabValeur[$i]["prenom"]["val"]=$usr->prenom;
+				$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
+				$tabValeur[$i]["nom"]["val"]=$usr->nom;
+				$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
+				$tabValeur[$i]["echeance"]["val"]=$dte->Val();
+				$tabValeur[$i]["echeance"]["aff"]=$dte->Affiche();
+				$tabValeur[$i]["debiter"]["aff"]="<input type='checkbox' id='form_debite_".$id."' name='form_debite[".$id."]'>";
 
-			$tmpl_x->assign("form_uid",$id);
-			$tmpl_x->parse("corps.lst_checkbox");
+				$tmpl_x->assign("form_uid",$id);
+				$tmpl_x->parse("corps.lst_checkbox");
+			}
 		}
 
 		if ($order=="") { $order="nom"; }
