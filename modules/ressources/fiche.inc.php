@@ -147,7 +147,8 @@
 		$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
 		$tabValeur[$i]["dteresolv"]["val"]="";
 		$tabValeur[$i]["dteresolv"]["aff"]="";
-		$tabValeur[$i]["action"]["val"]=0;
+		$tabValeur[$i]["id"]["val"]=0;
+		$tabValeur[$i]["action"]["val"]="";
 		$tabValeur[$i]["action"]["aff"]="";
 	}
 

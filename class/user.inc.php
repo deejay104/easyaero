@@ -103,9 +103,11 @@ class user_class extends user_core
 		$sql=$this->sql;
 		$sql->Query($query);
 
+		$this->data["lache"]=array();
 		for($i=0; $i<$sql->rows; $i++)
 		{ 
 			$sql->GetRow($i);
+			$this->data["lache"][$i]=array();
 			$this->data["lache"][$i]["idlache"]=$sql->data["lid"];
 			$this->data["lache"][$i]["idavion"]=$sql->data["aid"];
 			$this->data["lache"][$i]["idusr"]=$sql->data["uid"];

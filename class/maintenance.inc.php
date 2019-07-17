@@ -236,7 +236,9 @@ class fichemaint_class extends objet_core
 
 function GetActiveFiche($sql,$ress=0,$maint=0)
 { global $MyOpt;
-	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintfiche WHERE actif='oui' AND uid_valid>0 AND (traite='non' ".(($maint>0) ? " OR uid_planif='$maint'" : "").") ".(($ress>0) ? " AND uid_avion='$ress'" : "")." ORDER BY dte_creat DESC";
+	$query ="SELECT fiche.id FROM ".$MyOpt["tbl"]."_maintfiche AS fiche ";
+	$query.="LEFT JOIN ".$MyOpt["tbl"]."_ressources AS ress ON fiche.uid_avion=ress.id ";
+	$query.="WHERE fiche.actif='oui' AND fiche.uid_valid>0 AND (fiche.traite='non' ".(($maint>0) ? " OR fiche.uid_planif='$maint'" : "").") ".(($ress>0) ? " AND fiche.uid_avion='$ress'" : "")." AND ress.actif='oui' ORDER BY fiche.dte_creat DESC";
 	$lstfiche=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
