@@ -3,7 +3,7 @@
 
 class echeance_class extends echeance_core
 {
-	protected $table="echeances";
+	protected $table="echeance";
 	protected $mod="";
 	protected $rub="";
 
