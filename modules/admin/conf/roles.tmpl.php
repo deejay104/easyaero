@@ -159,6 +159,7 @@ $tabRoles["SupprimeBapteme"]="Suppression d'un baptème";
 
 
 $tabRoles["NotifDecouvert"]="Personne à mettre en copie des notifications de découvert";
+$tabRoles["NotifMainteanance"]="Personne à mettre à notifier lorsqu'un avion est proche de la prochaine maintenance";
 
 
 

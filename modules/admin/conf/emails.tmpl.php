@@ -109,4 +109,22 @@ A bientôt
 	);
 // *****************************************************************
 
+// *****************************************************************
+	$tabMails["maintenance"]=Array
+	(
+		"titre"=>"Maintenance avion à planifier",
+		"balise"=>"immatriculation,potentiel,dte_maint",
+		"mail"=>
+"Bonjour,
+
+L'avion {immatriculation} arrive en fin de potentiel.
+Potentiel restant : {potentiel}
+Estimation de la date de la prochaine maintenance : {dte_maint}
+
+A bientôt
+"
+	);
+// *****************************************************************
+	
+
 ?>

@@ -25,6 +25,7 @@
 	<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet avion ?');"><IMG src="{path_module}/img/icn32_supprime.png" border=0 alt="">Supprimer</A>
 	<!-- END: suppression -->
 	<A href="index.php?mod=ressources&rub=fiche&uid_avion={id}"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Fiches</A>
+	<A href="index.php?mod=aviation&rub=carnet&id={id}"><IMG src="{path_module}/img/icn32_carnetvols.png" border=0 alt="">Carnet de route</A>
 </div>
 
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
@@ -82,16 +83,11 @@
 	</td>
 	<td width='50%' valign="top" style='padding: 5px;'>
 
-		<div class="formulaireTitre">Tarifs</div>
+		<div class="formulaireTitre">Maintenance</div>
 		<div class="formulaire">
-			<p>
-				<label>Poste</label>
-				{form_poste}
-			</p>
-			<p>
-				<label>Type horamètre</label>
-				{form_typehora}
-			</p>
+			<p><label>Temps de vol</label>{aff_tpsvol}</p>
+			<p><label>Potentiel</label>{aff_tpspot}</p>
+			<p><label>Prochaine maintenance</label>{aff_dtemaint}</p>
 		</div>
 
 		<div class="formulaireTitre">{lang_documents}</div>
@@ -109,9 +105,27 @@
 			<!-- END: lst_echeance -->
 		</div>
 		<!-- END: aff_echeances -->
+
 		
 		<div class="formulaireTitre">Caractéristiques</div>
 		<div class="formulaire">
+			<p>
+				<label>Poste</label>
+				{form_poste}
+			</p>
+			<p>
+				<label>Type horamètre</label>
+				{form_typehora}
+			</p>
+			<p>
+				<label>Avertissement potentiel</label>
+				{form_alertpotentiel}
+			</p>
+			<p>
+				<label>Potentiel Maximum</label>
+				{form_maxpotentiel}
+			</p>
+
 			<p>
 				<label>Nb de place</label>
 				{form_places}
@@ -127,14 +141,6 @@
 			<p>
 				<label>Vitesse max.</label>
 				{form_vitesse}
-			</p>
-			<p>
-				<label>Avertissement potentiel</label>
-				{form_alertpotentiel}
-			</p>
-			<p>
-				<label>Potentiel Maximum</label>
-				{form_maxpotentiel}
 			</p>
 		</div>
 	</td>

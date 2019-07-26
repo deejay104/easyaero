@@ -158,7 +158,7 @@
 	foreach($ress->data as $k=>$v)
 	  { $tmpl_x->assign("form_$k", $ress->aff($k,$typeaff)); }
 
-	 $tmpl_x->assign("bk_couleur",$ress->data["couleur"]);
+	$tmpl_x->assign("bk_couleur",$ress->data["couleur"]);
 	  
 	if (($id==$gl_uid) || (GetDroit("ModifRessource")))
 	  { $tmpl_x->parse("corps.modification"); }
@@ -185,6 +185,10 @@
 
  	if (GetDroit("ModifRessourceParametres"))
 	  { $tmpl_x->parse("corps.parametres"); }
+
+	$tmpl_x->assign("aff_tpsvol",$ress->AffTempsVol());
+	$tmpl_x->assign("aff_tpspot",$ress->AffPotentiel());
+	$tmpl_x->assign("aff_dtemaint",$ress->EstimeMaintenance());
 
   
 // ---- Affiche les documents

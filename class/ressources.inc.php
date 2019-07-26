@@ -56,6 +56,7 @@ class ress_class extends objet_core
 		"tolerance" => Array("type" => "varchar", ),
 		"centrage" => Array("type" => "text", ),
 		"maintenance" => Array("type" => "varchar", "len"=>200 ),
+		"notifmaint" => Array("type" => "datetime" ),
 	);
 
 	protected $tabList=array(
@@ -290,7 +291,7 @@ class ress_class extends objet_core
 
 		// $dte=$reslast["dte_fin"];
 		
-		$dte=now();
+		$dte="NA";
 		$query="SELECT dte_deb,dte_fin,tpsestime FROM ".$this->tbl."_calendrier WHERE dte_deb>='".now()."' AND actif='oui' AND uid_avion='".$this->id."' ORDER BY dte_deb";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
