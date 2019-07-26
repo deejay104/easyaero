@@ -309,6 +309,22 @@ class ress_class extends objet_core
 			
 		return $dte;
 	}
+	
+	function ProchaineMaintenance()
+	{
+		$sql=$this->sql;
+		$id=0;
+		
+		$query="SELECT id FROM ".$this->tbl."_maintenance WHERE dte_deb>='".now()."' AND actif='oui' AND uid_ressource='".$this->id."' ORDER BY dte_deb LIMIT 0,1";
+		$res=$sql->QueryRow($query);
+		
+		if ($res["id"]>0)
+		{
+			$id=$res["id"];
+		}
+
+		return $id;
+	}
 }
 
 

@@ -29,6 +29,7 @@
 	$id=checkVar("id","numeric");
 	$uid_ressource=checkVar("uid_ressource","numeric");
 	$form_data=checkVar("form_data","array");
+	$form_fiche=checkVar("form_fiche","array");
 
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
@@ -82,7 +83,7 @@
 			$id=$maint->id;
 		}
 		
-		$lstFiche=GetActiveFiche($sql,$maint->uid_ressource,$maint->id);
+		$lstFiche=GetActiveFiche($sql,$maint->data["uid_ressource"],$maint->id);
 	
 		if (count($lstFiche)>0)
 		{
@@ -90,12 +91,12 @@
 			{
 				$fiche=new fichemaint_class($fid,$sql);
 
-				if ($form_fiche[$fid]!="")
+				if ((isset($form_fiche[$fid])) && ($form_fiche[$fid]!=""))
 				{
 				  	$fiche->data["uid_planif"]=$id;
-					if ($maint->status=='cloture')
+					if ($maint->data["status"]=='cloture')
 					{
-					  	$fiche->traite="oui";
+					  	$fiche->data["traite"]="oui";
 					}
 				  	$fiche->Save();
 				}

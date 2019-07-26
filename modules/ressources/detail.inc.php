@@ -21,6 +21,7 @@
 
 <?
 	require_once ($appfolder."/class/ressources.inc.php");
+	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ("class/document.inc.php");
 	require_once ("class/echeance.inc.php");
@@ -188,7 +189,26 @@
 
 	$tmpl_x->assign("aff_tpsvol",$ress->AffTempsVol());
 	$tmpl_x->assign("aff_tpspot",$ress->AffPotentiel());
-	$tmpl_x->assign("aff_dtemaint",sql2date($ress->EstimeMaintenance(),"jour"));
+	
+	$dteid=$ress->ProchaineMaintenance();
+	$dtes="";
+	if ($dteid==0)
+	{
+		$dtem=sql2date($ress->EstimeMaintenance(),"jour");
+		if ($dtem!="NA")
+		{
+			$dtes="(Estimation)";
+		}
+	}
+	else
+	{
+		$maint=new maint_class($dteid,$sql);
+		$dtem=$maint->Aff("dte_deb");
+		$dtes="(".$maint->Aff("status").")";
+
+		// $dtes="(Planifié)";
+	}
+	$tmpl_x->assign("aff_dtemaint",$dtem." ".$dtes);
 
   
 // ---- Affiche les documents
