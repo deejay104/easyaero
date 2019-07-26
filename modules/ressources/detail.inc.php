@@ -188,7 +188,7 @@
 
 	$tmpl_x->assign("aff_tpsvol",$ress->AffTempsVol());
 	$tmpl_x->assign("aff_tpspot",$ress->AffPotentiel());
-	$tmpl_x->assign("aff_dtemaint",$ress->EstimeMaintenance());
+	$tmpl_x->assign("aff_dtemaint",sql2date($ress->EstimeMaintenance(),"jour"));
 
   
 // ---- Affiche les documents
