@@ -26,7 +26,19 @@ class maint_class extends objet_core
 	protected $rub="detailmaint";
 
 	protected $droit=array();
-	protected $type=array("dte_deb"=>"date","dte_fin"=>"date","status"=>"enum","potentiel"=>"duration","commentaire"=>"text","cout"=>"price");
+	// protected $type=array("dte_deb"=>"date","dte_fin"=>"date","status"=>"enum","potentiel"=>"duration","commentaire"=>"text","cout"=>"price");
+	protected $fields=array(
+		"uid_ressource" => Array("type" => "number", "default" => "0", "Index" => "1", ),
+		"uid_atelier" => Array("type" => "number", "default" => "0", "Index"=>1),
+		"status" => Array("type" => "enum", "default" => "planifie", "Index"=>1),
+		"dte_deb" => Array("type" => "date", "default" => "0000-00-00", ),
+		"dte_fin" => Array("type" => "date", "default" => "0000-00-00", ),
+		"potentiel" => Array("type" => "number", "default" => "0", ),
+		"cout" => Array("type" => "price" ),
+		"commentaire" => Array("type" => "text" ),
+		"uid_lastresa" => Array("type" => "number", "default" => "0", ),
+	
+	);
 	
 	protected $tabList=array(
 		"status"=>array('planifie'=>'Planifié','confirme'=>'Confirmé','effectue'=>'Effectué','cloture'=>'Cloturé','supprime'=>'Supprimé'),
@@ -273,7 +285,10 @@ class atelier_class extends objet_core
 	protected $rub="";
 
 	protected $droit=array();
-	protected $type=array("nom"=>"varchar","mail"=>"email");
+	protected $fields=array(
+		"nom" => Array("type" => "varchar", "len"=>200 ),
+		"mail" => Array("type" => "email"),
+	);
 	
 	protected $tabList=array(
 	);

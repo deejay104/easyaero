@@ -56,11 +56,15 @@
 	$tabTitre["dte_fin"]["width"]=100;
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=100;
-	$tabTitre["cout"]["aff"]="Cout";
-	$tabTitre["cout"]["width"]=100;
-	$tabTitre["atelier"]["aff"]="Atelier";
-	$tabTitre["atelier"]["width"]=220;
-
+	
+	if ($theme!="phone")
+	{
+		$tabTitre["cout"]["aff"]="Cout";
+		$tabTitre["cout"]["width"]=100;
+		$tabTitre["atelier"]["aff"]="Atelier";
+		$tabTitre["atelier"]["width"]=220;
+	}
+	
 	$lstFiche=GetAllMaintenance($sql,$ress);
 	$tabValeur=array();
 

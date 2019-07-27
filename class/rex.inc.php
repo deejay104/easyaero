@@ -37,7 +37,25 @@ class rex_class extends objet_core
 	protected $rub="rexdetail";
 
 	protected $droit=array("status"=>"ModifRexStatus","planaction"=>"ModifRexSynthese","synthese"=>"ModifRexSynthese");
-	protected $type=array("titre"=>"varchar","status"=>"enum","description"=>"text","commentaire"=>"text","synthese"=>"text","planaction"=>"text","dte_rex"=>"date");
+	// protected $type=array("titre"=>"varchar","status"=>"enum","description"=>"text","commentaire"=>"text","synthese"=>"text","planaction"=>"text","dte_rex"=>"date");
+	protected $fields=array(
+		"titre" => Array("type" => "varchar", "len"=>40 ),
+		"status" => Array("type" => "enum","default"=>"new","index"=>1 ),
+		"description" => Array("type" => "text" ),
+		"commentaire" => Array("type" => "text" ),
+		"synthese" => Array("type" => "text" ),
+		"planaction" => Array("type" => "text" ),
+		"categorie" => Array("type" => "varchar", "len"=>30 ),
+		"nature" => Array("type" => "varchar", "len"=>30 ),
+		"mto" => Array("type" => "varchar", "len"=>30 ),
+		"environnement" => Array("type" => "varchar","len"=>30 ),
+		"phase" => Array("type" => "varchar","len"=>30 ),
+		"typevol" => Array("type" => "varchar","len"=>30 ),
+		"typeevt" => Array("type" => "varchar","len"=>30),
+		"uid_avion" => Array("type" => "number", "Index"=>1 ),
+		"risque" => Array("type" => "varchar","len"=>2 ),
+		"dte_rex" => Array("type" => "date", "default" => "0000-00-00" ),
+	);
 
 	protected $tabList=array(
 		"status"=>array('new'=>'Nouveau','inprg'=>'En cours','close'=>'Cloturé','cancel'=>'Annulé'),
@@ -112,7 +130,7 @@ class rex_class extends objet_core
 				foreach($lstress as $i=>$rid)
 				{
 					$resr=new ress_class($rid,$this->sql);
-					$ret.="<option value='".$rid."' ".(($txt==$rid) ? "selected" : "").">".$resr->val("immatriculation")."</option>";
+					$ret.="<option value='".$rid."' ".(($this->data["uid_avion"]==$rid) ? "selected" : "").">".$resr->val("immatriculation")."</option>";
 				}
 				$ret.="</select>";
 			}

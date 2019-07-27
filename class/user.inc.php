@@ -24,6 +24,8 @@ class user_class extends user_core
 	protected $rub="detail";
 
 	protected $typeea=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+
+
 	protected $droitea=array(
 		"dte_inscription"=>"ModifUserDteInscription",
 		"decouvert"=>"ModifUserDecouvert",

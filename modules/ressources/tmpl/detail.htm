@@ -10,8 +10,15 @@
 
 <!-- BEGIN: corps -->
 
+<style>
+.showColor { display: inline-block; width:190px; }
+@media (max-device-width: 714px) { 
+	.showColor { padding-left:20px; }
+}
+</style>
+
 <div class="pagetitle pagemenu">
-	<p><a href="index.php?mod=ressources"><img src="{path_module}/img/icn32_retour.png" alt="">Liste</a></p>
+	<a href="index.php?mod=ressources"><img src="{path_module}/img/icn32_retour.png" alt="">Liste</a>
 	<!-- BEGIN: ajout -->
 	<A href="index.php?mod=ressources&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
 	<!-- END: ajout -->
@@ -34,7 +41,6 @@
 <INPUT type="hidden" name="id" value="{id}">
 <INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-<BR>
 
 <!-- BEGIN: msg_erreur -->
 <div class="msgerror">{msg_erreur}</div>
@@ -57,13 +63,13 @@
 	<p>
 			<label>Modèle</label>{form_modele}</p>
 	<p>
-			<div style='display: inline-block; width:190px;'>Couleur</div>{form_couleur}
+			<div class="showColor">Couleur</div>{form_couleur}
 	</p>
 </div>
 
 <table width='100%'>
 <tr>
-	<td width='50%' valign="top" style='padding: 5px;'>
+	<td width='50%' valign="top" style="padding: 5px;" class="noMobile">
 
 		<div class="formulaireTitre">Description</div>
 		{form_description}

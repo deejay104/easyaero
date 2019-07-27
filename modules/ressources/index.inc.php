@@ -52,8 +52,11 @@
 	$tabTitre["potentiel"]["width"]=150;
 	$tabTitre["estimemaint"]["aff"]="Estimation Prochaine maintenance";
 	$tabTitre["estimemaint"]["width"]=150;
-	$tabTitre["echeance"]["aff"]="Echéance(s)";
-	$tabTitre["echeance"]["width"]=350;
+	if ($theme!="phone")
+	{
+		$tabTitre["echeance"]["aff"]="Echéance(s)";
+		$tabTitre["echeance"]["width"]=350;
+	}
 
 	$lstusr=ListeRessources($sql);
 

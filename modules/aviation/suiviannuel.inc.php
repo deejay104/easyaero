@@ -91,13 +91,15 @@
 	$tabTitre["type"]["width"]=140;
 	$tabTitre["total"]["aff"]="Total";
 	$tabTitre["total"]["width"]=100;
-	$tabTitre["cdb"]["aff"]="CdB";
-	$tabTitre["cdb"]["width"]=100;
-	$tabTitre["dc"]["aff"]="DC";
-	$tabTitre["dc"]["width"]=100;
-	$tabTitre["inst"]["aff"]="Inst";
-	$tabTitre["inst"]["width"]=100;
-
+	if ($theme!="phone")
+	{
+		$tabTitre["cdb"]["aff"]="CdB";
+		$tabTitre["cdb"]["width"]=100;
+		$tabTitre["dc"]["aff"]="DC";
+		$tabTitre["dc"]["width"]=100;
+		$tabTitre["inst"]["aff"]="Inst";
+		$tabTitre["inst"]["width"]=100;
+	}
 
 	// $lstres=ListeRessources($sql,array("oui"));
 	// foreach($lstres as $i=>$id)
@@ -168,10 +170,13 @@
 
 	$tabTitre["type"]["bottom"]="Total ->";
 	$tabTitre["total"]["bottom"]=AffTemps($tabTotal["total"]);
-	$tabTitre["cdb"]["bottom"]=AffTemps($tabTotal["cdb"]);
-	$tabTitre["dc"]["bottom"]=AffTemps($tabTotal["dc"]);
-	$tabTitre["inst"]["bottom"]=AffTemps($tabTotal["inst"]);
 
+	if ($theme!="phone")
+	{
+		$tabTitre["cdb"]["bottom"]=AffTemps($tabTotal["cdb"]);
+		$tabTitre["dc"]["bottom"]=AffTemps($tabTotal["dc"]);
+		$tabTitre["inst"]["bottom"]=AffTemps($tabTotal["inst"]);
+	}
 
 	$tmpl_x->assign("tab_liste",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"type=".$type."&dte=".$dte));
 

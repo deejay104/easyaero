@@ -96,36 +96,36 @@ $tabCustom=Array
 		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => 0, ),
 		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 	),
-	"document" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"name" => Array("Type" => "varchar(100)", ),
-		"filename" => Array("Type" => "varchar(20)", ),
-		"uid" => Array("Type" => "int(10) unsigned", "Default" => 0, "Index" => "1", ),
-		"type" => Array("Type" => "varchar(10)", "Index" => "1", ),
-		"dossier" => Array("Type" => "tinytext", ),
-		"droit" => Array("Type" => "varchar(3)", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
-		"uid_creat" => Array("Type" => "int(10) unsigned","Default" => 0, ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
-	"droits" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"groupe" => Array("Type" => "varchar(5)", "Index" => "1", ),
-		"uid" => Array("Type" => "int(10) unsigned", "Default" => 0, "Index" => "1", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => 0, ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
-	"export" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"nom" => Array("Type" => "varchar(50)", ),
-		"description" => Array("Type" => "text", ),
-		"requete" => Array("Type" => "text", ),
-		"param" => Array("Type" => "varchar(50)", ),
-		"droit_r" => Array("Type" => "char(3)", ),
-	),
+	// "document" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "name" => Array("Type" => "varchar(100)", ),
+		// "filename" => Array("Type" => "varchar(20)", ),
+		// "uid" => Array("Type" => "int(10) unsigned", "Default" => 0, "Index" => "1", ),
+		// "type" => Array("Type" => "varchar(10)", "Index" => "1", ),
+		// "dossier" => Array("Type" => "tinytext", ),
+		// "droit" => Array("Type" => "varchar(3)", ),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
+		// "uid_creat" => Array("Type" => "int(10) unsigned","Default" => 0, ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+	// ),
+	// "droits" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "groupe" => Array("Type" => "varchar(5)", "Index" => "1", ),
+		// "uid" => Array("Type" => "int(10) unsigned", "Default" => 0, "Index" => "1", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", "Default" => 0, ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+	// ),
+	// "export" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "nom" => Array("Type" => "varchar(50)", ),
+		// "description" => Array("Type" => "text", ),
+		// "requete" => Array("Type" => "text", ),
+		// "param" => Array("Type" => "varchar(50)", ),
+		// "droit_r" => Array("Type" => "char(3)", ),
+	// ),
 	"factures" => Array
 	(
 		"id" => Array("Type" => "varchar(10)", "Index" => "PRIMARY", ),
@@ -137,42 +137,42 @@ $tabCustom=Array
 		"email" => Array("Type" => "char(1)", "Default" => "N", ),
 		"comment" => Array("Type" => "varchar(200)", ),
 	),
-	"forums" => Array
-	(
-		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
-		"fid" => Array("Type" => "mediumint(8) unsigned", "Default" => "0", "Index" => "1", ),
-		"fil" => Array("Type" => "mediumint(8) unsigned", "Default" => "0", "Index" => "1", ),
-		"titre" => Array("Type" => "varchar(104)", ),
-		"message" => Array("Type" => "text", ),
-		"pseudo" => Array("Type" => "varchar(104)", ),
-		"mail_diff" => Array("Type" => "varchar(104)", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index" => "1", ),
-		"droit_r" => Array("Type" => "char(3)", ),
-		"droit_w" => Array("Type" => "char(3)", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
-		"mailing" => Array("Type" => "int(11)", "Default" => "0", ),
-	),
-	"forums_lus" => Array
-	(
-		"forum_id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
-		"forum_msg" => Array("Type" => "mediumint(8) unsigned", "Index" => "1", ),
-		"forum_usr" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"forum_date" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
-	"historique" => Array
-	(
-		"id" => Array("Type" => "bigint(20) unsigned", "Index" => "PRIMARY", ),
-		"class" => Array("Type" => "varchar(20)", ),
-		"table" => Array("Type" => "varchar(20)", "Index" => "1", ),
-		"idtable" => Array("Type" => "bigint(20) unsigned", "Index" => "1", ),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"type" => Array("Type" => "varchar(3)", ),
-		"comment" => Array("Type" => "text", ),
-	),
+	// "forums" => Array
+	// (
+		// "id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		// "fid" => Array("Type" => "mediumint(8) unsigned", "Default" => "0", "Index" => "1", ),
+		// "fil" => Array("Type" => "mediumint(8) unsigned", "Default" => "0", "Index" => "1", ),
+		// "titre" => Array("Type" => "varchar(104)", ),
+		// "message" => Array("Type" => "text", ),
+		// "pseudo" => Array("Type" => "varchar(104)", ),
+		// "mail_diff" => Array("Type" => "varchar(104)", ),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index" => "1", ),
+		// "droit_r" => Array("Type" => "char(3)", ),
+		// "droit_w" => Array("Type" => "char(3)", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
+		// "mailing" => Array("Type" => "int(11)", "Default" => "0", ),
+	// ),
+	// "forums_lus" => Array
+	// (
+		// "forum_id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		// "forum_msg" => Array("Type" => "mediumint(8) unsigned", "Index" => "1", ),
+		// "forum_usr" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
+		// "forum_date" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+	// ),
+	// "historique" => Array
+	// (
+		// "id" => Array("Type" => "bigint(20) unsigned", "Index" => "PRIMARY", ),
+		// "class" => Array("Type" => "varchar(20)", ),
+		// "table" => Array("Type" => "varchar(20)", "Index" => "1", ),
+		// "idtable" => Array("Type" => "bigint(20) unsigned", "Index" => "1", ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+		// "type" => Array("Type" => "varchar(3)", ),
+		// "comment" => Array("Type" => "text", ),
+	// ),
 	"lache" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -182,42 +182,42 @@ $tabCustom=Array
 		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),
-	"login" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"username" => Array("Type" => "varchar(100)", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"header" => Array("Type" => "varchar(200)", ),
-	),
-	"maintatelier" => Array
-	(
-		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
-		"nom" => Array("Type" => "varchar(200)", ),
-		"mail" => Array("Type" => "varchar(200)", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-	),
-	"maintenance" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"uid_ressource" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index" => "1", ),
-		"uid_atelier" => Array("Type" => "mediumint(8) unsigned", "Default" => "0", "Index"=>1),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
-		"status" => Array("Type" => "enum('planifie','confirme','effectue','cloture','supprime')", "Default" => "planifie", "Index"=>1),
-		"dte_deb" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"dte_fin" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"potentiel" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"cout" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
-		"commentaire" => Array("Type" => "text" ),
-		"uid_lastresa" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
-	),
+	// "login" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "username" => Array("Type" => "varchar(100)", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "header" => Array("Type" => "varchar(200)", ),
+	// ),
+	// "maintatelier" => Array
+	// (
+		// "id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		// "nom" => Array("Type" => "varchar(200)", ),
+		// "mail" => Array("Type" => "varchar(200)", ),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
+	// ),
+	// "maintenance" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "uid_ressource" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index" => "1", ),
+		// "uid_atelier" => Array("Type" => "mediumint(8) unsigned", "Default" => "0", "Index"=>1),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
+		// "status" => Array("Type" => "enum('planifie','confirme','effectue','cloture','supprime')", "Default" => "planifie", "Index"=>1),
+		// "dte_deb" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "dte_fin" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "potentiel" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "cout" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
+		// "commentaire" => Array("Type" => "text" ),
+		// "uid_lastresa" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
+	// ),
 	// "maintfiche" => Array
 	// (
 		// "id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
@@ -367,31 +367,31 @@ $tabCustom=Array
 		// "uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 	// ),
-	"rex" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"titre" => Array("Type" => "varchar(40)" ),
-		"status" => Array("Type" => "enum('new','inprg','close','cancel')","Index"=>1 ),
-		"description" => Array("Type" => "text" ),
-		"commentaire" => Array("Type" => "text" ),
-		"synthese" => Array("Type" => "text" ),
-		"planaction" => Array("Type" => "text" ),
-		"categorie" => Array("Type" => "varchar(30)" ),
-		"nature" => Array("Type" => "varchar(30)" ),
-		"mto" => Array("Type" => "varchar(30)" ),
-		"environnement" => Array("Type" => "varchar(30)" ),
-		"phase" => Array("Type" => "varchar(30)" ),
-		"typevol" => Array("Type" => "varchar(30)" ),
-		"typeevt" => Array("Type" => "varchar(30)" ),
-		"uid_avion" => Array("Type" => "int(10) unsigned", "Index"=>1 ),
-		"risque" => Array("Type" => "varchar(2)" ),
-		"actif" => Array("Type" => "enum('oui','non')","Index"=>1, "Default"=>"oui" ),
-		"dte_rex" => Array("Type" => "date", "Default" => "0000-00-00" ),
-		"uid_creat" => Array("Type" => "int(10) unsigned","Index"=>1 ),
-		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
-		"uid_maj" => Array("Type" => "int(10) unsigned","Index"=>1 ),
-		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
-	),
+	// "rex" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "titre" => Array("Type" => "varchar(40)" ),
+		// "status" => Array("Type" => "enum('new','inprg','close','cancel')","Index"=>1 ),
+		// "description" => Array("Type" => "text" ),
+		// "commentaire" => Array("Type" => "text" ),
+		// "synthese" => Array("Type" => "text" ),
+		// "planaction" => Array("Type" => "text" ),
+		// "categorie" => Array("Type" => "varchar(30)" ),
+		// "nature" => Array("Type" => "varchar(30)" ),
+		// "mto" => Array("Type" => "varchar(30)" ),
+		// "environnement" => Array("Type" => "varchar(30)" ),
+		// "phase" => Array("Type" => "varchar(30)" ),
+		// "typevol" => Array("Type" => "varchar(30)" ),
+		// "typeevt" => Array("Type" => "varchar(30)" ),
+		// "uid_avion" => Array("Type" => "int(10) unsigned", "Index"=>1 ),
+		// "risque" => Array("Type" => "varchar(2)" ),
+		// "actif" => Array("Type" => "enum('oui','non')","Index"=>1, "Default"=>"oui" ),
+		// "dte_rex" => Array("Type" => "date", "Default" => "0000-00-00" ),
+		// "uid_creat" => Array("Type" => "int(10) unsigned","Index"=>1 ),
+		// "dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
+		// "uid_maj" => Array("Type" => "int(10) unsigned","Index"=>1 ),
+		// "dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00" ),
+	// ),
 	"synthese" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -444,21 +444,21 @@ $tabCustom=Array
 		"nom" => Array("Type" => "varchar(50)", ),
 		"libelle" => Array("Type" => "varchar(50)", ),
 	),
-	"utildonnees" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"did" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"uid" => Array("Type" => "int(11)", "Index" => "1", ),
-		"valeur" => Array("Type" => "varchar(255)", ),
-	),
-	"utildonneesdef" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"ordre" => Array("Type" => "tinyint(3) unsigned", ),
-		"nom" => Array("Type" => "varchar(20)", ),
-		"type" => Array("Type" => "varchar(10)", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index" => "1"),
-	),
+	// "utildonnees" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "did" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
+		// "uid" => Array("Type" => "int(11)", "Index" => "1", ),
+		// "valeur" => Array("Type" => "varchar(255)", ),
+	// ),
+	// "utildonneesdef" => Array
+	// (
+		// "id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		// "ordre" => Array("Type" => "tinyint(3) unsigned", ),
+		// "nom" => Array("Type" => "varchar(20)", ),
+		// "type" => Array("Type" => "varchar(10)", ),
+		// "actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index" => "1"),
+	// ),
 	"utilisateurs" => Array
 	(
 		"idcpt" => Array("Type" => "int(10) unsigned", "Default" => "0"),
@@ -600,7 +600,11 @@ $tabCustom=Array
 	$obj->genSqlTab($tabCustom);
 
 	require_once ($appfolder."/class/maintenance.inc.php");
+	$obj=new maint_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
 	$obj=new fichemaint_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+	$obj=new atelier_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
 
 	require_once ("class/echeance.inc.php");
@@ -610,4 +614,7 @@ $tabCustom=Array
 	$obj=new echeancetype_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
 
+	require_once ($appfolder."/class/rex.inc.php");
+	$obj=new rex_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
 ?>

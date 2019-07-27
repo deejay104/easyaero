@@ -10,11 +10,11 @@
 <!-- BEGIN: corps -->
 
 <div class="pagetitle pagemenu">
-	<p><a href="index.php?mod=ressources&rub=liste"><img src="{path_module}/img/icn32_retour.png" alt="">Liste</a></p>
+	<a href="index.php?mod=ressources&rub=liste"><img src="{path_module}/img/icn32_retour.png" alt="">Liste</a>
 	<!-- BEGIN: supprimemaint -->
-	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer la maintenance</a></p>
+	<a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer la maintenance</a>
 	<!-- END: supprimemaint -->
-	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a></p>
+	<a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a>
 </div>
 
 <script type="text/javascript">
@@ -66,7 +66,7 @@
 		dialog = $( "#dialog-form" ).dialog({
 		  autoOpen: false,
 		  height: 300,
-		  width: 1200,
+		  width: 800,
 		  top: 10,
 		  modal: true,
 		  buttons: {
@@ -117,7 +117,7 @@
 </script>
 
 
-<div id="dialog-form" title="Ajouter un vol" class="formulaire" style='display:none;'>
+<div id="dialog-form" title="Ajouter un atelier de maintenance" class="formulaire" style='display:none;'>
   <p class="validateTips">Saisissez le nom et l'email de l'atelier.</p>
  
   <form id="atelier" method="post" action="index.php" enctype="multipart/form-data">
@@ -155,8 +155,8 @@
 				<p>
 					<label>Status</label>{form_status}
 				</p>
-				<p>
-					<label>Atelier</label>{form_uid_atelier} <a id="ajouter">-Ajouter un atelier-</a>
+				<p OnMouseOver="document.getElementById('addatelier').style.display='inline-block';" OnMouseOut="document.getElementById('addatelier').style.display='none';">
+					<label>Atelier</label>{form_uid_atelier} <a id="ajouter" class='imgDelete'><img id="addatelier" src="{path_module}/img/icn16_editer.png" style="display:none;"></a>
 				</p>
 				<p>
 					<label>Début de l'intervention</label>{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
@@ -172,8 +172,7 @@
 				</p>
 			</div>
 		</td>
-		<td width="10">&nbsp;</td>
-		<td >
+		<td class="noMobile">
 			<div class="formulaireTitre">Commentaire</div>
 			<div>{form_commentaire}</div>
 		</td>
