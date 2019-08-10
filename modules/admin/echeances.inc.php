@@ -86,7 +86,7 @@
 		),
 		"context"=>array(
 			"aff"=>"Contexte",
-			"width"=>220
+			"width"=>110
 		),
 		"action"=>array(
 			"aff"=>"&nbsp;",

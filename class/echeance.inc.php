@@ -32,14 +32,16 @@ class echeancetype_class extends echeancetype_core
 
 	protected $fields_loc=array
 	(
+		"resa" => Array("type" => "enum" ),
 		"poste" => Array("type" => "number", "index" => "1"),
 		"cout" => Array("type" => "price","default"=>"0.00"),
 	);
 
 	protected $tabList_loc=array(
+		"resa"=>array('obligatoire'=>'Obligatoire','instructeur'=>'Instructeur','facultatif'=>'Facultatif'),
 		"context"=>array('utilisateurs'=>'Utilisateur','ressources'=>'Avion'),
 	);
-
+	
 	function __construct($id=0,$sql)
 	{
 		$this->fields=array_merge($this->fields,$this->fields_loc); 

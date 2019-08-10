@@ -18,7 +18,7 @@
 	
 // ---- Liste des membres à notifier
 	$tabUser=array();
-	$lst=ListActiveUsers($sql,"",array("NotifMainteanance"),"non");
+	$lst=ListActiveUsers($sql,"",array("NotifMaintenance"),"non");
 	foreach($lst as $i=>$id)
 	{
 		$usr = new user_class($id,$sql,false,true);
