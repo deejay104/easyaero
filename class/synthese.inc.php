@@ -30,22 +30,49 @@ class synthese_class extends objet_core
 	protected $rub="synthese";
 
 	// protected $droit=array("status"=>"ModifRexStatus","planaction"=>"ModifRexSynthese","synthese"=>"ModifRexSynthese");
-	protected $type=array(
-		"status" => "enum",
-		"nbvol"=>"number",
-		"type" => "enum",
-		"phase" => "radio",
-		"nature" => "enum",
-		"remtech" => "text",
-		"remnotech" => "text",
-		"menace" => "text",
-		"erreur" => "text",
-		"remnotech" => "text",
-		"travail" => "text",
-		"nbatt" => "number",
-		"sdte_pilote" => "datetime",
-		"sdte_instructeur" => "datetime"
+	// protected $type=array(
+		// "status" => "enum",
+		// "nbvol"=>"number",
+		// "type" => "enum",
+		// "phase" => "radio",
+		// "nature" => "enum",
+		// "remtech" => "text",
+		// "remnotech" => "text",
+		// "menace" => "text",
+		// "erreur" => "text",
+		// "remnotech" => "text",
+		// "travail" => "text",
+		// "nbatt" => "number",
+		// "sdte_pilote" => "datetime",
+		// "sdte_instructeur" => "datetime"
+	// );
+
+	protected $fields = Array	(
+		"idvol" => Array("type" => "number", "default" => "0", "index" => "1" ),
+		"status" => Array("type" => "enum","index"=>1 ),
+		"uid_pilote" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"uid_instructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"uid_avion" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"type" => Array("type" => "enum", "default"=>"double"),
+		"phase" => Array("type" => "radio","default"=>"perfectionnement"),
+		// "nature" => Array("type" => "enum","default"=>"maniabilite"),
+		"lecon" => Array("type" => "varchar","len"=>6),
+		"remtech" => Array("type" => "text"),
+		"remnotech" => Array("type" => "text"),
+		"menace" => Array("type" => "text"),
+		"erreur" => Array("type" => "text"),
+		"remnotech" => Array("type" => "text"),
+		"travail" => Array("type" => "text"),
+		"nbvol" => Array("type" => "number", "default"=>0),
+		"nbatt" => Array("type" => "number", "default"=>1),
+		"sid_pilote" => Array("type" => "number", "default" => 0),
+		"sdte_pilote" => Array("type" => "datetime"),
+		"skey_pilote" => Array("type" => "varchar","len"=>64),
+		"sid_instructeur" => Array("type" => "number", "default" => 0),
+		"sdte_instructeur" => Array("type" => "datetime"),
+		"skey_instructeur" => Array("type" => "varchar","len"=>64),
 	);
+
 	
 	protected $tabList=array(
 		"status"=>array(
@@ -60,7 +87,10 @@ class synthese_class extends objet_core
 			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','perfectionnement'=>'Perfectionnement'),
 			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','perfectionnement'=>'Perfectionnement')
 		),
-		"nature" => Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','autre'=>'Autre'),
+		"nature" => array(
+			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','autre'=>'Autre'),
+			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','autre'=>'Autre')
+		),
 	);
 
 	# Constructor

@@ -9,7 +9,6 @@
 
 // ---- Sélectionne le menu courant
 	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
-	$tmpl_menu->assign("form_id", $id);
 
 	if (GetDroit("AccesSuiviListeComptes"))
 	{

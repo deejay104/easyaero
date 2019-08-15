@@ -122,6 +122,19 @@ class ress_class extends objet_core
 				$res=$sql->QueryRow($query);
 				$ret=$res["description"];
 			}
+			else if ($key=="immatriculation")
+			{
+				$ret=strtoupper($this->data[$key]);
+				if ($ret=="")
+				{
+					$ret="<i>NA</i>";
+				}
+				if ($this->data["actif"]!="oui")
+				{
+					$ret="<s>".$ret."</s>";
+				}
+				$ret="<a href='index.php?mod=ressources&rub=detail&id=".$this->id."'>".$ret."</a>";
+			}
 		}
 		return $ret;
 	}
@@ -329,16 +342,25 @@ class ress_class extends objet_core
 
 
 
-function ListeRessources($sql,$actif=array("oui"))
+function ListeRessources($sql,$actif=array())
 {
 	global $MyOpt;
 
+	if (count($actif)==0)
+	{
+		$actif[]="oui";
+		if (GetDroit("SupprimeRessource"))
+		{
+			$actif[]="off";
+		}
+	}
+	
 	$txt="1=0";
 	foreach($actif as $a)
 	  {
 	  	$txt.=" OR actif='$a'";
 	  }
-	$query = "SELECT id FROM ".$MyOpt["tbl"]."_ressources WHERE ($txt ".((GetDroit("SupprimeRessource")) ? "OR actif='off'" : "" ).") ";
+	$query = "SELECT id FROM ".$MyOpt["tbl"]."_ressources WHERE ($txt) ";
 	$sql->Query($query);
 	$res=array();
 	for($i=0; $i<$sql->rows; $i++)
@@ -349,8 +371,18 @@ function ListeRessources($sql,$actif=array("oui"))
 	return $res;
 }
 
-function AffListeRessources($sql,$form_uid,$name,$actif=array("oui"))
- { global $MyOpt;
+function AffListeRessources($sql,$form_uid,$name,$actif=array())
+{
+	global $MyOpt;
+
+ 	if (count($actif)==0)
+	{
+		$actif[]="oui";
+		if (GetDroit("SupprimeRessource"))
+		{
+			$actif[]="off";
+		}
+	}
 
 	$txt="1=0";
 	foreach($actif as $a)
@@ -371,5 +403,6 @@ function AffListeRessources($sql,$form_uid,$name,$actif=array("oui"))
 	$lstress.="</select>";
 
 	return $lstress;
-  }
+}
+
 ?>

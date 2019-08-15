@@ -180,6 +180,9 @@
 	$tmpl_x->assign("form_instructeur",$ins->aff("fullname"));
 	$tmpl_x->assign("form_dtevol",sql2date($resa->dte_deb,"jour"));
 
+	$ress=new ress_class($resa->uid_ressource,$sql);
+	$tmpl_x->assign("form_immat",$ress->Aff("immatriculation"));
+
 	
 	if (GetDroit("SupprimeSynthese"))
 	{

@@ -47,7 +47,7 @@
 	$finjour=($MyOpt["finjour"]!="") ? $MyOpt["finjour"] : "22";
 	$larcol="100";
 
-	$t=ListeRessources($sql,array("oui"));
+	$t=ListeRessources($sql);
 	$tress=array();
 
 	$ii=1;

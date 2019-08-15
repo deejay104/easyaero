@@ -30,14 +30,14 @@
 
 
 // ---- Teste le potentiel restant de chaque avion
-	$lstress=ListeRessources($sql);
+	$lstress=ListeRessources($sql,array("oui"));
 	$gl_res="OK";
 
 	foreach($lstress as $i=>$id)
 	{
 		$ress = new ress_class($id,$sql,false);
 		$tpspot=$ress->Potentiel();
-		
+myPrint($ress->Aff("immatriculation")." ".$ress->data["actif"]);	
 		if (time()-strtotime($ress->val("notifmaint"))>7*24*3600)
 		{
 			if (floor($tpspot/60)<$ress->data["alertpotentiel"])

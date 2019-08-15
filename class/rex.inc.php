@@ -125,7 +125,7 @@ class rex_class extends objet_core
 			if ($key=="uid_avion")
 		  	{
 				$ret="<select id='".$key."' name=\"".$formname."[$key]\">";
-				$lstress=ListeRessources($this->sql);
+				$lstress=ListeRessources($this->sql,array("oui"));
 
 				foreach($lstress as $i=>$rid)
 				{

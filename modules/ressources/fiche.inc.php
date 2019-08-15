@@ -50,7 +50,7 @@
 	}
 
 // ---- Liste des avions
-	$lst=ListeRessources($sql,array("oui"));
+	$lst=ListeRessources($sql);
 
 	foreach($lst as $i=>$id)
 	  {

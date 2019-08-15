@@ -87,7 +87,8 @@
 	foreach($tabHeures as $id=>$md)
 	{
 	  	$ress = new ress_class($id,$sql);
-		$tabHeures[$id]["avion"]=$ress->aff("immatriculation");
+		$tabHeures[$id]["avion"]=$ress->val("immatriculation");
+		$tabHeures[$id]["titre"]=$ress->aff("immatriculation");
 		$tabHeures[$id]["couleur"]=(($ress->val("couleur")=="") ? dechex(rand(0x000000, 0xFFFFFF)) : $ress->val("couleur"));
 		$col.=$s."'#".$tabHeures[$id]["couleur"]."','#".$tabHeures[$id]["couleur"]."'";
 		$s=",";
@@ -130,7 +131,7 @@
 	foreach($tabHeures as $id=>$md)
 	{
 		$tabValeur[$id]["avion"]["val"]=$tabHeures[$id]["avion"];
-		$tabValeur[$id]["avion"]["aff"]=$tabHeures[$id]["avion"];
+		$tabValeur[$id]["avion"]["aff"]=$tabHeures[$id]["titre"];
 		$tabValeur[$id]["avion"]["align"]="center";
 		$tabValeur[$id]["line1"]["val"]="<line>";
 		$tot=0;

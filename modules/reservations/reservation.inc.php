@@ -261,7 +261,7 @@
 	$tmpl_x->assign("form_uid_ress", $resa["resa"]->uid_ressource);
 
 	// Récupère la liste des ressources
-	$lstress=ListeRessources($sql);
+	$lstress=ListeRessources($sql,array("oui"));
 
 	foreach($lstress as $i=>$rid)
 	{

@@ -71,7 +71,7 @@ class maint_class extends objet_core
 		{
 			if ($key=="uid_ressource")
 			{
-				$lst=ListeRessources($sql);
+				$lst=ListeRessources($sql,array("oui"));
 
 				$ret="<select name='".$formname."[".$key."]' OnChange='document.maintenance.submit();'>";
 
