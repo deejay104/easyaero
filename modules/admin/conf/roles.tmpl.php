@@ -58,6 +58,7 @@ $tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
 $tabRoles["AccesConfigTarifs"]="Accès à la page de configuration des tarifs";
 $tabRoles["AccesConfigPrevisions"]="Accès à la page de gestion des prévisions";
 $tabRoles["AccesConfigNavigation"]="Accès à la page de configuration des points de navigation";
+$tabRoles["AccesConfigExercices"]="Accès à la page de configuration de la liste des exercices";
 
 
 
@@ -99,7 +100,8 @@ $tabRoles["SupprimeRex"]="Suppression d'un REX";
 $tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";
 $tabRoles["CreeSynthese"]="Création d'un fiche de synthèse de vol";
 $tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthèse de vol";
-$tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse";
+$tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse de vol";
+
 
 
 

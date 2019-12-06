@@ -106,10 +106,13 @@
 		
 		$tabValeur[$i]["id"]["val"]=$sql->data["id"];
 
-		$tabValeur[$i]["nom"]["val"]="<div id='nom_".$sql->data["id"]."'>".$sql->data["nom"]."</div>";
-		$tabValeur[$i]["description"]["val"]="<div id='description_".$sql->data["id"]."'>".$sql->data["description"]."</div>";
+		$tabValeur[$i]["nom"]["val"]=$sql->data["nom"];
+		$tabValeur[$i]["nom"]["aff"]="<div id='nom_".$sql->data["id"]."'>".$sql->data["nom"]."</div>";
+		$tabValeur[$i]["description"]["val"]=$sql->data["description"];
+		$tabValeur[$i]["description"]["aff"]="<div id='description_".$sql->data["id"]."'>".$sql->data["description"]."</div>";
 		$tabValeur[$i]["icone"]["val"]=$sql->data["icone"];
-		$tabValeur[$i]["taxe"]["val"]="<div id='taxe_".$sql->data["id"]."'>".$sql->data["taxe"]."</div>";
+		$tabValeur[$i]["taxe"]["val"]=$sql->data["taxe"];
+		$tabValeur[$i]["taxe"]["aff"]="<div id='taxe_".$sql->data["id"]."'>".$sql->data["taxe"]."</div>";
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
 		$tabValeur[$i]["action"]["aff"]="<div id='action_".$sql->data["id"]."' style='display:none;'><a id='edit_".$sql->data["id"]."' class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a></div>";

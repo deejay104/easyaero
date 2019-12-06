@@ -65,9 +65,8 @@
 			$tmpl_x->parse("corps.users");
 	}
 
-	
 // ---- Affiche la liste	
-	$lst=ListMySynthese($sql,$uid);
+	$lst=ListCompetences($sql,$uid);
 
 	$tabTitre=array(
 		"ress" => array("aff"=>"Avion","width"=>80),

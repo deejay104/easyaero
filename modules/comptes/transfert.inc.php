@@ -46,6 +46,7 @@
 	$max=$usr->CalcSolde();
 	$tmpl_x->assign("montant_max",AffMontant($max));
 	$val=abs($form_montant);
+	$ret="";
 
 	if ($max<0)
 	{

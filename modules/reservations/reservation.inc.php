@@ -538,9 +538,12 @@
 		{
 			foreach($t as $i=>$d)
 			{
+				$fiche=new synthese_class($i,$sql);
 				$tmpl_x->assign("sid", $i);
-				$tmpl_x->assign("synt_nbvol", $d["nbvol"]);
-				$tmpl_x->assign("synt_type", ($d["type"]=="double") ? "double commande" : "vol solo");
+				$tmpl_x->assign("synt_refffa", $fiche->Aff("refffa"));
+				$tmpl_x->assign("synt_module", $fiche->Aff("module"));
+				$tmpl_x->assign("synt_progression", $fiche->Aff("progression"));
+				$tmpl_x->assign("synt_status", $fiche->Aff("status"));
 				$tmpl_x->parse("corps.aff_reservation.aff_syntheses.lst_synthese");		
 			}
 			$tmpl_x->parse("corps.aff_reservation.aff_syntheses");

@@ -32,6 +32,10 @@
 	{
 		$tmpl_menu->parse("infos.navigation");
 	}
+	if (GetDroit("AccesConfigExerices"))
+	{
+		$tmpl_menu->parse("infos.exercices");
+	}
 
 	$tmpl_menu->parse("infos");
 	$aff_menu.=$tmpl_menu->text("infos");

@@ -61,7 +61,7 @@ $( function() {
 					if (response.result=="OK")
 					{
 						console.log("ok");
-						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>Le point de navigation a Ã©tÃ© enregistrÃ©</div>";
+						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>Le point de navigation a été enregistré</div>";
 					}
 					else
 					{
@@ -103,8 +103,8 @@ $( function() {
 </script>
 
 <div id="dialog-form" title="Editer un point de navigation" class="formulaire" style="display:none;">
-	<input id="form_id" type="hidden" value="">
-	<p><label>Nom</label><input id="form_nom" value=""></span></p>
+	<input id="form_id" type="hidden" value="" />
+	<p><label>Nom</label><input id="form_nom" value=""></p>
 	<p><label>Description</label><input id="form_description" value=""></p>
 	<p><label>Taxe</label><input id="form_taxe" value=""></p>
 	<p><label>Longitude</label><input id="form_lon" value=""></p>

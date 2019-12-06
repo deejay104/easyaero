@@ -10,13 +10,16 @@
 
 
 <!-- BEGIN: corps -->
+<style>
+#mto { width: 100%!important; }
+</style>
+
 <div class="pagetitle pagemenu">
 	<p><A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A></p>
 <!-- BEGIN: supprimer -->
 	<p><A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A></p>
 <!-- END: supprimer -->
 </div>
-<br />
 
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="aviation">
@@ -33,77 +36,142 @@
 	<p class="lastupdate">Dernière mise à  jour : {form_usr_maj} {form_dte_maj}</p>
 
 	<div class='formulaireTitre'>
-		FICHE DE SYNTHESE
+		FICHE DE SYNTHESE DE VOL
 	</div>
 
 	<div class='formulaire'>
-		<p><label>Type de vol</label>{form_type}</p>
-		<p><label>Phase de progression</label>{form_phase}</p>
+		<table width=100%>
+		<tr><td width=300>Module</td><td>{form_module}</td></tr>
+		<tr><td>Référence du programme</td><td>{form_refffa}</td></tr>
+		<tr><td>Type de vol</td><td>{form_type}</td></tr>
+		</table>
 	</div>
 
-	<table width='100%'>
-	<tr>
-		<td width=50%>
-			<div class='formulaire' style='height:35px;'>
-				<p><label>Vol n°</label>{form_nbvol}</p>
-			</div>
-		</td>
-		<td>
-			<div class='formulaire' style='height:35px; margin-left:10px;'>
-				<p><label style='width:100px;'>Date du vol</label>{form_dtevol} sur {form_immat}</p>
-			</div>
-		</td>
-	</tr>
+	<div class='formulaireTitre'>THEMES</div>
+	{form_themes}
+	
+	<div class='formulaireTitre'>APPRECIATION GENERALE DU VOL</div>
+	{form_bilan_gen}
 
-	<tr>
-		<td>
-			<div class='formulaire' style='height:65px;'>
-				<p><label>Eleve</label>{form_eleve}</p>
-				<p><label>Instructeur</label>{form_instructeur}</p>
-			</div>
-		</td>
-		<td>
-			<div class='formulaire' style='height:65px; margin-left:10px;'>
-				<p><label style='width:100px;'>Leçon n°</label><img src='{path_module}/img/icn16_{form_img_lecon}.png'> {form_lecon}</p>
-				<p><label style='width:100px;'>Autre</label><img src='{path_module}/img/icn16_{form_img_autre}.png'> Vol de révision, de reprise, etc...</p>
-			</div>
-		</td>
-	</tr>
+	<div class='formulaireTitre'>EXERCICES DU DOMAINE TECHNIQUE</div>
+<!-- BEGIN: lst_exercice -->
+		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		{form_progression}
+		</div>
+<!-- END: lst_exercice -->
+	
+	<div id="affexercices">
+	</div>
+	<br />
+
+	<div class='formulaireTitre'>PANNES</div>
+<!-- BEGIN: lst_panne -->
+		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		{form_progression}
+		</div>
+<!-- END: lst_panne -->
+	<div id="affpannes">
+	</div>
+
+
+	<br />
+	Ajouter un exercice / panne : <input id="addexercice" style="width:500px;">
+	<br />
+	<br />
+
+	<div class='formulaireTitre'>METEO DU JOUR</div>
+	{form_mto}
+	<br/>
+	<br/>
+
+	<div class='formulaireTitre'>Non technique / Menace, Erreurs, Situation non désirées</div>
+
+	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div>{form_info_1}</div>
+	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div>{form_info_2}</div>
+	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div>{form_info_3}</div>
+	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div>{form_info_4}</div>
+	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div>{form_info_5}</div>
+
+	<br />
+	<table>
+		<tr class='formulaireTitre'>
+			<th width=200>Nb Atterrissage</th>
+			<th width=200>Total Atterrissage</th>
+			<th width=200>Remise(s) des Gaz</th>
+			<th width=200>Total RMG</th>
+		</tr>
+		<tr>
+			<td>{form_nb_att}</td>
+			<td>{form_total_att}</td>
+			<td>{form_nb_rmg}</td>
+			<td>{form_total_rmg}</td>
+		</tr>
 	</table>
+<script>
+	$(document).ready(function() {
+	  $(window).keydown(function(event){
+		if(event.keyCode == 13) {
+		  event.preventDefault();
+		  return false;
+		}
+	  });
+	});
+	
+	$("#addexercice").autocomplete({
+		source: "api.php?mod=aviation&rub=exercice",
+		select: function(event, ui) {
+			var txt="";
+			value=ui.item;
+			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+			txt=txt+"</div>";
+			
+			if (value.module=="panne")
+			{
+				$("#affpannes").append(txt);
+			}
+			else
+			{
+				$("#affexercices").append(txt);
+			}
+			ui.item.value="";
+		},
+		delay: 200
+	});
 
-	<div class='formulaireTitre'>
-		COMPETENCES (Remarques)
-	</div>
 
-	<div>
-		TECHNIQUES : (Etude / Acquisition...)
-		{form_remtech}
-	</div>
-	<div>
-		NON TECHNIQUES : (Etude / Acquisition...)
-		{form_remnotech}
-	</div>
 
-	<div class='formulaireTitre'>
-		GESTION DE LA MENACE ET DE L'ERREUR
-	</div>
-	<table width='100%'>
-	<tr>
-		<td width=50%>
-			<div>
-				MENACE (identification, mesures en atténuation)
-				{form_menace}
-			</div>
-		</td>
-		<td>
-			<div style='margin-left: 10px;'>
-				ERREUR (Détection, correction,...)
-				{form_erreur}
-			</div>
-		</td>
-	</tr>
-	</table>
+	$("#refffa").change(function() {
+		var ref=$("#refffa").val();
 
+		$.ajax({
+			type: "GET",
+			url: "api.php?mod=aviation&rub=exercice&ref="+ref,
+			dataType: 'JSON',
+
+			success: function(response) {
+				$("#affexercices").text("");
+				var txt="";
+				if (response.length>0)
+				{
+					$.each(response, function (index, value) {
+						txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+						txt=txt+"</div>";
+					});
+				}
+				$("#affexercices").append(txt);
+			}
+		});
+   
+	});
+</script>
+
+	
 <!-- BEGIN: submit -->
 	<div class="formulaireSubmit" style=" padding-left:55px;">
 		<input type="submit" name="fonc" id="enregistrer" value="Enregistrer">
@@ -117,9 +185,29 @@
 	</div>
 	<table width='100%'>
 	<tr>
-		<td width='50%'>
-			<div class='formulaire'>
-				<b>Instructeur</b><br />
+		<td width='15%'>
+			<div class='formulaire' style='height:90px;'>
+			<b>Date du vol</b><br />
+			{form_dtevol}
+			</div>
+		</td>
+		<td width='10%'>
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<b>Durée</b><br />
+			{form_duree}
+			</div>
+		</td>
+		<td width='10%'>
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<b>Cumul DC</b><br />
+			{form_cumuldc}<br />
+			<b>Cumul Solo</b><br />
+			{form_cumulsolo}
+			</div>
+		</td>
+		<td width='33%'>
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+				<b>Instructeur</b> : {form_instructeur}<br />
 <!-- BEGIN: signinst -->
 				<input type="submit" name="fonc" value="Signature Instructeur">
 <!-- END: signinst -->
@@ -130,8 +218,8 @@
 			</div>
 		</td>
 		<td>
-			<div class='formulaire' style='margin-left:10px;'>
-				<b>Eleve</b><br />
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+				<b>Eleve</b> : {form_eleve}<br />
 <!-- BEGIN: signeleve -->
 				<input type="submit" name="fonc" value="Signature Elève">
 <!-- END: signeleve -->

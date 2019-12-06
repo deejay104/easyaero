@@ -33,13 +33,17 @@
 	$id=checkVar("id","numeric");
 	$uid=checkVar("uid","numeric");
 	$idvol=checkVar("idvol","numeric");
-	$form_data=checkVar("form_data","array");
 	
 // ---- Enregistrer
 	$msg_erreur="";
 	$msg_confirmation="";
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$form_data=checkVar("form_data","array");
+		$form_comp=checkVar("form_comp","array");
+		$form_compec=checkVar("form_compec","array");
+		$form_compold=checkVar("form_compold","array");
+
 		$fiche=new synthese_class($id,$sql);
 		if (count($form_data)>0)
 		{
@@ -52,13 +56,58 @@
 		}
 
 		$n=$fiche->Save();
-		if ($n>0)
-		{
-			affInformation("Vos données ont été enregistrées.","ok");
-		}
 		if ($id==0)
 		{
 			$id=$fiche->id;
+		}
+
+		$tabok=array();
+		if (is_array($form_compold))
+		{
+			foreach($form_compold as $i=>$s)
+			{
+				$exo=new exercice_class(0,$sql);
+				$exo->Valid("idsynthese",$id);
+				$exo->Valid("idexercice",$i);
+				$exo->Valid("uid",$fiche->val("uid_pilote"));
+				$exo->Valid("progression",$s["progression"]);
+				$exo->Valid("progref","A");
+				$exo->Save();
+				$tabok[$i]="ok";
+			}
+		}
+		if (is_array($form_comp))
+		{
+			foreach($form_comp as $i=>$s)
+			{
+				$prog=new exercice_prog_class($i,$sql);
+				$exo=new exercice_class(0,$sql);
+				
+				if (!isset($tabok[$prog->val("idexercice")]))
+				{
+					$exo->Valid("idsynthese",$id);
+					$exo->Valid("idexercice",$prog->val("idexercice"));
+					$exo->Valid("uid",$fiche->val("uid_pilote"));
+					$exo->Valid("progression",$s["progression"]);
+					$exo->Valid("progref",$prog->val("progression"));
+					$exo->Save();
+					$tabok[$prog->val("idexercice")]="ok";
+				}
+			}
+		}
+		if (is_array($form_compec))
+		{
+			foreach($form_compec as $i=>$s)
+			{
+				$exo=new exercice_class($i,$sql);
+				$exo->Valid("progression",$s["progression"]);
+				$exo->Save();
+			}
+		}
+
+		if ($n>0)
+		{
+			affInformation("Vos données ont été enregistrées.","ok");
 		}
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
@@ -73,12 +122,13 @@
 	}
 
 // ---- Signe
-	if ((($fonc=="Signature Instructeur")|| ($fonc=="Sign. Instructeur")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ((($fonc=="Signature Instructeur") || ($fonc=="Sign. Instructeur")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$fiche=new synthese_class($id,$sql);
 
 		$fiche->Valid("sid_instructeur",$gl_uid);
 		$fiche->Valid("sdte_instructeur",now());
+		$fiche->Valid("status","signed");
 
 		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_instructeur","sdte_instructeur");
 		$s=$fiche->sign($t);
@@ -103,6 +153,7 @@
 		$fiche->Valid("sid_pilote",$gl_uid);
 		$fiche->Valid("sdte_pilote",now());
 		$fiche->Valid("skey_pilote",$s);
+		$fiche->Valid("status","signed");
 		
 		$n=$fiche->Save();
 		if ($n>0)
@@ -162,12 +213,54 @@
 			$fiche->Valid("idvol",$idvol);
 		}
 	}
-	
+
+// ---- Charge les exercices de la fiche de synthèse
+	$lst=ListExercices($sql,$id);
+
+	foreach($lst as $i=>$v)
+	{
+		$c_conf=new exercice_conf_class($v["idexercice"],$sql);
+		$c_line=new exercice_class($v["id"],$sql);
+
+		$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
+		$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compec[".$v["id"]."]"));
+		if ($c_conf->val("module")=="panne")
+		{
+			$tmpl_x->parse("corps.lst_panne");
+		}
+		else
+		{
+			$tmpl_x->parse("corps.lst_exercice");
+		}
+	}
+
+// ---- Informations Users
 	$resa=new resa_class($fiche->val("idvol"),$sql);
 	$pil=new user_class($resa->uid_pilote,$sql);
 	$ins=new user_class($resa->uid_instructeur,$sql);
 
-// ---- Set les paramètres
+// ---- Charge les exercices non acquis
+	if ($id==0)
+	{
+		$lst=ListExercicesNonAcquis($sql,$resa->uid_pilote);
+
+		foreach($lst as $i=>$v)
+		{
+			$c_conf=new exercice_conf_class($v["id"],$sql);
+			$c_line=new exercice_class(0,$sql);
+
+			$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
+			$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compold[".$v["id"]."]"));
+
+			$tmpl_x->parse("corps.lst_exercice");
+		}
+	}
+
+// ---- Calcul totaux
+	$tmpl_x->assign("form_total_att",$fiche->NbAtt());
+	$tmpl_x->assign("form_total_rmg",$fiche->NbRmg());
+
+// ---- Affiche les paramètres
 	$tmpl_x->assign("form_id",$id);
 	$tmpl_x->assign("prev_uid",$uid);
 	$tmpl_x->assign("prev_idvol",$idvol);
@@ -178,7 +271,9 @@
 	
 	$tmpl_x->assign("form_eleve",$pil->aff("fullname"));
 	$tmpl_x->assign("form_instructeur",$ins->aff("fullname"));
-	$tmpl_x->assign("form_dtevol",sql2date($resa->dte_deb,"jour"));
+	$tmpl_x->assign("form_dtevol",$resa->Aff("dte_deb"));
+	$tmpl_x->assign("form_duree",AffTemps($resa->tpsreel));
+	$tmpl_x->assign("form_cumuldc",AffTemps($pil->NbHeures("1970-01-01",$resa->dte_deb,"dc")+$resa->tpsreel));
 
 	$ress=new ress_class($resa->uid_ressource,$sql);
 	$tmpl_x->assign("form_immat",$ress->Aff("immatriculation"));
@@ -188,28 +283,14 @@
 	{
 		$tmpl_x->parse("corps.supprimer");
 	}
-
-	
-	if ($fiche->val("lecon")!="")
-	{
-		$tmpl_x->assign("form_img_lecon","ok");
-		$tmpl_x->assign("form_img_autre","nc");
-	}
-	else
-	{
-		$tmpl_x->assign("form_img_autre","ok");
-		$tmpl_x->assign("form_img_lecon","nc");
-	}
-		
 	
 	if ($typeaff=="form")
 	{
+		$tmpl_x->parse("corps.aff_addcomp");
 		$tmpl_x->parse("corps.submit");
 	}
 
-	$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt");
-
-	if ((GetDroit("signinst")) && ($fiche->val("skey_instructeur")=="") && ($id>0))
+	if ((GetDroit("SignSynthese")) && ($fiche->val("skey_instructeur")=="") && ($id>0))
 	{
 		$tmpl_x->parse("corps.signinst"); 
 	}

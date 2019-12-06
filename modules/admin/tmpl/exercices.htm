@@ -1,0 +1,142 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+<script>
+$( function() {
+
+	function loadExercice(id) {
+		$.ajax({
+			type: 'GET',
+			url: 'api.php?mod=admin&rub=updexo&fonc=get&id='+id,
+			dataType: 'JSON',
+
+			success: function(response) {
+				document.getElementById('form_id').value=response.id;
+				document.getElementById('description').value=response.description;
+				document.getElementById('module').value=response.module;
+				document.getElementById('refffa').value=response.refffa;
+				document.getElementById('refenac').value=response.refenac;
+				document.getElementById('competence').value=response.competence;
+				
+				$('#1_refffa')[0].value = response.progression[1].ref;
+				$('#2_refffa')[0].value = response.progression[2].ref;
+				$('#3_refffa')[0].value = response.progression[3].ref;
+				$('#4_refffa')[0].value = response.progression[4].ref;
+
+				$('#1_progression_'+response.progression[1].val)[0].checked = true;
+				$('#2_progression_'+response.progression[2].val)[0].checked = true;
+				$('#3_progression_'+response.progression[3].val)[0].checked = true;
+				$('#4_progression_'+response.progression[4].val)[0].checked = true;
+			},
+			error: function(response) {
+				console.log("error");
+				console.log(response);
+			}
+		});   
+	}
+
+    function saveNavpoint() {
+		var valid = true;
+
+		if ( valid ) {
+			dialog.dialog( "close" );
+
+			var id=document.getElementById('form_id').value;
+			console.log("edit: "+id);
+			data = {};
+			data["id"]=id;
+			<!-- data["nom"]=document.getElementById('form_nom').value; -->
+			data["description"]=document.getElementById('description').value;
+			<!-- data["taxe"]=document.getElementById('form_taxe').value; -->
+			<!-- data["lon"]=document.getElementById('form_lon').value; -->
+			<!-- data["lat"]=document.getElementById('form_lat').value; -->
+
+			<!-- document.getElementById('nom_'+id).innerHTML=data["nom"]; -->
+			<!-- document.getElementById('description_'+id).innerHTML=data["description"]; -->
+			<!-- document.getElementById('taxe_'+id).innerHTML=data["taxe"]; -->
+
+			$.ajax({
+				url:'api.php?mod=admin&rub=updexo&fonc=post',
+				type: 'POST',
+				data: data,
+				dataType: 'JSON',
+				success: function(response)
+				{
+					if (response.result=="OK")
+					{
+						console.log("ok");
+						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>Le point de navigation a été enregistré</div>";
+					}
+					else
+					{
+						console.log("nok");
+						document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde ("+response.result+")</div>";
+					}
+				},
+				error : function()
+				{
+					console.log("nok");
+					document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde</div>";
+				}
+			});
+		}
+		return valid;
+    }
+
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 450,
+      width: 800,
+	  top: 10,
+      modal: true,
+      buttons: {
+        "Enregistrer": saveNavpoint,
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+    });
+
+<!-- BEGIN: lst_edit -->
+	$( "#edit_{lst_id}" ).on( "click", function() {
+		loadExercice({lst_id});
+		dialog.dialog( "open" );
+    });
+<!-- END: lst_edit -->
+});
+</script>
+
+<div id="dialog-form" title="Editer un exercice" class="formulaire" style="display:none;">
+	<input id="form_id" type="hidden" value="" />
+	<p><label>Description</label>{form_description}</p>
+	<p><label>Module</label>{form_module}</p>
+	<p><label>Référence</label>{form_refffa}</p>
+	<p><label>ENAC</label>{form_refenac}</p>
+	<p><label>Compétence</label>{form_competence}</p>
+
+	<p><label>Progression</label>{form_1_refffa} {form_1_progression}</p>
+	<p><label>Progression</label>{form_2_refffa} {form_2_progression}</p>
+	<p><label>Progression</label>{form_3_refffa} {form_3_progression}</p>
+	<p><label>Progression</label>{form_4_refffa} {form_4_progression}</p>
+
+
+	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+</div>
+
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="admin">
+	<INPUT type="hidden" name="rub" value="exercices">
+
+{aff_tableau}	<br />
+
+</FORM>
+
+
+
+<!-- END: corps -->

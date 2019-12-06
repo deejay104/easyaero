@@ -15,6 +15,7 @@
 <!-- BEGIN: corps -->
 
 
+
 <FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="reservations">
 	<INPUT type="hidden" name="rub" value="reservation_sauve">
@@ -134,7 +135,7 @@
 	
 	<div style='padding-left: 20px; padding-bottom:10px;'>
 	<!-- BEGIN: lst_synthese -->
-	<img src='{path_module}/img/icn16_synthese.png' /> <a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'>Fiche {synt_type} du vol n° {synt_nbvol}</a><br />
+	<img src='{path_module}/img/icn16_synthese.png' /> <a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'>Synthèse leçon {synt_lecon} </a>({synt_type} / ref. {synt_refffa}) - {synt_status}</a><br />
 	<!-- END: lst_synthese -->
 	</div>
 	<!-- END: aff_syntheses -->

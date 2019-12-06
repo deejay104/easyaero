@@ -20,7 +20,7 @@
 ?>
 
 <?
-	// if (!GetDroit("AccesSynthese")) { FatalError("Accès non autorisé (AccesSynthese)"); }
+	// if (!GetDroit("AccesSynthese")) { FatalError("AccÃ¨s non autorisÃ© (AccesSynthese)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 	require_once ($appfolder."/class/reservation.inc.php");
@@ -33,6 +33,9 @@
 
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
+	$order=checkVar("order","varchar",12);
+	$trie=checkVar("trie","varchar",1);
+	$ts=checkVar("ts","numeric");
 
 	if ($uid==0)
 	{
@@ -65,44 +68,39 @@
 			$tmpl_x->parse("corps.users");
 	}
 
-	
 // ---- Affiche la liste	
-	$lst=ListMySynthese($sql,$uid);
+	$lst=ListExercicesProg($sql,$uid);
 
 	$tabTitre=array(
-		"ress" => array("aff"=>"Avion","width"=>80),
-		"dte" => array("aff"=>"Date","width"=>100),
-		"inst" => array("aff"=>"Instructeur","width"=>200),
-		"module" => array("aff"=>"Module","width"=>100),
-		"refffa" => array("aff"=>"Reférence","width"=>100),
-		"status" => array("aff"=>"Status","width"=>100),
+		"id" => array("aff"=>"#","width"=>40),
+		"exercice" => array("aff"=>"Exercice","width"=>400),
+		"dte" => array("aff"=>"Date","width"=>120),
+		"progression" => array("aff"=>"Progression","width"=>100),
+		"progref" => array("aff"=>"Requis","width"=>100),
 	);
 	$tabValeur=array();
 	foreach($lst as $fid=>$d)
-	{
-		$fiche = new synthese_class($fid,$sql);
-		$resa=new resa_class($fiche->val("idvol"),$sql);
-		$ress=new ress_class($fiche->val("uid_avion"),$sql);
-		$inst=new user_class($fiche->val("uid_instructeur"),$sql);
-		
-		$tabValeur[$fid]["ress"]["val"]=$ress->val("immatriculation");
-		$tabValeur[$fid]["ress"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$ress->val("immatriculation")."</a>";
-		$tabValeur[$fid]["dte"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$fid]["dte"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".sql2date($resa->dte_deb,"jour")."</a>";
-		
-		$tabValeur[$fid]["inst"]["val"]=$inst->val("fullname");
-		$tabValeur[$fid]["inst"]["val"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
-	
+	{	
+		$exo = new exercice_conf_class($fid,$sql);
 
-		$tabValeur[$fid]["module"]["val"]=$fiche->val("module");
-		$tabValeur[$fid]["module"]["val"]=$fiche->aff("module");
-		$tabValeur[$fid]["refffa"]["val"]=$fiche->val("refffa");
-		$tabValeur[$fid]["refffa"]["val"]=$fiche->aff("refffa");
-		$tabValeur[$fid]["status"]["val"]=$fiche->val("status");
-		$tabValeur[$fid]["status"]["val"]=$fiche->aff("status");
+		$tabValeur[$fid]["id"]["val"]=$fid;
+		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
+		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
+		$tabValeur[$fid]["dte"]["val"]=$d["dte_acquis"];
+		$tabValeur[$fid]["dte"]["aff"]=sql2date($d["dte_acquis"],"jour");
+		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
+		$tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "<div style='padding-left:50px;'>A</div>" : "E";
+		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
+		$tabValeur[$fid]["progref"]["aff"]=($d["progref"]=="A") ? "Acquis" : "Etude";
+		
+		if ($d["progref"]!=$d["progression"])
+		{
+			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+		}
 	}
 
-	if ((!isset($order)) || ($order=="")) { $order="dte"; }
+	if ((!isset($order)) || ($order=="")) { $order="id"; }
 	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,""));
