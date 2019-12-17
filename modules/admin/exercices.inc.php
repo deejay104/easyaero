@@ -40,6 +40,16 @@
 
 
 // ---- Supprime un poste
+	if ($fonc=="delete")
+	{
+		$id=checkVar("id","numeric");
+		if ($id>0)
+		{
+			$exo=new exercice_conf_class($id,$sql);
+			$exo->Delete();
+		}
+	}
+
 
 // ---- Affiche la page demandée
 	$tabTitre=array(
@@ -47,8 +57,8 @@
 			"aff"=>"Description",
 			"width"=>400
 		),
-		"module"=>array(
-			"aff"=>"Module",
+		"type"=>array(
+			"aff"=>"Type",
 			"width"=>100
 		),
 		"refffa"=>array(
@@ -77,9 +87,18 @@
 	$ts=checkVar("ts","numeric");
 	$tabsearch=checkVar("tabsearch","array");
 	
-	if ($order=="") { $order="module"; }
+	if ($order=="") { $order="refffa"; }
 
-	$lst=ListExercicesConf($sql);
+	$search=array("actif"=>"oui");
+	foreach ($tabsearch as $k=>$v)
+	{
+		if ($v!="")
+		{
+			$search[$k]=$v;
+		}
+	}
+
+	$lst=ListExercicesConf($sql,$search,array($order));
 	$totligne=count($lst);
 	$tl=$totligne;
 
@@ -89,14 +108,15 @@
 
 		$tabValeur[$i]["id"]["val"]=$d["id"];
 		$tabValeur[$i]["description"]["val"]=$exo->val("description");
-		$tabValeur[$i]["module"]["val"]=$exo->val("module");
+		$tabValeur[$i]["type"]["val"]=$exo->val("type");
+		$tabValeur[$i]["type"]["aff"]=$exo->aff("type");
 		$tabValeur[$i]["refffa"]["val"]=$exo->val("refffa");
 		$tabValeur[$i]["refenac"]["val"]=$exo->val("refenac");
 		$tabValeur[$i]["competence"]["val"]=$exo->val("competence");
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
-		$tabValeur[$i]["action"]["aff"] ="<div id='action_".$sql->data["id"]."' style='display:none;'><a id='edit_".$sql->data["id"]."' class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a>";
-		$tabValeur[$i]["action"]["aff"].="<a id='del_".$sql->data["id"]."' class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"] ="<div id='action_".$d["id"]."' style='display:none;'><a id='edit_".$d["id"]."' class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a>";
+		$tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'  class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
 
 		$lstp=ListProgression($sql,$d["id"]);
 		$tabValeur[$i]["progression"]["val"]="";

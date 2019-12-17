@@ -33,7 +33,7 @@
 	$id=checkVar("id","numeric");
 	$uid=checkVar("uid","numeric");
 	$idvol=checkVar("idvol","numeric");
-	
+
 // ---- Enregistrer
 	$msg_erreur="";
 	$msg_confirmation="";
@@ -112,20 +112,55 @@
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
-// ---- Supprimer
-	if (($fonc=="supprimer") && ($id>0) && (GetDroit("SupprimeSynthese")))
+
+// ---- Charge la fiche de synthèse
+	$fiche=new synthese_class($id,$sql);
+
+	$signed=false;
+	if ($fiche->val("skey_instructeur")!="")
 	{
-		$fiche=new synthese_class($id,$sql);
-		$fiche->Delete();
-		$mod="aviation";
-		$affrub="syntheses";
+		$signed=true;
+	}
+	if ($fiche->val("skey_pilote")!="")
+	{
+		$signed=true;
+	}
+
+
+	$ok=false;
+	if (GetDroit("SupprimeSynthese"))
+	{
+		$ok=true;
+	}
+
+	if ((GetDroit("SignSynthese")) && (!$signed))
+	{
+		$ok=true;
+	}
+	if (($fiche->val("uid_pilote")==$gl_uid) && (!$signed))
+	{
+		$ok=true;
+	}
+
+	if ($ok)
+	{
+		$tmpl_x->parse("corps.supprimer");
+	}
+
+// ---- Supprimer
+	if ( ($fonc=="supprimer") && ($id>0) )
+	{
+		if ($ok==true)
+		{
+			$fiche->Delete();
+			$mod="aviation";
+			$affrub="syntheses";
+		}
 	}
 
 // ---- Signe
 	if ((($fonc=="Signature Instructeur") || ($fonc=="Sign. Instructeur")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$fiche=new synthese_class($id,$sql);
-
 		$fiche->Valid("sid_instructeur",$gl_uid);
 		$fiche->Valid("sdte_instructeur",now());
 		$fiche->Valid("status","signed");
@@ -145,8 +180,6 @@
 	
 	if ((($fonc=="Signature Elève") || ($fonc=="Sign. Elève")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$fiche=new synthese_class($id,$sql);
-
 		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_pilote","sdte_pilote");
 		$s=$fiche->sign($t);
 		
@@ -186,8 +219,6 @@
 	
 // ---- Charge la fiche
 
-	$fiche = new synthese_class($id,$sql);
-
 	if ((!GetDroit("AccesSynthese")) && ($fiche->val("uid_pilote")!=$id))
 	{
 		FatalError("Accès non autorisé (AccesSynthese)");
@@ -224,13 +255,17 @@
 
 		$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
 		$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compec[".$v["id"]."]"));
-		if ($c_conf->val("module")=="panne")
+		if ($c_conf->val("type")=="panne")
 		{
 			$tmpl_x->parse("corps.lst_panne");
 		}
-		else
+		else if ($c_conf->val("type")=="ecercice")
 		{
 			$tmpl_x->parse("corps.lst_exercice");
+		}
+		else
+		{
+			$tmpl_x->parse("corps.lst_pedagogique");
 		}
 	}
 
@@ -238,6 +273,23 @@
 	$resa=new resa_class($fiche->val("idvol"),$sql);
 	$pil=new user_class($resa->uid_pilote,$sql);
 	$ins=new user_class($resa->uid_instructeur,$sql);
+
+	if ($fiche->val("uid_pilote")==0)
+	{
+		$fiche->valid("uid_pilote",$resa->uid_pilote);
+	}
+	if ($fiche->val("uid_instructeur")==0)
+	{
+		$fiche->valid("uid_instructeur",$resa->uid_instructeur);
+	}
+	if ($fiche->val("uid_avion")==0)
+	{
+		$fiche->valid("uid_avion",$resa->uid_ressource);
+	}
+	if ($fiche->val("dte_vol")=="0000-00-00 00:00:00")
+	{
+		$fiche->valid("dte_vol",$resa->dte_deb);
+	}
 
 // ---- Charge les exercices non acquis
 	if ($id==0)
@@ -252,7 +304,7 @@
 			$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
 			$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compold[".$v["id"]."]"));
 
-			$tmpl_x->parse("corps.lst_exercice");
+			$tmpl_x->parse("corps.lst_pedagogique");
 		}
 	}
 
@@ -265,25 +317,22 @@
 	$tmpl_x->assign("prev_uid",$uid);
 	$tmpl_x->assign("prev_idvol",$idvol);
 	$tmpl_x->assign("form_idvol",$fiche->val("idvol"));
-	$tmpl_x->assign("form_uid_pilote",$resa->uid_pilote);
-	$tmpl_x->assign("form_uid_instructeur",$resa->uid_instructeur);
-	$tmpl_x->assign("form_uid_avion",$resa->uid_ressource);
+	$tmpl_x->assign("form_uid_pilote",$fiche->val("uid_pilote"));
+	$tmpl_x->assign("form_uid_instructeur",$fiche->val("uid_instructeur"));
+	$tmpl_x->assign("form_uid_avion",$fiche->val("uid_avion"));
 	
 	$tmpl_x->assign("form_eleve",$pil->aff("fullname"));
 	$tmpl_x->assign("form_instructeur",$ins->aff("fullname"));
 	$tmpl_x->assign("form_dtevol",$resa->Aff("dte_deb"));
 	$tmpl_x->assign("form_duree",AffTemps($resa->tpsreel));
-	$tmpl_x->assign("form_cumuldc",AffTemps($pil->NbHeures("1970-01-01",$resa->dte_deb,"dc")+$resa->tpsreel));
+
+	$tmpl_x->assign("form_cumuldc",$pil->AffNbHeuresSynthese($fiche->val("dte_vol"),"dc"));
+	$tmpl_x->assign("form_cumulsolo",$pil->AffNbHeuresSynthese($fiche->val("dte_vol"),"solo"));
 
 	$ress=new ress_class($resa->uid_ressource,$sql);
 	$tmpl_x->assign("form_immat",$ress->Aff("immatriculation"));
 
-	
-	if (GetDroit("SupprimeSynthese"))
-	{
-		$tmpl_x->parse("corps.supprimer");
-	}
-	
+		
 	if ($typeaff=="form")
 	{
 		$tmpl_x->parse("corps.aff_addcomp");
@@ -306,7 +355,7 @@
 		$tmpl_x->parse("corps.signedinst"); 
 	}
 	
-	if (($fiche->val("skey_pilote")=="") && ($id>0))
+	if ((GetDroit("SignSynthese") || ($fiche->val("uid_pilote")==$gl_uid)) && ($fiche->val("skey_pilote")=="") && ($id>0))
 	{
 		$tmpl_x->parse("corps.signeleve"); 
 	}

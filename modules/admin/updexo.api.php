@@ -12,12 +12,13 @@
 // ---- 
 	$result=array();
 
-	if (($fonc=="get") && ($id>0))
+	if (($fonc=="get") && (is_numeric($id)))
 	{
 		$exo=new exercice_conf_class($id,$sql);
 
 		$result["id"]=$id;
 		$result["description"]=utf8_encode($exo->val("description"));
+		$result["type"]=utf8_encode($exo->val("type"));
 		$result["module"]=utf8_encode($exo->val("module"));
 		$result["refffa"]=utf8_encode($exo->val("refffa"));
 		$result["refenac"]=utf8_encode($exo->val("refenac"));
@@ -48,11 +49,20 @@
 		{
 			$id=checkVar("id","numeric");
 			$exo=new exercice_conf_class($id,$sql);
-			$desc=checkVar("description","varchar",200);
-			$exo->Valid("description",utf8_decode($desc));
+			$exo->Valid("description",utf8_decode(checkVar("description","varchar",100)));
+			$exo->Valid("type",utf8_decode(checkVar("type","varchar",20)));
+			$exo->Valid("module",utf8_decode(checkVar("module","varchar",40)));
+			$exo->Valid("refffa",utf8_decode(checkVar("refffa","varchar",20)));
+			$exo->Valid("refenac",utf8_decode(checkVar("refenac","numeric")));
+			$exo->Valid("competence",utf8_decode(checkVar("competence","varchar",100)));
 			
 			$exo->Save();
-			
+
+			$prog=new exercice_prog_class(checkVar("1_prog_id","numeric"),$sql);
+			$prog->Valid("idexercice",$exo->id);
+			$prog->Valid("refffa",utf8_decode(checkVar("1_refffa","varchar",20)));
+			$prog->Save();
+error_log(		checkVar("1_prog_id","numeric")." ".utf8_decode(checkVar("1_refffa","varchar",20)));
 			$result["result"]="OK";
 		}
 	}

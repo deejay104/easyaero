@@ -36,8 +36,9 @@ class synthese_class extends objet_core
 		"uid_pilote" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_instructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_avion" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"dte_vol" => Array("type" => "datetime", ),
 		"module" => Array("type" => "enum","default"=>"maniabilite"),
-		"refffa" => Array("type" => "uppercase","len"=>50),
+		"refffa" => Array("type" => "uppercase","len"=>10),
 
 		"themes" => Array("type" => "text"),
 		"bilan_gen" => Array("type" => "text"),
@@ -114,15 +115,30 @@ class synthese_class extends objet_core
 		{
 			if ($key=="refffa")
 			{
-				$typeaff="html";
+				$render="html";
 			}
 			else if ($key=="module")
 			{
+				$render="html";
 				$typeaff="html";
 			}
 		}
 
 		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
+
+		if (($key=="refffa") && ($typeaff=="form"))
+		{
+			$txt=$this->val($key);
+			$t=ListeObjets($this->sql,"reference",array("id","refffa"),array("actif"=>"oui"),array("refffa"));
+			
+			$ret ="<select id='".(($formid!="") ? $formid : "").$key."'  name=\"".$formname."[$key]\">";
+				$ret.="<option value=\"\" ".(($txt=="") ? "selected" : "").">Aucun</option>";
+			foreach($t as $k=>$v)
+			{
+				$ret.="<option value=\"".$v["refffa"]."\" ".(($txt==$v["refffa"]) ? "selected" : "").">".$v["refffa"]."</option>";
+			}
+			$ret.="</select>";			
+		}
 		
 		return $ret;
 	}
@@ -183,22 +199,27 @@ class exercice_conf_class extends objet_core
 	protected $fields = Array(
 		"description" => array("type"=>"varchar","len"=>100, "formlen"=>400),
 		"competence" => array("type"=>"varchar","len"=>100, "formlen"=>400),
+		"type" => Array("type" => "enum","default"=>"peda"),
 		"module" => Array("type" => "enum","default"=>"maniabilite"),
-		"refffa" => Array("type" => "varchar","len"=>20,"formlen"=>100),
+		"refffa" => Array("type" => "varchar","len"=>10,"formlen"=>100),
 		"refenac" => Array("type" => "number"),
 	);
 	
 	protected $tabList=array(
 		"module" => array(
-			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne'),
-			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne')
+			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation'),
+			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation')
+		),
+		"type" => array(
+			"fr"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
+			"fr"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
 		)
 	);
 }
 
-function ListExercicesConf($sql)
+function ListExercicesConf($sql,$s=array("actif"=>"oui"),$order=array("refffa","id"))
 {
-	return ListeObjets($sql,"exercice_conf",array("id"),array("actif"=>"oui"),array("refffa","id"));
+	return ListeObjets($sql,"exercice_conf",array("id"),$s,$order);
 }
 
 class exercice_prog_class extends objet_core
@@ -209,7 +230,7 @@ class exercice_prog_class extends objet_core
 
 	protected $fields = Array(
 		"idexercice" => Array("type"=>"number", "index"=>1),
-		"refffa" => Array("type" => "varchar","len"=>20, "formlen"=>100),
+		"refffa" => Array("type" => "varchar","len"=>10, "formlen"=>100),
 		"progression" => Array("type" => "radio","default"=>"A"),
 	);
 	
@@ -300,5 +321,30 @@ function ListExercicesProg($sql,$uid)
 	}
 	return $lst;
 }
+
+
+class reference_class extends objet_core
+{
+	protected $table="reference";
+	protected $mod="aviation";
+	protected $rub="";
+
+	protected $fields = Array(
+		"refffa" => Array("type" => "varchar","len"=>10, "formlen"=>100),
+		"theme" => Array("type" => "text"),
+	);
+	
+	protected $tabList=array(
+		"progression" =>array(
+			"fr"=>array('E'=>'Etude','A'=>'Acquis'),	
+			"en"=>array('E'=>'Etude','A'=>'Acquis'),
+		),
+	);
+}
+function ListReference($sql)
+{
+	return ListeObjets($sql,"reference",array("id"),array("actif"=>"oui"));
+}
+
   
 ?>

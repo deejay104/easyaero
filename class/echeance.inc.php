@@ -49,9 +49,9 @@ class echeancetype_class extends echeancetype_core
 		parent::__construct($id,$sql);
 	}
 
-	function aff($key,$typeaff="html",$formname="form_data",&$render="")
+	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
-		$ret=parent::aff($key,$typeaff,$formname,$render);
+		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 
 		if ($typeaff=="form")
 		{

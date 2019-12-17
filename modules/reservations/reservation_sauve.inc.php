@@ -33,6 +33,7 @@
 // --- Charge la réservation
 	$id=checkVar("id","numeric");
 	$prev=checkVar("prev","varchar");
+	$fonch=checkVar("fonch","varchar");
 
 	$form_data=checkVar("form_data","array");
 
@@ -63,7 +64,7 @@
 	$resa["resa"]=new resa_class($id,$sql);
 
 // ---- Vérifie les infos
-	if (($fonc=="Enregistrer") || ($fonc=="Actualiser") || ($fonc=="Devis masse"))
+	if (($fonc=="Enregistrer") || ($fonc=="Actualiser") || ($fonch=="centrage") || ($fonch=="synthese"))
 	  {
 		$ok=1;
 
@@ -145,8 +146,10 @@
 				$resa["resa"]->carbapres=$form_carbapres;
 				$resa["resa"]->prixcarbu=$form_prixcarbu;
 
-		  		$resa["resa"]->Valid("taxe",$form_data["taxe"]);
-
+				if (isset($form_data["taxe"]))
+				{
+					$resa["resa"]->Valid("taxe",$form_data["taxe"]);
+				}
 			}
 
 
@@ -286,28 +289,34 @@
 		  	$ok=3;
 		  }
 	  }
+
 	if ($fonc=="Annuler")  	
 	{
 		$ok=0;
 		$affrub=($prev=="scheduler") ? "scheduler" : "index";
 		$ress=$form_uid_ress;
 	}
-
-	if ($fonc=="Devis masse")  	
+	else if ($fonch=="centrage")  	
 	{
 		$ok=0;
 		$mod="aviation";
 		$affrub="centrage";
 	}
-
-	if ($fonc=="Actualiser")  	
-	  {
+	else if ($fonch=="synthese")  	
+	{
+		$ok=0;
+		$mod="aviation";
+		$_REQUEST["id"]=0;
+		$_REQUEST["idvol"]=$id;
+		$affrub="synthese";
+	}
+	else if ($fonc=="Actualiser")  	
+	{
 		$ok=2;
-	  }
-
-	if ($ok>1)
-	  {
+	}
+	else if ($ok>1)
+	{
 	  	$affrub="reservation";
-	  }
+	}
 
 ?>

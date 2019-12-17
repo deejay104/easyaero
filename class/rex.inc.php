@@ -88,9 +88,9 @@ class rex_class extends objet_core
 	}	
 
 	
-	function aff($key,$typeaff="html",$formname="form_data",&$render="")
+	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
-		$ret=parent::aff($key,$typeaff,$formname,$render);
+		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 		$sql=$this->sql;
 
 		// Variables

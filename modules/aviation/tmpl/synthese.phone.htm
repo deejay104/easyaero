@@ -4,19 +4,22 @@
 
 <!-- BEGIN: infos -->
 
-	<p><A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A></p>
-	<p><A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A></p>
 {aff_menu}
 
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
+<style>
+#mto { margin-left:10px; width: 420px!important; }
+</style>
+
 <div class="pagetitle pagemenu">
+	<A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A>
 <!-- BEGIN: supprimer -->
+	<A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A>
 <!-- END: supprimer -->
 </div>
-<br />
 
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="aviation">
@@ -33,47 +36,175 @@
 	<p class="lastupdate">Dernière mise à  jour : {form_usr_maj} {form_dte_maj}</p>
 
 	<div class='formulaireTitre'>
-		FICHE DE SYNTHESE
+		FICHE DE SYNTHESE DE VOL
 	</div>
 
 	<div class='formulaire'>
-		<p><label>Type de vol</label>{form_type}</p>
-		<p><label>Phase de progression</label>{form_phase}</p>
-		<p><label>Vol n°</label>{form_nbvol}</p>
-		<p><label>Date du vol</label>{form_dtevol}</p>
-		<p><label>Eleve</label>{form_eleve}</p>
-		<p><label>Instructeur</label>{form_instructeur}</p>
-		<p><label style='width:140px;'>Leçon n°</label><img src='{path_module}/img/icn16_{form_img_lecon}.png'> {form_lecon}</p>
-		<p><label style='width:140px;'>Autre</label><img src='{path_module}/img/icn16_{form_img_autre}.png'> Vol de révision, de reprise, etc...</p>
+		<table width=420px style='margin-left:15px;'>
+		<tr><td width=180>Module</td><td>{form_module}</td></tr>
+		<tr><td>Réf. du programme</td><td>{form_refffa}</td></tr>
+		<tr><td>Type de vol</td><td>{form_type}</td></tr>
+		</table>
 	</div>
 
-	<div class='formulaireTitre'>
-		COMPETENCES (Remarques)
+	<div class='formulaireTitre'>THEMES</div>
+	{form_themes}
+	
+	<div class='formulaireTitre'>APPRECIATION GENERALE DU VOL</div>
+	{form_bilan_gen}
+
+	<div class='formulaireTitre'>EXERCICES DU DOMAINE TECHNIQUE</div>
+<!-- BEGIN: lst_pedagogique -->
+		<div class='formulaire><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		{form_progression}
+		</div>
+<!-- END: lst_pedagogique -->
+	
+	<div id="affpedagogique">
+	</div>
+	<br />
+
+	<div class='formulaireTitre'>EXERCICES</div>
+<!-- BEGIN: lst_exercice -->
+		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		{form_progression}
+		</div>
+<!-- END: lst_affexercice -->
+	<div id="affexercices">
 	</div>
 
-	<div class="actualitesTexte" style='padding-left:15px;'>
-		TECHNIQUES : (Etude / Acquisition...)
-		{form_remtech}
-	</div>
-	<div class="actualitesTexte" style='padding-left:15px;'>
-		NON TECHNIQUES : (Etude / Acquisition...)
-		{form_remnotech}
+	<div class='formulaireTitre'>PANNES</div>
+<!-- BEGIN: lst_panne -->
+		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		{form_progression}
+		</div>
+<!-- END: lst_panne -->
+	<div id="affpannes">
 	</div>
 
-	<div class='formulaireTitre'>
-		GESTION DE LA MENACE ET DE L'ERREUR
+
+	<br />
+	<div class='formulaire'>
+	<p>Ajouter un exercice / panne :</p>
+	<input id="addexercice" style="width:420px; margin-left:10px;">
 	</div>
-	<div class="actualitesTexte" style='padding-left:15px;'>
-		MENACE (identification, mesures en atténuation)
-		{form_menace}
-	</div>
-	<div class="actualitesTexte" style='padding-left:15px;'>
-		ERREUR (Détection, correction,...)
-		{form_erreur}
-	</div>
+	<br />
+
+	<div class='formulaireTitre'>METEO DU JOUR</div>
+	{form_mto}
+	<br/>
+	<br/>
+
+	<div class='formulaireTitre'>Non technique</div>
+
+	<div style='margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div><div style='padding-left:40px;'>{form_info_1}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div><div style='padding-left:40px;'>{form_info_2}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div><div style='padding-left:40px;'>{form_info_3}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div><div style='padding-left:40px;'>{form_info_4}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div><div style='padding-left:40px;'>{form_info_5}</div></div>
+
+	<br />
+	<table>
+		<tr class='formulaireTitre'>
+			<th width=200>Nb Atterrissage</th>
+			<th width=200>Total Atterrissage</th>
+			<th width=200>Remise(s) des Gaz</th>
+			<th width=200>Total RMG</th>
+		</tr>
+		<tr>
+			<td>{form_nb_att}</td>
+			<td>{form_total_att}</td>
+			<td>{form_nb_rmg}</td>
+			<td>{form_total_rmg}</td>
+		</tr>
+	</table>
+<script>
+	$(document).ready(function() {
+	  $(window).keydown(function(event){
+		if(event.keyCode == 13) {
+		  event.preventDefault();
+		  return false;
+		}
+	  });
+	});
+	
+	$("#addexercice").autocomplete({
+		source: "api.php?mod=aviation&rub=exercice",
+		select: function(event, ui) {
+			var txt="";
+			value=ui.item;
+			console.log(value);
+			txt=txt+"<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+			txt=txt+"<div style='padding-left:40px;'>";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+			txt=txt+"</div>";
+			txt=txt+"</div>";
+			
+			if (value.type=="panne")
+			{
+				$("#affpannes").append(txt);
+			}
+			else if (value.type=="exercice")
+			{
+				$("#affexercices").append(txt);
+			}
+			else
+			{
+				$("#affpedagogique").append(txt);
+			}
+			ui.item.value="";
+		},
+		delay: 200
+	});
+
+
+
+	$("#refffa").change(function() {
+		var ref=$("#refffa").val();
+
+		$.ajax({
+			type: "GET",
+			url: "api.php?mod=aviation&rub=exercice&ref="+ref,
+			dataType: 'JSON',
+
+			success: function(response) {
+				$("#affpedagogique").text("");
+				var txt="";
+				if (response.length>0)
+				{
+					$.each(response, function (index, value) {
+						txt=txt+"<div style='border-top:1px solid #dddddd; margin-left:15px;'><div style='padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+						txt=txt+"<div style='padding-left:40px;'>";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+						txt=txt+"</div>";
+						txt=txt+"</div>";
+					});
+				}
+				$("#affpedagogique").append(txt);
+			}
+		});
+
+		$.ajax({
+			type: "GET",
+			url: "api.php?mod=aviation&rub=exercice&fonc=theme&ref="+ref,
+			dataType: 'JSON',
+
+			success: function(response) {
+				var txt="";
+				$("#themes").text(response.theme);
+			}
+		});
+   
+	});
+</script>
+
 	
 <!-- BEGIN: submit -->
-	<div class="formulaireSubmit" style=" padding-left:55px;">
+	<div class="formulaireSubmit" style=" padding-left:15px;">
 		<input type="submit" name="fonc" id="enregistrer" value="Enregistrer">
 		<input type="submit" name="fonc" id="annuler" value="Annuler">
 	</div>
@@ -83,29 +214,53 @@
 	<div class='formulaireTitre'>
 		VISAS
 	</div>
-	<div  class="actualitesTexte" style='padding-left:15px; float:left; width:50%;'>
-		<b>Instructeur</b><br />
+	<table width='100%'>
+	<tr>
+		<td width='15%'>
+			<div class='formulaire' style='height:90px;'>
+			<b>Date du vol</b><br />
+			{form_dtevol}
+			</div>
+		</td>
+		<td width='10%'>
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<b>Durée</b><br />
+			{form_duree}
+			</div>
+		</td>
+		<td width='10%'>
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<b>Cumul DC</b><br />
+			{form_cumuldc}<br />
+			<b>Cumul Solo</b><br />
+			{form_cumulsolo}
+			</div>
+		</td>
+		<td width='33%'>
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+				<b>Instructeur</b> : {form_instructeur}<br />
 <!-- BEGIN: signinst -->
-		<input type="submit" name="fonc" value="Sign. Instructeur">
+				<input type="submit" name="fonc" value="Signature Instructeur">
 <!-- END: signinst -->
 <!-- BEGIN: signedinst -->
-		Signé par<br />{form_signinst_name}<br /> le {form_signinst_dte}<br />
-		<font style='font-size:8px;'>(Clé: {form_signinst_key})</font>
+				<br />Signé par {form_signinst_name} le {form_signinst_dte}<br />
+				(Clé: {form_signinst_key})
 <!-- END: signedinst -->
-	</div>
-	<div  class='formulaire'>
-		<b>Eleve</b><br />
+			</div>
+		</td>
+		<td>
+			<div class='formulaire' style='margin-left:10px; height:90px;'>
+				<b>Eleve</b> : {form_eleve}<br />
 <!-- BEGIN: signeleve -->
-		<input type="submit" name="fonc" value="Sign. Elève">
+				<input type="submit" name="fonc" value="Signature Elève">
 <!-- END: signeleve -->
 <!-- BEGIN: signedeleve -->
-		Signé par<br />{form_signeleve_name}<br />le {form_signeleve_dte}<br />
-		<font style='font-size:8px;'>(Clé: {form_signeleve_key})</font>
+				<br />Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
+				(Clé: {form_signeleve_key})
 <!-- END: signedeleve -->
-		<br />
-		<br />
-	</div>
-
+			</div>
+		</td>
+	</table>
 </form>
 <br />
 

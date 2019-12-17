@@ -86,8 +86,8 @@
 		$tabValeur[$fid]["id"]["val"]=$fid;
 		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
 		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
-		$tabValeur[$fid]["dte"]["val"]=$d["dte_acquis"];
-		$tabValeur[$fid]["dte"]["aff"]=sql2date($d["dte_acquis"],"jour");
+		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
+		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
 		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
 		$tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "<div style='padding-left:50px;'>A</div>" : "E";
 		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
@@ -100,8 +100,8 @@
 		}
 	}
 
-	if ((!isset($order)) || ($order=="")) { $order="id"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
+	if ((!isset($order)) || ($order=="")) { $order="dte"; }
+	if ((!isset($trie)) || ($trie=="")) { $trie="i"; }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,""));
 

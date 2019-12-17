@@ -15,9 +15,9 @@
 </style>
 
 <div class="pagetitle pagemenu">
-	<p><A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A></p>
+	<A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A>
 <!-- BEGIN: supprimer -->
-	<p><A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A></p>
+	<A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A>
 <!-- END: supprimer -->
 </div>
 
@@ -54,15 +54,24 @@
 	{form_bilan_gen}
 
 	<div class='formulaireTitre'>EXERCICES DU DOMAINE TECHNIQUE</div>
+<!-- BEGIN: lst_pedagogique -->
+		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		{form_progression}
+		</div>
+<!-- END: lst_pedagogique -->
+	
+	<div id="affpedagogique">
+	</div>
+	<br />
+
+	<div class='formulaireTitre'>EXERCICES</div>
 <!-- BEGIN: lst_exercice -->
 		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		{form_progression}
 		</div>
-<!-- END: lst_exercice -->
-	
+<!-- END: lst_affexercice -->
 	<div id="affexercices">
 	</div>
-	<br />
 
 	<div class='formulaireTitre'>PANNES</div>
 <!-- BEGIN: lst_panne -->
@@ -122,19 +131,24 @@
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
+			console.log(value);
 			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
 			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
 			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
 			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
 			txt=txt+"</div>";
 			
-			if (value.module=="panne")
+			if (value.type=="panne")
 			{
 				$("#affpannes").append(txt);
 			}
-			else
+			else if (value.type=="exercice")
 			{
 				$("#affexercices").append(txt);
+			}
+			else
+			{
+				$("#affpedagogique").append(txt);
 			}
 			ui.item.value="";
 		},
@@ -152,7 +166,7 @@
 			dataType: 'JSON',
 
 			success: function(response) {
-				$("#affexercices").text("");
+				$("#affpedagogique").text("");
 				var txt="";
 				if (response.length>0)
 				{
@@ -164,7 +178,18 @@
 						txt=txt+"</div>";
 					});
 				}
-				$("#affexercices").append(txt);
+				$("#affpedagogique").append(txt);
+			}
+		});
+
+		$.ajax({
+			type: "GET",
+			url: "api.php?mod=aviation&rub=exercice&fonc=theme&ref="+ref,
+			dataType: 'JSON',
+
+			success: function(response) {
+				var txt="";
+				$("#themes").text(response.theme);
 			}
 		});
    

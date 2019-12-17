@@ -171,10 +171,10 @@ class user_class extends user_core
 	}
 
 	
-	function aff($key,$typeaff="html",$formname="form_data",&$render="")
+	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
 		$render=$typeaff;
-		$ret=parent::aff($key,$typeaff,$formname,$render);
+		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 
 		$sql=$this->sql;
 		$txt="";
@@ -403,6 +403,27 @@ class user_class extends user_core
 	function AffNbHeures($dte)
 	{
 		$t=$this->NbHeures($dte);
+
+		if ($t>0)
+		  { $ret=AffTemps($t); }
+		else
+		  { $ret="0h 00"; }
+		return "<a href='index.php?mod=aviation&rub=vols&id=".$this->id."'>".$ret."</a>";
+	}
+
+	function NbHeuresSynthese($dte,$type)
+	{
+		$query ="SELECT SUM(resa.tpsreel) AS nb FROM ".$this->tbl."_synthese AS synt ";
+		$query.="LEFT JOIN ".$this->tbl."_calendrier AS resa ON resa.id=synt.idvol ";
+		$query.="WHERE synt.type='".$type."' AND synt.dte_vol<='".$dte."' AND synt.uid_pilote=".$this->id;
+		$sql=$this->sql;
+		$res=$sql->QueryRow($query);
+		return (($res["nb"]>0) ? $res["nb"] : "0");
+	}
+
+	function AffNbHeuresSynthese($dte,$type)
+	{
+		$t=$this->NbHeuresSynthese($dte,$type);
 
 		if ($t>0)
 		  { $ret=AffTemps($t); }

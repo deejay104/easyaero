@@ -6,6 +6,15 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
+<div class="pagetitle pagemenu">
+	<p><A href="index.php?mod=admin&rub=exercices" {class_exercices}>Exercices</A></p>
+	<p><A href="index.php?mod=admin&rub=references" {class_references}>Références</A></p>
+	<p><A href="index.php?mod=admin&rub=refenac" {class_refenac}>Ref. ENAC</A></p>
+	<p style='padding-left:30px;'><a id='edit_new' href="#">Ajouter</a></p>
+
+</div>
+
+
 <script>
 $( function() {
 
@@ -18,6 +27,7 @@ $( function() {
 			success: function(response) {
 				document.getElementById('form_id').value=response.id;
 				document.getElementById('description').value=response.description;
+				document.getElementById('type').value=response.type;
 				document.getElementById('module').value=response.module;
 				document.getElementById('refffa').value=response.refffa;
 				document.getElementById('refenac').value=response.refenac;
@@ -27,6 +37,11 @@ $( function() {
 				$('#2_refffa')[0].value = response.progression[2].ref;
 				$('#3_refffa')[0].value = response.progression[3].ref;
 				$('#4_refffa')[0].value = response.progression[4].ref;
+
+				$('#1_prog_id')[0].value = response.progression[1].id;
+				$('#2_prog_id')[0].value = response.progression[2].id;
+				$('#3_prog_id')[0].value = response.progression[3].id;
+				$('#4_prog_id')[0].value = response.progression[4].id;
 
 				$('#1_progression_'+response.progression[1].val)[0].checked = true;
 				$('#2_progression_'+response.progression[2].val)[0].checked = true;
@@ -50,15 +65,22 @@ $( function() {
 			console.log("edit: "+id);
 			data = {};
 			data["id"]=id;
-			<!-- data["nom"]=document.getElementById('form_nom').value; -->
 			data["description"]=document.getElementById('description').value;
-			<!-- data["taxe"]=document.getElementById('form_taxe').value; -->
-			<!-- data["lon"]=document.getElementById('form_lon').value; -->
-			<!-- data["lat"]=document.getElementById('form_lat').value; -->
+			data["type"]=document.getElementById('type').value;
+			data["module"]=document.getElementById('module').value;
+			data["refffa"]=document.getElementById('refffa').value;
+			data["refenac"]=document.getElementById('refenac').value;
+			data["competence"]=document.getElementById('competence').value;
 
-			<!-- document.getElementById('nom_'+id).innerHTML=data["nom"]; -->
-			<!-- document.getElementById('description_'+id).innerHTML=data["description"]; -->
-			<!-- document.getElementById('taxe_'+id).innerHTML=data["taxe"]; -->
+			data["1_refffa"]=document.getElementById('1_refffa').value;
+			data["2_refffa"]=document.getElementById('2_refffa').value;
+			data["3_refffa"]=document.getElementById('3_refffa').value;
+			data["4_refffa"]=document.getElementById('4_refffa').value;
+
+			data["1_prog_id"]=document.getElementById('1_prog_id').value;
+			data["2_prog_id"]=document.getElementById('2_prog_id').value;
+			data["3_prog_id"]=document.getElementById('3_prog_id').value;
+			data["4_prog_id"]=document.getElementById('4_prog_id').value;
 
 			$.ajax({
 				url:'api.php?mod=admin&rub=updexo&fonc=post',
@@ -108,32 +130,37 @@ $( function() {
 		dialog.dialog( "open" );
     });
 <!-- END: lst_edit -->
+	$( "#edit_new" ).on( "click", function() {
+		loadExercice(0);
+		dialog.dialog( "open" );
+    });
 });
 </script>
 
 <div id="dialog-form" title="Editer un exercice" class="formulaire" style="display:none;">
 	<input id="form_id" type="hidden" value="" />
 	<p><label>Description</label>{form_description}</p>
+	<p><label>Type</label>{form_type}</p>
 	<p><label>Module</label>{form_module}</p>
 	<p><label>Référence</label>{form_refffa}</p>
 	<p><label>ENAC</label>{form_refenac}</p>
 	<p><label>Compétence</label>{form_competence}</p>
 
-	<p><label>Progression</label>{form_1_refffa} {form_1_progression}</p>
-	<p><label>Progression</label>{form_2_refffa} {form_2_progression}</p>
-	<p><label>Progression</label>{form_3_refffa} {form_3_progression}</p>
-	<p><label>Progression</label>{form_4_refffa} {form_4_progression}</p>
+	<p><label>Progression</label>{form_1_refffa} {form_1_progression}<input type="hidden" id="1_prog_id" /></p>
+	<p><label></label>{form_2_refffa} {form_2_progression}<input type="hidden" id="2_prog_id" /></p>
+	<p><label></label>{form_3_refffa} {form_3_progression}<input type="hidden" id="3_prog_id" /></p>
+	<p><label></label>{form_4_refffa} {form_4_progression}<input type="hidden" id="4_prog_id" /></p>
 
 
 	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 </div>
 
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+<FORM id="form_tableau" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="exercices">
 
-{aff_tableau}	<br />
+{aff_tableau}
 
 </FORM>
 

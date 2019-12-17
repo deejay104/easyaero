@@ -523,12 +523,6 @@
 		$tmpl_x->parse("infos.supprimer");
 	}
 	
-	// Ajoute une synthèse de vol
-	if ((GetDroit("CreeSynthese")) && ($id>0))
-	{
-		$tmpl_x->parse("infos.synthese"); 
-	}
-
 	// Liste les fiches de synthèse du vol
 	if ($id>0)
 	{
@@ -540,7 +534,7 @@
 			{
 				$fiche=new synthese_class($i,$sql);
 				$tmpl_x->assign("sid", $i);
-				$tmpl_x->assign("synt_refffa", $fiche->Aff("refffa"));
+				$tmpl_x->assign("synt_refffa", $fiche->val("refffa"));
 				$tmpl_x->assign("synt_module", $fiche->Aff("module"));
 				$tmpl_x->assign("synt_progression", $fiche->Aff("progression"));
 				$tmpl_x->assign("synt_status", $fiche->Aff("status"));
@@ -548,7 +542,13 @@
 			}
 			$tmpl_x->parse("corps.aff_reservation.aff_syntheses");
 		}
+		// Ajoute une synthèse de vol
+		if ((GetDroit("CreeSynthese")) && (count($t)==0))
+		{
+			$tmpl_x->parse("infos.synthese"); 
+		}
 	}
+
 		
 	if ($ok_aff==0)
 	{ 

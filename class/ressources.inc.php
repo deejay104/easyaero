@@ -79,10 +79,10 @@ class ress_class extends objet_core
 	}
 
 	# Show informations
-	function aff($key,$typeaff="html",$formname="form_data",&$render="")
+	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
 		$render=$typeaff;
-		$ret=parent::aff($key,$typeaff,$formname,$render);
+		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 
 		$sql=$this->sql;
 		$txt="";

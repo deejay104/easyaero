@@ -9,25 +9,33 @@
 
 // ---- Sélectionne le menu courant
 	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
+	$tmpl_x->assign("class_".$rub,"class='pageTitleSelected'");
 
 	
 // ---- Affiche les menus
+
+	if ((GetDroit("AccesConfigComptes")) || (GetDroit("AccesConfigPostes")) || (GetDroit("AccesConfigTarifs")) || (GetDroit("AccesConfigPrevisions")))
+	{
+		$tmpl_menu->parse("infos.comptabilite");
+	}
+
 	if (GetDroit("AccesConfigComptes"))
 	{
-		$tmpl_menu->parse("infos.comptes");
+		$tmpl_x->parse("corps.comptes");
 	}
 	if (GetDroit("AccesConfigPostes"))
 	{
-		$tmpl_menu->parse("infos.postes");
+		$tmpl_x->parse("corps.postes");
 	}
 	if (GetDroit("AccesConfigTarifs"))
 	{
-		$tmpl_menu->parse("infos.tarifs");
+		$tmpl_x->parse("corps.tarifs");
 	}
 	if (GetDroit("AccesConfigPrevisions"))
 	{
-		$tmpl_menu->parse("infos.previsions");
+		$tmpl_x->parse("corps.previsions");
 	}
+	
 	if (GetDroit("AccesConfigNavigation"))
 	{
 		$tmpl_menu->parse("infos.navigation");

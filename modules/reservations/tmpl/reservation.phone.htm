@@ -2,19 +2,25 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	<p><A href="index.php?mod=aviation&rub=centrage&id={id}"><IMG src="{path_module}/img/icn32_devismasse.png" border=0>Devis de masse</A></p>
+	<p><A href="#" OnClick="submitForm('centrage');"><IMG src="{path_module}/img/icn32_devismasse.png" border=0>Devis de masse</A></p>
 	<!-- BEGIN: supprimer -->
 	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
 	<!-- END: supprimer -->
 	<!-- BEGIN: synthese -->
-	<p><A href="index.php?mod=aviation&rub=synthese&idvol={id}"><IMG src="{path_module}/img/icn32_synthese.png" border=0>Ajouter Synthèse</A></p>
+	<p><A href="#" OnClick="submitForm('synthese');"><IMG src="{path_module}/img/icn32_synthese.png" border=0>Ajouter Synthèse</A></p>
 	<!-- END: synthese -->
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
-
+<script type="text/javascript">
+	function submitForm(fonc)
+	{
+		document.getElementById("fonch").value=fonc;
+		reservation.submit();
+	}
+</script>
 
 <FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="reservations">
@@ -22,6 +28,7 @@
 	<INPUT type="hidden" name="id" value="{id}">
 	<INPUT type="hidden" name="prev" value="{prev}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="fonch" id="fonch" value="">
 
 	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
 
@@ -165,7 +172,7 @@
 	</div>
 
 	<div class="formulaire">
-	  <p><TEXTAREA name="form_description" cols="40" rows="3">{form_description}</TEXTAREA></p>
+		<TEXTAREA name="form_description" cols="40" rows="3">{form_description}</TEXTAREA>
 	</div>
 
 	<!-- END: aff_reservation -->
