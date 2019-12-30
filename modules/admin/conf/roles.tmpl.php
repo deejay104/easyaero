@@ -58,7 +58,11 @@ $tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
 $tabRoles["AccesConfigTarifs"]="Accès à la page de configuration des tarifs";
 $tabRoles["AccesConfigPrevisions"]="Accès à la page de gestion des prévisions";
 $tabRoles["AccesConfigNavigation"]="Accès à la page de configuration des points de navigation";
-$tabRoles["AccesConfigExercices"]="Accès à la page de configuration de la liste des exercices";
+$tabRoles["AccesConfigInstruction"]="Accès à la page de configuration des synthèses de vol";
+
+
+$tabRoles["AccesConfigExercices"]="Accès à la page de configuration de la liste des exercices (Synthèse de vol)";
+$tabRoles["AccesConfigReferences"]="Accès à la page de configuration de la liste des références ENAC (Synthèse de vol)";
 
 
 

@@ -46,6 +46,7 @@
 // ---- Sauvegarde
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$form_data=checkVar("form_data","array");
 		$rex=new rex_class($id,$sql);
 		if (count($form_data)>0)
 		{

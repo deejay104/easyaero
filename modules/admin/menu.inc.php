@@ -40,7 +40,7 @@
 	{
 		$tmpl_menu->parse("infos.navigation");
 	}
-	if (GetDroit("AccesConfigExerices"))
+	if (GetDroit("AccesConfigInstruction"))
 	{
 		$tmpl_menu->parse("infos.exercices");
 	}

@@ -116,6 +116,7 @@ class synthese_class extends objet_core
 			if ($key=="refffa")
 			{
 				$render="html";
+				$typeaff="html";
 			}
 			else if ($key=="module")
 			{

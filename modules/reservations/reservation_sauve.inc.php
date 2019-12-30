@@ -313,6 +313,7 @@
 	else if ($fonc=="Actualiser")  	
 	{
 		$ok=2;
+	  	$affrub="reservation";
 	}
 	else if ($ok>1)
 	{

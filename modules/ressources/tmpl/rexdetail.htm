@@ -39,10 +39,12 @@
 	</div>
 
 	<div class="formulaireTitre">Descriptif</div>
+	<div class="formulaire">
 	<div><b>Descriptif de l'événement</b></div>
 	{form_description}
 	<div><b>Commentaire</b></div>
 	{form_commentaire}
+	</div>
 
 	<div class="formulaireTitre">Classification</div>
 	<div class="formulaire">
@@ -70,12 +72,14 @@
 	</div>
 
 	<div class="formulaireTitre">Conclusion</div>
-	<div><b>Synthèse</b></div>
-	{form_synthese}
+	<div class="formulaire">
+		<div><b>Synthèse</b></div>
+		{form_synthese}
 
-	
-	<div><b>Plan d'action</b></div>
-	{form_planaction}
+		
+		<div><b>Plan d'action</b></div>
+		{form_planaction}
+	</div>
 
 <!-- BEGIN: form_submit -->
 	<input type="submit" name="fonc" value="Enregistrer">
