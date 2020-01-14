@@ -303,15 +303,35 @@ function ListExercicesNonAcquis($sql,$uid)
 	return $lst;
 }
 
-// Liste des exercices avec la progression pour un élève
-function ListExercicesProg($sql,$uid)
+// Liste des exercices avec la progression pour un membre
+function ListExercicesProg($sql,$uid,$type="")
 {
 	global $MyOpt;
 	
-	$q ="SELECT id,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice) AS dte_acquis,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
+	$q ="SELECT id,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
 	$q.="FROM ".$MyOpt["tbl"]."_exercice_conf AS exo ";
-	// $q.="WHERE uid='".$uid."' ";
-//	$q.="GROUP BY idexercice";
+	if ($type!="")
+	{
+		$q.="WHERE exo.type='".$type."' ";
+	}
+	$sql->Query($q);
+
+	$lst=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$lst[$sql->data["id"]]=$sql->data;
+	}
+	return $lst;
+}
+
+// Liste des compétences avec la progression pour un membre
+function ListCompetences($sql,$uid)
+{
+	global $MyOpt;
+	
+	$q ="SELECT id,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
+	$q.="FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE exo.competence<>''";
 	$sql->Query($q);
 
 	$lst=array();
@@ -334,18 +354,59 @@ class reference_class extends objet_core
 		"refffa" => Array("type" => "varchar","len"=>10, "formlen"=>100),
 		"theme" => Array("type" => "text"),
 	);
-	
-	protected $tabList=array(
-		"progression" =>array(
-			"fr"=>array('E'=>'Etude','A'=>'Acquis'),	
-			"en"=>array('E'=>'Etude','A'=>'Acquis'),
-		),
-	);
 }
 function ListReference($sql)
 {
 	return ListeObjets($sql,"reference",array("id"),array("actif"=>"oui"));
 }
 
-  
+class refenac_class extends objet_core
+{
+	protected $table="refenac";
+	protected $mod="aviation";
+	protected $rub="";
+
+	protected $fields = Array(
+		"description" => Array("type" => "varchar", "len"=>100, "formlen"=>490),
+		"refenac" => Array("type" => "number"),
+		"module" => Array("type" => "enum", "default"=>"maniabilite"),
+		"phase" => Array("type" => "varchar", "len"=>50, "formlen"=>300),
+	);
+	
+	protected $tabList=array(
+		"module" => array(
+			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
+			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
+		),
+	);
+}
+function ListRefEnac($sql)
+{
+	return ListeObjets($sql,"refenac",array("id"),array("actif"=>"oui"));
+}
+
+// Liste des exercices avec la progression pour un élève
+function ListProgressionEnac($sql,$uid)
+{
+	global $MyOpt;
+	
+	$q ="SELECT id,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
+
+	$q ="SELECT ref.*, (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice_conf AS conf WHERE ref.refenac=conf.refenac)  AS nbenac, ";
+	$q.="(SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog LEFT JOIN ".$MyOpt["tbl"]."_exercice_conf AS conf ON prog.idexercice=conf.id WHERE conf.refenac=ref.refenac AND prog.uid='".$uid."' AND prog.progression='A')  AS nbprog, ";
+	$q.="(SELECT MAX(prog.dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog LEFT JOIN ".$MyOpt["tbl"]."_exercice_conf AS conf ON prog.idexercice=conf.id WHERE conf.refenac=ref.refenac AND prog.uid='".$uid."' AND prog.progression='A')  AS dteprog ";
+	$q.="FROM ".$MyOpt["tbl"]."_refenac AS ref ";
+	$q.="ORDER BY module, phase ";
+	$sql->Query($q);
+
+	$lst=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$lst[$sql->data["id"]]=$sql->data;
+	}
+	return $lst;
+}
+
+
 ?>

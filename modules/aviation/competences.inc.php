@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	Easy Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,7 +19,7 @@
 */
 ?>
 
-<?
+<?php
 	// if (!GetDroit("AccesSynthese")) { FatalError("Accès non autorisé (AccesSynthese)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
@@ -33,6 +33,9 @@
 
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
+	$order=checkVar("order","varchar",12);
+	$trie=checkVar("trie","varchar",1);
+	$ts=checkVar("ts","numeric");
 
 	if ($uid==0)
 	{
@@ -69,36 +72,21 @@
 	$lst=ListCompetences($sql,$uid);
 
 	$tabTitre=array(
-		"ress" => array("aff"=>"Avion","width"=>80),
-		"dte" => array("aff"=>"Date","width"=>100),
-		"inst" => array("aff"=>"Instructeur","width"=>200),
-		"module" => array("aff"=>"Module","width"=>100),
-		"refffa" => array("aff"=>"Reférence","width"=>100),
-		"status" => array("aff"=>"Status","width"=>100),
+		"exercice" => array("aff"=>"Exercice","width"=>400),
+		"dte" => array("aff"=>"Date","width"=>120),
+		"progression" => array("aff"=>"Progression","width"=>100),
 	);
 	$tabValeur=array();
 	foreach($lst as $fid=>$d)
-	{
-		$fiche = new synthese_class($fid,$sql);
-		$resa=new resa_class($fiche->val("idvol"),$sql);
-		$ress=new ress_class($fiche->val("uid_avion"),$sql);
-		$inst=new user_class($fiche->val("uid_instructeur"),$sql);
-		
-		$tabValeur[$fid]["ress"]["val"]=$ress->val("immatriculation");
-		$tabValeur[$fid]["ress"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$ress->val("immatriculation")."</a>";
-		$tabValeur[$fid]["dte"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$fid]["dte"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".sql2date($resa->dte_deb,"jour")."</a>";
-		
-		$tabValeur[$fid]["inst"]["val"]=$inst->val("fullname");
-		$tabValeur[$fid]["inst"]["val"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
-	
+	{	
+		$exo = new exercice_conf_class($fid,$sql);
 
-		$tabValeur[$fid]["module"]["val"]=$fiche->val("module");
-		$tabValeur[$fid]["module"]["val"]=$fiche->aff("module");
-		$tabValeur[$fid]["refffa"]["val"]=$fiche->val("refffa");
-		$tabValeur[$fid]["refffa"]["val"]=$fiche->aff("refffa");
-		$tabValeur[$fid]["status"]["val"]=$fiche->val("status");
-		$tabValeur[$fid]["status"]["val"]=$fiche->aff("status");
+		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
+		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
+		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
+		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
+		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
+		$tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "Acquis" : "Etude";
 	}
 
 	if ((!isset($order)) || ($order=="")) { $order="dte"; }

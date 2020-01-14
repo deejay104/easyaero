@@ -20,7 +20,7 @@
 ?>
 
 <?php
-	// if (!GetDroit("AccesSynthese")) { FatalError("AccÃ¨s non autorisÃ© (AccesSynthese)"); }
+	// if (!GetDroit("AccesSynthese")) { FatalError("Accès non autorisé (AccesSynthese)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 	require_once ($appfolder."/class/reservation.inc.php");
@@ -69,7 +69,7 @@
 	}
 
 // ---- Affiche la liste	
-	$lst=ListExercicesProg($sql,$uid);
+	$lst=ListExercicesProg($sql,$uid,"panne");
 
 	$tabTitre=array(
 		"id" => array("aff"=>"#","width"=>40),

@@ -69,39 +69,55 @@
 	}
 
 // ---- Affiche la liste	
-	$lst=ListExercicesProg($sql,$uid);
+	$lst=ListProgressionEnac($sql,$uid,"panne");
 
 	$tabTitre=array(
 		"id" => array("aff"=>"#","width"=>40),
-		"exercice" => array("aff"=>"Exercice","width"=>400),
+		"module" => array("aff"=>"Module","width"=>150),
+		"phase" => array("aff"=>"Phase","width"=>300),
+		"description" => array("aff"=>"Description","width"=>500),
 		"dte" => array("aff"=>"Date","width"=>120),
-		"progression" => array("aff"=>"Progression","width"=>100),
-		"progref" => array("aff"=>"Requis","width"=>100),
+		"prog" => array("aff"=>"Progression","width"=>100),
 	);
 	$tabValeur=array();
 	foreach($lst as $fid=>$d)
 	{	
-		$exo = new exercice_conf_class($fid,$sql);
+		$exo = new refenac_class($fid,$sql);
 
-		$tabValeur[$fid]["id"]["val"]=$fid;
-		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
-		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
-		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
-		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
-		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
-		$tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "<div style='padding-left:50px;'>A</div>" : "E";
-		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
-		$tabValeur[$fid]["progref"]["aff"]=($d["progref"]=="A") ? "Acquis" : "Etude";
+		$tabValeur[$fid]["id"]["val"]=$exo->val("refenac");
+		$tabValeur[$fid]["module"]["val"]=$exo->val("module");
+		$tabValeur[$fid]["module"]["aff"]=$exo->aff("module");
+		$tabValeur[$fid]["phase"]["val"]=$exo->val("phase");
+		$tabValeur[$fid]["phase"]["aff"]=$exo->aff("phase");
+		$tabValeur[$fid]["description"]["val"]=$exo->val("description");
+		$tabValeur[$fid]["description"]["aff"]=$exo->aff("description");
+
+		// $tabValeur[$fid]["progression"]["val"]=$d["progression"];
+		// $tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "<div style='padding-left:50px;'>A</div>" : "E";
+		// $tabValeur[$fid]["progref"]["val"]=$d["progref"];
+		// $tabValeur[$fid]["progref"]["aff"]=($d["progref"]=="A") ? "Acquis" : "Etude";
+
+		// $tabValeur[$fid]["nbenac"]["val"]=$d["nbenac"];
+		// $tabValeur[$fid]["nbprog"]["val"]=$d["nbprog"];
 		
-		if ($d["progref"]!=$d["progression"])
+		if (($d["nbprog"]>=$d["nbenac"]) && ($d["nbenac"]>0))
 		{
-			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
-			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+			// $tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+			// $tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+
+			$tabValeur[$fid]["prog"]["val"]="Acquis";
+
+			$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dteprog"])>0) ? strtotime($d["dteprog"]) : 99999999999 ;
+			$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dteprog"])>0) ? sql2date($d["dteprog"],"jour") : " ";
+		}
+		else if ($d["nbenac"]==0)
+		{
+			$tabValeur[$fid]["prog"]["val"]="-";
 		}
 	}
 
-	if ((!isset($order)) || ($order=="")) { $order="dte"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
+	if ((!isset($order)) || ($order=="")) { $order=""; }
+	if ((!isset($trie)) || ($trie=="")) { $trie=""; }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,""));
 

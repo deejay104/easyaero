@@ -329,4 +329,6 @@ $tabCustom=Array
 	$obj->genSqlTab($tabCustom);
 	$obj=new reference_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
+	$obj=new refenac_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
 ?>
