@@ -179,7 +179,7 @@ class synthese_class extends objet_core
 
 function ListSyntheseVol($sql,$idvol)
 {
-	return ListeObjets($sql,"synthese",array("id","module","refffa","progression"),array("actif"=>"oui","idvol"=>$idvol));
+	return ListeObjets($sql,"synthese",array("id","module","refffa"),array("actif"=>"oui","idvol"=>$idvol));
 }
 function ListMySynthese($sql,$uid)
 {
