@@ -1,4 +1,4 @@
-<?
+<?php
 // ---------------------------------------------------------------------------------------------
 //   Variables
 // ---------------------------------------------------------------------------------------------
@@ -6,7 +6,7 @@
 // Titre du site
 $MyOptTmpl["site_title"]="Easy-Aero";
 
-// email par dÈfault d'envoie des mails
+// email par d√©fault d'envoie des mails
 $MyOptTmpl["from_email"]="noreply@easy-aero.fr";
 
 
@@ -22,9 +22,9 @@ $MyOptHelp["uid_club"]="ID du compte club";
 $MyOptTmpl["uid_bapteme"]=53;
 $MyOptHelp["uid_bapteme"]="ID du compte bapteme";
 
-// Compte par dÈfaut pour le tableau de bord
+// Compte par d√©faut pour le tableau de bord
 $MyOptTmpl["uid_tableaubord"]=$MyOptTmpl["uid_club"];
-$MyOptHelp["uid_tableaubord"]="Compte par dÈfaut pour le tableau de bord";
+$MyOptHelp["uid_tableaubord"]="Compte par d√©faut pour le tableau de bord";
 
 // ID poste pour facturation manifestation
 $MyOptTmpl["id_PosteManip"]=0;
@@ -32,9 +32,9 @@ $MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
 
 // ID poste pour les factures
 $MyOptTmpl["id_PosteFacture"]=0;
-$MyOptHelp["id_PosteFacture"]="ID du poste pour le crÈdit des factures";
+$MyOptHelp["id_PosteFacture"]="ID du poste pour le cr√©dit des factures";
 
-// ID poste pour les transfËrts
+// ID poste pour les transf√®rts
 $MyOptTmpl["id_PosteTransfert"]=0;
 $MyOptHelp["id_PosteTransfert"]="ID du poste pour le transfert vers le compte d'un autre membre";
 
@@ -42,100 +42,100 @@ $MyOptHelp["id_PosteTransfert"]="ID du poste pour le transfert vers le compte d'
 $MyOptTmpl["id_PosteTaxeAT"]=0;
 $MyOptHelp["id_PosteTaxeAT"]="ID du poste pour les taxes d'atterrissage";
 
-// ID poste pour les crÈdits de compte
+// ID poste pour les cr√©dits de compte
 $MyOptTmpl["PosteCredite"]["virement"]=0;
-$MyOptHelp["PosteCredite"]["virement"]="ID du poste pour le crÈdit de son compte par virement";
+$MyOptHelp["PosteCredite"]["virement"]="ID du poste pour le cr√©dit de son compte par virement";
 $MyOptTmpl["PosteCredite"]["cheque"]=0;
-$MyOptHelp["PosteCredite"]["cheque"]="ID du poste pour le crÈdit de son compte par chËque";
+$MyOptHelp["PosteCredite"]["cheque"]="ID du poste pour le cr√©dit de son compte par ch√®que";
 $MyOptTmpl["PosteCredite"]["espece"]=0;
-$MyOptHelp["PosteCredite"]["espece"]="ID du poste pour le crÈdit de son compte par espËces";
+$MyOptHelp["PosteCredite"]["espece"]="ID du poste pour le cr√©dit de son compte par esp√®ces";
 $MyOptTmpl["PosteCredite"]["vacances"]=0;
-$MyOptHelp["PosteCredite"]["vacances"]="ID du poste pour le crÈdit de son compte par chËque vacances";
+$MyOptHelp["PosteCredite"]["vacances"]="ID du poste pour le cr√©dit de son compte par ch√®que vacances";
 
-// CoordonnÈes terrain
+// Coordonn√©es terrain
 $MyOptTmpl["terrain"]["nom"]="Neuhof";
 $MyOptHelp["terrain"]["nom"]="Nom du terrain d'origine";
 $MyOptTmpl["terrain"]["longitude"]=7.77750;
-$MyOptHelp["terrain"]["longitude"]="Longitude du terrain (nÈgatif si ‡ l'est)";
+$MyOptHelp["terrain"]["longitude"]="Longitude du terrain (n√©gatif si √† l'est)";
 $MyOptTmpl["terrain"]["latitude"]=48.55360;
 $MyOptHelp["terrain"]["latitude"]="Latitude du terrain";
 
-// DÈbut et fin de la journÈe de rÈservation
+// D√©but et fin de la journ√©e de r√©servation
 $MyOptTmpl["debjour"]="6";
-$MyOptHelp["debjour"]="Heure du dÈbut de la journÈe (pour l'affichage du calendrier)";
+$MyOptHelp["debjour"]="Heure du d√©but de la journ√©e (pour l'affichage du calendrier)";
 $MyOptTmpl["finjour"]="22";
-$MyOptHelp["finjour"]="Heure de fin de la journÈe";
+$MyOptHelp["finjour"]="Heure de fin de la journ√©e";
 
-// UnitÈs
+// Unit√©s
 $MyOptTmpl["unitPoids"]="kg";
-$MyOptHelp["unitPoids"]="UnitÈ des poids";
+$MyOptHelp["unitPoids"]="Unit√© des poids";
 $MyOptTmpl["unitVol"]="L";
-$MyOptHelp["unitVol"]="UnitÈ des volumes";
+$MyOptHelp["unitVol"]="Unit√© des volumes";
 
 // Dernier vol
 $MyOptTmpl["maxDernierVol"]=90;
 $MyOptHelp["maxDernierVol"]="Nombre jours maximum entre 2 vols.";
 
 
-// Texte ‡ accepter pour une rÈservation
-$MyOptTmpl["TxtValidResa"]="Pilote, il est de votre responsabilitÈ de vÈrifier que vous respectez bien les conditions díexpÈrience rÈcente pour voler sur cet avion. Au del‡ de 3 mois maximum sans voler : un vol avec un instructeur du club est obligatoire.<br />Confirmer que vous avez volÈ depuis moins de 3 mois sur cet avion ou assimilÈ.";
-$MyOptHelp["TxtValidResa"]="Texte ‡ afficher si les conditions de vol pour le pilote ne sont pas satisfaites";
+// Texte √† accepter pour une r√©servation
+$MyOptTmpl["TxtValidResa"]="Pilote, il est de votre responsabilit√© de v√©rifier que vous respectez bien les conditions d‚Äôexp√©rience r√©cente pour voler sur cet avion. Au del√† de 3 mois maximum sans voler : un vol avec un instructeur du club est obligatoire.<br />Confirmer que vous avez vol√© depuis moins de 3 mois sur cet avion ou assimil√©.";
+$MyOptHelp["TxtValidResa"]="Texte √† afficher si les conditions de vol pour le pilote ne sont pas satisfaites";
 $MyOptTmpl["ChkValidResa"]="on";
-$MyOptHelp["ChkValidResa"]="Active l'affichage du texte ‡ confirmer (on=ActivÈ)";
+$MyOptHelp["ChkValidResa"]="Active l'affichage du texte √† confirmer (on=Activ√©)";
 
 
-// Nombre de lignes affichÈes pour la ventilation
+// Nombre de lignes affich√©es pour la ventilation
 $MyOptTmpl["ventilationNbLigne"]="4";
-$MyOptHelp["ventilationNbLigne"]="Nombre de lignes ‡ afficher lors d'une ventilation de mouvement";
+$MyOptHelp["ventilationNbLigne"]="Nombre de lignes √† afficher lors d'une ventilation de mouvement";
 
 
 // Modules
-// on : AffichÈ et actif
+// on : Affich√© et actif
 $MyOptTmpl["module"]["aviation"]="on";
 $MyOptHelp["module"]["aviation"]="on : Affiche et active le module aviation";
 $MyOptTmpl["module"]["compta"]="on";
-$MyOptHelp["module"]["compta"]="on : Affiche et active le module comptabilitÈ";
+$MyOptHelp["module"]["compta"]="on : Affiche et active le module comptabilit√©";
 $MyOptTmpl["module"]["creche"]="";
-$MyOptHelp["module"]["creche"]="on : Affiche et active le module crËche";
+$MyOptHelp["module"]["creche"]="on : Affiche et active le module cr√®che";
 $MyOptTmpl["module"]["facture"]="";
 $MyOptHelp["module"]["facture"]="on : Affiche et active le module facture";
 $MyOptTmpl["module"]["abonnement"]="";
 $MyOptHelp["module"]["abonnement"]="on : Affiche et active le module abonnement";
 
-// Restreint la liste des membres pour les famille. Types sÈparÈs par des virgules (pilote,eleve)
+// Restreint la liste des membres pour les famille. Types s√©par√©s par des virgules (pilote,eleve)
 $MyOptTmpl["restrict"]["famille"]="";
-$MyOptHelp["restrict"]["famille"]="Restreint l'affichage de la liste des membres pour la page des familles. Saisir les types sÈparÈs par des virgules (pilote,eleve)";
+$MyOptHelp["restrict"]["famille"]="Restreint l'affichage de la liste des membres pour la page des familles. Saisir les types s√©par√©s par des virgules (pilote,eleve)";
 // Restreint la liste des membres pour les factures.
 $MyOptTmpl["restrict"]["facturation"]="";
-$MyOptHelp["restrict"]["facturation"]="Restreint l'affichage de la liste des membres pour la page des facturations. Saisir les types sÈparÈs par des virgules (pilote,eleve)";
+$MyOptHelp["restrict"]["facturation"]="Restreint l'affichage de la liste des membres pour la page des facturations. Saisir les types s√©par√©s par des virgules (pilote,eleve)";
 // Restreint la liste des membres pour les comptes.
 $MyOptTmpl["restrict"]["comptes"]="";
-$MyOptHelp["restrict"]["comptes"]="Restreint l'affichage de la liste des membres pour la page des comptes. Saisir les types sÈparÈs par des virgules (pilote,eleve)";
+$MyOptHelp["restrict"]["comptes"]="Restreint l'affichage de la liste des membres pour la page des comptes. Saisir les types s√©par√©s par des virgules (pilote,eleve)";
 
 // Saisir les vols en facturation
 $MyOptTmpl["facturevol"]="";
-$MyOptHelp["facturevol"]="Saisi les vols en facturation (on=ActivÈ)";
+$MyOptHelp["facturevol"]="Saisi les vols en facturation (on=Activ√©)";
 
 // Compense le compte CLUB lors du remboursement d'une facture
 $MyOptTmpl["CompenseClub"]="";
-$MyOptHelp["CompenseClub"]="Compense le compte CLUB lors du remboursement d'une facture (on=ActivÈ)";
+$MyOptHelp["CompenseClub"]="Compense le compte CLUB lors du remboursement d'une facture (on=Activ√©)";
 
 
 // Couleurs du calendrier
 $MyOptTmpl["tabcolresa"]["own"]="A0E2AF";
-$MyOptHelp["tabcolresa"]["own"]="Couleur pour ses rÈservations";
+$MyOptHelp["tabcolresa"]["own"]="Couleur pour ses r√©servations";
 $MyOptTmpl["tabcolresa"]["booked"]="A9D7FE";
-$MyOptHelp["tabcolresa"]["booked"]="Couleur pour une rÈservation autre que les siennes";
+$MyOptHelp["tabcolresa"]["booked"]="Couleur pour une r√©servation autre que les siennes";
 $MyOptTmpl["tabcolresa"]["meeting"]="AAFC8F";
 $MyOptHelp["tabcolresa"]["meeting"]="Couleur pour une manifestation";
 $MyOptTmpl["tabcolresa"]["maintconf"]="dfacac";
-$MyOptHelp["tabcolresa"]["maintconf"]="Couleur pour une maintenance confirmÈe";
+$MyOptHelp["tabcolresa"]["maintconf"]="Couleur pour une maintenance confirm√©e";
 $MyOptTmpl["tabcolresa"]["maintplan"]="eec89e";
-$MyOptHelp["tabcolresa"]["maintplan"]="Couleur pour ses maintenance planifiÈe";
+$MyOptHelp["tabcolresa"]["maintplan"]="Couleur pour ses maintenance planifi√©e";
 
-// Maintiens l'heure bloc Ègale ‡ l'horametre
+// Maintiens l'heure bloc √©gale √† l'horametre
 $MyOptTmpl["updateBloc"]="";
-$MyOptHelp["updateBloc"]="Maintiens le temps bloc Ègale ‡ celui de l'horametre (on=activÈ)";
+$MyOptHelp["updateBloc"]="Maintiens le temps bloc √©gale √† celui de l'horametre (on=activ√©)";
 
 
 ?>

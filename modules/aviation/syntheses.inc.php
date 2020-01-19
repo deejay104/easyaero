@@ -27,10 +27,6 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
 
@@ -48,10 +44,23 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
+// ---- Affiche le sous menu
+	if ($theme!="phone")
+	{
+		addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",true);
+		addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
+		addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
+		addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
+		addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
+		affSubMenu();
+	}
+// ---- Change membre
+	$tmpl_x->assign("url",geturl("aviation","syntheses",""));
+	
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))
 	{
-			$lst=ListActiveUsers($sql,"std","","");
+			$lst=ListActiveUsers($sql,"std");
 		
 			foreach($lst as $i=>$tmpuid)
 			{
@@ -72,11 +81,12 @@
 	$tabTitre=array(
 		"ress" => array("aff"=>"Avion","width"=>80),
 		"dte" => array("aff"=>"Date","width"=>100),
-		"inst" => array("aff"=>"Instructeur","width"=>200),
-		"module" => array("aff"=>"Module","width"=>100),
+		"inst" => array("aff"=>"Instructeur","width"=>200, "mobile"=>"no"),
+		"module" => array("aff"=>"Module","width"=>100, "mobile"=>"no"),
 		"refffa" => array("aff"=>"Reférence","width"=>100),
 		"status" => array("aff"=>"Status","width"=>100),
 	);
+
 	$tabValeur=array();
 	foreach($lst as $fid=>$d)
 	{
@@ -86,12 +96,12 @@
 		$inst=new user_class($fiche->val("uid_instructeur"),$sql);
 		
 		$tabValeur[$fid]["ress"]["val"]=$ress->val("immatriculation");
-		$tabValeur[$fid]["ress"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$ress->val("immatriculation")."</a>";
+		$tabValeur[$fid]["ress"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".$ress->val("immatriculation")."</a>";
 		$tabValeur[$fid]["dte"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$fid]["dte"]["aff"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".sql2date($resa->dte_deb,"jour")."</a>";
+		$tabValeur[$fid]["dte"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".sql2date($resa->dte_deb,"jour")."</a>";
 		
 		$tabValeur[$fid]["inst"]["val"]=$inst->val("fullname");
-		$tabValeur[$fid]["inst"]["val"]="<a href='index.php?mod=aviation&rub=synthese&id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
+		$tabValeur[$fid]["inst"]["val"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
 	
 
 		$tabValeur[$fid]["module"]["val"]=$fiche->val("module");

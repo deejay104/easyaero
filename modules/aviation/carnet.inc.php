@@ -43,29 +43,25 @@
 
 // ---- Titre
 	$tabTitre=array();
-	if ($theme!="phone")
-	{
-		$tabTitre["dte_deb"]["aff"]="Date";
-		$tabTitre["dte_deb"]["width"]=110;
-	}
+	$tabTitre["dte_deb"]["aff"]="Date";
+	$tabTitre["dte_deb"]["width"]=110;
+	$tabTitre["dte_deb"]["mobile"]="no";
+
 	$tabTitre["nom"]["aff"]="Equipage";
 	$tabTitre["nom"]["width"]=350;
 
-	if ($theme!="phone")
-	{
-		$tabTitre["tarif"]["aff"]="Tarif";
-		$tabTitre["tarif"]["width"]=50;
-		$tabTitre["tarif"]["mobile"]="no";
-		$tabTitre["dest"]["aff"]="Lieu";
-		$tabTitre["dest"]["width"]=100;
-		$tabTitre["dest"]["mobile"]="no";
-		$tabTitre["heure_deb"]["aff"]="Départ";
-		$tabTitre["heure_deb"]["width"]=70;
-		$tabTitre["heure_deb"]["mobile"]="no";
-		$tabTitre["heure_fin"]["aff"]="Arrivée";
-		$tabTitre["heure_fin"]["width"]=70;
-		$tabTitre["heure_fin"]["mobile"]="no";
-	}
+	$tabTitre["tarif"]["aff"]="Tarif";
+	$tabTitre["tarif"]["width"]=50;
+	$tabTitre["tarif"]["mobile"]="no";
+	$tabTitre["dest"]["aff"]="Lieu";
+	$tabTitre["dest"]["width"]=100;
+	$tabTitre["dest"]["mobile"]="no";
+	$tabTitre["heure_deb"]["aff"]="Départ";
+	$tabTitre["heure_deb"]["width"]=70;
+	$tabTitre["heure_deb"]["mobile"]="no";
+	$tabTitre["heure_fin"]["aff"]="Arrivée";
+	$tabTitre["heure_fin"]["width"]=70;
+	$tabTitre["heure_fin"]["mobile"]="no";
 
 	$tabTitre["heure"]["aff"]="Temps de vol";
 	$tabTitre["heure"]["width"]=110;
@@ -77,8 +73,9 @@
 		$tabTitre["carbapres"]["width"]=100;
 		$tabTitre["potentiel"]["aff"]="Potentiel";
 		$tabTitre["potentiel"]["width"]=100;
-		// $tabTitre["total"]["aff"]="Total";
-		// $tabTitre["total"]["width"]=100;
+		$tabTitre["total"]["aff"]="Total";
+		$tabTitre["total"]["width"]=100;
+		$tabTitre["total"]["mobile"]="no";
 	}
 	else
 	{
@@ -92,8 +89,8 @@
 		$tabTitre["total"]["width"]=100;
 	}
 		
-// ---- Chargement des données
-	$tabValeur=array();
+
+// ---- Liste des avions
 	$lstress=ListeRessources($sql);
 
 	foreach($lstress as $i=>$rid)
@@ -118,80 +115,9 @@
 		$tmpl_x->parse("corps.lst_avion");
 	}
 
-	
-	if ($order=="") { $order="dte_deb"; }
-	if ($trie=="") { $trie="i"; }
-	if (!is_numeric($ts))
-	  { $ts = 0; }
-	$tl=40;
-	$lstresa=ListCarnetVols($sql,$id,$order,$trie,$ts,$tl);
-	
-	$totligne=ListCarnetNbLignes($sql,$id);
-	
-	$tabresa=array();
-	foreach($lstresa as $i=>$rid)
-	{
-		$resa = new resa_class($rid,$sql,false);
-		$ress = new ress_class($resa->uid_ressource,$sql);
-		$usrpil = new user_class($resa->uid_pilote,$sql);
-		if ($resa->uid_instructeur>0)
-		{ $usrinst = new user_class($resa->uid_instructeur,$sql); }
-
-		$t1=sql2date($resa->dte_deb,"jour");
-		$t2=sql2date($resa->dte_fin,"jour");
-
-		if ($t1!=$t2)
-		  { $dte=$t1." - ".$t2; }
-		else if ((sql2time($resa->dte_deb)!="00:00:00") && ($theme!="phone"))
-		  { $dte=$t1." (".sql2time($resa->dte_deb,"nosec")." à ".sql2time($resa->dte_fin,"nosec").")"; }
-		else if  ($theme!="phone")
-		  { $dte=$t1." (N/A)"; }
-		else
-		  { $dte=$t1; }
-
-		$tabValeur[$i]["dte_deb"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".$t1."</a>";
-
-		$tabValeur[$i]["nom"]["val"]=$usrpil->fullname;
-		$tabValeur[$i]["nom"]["aff"]=$usrpil->Aff("fullname").(($resa->uid_instructeur>0) ? " / ".$usrinst->Aff("fullname") : "");
-
-		$tabValeur[$i]["tarif"]["val"]=$resa->tarif;
-		$tabValeur[$i]["tarif"]["aff"]=$resa->tarif;
-		$tabValeur[$i]["tarif"]["align"]="center";
-
-		$tabValeur[$i]["dest"]["val"]=$resa->destination;
-		$tabValeur[$i]["dest"]["aff"]=$resa->destination;
-
-		$tabValeur[$i]["heure_deb"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$i]["heure_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".sql2time($resa->dte_deb,"nosec")."</a>";
-		$tabValeur[$i]["heure_deb"]["align"]="center";
-		$tabValeur[$i]["heure_fin"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$i]["heure_fin"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".sql2time($resa->dte_fin,"nosec")."</a>";
-		$tabValeur[$i]["heure_fin"]["align"]="center";
-	
-		$tabValeur[$i]["heure"]["val"]=$resa->tpsreel;
-		$tabValeur[$i]["heure"]["aff"]=$resa->AffTempsReel();
-		$tabValeur[$i]["heure"]["align"]="center";
-
-		$tabValeur[$i]["carbavant"]["val"]=$resa->carbavant;
-		$tabValeur[$i]["carbavant"]["aff"]=($resa->carbavant>0) ? $resa->carbavant."L" : " ";
-		$tabValeur[$i]["carbavant"]["align"]="center";
-
-		$tabValeur[$i]["carbapres"]["val"]=$resa->carbapres;
-		$tabValeur[$i]["carbapres"]["aff"]=($resa->carbapres>0) ? $resa->carbapres."L" : " ";
-		$tabValeur[$i]["carbapres"]["align"]="center";
-
-		$tabValeur[$i]["potentiel"]["val"]="";
-		$tabValeur[$i]["potentiel"]["aff"]=$resa->AffPotentiel("fin");
-		$tabValeur[$i]["potentiel"]["align"]="center";
-
-		$tabValeur[$i]["total"]["val"]=$resa->TempsVols("fin");
-		$tabValeur[$i]["total"]["aff"]=$resa->AffTempsVols("fin");
-		$tabValeur[$i]["total"]["align"]="center";
-	}
-	
 // ---- Affiche le tableau
-	$tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne,false,false));
+	// $tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne,false,false));
+	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,$order,geturlapi($mod,"vols","carnet","id=".$id),false));
 
 
 // ---- Affecte les variables d'affichage

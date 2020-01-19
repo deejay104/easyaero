@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -16,7 +16,7 @@
 */
 ?>
 
-<?
+<?php
 	require_once ("class/echeance.inc.php");
 
 	require_once ($appfolder."/class/reservation.inc.php");
@@ -28,9 +28,9 @@
   	$ok=1;
 	$msg_err="";
 
-//echo "Mettre le test de rÈsa ici";
+//echo "Mettre le test de r√©sa ici";
 
-// --- Charge la rÈservation
+// --- Charge la r√©servation
 	$id=checkVar("id","numeric");
 	$prev=checkVar("prev","varchar");
 	$fonch=checkVar("fonch","varchar");
@@ -63,7 +63,7 @@
 	
 	$resa["resa"]=new resa_class($id,$sql);
 
-// ---- VÈrifie les infos
+// ---- V√©rifie les infos
 	if (($fonc=="Enregistrer") || ($fonc=="Actualiser") || ($fonch=="centrage") || ($fonch=="synthese"))
 	  {
 		$ok=1;
@@ -90,32 +90,32 @@
 		if ($resa["pilote"]->isSoldeNegatif())
 		{
 			$s=$resa["pilote"]->CalcSolde();
-		  	$msg_err.="<u>Le compte du pilote est NEGATIF ($s Ä)</u>.<br />";
-		  	$msg_err.="Appeller le trÈsorier pour l'autorisation d'un dÈcouvert.<br />";
+		  	$msg_err.="<u>Le compte du pilote est NEGATIF ($s ‚Ç¨)</u>.<br />";
+		  	$msg_err.="Appeller le tr√©sorier pour l'autorisation d'un d√©couvert.<br />";
 			$ok=4;
 		}
 
 		if ($resa["resa"]->edite=='non')
 		{
-		  	$msg_err.="<u>RÈservation dÈj‡ saisie en compta</u>.<br />";
-		  	$msg_err.="Il n'est plus possible de modifier cette rÈservation car elle a dÈj‡ ÈtÈ saisie en compta.<br />";
+		  	$msg_err.="<u>R√©servation d√©j√† saisie en compta</u>.<br />";
+		  	$msg_err.="Il n'est plus possible de modifier cette r√©servation car elle a d√©j√† √©t√© saisie en compta.<br />";
 			$ok=3;
 		}
 
-		// VÈrifie si le pilote est lachÈ sur l'avion
+		// V√©rifie si le pilote est lach√© sur l'avion
 		if ((!$resa["pilote"]->CheckLache($form_uid_ress)) && ($form_uid_instructeur==0))
 		{
-		  	$msg_err.="<u>RÈservation impossible</u>.<br />";
-		  	$msg_err.="Le pilote sÈlectionnÈ n'est pas lachÈ sur cet avion.<br />";
-		  	$msg_err.="Il n'est pas possible de rÈserver sans instructeur.<br />";
+		  	$msg_err.="<u>R√©servation impossible</u>.<br />";
+		  	$msg_err.="Le pilote s√©lectionn√© n'est pas lach√© sur cet avion.<br />";
+		  	$msg_err.="Il n'est pas possible de r√©server sans instructeur.<br />";
 			$ok=3;
 		}
 
-		// VÈrifie si le pilote est autorisÈ
+		// V√©rifie si le pilote est autoris√©
 		if (!$resa["pilote"]->CheckDroit("TypePilote"))
 		{ 
-		  	$msg_err.="<u>RÈservation impossible</u>.<br />";
-			$msg_err.="Le pilote sÈlectionnÈ n'a pas le droit d'effectuer de rÈservation d'avion<BR>";
+		  	$msg_err.="<u>R√©servation impossible</u>.<br />";
+			$msg_err.="Le pilote s√©lectionn√© n'a pas le droit d'effectuer de r√©servation d'avion<BR>";
 			$ok=3;
 		}
 
@@ -153,7 +153,7 @@
 			}
 
 
-			// On peut mettre ‡ jour les donnÈes de vols mÍme si on est en nÈgatif.
+			// On peut mettre √† jour les donn√©es de vols m√™me si on est en n√©gatif.
 			if (($id>0) && ($ok==4) && (($form_tpsreel!="") || ($form_horadeb!="") || ($form_horafin!="")))
 			{
 				$ok=1;
@@ -168,7 +168,7 @@
 		}
 	}
 
-// ---- Supprime la rÈservation
+// ---- Supprime la r√©servation
 	else if (($fonc=="delete") && ($id>0))
 	{
 		$ok=0;
@@ -189,7 +189,7 @@
 
 			SendMailFromFile("",$resp->mail,array(),"",$tabvar,"resa_supp","");
 
-			affInformation($resp->Aff("fullname","val")." a ÈtÈ notifiÈ".(($resp->data["sexe"]=="F") ? "e" : "")." que sa rÈservation a ÈtÈ supprimÈe.","ok");
+			affInformation($resp->Aff("fullname","val")." a √©t√© notifi√©".(($resp->data["sexe"]=="F") ? "e" : "")." que sa r√©servation a √©t√© supprim√©e.","ok");
 		}
 
 		$ress=$resa["resa"]->uid_ressource;
@@ -245,7 +245,7 @@
 
 				SendMailFromFile("",$resa["pilote"]->mail,array(),"",$tabvar,"resa_modif","");
 
-				affInformation($resa["pilote"]->Aff("fullname","val")." a ÈtÈ notifiÈ".(($resa["pilote"]->data["sexe"]=="F") ? "e" : "")." que sa rÈservation a ÈtÈ mise ‡ jour.","ok");
+				affInformation($resa["pilote"]->Aff("fullname","val")." a √©t√© notifi√©".(($resa["pilote"]->data["sexe"]=="F") ? "e" : "")." que sa r√©servation a √©t√© mise √† jour.","ok");
 			}
 			
 			// Email l'instructeur
@@ -262,7 +262,7 @@
 
 				$ics = new ICS(array());
 				$ics->set(array(
-					'summary' => "RÈservation ".strtoupper($resr->val("immatriculation"))." avec ".$resa["pilote"]->val("fullname"),
+					'summary' => "R√©servation ".strtoupper($resr->val("immatriculation"))." avec ".$resa["pilote"]->val("fullname"),
 					'description' => preg_replace("/\s\s+/","\\n",$resa["resa"]->description),
 					'dtstart' => gmdate("Y-m-d H:i",strtotime($resa["resa"]->dte_deb)),
 					'dtend' => gmdate("Y-m-d H:i",strtotime($resa["resa"]->dte_fin)),

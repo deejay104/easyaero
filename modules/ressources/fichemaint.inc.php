@@ -23,15 +23,6 @@
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("fichemaint.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Affiche le menu
-	$aff_menu="";
-	require_once($appfolder."/modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
-
 // ---- Droit d'accès
 	if (!GetDroit("AccesFichesMaintenance")) { FatalError("Accès non authorisé (AccesFichesMaintenance)"); }
 
@@ -42,7 +33,6 @@
   
 	$form_description=preg_replace("/<BR[^>]*>/i","\n",$form_description);
 	$form_description=preg_replace("/<[^>]*>/i","",$form_description);
-
 	
 // ---- Enregistre
 	$msg_ok="";
@@ -77,11 +67,17 @@
 	  {
 	  	$form_description="";
 	  	$affrub="fiche";
+		return;
 	  }
 	else
 	  {
 	  	$form_description="";
 	  }
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);

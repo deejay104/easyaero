@@ -2,12 +2,12 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	<p><A href="#" OnClick="submitForm('centrage');"><IMG src="{path_module}/img/icn32_devismasse.png" border=0>Devis de masse</A></p>
+	<p><A href="#" OnClick="submitForm('centrage');"><IMG src="{path_root}/{path_module}/img/icn32_devismasse.png" border=0>Devis de masse</A></p>
 	<!-- BEGIN: supprimer -->
-	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
+	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette rÃ©servation ?');"><IMG src="{path_root}/{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
 	<!-- END: supprimer -->
 	<!-- BEGIN: synthese -->
-	<p><A href="#" OnClick="submitForm('synthese');"><IMG src="{path_module}/img/icn32_synthese.png" border=0>Ajouter Synthèse</A></p>
+	<p><A href="#" OnClick="submitForm('synthese');"><IMG src="{path_root}/{path_module}/img/icn32_synthese.png" border=0>Ajouter SynthÃ¨se</A></p>
 	<!-- END: synthese -->
 <!-- END: infos -->
 
@@ -26,8 +26,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","FÃ©vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","DÃ©cembre"],
+			prevText: "PrÃ©cÃ©dent",
 			nextText: "Suivant",
 			onSelect: function(dateText) {
 				var mid=document.getElementById("instructeur").value;
@@ -50,8 +50,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","FÃ©vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","DÃ©cembre"],
+			prevText: "PrÃ©cÃ©dent",
 			nextText: "Suivant"
 		});
 
@@ -106,13 +106,13 @@
 	<INPUT type="hidden" name="fonch" id="fonch" value="">
 
 
-	<p class="lastupdate">Dernière mise à jour : <label title="{info_historique}">{info_maj}</label></p>
-	<p>Potentiel restant à la prise en charge : {potentiel}</p>
+	<p class="lastupdate">DerniÃ¨re mise Ã  jour : <label title="{info_historique}">{info_maj}</label></p>
+	<p>Potentiel restant Ã  la prise en charge : {potentiel}</p>
 
 	<!-- BEGIN: date_depassee -->
 	<p class="msgaff">
 	<B><FONT color="{color_date}">{texte_date}</FONT></B><br />
-	Merci d'envoyer une copie de votre {nom_date} au président afin de mettre à jour votre profile.
+	Merci d'envoyer une copie de votre {nom_date} au prÃ©sident afin de mettre Ã  jour votre profile.
 	</p>
 	<!-- END: date_depassee -->
 	<!-- BEGIN: msg_warning -->
@@ -126,7 +126,7 @@
 	<!-- BEGIN: aff_reservation -->
 
 	<div class="formulaireTitre">
-	  	Réservation
+	  	RÃ©servation
 	</div>
 
 	<div class="formulaire"  style=' padding-top: 10px; padding-left: 20px;'>
@@ -152,7 +152,7 @@
 	  	</p>
 
 		<p>
-			<label for="debite" title="Choisissez un autre compte à débiter. Par exemple dans le cas d'un baptème, c'est le compte du club qui est débité">Débité (si différent)</label>
+			<label for="debite" title="Choisissez un autre compte Ã  dÃ©biter. Par exemple dans le cas d'un baptÃ¨me, c'est le compte du club qui est dÃ©bitÃ©">DÃ©bitÃ© (si diffÃ©rent)</label>
 			<SELECT id="debite" name="form_uid_debite" style='width: 220px;'>
 				<OPTION value="0">Pilote</OPTION>
 				<!-- BEGIN: lst_debite -->
@@ -185,17 +185,17 @@
 	<!-- END: aff_tarif -->
 
 		<p>
-			<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
+			<label for="destination" title="PrÃ©ciser la destination ou LOCAL pour un vol local.">Destination</label>
 			<INPUT id="destination" name="form_destination" value="{form_destination}" style='width: 220px!important;'>
 			{form_taxe}
 		</p>
 		<p>
-			<label for="tpsestime" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire.">Temps de vol estimé</label>
+			<label for="tpsestime" title="Le temps de vol estimÃ© correspond au temps durant lequel vous avez prÃ©vu de voler. Ce champs est obligatoire.">Temps de vol estimÃ©</label>
 			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style='width: 70px!important;'> (en minutes)
 		</p>
 
 		<p style='padding-top:10px;'>
-			<label for="pob" title="Entrez le nombre de personne à bord, pilote compris (POB)">Nb de personnes</label>
+			<label for="pob" title="Entrez le nombre de personne Ã  bord, pilote compris (POB)">Nb de personnes</label>
 			<!-- BEGIN: lst_pob -->
 			<input type="radio" name="form_nbpersonne" value="{pob}" {chk_pob}>{pob}
 			<!-- END: lst_pob -->
@@ -203,23 +203,23 @@
 
 
 		<p>
-			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
+			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vÃ©rifier s'il reste des places.">Inviter les membres</label>
 			<input type="radio" name="form_invite" value="non" {chk_invite_non}>Non
 			<input type="radio" name="form_invite" value="oui" {chk_invite_oui}>Oui
 		</p>
 
 		<p style='padding-top:10px;'>
 			<label for="form_dte_deb">Du</label>
-			<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" style='width: 100px!important;' > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" style='width: 60px!important;'> <FONT color=red>{msg_dtedeb}</FONT>
+			<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" style='width: 100px!important;' > Ã  <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" style='width: 60px!important;'> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
 		<p>
 			<label for="form_dte_fin">Au</label>
-		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" style='width: 100px!important;'> à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" style='width: 60px!important;'> <FONT color=red>{msg_dtefin}</FONT>
+		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" style='width: 100px!important;'> Ã  <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" style='width: 60px!important;'> <FONT color=red>{msg_dtefin}</FONT>
 		</p>
 		<p>&nbsp;</p>
 	
 		<p>
-			<label for="commentaire" style="vertical-align: top;" title="Veuillez préciser le nom des passagers que vous emmenez.">Commentaire(s) :</label>
+			<label for="commentaire" style="vertical-align: top;" title="Veuillez prÃ©ciser le nom des passagers que vous emmenez.">Commentaire(s) :</label>
 			<TEXTAREA id="commentaire" name="form_description" cols="50" rows="6">{form_description}</TEXTAREA>
 		</p>
 	  	  
@@ -227,18 +227,18 @@
 
 	<!-- BEGIN: aff_syntheses -->
 	<div class="formulaireTitre">
-	  	Fiche(s) de synthèse
+	  	Fiche(s) de synthÃ¨se
 	</div>
 	
 	<div style='padding-left: 20px; padding-bottom:10px;'>
 	<!-- BEGIN: lst_synthese -->
-	<a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'><img src='{path_module}/img/icn16_synthese.png' /> Fiche de synthèse {synt_refffa} </a> ({synt_status})</a><br />
+	<a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'><img src='{path_module}/img/icn16_synthese.png' /> Fiche de synthÃ¨se {synt_refffa} </a> ({synt_status})</a><br />
 	<!-- END: lst_synthese -->
 	</div>
 	<!-- END: aff_syntheses -->
 
 	<div class="formulaireTitre">
-	  	Saisi de l'horamètre
+	  	Saisi de l'horamÃ¨tre
 	</div>
 
 	<table width='100%' class='formulaire'  >
@@ -258,18 +258,18 @@
 				<label for="tpsvols">Temps de vol (fin de vol)</label>{form_tpsvol}
 			</p>
 			<p>
-				<label for="potentiel" title="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant">Correction</label>
+				<label for="potentiel" title="Correction du temps de vol effectuÃ© depuis la derniÃ¨re maintenance, afin de pouvoir ajuster le potentiel restant">Correction</label>
 				<INPUT type="number" name="form_potentielh" value="{form_potentielh}" style='width: 60px!important;'> h <INPUT type="number" name="form_potentielm" value="{form_potentielm}" style='width: 60px!important;'>
 			</p>
 
 			<p>
-				<label for="carburant">Carburant ajouté Avant</label>
-				<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L, Après
+				<label for="carburant">Carburant ajoutÃ© Avant</label>
+				<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L, AprÃ¨s
 				<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L
 			</p>
 			<p>
 				<label for="carburant">Prix total Carburant</label>
-				<INPUT name="form_prixcarbu" value="{form_prixcarbu}" type="number" style='width: 60px!important;'> €
+				<INPUT name="form_prixcarbu" value="{form_prixcarbu}" type="number" style='width: 60px!important;'> â‚¬
 			</p>
 		</td>
 	</tr>

@@ -24,10 +24,6 @@
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("liste.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
 // ---- Vérifie les variables
 	$ress=checkVar("trie","numeric");
 	$order=checkVar("order","varchar");
@@ -38,9 +34,13 @@
 	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Affiche les liens
+// ---- Affiche le sous-menu
 	if (GetDroit("CreeMaintenance"))
-	  { $tmpl_x->parse("corps.creemaint"); }
+	{
+		addSubMenu("","Planifier une maintenance",geturl("ressources","detailmaint","id=0"),"icn32_supprime.png",false);
+		affSubMenu();
+	}
+
 
 // ---- Affiche la liste des maintenances
 

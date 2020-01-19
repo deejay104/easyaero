@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy Aero v2.4
     Copyright (C) 2018 Matthieu Isorez
@@ -65,7 +65,7 @@ class synthese_class extends objet_core
 	
 	protected $tabList=array(
 		"status"=>array(
-			"fr"=>array('edit'=>'Rédaction','signed'=>'Signé','cancel'=>'Annulé'),
+			"fr"=>array('edit'=>'RÃ©daction','signed'=>'SignÃ©','cancel'=>'AnnulÃ©'),
 			"en"=>array('edit'=>'Edit','signed'=>'Signed','cancel'=>'Canceled'),
 		),
 		"type" =>array(
@@ -73,8 +73,8 @@ class synthese_class extends objet_core
 			"en"=>array('dc'=>'Double Commande','solo'=>'Solo'),
 		),
 		"module" => array(
-			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne'),
-			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne')
+			"fr"=>Array('maniabilite'=>'ManiabilitÃ©','navigation'=>'Navigation','avance'=>'Navigation avancÃ©e','evaluation'=>'Vol d\'Ã©valuation','solo'=>'Solo SupervisÃ©','prorogation'=>'Prorogation','panne'=>'Panne'),
+			"en"=>Array('maniabilite'=>'ManiabilitÃ©','navigation'=>'Navigation','avance'=>'Navigation avancÃ©e','evaluation'=>'Vol d\'Ã©valuation','solo'=>'Solo SupervisÃ©','prorogation'=>'Prorogation','panne'=>'Panne')
 		),
 		"info_1" =>array(
 			"fr"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
@@ -208,12 +208,12 @@ class exercice_conf_class extends objet_core
 	
 	protected $tabList=array(
 		"module" => array(
-			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation'),
-			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation')
+			"fr"=>Array('maniabilite'=>'ManiabilitÃ©','navigation'=>'Navigation','avance'=>'Navigation avancÃ©e','evaluation'=>'Vol d\'Ã©valuation','solo'=>'Solo SupervisÃ©','prorogation'=>'Prorogation'),
+			"en"=>Array('maniabilite'=>'ManiabilitÃ©','navigation'=>'Navigation','avance'=>'Navigation avancÃ©e','evaluation'=>'Vol d\'Ã©valuation','solo'=>'Solo SupervisÃ©','prorogation'=>'Prorogation')
 		),
 		"type" => array(
-			"fr"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
-			"fr"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
+			"fr"=>Array('peda'=>'PÃ©dagogique','exercice'=>'Exercice','panne'=>'Panne'),
+			"fr"=>Array('peda'=>'PÃ©dagogique','exercice'=>'Exercice','panne'=>'Panne'),
 		)
 	);
 }
@@ -282,7 +282,7 @@ function ListExercices($sql,$id)
 	return ListeObjets($sql,"exercice",array("idexercice","progression","progref"),array("actif"=>"oui","idsynthese"=>$id),array("progref DESC","id"));
 }
 
-// Liste des exercices non aquis pour un élève
+// Liste des exercices non aquis pour un Ã©lÃ¨ve
 function ListExercicesNonAcquis($sql,$uid)
 {
 	global $MyOpt;
@@ -325,7 +325,7 @@ function ListExercicesProg($sql,$uid,$type="")
 	return $lst;
 }
 
-// Liste des compétences avec la progression pour un membre
+// Liste des compÃ©tences avec la progression pour un membre
 function ListCompetences($sql,$uid)
 {
 	global $MyOpt;
@@ -375,8 +375,8 @@ class refenac_class extends objet_core
 	
 	protected $tabList=array(
 		"module" => array(
-			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
-			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
+			"fr"=>Array('maniabilite'=>'ManiabilitÃ©','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
+			"en"=>Array('maniabilite'=>'ManiabilitÃ©','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
 		),
 	);
 }
@@ -385,7 +385,7 @@ function ListRefEnac($sql)
 	return ListeObjets($sql,"refenac",array("id"),array("actif"=>"oui"));
 }
 
-// Liste des exercices avec la progression pour un élève
+// Liste des exercices avec la progression pour un Ã©lÃ¨ve
 function ListProgressionEnac($sql,$uid)
 {
 	global $MyOpt;

@@ -4,11 +4,11 @@
 <!-- BEGIN: infos -->
 	<p><a href="index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=Annuler"><IMG src="{path_module}/img/icn32_retour.png">Retour</a></p>
 	<!-- BEGIN: supprimer -->
-	<p><a href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png">Supprimer</a></p>
+	<p><a href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette rÃ©servation ?');"><IMG src="{path_module}/img/icn32_supprimer.png">Supprimer</a></p>
 	<!-- END: supprimer -->
 	<p><a href="index.php?mod=reservations&rub=reservation_sauve&id={id}&fonch=centrage"><img src="{path_module}/img/icn32_devismasse.png">Devis masse</a></p>
 	<!-- BEGIN: synthese -->
-	<p><A href="index.php?mod=aviation&rub=synthese&idvol={id}"><IMG src="{path_module}/img/icn32_synthese.png" border=0>Ajouter Synthèse</A></p>
+	<p><A href="index.php?mod=aviation&rub=synthese&idvol={id}"><IMG src="{path_module}/img/icn32_synthese.png" border=0>Ajouter SynthÃ¨se</A></p>
 	<!-- END: synthese -->
 
 <!-- END: infos -->
@@ -17,12 +17,12 @@
 <!-- BEGIN: corps -->
 
 
-	<p class="lastupdate">Dernière mise à jour : <a href="" OnMouseOver="ShowPopup('{info_historique}');" OnMouseOut="HidePopup();">{info_maj}</a></p>
-	<p>Potentiel restant à la prise en charge : {potentiel}</p>
+	<p class="lastupdate">DerniÃ¨re mise Ã  jour : <a href="" OnMouseOver="ShowPopup('{info_historique}');" OnMouseOut="HidePopup();">{info_maj}</a></p>
+	<p>Potentiel restant Ã  la prise en charge : {potentiel}</p>
 
 	<!-- BEGIN: aff_reservation -->
 		<div class="formulaireTitre">
-	  	Réservation
+	  	RÃ©servation
 	  </div>
 
 		<div class="formulaire">
@@ -37,7 +37,7 @@
 			</p>
 
 			<p>
-				<label for="debite">Débité (si différent)</label>{aff_nom_debite}
+				<label for="debite">DÃ©bitÃ© (si diffÃ©rent)</label>{aff_nom_debite}
 		 	</p>
 
 	<!-- BEGIN: aff_instructeur -->
@@ -49,7 +49,7 @@
 				<label for="destination">Destination</label>{form_destination}
 			</p>
 			<p>
-				<label for="tpsestime">Temps de vol estimé</label>{form_tpsestime} min
+				<label for="tpsestime">Temps de vol estimÃ©</label>{form_tpsestime} min
 			</p>
 			<p>
 				<label for="pob">Nb de personnes</label>{form_nbpassager}
@@ -58,10 +58,10 @@
 
 			<p>&nbsp;</p>
 			<p>
-				<label for="form_dte_deb">Du</label>{form_dte_deb} à {form_hor_deb}
+				<label for="form_dte_deb">Du</label>{form_dte_deb} Ã  {form_hor_deb}
 			</p>
 			<p>
-				<label for="form_dte_fin">Au</label>{form_dte_fin} à {form_hor_fin}
+				<label for="form_dte_fin">Au</label>{form_dte_fin} Ã  {form_hor_fin}
 			</p>
 			<p>&nbsp;</p>
 	
@@ -73,18 +73,18 @@
 
 		<!-- BEGIN: aff_syntheses -->
 		<div class="formulaireTitre">
-			Fiche(s) de synthèse
+			Fiche(s) de synthÃ¨se
 		</div>
 		
 		<div style='padding-left: 20px; padding-bottom:10px;'>
 		<!-- BEGIN: lst_synthese -->
-		<img src='{path_module}/img/icn16_synthese.png' /> <a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'>Fiche {synt_type} du vol n° {synt_nbvol}</a><br />
+		<img src='{path_module}/img/icn16_synthese.png' /> <a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'>Fiche {synt_type} du vol nÂ° {synt_nbvol}</a><br />
 		<!-- END: lst_synthese -->
 		</div>
 		<!-- END: aff_syntheses -->
 
 		<div class="formulaireTitre">
-		Saisi de l'horamètre
+		Saisi de l'horamÃ¨tre
 		</div>
 
 		<table width='100%' class='formulaire'  >
@@ -106,10 +106,10 @@
 					<label for="carburant">Carburant Avant</label>{form_carbavant} Litres
 				</p>
 				<p>
-					<label for="carburant">Carburant Après</label>{form_carbapres} Litres
+					<label for="carburant">Carburant AprÃ¨s</label>{form_carbapres} Litres
 				</p>
 				<p>
-					<label for="prixcarbu">Total</label>{form_prixcarbu} €
+					<label for="prixcarbu">Total</label>{form_prixcarbu} â‚¬
 				</p>
 			</td>
 		</tr>

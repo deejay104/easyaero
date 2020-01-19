@@ -24,10 +24,6 @@
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/echeance.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
 // ---- Vérifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
@@ -37,6 +33,13 @@
 	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
+// ---- Affiche le sous-menu
+	if (GetDroit("CreeRessource"))
+	{
+		addSubMenu("","Ajouter",geturl("ressources","detail","id=0"),"icn32_ajouter.png",false,"");
+		affSubMenu();
+	}
+	
 // ---- Droit d'accès
 	if (!GetDroit("AccesAvions")) { FatalError("Accès non authorisé (AccesAvions)"); }
 
@@ -72,11 +75,11 @@
 
 		$tv=$usr->AffTempsVol();
 		$tabValeur[$i]["hora"]["val"]=(($tv>0) ? $tv : "0");
-		$tabValeur[$i]["hora"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".$tv."</a>";
+		$tabValeur[$i]["hora"]["aff"]="<A href='".geturl("ressources","detail","id=".$id)."'>".$tv."</a>";
 
 		$tp=$usr->AffPotentiel();
 		$tabValeur[$i]["potentiel"]["val"]=(($tp>0) ? $tp : "0");
-		$tabValeur[$i]["potentiel"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".$tp."</a>";
+		$tabValeur[$i]["potentiel"]["aff"]="<A href='".geturl("ressources","detail","id=".$id)."'>".$tp."</a>";
 
 		$t=$usr->EstimeMaintenance();		
 		if (strtotime($t)<time())
@@ -84,7 +87,7 @@
 			// $t=date("Y-m-d",$t);
 		}
 		$tabValeur[$i]["estimemaint"]["val"]=$t;
-		$tabValeur[$i]["estimemaint"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".sql2date($t,"jour")."</a>";
+		$tabValeur[$i]["estimemaint"]["aff"]="<A href='".geturl("ressources","detail","id=".$id)."'>".sql2date($t,"jour")."</a>";
 		
 		$lstdte=VerifEcheance($sql,$id,"ressources",true);
 		$nb=0;
@@ -122,10 +125,6 @@
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
-	if (GetDroit("CreeRessource"))
-	{
-		$tmpl_x->parse("corps.ajout");
-	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

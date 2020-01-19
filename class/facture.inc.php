@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v2.0
     Copyright (C) 2005 Matthieu Isorez
@@ -26,7 +26,7 @@
 
 // Liste des mois
 $tabMois[1]="janvier";
-$tabMois[2]="février";
+$tabMois[2]="fÃ©vrier";
 $tabMois[3]="mars";
 $tabMois[4]="avril";
 $tabMois[5]="mai";
@@ -36,7 +36,7 @@ $tabMois[8]="aout";
 $tabMois[9]="septembre";
 $tabMois[10]="octobre";
 $tabMois[11]="novembre";
-$tabMois[12]="décembre";
+$tabMois[12]="dÃ©cembre";
 
 // Liste des jours de la semaine
 $tabJour["0"]="Dimanche";
@@ -212,7 +212,7 @@ class facture_class{
 	// ---- Initialise les variables
 		$tmpl_pdf->assign("form_checktime",$_SESSION['checkpost']);
 	
-	// ---- Affiche la facture demandée
+	// ---- Affiche la facture demandÃ©e
 		$tmpl_pdf->assign("id_facture",$this->id);
 		if (file_exists("custom/".$MyOpt["site_logo"]))
 		{
@@ -242,7 +242,7 @@ class facture_class{
 		$tmpl_pdf->assign("ville", $cptusr->Aff("ville"));
 		$tmpl_pdf->assign("codepostal", $cptusr->Aff("codepostal"));
 	
-		// Définition des variables
+		// DÃ©finition des variables
 		$myColor[0]="F0F0F0";
 		$myColor[1]="F7F7F7";
 	

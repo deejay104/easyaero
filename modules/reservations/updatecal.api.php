@@ -1,4 +1,4 @@
-<?
+<?php
 // ---- Refuse l'accès en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
@@ -51,7 +51,7 @@
 	if ($ret!="")
 	{
 		$r["result"]="NOK";
-		$r["value"]=utf8_encode($ret);
+		$r["value"]=$ret;
 	}
 	echo json_encode($r);
 ?>

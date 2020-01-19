@@ -17,24 +17,6 @@
 }
 </style>
 
-<div class="pagetitle pagemenu">
-	<a href="index.php?mod=ressources"><img src="{path_module}/img/icn32_retour.png" alt="">Liste</a>
-	<!-- BEGIN: ajout -->
-	<A href="index.php?mod=ressources&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
-	<!-- END: ajout -->
-	<!-- BEGIN: modification -->
-	<A href="index.php?mod=ressources&rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
-	<!-- END: modification -->
-	<!-- BEGIN: desactive -->
-	<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cet avion ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Désactiver</A>
-	<!-- END: desactive -->
-	<!-- BEGIN: suppression -->
-	<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet avion ?');"><IMG src="{path_module}/img/icn32_supprime.png" border=0 alt="">Supprimer</A>
-	<!-- END: suppression -->
-	<A href="index.php?mod=ressources&rub=fiche&uid_avion={id}"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Fiches</A>
-	<A href="index.php?mod=aviation&rub=carnet&id={id}"><IMG src="{path_module}/img/icn32_carnetvols.png" border=0 alt="">Carnet de route</A>
-</div>
-
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
 <INPUT type="hidden" name="mod" value="ressources">
 <INPUT type="hidden" name="rub" value="detail">
@@ -86,7 +68,7 @@
 		</div>
 		{form_centrage}
 		<!-- END: parametres -->
-		<img src="api.php?mod=aviation&rub=imgcentrage&rid={id}" />
+		<img src="{path_root}/api.php?mod=aviation&rub=imgcentrage&rid={id}" />
 
 	</td>
 	<td width='50%' valign="top" style='padding: 5px;'>

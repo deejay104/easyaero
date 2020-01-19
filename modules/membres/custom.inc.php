@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -32,10 +32,10 @@
 	$usrcus->LoadLache();
 
 // ---- Sauvegarde
-	// Sauvegarde les infos spécifiques
+	// Sauvegarde les infos spÃ©cifiques
 	if (($fonc==$tabLang["lang_save"]) && ((GetMyId($id)) || (GetDroit("ModifUserSauve"))))
 	{
-		// Sauvegarde les données
+		// Sauvegarde les donnÃ©es
 		if (count($form_data)>0)
 		{
 			foreach($form_data as $k=>$v)
@@ -52,7 +52,7 @@
 		$usrcus->LoadLache();
 	}
 	
-// ---- Données Utilisateurs
+// ---- DonnÃ©es Utilisateurs
 
 	foreach($usrcus->data as $k=>$v)
 	  { $tmpl_custom->assign("form_$k", $usrcus->aff($k,$typeaff)); }

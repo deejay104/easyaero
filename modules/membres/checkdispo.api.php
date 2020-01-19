@@ -1,15 +1,15 @@
-<?
-// ---- Refuse l'accès en direct
+<?php
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
   
 // ---- Header de la page
 
-	// Date du passé
+	// Date du passÃ©
 	header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
-	// toujours modifié
+	// toujours modifiÃ©
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
 	// HTTP/1.1
@@ -25,7 +25,7 @@
 	$l = 100;
 	$h = 16;
 
-// ---- Récupère les paramètres
+// ---- RÃ©cupÃ¨re les paramÃ¨tres
 	$mid=checkVar("mid","numeric");
 	$deb=checkVar("deb","numeric");
 	$fin=checkVar("fin","numeric");
@@ -49,7 +49,7 @@
 		else
 		{
 			$ok="nok";
-			$txt="Occupé";
+			$txt="OccupÃ©";
 		}
 	}
 	else
@@ -68,7 +68,7 @@
 		}
 		else
 		{
-			erreur("Les paramètres sont incorrects.");
+			erreur("Les paramÃ¨tres sont incorrects.");
 			exit;
 		}
 	}

@@ -39,10 +39,14 @@
 	$msg_erreur="";
 	$msg_ok="";
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("detailmaint.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
+// ---- Retour
+	if ($fonc=="Retour")
+	{
+		$affrub="liste";
+		return;
+	}
 
+// ---- Charge le template
 	if ($fonc=="imprimer")
 	{
 		$tmpl_prg = new XTemplate (MyRep("print.htm","default"));
@@ -52,11 +56,6 @@
 		$tmpl_prg->assign("version", $version."-".$core_version.(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : "")." le ".date("d/m/Y")." à ".date("H:i"));
 		$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
 	}
-
-// ---- Affiche le menu
-	$aff_menu="";
-	require_once($appfolder."/modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les infos
 	$maint=new maint_class($id,$sql);
@@ -116,12 +115,9 @@
 	  	$msg_erreur=$maint->Delete();
 		$mod="ressources";
 		$affrub="liste";
+		return;
 	}
-	else if ($fonc=="Retour")
-	{
-		$mod="ressources";
-		$affrub="liste";
-	}
+
 
 // ---- Ajout d'un atelier
 	if (GetDroit("CreeAtelier") && ($fonc=="ajoutatelier") && (!isset($_SESSION['tab_checkpost'][$checktime])))
@@ -151,7 +147,23 @@
 	{
 		affInformation($msg_ok,"ok");
 	}
-	
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Affiche le sous-menu
+	addSubMenu("","Liste",geturl("ressources","liste",""),"icn32_retour.png",false);
+	addSubMenu("","Imprimer",geturl("ressources","detailmaint","id=".$id."&fonc=imprimer"),"icn32_printer.png",false);
+		
+	if (GetDroit("SupprimeMaintenance"))
+	  {
+		addSubMenu("","Supprimer la maintenance",geturl("ressources","detailmaint","id=".$id."&fonc=Supprimer"),"icn32_supprimer.png",false,"Voulez-vous supprimer cette maintenance ?");
+	  }
+
+	affSubMenu();
+
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("id", $maint->id);
@@ -211,7 +223,7 @@
 			}
 			else
 			{
-				$tabValeur[$ii]["chk"]["aff"]=($resa->id==$maint->data["uid_lastresa"]) ? "<img src='".$corefolder."/static/images/icn16_ok.png'>" : "";
+				$tabValeur[$ii]["chk"]["aff"]=($resa->id==$maint->data["uid_lastresa"]) ? "<img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_ok.png'>" : "";
 			}
 
 
@@ -274,7 +286,7 @@
 				  {
 					$tabValeur[$i]["chk"]["aff"]="<input type='checkbox' name='form_fiche[".$fid."]' ".(($fiche->data["uid_planif"]==$maint->id) ? "checked" : "").">";
 				} else {
-					$tabValeur[$i]["chk"]["aff"]=($fiche->data["uid_planif"]==$maint->id) ? "<img src='".$corefolder."/static/images/icn16_ok.png'>" : "";
+					$tabValeur[$i]["chk"]["aff"]=($fiche->data["uid_planif"]==$maint->id) ? "<img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_ok.png'>" : "";
 				  }
 				
 				$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
@@ -291,7 +303,7 @@
 				$tabValeur[$i]["description"]["aff"]=$fiche->aff("description");
 
 				$tabValeur[$i]["maint"]["val"]=(($fiche->data["uid_planif"]>0) ? "1" : "0");
-				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='index.php?mod=ressources&rub=detailmaint&id=".$fiche->data["uid_planif"]."' title='Cette fiche est déjà affectée à une autre maintenance'><img src='".$corefolder."/static/images/icn16_liste	.png'></a>" : " ");
+				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='".geturl("ressources","detailmaint","id=".$fiche->data["uid_planif"])."' title='Cette fiche est déjà affectée à une autre maintenance'><img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_liste	.png'></a>" : " ");
 			  }	
 		  }
 	  }
@@ -323,10 +335,7 @@
 	  {
 			$tmpl_x->parse("corps.form_submit.aff_bouttons");
 	  }
-	if (GetDroit("SupprimeMaintenance"))
-	  {
-			$tmpl_x->parse("corps.supprimemaint");
-	  }
+
 
 // ---- Bouttons du formulaire
 	if ($fonc!="imprimer")
@@ -335,18 +344,10 @@
 	}
 
 // ---- Affecte les variables d'affichage
-	if (($fonc!="Retour") && ($fonc!="Supprimer"))
-	{
-		$tmpl_x->parse("icone");
-		$icone=$tmpl_x->text("icone");
-		$tmpl_x->parse("infos");
-		$infos=$tmpl_x->text("infos");
-		$tmpl_x->parse("corps");
-		$corps=$tmpl_x->text("corps");
-	}
-	else
-	{
-	  	$order="dte_deb";
-	  	$trie="i";
-	}
+	$tmpl_x->parse("icone");
+	$icone=$tmpl_x->text("icone");
+	$tmpl_x->parse("infos");
+	$infos=$tmpl_x->text("infos");
+	$tmpl_x->parse("corps");
+	$corps=$tmpl_x->text("corps");
 ?>

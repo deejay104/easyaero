@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,20 +19,14 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesReservations")) { FatalError("Accès non autorisé (AccesReservations)"); }
+<?php
+	if (!GetDroit("AccesReservations")) { FatalError("AccÃ¨s non autorisÃ© (AccesReservations)"); }
 
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("scheduler.htm"));
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("corefolder",$corefolder);
-
   
-// ---- Définition des constantes
+// ---- DÃ©finition des constantes
 	$ress=checkVar("ress","numeric");
 	$jour=checkVar("jour","date");
 
@@ -65,7 +59,7 @@
 		$tmpl_x->parse("corps.lst_inst");
 	}
 
-// ---- Affichage pour la journée
+// ---- Affichage pour la journÃ©e
 	
 	if ($theme=="phone")
 	{

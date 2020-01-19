@@ -1,6 +1,6 @@
-<?
+<?php
 // ---------------------------------------------------------------------------------------------
-//   Définitions des roles
+//   DÃ©finitions des roles
 // ---------------------------------------------------------------------------------------------
 
 
@@ -10,59 +10,59 @@ $tabRoles["TypeMembre"]="Membre";
 $tabRoles["TypePilote"]="Pilote";
 $tabRoles["TypeInstructeur"]="Instructeur";
 
-$tabRoles["AccesAbonnements"]="Accès à la liste des abonnements";
-$tabRoles["AccesExport"]="Accès à la page des exports";
-$tabRoles["AccesFactures"]="Accès à la liste des factures";
-$tabRoles["AccesReservations"]="Accès au calendrier de réservations";
-$tabRoles["AccesMaintenances"]="Accès à la liste des maintenances";
+$tabRoles["AccesAbonnements"]="AccÃ¨s Ã  la liste des abonnements";
+$tabRoles["AccesExport"]="AccÃ¨s Ã  la page des exports";
+$tabRoles["AccesFactures"]="AccÃ¨s Ã  la liste des factures";
+$tabRoles["AccesReservations"]="AccÃ¨s au calendrier de rÃ©servations";
+$tabRoles["AccesMaintenances"]="AccÃ¨s Ã  la liste des maintenances";
 
-$tabRoles["AccesSuiviClub"]="Accès aux pages de suivi du club";
-$tabRoles["AccesSuivi"]="Accès au module de suivi du club";
+$tabRoles["AccesSuiviClub"]="AccÃ¨s aux pages de suivi du club";
+$tabRoles["AccesSuivi"]="AccÃ¨s au module de suivi du club";
 
-$tabRoles["AccesSuiviMouvements"]="Accès à la page de saisi d'un mouvement";
-$tabRoles["AccesSuiviEcheances"]="Accès à la page de suivi des échéances";
-$tabRoles["AccesSuiviBanque"]="Accès à la page de suivi des comptes";
-$tabRoles["AccesSuiviListeComptes"]="Accès à la page de la liste des comptes";
-$tabRoles["AccesSuiviListeTarifs"]="Accès à la page des tarifs";
-$tabRoles["AccesSuiviTableauBord"]="Accès à la page des tableau de bord";
-$tabRoles["AccesSuiviBilan"]="Accès à la page du bilan comptable";
+$tabRoles["AccesSuiviMouvements"]="AccÃ¨s Ã  la page de saisi d'un mouvement";
+$tabRoles["AccesSuiviEcheances"]="AccÃ¨s Ã  la page de suivi des Ã©chÃ©ances";
+$tabRoles["AccesSuiviBanque"]="AccÃ¨s Ã  la page de suivi des comptes";
+$tabRoles["AccesSuiviListeComptes"]="AccÃ¨s Ã  la page de la liste des comptes";
+$tabRoles["AccesSuiviListeTarifs"]="AccÃ¨s Ã  la page des tarifs";
+$tabRoles["AccesSuiviTableauBord"]="AccÃ¨s Ã  la page des tableau de bord";
+$tabRoles["AccesSuiviBilan"]="AccÃ¨s Ã  la page du bilan comptable";
 
-$tabRoles["AccesSuiviVolsMembres"]="Accès à la page de suivi des membres par les instructeur pour les vols";
-$tabRoles["AccesSuiviHorametre"]="Accès à la page de suivi des horamètres";
-$tabRoles["AccesSuiviAnnuel"]="Accès à la page de suivi annuel des vols pour tous les membres";
-$tabRoles["AccesSuiviTaxeAT"]="Accès à la page de saisie des taxes d'atterrissage";
-
-
-$tabRoles["AccesCompte"]="Accès à la page d'affichage du compte";
-$tabRoles["AccesTransfert"]="Accès à la page de transfert d'un compte à l'autre";
-$tabRoles["AccesCredite"]="Accès à la page de crédit de son compte";
-$tabRoles["AccesIndicateurs"]="Accès à la page d'indicateurs";
-
-$tabRoles["AccesPresence"]="Accès à la page des présences";
-$tabRoles["AccesPresences"]="Accès au tableau des présences";
-$tabRoles["AccesPresencePonctuelle"]="Accès à la page de saisie d'une présence ponctuelle";
-$tabRoles["AccesMembre"]="Accès au détail d'un membre";
-$tabRoles["AccesMembres"]="Accès à la liste des membres";
-$tabRoles["AccesFamille"]="Accès à l'affichage des détails d'une famille";
-$tabRoles["AccesFamilles"]="Accès à la liste des familles";
-$tabRoles["AccesComptabilite"]="Accès aux pages de comptabilités";
-$tabRoles["AccesVacances"]="Accès à la page de saisie des vacances";
-$tabRoles["AccesPlage"]="Accès à la page de configuration des plages horaires";
-$tabRoles["AccesVols"]="Accès au suivi des vols";
-$tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
-$tabRoles["AccesDisponibilites"]="Accès à la page de saisi des disponibilités";
-
-$tabRoles["AccesConfiguration"]="Accès au module de configuration";
-$tabRoles["AccesConfigComptes"]="Accès à la page de modification des numéro de comptes";
-$tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
-$tabRoles["AccesConfigTarifs"]="Accès à la page de configuration des tarifs";
-$tabRoles["AccesConfigPrevisions"]="Accès à la page de gestion des prévisions";
-$tabRoles["AccesConfigNavigation"]="Accès à la page de configuration des points de navigation";
-$tabRoles["AccesConfigInstruction"]="Accès à la page de configuration des synthèses de vol";
+$tabRoles["AccesSuiviVolsMembres"]="AccÃ¨s Ã  la page de suivi des membres par les instructeur pour les vols";
+$tabRoles["AccesSuiviHorametre"]="AccÃ¨s Ã  la page de suivi des horamÃ¨tres";
+$tabRoles["AccesSuiviAnnuel"]="AccÃ¨s Ã  la page de suivi annuel des vols pour tous les membres";
+$tabRoles["AccesSuiviTaxeAT"]="AccÃ¨s Ã  la page de saisie des taxes d'atterrissage";
 
 
-$tabRoles["AccesConfigExercices"]="Accès à la page de configuration de la liste des exercices (Synthèse de vol)";
-$tabRoles["AccesConfigReferences"]="Accès à la page de configuration de la liste des références ENAC (Synthèse de vol)";
+$tabRoles["AccesCompte"]="AccÃ¨s Ã  la page d'affichage du compte";
+$tabRoles["AccesTransfert"]="AccÃ¨s Ã  la page de transfert d'un compte Ã  l'autre";
+$tabRoles["AccesCredite"]="AccÃ¨s Ã  la page de crÃ©dit de son compte";
+$tabRoles["AccesIndicateurs"]="AccÃ¨s Ã  la page d'indicateurs";
+
+$tabRoles["AccesPresence"]="AccÃ¨s Ã  la page des prÃ©sences";
+$tabRoles["AccesPresences"]="AccÃ¨s au tableau des prÃ©sences";
+$tabRoles["AccesPresencePonctuelle"]="AccÃ¨s Ã  la page de saisie d'une prÃ©sence ponctuelle";
+$tabRoles["AccesMembre"]="AccÃ¨s au dÃ©tail d'un membre";
+$tabRoles["AccesMembres"]="AccÃ¨s Ã  la liste des membres";
+$tabRoles["AccesFamille"]="AccÃ¨s Ã  l'affichage des dÃ©tails d'une famille";
+$tabRoles["AccesFamilles"]="AccÃ¨s Ã  la liste des familles";
+$tabRoles["AccesComptabilite"]="AccÃ¨s aux pages de comptabilitÃ©s";
+$tabRoles["AccesVacances"]="AccÃ¨s Ã  la page de saisie des vacances";
+$tabRoles["AccesPlage"]="AccÃ¨s Ã  la page de configuration des plages horaires";
+$tabRoles["AccesVols"]="AccÃ¨s au suivi des vols";
+$tabRoles["AccesSuiviVols"]="AccÃ¨s au suivi des vols des membres";
+$tabRoles["AccesDisponibilites"]="AccÃ¨s Ã  la page de saisi des disponibilitÃ©s";
+
+$tabRoles["AccesConfiguration"]="AccÃ¨s au module de configuration";
+$tabRoles["AccesConfigComptes"]="AccÃ¨s Ã  la page de modification des numÃ©ro de comptes";
+$tabRoles["AccesConfigPostes"]="AccÃ¨s Ã  la page de modification des postes";
+$tabRoles["AccesConfigTarifs"]="AccÃ¨s Ã  la page de configuration des tarifs";
+$tabRoles["AccesConfigPrevisions"]="AccÃ¨s Ã  la page de gestion des prÃ©visions";
+$tabRoles["AccesConfigNavigation"]="AccÃ¨s Ã  la page de configuration des points de navigation";
+$tabRoles["AccesConfigInstruction"]="AccÃ¨s Ã  la page de configuration des synthÃ¨ses de vol";
+
+
+$tabRoles["AccesConfigExercices"]="AccÃ¨s Ã  la page de configuration de la liste des exercices (SynthÃ¨se de vol)";
+$tabRoles["AccesConfigReferences"]="AccÃ¨s Ã  la page de configuration de la liste des rÃ©fÃ©rences ENAC (SynthÃ¨se de vol)";
 
 
 
@@ -70,20 +70,20 @@ $tabRoles["AffUserComptes"]="Afficher le solde du compte sur la fiche du membre"
 $tabRoles["AffUserHeures"]="Afficher les heure de vol sur la fiche du membre";
 
 $tabRoles["ModifUserLache"]="Lacher des membres sur les ressources (avions)";
-$tabRoles["ModifUserDecouvert"]="Modifier le découvert d'un membre";
+$tabRoles["ModifUserDecouvert"]="Modifier le dÃ©couvert d'un membre";
 $tabRoles["ModifUserTarif"]="Modifier le taux de remboursement horaire d'un instructeur";
 $tabRoles["ModifUserIdCpt"]="Modifier le compte de saisie";
-$tabRoles["ModifUserDisponibilite"]="Modifier les disponibilités";
+$tabRoles["ModifUserDisponibilite"]="Modifier les disponibilitÃ©s";
 $tabRoles["ModifUserDteInscription"]="Modifier la date d'inscription";
 
 $tabRoles["ModifParents"]="Modifier les parents";
 $tabRoles["ModifRessourceSauve"]="Sauvegarde une ressource (avion)";
 $tabRoles["ModifRessource"]="Modifier les ressources (avion)";
-$tabRoles["ModifRessourceParametres"]="Modification des paramètres d'une ressource";
+$tabRoles["ModifRessourceParametres"]="Modification des paramÃ¨tres d'une ressource";
 $tabRoles["ModifMessage"]="Modification d'un message dans le module document";
 $tabRoles["ModifClasseur"]="Modification d'un classeur dans le module document";
 
-$tabRoles["ModifFamilleCree"]="Créer une famille";
+$tabRoles["ModifFamilleCree"]="CrÃ©er une famille";
 
 $tabRoles["ModifForum"]="Modifier la liste de forum (et suppression)";
 $tabRoles["ModifFamilleSauve"]="Sauvegarder une famille";
@@ -92,30 +92,30 @@ $tabRoles["ModifWaypoint"]="Import de waypoints";
 $tabRoles["ModifNavigation"]="Modification d'une navigation";
 $tabRoles["ModifWeb"]="Modification de la partie publique";
 
-$tabRoles["AccesRex"]="Accès à la liste des REX";
-$tabRoles["CreeRex"]="Création d'un REX";
+$tabRoles["AccesRex"]="AccÃ¨s Ã  la liste des REX";
+$tabRoles["CreeRex"]="CrÃ©ation d'un REX";
 $tabRoles["ModifRex"]="Modification des REX";
 $tabRoles["ModifRexAll"]="Modification REX e tous les champs";
-$tabRoles["ModifRexSynthese"]="Modification de la synthèse d'un REX";
+$tabRoles["ModifRexSynthese"]="Modification de la synthÃ¨se d'un REX";
 $tabRoles["ModifRexStatus"]="Modication du status d'un REX";
 $tabRoles["SupprimeRex"]="Suppression d'un REX";
 
 
-$tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";
-$tabRoles["CreeSynthese"]="Création d'un fiche de synthèse de vol";
-$tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthèse de vol";
-$tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse de vol";
+$tabRoles["AccesSynthese"]="AccÃ¨s Ã  toutes les fiches de synthÃ¨se de vol";
+$tabRoles["CreeSynthese"]="CrÃ©ation d'un fiche de synthÃ¨se de vol";
+$tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthÃ¨se de vol";
+$tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthÃ¨se de vol";
 
 
 
 
 
-$tabRoles["CreeFacture"]="Créer une nouvelle facture";
+$tabRoles["CreeFacture"]="CrÃ©er une nouvelle facture";
 
-$tabRoles["CreeFamille"]="Créer une famille";
-$tabRoles["CreeRessource"]="Créer une nouvelle ressource (avion)";
-$tabRoles["CreeClasseur"]="Créer un nouveau classeur dans le module document";
-$tabRoles["CreeNavigation"]="Créer une navigation";
+$tabRoles["CreeFamille"]="CrÃ©er une famille";
+$tabRoles["CreeRessource"]="CrÃ©er une nouvelle ressource (avion)";
+$tabRoles["CreeClasseur"]="CrÃ©er un nouveau classeur dans le module document";
+$tabRoles["CreeNavigation"]="CrÃ©er une navigation";
 
 $tabRoles["SupprimeActualite"]="Suppression d'une actualite";
 $tabRoles["SupprimeUser"]="Supprimer un membre";
@@ -126,14 +126,14 @@ $tabRoles["SupprimeGroupe"]="Supprimer un groupe";
 $tabRoles["EnregistreFacture"]="Droit d'enregistrer une facture";
 
 $tabRoles["ListeVols"]="Autorise l'affichage des vols des membres";
-$tabRoles["ListeUserSupprime"]="Autorise l'affichage des membres supprimés";
-$tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres désactivés";
+$tabRoles["ListeUserSupprime"]="Autorise l'affichage des membres supprimÃ©s";
+$tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres dÃ©sactivÃ©s";
 
-$tabRoles["AccesAvions"]="Accès au suivi des avions";
-$tabRoles["AccesFichesMaintenance"]="Accès à la page de saisi d'une fiche de maintenance";
-$tabRoles["AccesFichesValidation"]="Accès à la page de validation des fiches de maintenance";
+$tabRoles["AccesAvions"]="AccÃ¨s au suivi des avions";
+$tabRoles["AccesFichesMaintenance"]="AccÃ¨s Ã  la page de saisi d'une fiche de maintenance";
+$tabRoles["AccesFichesValidation"]="AccÃ¨s Ã  la page de validation des fiches de maintenance";
 
-$tabRoles["CreeMaintenance"]="Création d'une fiche de maintenance";
+$tabRoles["CreeMaintenance"]="CrÃ©ation d'une fiche de maintenance";
 $tabRoles["ModifMaintenance"]="Modification d'une fiche de maintenance";
 $tabRoles["PlanifieMaintenance"]="Planification d'une maintenance";
 $tabRoles["ValideFichesMaintenance"]="Valider une fiche de maintenance";
@@ -141,31 +141,31 @@ $tabRoles["RefuserFicheMaintenance"]="Refuser une fiche de maintenance";
 $tabRoles["SupprimeMaintenance"]="Suppression d'une maintenance";
 
 
-$tabRoles["AccesManifestations"]="Accès au calendrier des manifestations";
-$tabRoles["CreeManifestation"]="Création d'une manifestation";
+$tabRoles["AccesManifestations"]="AccÃ¨s au calendrier des manifestations";
+$tabRoles["CreeManifestation"]="CrÃ©ation d'une manifestation";
 $tabRoles["ModifManifestation"]="Modification des manifestations";
-$tabRoles["ModifParticipant"]="Ajout/Suppression de participants à une manifestation";
+$tabRoles["ModifParticipant"]="Ajout/Suppression de participants Ã  une manifestation";
 $tabRoles["SupprimeManifestation"]="Suppression d'une manifestation";
 
 
 $tabRoles["ListeFactures"]="Lister l'ensemble des factures";
 $tabRoles["PayerFacture"]="Payer des factures";
 $tabRoles["FactureManips"]="Facture une manifestation";
-$tabRoles["AfficheDetailMouvement"]="Affiche le détail d'un mouvement";
-$tabRoles["AfficheSignatureCompte"]="Vérifie la signature des transactions";
+$tabRoles["AfficheDetailMouvement"]="Affiche le dÃ©tail d'un mouvement";
+$tabRoles["AfficheSignatureCompte"]="VÃ©rifie la signature des transactions";
 
-// Baptèmes
-$tabRoles["CreeBapteme"]="Création d'un baptème";
-$tabRoles["AccesBaptemes"]="Accès à la page des baptèmes";
-$tabRoles["AccesBapteme"]="Accès à la page d'un baptème";
-$tabRoles["ModifBapteme"]="Modifier un baptème";
-$tabRoles["ModifBaptemePaye"]="Modification de la date de paiement d'un baptème";
-$tabRoles["SupprimeBapteme"]="Suppression d'un baptème";
+// BaptÃ¨mes
+$tabRoles["CreeBapteme"]="CrÃ©ation d'un baptÃ¨me";
+$tabRoles["AccesBaptemes"]="AccÃ¨s Ã  la page des baptÃ¨mes";
+$tabRoles["AccesBapteme"]="AccÃ¨s Ã  la page d'un baptÃ¨me";
+$tabRoles["ModifBapteme"]="Modifier un baptÃ¨me";
+$tabRoles["ModifBaptemePaye"]="Modification de la date de paiement d'un baptÃ¨me";
+$tabRoles["SupprimeBapteme"]="Suppression d'un baptÃ¨me";
 
 
 
-$tabRoles["NotifDecouvert"]="Personne à mettre en copie des notifications de découvert";
-$tabRoles["NotifMaintenance"]="Personne à mettre à notifier lorsqu'un avion est proche de la prochaine maintenance";
+$tabRoles["NotifDecouvert"]="Personne Ã  mettre en copie des notifications de dÃ©couvert";
+$tabRoles["NotifMaintenance"]="Personne Ã  mettre Ã  notifier lorsqu'un avion est proche de la prochaine maintenance";
 
 
 

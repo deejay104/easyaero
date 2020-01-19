@@ -1,20 +1,20 @@
-<?
+<?php
 
 // *****************************************************************
 	$tabMails["resa_inst"]=Array
 	(
-		"titre"=>"Notification de réservation",
+		"titre"=>"Notification de rÃ©servation",
 		"balise"=>"avion,dte_deb,dte_fin,url,pilote",
 		"mail"=>
 "Bonjour,
 
-Je t'ai ajouté en tant qu'instructeur sur la réservation suivante :
+Je t'ai ajoutÃ© en tant qu'instructeur sur la rÃ©servation suivante :
 
 {avion} du {dte_deb} au {dte_fin}
 
-<a href='{url}'>Détail</a>
+<a href='{url}'>DÃ©tail</a>
 
-A bientôt au club
+A bientÃ´t au club
 {pilote}"
 	);
 // *****************************************************************
@@ -22,36 +22,36 @@ A bientôt au club
 // *****************************************************************
 	$tabMails["resa_modif"]=Array
 	(
-		"titre"=>"Modification de votre réservation",
+		"titre"=>"Modification de votre rÃ©servation",
 		"balise"=>"avion,dte_deb,dte_fin,url,pilote,editeur",
 		"mail"=>
 "Bonjour,
 
-La réservation suivante a été modifiée par {editeur} :
+La rÃ©servation suivante a Ã©tÃ© modifiÃ©e par {editeur} :
 
 {avion} du {dte_deb} au {dte_fin}
 
-<a href='{url}'>Voir plus de détail</a>
+<a href='{url}'>Voir plus de dÃ©tail</a>
 
-A bientôt au club
+A bientÃ´t au club
 "
 	);
 // *****************************************************************
 // *****************************************************************
 	$tabMails["resa_supp"]=Array
 	(
-		"titre"=>"Suppression de votre réservation",
+		"titre"=>"Suppression de votre rÃ©servation",
 		"balise"=>"avion,dte_deb,dte_fin,url,pilote,editeur",
 		"mail"=>
 "Bonjour,
 
-La réservation suivante a été supprimée par {editeur} :
+La rÃ©servation suivante a Ã©tÃ© supprimÃ©e par {editeur} :
 
 {avion} du {dte_deb} au {dte_fin}
 
-<a href='{url}'>Voir plus de détail</a>
+<a href='{url}'>Voir plus de dÃ©tail</a>
 
-A bientôt au club
+A bientÃ´t au club
 "
 	);
 // *****************************************************************
@@ -60,19 +60,19 @@ A bientôt au club
 // *****************************************************************
 	$tabMails["decouvert"]=Array
 	(
-		"titre"=>"Compte à découvert",
+		"titre"=>"Compte Ã  dÃ©couvert",
 		"balise"=>"solde",
 		"mail"=>
 "Bonjour,
 
 Sauf erreur de notre part, le solde ton compte est de {solde}.
-Conformément à notre règlement intérieur et afin de préserver la santé financière de notre association, je te demande de faire le nécessaire au plus vite afin de régulariser ta situation. Dans un souci de rapidité, nous te demandons de privilégier dans le mesure du possible un règlement par virement bancaire sans oublier de m'en informer.
+ConformÃ©ment Ã  notre rÃ¨glement intÃ©rieur et afin de prÃ©server la santÃ© financiÃ¨re de notre association, je te demande de faire le nÃ©cessaire au plus vite afin de rÃ©gulariser ta situation. Dans un souci de rapiditÃ©, nous te demandons de privilÃ©gier dans le mesure du possible un rÃ¨glement par virement bancaire sans oublier de m'en informer.
 
 Nous comptons sur toi.
 
-A bientôt
+A bientÃ´t
 
-Le Trésorier"
+Le TrÃ©sorier"
 	);
 // *****************************************************************
 
@@ -84,10 +84,10 @@ Le Trésorier"
 		"mail"=>
 "Bonjour,
 
-Un nouveau REX a été publié. Je t'invite à en prendre connaissance.
+Un nouveau REX a Ã©tÃ© publiÃ©. Je t'invite Ã  en prendre connaissance.
 {url}
 
-A bientôt
+A bientÃ´t
 {editeur}
 "
 	);
@@ -101,9 +101,9 @@ A bientôt
 		"mail"=>
 "Bonjour,
 
-Il me reste des places dans mon vol du {dte_deb} de {dte_deb_heure} à {dte_fin_heure}. Faites moi savoir si cela vous intéresse.
+Il me reste des places dans mon vol du {dte_deb} de {dte_deb_heure} Ã  {dte_fin_heure}. Faites moi savoir si cela vous intÃ©resse.
 
-A bientôt
+A bientÃ´t
 {pilote}
 "
 	);
@@ -112,7 +112,7 @@ A bientôt
 // *****************************************************************
 	$tabMails["maintenance"]=Array
 	(
-		"titre"=>"Maintenance avion à planifier",
+		"titre"=>"Maintenance avion Ã  planifier",
 		"balise"=>"immatriculation,potentiel,dte_maint",
 		"mail"=>
 "Bonjour,
@@ -121,7 +121,7 @@ L'avion {immatriculation} arrive en fin de potentiel.
 Potentiel restant : {potentiel}
 Estimation de la date de la prochaine maintenance : {dte_maint}
 
-A bientôt
+A bientÃ´t
 "
 	);
 // *****************************************************************

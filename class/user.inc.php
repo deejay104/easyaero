@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -47,9 +47,9 @@ class user_class extends user_core
 	// protected $type=array("description"=>"text","status"=>"enum","module"=>"enum");
 	
 	public $tabList=array(
-			"type"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
-			"disponibilite"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
-			"sexe"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné")
+			"type"=>array('pilote'=>'Pilote','eleve'=>'ElÃ¨ve','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'InvitÃ©','employe'=>'EmployÃ©'),
+			"disponibilite"=>array('dispo'=>'Disponible','occupe'=>'OccupÃ©'),
+			"sexe"=>array("M"=>"Masculin","F"=>"FÃ©minin","NA"=>"Non renseignÃ©")
 			);
 	
 	# Constructor
@@ -95,7 +95,7 @@ class user_class extends user_core
 		}
 	}
 	
-	# Laché
+	# LachÃ©
 	function loadLache()
 	{
 		$query = "SELECT avion.id AS aid, lache.id AS lid, lache.uid_creat AS uid FROM ".$this->tbl."_utilisateurs AS usr ";
@@ -154,7 +154,7 @@ class user_class extends user_core
 			}
 		}
 
-		// Vérifie la différence
+		// VÃ©rifie la diffÃ©rence
 		foreach($tlache as $avion=>$v)
 		{
 			if (($v["bd"]==0) && ($v["new"]=="N"))

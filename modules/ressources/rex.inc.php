@@ -24,10 +24,6 @@
 	
 	require_once ($appfolder."/class/rex.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("rex.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
 // ---- Vérification des données
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
@@ -36,6 +32,13 @@
 	$aff_menu="";
 	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Affiche le sous-menu
+	if (GetDroit("CreeRex"))
+	{
+		addSubMenu("","Créer",geturl("ressources","rexdetail","id=0"),"icn32_ajouter.png",false,"");
+		affSubMenu();
+	}
 
 // ---- Liste des ressources
 	$tabTitre=array();
@@ -69,10 +72,6 @@
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
-	if (GetDroit("CreeRex"))
-	{
-			$tmpl_x->parse("corps.creerex");
-	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

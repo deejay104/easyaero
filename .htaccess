@@ -7,3 +7,23 @@
   ExpiresByType text/css "access plus 240 minutes"
   ExpiresByType application/javascript "access plus 60 minutes"
 </IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  Options -MultiViews
+  RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
+  RewriteRule ^(.*)$ - [E=BASE:%1]
+
+  RewriteRule ^api/v1/([a-z]*)/([a-z]*)/([a-z]*)$ %{ENV:BASE}/api.php?mod=$1&rub=$2&fonc=$3 [QSA,L]
+  RewriteRule ^api/v1/([a-z]*)/([a-z]*)$ %{ENV:BASE}/api.php?mod=$1&rub=$2 [QSA,L]
+
+  RewriteRule ^([a-z]*)$ %{ENV:BASE}/index.php?mod=$1 [QSA,L]
+  RewriteRule ^([a-z]*)/([a-z]*)$ %{ENV:BASE}/index.php?mod=$1&rub=$2 [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !\.(css|js|svg|gif|png|html|ttf|woff2?|ico|jpg|jpeg)$
+  RewriteCond %{REQUEST_FILENAME} !/index.php
+  RewriteCond %{REQUEST_FILENAME} !/doc.php
+  RewriteCond %{REQUEST_FILENAME} !/api.php
+  RewriteRule . %{ENV:BASE}/index.php [QSA,L]
+  RewriteBase /
+</IfModule>

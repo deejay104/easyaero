@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -16,7 +16,7 @@
 */
 ?>
 
-<?
+<?php
 	require_once ("class/echeance.inc.php");
 
 	require_once ($appfolder."/class/reservation.inc.php");
@@ -25,9 +25,9 @@
 	require_once ($appfolder."/class/synthese.inc.php");
 
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("reservation.htm"));
+	// $tmpl_x = new XTemplate (MyRep("reservation.htm"));
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$id=checkVar("id","numeric");
 	$prev=checkVar("prev","varchar");
 	$ress=checkVar("ress","numeric");
@@ -44,10 +44,10 @@
 		$ok=checkVar("ok","numeric");
 	}
 	
-// ---- Charge les données de la réservation
+// ---- Charge les donnÃ©es de la rÃ©servation
 	if (($id>0) && ($ok!=3))
 	{
-		// Charge une nouvelle réservation
+		// Charge une nouvelle rÃ©servation
 		$resa["resa"]=new resa_class($id,$sql);
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 		$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql);
@@ -89,7 +89,7 @@
 	}
 	else if ($ok==3)
 	{
-	  	// Il y a eu une erreur on recharge les valeurs postées
+	  	// Il y a eu une erreur on recharge les valeurs postÃ©es
 		$ress=$form_uid_ress;
 
 		$resa["resa"]=new resa_class(($id>0) ? $id : 0,$sql);
@@ -152,7 +152,7 @@
 	$resusr=new user_class($resa["resa"]->uid_pilote,$sql,true);
 	$resa["resa"]->pilote_data=$resusr->data;
 
-// ---- Vérifie les échéances
+// ---- VÃ©rifie les Ã©chÃ©ances
 	$lstdte=VerifEcheance($sql,$resa["resa"]->uid_pilote,"utilisateurs");
 
 	if ( (is_array($lstdte)) && (count($lstdte)>0) )
@@ -161,23 +161,23 @@
 		{
 			if ($d["dte_echeance"]!="")
 			{
-				$m ="<b><font color='red'>L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).").</font></b><br />";
+				$m ="<b><font color='red'>L'Ã©chÃ©ance ".$d["description"]." a Ã©tÃ© dÃ©passÃ©e (".sql2date($d["dte_echeance"]).").</font></b><br />";
 			}
 			else
 			{
-				$m ="<b><font color='red'>Vous n'avez pas de date d'échéance pour ".$d["description"].".</font></b><br />";
+				$m ="<b><font color='red'>Vous n'avez pas de date d'Ã©chÃ©ance pour ".$d["description"].".</font></b><br />";
 			}
 			
 			if ($d["resa"]=="instructeur")
 			{
-				$m.="La présence d'un instructeur est obligatoire.<br />";
+				$m.="La prÃ©sence d'un instructeur est obligatoire.<br />";
 				affInformation($m,"warning");
 
 				$ok_inst=1;
 			}
 			else if ($d["resa"]=="obligatoire")
 			{
-				$m.="La réservation n'est pas possible.<br />";
+				$m.="La rÃ©servation n'est pas possible.<br />";
 				affInformation($m,"error");
 				$save=1;
 			}
@@ -185,15 +185,15 @@
 		}
 	}
 
-// ---- Vérifie si le compte est provisionné
+// ---- VÃ©rifie si le compte est provisionnÃ©
 
 	// $s=$resa["pilote"]->CalcSolde();
 	// if ($s<-$resa["pilote"]->data["decouvert"])
 	if ($resa["pilote"]->isSoldeNegatif())
 	{
 		$s=$resa["pilote"]->CalcSolde();
-		$m ="<b><font color='red'>Le compte du pilote est NEGATIF ($s €).</font></b><br />";
-		$m.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+		$m ="<b><font color='red'>Le compte du pilote est NEGATIF ($s â‚¬).</font></b><br />";
+		$m.="Appeller le trÃ©sorier pour l'autorisation d'un dÃ©couvert.<br />";
 		affInformation($m,"error");
 
 		if ($id==0)
@@ -203,10 +203,10 @@
 	}
 
 
-// ---- Vérifie si l'utilisateur est laché sur l'avion
+// ---- VÃ©rifie si l'utilisateur est lachÃ© sur l'avion
 	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
 	{
-		$m="<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.";
+		$m="<b><font color='red'>Vous n'Ãªtes pas lachÃ© sur cet avion.</font></b><br />La prÃ©sence d'un instructeur est obligatoire.";
 		affInformation($m,"warning");
 
 		$ok_inst=1;
@@ -225,9 +225,9 @@
 	}
 	
 
-// ---- Affiche les infos de la réservation
+// ---- Affiche les infos de la rÃ©servation
 
-	// Dernière mise à jour
+	// DerniÃ¨re mise Ã  jour
 	$maj=new user_class($resa["resa"]->uid_maj,$sql);
 	$tmpl_x->assign("info_maj", $maj->aff("fullname")." le ".sql2date($resa["resa"]->dte_maj));
 
@@ -241,7 +241,7 @@
 	  	$txtmaj.=sql2date($k["dte"])." - ";
 
 		if ($k["type"]=="ADD")
-			$txtmaj.="Création par";
+			$txtmaj.="CrÃ©ation par";
 		else if ($k["type"]=="MOD")
 			$txtmaj.="Modification par";
 		else if ($k["type"]=="DEL")
@@ -260,7 +260,7 @@
 	
 	$tmpl_x->assign("form_uid_ress", $resa["resa"]->uid_ressource);
 
-	// Récupère la liste des ressources
+	// RÃ©cupÃ¨re la liste des ressources
 	$lstress=ListeRessources($sql,array("oui"));
 
 	foreach($lstress as $i=>$rid)
@@ -308,7 +308,7 @@
 	$tmpl_x->assign("aff_nom_pilote", $resusr->aff("fullname"));
 
 	
-	// Liste des pilotes débité	
+	// Liste des pilotes dÃ©bitÃ©	
 	$lst=ListActiveUsers($sql,"prenom,nom","","");
 
 	$txt="-";
@@ -467,7 +467,7 @@
 	$tmpl_hora->assign("form_horadeb", $resa["resa"]->horadeb);
 	$tmpl_hora->assign("form_horafin", $resa["resa"]->horafin);
 
-	// Affiche l'horamètre
+	// Affiche l'horamÃ¨tre
 	$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 	$t=$resr->CalcHorametre($resa["resa"]->horadeb,$resa["resa"]->horafin);
 	
@@ -481,7 +481,7 @@
 	$tmpl_hora->parse("aff_horametre");
 	$tmpl_x->assign("aff_horametre", $tmpl_hora->text("aff_horametre"));
 
-	// Description de la réservation
+	// Description de la rÃ©servation
 	$tmpl_x->assign("form_description", $resa["resa"]->description);
 
 	// Potentiel restant
@@ -523,7 +523,7 @@
 		$tmpl_x->parse("infos.supprimer");
 	}
 	
-	// Liste les fiches de synthèse du vol
+	// Liste les fiches de synthÃ¨se du vol
 	if ($id>0)
 	{
 		$t=ListSyntheseVol($sql,$id);
@@ -542,7 +542,7 @@
 			}
 			$tmpl_x->parse("corps.aff_reservation.aff_syntheses");
 		}
-		// Ajoute une synthèse de vol
+		// Ajoute une synthÃ¨se de vol
 		if ((GetDroit("CreeSynthese")) && (count($t)==0))
 		{
 			$tmpl_x->parse("infos.synthese"); 

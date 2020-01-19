@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v2.2 ($Revision: 460 $)
     Copyright (C) 2012 Matthieu Isorez
@@ -76,11 +76,11 @@ class abonnement_class{
 		if (($this->dte_deb=="") || ($this->dte_fin==""))
 		  { return "La date est obligatoire"; }
 
-		// Vérifie la date/heure de début
+		// VÃ©rifie la date/heure de dÃ©but
 		// if (!preg_match("/^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}$/",$this->dte_deb))
-		  // { return "La date de début n'a pas un format correct (jj/mm/aaaa).<br />"; }
+		  // { return "La date de dÃ©but n'a pas un format correct (jj/mm/aaaa).<br />"; }
 
-		// Vérifie la date/heure de fin
+		// VÃ©rifie la date/heure de fin
 		// if (!preg_match("/^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}$/",$this->dte_fin))
 		  // { return "La date de fin n'a pas un format correct (jj/mm/aaaa).<br />"; }
 

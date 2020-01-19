@@ -14,12 +14,6 @@
 #mto { margin-left:10px; width: 420px!important; }
 </style>
 
-<div class="pagetitle pagemenu">
-	<A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A>
-<!-- BEGIN: supprimer -->
-	<A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A>
-<!-- END: supprimer -->
-</div>
 
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="aviation">
@@ -48,45 +42,52 @@
 	</div>
 
 	<div class='formulaireTitre'>THEMES</div>
+	<div class="formulaire">
 	{form_themes}
+	</div>
 	
 	<div class='formulaireTitre'>APPRECIATION GENERALE DU VOL</div>
+	<div class="formulaire">
 	{form_bilan_gen}
+	</div>
 
 	<div class='formulaireTitre'>EXERCICES DU DOMAINE TECHNIQUE</div>
 <!-- BEGIN: lst_pedagogique -->
-		<div class='formulaire><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
-		{form_progression}
+		<div class='formulaire' style='border-bottom: 1px #dddddd solid;'>
+		<div style='width:400px; max-width:400px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div style='padding-right:20px; text-align: right;'>{form_progression}</div>
 		</div>
 <!-- END: lst_pedagogique -->
 	
-	<div id="affpedagogique">
+	<div id="affpedagogique" class='formulaire'>
 	</div>
 	<br />
 
 	<div class='formulaireTitre'>EXERCICES</div>
 <!-- BEGIN: lst_exercice -->
-		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
-		{form_progression}
+		<div class='formulaire'>
+		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div style='padding-right:20px; text-align: right;'>{form_progression}</div>
 		</div>
 <!-- END: lst_affexercice -->
-	<div id="affexercices">
+	<div id="affexercices" class='formulaire'>
 	</div>
 
 	<div class='formulaireTitre'>PANNES</div>
 <!-- BEGIN: lst_panne -->
-		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
-		{form_progression}
+		<div class='formulaire'>
+		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div style='padding-right:20px; text-align: right;'>{form_progression}</div>
 		</div>
 <!-- END: lst_panne -->
-	<div id="affpannes">
+	<div id="affpannes" class='formulaire'>
 	</div>
 
 
 	<br />
 	<div class='formulaire'>
 	<p>Ajouter un exercice / panne :</p>
-	<input id="addexercice" style="width:420px; margin-left:10px;">
+	<input id="addexercice" style="width:400px; margin-left:10px;">
 	</div>
 	<br />
 
@@ -97,11 +98,11 @@
 
 	<div class='formulaireTitre'>Non technique</div>
 
-	<div style='margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div><div style='padding-left:40px;'>{form_info_1}</div></div>
-	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div><div style='padding-left:40px;'>{form_info_2}</div></div>
-	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div><div style='padding-left:40px;'>{form_info_3}</div></div>
-	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div><div style='padding-left:40px;'>{form_info_4}</div></div>
-	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div><div style='padding-left:40px;'>{form_info_5}</div></div>
+	<div style='margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div><div style='padding-right:20px; text-align: right;'>{form_info_1}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div><div style='padding-right:20px; text-align: right;'>{form_info_2}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div><div style='padding-right:20px; text-align: right;'>{form_info_3}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div><div style='padding-right:20px; text-align: right;'>{form_info_4}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div><div style='padding-right:20px; text-align: right;'>{form_info_5}</div></div>
 
 	<br />
 	<table>
@@ -129,7 +130,7 @@
 	});
 	
 	$("#addexercice").autocomplete({
-		source: "api.php?mod=aviation&rub=exercice",
+		source: "{path_root}/api/v1/aviation/exercice",
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -166,7 +167,7 @@
 
 		$.ajax({
 			type: "GET",
-			url: "api.php?mod=aviation&rub=exercice&ref="+ref,
+			url: "{path_root}/api/v1/aviation/exercice?ref="+ref,
 			dataType: 'JSON',
 
 			success: function(response) {
@@ -190,7 +191,7 @@
 
 		$.ajax({
 			type: "GET",
-			url: "api.php?mod=aviation&rub=exercice&fonc=theme&ref="+ref,
+			url: "{path_root}/api/v1/aviation/exercice/theme?ref="+ref,
 			dataType: 'JSON',
 
 			success: function(response) {
@@ -214,53 +215,28 @@
 	<div class='formulaireTitre'>
 		VISAS
 	</div>
-	<table width='100%'>
-	<tr>
-		<td width='15%'>
-			<div class='formulaire' style='height:90px;'>
-			<b>Date du vol</b><br />
-			{form_dtevol}
-			</div>
-		</td>
-		<td width='10%'>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
-			<b>Durée</b><br />
-			{form_duree}
-			</div>
-		</td>
-		<td width='10%'>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
-			<b>Cumul DC</b><br />
-			{form_cumuldc}<br />
-			<b>Cumul Solo</b><br />
-			{form_cumulsolo}
-			</div>
-		</td>
-		<td width='33%'>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<div class='formulaire' style='margin-left:10px;'>
 				<b>Instructeur</b> : {form_instructeur}<br />
 <!-- BEGIN: signinst -->
-				<input type="submit" name="fonc" value="Signature Instructeur">
+				<input type="submit" name="fonc" value="Signature Instructeur" style='width:300px;'>
 <!-- END: signinst -->
 <!-- BEGIN: signedinst -->
-				<br />Signé par {form_signinst_name} le {form_signinst_dte}<br />
-				(Clé: {form_signinst_key})
+				Signé par {form_signinst_name} le {form_signinst_dte}<br />
+				(Clé: {form_signinst_key})<br />
 <!-- END: signedinst -->
 			</div>
 		</td>
 		<td>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<div class='formulaire' style='margin-left:10px; margin-top:10px;'>
 				<b>Eleve</b> : {form_eleve}<br />
 <!-- BEGIN: signeleve -->
-				<input type="submit" name="fonc" value="Signature Elève">
+				<input type="submit" name="fonc" value="Signature Elève" style='width:300px;'>
 <!-- END: signeleve -->
 <!-- BEGIN: signedeleve -->
-				<br />Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
+				Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
 				(Clé: {form_signeleve_key})
 <!-- END: signedeleve -->
 			</div>
-		</td>
-	</table>
 </form>
 <br />
 

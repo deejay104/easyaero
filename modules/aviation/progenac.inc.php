@@ -20,7 +20,7 @@
 ?>
 
 <?php
-	// if (!GetDroit("AccesSynthese")) { FatalError("AccÃ¨s non autorisÃ© (AccesSynthese)"); }
+	// if (!GetDroit("AccesSynthese")) { FatalError("Accès non autorisé (AccesSynthese)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 	require_once ($appfolder."/class/reservation.inc.php");
@@ -51,10 +51,21 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
+// ---- Affiche le sous menu
+	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
+	addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
+	addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
+	addSubMenu("","Progression",geturl("aviation","progenac"),"",true);
+	addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
+	affSubMenu();
+
+// ---- Change membre
+	$tmpl_x->assign("url",geturl("aviation","progenac",""));
+
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))
 	{
-			$lst=ListActiveUsers($sql,"std","","");
+			$lst=ListActiveUsers($sql,"std");
 		
 			foreach($lst as $i=>$tmpuid)
 			{
@@ -105,7 +116,9 @@
 			// $tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
 			// $tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
 
-			$tabValeur[$fid]["prog"]["val"]="Acquis";
+			$tabValeur[$fid]["prog"]["val"]="A";
+			$tabValeur[$fid]["prog"]["align"]="center";
+			$tabValeur[$fid]["prog"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"]."'>";
 
 			$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dteprog"])>0) ? strtotime($d["dteprog"]) : 99999999999 ;
 			$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dteprog"])>0) ? sql2date($d["dteprog"],"jour") : " ";
@@ -113,6 +126,13 @@
 		else if ($d["nbenac"]==0)
 		{
 			$tabValeur[$fid]["prog"]["val"]="-";
+			$tabValeur[$fid]["prog"]["align"]="center";
+		}
+		else
+		{
+			$tabValeur[$fid]["prog"]["val"]="E";
+			$tabValeur[$fid]["prog"]["align"]="center";
+			$tabValeur[$fid]["prog"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/icn16_nc.png'>";
 		}
 	}
 

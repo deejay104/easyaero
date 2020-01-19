@@ -27,9 +27,6 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 
 
-// ---- Charge le template
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Vérifie les variables
 	$id=checkVar("id","numeric");
@@ -37,13 +34,14 @@
 	$trie=checkVar("trie","varchar");
 	$ts=checkVar("ts","numeric");
 
-
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Titre
+	$tmpl_x->assign("url",geturl("ressources","horametre",""));
+
 	$tabTitre=array();
 	if ($theme!="phone")
 	{

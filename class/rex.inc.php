@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy Aero v2.4
     Copyright (C) 2018 Matthieu Isorez
@@ -25,8 +25,8 @@
 $tabValeurRex=array();
 $tabValeurRex["new"]="Nouveau";
 $tabValeurRex["inprg"]="En cours";
-$tabValeurRex["close"]="CloturÈ";
-$tabValeurRex["cancel"]="AnnulÈ";
+$tabValeurRex["close"]="Clotur√©";
+$tabValeurRex["cancel"]="Annul√©";
 
 
 // Class Utilisateur
@@ -58,7 +58,7 @@ class rex_class extends objet_core
 	);
 
 	protected $tabList=array(
-		"status"=>array('new'=>'Nouveau','inprg'=>'En cours','close'=>'CloturÈ','cancel'=>'AnnulÈ'),
+		"status"=>array('new'=>'Nouveau','inprg'=>'En cours','close'=>'Clotur√©','cancel'=>'Annul√©'),
 	);
 
 	# Constructor
@@ -98,19 +98,19 @@ class rex_class extends objet_core
 		$tabLig=array();
 		$tabBg=array();
 
-		$tabCol[1]="TrËs Probable";
+		$tabCol[1]="Tr√®s Probable";
 		$tabCol[2]="Probable";
-		$tabCol[3]="TrËs improbable";
+		$tabCol[3]="Tr√®s improbable";
 		$tabCol[4]="Improbable";
-		$tabCol[5]="Non dÈfini";
+		$tabCol[5]="Non d√©fini";
 
-		$tabLig[1]="Accident matÈriel et corporel";
+		$tabLig[1]="Accident mat√©riel et corporel";
 		$tabLig[2]="Accident corporel";
-		$tabLig[3]="Accident matÈriel";
+		$tabLig[3]="Accident mat√©riel";
 		$tabLig[4]="Incident grave";
 		$tabLig[5]="Incident";
 		$tabLig[6]="Annomalie";
-		$tabLig[7]="Non dÈfini";
+		$tabLig[7]="Non d√©fini";
 
 		$tabBg["11"]="#ff0000"; $tabBg["12"]="#ff0000"; $tabBg["13"]="#ff0000"; $tabBg["14"]="#ffff00"; $tabBg["15"]="#ffffff";
 		$tabBg["21"]="#ff0000"; $tabBg["22"]="#ff0000"; $tabBg["23"]="#ff0000"; $tabBg["24"]="#ffff00"; $tabBg["25"]="#ffffff";

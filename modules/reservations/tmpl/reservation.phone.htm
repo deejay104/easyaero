@@ -4,10 +4,10 @@
 <!-- BEGIN: infos -->
 	<p><A href="#" OnClick="submitForm('centrage');"><IMG src="{path_module}/img/icn32_devismasse.png" border=0>Devis de masse</A></p>
 	<!-- BEGIN: supprimer -->
-	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
+	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette rÃ©servation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
 	<!-- END: supprimer -->
 	<!-- BEGIN: synthese -->
-	<p><A href="#" OnClick="submitForm('synthese');"><IMG src="{path_module}/img/icn32_synthese.png" border=0>Ajouter Synthèse</A></p>
+	<p><A href="#" OnClick="submitForm('synthese');"><IMG src="{path_module}/img/icn32_synthese.png" border=0>Ajouter SynthÃ¨se</A></p>
 	<!-- END: synthese -->
 <!-- END: infos -->
 
@@ -30,10 +30,10 @@
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="fonch" id="fonch" value="">
 
-	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+	<p class="lastupdate">DerniÃ¨re mise Ã  jour : {info_maj}</p>
 
 	<!-- BEGIN: aff_reservation -->
-	<div class="formulaireTitre">Réservation</div>
+	<div class="formulaireTitre">RÃ©servation</div>
 
 	<div class="formulaire">
 		<p>
@@ -55,7 +55,7 @@
 		</p>
 
 		<p>
-			<label for="debite">Débité</label>
+			<label for="debite">DÃ©bitÃ©</label>
 			<SELECT id="debite" name="form_uid_debite">
 			<OPTION value="0">Pilote</OPTION>
 			<!-- BEGIN: lst_debite -->
@@ -85,7 +85,7 @@
 	<!-- END: aff_tarif -->
 		<p>
 			<label for="destination">Destination</label>
-			<INPUT id="destination" name="form_destination" value="{form_destination}" title="Préciser la destination ou LOCAL pour un vol local.">
+			<INPUT id="destination" name="form_destination" value="{form_destination}" title="PrÃ©ciser la destination ou LOCAL pour un vol local.">
 		</p>
 
 		<p>
@@ -95,24 +95,24 @@
 			<!-- END: lst_pob -->
 		</p>
 		<p>
-			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
+			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vÃ©rifier s'il reste des places.">Inviter les membres</label>
 			<input type="radio" name="form_invite" value="non" {chk_invite_non}>Non
 			<input type="radio" name="form_invite" value="oui" {chk_invite_oui}>Oui
 		</p>
 		<p>
-			<label for="tpsestime">Tps estimée</label>
-			<INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style="width: 70px;" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire."> (en minutes)
+			<label for="tpsestime">Tps estimÃ©e</label>
+			<INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style="width: 70px;" title="Le temps de vol estimÃ© correspond au temps durant lequel vous avez prÃ©vu de voler. Ce champs est obligatoire."> (en minutes)
 		</p>
 
 		<p>
   		<label>Du</label>
   		<INPUT name="form_dte_deb" id="form_dte_deb" value="{form_dte_debsql}" type="date" style="width:140px;"> 
-  		à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" type="time" style="width:80px;"> <FONT color=red>{msg_dtedeb}</FONT>
+  		Ã  <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" type="time" style="width:80px;"> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
 		<p>
 			<label>Au</label>
 			<INPUT name="form_dte_fin" id="form_dte_fin" value="{form_dte_finsql}" type="date" style="width:140px;"> 
-			à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" type="time" style="width:80px;"> <FONT color=red>{msg_dtefin}</FONT>
+			Ã  <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" type="time" style="width:80px;"> <FONT color=red>{msg_dtefin}</FONT>
 		</p>
 
 	<!-- BEGIN: aff_chkreservation -->
@@ -137,22 +137,22 @@
 
 	<!-- BEGIN: aff_syntheses -->
 	<div class="formulaireTitre">
-	  	Fiche(s) de synthèse
+	  	Fiche(s) de synthÃ¨se
 	</div>
 	
 	<div style='padding-left: 20px; padding-bottom:10px;'>
 	<!-- BEGIN: lst_synthese -->
-	<img src='{path_module}/img/icn16_synthese.png' /> <a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'>Synthèse leçon {synt_lecon} </a>({synt_type} / ref. {synt_refffa}) - {synt_status}</a><br />
+	<img src='{path_module}/img/icn16_synthese.png' /> <a href='index.php?mod=aviation&rub=synthese&idvol={id}&id={sid}'>SynthÃ¨se leÃ§on {synt_lecon} </a>({synt_type} / ref. {synt_refffa}) - {synt_status}</a><br />
 	<!-- END: lst_synthese -->
 	</div>
 	<!-- END: aff_syntheses -->
 
 	<div class="formulaireTitre">
-  	Saisi de l'horamètre
+  	Saisi de l'horamÃ¨tre
 	</div>
 
 	<div class="formulaire">
-		<p>Estimation du potentiel à la prise en charge : {potentiel}</p>
+		<p>Estimation du potentiel Ã  la prise en charge : {potentiel}</p>
 
 		{aff_horametre}
 
@@ -163,7 +163,7 @@
 			<label for="form_carbapres">Carb Apres</label><INPUT type="number" name="form_carbapres" value="{form_carbapres}" style="width:90px;"> Litres
 		</p>
 		<p>
-			<label for="prixcarbu">Total</label><INPUT name="form_prixcarbu" value="{form_prixcarbu}" style="width:90px;"> €
+			<label for="prixcarbu">Total</label><INPUT name="form_prixcarbu" value="{form_prixcarbu}" style="width:90px;"> â‚¬
 		</p>
 	</div>
 

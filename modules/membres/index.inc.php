@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     MnMs Framework
     Copyright (C) 2018 Matthieu Isorez
@@ -19,19 +19,30 @@
 */
 ?>
 
-<?
+<?php
 	if (!GetDroit("AccesMembres")) { FatalError($tabLang["lang_accessdenied"]." (AccesMembres)"); }
 
 	require_once ("class/document.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	// $tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module",$corefolder."/".$module."/".$mod);
-
 // ---- Valide les variables
 	$aff=checkVar("aff","varchar");
 
+// ---- Menu
+	addPageMenu($corefolder,$mod,$tabLang["lang_list"],geturl("membres","","fonc=&aff=".$aff),"icn32_liste.png",($fonc!="trombi") ? true : false);
+	addPageMenu($corefolder,$mod,$tabLang["lang_pictures"],geturl("membres","","fonc=trombi&aff=".$aff),"icn32_trombi.png",($fonc=="trombi") ? true : false);
+
+	if (GetDroit("AccesMembresVirtuel"))
+	{
+		addPageMenu($corefolder,$mod,$tabLang["lang_normal"],geturl("membres","","fonc=".$fonc."&aff="),"",($aff!="virtuel") ? true : false);
+		addPageMenu($corefolder,$mod,$tabLang["lang_virtuals"],geturl("membres","","fonc=".$fonc."&aff=virtuel"),"",($aff=="virtuel") ? true : false);
+	}
+
+	if (GetDroit("CreeUser"))
+	{
+		addPageMenu($corefolder,$mod,$tabLang["lang_add"],geturl("membres","detail","id=0"),"icn32_ajouter.png");
+	}
+	
 // ---- Trombino
 	if ($fonc=="trombi")
 	{
@@ -92,6 +103,7 @@
 				$usr = new user_class($id,$sql);
 
 				$tmpl_x->assign("id_membre",$id);
+				$tmpl_x->assign("url_detail",geturl("membres","detail","id=".$id));
 				$tmpl_x->assign("aff_membre",$usr->aff("fullname"));
 				$tmpl_x->assign("tel_membre",$usr->AffTel());
 				$tmpl_x->assign("mail_membre",$usr->aff("mail"));
@@ -114,7 +126,7 @@
 		else
 		{
 			$tabTitre=array();
-			$tabTitre["prenom"]["aff"]="Prénom";
+			$tabTitre["prenom"]["aff"]="PrÃ©nom";
 			$tabTitre["prenom"]["width"]=($theme!="phone") ? 150 : 120;
 			$tabTitre["nom"]["aff"]="Nom";
 			$tabTitre["nom"]["width"]=($theme!="phone") ? 200 : 180;
@@ -144,22 +156,7 @@
 		  }
 	}
 
-	if (GetDroit("CreeUser"))
-	  { $tmpl_x->parse("infos.ajout"); }
-	
-	if (GetDroit("AccesMembresVirtuel"))
-	{
-		if ($aff=="virtuel")
-		{
-			$tmpl_x->assign("aff_virtuel","class='pageTitleSelected'");
-		}
-		else
-		{
-			$tmpl_x->assign("aff_normal","class='pageTitleSelected'");
-		}
-		$tmpl_x->parse("infos.aff_virtuel");
-	}
-		
+			
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

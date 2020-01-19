@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -62,7 +62,7 @@ class resa_class extends objet_core
 	);
 
 	protected $tabList=array(
-		"taxe"=>array("none"=>"Pas de taxe","notpaid"=>"Taxe pas payée","paid"=>"Taxe payée sur place"),
+		"taxe"=>array("none"=>"Pas de taxe","notpaid"=>"Taxe pas payÃ©e","paid"=>"Taxe payÃ©e sur place"),
 	);
 	
 	# Constructor
@@ -191,7 +191,7 @@ class resa_class extends objet_core
 		if ($t1!=$t2)
 		  { $dte=$t1." - ".$t2; }
 		else if (sql2time($this->dte_deb)!="00:00:00")
-		  { $dte=$t1." (".sql2time($this->dte_deb,"nosec")." à ".sql2time($this->dte_fin,"nosec").")"; }
+		  { $dte=$t1." (".sql2time($this->dte_deb,"nosec")." Ã  ".sql2time($this->dte_fin,"nosec").")"; }
 		else
 		  { $dte=$t1." (N/A)"; }
 		return "<a href='index.php?mod=reservations&rub=reservation&id=".$this->id."'>".$dte."</a>";
@@ -317,18 +317,18 @@ class resa_class extends objet_core
 		else if ($this->dte_fin=="")
 		  { $this->dte_deb=$this->dte_fin; }
 
-		// Vérifie la date/heure de début
+		// VÃ©rifie la date/heure de dÃ©but
 		if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} ?[^$]*$/",$this->dte_deb)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_deb)) )
-		  { return "La date de début n'a pas un format correct (".$this->dte_deb."<>jj/mm/aaaa).<br />"; }
+		  { return "La date de dÃ©but n'a pas un format correct (".$this->dte_deb."<>jj/mm/aaaa).<br />"; }
 		if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_deb))
-		  { return "L'heure de début n'a pas un format correct (".$this->dte_deb."<>hh:mm:ss).<br />"; }
+		  { return "L'heure de dÃ©but n'a pas un format correct (".$this->dte_deb."<>hh:mm:ss).<br />"; }
 
 		$hdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\1', $this->dte_deb);
 		$mdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\2', $this->dte_deb);
 		$dte=date2sql($this->dte_deb,"jour")." $hdeb".(($mdeb!="") ? ":$mdeb" : ":00");
 		$this->dte_deb=$dte;
 
-		// Vérifie la date/heure de fin
+		// VÃ©rifie la date/heure de fin
 		if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} [^$]*$/",$this->dte_fin)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_fin)) )
 		  { return "La date de fin n'a pas un format correct (".$this->dte_fin."<>jj/mm/aaaa).<br />"; }
 		if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_fin))
@@ -356,7 +356,7 @@ class resa_class extends objet_core
 		  { return "Erreur avec l'id instructeur"; }
 
 		if (!is_numeric($this->uid_ressource))
-		  { return "Il faut sélectionner un avion.<br />"; }
+		  { return "Il faut sÃ©lectionner un avion.<br />"; }
 
 		if ($this->destination=="")
 		  { return "La destination est obligatoire"; }
@@ -365,7 +365,7 @@ class resa_class extends objet_core
 	  	  { $this->tpsestime=0; }
 
 		if ($this->tpsestime==0)
-	  	  { return "Vous devez saisir un temps de vol estimé.<br />"; }
+	  	  { return "Vous devez saisir un temps de vol estimÃ©.<br />"; }
 
 		if (!is_numeric($this->tpsreel))
 	  	  { $this->tpsreel=0; }
@@ -395,7 +395,7 @@ class resa_class extends objet_core
 		if (!is_numeric($this->potentiel))
 	  	  { $this->potentiel=0; }
 
-		// Vérifie si la saisi d'horametre est cohérente
+		// VÃ©rifie si la saisi d'horametre est cohÃ©rente
 		$this->horadeb=preg_replace("/,/",".",$this->horadeb);
 		$this->horafin=preg_replace("/,/",".",$this->horafin);
 		if (!is_numeric($this->horadeb))
@@ -413,10 +413,10 @@ class resa_class extends objet_core
 			  { $this->horadeb=0; }
 		}
 
-		// Tps horametre >= Tps réel
+		// Tps horametre >= Tps rÃ©el
 		// Deb horametre >= dernier vol
 
-		// Vérifie si les conditions ont été acceptées
+		// VÃ©rifie si les conditions ont Ã©tÃ© acceptÃ©es
 		if ($this->accept!="oui")
 		  { $this->accept="non"; }
 
@@ -425,7 +425,7 @@ class resa_class extends objet_core
 
 
 
-		// Vérifie si la réservation n'empiète pas sur une autre
+		// VÃ©rifie si la rÃ©servation n'empiÃ¨te pas sur une autre
 		$query ="SELECT cal.*,usr.nom AS nom ,usr.prenom AS prenom,usr.initiales,ins.nom AS insnom,ins.prenom AS insprenom,avion.immatriculation ";
 		$query.="FROM ".$this->tbl."_calendrier AS cal ";
 		$query.="LEFT JOIN ".$this->tbl."_utilisateurs AS usr ON cal.uid_pilote=usr.id ";
@@ -439,7 +439,7 @@ class resa_class extends objet_core
 	
 
 		$sql->Query($query);
-		$msg_err_t="<U>L'avion est déja réservé</U> :<BR>";
+		$msg_err_t="<U>L'avion est dÃ©ja rÃ©servÃ©</U> :<BR>";
 		$okresa=0;
 		for($i=0; $i<$sql->rows; $i++)
 		  { 
@@ -449,14 +449,14 @@ class resa_class extends objet_core
 				{
 					$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
 				}
-			$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
+			$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." Ã  ".sql2date($sql->data["dte_fin"]).".</p>";
 
 		  	return $msg_err_t;
 			$okresa=1;
 		  }
 
 
-		// Vérifie si l'instructeur est disponible
+		// VÃ©rifie si l'instructeur est disponible
 		$msg_err_t="";
 		$okresa=0;
 		if ($this->uid_instructeur>0)
@@ -481,13 +481,13 @@ class resa_class extends objet_core
 				{
 					$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
 				}
-				$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
+				$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." Ã  ".sql2date($sql->data["dte_fin"]).".</p>";
 	
 				$okresa=1;
 			}
 			if ($okresa==1)
 			{
-				return "<U>L'instructeur a déjà une réservation</U> :<BR>".$msg_err_t;
+				return "<U>L'instructeur a dÃ©jÃ  une rÃ©servation</U> :<BR>".$msg_err_t;
 			}
 		}
 			  
@@ -671,7 +671,7 @@ function ListReservationPaye($sql,$id)
 
 function ListReservationVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
 { global $MyOpt;
-	$query="SELECT ".$MyOpt["tbl"]."_calendrier.id FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui' ".(($order=="dte_deb") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "") : "")." ".(($tl>0) ? "LIMIT $ts,$tl" : "");
+	$query="SELECT ".$MyOpt["tbl"]."_calendrier.id FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "ASC" : "DESC") : "")." ".(($tl>0) ? "LIMIT $ts,$tl" : "");
 
 	$res=array();
 	$sql->Query($query);
@@ -686,7 +686,7 @@ function ListReservationVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
 
 function ListCarnetVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
 { global $MyOpt;
-	$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier WHERE uid_avion='$id' AND tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "") : "")." ".(($tl>0) ? "LIMIT $ts,".($tl+1) : "");
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier WHERE uid_avion='$id' AND tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "ASC" : "DESC") : "")." ".(($tl>0) ? "LIMIT $ts,".($tl+1) : "");
 
 	$res=array();
 	$sql->Query($query);

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,23 +19,19 @@
 */
 ?>
 
-<?
+<?php
+	$id=checkVar("id","numeric");
+
 	if (!is_numeric($id))
       { $id=0; }
 
 	if ( (!GetDroit("AccesDisponibilites")) && (!GetMyId($id)) )
-	  { FatalError("Accès non autorisé (AccesDisponibilites)"); }
+	  { FatalError("AccÃ¨s non autorisÃ© (AccesDisponibilites)"); }
 
   	require_once ($appfolder."/class/user.inc.php");
 
   	if ($id>0)
 	  { $usr = new user_class($id,$sql,((GetMyId($id)) ? true : false)); }
-
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("disponibilite.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("corefolder",$corefolder);
 
 // ---- Affiche le menu
 	$aff_menu="";

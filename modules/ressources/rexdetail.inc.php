@@ -24,21 +24,9 @@
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("rexdetail.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 // ---- Vérifie les variables
 	$id=checkVar("id","numeric");
-
-// ---- Affiche le menu
-	$aff_menu="";
-	require_once($appfolder."/modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
-
-	
-
+	$form_data=checkVar("form_data","array");
 
 	$msg_erreur="";
 	$msg_confirmation="";
@@ -46,7 +34,6 @@
 // ---- Sauvegarde
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$form_data=checkVar("form_data","array");
 		$rex=new rex_class($id,$sql);
 		if (count($form_data)>0)
 		{
@@ -86,7 +73,15 @@
 		$rex=new rex_class($id,$sql);
 		$rex->Delete();
 		$affrub="rex";
+		return;
 	}
+	
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+	
+
 // ---- Type d'affichage
 
 	$typeaff="aff";
@@ -120,19 +115,35 @@
 	}
 
 // ---- Menu
+// <div class="pagetitle pagemenu">
+	// <A href="index.php?mod=ressources&rub=rex"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+// <!-- BEGIN: editer -->
+	// <A href="index.php?mod=ressources&rub=rexdetail&fonc=editer&id={id}"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
+// <!-- END: editer -->
+// <!-- BEGIN: supprimer -->
+	// <A href="index.php?mod=ressources&rub=rexdetail&fonc=supprimer&id={id}"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">Supprimer</A>
+// <!-- END: supprimer -->
+	// <a href="index.php?mod=ressources&rub=rexdetail&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a>
+// <!-- BEGIN: notifier -->
+	// <a href="index.php?mod=ressources&rub=rexdetail&id={id}&fonc=notifier"><img src="{path_module}/img/icn32_notifier.png" alt="">Notifier</a>
+// <!-- END: notifier -->
+// </div>
 
+	addSubMenu("","Liste",geturl("ressources","rex",""),"icn32_retour.png",false,"");
 	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat))
 	{
-		$tmpl_x->parse("corps.editer");
+		addSubMenu("","Modifier",geturl("ressources","rexdetail","fonc=editer&id=".$id),"icn32_modifier.png",false,"");
 	}
 	if (GetDroit("SupprimeRex"))
 	{
-		$tmpl_x->parse("corps.supprimer");
+		addSubMenu("","Supprimer",geturl("ressources","rexdetail","fonc=supprimer&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer ce REX ?");
 	}	
+	addSubMenu("","Imprimer",geturl("ressources","rexdetail","fonc=imprimer&id=".$id),"icn32_printer.png",false,"");
 	if ((GetDroit("NotifierRex")) && ($rex->data["status"]=="close"))
 	{
-		$tmpl_x->parse("corps.notifier");
+		addSubMenu("","Notifier",geturl("ressources","rexdetail","fonc=notifier&id=".$id),"icn32_notifier.png",false,"");
 	}
+	affSubMenu();
 
 // ---- Infos de dernières maj
 	$usrmaj = new user_class($rex->uid_maj,$sql);

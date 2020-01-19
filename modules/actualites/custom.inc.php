@@ -68,7 +68,7 @@
 					$dte=new echeance_class($d["id"],$sql);
 					$ress=new ress_class($dte->uid,$sql);
 
-					$txt=$dte->Affiche()." pour ".$ress->aff("immatriculation");
+					$txt="Pour ".$ress->aff("immatriculation")." :".$dte->Affiche();
 					$tmpl_custom->assign("form_echeance_avion", $txt);
 					$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
 
@@ -78,7 +78,7 @@
 				{
 					if ($d["resa"]=="obligatoire")
 					{
-						$txt="Aucune échéance pour ".$d["description"];
+						$txt="Aucune Ã©chÃ©ance pour ".$d["description"];
 						$tmpl_custom->assign("form_echeance_avion", $txt);
 						$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
 						$nb++;

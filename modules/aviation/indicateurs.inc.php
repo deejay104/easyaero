@@ -22,11 +22,6 @@
 <?
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("indicateurs.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("corefolder",$corefolder);
-
 	
 // ---- Vérification des données
 	$dte=checkVar("dte","varchar",4);
@@ -47,6 +42,7 @@
 	$tabm[11]="Nov";
 	$tabm[12]="Déc";
 
+	$tmpl_x->assign("url", geturl("aviation","indicateurs",""));
 
 // ---- Affiche la courbe des heures
 	if (($dte=="") && (!preg_match("/[0-9]{4}/",$dte)))

@@ -9,14 +9,6 @@
 
 <!-- BEGIN: corps -->
 
-<div class="pagetitle pagemenu">
-	<a href="index.php?mod=ressources&rub=liste"><img src="{path_module}/img/icn32_retour.png" alt="">Liste</a>
-	<!-- BEGIN: supprimemaint -->
-	<a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer la maintenance</a>
-	<!-- END: supprimemaint -->
-	<a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a>
-</div>
-
 <script type="text/javascript">
 	$(function() {
 		$("#form_dte_deb").datepicker({
@@ -136,7 +128,7 @@
 </div>
 
 
-<FORM name="maintenance" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="maintenance" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="ressources">
 	<INPUT type="hidden" name="rub" value="detailmaint">
@@ -156,7 +148,7 @@
 					<label>Status</label>{form_status}
 				</p>
 				<p OnMouseOver="document.getElementById('addatelier').style.display='inline-block';" OnMouseOut="document.getElementById('addatelier').style.display='none';">
-					<label>Atelier</label>{form_uid_atelier} <a id="ajouter" class='imgDelete'><img id="addatelier" src="{path_module}/img/icn16_editer.png" style="display:none;"></a>
+					<label>Atelier</label>{form_uid_atelier} <a id="ajouter" class='imgDelete'><img id="addatelier" src="{path_root}/{path_module}/img/icn16_editer.png" style="display:none;"></a>
 				</p>
 				<p>
 					<label>Début de l'intervention</label>{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>

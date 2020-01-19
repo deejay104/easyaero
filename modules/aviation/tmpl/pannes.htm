@@ -8,16 +8,9 @@
 
 
 <!-- BEGIN: corps -->
-<div class="pagetitle pagemenu">
-	<p><A href="index.php?mod=aviation&rub=syntheses"><IMG src="{path_module}/img/icn32_carnetvols.png" alt="">Synthèses</A></p>
-	<p><A href="index.php?mod=aviation&rub=exercices"><IMG src="{path_module}/img/icn32_carnetvols.png" alt="">Exercices</A></p>
-	<p><A href="index.php?mod=aviation&rub=competences"><IMG src="{path_module}/img/icn32_carnetvols.png" alt="">Compétences</A></p>
-	<p><A href="index.php?mod=aviation&rub=progenac"><IMG src="{path_module}/img/icn32_carnetvols.png" alt="">Progression</A></p>
-	<p><A href="index.php?mod=aviation&rub=pannes" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_carnetvols.png" alt="">Pannes</A></p>
-</div>
 
 <!-- BEGIN: users -->
-	<select id="form_id" name="form_id" OnChange="document.location='index.php?mod=aviation&rub=pannes&uid='+document.getElementById('form_id').value;">
+	<select id="form_id" name="form_id" OnChange="document.location='{url}?uid='+document.getElementById('form_id').value;">
 	<!-- BEGIN: lst_users -->
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
 	<!-- END: lst_users -->

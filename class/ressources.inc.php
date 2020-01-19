@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v2.0
     Copyright (C) 2009 Matthieu Isorez
@@ -60,7 +60,7 @@ class ress_class extends objet_core
 	);
 
 	protected $tabList=array(
-		"typehora"=>array("dix"=>"Dixième","cen"=>"Centième","min"=>"Minute"),
+		"typehora"=>array("dix"=>"DixiÃ¨me","cen"=>"CentiÃ¨me","min"=>"Minute"),
 		"actif"=>array("oui"=>"oui","non"=>"non","off"=>"off")
 	);
 
@@ -133,7 +133,7 @@ class ress_class extends objet_core
 				{
 					$ret="<s>".$ret."</s>";
 				}
-				$ret="<a href='index.php?mod=ressources&rub=detail&id=".$this->id."'>".$ret."</a>";
+				$ret="<a href='".geturl("ressources","detail","id=".$this->id)."'>".$ret."</a>";
 			}
 		}
 		return $ret;

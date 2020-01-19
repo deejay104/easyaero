@@ -1,58 +1,58 @@
 <?
 // ---- Desktop
 	$tabMenu["reservations"]=array(
-		"icone"=>"static/modules/reservations/img/icn32_titre.png",
-		"nom"=>"Réservations",
+		"icone"=>$MyOpt["host"]."/"."static/modules/reservations/img/icn32_titre.png",
+		"nom"=>"RÃ©servations",
 		"droit"=>"AccesReservations",
-		"url"=>"mod=reservations"
+		"url"=>geturl("reservations","",""),
 	);
 	$tabMenu["bapteme"]=array(
-		"icone"=>"static/modules/aviation/img/icn32_baptemes.png",
-		"nom"=>"Baptèmes",
+		"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_baptemes.png",
+		"nom"=>"BaptÃ¨mes",
 		"droit"=>"AccesBaptemes",
-		"url"=>"mod=aviation&rub=baptemes"
+		"url"=>geturl("aviation","baptemes",""),
 	);
 	$tabMenu["manifestattions"]=array(
-		"icone"=>"static/modules/manifestations/img/icn32_titre.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/manifestations/img/icn32_titre.png",
 		"nom"=>"Manifestations",
 		"droit"=>"AccesManifestations",
-		"url"=>"mod=manifestations"
+		"url"=>geturl("manifestations","",""),
 	);
 	$tabMenu["comptes"]=array(
-		"icone"=>"static/modules/comptes/img/icn32_titre.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/comptes/img/icn32_titre.png",
 		"nom"=>"Comptes",
 		"droit"=>"AccesCompte",
-		"url"=>"mod=comptes"
+		"url"=>geturl("comptes","",""),
 	);
 	$tabMenu["suivi"]=array(
-		"icone"=>"static/modules/suivi/img/icn32_titre.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/suivi/img/icn32_titre.png",
 		"nom"=>"Suivi Club",
 		"droit"=>"AccesSuivi",
-		"url"=>"mod=suivi"
+		"url"=>geturl("suivi","",""),
 	);
 	$tabMenu["suivivols"]=array(
-		"icone"=>"static/modules/aviation/img/icn32_suivivols.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_suivivols.png",
 		"nom"=>"Suivi des Vols",
 		"droit"=>"AccesVols",
-		"url"=>"mod=aviation&rub=vols"
+		"url"=>geturl("aviation","vols",""),
 	);
 	$tabMenu["suiviavions"]=array(
-		"icone"=>"static/modules/ressources/img/icn32_titre.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/ressources/img/icn32_titre.png",
 		"nom"=>"Suivi des Avions",
 		"droit"=>"AccesAvions",
-		"url"=>"mod=ressources"
+		"url"=>geturl("ressources","",""),
 	);
 	$tabMenu["rex"]=array(
-		"icone"=>"static/modules/ressources/img/icn32_rex.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/ressources/img/icn32_rex.png",
 		"nom"=>"REX",
 		"droit"=>"AccesRex",
-		"url"=>"mod=ressources&rub=rex"
+		"url"=>geturl("ressources","rex",""),
 	);
 	$tabMenu["indicateurs"]=array(
-		"icone"=>"static/modules/aviation/img/icn32_indicateurs.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_indicateurs.png",
 		"nom"=>"Indicateurs",
 		"droit"=>"AccesIndicateurs",
-		"url"=>"mod=aviation&rub=indicateurs"
+		"url"=>geturl("aviation","indicateurs",""),
 	);
 	
 // ---- Phone
@@ -62,16 +62,16 @@
 	// $tabMenuPhone["logs"]["url"]="mod=logs&rub=search";
 	
 	$tabMenuPhone["reservations"]=array(
-		"icone"=>"static/modules/reservations/img/icn48_titre.png",
-		"nom"=>"Réservations",
+		"icone"=>$MyOpt["host"]."/"."static/modules/reservations/img/icn48_titre.png",
+		"nom"=>"RÃ©servations",
 		"droit"=>"AccesReservations",
-		"url"=>"mod=reservations"
+		"url"=>geturl("reservations","",""),
 	);
 	$tabMenuPhone["suivivols"]=array(
-		"icone"=>"static/modules/aviation/img/icn48_suivivols.png",
+		"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn48_suivivols.png",
 		"nom"=>"Suivi des Vols",
 		"droit"=>"AccesVols",
-		"url"=>"mod=aviation&rub=vols"
+		"url"=>geturl("aviation","vols",""),
 	);
 
 ?>

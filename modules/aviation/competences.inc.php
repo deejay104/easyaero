@@ -51,10 +51,21 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
+// ---- Affiche le sous menu
+	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
+	addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
+	addSubMenu("","Compétences",geturl("aviation","competences"),"",true);
+	addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
+	addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
+	affSubMenu();
+
+// ---- Change membre
+	$tmpl_x->assign("url",geturl("aviation","competences",""));
+	
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))
 	{
-			$lst=ListActiveUsers($sql,"std","","");
+			$lst=ListActiveUsers($sql,"std");
 		
 			foreach($lst as $i=>$tmpuid)
 			{

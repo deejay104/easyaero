@@ -26,10 +26,6 @@
 	require_once ("class/document.inc.php");
 	require_once ("class/echeance.inc.php");
 
-// ---- Charge le template
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 
 // ---- Initialisation des variables
   	$id=checkVar("id","numeric");
@@ -68,6 +64,50 @@
 	{
 		FatalError("Paramètre d'id non valide");
 	}
+
+// ---- Supprimer la ressource
+	if (($fonc=="delete") && ($id>0) && (GetDroit("SupprimeRessource")))
+	{
+			$ress->Delete();
+			$affrub="index";
+			// include("modules/ressources/index.inc.php");
+			return;
+	}
+
+// ---- Désactive la ressource
+	if (($fonc=="desactive") && ($id>0) && (GetDroit("DesactiveRessource")))
+	{
+		$ress->Desactive();
+	}
+	
+// ---- Affiche le sous-menu
+	addSubMenu("","Liste",geturl("ressources",""),"icn32_retour.png",false);
+
+	if (GetDroit("CreeRessource"))
+	{
+		// $tmpl_x->parse("corps.ajout");
+		addSubMenu("","Ajouter",geturl("ressources","detail","id=0"),"icn32_ajouter.png",false);
+	}	
+
+	if (($id==$gl_uid) || (GetDroit("ModifRessource")))
+	{
+		// $tmpl_x->parse("corps.modification");
+		addSubMenu("","Modifier",geturl("ressources","detail","id=".$id."&fonc=modifier"),"",false);
+	}
+
+	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="oui"))
+	{
+		// $tmpl_x->parse("corps.desactive");
+		addSubMenu("","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"icn32_desactive.png",false,"Voulez-vous désactiver cet avion ?");
+	}
+
+	if ((GetDroit("SupprimeRessource")) && ($ress->data["actif"]=="off"))
+	{
+		// $tmpl_x->parse("corps.suppression");
+		addSubMenu("","Liste",geturl("ressources","detail","id=".$id."&fonc=delete"),"icn32_supprime.png",false,"Voulez-vous supprimer cet avion ?");
+	}
+
+	affSubMenu();
 
 // ---- Sauvegarde les infos
 	if (($fonc=="Enregistrer") && (isset($_SESSION['tab_checkpost'][$checktime])))
@@ -134,20 +174,6 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	  }
 
-
-// ---- Supprimer la ressource
-	if (($fonc=="delete") && ($id>0) && (GetDroit("SupprimeRessource")))
-	{
-			$ress->Delete();
-			$affrub="index";
-			include("modules/ressources/index.inc.php");
-			return;
-	}
-
-	if (($fonc=="desactive") && ($id>0) && (GetDroit("DesactiveRessource")))
-	{
-		$ress->Desactive();
-	}
 	
 // ---- Affiche les infos
 	$ress = new ress_class($id,$sql);
@@ -160,19 +186,7 @@
 	  { $tmpl_x->assign("form_$k", $ress->aff($k,$typeaff)); }
 
 	$tmpl_x->assign("bk_couleur",$ress->data["couleur"]);
-	  
-	if (($id==$gl_uid) || (GetDroit("ModifRessource")))
-	  { $tmpl_x->parse("corps.modification"); }
-
-	if (GetDroit("CreeRessource"))
-	  { $tmpl_x->parse("corps.ajout"); }
-
-	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="oui"))
-	  { $tmpl_x->parse("corps.desactive"); }
-
-	if ((GetDroit("SupprimeRessource")) && ($ress->data["actif"]=="off"))
-	  { $tmpl_x->parse("corps.suppression"); }
-
+	
 	if ($typeaff=="form")
 	  {
 		$tmpl_x->parse("corps.submit");

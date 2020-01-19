@@ -1,9 +1,9 @@
 <?php
-// ---- Refuse l'accès en direct
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Vérifie les paramètres
+// ---- VÃ©rifie les paramÃ¨tres
 	// Short-circuit if the client did not give us a date range.
 	if (!isset($_GET['start']) || !isset($_GET['end'])) {
 		die("Please provide a date range.");
@@ -19,7 +19,7 @@
 
 	$input_arrays=array();
 
-// ---- Charge les disponibilités
+// ---- Charge les disponibilitÃ©s
 	require_once ($appfolder."/class/user.inc.php");
 	$usr=new user_class($mid,$sql,false,true);
 
@@ -30,7 +30,7 @@
 		$sql->GetRow($i);
 
 		$input_arrays[$i]["id"]=$sql->data["id"];
-		$input_arrays[$i]["title"]=utf8_encode(($usr->data["disponibilite"]=="dispo") ? "Occupé" : "Disponible");
+		$input_arrays[$i]["title"]=($usr->data["disponibilite"]=="dispo") ? "OccupÃ©" : "Disponible";
 		$input_arrays[$i]["start"]=date("c",strtotime($sql->data["dte_deb"]));
 		$input_arrays[$i]["end"]=date("c",strtotime($sql->data["dte_fin"]));
 	}

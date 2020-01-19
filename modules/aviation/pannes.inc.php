@@ -27,10 +27,6 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
 	$order=checkVar("order","varchar",12);
@@ -50,11 +46,22 @@
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
-	
+
+// ---- Affiche le sous menu
+	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
+	addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
+	addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
+	addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
+	addSubMenu("","Pannes",geturl("aviation","pannes"),"",true);
+	affSubMenu();
+
+// ---- Change membre
+	$tmpl_x->assign("url",geturl("aviation","pannes",""));
+
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))
 	{
-			$lst=ListActiveUsers($sql,"std","","");
+			$lst=ListActiveUsers($sql,"std");
 		
 			foreach($lst as $i=>$tmpuid)
 			{
@@ -76,7 +83,6 @@
 		"exercice" => array("aff"=>"Exercice","width"=>400),
 		"dte" => array("aff"=>"Date","width"=>120),
 		"progression" => array("aff"=>"Progression","width"=>100),
-		"progref" => array("aff"=>"Requis","width"=>100),
 	);
 	$tabValeur=array();
 	foreach($lst as $fid=>$d)
@@ -88,16 +94,10 @@
 		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
 		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
 		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
-		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
-		$tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "<div style='padding-left:50px;'>A</div>" : "E";
-		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
-		$tabValeur[$fid]["progref"]["aff"]=($d["progref"]=="A") ? "Acquis" : "Etude";
+		$tabValeur[$fid]["progression"]["val"]=($d["progression"]=="A") ? "A" : "";
+		$tabValeur[$fid]["progression"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/".(($d["progression"]=="A") ? "icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"] : "icn16_nc.png")."'>";
+		$tabValeur[$fid]["progression"]["align"]="center";
 		
-		if ($d["progref"]!=$d["progression"])
-		{
-			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
-			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
-		}
 	}
 
 	if ((!isset($order)) || ($order=="")) { $order="dte"; }

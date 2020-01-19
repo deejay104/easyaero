@@ -1,9 +1,9 @@
-<?
-// ---- Refuse l'accès en direct
+<?php
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Vérifie les paramètres
+// ---- VÃ©rifie les paramÃ¨tres
 	// Short-circuit if the client did not give us a date range.
 	if (!isset($_GET['jstart']) || !isset($_GET['jend'])) {
 		die("Please provide a date range.");

@@ -24,10 +24,6 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("validation.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
@@ -40,11 +36,12 @@
 	$uid_avion=checkVar("uid_avion","numeric");
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
+	$form_valid=checkVar("form_valid","array");
 
 // ---- Enregistre
 	$msg_erreur="";
 
-	if ((GetDroit("ValideFichesMaintenance")) && ($fonc=="Accepter") && (is_array($form_valid)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ((GetDroit("ValideFichesMaintenance")) && ($fonc=="Accepter") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		foreach($form_valid as $fid=>$k)
 		{

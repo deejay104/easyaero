@@ -1,4 +1,4 @@
-<?
+<?php
 require_once ("class/user.inc.php");
 
 class compte_class{
@@ -122,7 +122,7 @@ class compte_class{
 		    {
 				if (($c>0) && ($d>0) && ($dte!=""))
 				{
-					// Vérifie le montant
+					// VÃ©rifie le montant
 					preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$montant,$t);
 					$montant=$t[1].".".$t[2];
 
@@ -136,10 +136,10 @@ class compte_class{
 
 							foreach ($ventilation["data"] as $i=>$v)
 							{
-								// Vérifie le montant
+								// VÃ©rifie le montant
 								preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$v["montant"],$t);
 								$m=$t[1].".".$t[2];
-								// Créé les lignes de mouvement
+								// CrÃ©Ã© les lignes de mouvement
 								$this->mvt[$i]["uid"]=$v["tiers"];
 								$this->mvt[$i]["tiers"]=($ventilation["ventilation"]=="debiteur") ? $d : $c;
 								$this->mvt[$i]["montant"]=($ventilation["ventilation"]=="debiteur") ? -$m : $m;
@@ -152,7 +152,7 @@ class compte_class{
 						}
 					}
 					
-					// Complète s'il y a un reste
+					// ComplÃ¨te s'il y a un reste
 					if ($tot["debiteur"]<>0)
 					{
 						$this->mvt[$i]["uid"]=$d;
@@ -207,18 +207,18 @@ class compte_class{
 		$this->erreur="";
 		if ($this->status!="brouillon")
 		{
-			$this->erreur="Cette transaction a déjà été débitée<br>";
+			$this->erreur="Cette transaction a dÃ©jÃ Â Ã©tÃ© dÃ©bitÃ©e<br>";
 			return 0;
 		}
 		
-		// Débite le mouvement sur les comptes
+		// DÃ©bite le mouvement sur les comptes
 		$sql=$this->sql;
 
 		$this->nbmvt=0;
 		$totmnt=0;
 		foreach($this->mvt as $i=>$m)
 		{
-			// Récupère la dernière transaction
+			// RÃ©cupÃ¨re la derniÃ¨re transaction
 			$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte WHERE uid='".$m["uid"]."'";
 			$res=$sql->QueryRow($query);
 			if ($res["maxid"]>0)
@@ -230,7 +230,7 @@ class compte_class{
 				$prev_id=0;
 			}
 
-			// Charge les données de la transaction précédente
+			// Charge les donnÃ©es de la transaction prÃ©cÃ©dente
 			$query="SELECT id,hash FROM ".$this->tbl."_compte WHERE id='".$prev_id."'";
 			$res=$sql->QueryRow($query);
 			$prev_hash=$res["hash"];
@@ -369,7 +369,7 @@ class compte_class{
 	}
 }
 
-// Affiche le détail de toutes les lignes d'un mouvement
+// Affiche le dÃ©tail de toutes les lignes d'un mouvement
 function AfficheDetailMouvement($id,$mid)
 { global $MyOpt,$sql;
 	$txt="Mouvement : ".$mid."\n";

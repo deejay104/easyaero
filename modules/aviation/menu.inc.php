@@ -1,25 +1,39 @@
 <?
-// ---- Charge le template
-  	// $tmpl_menu = new XTemplate("modules/membres/tmpl/menu.htm");
-  	$tmpl_menu = LoadTemplate("menu","aviation");
-	$tmpl_menu->assign("path_module",$module."/".$mod);
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Sélectionne le menu courant
-	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
+// ---- Affiche le menu
 
-// ---- Affiche les menus
+	addPageMenu("",$mod,"Mes vols",geturl("aviation","vols",""),"icn32_carnetvols.png",($rub=="vols") ? true : false);
+	addPageMenu("",$mod,"Carnet de route",geturl("aviation","carnet",""),"icn32_carnetvols.png",($rub=="carnet") ? true : false);
 	if (GetDroit("AccesSuiviVolsMembres"))
 	{
-		$tmpl_menu->parse("infos.suiviVols");
+		addPageMenu("",$mod,"Suivi membres",geturl("aviation","suivivols",""),"icn32_suivivols.png",($rub=="suivivols") ? true : false);
 	}
-	if (GetDroit("AccesSuiviHorametre"))
+	addPageMenu("",$mod,"Suivi annuel",geturl("aviation","suiviannuel",""),"icn32_suivivols.png",($rub=="suiviannuel") ? true : false);
+
+	$sel=false;
+	if ($rub=="syntheses")
 	{
-		$tmpl_menu->parse("infos.horametre");
+		$sel=true;
 	}
-	
-	
-// ---- Affiche le menu	
-	$tmpl_menu->parse("infos");
-	$aff_menu=$tmpl_menu->text("infos");
+	else if ($rub=="exercices")
+	{
+		$sel=true;
+	}
+	else if ($rub=="competences")
+	{
+		$sel=true;
+	}
+	else if ($rub=="progenac")
+	{
+		$sel=true;
+	}
+	else if ($rub=="pannes")
+	{
+		$sel=true;
+	}
+	addPageMenu("","aviation","Livret de progression",geturl("aviation","syntheses",""),"icn32_synthese.png",$sel);
 
 ?>

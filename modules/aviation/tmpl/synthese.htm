@@ -14,13 +14,6 @@
 #mto { width: 100%!important; }
 </style>
 
-<div class="pagetitle pagemenu">
-	<A href="index.php?{prev}"><IMG src="{path_module}/img/icn32_retour.png" alt="">Retour</A>
-<!-- BEGIN: supprimer -->
-	<A href="index.php?mod=aviation&rub=synthese&id={form_id}&uid={prev_uid}&idvol={prev_idvol}&fonc=supprimer"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">Supprimer</A>
-<!-- END: supprimer -->
-</div>
-
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="aviation">
 	<INPUT type="hidden" name="rub" value="synthese">
@@ -127,7 +120,7 @@
 	});
 	
 	$("#addexercice").autocomplete({
-		source: "api.php?mod=aviation&rub=exercice",
+		source: "{path_root}/api/v1/aviation/exercice",
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -162,7 +155,7 @@
 
 		$.ajax({
 			type: "GET",
-			url: "api.php?mod=aviation&rub=exercice&ref="+ref,
+			url: "{path_root}/api/v1/aviation/exercice?ref="+ref,
 			dataType: 'JSON',
 
 			success: function(response) {
@@ -184,7 +177,7 @@
 
 		$.ajax({
 			type: "GET",
-			url: "api.php?mod=aviation&rub=exercice&fonc=theme&ref="+ref,
+			url: "{path_root}/api/v1/aviation/exercice/theme?ref="+ref,
 			dataType: 'JSON',
 
 			success: function(response) {
@@ -254,6 +247,7 @@
 <!-- END: signedeleve -->
 			</div>
 		</td>
+	</tr>
 	</table>
 </form>
 <br />

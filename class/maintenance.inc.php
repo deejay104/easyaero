@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -41,7 +41,7 @@ class maint_class extends objet_core
 	);
 	
 	protected $tabList=array(
-		"status"=>array('planifie'=>'PlanifiÈ','confirme'=>'ConfirmÈ','effectue'=>'EffectuÈ','cloture'=>'CloturÈ','supprime'=>'SupprimÈ'),
+		"status"=>array('planifie'=>'Planifi√©','confirme'=>'Confirm√©','effectue'=>'Effectu√©','cloture'=>'Clotur√©','supprime'=>'Supprim√©'),
 	);
 
 	# Constructor

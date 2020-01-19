@@ -23,14 +23,14 @@
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("fiche.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
 // ---- Affiche le menu
 	$aff_menu="";
 	require($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
+
+// ---- Affiche le sous-menu
+	addSubMenu("","Créer",geturl("ressources","fichemaint",""),"icn32_ajouter.png",false,"");
+	affSubMenu();
 
 // ---- Vérification des données
 	$uid_avion=checkVar("uid_avion","numeric");

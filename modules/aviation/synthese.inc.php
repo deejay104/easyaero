@@ -25,10 +25,6 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 // ---- Initialise les variables
 	$id=checkVar("id","numeric");
 	$uid=checkVar("uid","numeric");
@@ -116,6 +112,10 @@
 // ---- Charge la fiche de synthèse
 	$fiche=new synthese_class($id,$sql);
 
+	$tmpl_x->assign("form_id",$id);
+	$tmpl_x->assign("prev_uid",$uid);
+	$tmpl_x->assign("prev_idvol",$idvol);
+
 	$signed=false;
 	if ($fiche->val("skey_instructeur")!="")
 	{
@@ -142,10 +142,7 @@
 		$ok=true;
 	}
 
-	if ($ok)
-	{
-		$tmpl_x->parse("corps.supprimer");
-	}
+
 
 // ---- Supprimer
 	if ( ($fonc=="supprimer") && ($id>0) )
@@ -202,20 +199,26 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 
-// ---- Modifie les infos
+// ---- Affiche le sous-menu
 
 	if ($idvol>0)
 	{
-		$tmpl_x->assign("prev","mod=reservations&rub=reservation&id=".$idvol);
+		addSubMenu("","Retour",geturl("index.php","","mod=reservations&rub=reservation&id=".$idvol),"icn32_retour.png",false);
 	}
 	else if ($uid>0)
 	{
-		$tmpl_x->assign("prev","mod=aviation&rub=syntheses&uid=".$uid);
+		addSubMenu("","Retour",geturl("index.php","","mod=aviation&rub=syntheses&uid=".$uid),"icn32_retour.png",false);
 	}
 	else
 	{
-		$tmpl_x->assign("prev","mod=aviation&rub=syntheses");
+		addSubMenu("","Retour",geturl("index.php","","mod=aviation&rub=syntheses"),"icn32_retour.png",false);
 	}
+	if ($ok)
+	{
+		addSubMenu("","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"icn32_supprimer.png",false);
+	}
+
+	affSubMenu();
 	
 // ---- Charge la fiche
 
@@ -253,8 +256,9 @@
 		$c_conf=new exercice_conf_class($v["idexercice"],$sql);
 		$c_line=new exercice_class($v["id"],$sql);
 
+		$render=$typeaff;
 		$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
-		$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compec[".$v["id"]."]"));
+		$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compec[".$v["id"]."]",$render,$v["id"]."_"));
 		if ($c_conf->val("type")=="panne")
 		{
 			$tmpl_x->parse("corps.lst_panne");
@@ -313,9 +317,7 @@
 	$tmpl_x->assign("form_total_rmg",$fiche->NbRmg());
 
 // ---- Affiche les paramètres
-	$tmpl_x->assign("form_id",$id);
-	$tmpl_x->assign("prev_uid",$uid);
-	$tmpl_x->assign("prev_idvol",$idvol);
+
 	$tmpl_x->assign("form_idvol",$fiche->val("idvol"));
 	$tmpl_x->assign("form_uid_pilote",$fiche->val("uid_pilote"));
 	$tmpl_x->assign("form_uid_instructeur",$fiche->val("uid_instructeur"));

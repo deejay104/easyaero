@@ -116,57 +116,10 @@
 		$tabValeur[$i]["total"]["aff"]=AffTemps($usr->NbHeures("0000-00-00"));
 		$dte=$usr->DernierVol();
 		$tabValeur[$i]["lastflight"]["val"]=strtotime($dte["dte"]);
-		$tabValeur[$i]["lastflight"]["aff"]="<a href='index.php?mod=aviation&vols&id=$id'>".$usr->AffDernierVol()."</a>";
-
-		//$lastdc=strtotime($usr->AffDernierVol("DC"));
-		//$renewlic=strtotime($usr->data["dte_licence"]);
+		$tabValeur[$i]["lastflight"]["aff"]="<a href='".geturl("reservations","reservation","id=".$id)."'>".$usr->AffDernierVol()."</a>";
 		
 		$lastdc=$usr->DernierVol("DC",60);
 
-		// $daystodc=floor((strtotime($usr->data["dte_licence"])-strtotime($lastdc["dte"]))/86400);
-		// $daystolic=floor((time()-strtotime($usr->data["dte_licence"]))/86400);
-		
-		// if ($usr->data["dte_licence"]=="0000-00-00")
-		  // {
-				// $tabValeur[$i]["prorogation"]["val"]="0";
-				// $tabValeur[$i]["prorogation"]["aff"]="-";
-		  // }
-		// else if ($daystolic>0)
-		  // {
-				// $tabValeur[$i]["prorogation"]["val"]="2";
-				// $tabValeur[$i]["prorogation"]["aff"]=" ";
-		  // }
-		// else if ($daystolic>-365)
-		  // {
-/*
-				if ($daystodc>365)
-					{
-						$tabValeur[$i]["prorogation"]["val"]="3";
-						$tabValeur[$i]["prorogation"]["aff"]="<img src='images/valid_non.gif' alt='' border='0' />";
-				  }
-*/
-				// if ( ($daystodc<365) && ($daystodc>0))
-				  // {
-						// $tabValeur[$i]["prorogation"]["val"]="4";
-						// $tabValeur[$i]["prorogation"]["aff"]="<a href='reservations.php?rub=reservation&id=".$lastdc["id"]."'><img src='$module/$mod/img/icn16_ok.png' alt='' /></a>";
-				  // }
-				// else
-				  // {
-		
-						// $tabValeur[$i]["prorogation"]["val"]="3";
-						// $tabValeur[$i]["prorogation"]["aff"]="<img src='$module/$mod/img/icn16_nc.png' />";
-					// }
-		  // }
-		// else
-		  // {
-				// $tabValeur[$i]["prorogation"]["val"]="2";
-				// $tabValeur[$i]["prorogation"]["aff"]=" ";
-		  // }
-
-		// $tabValeur[$i]["lic"]["val"]=$usr->data["dte_licence"];
-		// $tabValeur[$i]["lic"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_licence")."</a>";
-		// $tabValeur[$i]["med"]["val"]=$usr->data["dte_medicale"];
-		// $tabValeur[$i]["med"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_medicale")."</a>";
 		foreach($tabecheance as $ii=>$t)
 		{
 			$dte = new echeance_core(0,$sql,$id);
@@ -180,7 +133,7 @@
 		  	if ($usr->CheckLache($res->id))
 		  	{
 					$tabValeur[$i]["av".$ii]["val"]="1";
-					$tabValeur[$i]["av".$ii]["aff"]="<a href='membres.php?rub=detail&id=$id'><img src='$module/$mod/img/icn16_ok2.png' alt=''></a>";
+					$tabValeur[$i]["av".$ii]["aff"]="<a href='".geturl("membres","detail","id=".$id)."'><img src='".$MyOpt["host"]."/".$module."/".$mod."/"."img/icn16_ok2.png' alt=''></a>";
 			}
 			else
 		  	{

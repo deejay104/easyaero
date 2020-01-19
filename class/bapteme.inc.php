@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -49,9 +49,9 @@ class bapteme_class extends objet_core
 
 	
 	protected $tabList=array(
-		"status"=>array("0"=>"Nouveau","1"=>"Analyse","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé"),
+		"status"=>array("0"=>"Nouveau","1"=>"Analyse","2"=>"A affecter","3"=>"AffectÃ©","4"=>"PlanifiÃ©","5"=>"EffectuÃ©","6"=>"AnnulÃ©"),
 		"nb"=>array("1"=>"1","2"=>"2","3"=>"3"),
-		"type"=>array("btm"=>"Baptème","vi"=>"VI"),
+		"type"=>array("btm"=>"BaptÃ¨me","vi"=>"VI"),
 		"nb"=>array(
 			"fr"=>array("1"=>"1","2"=>"2","3"=>"3"),
 			"en"=>array("1"=>"1","2"=>"2","3"=>"3")
