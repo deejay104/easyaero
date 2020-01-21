@@ -9,10 +9,10 @@
 <!-- BEGIN: corps -->
 
 <!-- BEGIN: listeVols -->
-<form name="users" method="post" action="index.php" enctype="multipart/form-data">
+<form name="users" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<input type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="aviation">
-	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=aviation&rub=vols&id='+id;">
+	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='{path_root}/index.php?mod=aviation&rub=vols&id='+id;">
 	<!-- BEGIN: lst_user -->
 	<option value="{id_user}" {chk_user}>{nom_user}</OPTION>
 	<!-- END: lst_user -->

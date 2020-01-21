@@ -1,5 +1,5 @@
 <?php
-// ---- Refuse l'accès en direct
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
@@ -17,12 +17,12 @@
 		$exo=new exercice_conf_class($id,$sql);
 
 		$result["id"]=$id;
-		$result["description"]=utf8_encode($exo->val("description"));
-		$result["type"]=utf8_encode($exo->val("type"));
-		$result["module"]=utf8_encode($exo->val("module"));
-		$result["refffa"]=utf8_encode($exo->val("refffa"));
-		$result["refenac"]=utf8_encode($exo->val("refenac"));
-		$result["competence"]=utf8_encode($exo->val("competence"));
+		$result["description"]=$exo->val("description");
+		$result["type"]=$exo->val("type");
+		$result["module"]=$exo->val("module");
+		$result["refffa"]=$exo->val("refffa");
+		$result["refenac"]=$exo->val("refenac");
+		$result["competence"]=$exo->val("competence");
 		
 		$lstp=ListProgression($sql,$id);
 		$i=1;
@@ -49,20 +49,20 @@
 		{
 			$id=checkVar("id","numeric");
 			$exo=new exercice_conf_class($id,$sql);
-			$exo->Valid("description",utf8_decode(checkVar("description","varchar",100)));
-			$exo->Valid("type",utf8_decode(checkVar("type","varchar",20)));
-			$exo->Valid("module",utf8_decode(checkVar("module","varchar",40)));
-			$exo->Valid("refffa",utf8_decode(checkVar("refffa","varchar",20)));
-			$exo->Valid("refenac",utf8_decode(checkVar("refenac","numeric")));
-			$exo->Valid("competence",utf8_decode(checkVar("competence","varchar",100)));
+			$exo->Valid("description",checkVar("description","varchar",100));
+			$exo->Valid("type",checkVar("type","varchar",20));
+			$exo->Valid("module",checkVar("module","varchar",40));
+			$exo->Valid("refffa",checkVar("refffa","varchar",20));
+			$exo->Valid("refenac",checkVar("refenac","numeric"));
+			$exo->Valid("competence",checkVar("competence","varchar",100));
 			
 			$exo->Save();
 
 			$prog=new exercice_prog_class(checkVar("1_prog_id","numeric"),$sql);
 			$prog->Valid("idexercice",$exo->id);
-			$prog->Valid("refffa",utf8_decode(checkVar("1_refffa","varchar",20)));
+			$prog->Valid("refffa",checkVar("1_refffa","varchar",20));
 			$prog->Save();
-error_log(		checkVar("1_prog_id","numeric")." ".utf8_decode(checkVar("1_refffa","varchar",20)));
+error_log(		checkVar("1_prog_id","numeric")." ".(checkVar("1_refffa","varchar",20)));
 			$result["result"]="OK";
 		}
 	}

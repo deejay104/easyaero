@@ -1,15 +1,15 @@
-<?
-// ---- Refuse l'accès en direct
+<?php
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
   
 // ---- Header de la page
 
-	// Date du passé
+	// Date du passÃ©
 	header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
-	// toujours modifié
+	// toujours modifiÃ©
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
 	// HTTP/1.1
@@ -22,7 +22,7 @@
 	header('Content-type: image/png');
 
 
-// ---- Récupère les paramètres
+// ---- RÃ©cupÃ¨re les paramÃ¨tres
 	$id=(is_numeric($_REQUEST["id"]) ? $_REQUEST["id"] : 0);
 	$deb=(is_numeric($_REQUEST["deb"]) ? $_REQUEST["deb"] : 0);
 	$fin=(is_numeric($_REQUEST["fin"]) ? $_REQUEST["fin"] : 0);
@@ -39,14 +39,14 @@
 		if ($sql->rows>0)
 		  {
 			$ok="nok";
-			$txt="Occupé";
+			$txt="OccupÃ©";
 			for($i=0; $i<$sql->rows; $i++)
 			  { 
 				$sql->GetRow($i);
 				if ($sql->data["id"]==$_REQUEST["resa"])
 				  {
 				  	$ok="ok";
-					$txt="Réservé";
+					$txt="RÃ©servÃ©";
 				  }
 			  }
 		  }
@@ -60,7 +60,7 @@
 	{
 		if (($deb>0) && ($deb>0))
 		{
-			erreur("Les paramètres sont incorrects.");
+			erreur("Les paramÃ¨tres sont incorrects.");
 		}
 		else
 		{

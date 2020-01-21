@@ -26,15 +26,10 @@
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("vols.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 // ---- Vérifie les variables
-	$order=checkVar("order","varchar");
-	$trie=checkVar("trie","varchar");
+	$id=checkVar("id","numeric");
+	$order=checkVar("order","varchar",10,"dte_deb");
+	$trie=checkVar("trie","varchar",1,"i");
 	$ts=checkVar("ts","numeric");
 
 // ---- Affiche le menu
@@ -45,7 +40,7 @@
 // ---- Affiche la liste des membres
 	if (GetDroit("ListeVols"))
 	{
-		if (!isset($id))
+		if ($id==0)
 		  { $id=$uid; }
 
 		$lstusr=ListActiveUsers($sql,"prenom","");
@@ -78,9 +73,12 @@
 	$tabTitre["temps"]["width"]=70;
 	$tabTitre["cout"]["aff"]="Cout";
 	$tabTitre["cout"]["width"]=100;
-	$tabTitre["instructeur"]["aff"]="Instructeur";
-	$tabTitre["instructeur"]["width"]=270;
-
+	if ($theme!="phone")
+	{
+		$tabTitre["instructeur"]["aff"]="Instructeur";
+		$tabTitre["instructeur"]["width"]=270;
+		$tabTitre["instructeur"]["mobile"]="no";
+	}
 
 // ---- Chargement des données
 	// if ($order=="") { $order="dte_deb"; }
@@ -137,7 +135,7 @@
 	// }
 
 // ---- Affiche le tableau
-	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,$order,geturlapi($mod,"vols","mesvols","id=".$id),false));
+	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","mesvols","id=".$id."&theme=".$theme),$order,$trie,false));
 
 
 // ---- Affecte les variables d'affichage

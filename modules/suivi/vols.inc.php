@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -18,20 +18,15 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */?>
 
-<?
-	if (!GetDroit("AccesSuiviVols")) { FatalError("Accès non autorisé (AccesSuiviVols)"); }
+<?php
+	if (!GetDroit("AccesSuiviVols")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviVols)"); }
 
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("vols.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$idavion=checkVar("idavion","numeric");
 
 // ---- Affiche le menu
@@ -56,8 +51,8 @@
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["nom"]=$sql->data["nom"];
 	}
 
-// ---- Valide les vols à enregistrer
-	if ((($fonc=="Enregistrer") || ($fonc=="Débiter")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+// ---- Valide les vols Ã  enregistrer
+	if ((($fonc=="Enregistrer") || ($fonc=="DÃ©biter")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$form_tarif=checkVar("form_tarif","array");
 		$form_horadeb=checkVar("form_horadeb","array");
@@ -84,11 +79,11 @@
 				{
 					$res=new resa_class($k,$sql);
 
-					// Récupérer tarifs pilote depuis la base
+					// RÃ©cupÃ©rer tarifs pilote depuis la base
 					$p=round($tabTarif[$res->uid_ressource][$form_tarif[$k]]["pilote"]*$tps/60,2);
 
 					// Calcul du tarif instructeur
-					// Si tarif instructeur mis dans la fiche prendre celui là à la place du tarif sélectionné
+					// Si tarif instructeur mis dans la fiche prendre celui lÃ  Ã  la place du tarif sÃ©lectionnÃ©
 					$pi=0;
 					if ($res->uid_instructeur>0)
 					{
@@ -101,7 +96,7 @@
 						}
 					}
 
-					// S'il y a une réduction de temps on l'a soustrait au temps pilote
+					// S'il y a une rÃ©duction de temps on l'a soustrait au temps pilote
 					if ($tabTarif[$res->uid_ressource][$form_tarif[$k]]["reduction"]>0)
 					{
 						$p=round($tabTarif[$res->uid_ressource][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$res->uid_ressource][$form_tarif[$k]]["reduction"])/60,2);
@@ -114,7 +109,7 @@
 					$res->tarif=$form_tarif[$k];
 					$msg_result.=$res->Save();
 
-					if ($fonc=="Débiter")
+					if ($fonc=="DÃ©biter")
 					{
 						DebiteVol($k,$tps,$res->uid_ressource,($res->uid_debite>0) ? $res->uid_debite : $res->uid_pilote,$res->uid_instructeur,$form_tarif[$k],$p,$pi,date('Y-m-d',strtotime($res->dte_deb)));
 					}
@@ -143,7 +138,7 @@
 						$horafin=$form_horafin[$k];
 						$tpsreel=$form_bloc[$k];
 						
-						// Récupérer tarifs pilote depuis la base
+						// RÃ©cupÃ©rer tarifs pilote depuis la base
 						$p=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*$tps/60,2);
 
 						// Calcul du tarif instructeur
@@ -159,7 +154,7 @@
 							}
 						}
 
-						// S'il y a une réduction de temps on l'a soustrait au temps pilote
+						// S'il y a une rÃ©duction de temps on l'a soustrait au temps pilote
 						if ($tabTarif[$uid_a][$form_tarif[$k]]["reduction"]>0)
 						{
 							$p=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$uid_a][$form_tarif[$k]]["reduction"])/60,2);
@@ -185,7 +180,7 @@
 							$msg_result.=$res->Save();
 						}
 
-						if ($fonc=="Débiter")
+						if ($fonc=="DÃ©biter")
 						{
 							DebiteVol($id,$tps,$uid_a,$uid_p,$uid_i,$tarif,$p,$pi,$dte);
 						}
@@ -201,14 +196,14 @@
 			affInformation($msg_result,"error");
 		}
 	  
-		if ($fonc=="Débiter")
+		if ($fonc=="DÃ©biter")
 		{
 			$tmpl_x->assign("form_page", "vols");
 			$tmpl_x->parse("corps.enregistre");
 		}
 	}
 
-// ---- Enregistre les opérations
+// ---- Enregistre les opÃ©rations
 	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$form_calid=checkVar("form_calid","array");
@@ -239,10 +234,10 @@
   				}
 			}
 
-			// $tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
+			// $tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : "")."<br />".$ret);
 			// $tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");			
 			// $tmpl_x->parse("corps.msg_enregistre");
-			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 
 		}
 
@@ -264,8 +259,8 @@
 		}
 	}
 
-// ---- Affiche la page demandée
-	if ($fonc!="Débiter")
+// ---- Affiche la page demandÃ©e
+	if ($fonc!="DÃ©biter")
 	{
 		if ($MyOpt["updateBloc"]=="on")
 		{
@@ -304,13 +299,13 @@
 			$tmpl_x->assign("nom_avion_edt",$tab_avions[$idavion]["immatriculation"]);
 		}
 
-		// Récupère la plus vieille date de saisie des vols
+		// RÃ©cupÃ¨re la plus vieille date de saisie des vols
 		$query = "SELECT dte_deb,horafin FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
 		$res=$sql->QueryRow($query);
 		$dte=$res["dte_deb"];
 		$horadeb_prec=$res["horafin"];
 
-		// Liste des vols réservés
+		// Liste des vols rÃ©servÃ©s
 		$query = "SELECT id ";
 		$query.= "FROM ".$MyOpt["tbl"]."_calendrier ";
 		$query.= "WHERE dte_deb>='$dte' AND dte_deb<'".now()."' AND actif='oui' AND prix=0 AND uid_avion='$idavion' ORDER BY dte_deb,horadeb";

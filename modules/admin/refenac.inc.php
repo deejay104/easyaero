@@ -20,17 +20,11 @@
 ?>
 
 <?php
-	if (!GetDroit("AccesConfigReferences")) { FatalError("Accès non autorisé (AccesConfigReferences)"); }
+	if (!GetDroit("AccesConfigReferences")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigReferences)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("refenac.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
-	$checktime=checkVar("checktime","numeric");
+// ---- VÃ©rifie les variables
 	$form_data=checkVar("form_data","array");
 
 // ---- Enregistre les modifications
@@ -52,7 +46,7 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
-// ---- Supprime une référence
+// ---- Supprime une rÃ©fÃ©rence
 	if ($fonc=="delete")
 	{
 		$id=checkVar("id","numeric");
@@ -67,7 +61,6 @@
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once("modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
 
 	$tabTitre=array(
 		"module"=>array(
@@ -83,7 +76,7 @@
 			"width"=>500
 		),
 		"refenac"=>array(
-			"aff"=>"Référence",
+			"aff"=>"RÃ©fÃ©rence",
 			"width"=>100
 		),
 		"action"=>array(
@@ -91,8 +84,8 @@
 			"width"=>24
 		),
 	);
-	$order=checkVar("order","varchar");
-	$trie=checkVar("trie","varchar",1);
+	$order=checkVar("order","varchar",10,"refenac");
+	$trie=checkVar("trie","varchar",1,"d");
 	
 
 	$lst=ListRefEnac($sql);
@@ -113,24 +106,23 @@
 		$tabValeur[$i]["refenac"]["aff"]=$ref->aff("refenac","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='index.php?mod=admin&rub=refenac&fonc=delete&id=".$d["id"]."' class='imgDelete' style='display:none;'><img src='".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='index.php?mod=admin&rub=refenac&fonc=delete&id=".$d["id"]."' class='imgDelete' style='display:none;'><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a>";
 	}
 
 	$ref=new refenac_class(0,$sql);
 	$tabValeur[0]["id"]["val"]=0;
-	$tabValeur[0]["module"]["val"]=$ref->val("module");
+	$tabValeur[0]["module"]["val"]="";
 	$tabValeur[0]["module"]["aff"]=$ref->aff("module","form","form_data[0]");
-	$tabValeur[0]["phase"]["val"]=$ref->val("phase");
+	$tabValeur[0]["phase"]["val"]="";
 	$tabValeur[0]["phase"]["aff"]=$ref->aff("phase","form","form_data[0]");
-	$tabValeur[0]["description"]["val"]=$ref->val("description");
+	$tabValeur[0]["description"]["val"]="";
 	$tabValeur[0]["description"]["aff"]=$ref->aff("description","form","form_data[0]");
-	$tabValeur[0]["refenac"]["val"]=$ref->val("refenac");
+	$tabValeur[0]["refenac"]["val"]="";
 	$tabValeur[0]["refenac"]["aff"]=$ref->aff("refenac","form","form_data[0]");
+	$tabValeur[0]["action"]["val"]=0;
+	$tabValeur[0]["action"]["aff"]="<div id='del_".$d["id"]."' style='display:none;'></div>";
 
-	if ((!isset($order)) || ($order=="")) { $order="refenac"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
-
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,"del"));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"del"));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

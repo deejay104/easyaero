@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,20 +19,13 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesCompte")) { FatalError("Accès non autorisé (AccesCompte)"); }
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module",$module."/".$mod);
-
-// ---- Initialise les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+<?php
+	if (!GetDroit("AccesCompte")) { FatalError("AccÃ¨s non autorisÃ© (AccesCompte)"); }
 
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Récupère les variables
+// ---- RÃ©cupÃ¨re les variables
 	$id=checkVar("id","numeric");
 	if ($id==0)
 	{
@@ -102,7 +95,7 @@
 	$cptusr=new user_class($id,$sql);
 
 
-// ---- Affiche le compte demandé
+// ---- Affiche le compte demandÃ©
 	if ((!isset($order)) || ($order==""))
 	{ $order="date_valeur"; }
 
@@ -113,7 +106,7 @@
 	// Nom de l'utilisateur
 	$tmpl_x->assign("nom_compte", $cptusr->Aff("prenom")." ".$cptusr->Aff("nom"));
 
-	// Définition des variables
+	// DÃ©finition des variables
 	if ((!isset($ts)) || (!is_numeric($ts)))
 	  { $ts = 0; }
 
@@ -171,7 +164,7 @@
 	$res=$sql->QueryRow($query);
 	$totligne=$res["nb"];
 
-	// Calcul le solde du compte au début de l'affichage
+	// Calcul le solde du compte au dÃ©but de l'affichage
 	$query = "SELECT SUM(lignes.montant) AS solde FROM (SELECT montant FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$totligne) AS lignes";
 	$res=$sql->QueryRow($query);
 	$solde=$res["solde"];
@@ -220,7 +213,7 @@
 	{
 		foreach($tabValeur as $i=>$d)
 		{
-			$tabValeur[$i]["date_valeur"]["aff"]="<a title='Créé le ".sql2date($tabValeur[$i]["date_creat"]["val"])."'>".$tabValeur[$i]["date_valeur"]["aff"]."</a>";
+			$tabValeur[$i]["date_valeur"]["aff"]="<a title='CrÃ©Ã© le ".sql2date($tabValeur[$i]["date_creat"]["val"])."'>".$tabValeur[$i]["date_valeur"]["aff"]."</a>";
 			$tabValeur[$i]["mouvement"]["aff"]="<a title='".AfficheDetailMouvement($id,$d["mid"]["val"])."'>".$tabValeur[$i]["mouvement"]["val"]."</a>";
 		}
 	}
@@ -233,7 +226,7 @@
 			$aff="";
 			if ($confirm["res"]=="ok")
 			{
-				$aff="<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>";
+				$aff="<a title='Signature de la transaction confirmÃ©e'><img src='static/images/icn16_signed.png' /></a>";
 				if ($fonc!="showhash")
 				{
 					$tabValeur[$i]["hash"]["val"]="";
@@ -241,12 +234,12 @@
 			}
 			else if ($confirm["res"]=="nok")
 			{
-				$aff="<a title='Cette transaction ou la précédente sont altérées.\nID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."'><img src='static/images/icn16_warning.png' /></a>";
+				$aff="<a title='Cette transaction ou la prÃ©cÃ©dente sont altÃ©rÃ©es.\nID courant:".$d["lid"]["val"]." ID prÃ©cÃ©dent:".$d["precedent"]["val"]."'><img src='static/images/icn16_warning.png' /></a>";
 				$tabValeur[$i]["hash"]["aff"]="<s>".$tabValeur[$i]["hash"]["val"]."</s><br />".$confirm["hash"];
 			}
 			else if ($confirm["res"]=="mvt")
 			{
-				$aff="<a title=\"Le mouvement n'a pas un total nul. Une des transaction a pu être altérée.\nMouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\"><img src='static/images/icn16_warning.png' /></a>";
+				$aff="<a title=\"Le mouvement n'a pas un total nul. Une des transaction a pu Ãªtre altÃ©rÃ©e.\nMouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\"><img src='static/images/icn16_warning.png' /></a>";
 			}
 			
 			$tabValeur[$i]["signature"]["val"]=$confirm;

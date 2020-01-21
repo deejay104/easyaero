@@ -1,6 +1,6 @@
-<?
+<?php
 // ---------------------------------------------------------------------------------------------
-//   Recherche d'une réservation
+//   Recherche d'une rÃ©servation
 //     ($Author: miniroot $)
 //     ($Date: 2016-04-22 20:48:24 +0200 (ven., 22 avr. 2016) $)
 //     ($Revision: 456 $)
@@ -27,7 +27,7 @@
 */
 ?>
 
-<?
+<?php
 	require_once ("class/reservation.inc.php");
 
 // ---- Charge le template
@@ -144,7 +144,7 @@
 			$tabValeur[$i]["avion"]["val"]=strtoupper($avion->immatriculation);
 			$tabValeur[$i]["avion"]["aff"]="<a href=\"reservations.php?rub=reservation&id=$id\">".strtoupper($avion->immatriculation)."</a>";
 			$tabValeur[$i]["date"]["val"]=$resa->dte_deb;
-			$tabValeur[$i]["date"]["aff"]="<a href=\"reservations.php?rub=reservation&id=$id\">".sql2date($resa->dte_deb)." à ".sql2date($resa->dte_fin)."</a>";
+			$tabValeur[$i]["date"]["aff"]="<a href=\"reservations.php?rub=reservation&id=$id\">".sql2date($resa->dte_deb)." Ã  ".sql2date($resa->dte_fin)."</a>";
 
 			$usr = new user_class($resa->uid_pilote,$sql);
 			$tabValeur[$i]["pilote"]["val"]=$usr->fullname;
@@ -154,8 +154,8 @@
 			$tabValeur[$i]["instructeur"]["val"]=$usr->fullname;
 			$tabValeur[$i]["instructeur"]["aff"]="<A href='membres.php?rub=detail&id=".$resa->uid_instructeur."'>".$usr->fullname."</a>";
 
-			$tabValeur[$i]["status"]["val"]=($resa->reel=="oui")?(($resa->actif=="oui")?"Actif":"Supprimé"):"Masqué";
-			$tabValeur[$i]["status"]["aff"]="<a href=\"reservations.php?rub=reservation&id=$id\">".(($resa->reel=="oui")?(($resa->actif=="oui")?"Actif":"Supprimé"):"Masqué")."</a>";
+			$tabValeur[$i]["status"]["val"]=($resa->reel=="oui")?(($resa->actif=="oui")?"Actif":"SupprimÃ©"):"MasquÃ©";
+			$tabValeur[$i]["status"]["aff"]="<a href=\"reservations.php?rub=reservation&id=$id\">".(($resa->reel=="oui")?(($resa->actif=="oui")?"Actif":"SupprimÃ©"):"MasquÃ©")."</a>";
 		  }
 
 		if ($order=="") { $order="date"; }

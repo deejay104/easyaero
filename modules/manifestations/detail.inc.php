@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -16,18 +16,13 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/manifestation.inc.php");
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("detail.htm"));
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$id=checkVar("id","numeric");
 	$jstart=checkVar("jstart","numeric");
 	$jstart=checkVar("jstart","numeric");
@@ -48,7 +43,7 @@
 		  	{
 		  		$msg_erreur.=$manip->Valid($k,$v);
 		  	}
-			$msg_confirmation.="Vos données ont été enregistrées.<BR>";
+			$msg_confirmation.="Vos donnÃ©es ont Ã©tÃ© enregistrÃ©es.<BR>";
 		}
 
 		$manip->Save();
@@ -94,14 +89,14 @@
 			$val=$res["cout"]*$v["nb"];
 			$dte=date("Y-m-d");
 
-			$form_commentaire=addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)";
+			$form_commentaire=addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."â‚¬)";
 			
 			$mvt = new compte_class(0,$sql);
 			$mvt->Generate($v["idcpt"],$MyOpt["id_PosteManip"],$form_commentaire,date("Y-m-d"),$val,array());
 			$mvt->Save();
 			$nbmvt=$nbmvt+$mvt->Debite();
 
-			// A voir si cette partie est nécessaire ?
+			// A voir si cette partie est nÃ©cessaire ?
 			$tmpl_x->assign("aff_mouvement_detail", $mvt->Affiche());
 			$tmpl_x->parse("corps.msg_enregistre.lst_enregistre");
 			
@@ -114,11 +109,11 @@
 		
 		if ($ret!="")
 		{
-			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,"error");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : "")."<br />".$ret,"error");
 		}
 		else
 		{
-			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : ""),"ok");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : ""),"ok");
 
 			$query="UPDATE ".$MyOpt["tbl"]."_manips SET facture='oui' WHERE id='$id'";
 			$sql->Update($query);
@@ -137,7 +132,7 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
-// ---- Inscription à la manifestation
+// ---- Inscription Ã  la manifestation
 	if ( (!GetDroit("ModifParticipant")) || ($idusr==0) )
 	{
 		$idusr=$gl_uid;
@@ -196,31 +191,32 @@
 	if ($manip->data["cout"]>0) 
 	  { $tmpl_x->parse("corps.aff_form_cout"); }
 
-
-
-	if  ( ($manip->data["facture"]=="non") && ((date_diff_txt($manip->data["dte_limite"],date("Y-m-d"))<=0) || ($manip->data["dte_limite"]=="0000-00-00")) )
-	{
-		$tmpl_x->parse("infos.bouttons.participe");
-	}
-
-	if (($manip->data["facture"]=="non") && (date_diff_txt($manip->data["dte_manip"],date("Y-m-d"))>=0) && ($manip->data["cout"]<>0) && GetDroit("FactureManips"))
-	{
-		$tmpl_x->parse("infos.bouttons.facture");
-	}
-
-	if (($id>0) && (($manip->uid_creat==$gl_uid) || (GetDroit("ModifManifestation"))))
-	{
-		$tmpl_x->parse("infos.bouttons.modification");
-	}
-	if (($id>0) && (($manip->uid_creat==$gl_uid) || (GetDroit("SupprimeManifestation"))))
-	{
-		$tmpl_x->parse("infos.bouttons.suppression");
-	}
-
-
 	if ($id>0)
 	{
-		$tmpl_x->parse("infos.bouttons");
+		addPageMenu("",$mod,"Retour",geturl("manifestations","",""),"icn32_retour.png",false);
+
+		if (($id>0) && (($manip->uid_creat==$gl_uid) || (GetDroit("ModifManifestation"))))
+		{
+			addPageMenu("",$mod,"Modifier",geturl("manifestations","detail","fonc=modifier&id=".$id),"icn32_modifier.png",false);
+		}
+
+		if (($id>0) && (($manip->uid_creat==$gl_uid) || (GetDroit("SupprimeManifestation"))))
+		{
+			addPageMenu("",$mod,"Supprimer",geturl("manifestations","detail","fonc=supprimer&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer cette manifestation ?");
+		}
+
+		if  ( ($manip->data["facture"]=="non") && ((date_diff_txt($manip->data["dte_limite"],date("Y-m-d"))<=0) || ($manip->data["dte_limite"]=="0000-00-00")) )
+		{
+			addPageMenu("",$mod,"Participer",geturl("manifestations","detail","fonc=ok&id=".$id),"icn32_participe.png",false);
+			addPageMenu("",$mod,"Absent",geturl("manifestations","detail","fonc=nok&id=".$id),"icn32_absent.png",false);
+		}
+
+		if (($manip->data["facture"]=="non") && (date_diff_txt($manip->data["dte_manip"],date("Y-m-d"))>=0) && ($manip->data["cout"]<>0) && GetDroit("FactureManips"))
+		{
+			addPageMenu("",$mod,"Facturer la manifestation",geturl("manifestations","detail","fonc=facture&id=".$id),"icn32_facture.png",false);
+		}
+
+
 	}
 
 	if ($typeaff=="form")
@@ -261,7 +257,7 @@
 			  	$txt_ok.="<p>".AffFullname($sql->data["prenom"],$sql->data["nom"])." ".(($sql->data["nb"]>1) ? "(".$sql->data["nb"].")" :"");
 					if (GetDroit("ModifParticipant"))
 					  {
-					  	$txt_ok.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=nok'><img src='static/modules/$mod/img/icn12_absent.png' border=0/></a>";
+					  	$txt_ok.=" <a href='".geturl("manifestations","detail","id=".$id."&idusr=".$sql->data["id"]."&fonc=nok")."'><img src='".$MyOpt["host"]."/static/modules/$mod/img/icn12_absent.png' border=0/></a>";
 					  }
 			  	$txt_ok.="</p>";
 			  	$nbok=$nbok+$sql->data["nb"];
@@ -271,7 +267,7 @@
 			  	$txt_nok.="<p>".AffFullname($sql->data["prenom"],$sql->data["nom"])." ".(($sql->data["nb"]>1) ? "(".$sql->data["nb"].")" :"");
 					if (GetDroit("ModifParticipant"))
 					  {
-					  	$txt_nok.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=ok'><img src='static/modules/$mod/img/icn12_participe.png' border=0/></a>";
+					  	$txt_nok.=" <a href='".geturl("manifestations","detail","id=".$id."&idusr=".$sql->data["id"]."&fonc=ok")."'><img src='".$MyOpt["host"]."/static/modules/$mod/img/icn12_participe.png' border=0/></a>";
 					  }
 			  	$txt_nok.="</p>";
 			  	$nbnok=$nbnok+$sql->data["nb"];
@@ -279,8 +275,8 @@
 			else if (GetDroit("ModifParticipant"))
 			  {
 			  	$txt_na.="<p>".AffFullname($sql->data["prenom"],$sql->data["nom"])." ".(($sql->data["nb"]>1) ? "(".$sql->data["nb"].")" :"");
-			  	$txt_na.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=ok'><img src='static/modules/$mod/img/icn12_participe.png' border=0/></a>&nbsp;";
-			  	$txt_na.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=nok'><img src='static/modules/$mod/img/icn12_absent.png' border=0/></a>&nbsp;";
+			  	$txt_na.=" <a href='".geturl("manifestations","detail","id=".$id."&idusr=".$sql->data["id"]."&fonc=ok")."'><img src='".$MyOpt["host"]."/static/modules/$mod/img/icn12_participe.png' border=0/></a>&nbsp;";
+			  	$txt_na.=" <a href='".geturl("manifestations","detail","id=".$id."&idusr=".$sql->data["id"]."&fonc=nok")."'><img src='".$MyOpt["host"]."/static/modules/$mod/img/icn12_absent.png' border=0/></a>&nbsp;";
 			  	$txt_na.="</p>";
 			  }
 		  }

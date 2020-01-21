@@ -20,16 +20,12 @@
 ?>
 
 <?php
-	// if (!GetDroit("AccesSynthese")) { FatalError("Accès non autorisé (AccesSynthese)"); }
+	// if (!GetDroit("AccesSynthese")) { FatalError("AccÃ¨s non autorisÃ© (AccesSynthese)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
-
-// ---- Charge le template
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
@@ -52,9 +48,9 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
 // ---- Affiche le sous menu
-	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
+	addSubMenu("","SynthÃ¨ses",geturl("aviation","syntheses"),"",false);
 	addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
-	addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
+	addSubMenu("","CompÃ©tences",geturl("aviation","competences"),"",false);
 	addSubMenu("","Progression",geturl("aviation","progenac"),"",true);
 	addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
 	affSubMenu();
@@ -139,7 +135,7 @@
 	if ((!isset($order)) || ($order=="")) { $order=""; }
 	if ((!isset($trie)) || ($trie=="")) { $trie=""; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,""));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 	
 // ---- Affecte les variables d'affichage

@@ -11,7 +11,7 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='index.php?mod=suivi&rub=vols&idavion='+document.getElementById('idavion').value;
+ 	document.location='{path_root}/index.php?mod=suivi&rub=vols&idavion='+document.getElementById('idavion').value;
 }
 
 function calcHorametre(id)
@@ -41,7 +41,7 @@ function calcHorametre(id)
 }
 </script>
 
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="vols">
@@ -78,7 +78,7 @@ function calcHorametre(id)
 			<th width=240><B>Pilote</B></TD>
 			<th width=170><B>Instructeur</B></TD>
 			<th width=170><B>Tarif</B></TD>
-			<th width=140 colspan=2><B>Horamètre</B></TD>
+			<th width=140 colspan=2><B>HoramÃ¨tre</B></TD>
 			<th width=70><B>Temps (min)</B></TD>
 			<th width=70><B>Bloc (min.)</B></TD>
 			<th width=100><B>Destination</B></TD>
@@ -87,7 +87,7 @@ function calcHorametre(id)
 		<!-- BEGIN: lst_vols -->
 		<TR>
 			<TD width=20>&nbsp;</TD>
-			<TD><a href="index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
+			<TD><a href="{path_root}/index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
 			<TD>{pilote_vols}</TD>
 			<TD>{instructeur_vols}</TD>
 			<TD>
@@ -144,7 +144,7 @@ function calcHorametre(id)
 		<!-- END: lst2_vols -->
 	</TABLE>
 	<br />
-	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Débiter"> <INPUT type="submit" name="fonc" value="Annuler">
+	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="DÃ©biter"> <INPUT type="submit" name="fonc" value="Annuler">
 	<!-- END: aff_vols -->
 
 </FORM>

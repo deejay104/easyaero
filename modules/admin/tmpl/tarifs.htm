@@ -9,22 +9,7 @@
 
 <!-- BEGIN: corps -->
 
-<div class="pagetitle pagemenu">
-<!-- BEGIN: comptes -->
-	<p><A href="index.php?mod=admin&rub=comptes" {class_comptes}>Comptes</A></p>
-<!-- END: comptes -->
-<!-- BEGIN: postes -->
-	<p><A href="index.php?mod=admin&rub=postes" {class_postes}>Postes</A></p>
-<!-- END: postes -->
-<!-- BEGIN: tarifs -->
-	<p><A href="index.php?mod=admin&rub=tarifs" {class_tarifs}>Tarifs</A></p>
-<!-- END: tarifs -->
-<!-- BEGIN: previsions -->
-	<p><A href="index.php?mod=admin&rub=previsions" {class_previsions}>Prévisions</A></p>
-<!-- END: previsions -->
-</div>
-
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="tarifs">
@@ -37,13 +22,13 @@
 			<th width=100><B>Avion</B></th>
 			<th width=40><B>Code</B></th>
 			<th width=160><B>Nom</B></th>
-			<th width=160><B>Aff. Réservation</B></th>
+			<th width=160><B>Aff. RÃ©servation</B></th>
 			<th width=160><B>Poste</B></th>
 			<th width=70><B>Pilote</B></th>
 			<th width=70><B>Instructeur</B></th>
-			<th width=70><B>Réduction (min)</B></th>
-			<th width=70><B>Défaut Pilote</B></th>
-			<th width=70><B>Défaut Instructeur</B></th>
+			<th width=70><B>RÃ©duction (min)</B></th>
+			<th width=70><B>DÃ©faut Pilote</B></th>
+			<th width=70><B>DÃ©faut Instructeur</B></th>
 			<th width=24>&nbsp;</TD>
 		  </TR>
 
@@ -68,7 +53,7 @@
 			<TD><INPUT type="text" name="tarif_reduction[{id_tarifs}]" value="{tarif_reduction}" size=5></TD>
 			<TD><INPUT type="radio" name="tarif_defaut_pil[{id_avion}]" value="{id_tarifs}" {tarif_defautpil_selected} size=5></TD>
 			<TD><INPUT type="radio" name="tarif_defaut_ins[{id_avion}]" value="{id_tarifs}" {tarif_defautins_selected} size=5></TD>
-			<TD><a id='del_{id_tarifs}' href="index.php?mod=admin&rub=tarifs&fonc=delete&id={id_tarifs}" class='imgDelete' style='display:none;'><img src="{path_module}/img/icn16_supprimer.png"></a></TD>
+			<TD><a id='del_{id_tarifs}' href="index.php?mod=admin&rub=tarifs&fonc=delete&id={id_tarifs}" class='imgDelete' style='display:none;'><img src="{path_root}/{path_module}/img/icn16_supprimer.png"></a></TD>
 		  </TR>
 		<!-- END: lst_tarifs -->
 		  <TR style='border-top: 1px solid #000000; height:35px;'>
@@ -106,9 +91,9 @@
 </FORM>
 
 <div style='position:relative; float: right; right:20px; width: 400px; border: 1px solid #000000; border-radius: 5px; padding: 15px; background-color:#eeeeee;'>
-	<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+	<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
 	<div style='margin-left: 40px;'>
-	Le poste permet de spécifier un poste particulier pour le débiteur pour le tarif en question. Si 'Poste avion' est choisi, le poste défini dans la fiche avion est utilisé.
+	Le poste permet de spÃ©cifier un poste particulier pour le dÃ©biteur pour le tarif en question. Si 'Poste avion' est choisi, le poste dÃ©fini dans la fiche avion est utilisÃ©.
 	</div>
 </div>
 

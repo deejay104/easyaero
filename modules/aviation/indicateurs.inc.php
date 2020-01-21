@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,18 +19,18 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/ressources.inc.php");
 
 	
-// ---- Vérification des données
+// ---- VÃ©rification des donnÃ©es
 	$dte=checkVar("dte","varchar",4);
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 
 // ---- Liste des mois
 	$tabm[1]="Jan";
-	$tabm[2]="Fév";
+	$tabm[2]="FÃ©v";
 	$tabm[3]="Mar";
 	$tabm[4]="Avr";
 	$tabm[5]="Mai";
@@ -40,7 +40,7 @@
 	$tabm[9]="Sep";
 	$tabm[10]="Oct";
 	$tabm[11]="Nov";
-	$tabm[12]="Déc";
+	$tabm[12]="DÃ©c";
 
 	$tmpl_x->assign("url", geturl("aviation","indicateurs",""));
 
@@ -189,7 +189,7 @@
 			$s=",";
 		}
 		$txt.="] }";
-		$txt.=",{ type: 'line', name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
+		$txt.=",{ type: 'line', name: 'PrÃ©vision ".$tabHeures[$id]["avion"]."', data: [";
 		$s="";
 		for ($m=1; $m<=12; $m++)
 		{
@@ -219,7 +219,7 @@
 			$s=",";
 		}
 		$txt.="] }";
-		$txt.=",{ type: 'line', name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
+		$txt.=",{ type: 'line', name: 'PrÃ©vision ".$tabHeures[$id]["avion"]."', data: [";
 		$s="";
 		$tot=0;
 		for ($m=1; $m<=12; $m++)
@@ -230,13 +230,13 @@
 		}
 		$txt.="] }";
 		$cs=",";
-		// $txt.="{ type: 'line', name: 'Prévision ".$tabHeures[$id]["immat"]."', data: [".$chart[$id]["prev"]."] },";
+		// $txt.="{ type: 'line', name: 'PrÃ©vision ".$tabHeures[$id]["immat"]."', data: [".$chart[$id]["prev"]."] },";
 	}
 
 	$tmpl_x->assign("aff_chartcumul",$txt);
 
 
-// ---- Affiche les années
+// ---- Affiche les annÃ©es
 
 	$query="SELECT DATE_FORMAT(dte_deb,'%Y') AS annee FROM ".$MyOpt["tbl"]."_calendrier GROUP BY DATE_FORMAT(dte_deb,'%Y') ORDER BY DATE_FORMAT(dte_deb,'%Y')";
 	$sql->Query($query);

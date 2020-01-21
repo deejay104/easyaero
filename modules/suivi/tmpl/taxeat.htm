@@ -6,22 +6,19 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
-<div class="pagetitle pagemenu">
-	<p><A OnClick='OpenDialog();' style='color:#000000;'><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A></p>
-</div>
-<br />
 
 <style>
 ul.ui-autocomplete {
     z-index: 1100;
 }
+
 </style>
 
 <script type="text/javascript">
 	$(function() {
 <!-- BEGIN: lst_vols_search -->
 		$("#dest_{id}").autocomplete({
-			source: "api.php?mod=navigation&rub=getwp&type=Airport&taxe=oui",
+			source: "{path_root}/api.php?mod=navigation&rub=getwp&type=Airport&taxe=oui",
 			select: function(event, ui) {
 				oFormObject = document.forms['reservation'];
 				oFormObject.elements["dest_{id}"].value=ui.item.value;
@@ -33,7 +30,7 @@ ul.ui-autocomplete {
 <!-- END: lst_vols_search -->
 
 		$("#dest_0").autocomplete({
-			source: "api.php?mod=navigation&rub=getwp&type=Airport",
+			source: "{path_root}/api.php?mod=navigation&rub=getwp&type=Airport",
 			select: function(event, ui) {
 				document.getElementById("dest_0").value=ui.item.value;
 				document.getElementById("taxe_0").value=ui.item.taxe;
@@ -48,7 +45,7 @@ ul.ui-autocomplete {
 			top: 10,
 			modal: true,
 			buttons: {
-				"Débiter": SubmitDialog,
+				"DÃ©biter": SubmitDialog,
 				Cancel: function() { dialog.dialog( "close" );
 			}
 			},
@@ -88,7 +85,7 @@ function HideLine(id)
 </script>
 
 		
-<FORM id="debite" name="debite" method="post" action="index.php" enctype="multipart/form-data">
+<FORM id="debite" name="debite" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="taxeat">
@@ -98,7 +95,7 @@ function HideLine(id)
 	<INPUT type="hidden" id="dia_taxe" name="dtaxe" value="">
 	<INPUT type="hidden" id="dia_date" name="ddate" value="">
 	<INPUT type="hidden" id="dia_pilote" name="dpilote" value="">
-	<div id="dialog-form" title="Débiter Taxe d'atterrissage" class="formulaire" style="display:none;">
+	<div id="dialog-form" title="DÃ©biter Taxe d'atterrissage" class="formulaire" style="display:none;">
 		<br />
 		<TABLE  class='tableauAff'>
 			<tr>
@@ -128,7 +125,7 @@ function HideLine(id)
 
 <!-- BEGIN: aff_mvt_detail -->
 <div style='width:1050px; padding-top :15px; padding-bottom :15px; margin-bottom:15px;'>
-Mouvements débités :<br />
+Mouvements dÃ©bitÃ©s :<br />
 <!-- BEGIN: aff_mvt_ligne -->
 {aff_mouvement_detail}
 <!-- END: aff_mvt_ligne -->
@@ -142,7 +139,7 @@ Mouvements débités :<br />
 
 	
 	<!-- BEGIN: aff_debiter -->
-	<p><INPUT type="submit" name="fonc" value="Débiter"></p>
+	<p><INPUT type="submit" name="fonc" value="DÃ©biter"></p>
 	<!-- END: aff_debiter -->
 	
 	<TABLE  class='tableauAff'>

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,19 +19,13 @@
 */
 ?>
 
-<?
+<?php
 
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
-	
-// ---- Charge le template
-	// $tmpl_x = new XTemplate (MyRep("suivivols.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
 
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 	$dte=checkVar("dte","varchar",4);
@@ -47,7 +41,7 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Date début et fin
+// ---- Date dÃ©but et fin
 
 	if ($type=="12")
 	{
@@ -64,7 +58,7 @@
 		$dfin=($dte+1)."-01-01";
 	}
 	
-// ---- Liste des années
+// ---- Liste des annÃ©es
 
 	$query = "SELECT MIN(dte_deb) AS dtedeb FROM ".$MyOpt["tbl"]."_calendrier";
 	$res=$sql->QueryRow($query);
@@ -72,7 +66,6 @@
 	$dte1=date("Y",strtotime($res["dtedeb"]));
 	if ($dte1<1970)
 	  { $dte1=1970; }
-
 	for($i=$dte1; $i<=date("Y"); $i++)
 	{ 
 			$tmpl_x->assign("dte_annee", $i);
@@ -83,7 +76,7 @@
 	
 // ---- Entete du tableau
 	$tabTitre=array();
-	$tabTitre["prenom"]["aff"]="Prénom";
+	$tabTitre["prenom"]["aff"]="PrÃ©nom";
 	$tabTitre["prenom"]["width"]=150;
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=210;

@@ -7,22 +7,7 @@
 
 <!-- BEGIN: corps -->
 
-<div class="pagetitle pagemenu">
-<!-- BEGIN: comptes -->
-	<p><A href="index.php?mod=admin&rub=comptes" {class_comptes}>Comptes</A></p>
-<!-- END: comptes -->
-<!-- BEGIN: postes -->
-	<p><A href="index.php?mod=admin&rub=postes" {class_postes}>Postes</A></p>
-<!-- END: postes -->
-<!-- BEGIN: tarifs -->
-	<p><A href="index.php?mod=admin&rub=tarifs" {class_tarifs}>Tarifs</A></p>
-<!-- END: tarifs -->
-<!-- BEGIN: previsions -->
-	<p><A href="index.php?mod=admin&rub=previsions" {class_previsions}>Prévisions</A></p>
-<!-- END: previsions -->
-</div>
-
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="comptes">
@@ -50,7 +35,7 @@
 			<INPUT type="text" name="form_description[{form_id}]" style="width:400px;" value="{form_description}">
 		</TD>
 		<TD>
-			<a id='del_{form_id}' href="index.php?mod=admin&rub=comptes&fonc=delete&id={form_id}" class='imgDelete' style='display:none;'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
+			<a id='del_{form_id}' href="{path_root}/index.php?mod=admin&rub=comptes&fonc=delete&id={form_id}" class='imgDelete' style='display:none;'><img src="{path_root}/{path_module}/img/icn16_supprimer.png" border=0 /></a>
 		</TD>
 
 	  </TR>

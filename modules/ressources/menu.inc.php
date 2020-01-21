@@ -1,5 +1,5 @@
-<?
-// ---- Refuse l'accès en direct
+<?php
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
@@ -8,29 +8,29 @@
 	// $tmpl_menu->assign("path_module","$module/$mod");
 	// $tmpl_menu->assign("path_root",$MyOpt["host"]);
 
-// ---- Sélectionne le menu courant
+// ---- SÃ©lectionne le menu courant
 	// $tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
 
 
 	if (GetDroit("AccesAvions"))
 	{
 		// $tmpl_menu->parse("infos.listeavions");
-		addPageMenu("",$mod,"Liste des avions",geturl("ressources","",""),"icn32_liste.png",($rub=="") ? true : false);
+		addPageMenu("",$mod,"Avions",geturl("ressources","",""),"icn32_liste.png",(($rub=="index") || ($rub=="detail")) ? true : false);
 	}	
 	if (GetDroit("AccesSuiviHorametre"))
 	{
-		addPageMenu("",$mod,"Suivi Horamètres",geturl("ressources","horametre",""),"icn32_carnetvols.png",($rub=="horametre") ? true : false);
+		addPageMenu("",$mod,"Suivi HoramÃ¨tres",geturl("ressources","horametre",""),"icn32_carnetvols.png",($rub=="horametre") ? true : false);
 	}
 	if (GetDroit("AccesFichesMaintenance"))
 	{
 		// $tmpl_menu->parse("infos.fiche");
-		addPageMenu("",$mod,"Fiches de maintenance",geturl("ressources","fiche",""),"icn32_ficheajout.png",($rub=="fiche") ? true : false);
+		addPageMenu("",$mod,"Fiches de maintenance",geturl("ressources","fiche",""),"icn32_ficheajout.png",(($rub=="fiche") || ($rub=="fichemaint")) ? true : false);
 	}	
 	
 	if (GetDroit("AccesFichesValidation"))
 	{
 		// $tmpl_menu->parse("infos.validation");
-		addPageMenu("",$mod,"Fiches à valider",geturl("ressources","validation",""),"icn32_ficheok.png",($rub=="validation") ? true : false);
+		addPageMenu("",$mod,"Fiches Ã  valider",geturl("ressources","validation",""),"icn32_ficheok.png",($rub=="validation") ? true : false);
 	}	
 	if (GetDroit("AccesMaintenances"))
 	{

@@ -3,9 +3,6 @@
 <!-- END: icone -->
 <!-- BEGIN: infos -->
 	<p><A href="#" OnClick="submitForm('centrage');"><IMG src="{path_root}/{path_module}/img/icn32_devismasse.png" border=0>Devis de masse</A></p>
-	<!-- BEGIN: supprimer -->
-	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_root}/{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
-	<!-- END: supprimer -->
 	<!-- BEGIN: synthese -->
 	<p><A href="#" OnClick="submitForm('synthese');"><IMG src="{path_root}/{path_module}/img/icn32_synthese.png" border=0>Ajouter Synthèse</A></p>
 	<!-- END: synthese -->
@@ -42,7 +39,7 @@
 				console.log("fin="+tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
 				var fin=new Date(tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
 
-				document.getElementById("imgdispo").src="api.php?mod=membres&rub=checkdispo&mid="+mid+"&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000+45*60);
+				document.getElementById("imgdispo").src="{path_root}/api.php?mod=membres&rub=checkdispo&mid="+mid+"&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000+45*60);
 			}
 		});
 
@@ -56,7 +53,7 @@
 		});
 
 		$("#destination").autocomplete({
-			source: "api.php?mod=navigation&rub=getwp&type=Airport",
+			source: "{path_root}/api.php?mod=navigation&rub=getwp&type=Airport",
 			select: function(event, ui) { 
 				oFormObject = document.forms['reservation']; 
 				oFormObject.elements["destination"].value=ui.item.value; 
@@ -169,7 +166,7 @@
 				<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
 				<!-- END: lst_instructeur -->
 			</SELECT>
-			<img id="imgdispo" src="api.php?mod=membres&rub=checkdispo&mid={form_uid_instructeur}&deb={deb}&fin={fin}" style='height:16px; vertical-align:top; margin-top:4px;'>
+			<img id="imgdispo" src="{path_root}/api.php?mod=membres&rub=checkdispo&mid={form_uid_instructeur}&deb={deb}&fin={fin}" style='height:16px; vertical-align:top; margin-top:4px;'>
 		</p>
 	<!-- END: aff_instructeur -->
 

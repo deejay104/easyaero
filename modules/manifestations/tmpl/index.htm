@@ -7,11 +7,11 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
-<link href='{corefolder}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+<link href='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
 
-<script src='{corefolder}/external/fullcalendar/lib/moment.min.js'></script>
-<script src='{corefolder}/external/fullcalendar/fullcalendar.min.js'></script>
-<script src='{corefolder}/external/fullcalendar/locale/fr.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/lib/moment.min.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
 
 <script>
 	$(document).ready(function() {
@@ -43,22 +43,22 @@
 			},
 
 			select: function(start, end) {
-				document.location="index.php?mod=manifestations&rub=detail&jstart="+start;
+				document.location="{path_root}/index.php?mod=manifestations&rub=detail&jstart="+start;
 			},
 			eventClick: function(event, element) {
-				document.location="index.php?mod=manifestations&rub=detail&id="+event.id;
+				document.location="{path_root}/index.php?mod=manifestations&rub=detail&id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {
-				$.ajax({ url: 'api.php?mod=manifestations&rub=updatecal&id='+event.id+'&jstart='+event.start });
+				$.ajax({ url: '{path_root}/api.php?mod=manifestations&rub=updatecal&id='+event.id+'&jstart='+event.start });
 			},
 			eventDrop: function(event,dayDelta,minuteDelta) {
-				$.ajax({ url: 'api.php?mod=manifestations&rub=updatecal&id='+event.id+'&jstart='+event.start });
+				$.ajax({ url: '{path_root}/api.php?mod=manifestations&rub=updatecal&id='+event.id+'&jstart='+event.start });
 			},
 
 
 			events: {
-				url: 'api.php?mod=manifestations&rub=getcal',
+				url: '{path_root}/api.php?mod=manifestations&rub=getcal',
 				error: function() {
 						$('#script-warning').show();
 					}
@@ -75,7 +75,7 @@
 
 
 	<div id='script-warning'>
-		Erreur : <code>api.php</code> doit être accessible.
+		Erreur : <code>api.php</code> doit Ãªtre accessible.
 	</div>
 
 	<div id='loading'>loading...</div>

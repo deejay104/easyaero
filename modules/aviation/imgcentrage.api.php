@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -20,16 +20,16 @@
 
 
 
-// ---- Refuse l'accès en direct
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
   
 // ---- Header de la page
-	// Date du passé
+	// Date du passÃ©
 	header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
-	// toujours modifié
+	// toujours modifiÃ©
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
 	// HTTP/1.1
@@ -46,7 +46,7 @@
 	$h = 400;
 
 
-// ---- Récupère les paramètres
+// ---- RÃ©cupÃ¨re les paramÃ¨tres
 	$id=checkVar("id","numeric");
 	$rid=checkVar("rid","numeric");
 
@@ -58,7 +58,7 @@
 		$query="SELECT cal.dte_deb, cal.dte_fin,avion.immatriculation,avion.tolerance,avion.centrage FROM ".$MyOpt["tbl"]."_calendrier AS cal LEFT JOIN ".$MyOpt["tbl"]."_ressources AS avion ON cal.uid_avion=avion.id WHERE cal.id='$id'";
 		$resvol=$sql->QueryRow($query);
 		
-		// Récupère la liste des passagers
+		// RÃ©cupÃ¨re la liste des passagers
 		$query = "SELECT * FROM ".$MyOpt["tbl"]."_masses WHERE uid_vol='$id'";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
@@ -76,7 +76,7 @@
 	}
 	else
 	{
-		erreur("Les paramètres sont incorrects.");
+		erreur("Les paramÃ¨tres sont incorrects.");
 		exit;
 	}
 	
@@ -88,7 +88,7 @@
 	xml_parse_into_struct($parser,$data,$values,$tags);
 	xml_parser_free($parser);
 
-	// boucle à travers les structures
+	// boucle Ã  travers les structures
 	foreach ($tags as $key=>$val)
 	{
 		if ($key == "place")
@@ -149,7 +149,7 @@
 	imagefilledrectangle($img,21,60,$l-20,$h-21,$grisclair);
 	imagerectangle($img,0,0,$l-1,$h-1,$black);
 
-	// Trace l'enveloppe de tolérance
+	// Trace l'enveloppe de tolÃ©rance
 	$env = preg_split("/,/",$resvol["tolerance"]);
 
 	$minx=$env[0];

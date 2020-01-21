@@ -1,51 +1,50 @@
-<?
-// ---- Refuse l'accès en direct
+<?php
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Charge le template
-  	$tmpl_menu = new XTemplate (MyRep("menu.htm"));
-	$tmpl_menu->assign("path_module","$module/$mod");
-
-// ---- Sélectionne le menu courant
-	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
-
-	
 // ---- Affiche les menus
+
 	if ((GetDroit("AccesSuiviMouvements")) && ($theme!="phone"))
 	{
-		$tmpl_menu->parse("infos.mouvement");
+		addPageMenu("",$mod,"Mouvement",geturl("suivi","mouvement",""),"icn32_mouvement.png",($rub=="mouvement") ? true : false);
 	}
+
 	if (GetDroit("AccesSuiviEcheances"))
 	{
-		$tmpl_menu->parse("infos.echeances");
+		addPageMenu("",$mod,"EchÃ©ances",geturl("suivi","echeances",""),"icn32_echeances.png",($rub=="echeances") ? true : false);
 	}
+
 	if ((GetDroit("AccesSuiviVols")) && ($theme!="phone"))
 	{
-		$tmpl_menu->parse("infos.vols");
+		addPageMenu("",$mod,"Vols",geturl("suivi","vols",""),"icn32_vols.png",($rub=="vols") ? true : false);
 	}	
+
 	if ((GetDroit("AccesSuiviTaxeAT")) && ($theme!="phone"))
 	{
-		$tmpl_menu->parse("infos.taxeat");
+		addPageMenu("",$mod,"Taxe AT",geturl("suivi","taxeat",""),"icn32_taxeat.png",($rub=="taxeat") ? true : false);
 	}	
+
 	if (GetDroit("AccesSuiviSuivi"))
 	{
-		$tmpl_menu->parse("infos.suivi");
+		addPageMenu("",$mod,"Suivi",geturl("suivi","suivi",""),"icn32_suivi.png",($rub=="suivi") ? true : false);
 	}
+
 	if (GetDroit("AccesSuiviListeComptes"))
 	{
-		$tmpl_menu->parse("infos.liste");
+		addPageMenu("",$mod,"Liste des comptes",geturl("suivi","liste",""),"icn32_comptes.png",($rub=="liste") ? true : false);
 	}
+
 	if (GetDroit("AccesSuiviTableauBord"))
 	{
-		$tmpl_menu->parse("infos.tableaubord");
+		addPageMenu("",$mod,"Tableau de bord",geturl("suivi","tableaubord",""),"icn32_tabbord.png",($rub=="tableaubord") ? true : false);
 	}
+
 	if (GetDroit("AccesSuiviBilan"))
 	{
-		$tmpl_menu->parse("infos.bilan");
+		addPageMenu("",$mod,"Bilan",geturl("suivi","bilan",""),"icn32_bilan.png",($rub=="bilan") ? true : false);
 	}
  
-	$tmpl_menu->parse("infos");
-	$aff_menu=$tmpl_menu->text("infos");
+
 	
 ?>

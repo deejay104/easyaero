@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,13 +19,13 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$id=checkVar("id","numeric");
 	$uid_ressource=checkVar("uid_ressource","numeric");
 	$form_data=checkVar("form_data","array");
@@ -53,7 +53,7 @@
 		$tmpl_prg->assign("corefolder", $corefolder);
 		$tmpl_prg->assign("username", $myuser->aff("fullname"));
 		$tmpl_prg->assign("style_url", GenereStyle("print"));
-		$tmpl_prg->assign("version", $version."-".$core_version.(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : "")." le ".date("d/m/Y")." à ".date("H:i"));
+		$tmpl_prg->assign("version", $version."-".$core_version.(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : "")." le ".date("d/m/Y")." Ã  ".date("H:i"));
 		$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
 	}
 
@@ -74,7 +74,7 @@
 		$ok=$maint->Save();
 		if ($ok<>1)
 		{
-			$msg_erreur.="Erreur lors de la sauvegarde des données";
+			$msg_erreur.="Erreur lors de la sauvegarde des donnÃ©es";
 		}
 		$maint->SetIntervention();
 		if ($id==0)
@@ -108,7 +108,7 @@
 
 
 		if ($msg_erreur=="")
-		  { $msg_ok="Enregistrement effectué."; }
+		  { $msg_ok="Enregistrement effectuÃ©."; }
 	}
 	else if (GetDroit("SupprimeMaintenance") && ($fonc=="Supprimer"))
 	{
@@ -130,7 +130,7 @@
 		  	{
 		  		$msg_erreur.=$atelier->Valid($k,$v);
 		  	}
-			$msg_ok="Atelier ajouté.<BR>";
+			$msg_ok="Atelier ajoutÃ©.<BR>";
 			$atelier->Save();
 		}
 		
@@ -174,7 +174,7 @@
 	  { $typeaff="html"; }
 
 
-// ---- Infos de dernières maj
+// ---- Infos de derniÃ¨res maj
 	$usrmaj = new user_class($maint->uid_maj,$sql);
 	$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($maint->dte_maj));
 
@@ -303,7 +303,7 @@
 				$tabValeur[$i]["description"]["aff"]=$fiche->aff("description");
 
 				$tabValeur[$i]["maint"]["val"]=(($fiche->data["uid_planif"]>0) ? "1" : "0");
-				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='".geturl("ressources","detailmaint","id=".$fiche->data["uid_planif"])."' title='Cette fiche est déjà affectée à une autre maintenance'><img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_liste	.png'></a>" : " ");
+				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='".geturl("ressources","detailmaint","id=".$fiche->data["uid_planif"])."' title='Cette fiche est dÃ©jÃ  affectÃ©e Ã  une autre maintenance'><img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_liste	.png'></a>" : " ");
 			  }	
 		  }
 	  }

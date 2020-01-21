@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,18 +19,10 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesSuiviBanque")) { FatalError("Accès non autorisé (AccesSuiviBanque)"); }
+<?php
+	if (!GetDroit("AccesSuiviBanque")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviBanque)"); }
 
 	require_once ($appfolder."/class/user.inc.php");
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("suivi.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Vérifie les variables
-
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -60,7 +52,6 @@
 		foreach ($tabmaj as $k=>$p)
 		{
 			$query="UPDATE ".$MyOpt["tbl"]."_compte SET pointe='$p' WHERE id='$k'";
-			//echo "$query<BR>";
 			$sql->Update($query);
 		}
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;

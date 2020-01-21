@@ -12,8 +12,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","FÃ©vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","DÃ©cembre"],
+			prevText: "PrÃ©cÃ©dent",
 			nextText: "Suivant"
 		});
 	});
@@ -22,13 +22,13 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='index.php?mod=suivi&rub=tableaubord&id='+document.getElementById('form_id').value+'&dte='+document.getElementById('form_date').value+'&show='+document.getElementById('form_mois').value;
+ 	document.location='{path_root}/index.php?mod=suivi&rub=tableaubord&id='+document.getElementById('form_id').value+'&dte='+document.getElementById('form_date').value+'&show='+document.getElementById('form_mois').value;
 }
 
 </script>
 
 
-<FORM name="compte" id="compte" method="post" action="index.php" enctype="multipart/form-data" OnSubmit="return false;">
+<FORM name="compte" id="compte" method="post" action="{path_root}/index.php" enctype="multipart/form-data" OnSubmit="return false;">
 
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="tableaubord">
@@ -45,7 +45,7 @@ function Recharge()
 		<!-- END: lst_compte -->
 		</SELECT>
 
-		Année : 
+		AnnÃ©e : 
 		<SELECT id="form_date" name="form_date" OnChange="Recharge();">
 		<!-- BEGIN: lst_annee -->
 			<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>

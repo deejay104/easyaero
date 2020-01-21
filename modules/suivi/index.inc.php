@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,7 +19,7 @@
 */
 ?>
 
-<?
+<?php
 	
 	if ((GetDroit("AccesSuiviMouvements")) && ($theme!="phone"))
 	{

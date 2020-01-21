@@ -1,10 +1,8 @@
 <!-- BEGIN: icone -->
-	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+	<img src="{path_root}/{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-<p><a href="index.php?mod=reservations"><img src="{path_module}/img/icn32_titre.png" alt="">Calendrier</a></p>
-<p><a href="index.php?mod=reservations&rub=scheduler" class='pageTitleSelected'><img src="{path_module}/img/icn32_scheduler.png" alt="">Journée</a></p>
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
@@ -28,15 +26,15 @@
 	  }
 </SCRIPT>
 
-<link href='{corefolder}/external/scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
-<link href='{corefolder}/external/scheduler/lib/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-<link href='{corefolder}/external/scheduler/scheduler.min.css' rel='stylesheet' />
-<script src='{corefolder}/external/scheduler/lib/moment.min.js'></script>
-<script src='{corefolder}/external/scheduler/lib/jquery.min.js'></script>
-<script src='{corefolder}/external/scheduler/lib/fullcalendar.min.js'></script>
-<script src='{corefolder}/external/scheduler/scheduler.min.js'></script>
+<link href='{path_root}/{path_core}/external/scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
+<link href='{path_root}/{path_core}/external/scheduler/lib/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<link href='{path_root}/{path_core}/external/scheduler/scheduler.min.css' rel='stylesheet' />
+<script src='{path_root}/{path_core}/external/scheduler/lib/moment.min.js'></script>
+<script src='{path_root}/{path_core}/external/scheduler/lib/jquery.min.js'></script>
+<script src='{path_root}/{path_core}/external/scheduler/lib/fullcalendar.min.js'></script>
+<script src='{path_root}/{path_core}/external/scheduler/scheduler.min.js'></script>
 
-<script src='{corefolder}/external/fullcalendar/locale/fr.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
 
 
 <style>
@@ -122,27 +120,27 @@
 			},
 
 			events: {
-				url: 'api.php?mod=reservations&rub=getsched',
+				url: '{path_root}/api.php?mod=reservations&rub=getsched',
 				error: function() {
 					$('#script-warning').show();
 				}
 			},
 
 			select: function(start, end, jsEvent, view, resource) {
-				document.location="index.php?mod=reservations&rub=reservation&prev=scheduler&jstart="+start+"&jend="+end+"&ress="+resource.id;
+				document.location="{path_root}/index.php?mod=reservations&rub=reservation&prev=scheduler&jstart="+start+"&jend="+end+"&ress="+resource.id;
 			},
 
 			eventClick: function(event, element) {
-				document.location="index.php?mod=reservations&rub=reservation&prev=scheduler&id="+event.id;
+				document.location="{path_root}/index.php?mod=reservations&rub=reservation&prev=scheduler&id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {
-				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+				$.ajax({ url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
 			},
 			eventDrop: function(event,dayDelta,minuteDelta) {
 				var myResource = $('#calendar').fullCalendar('getResourceById', event.resourceId);
 				console.log('New resource : ' + myResource.id);
-				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta+'&ress='+myResource.id });
+				$.ajax({ url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta+'&ress='+myResource.id });
 			},
 
 			eventRender: function( event, element, view ) {

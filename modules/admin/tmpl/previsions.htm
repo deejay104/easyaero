@@ -9,28 +9,13 @@
 
 <!-- BEGIN: corps -->
 
-<div class="pagetitle pagemenu">
-<!-- BEGIN: comptes -->
-	<p><A href="index.php?mod=admin&rub=comptes" {class_comptes}>Comptes</A></p>
-<!-- END: comptes -->
-<!-- BEGIN: postes -->
-	<p><A href="index.php?mod=admin&rub=postes" {class_postes}>Postes</A></p>
-<!-- END: postes -->
-<!-- BEGIN: tarifs -->
-	<p><A href="index.php?mod=admin&rub=tarifs" {class_tarifs}>Tarifs</A></p>
-<!-- END: tarifs -->
-<!-- BEGIN: previsions -->
-	<p><A href="index.php?mod=admin&rub=previsions" {class_previsions}>Prévisions</A></p>
-<!-- END: previsions -->
-</div>
-
 
 <script>
 function update(id,mois,ress)
 {
 	$(function() {
 		$.ajax({
-			url:'api.php?mod=admin&rub=updprev&mois='+mois+'&dte={aff_annee}&ress='+ress+'&var='+document.getElementById(id).value,
+			url:'{path_root}/api.php?mod=admin&rub=updprev&mois='+mois+'&dte={aff_annee}&ress='+ress+'&var='+document.getElementById(id).value,
 			type: 'html',
 			dataType: 'JSON',
 			success: function(response)
@@ -55,7 +40,7 @@ function update(id,mois,ress)
 }
 </script>
 
-<select id="dte" name="form_dte" OnChange="document.location='index.php?mod=admin&rub=previsions&dte='+document.getElementById('dte').value;">
+<select id="dte" name="form_dte" OnChange="document.location='{path_root}/index.php?mod=admin&rub=previsions&dte='+document.getElementById('dte').value;">
 <!-- BEGIN: lst_annee -->
 	<option value="{form_dte}" {form_selected}>{form_dte}</option>		
 <!-- END: lst_annee -->

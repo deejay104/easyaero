@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,19 +19,14 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-
-// ---- Charge le template
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$id=checkVar("id","numeric");
-	$order=checkVar("order","varchar");
+	$order=checkVar("order","varchar",20,"dte_deb");
 	$trie=checkVar("trie","varchar");
 	$ts=checkVar("ts","numeric");
 
@@ -43,45 +38,48 @@
 
 // ---- Titre
 	$tabTitre=array();
-	$tabTitre["dte_deb"]["aff"]="Date";
-	$tabTitre["dte_deb"]["width"]=110;
-	$tabTitre["dte_deb"]["mobile"]="no";
-
-	$tabTitre["nom"]["aff"]="Equipage";
-	$tabTitre["nom"]["width"]=350;
-
-	$tabTitre["tarif"]["aff"]="Tarif";
-	$tabTitre["tarif"]["width"]=50;
-	$tabTitre["tarif"]["mobile"]="no";
-	$tabTitre["dest"]["aff"]="Lieu";
-	$tabTitre["dest"]["width"]=100;
-	$tabTitre["dest"]["mobile"]="no";
-	$tabTitre["heure_deb"]["aff"]="Départ";
-	$tabTitre["heure_deb"]["width"]=70;
-	$tabTitre["heure_deb"]["mobile"]="no";
-	$tabTitre["heure_fin"]["aff"]="Arrivée";
-	$tabTitre["heure_fin"]["width"]=70;
-	$tabTitre["heure_fin"]["mobile"]="no";
-
-	$tabTitre["heure"]["aff"]="Temps de vol";
-	$tabTitre["heure"]["width"]=110;
 	if ($theme=="phone")
 	{
-		$tabTitre["carbavant"]["aff"]="Carb Avant";
+		$tabTitre["dte_deb"]["aff"]="Date";
+		$tabTitre["dte_deb"]["width"]=110;
+
+		$tabTitre["nom"]["aff"]="Equipage";
+		$tabTitre["nom"]["width"]=350;
+
+		$tabTitre["heure"]["aff"]="Temps de vol";
+		$tabTitre["heure"]["width"]=110;
+		$tabTitre["carbavant"]["aff"]="Carbu";
 		$tabTitre["carbavant"]["width"]=100;
-		$tabTitre["carbapres"]["aff"]="Carb Après";
+		$tabTitre["carbapres"]["aff"]="Total";
 		$tabTitre["carbapres"]["width"]=100;
-		$tabTitre["potentiel"]["aff"]="Potentiel";
-		$tabTitre["potentiel"]["width"]=100;
-		$tabTitre["total"]["aff"]="Total";
-		$tabTitre["total"]["width"]=100;
-		$tabTitre["total"]["mobile"]="no";
 	}
 	else
 	{
+		$tabTitre["dte_deb"]["aff"]="Date";
+		$tabTitre["dte_deb"]["width"]=110;
+		$tabTitre["dte_deb"]["mobile"]="no";
+
+		$tabTitre["nom"]["aff"]="Equipage";
+		$tabTitre["nom"]["width"]=350;
+
+		$tabTitre["tarif"]["aff"]="Tarif";
+		$tabTitre["tarif"]["width"]=50;
+		$tabTitre["tarif"]["mobile"]="no";
+		$tabTitre["dest"]["aff"]="Lieu";
+		$tabTitre["dest"]["width"]=100;
+		$tabTitre["dest"]["mobile"]="no";
+		$tabTitre["heure_deb"]["aff"]="DÃ©part";
+		$tabTitre["heure_deb"]["width"]=70;
+		$tabTitre["heure_deb"]["mobile"]="no";
+		$tabTitre["heure_fin"]["aff"]="ArrivÃ©e";
+		$tabTitre["heure_fin"]["width"]=70;
+		$tabTitre["heure_fin"]["mobile"]="no";
+
+		$tabTitre["heure"]["aff"]="Temps de vol";
+		$tabTitre["heure"]["width"]=110;
 		$tabTitre["carbavant"]["aff"]="Carburant Avant";
 		$tabTitre["carbavant"]["width"]=100;
-		$tabTitre["carbapres"]["aff"]="Carburant Après";
+		$tabTitre["carbapres"]["aff"]="Carburant AprÃ¨s";
 		$tabTitre["carbapres"]["width"]=100;
 		$tabTitre["potentiel"]["aff"]="Potentiel";
 		$tabTitre["potentiel"]["width"]=100;
@@ -117,7 +115,7 @@
 
 // ---- Affiche le tableau
 	// $tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne,false,false));
-	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,$order,geturlapi($mod,"vols","carnet","id=".$id),false));
+	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","carnet","id=".$id."&theme=".$theme),$order,$trie,false));
 
 
 // ---- Affecte les variables d'affichage

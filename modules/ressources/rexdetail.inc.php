@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,12 +19,12 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/rex.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$id=checkVar("id","numeric");
 	$form_data=checkVar("form_data","array");
 
@@ -41,7 +41,7 @@
 		  	{
 		  		$msg_erreur.=$rex->Valid($k,$v);
 		  	}
-			$msg_confirmation.="Vos données ont été enregistrées.<BR>";
+			$msg_confirmation.="Vos donnÃ©es ont Ã©tÃ© enregistrÃ©es.<BR>";
 		}
 
 		if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat)) 
@@ -64,7 +64,7 @@
 		);
 
 		SendMailFromFile("","",array(),$rex->val("titre"),$tabvar,"rex","","actualite");
-		$msg_confirmation.="Les membres vont être notifié de ce REX";
+		$msg_confirmation.="Les membres vont Ãªtre notifiÃ©s de ce REX";
 	}
 
 // ---- Suppression
@@ -145,7 +145,7 @@
 	}
 	affSubMenu();
 
-// ---- Infos de dernières maj
+// ---- Infos de derniÃ¨res maj
 	$usrmaj = new user_class($rex->uid_maj,$sql);
 	$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($rex->dte_maj));
 

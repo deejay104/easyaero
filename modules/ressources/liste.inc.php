@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,12 +19,12 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$ress=checkVar("trie","numeric");
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
@@ -50,7 +50,7 @@
 	$tabTitre=array();
 	$tabTitre["ress"]["aff"]="Avion";
 	$tabTitre["ress"]["width"]=70;
-	$tabTitre["dte_deb"]["aff"]="Début";
+	$tabTitre["dte_deb"]["aff"]="DÃ©but";
 	$tabTitre["dte_deb"]["width"]=100;
 	$tabTitre["dte_fin"]["aff"]="Fin";
 	$tabTitre["dte_fin"]["width"]=100;

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,24 +19,22 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesBaptemes")) { FatalError("Accès non autorisé (AccesBaptemes)"); }
+<?php
+	if (!GetDroit("AccesBaptemes")) { FatalError("AccÃ¨s non autorisÃ© (AccesBaptemes)"); }
 
 	require_once ($appfolder."/class/bapteme.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-	
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("baptemes.htm"));
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("corefolder",$corefolder);
-
 // ----
 	if (GetDroit("CreeBapteme"))
-	  {
-	  	$tmpl_x->parse("infos.ajout");
-	  }
+	{
+		addPageMenu("",$mod,"Ajouter",geturl("aviation","bapteme","fonc=add&id=0"),"icn32_ajouter.png",false);
+	}
+// &nbsp;
+// <!-- BEGIN: ajout -->
+// <p><A href="index.php?mod=aviation&rub=bapteme&fonc=add&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="">&nbsp;Ajouter</A></p>
+// <!-- END: ajout -->
 
 // ----
 	$form_status=checkVar("form_status","numeric");
@@ -74,51 +72,51 @@
 
 // ----
 	$tabTitre=array();
-	$tabTitre["num"]["aff"]="Numéro";
+	$tabTitre["num"]["aff"]="NumÃ©ro";
 	$tabTitre["num"]["width"]=120;
 
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=200;
 
-	if ($theme!="phone")
-		{
 			$tabTitre["type"]["aff"]="Type";
 			$tabTitre["type"]["width"]=100;
+			$tabTitre["type"]["mobile"]=($theme=="phone") ? "no" : "";
 
 			$tabTitre["bonkdo"]["aff"]="Bon KDO";
 			$tabTitre["bonkdo"]["width"]=90;
+			$tabTitre["bonkdo"]["mobile"]=($theme=="phone") ? "no" : "";
 
 			$tabTitre["nb"]["aff"]="Nb";
 			$tabTitre["nb"]["width"]=30;
+			$tabTitre["nb"]["mobile"]=($theme=="phone") ? "no" : "";
 		
-			$tabTitre["dte_creat"]["aff"]="Date création";
+			$tabTitre["dte_creat"]["aff"]="Date crÃ©ation";
 			$tabTitre["dte_creat"]["width"]=120;
-		}
+			$tabTitre["dte_creat"]["mobile"]=($theme=="phone") ? "no" : "";
 
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=80;
 
-	if ($theme!="phone")
-		{
 			$tabTitre["line1"]["aff"]="<line>";
 			$tabTitre["line1"]["mobile"]="no";
+			$tabTitre["line1"]["mobile"]=($theme=="phone") ? "no" : "";
 
-			$tabTitre["paye"]["aff"]="Payé";
+			$tabTitre["paye"]["aff"]="PayÃ©";
 			$tabTitre["paye"]["width"]=100;
 			$tabTitre["paye"]["mobile"]="no";
+			$tabTitre["paye"]["mobile"]=($theme=="phone") ? "no" : "";
 		
-			$tabTitre["date"]["aff"]="Date prévue";
+			$tabTitre["date"]["aff"]="Date prÃ©vue";
 			$tabTitre["date"]["width"]=170;
-			$tabTitre["date"]["mobile"]="no";
+			$tabTitre["date"]["mobile"]=($theme=="phone") ? "no" : "";
 		
 			$tabTitre["pilote"]["aff"]="Pilote";
 			$tabTitre["pilote"]["width"]=180;
-			$tabTitre["pilote"]["mobile"]="no";
+			$tabTitre["pilote"]["mobile"]=($theme=="phone") ? "no" : "";
 				
-			$tabTitre["resa"]["aff"]="Réservation";
+			$tabTitre["resa"]["aff"]="RÃ©servation";
 			$tabTitre["resa"]["width"]=100;
-			$tabTitre["resa"]["mobile"]="no";
-		}
+			$tabTitre["resa"]["mobile"]=($theme=="phone") ? "no" : "";
 
 	$lstusr=ListeBaptemes($sql,array("oui"),$form_status);
 

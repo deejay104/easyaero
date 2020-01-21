@@ -6,7 +6,7 @@
 	require_once ($appfolder."/class/synthese.inc.php");
 
 	$ref=checkVar("ref","varchar");
-	$term=utf8_decode(checkVar("term","varchar"));
+	$term=checkVar("term","varchar");
 	$fonc=checkVar("fonc","varchar",10);
 	$ret=array();
 
@@ -16,7 +16,7 @@
 		$query.="WHERE refffa='".$ref."' AND actif='oui' ";
 		$res=$sql->QueryRow($query);
 		$ret["refffa"]=$res["refffa"];
-		$ret["theme"]=utf8_encode($res["theme"]);
+		$ret["theme"]=$res["theme"];
 	}
 	else
 	{
@@ -42,11 +42,11 @@
 			$sql->GetRow($i);
 			$r=array();
 			$r["value"]=$sql->data["id"];
-			$r["label"]=utf8_encode($sql->data["description"]." (".$sql->data["progression"].")");
+			$r["label"]=$sql->data["description"]." (".$sql->data["progression"].")";
 			$r["id"]=$sql->data["id"];
-			$r["description"]=utf8_encode(htmlentities($sql->data["description"],ENT_HTML5,"ISO-8859-1"));
-			$r["type"]=utf8_encode(htmlentities($sql->data["type"],ENT_HTML5,"ISO-8859-1"));
-			$r["module"]=utf8_encode(htmlentities($sql->data["module"],ENT_HTML5,"ISO-8859-1"));
+			$r["description"]=htmlentities($sql->data["description"],ENT_HTML5,"ISO-8859-1");
+			$r["type"]=htmlentities($sql->data["type"],ENT_HTML5,"ISO-8859-1");
+			$r["module"]=htmlentities($sql->data["module"],ENT_HTML5,"ISO-8859-1");
 			$r["progression"]=$sql->data["progression"];
 			array_push($ret,$r);
 		}

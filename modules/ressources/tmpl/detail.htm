@@ -17,7 +17,7 @@
 }
 </style>
 
-<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 <INPUT type="hidden" name="mod" value="ressources">
 <INPUT type="hidden" name="rub" value="detail">
 <INPUT type="hidden" name="id" value="{id}">
@@ -31,7 +31,7 @@
 <div class="msgok">{msg_confirmation}</div>
 <!-- END: msg_enregistre -->
 
-<div class="formulaireTitre">Informations générales</div>
+<div class="formulaireTitre">Informations gÃ©nÃ©rales</div>
 
 
 <div class="formulaire">
@@ -43,7 +43,7 @@
 	<p>
 			<label>Marque</label>{form_marque}</p>
 	<p>
-			<label>Modèle</label>{form_modele}</p>
+			<label>ModÃ¨le</label>{form_modele}</p>
 	<p>
 			<div class="showColor">Couleur</div>{form_couleur}
 	</p>
@@ -58,11 +58,11 @@
 		{form_description}
 		</div>
 
-		<div class="formulaireTitre">Paramètres</div>
+		<div class="formulaireTitre">ParamÃ¨tres</div>
 		<!-- BEGIN: parametres -->
 		<div class="formulaire">
 			<p>
-				<label>Tolérance</label>
+				<label>TolÃ©rance</label>
 				{form_tolerance}
 			</p>
 		</div>
@@ -97,14 +97,14 @@
 		<!-- END: aff_echeances -->
 
 		
-		<div class="formulaireTitre">Caractéristiques</div>
+		<div class="formulaireTitre">CaractÃ©ristiques</div>
 		<div class="formulaire">
 			<p>
 				<label>Poste</label>
 				{form_poste}
 			</p>
 			<p>
-				<label>Type horamètre</label>
+				<label>Type horamÃ¨tre</label>
 				{form_typehora}
 			</p>
 			<p>

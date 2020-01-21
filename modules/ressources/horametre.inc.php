@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,8 +19,8 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesSuiviHorametre")) { FatalError("Accès non authorisé (AccesSuiviHorametre)"); }
+<?php
+	if (!GetDroit("AccesSuiviHorametre")) { FatalError("AccÃ¨s non authorisÃ© (AccesSuiviHorametre)"); }
 
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
@@ -28,7 +28,7 @@
 
 
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$id=checkVar("id","numeric");
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
@@ -63,10 +63,10 @@
 	$tabTitre["horafin"]["aff"]="Hora Fin";
 	$tabTitre["horafin"]["width"]=110;
 
-	$tabTitre["horadeb"]["aff"]="Hora Début";
+	$tabTitre["horadeb"]["aff"]="Hora DÃ©but";
 	$tabTitre["horadeb"]["width"]=110;
 	
-// ---- Chargement des données
+// ---- Chargement des donnÃ©es
 	$tabValeur=array();
 	$lstress=ListeRessources($sql);
 
@@ -127,7 +127,7 @@
 		if ($t1!=$t2)
 		  { $dte=$t1." - ".$t2; }
 		else if ((sql2time($resa->dte_deb)!="00:00:00") && ($theme!="phone"))
-		  { $dte=$t1." (".sql2time($resa->dte_deb,"nosec")." à ".sql2time($resa->dte_fin,"nosec").")"; }
+		  { $dte=$t1." (".sql2time($resa->dte_deb,"nosec")." Ã  ".sql2time($resa->dte_fin,"nosec").")"; }
 		else if  ($theme!="phone")
 		  { $dte=$t1." (N/A)"; }
 		else

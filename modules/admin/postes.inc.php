@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,17 +19,8 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesConfigPostes")) { FatalError("Accès non autorisé (AccesConfigPostes)"); }
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("postes.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
-	$checktime=checkVar("checktime","numeric");
-
+<?php
+	if (!GetDroit("AccesConfigPostes")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigPostes)"); }
 
 
 // ---- Affiche le menu
@@ -40,6 +31,13 @@
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (is_array($form_poste)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$form_poste=checkVar("form_poste","array");
+		$form_ordre=checkVar("form_ordre","array");
+		$form_compte=checkVar("form_compte","array");
+		$form_debiteur=checkVar("form_debiteur","array");
+		$form_crediteur=checkVar("form_crediteur","array");
+		$form_montant=checkVar("form_montant","array");
+		
 	  	foreach($form_poste as $id=>$description)
 	  	{
 			if (trim($description)!="")
@@ -64,7 +62,7 @@
 		$sql->Edit("mouvement",$MyOpt["tbl"]."_mouvement",$id,array("actif"=>"non"));		
 	}
 
-// ---- Affiche la page demandée
+// ---- Affiche la page demandÃ©e
 	$tabcompte=array();
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_numcompte WHERE actif='oui' ORDER BY numcpt";
 	$sql->Query($query);

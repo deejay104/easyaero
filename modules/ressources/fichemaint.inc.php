@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,14 +19,14 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Droit d'accËs
-	if (!GetDroit("AccesFichesMaintenance")) { FatalError("AccËs non authorisÈ (AccesFichesMaintenance)"); }
+// ---- Droit d'acc√®s
+	if (!GetDroit("AccesFichesMaintenance")) { FatalError("Acc√®s non authoris√© (AccesFichesMaintenance)"); }
 
-// ---- VÈrification des donnÈes
+// ---- V√©rification des donn√©es
 	$uid_avion=checkVar("uid_avion","numeric");
 	$form_avion=checkVar("form_avion","numeric");
 	$form_description=checkVar("form_description","text");
@@ -51,7 +51,7 @@
 		{
 		  	$_SESSION['tab_checkpost'][$checktime]=$checktime;
 		  	$form_description="";
-		  	$msg_ok="Fiche crÈÈe.<BR>";
+		  	$msg_ok="Fiche cr√©√©e.<BR>";
 		}
 		else
 		{

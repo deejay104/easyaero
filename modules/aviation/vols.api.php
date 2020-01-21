@@ -22,6 +22,7 @@
 	$draw=checkVar("draw","numeric");
 	$ts=checkVar("start","numeric");
 	$tl=checkVar("length","numeric");
+	$theme=checkVar("theme","varchar",20);
 
 // ---- Mes Vols
 	if ($fonc=="mesvols")
@@ -73,8 +74,11 @@
 				2=>$resa->AffTempsReel(),
 				3=>$resa->AffTemps(),
 				4=>$resa->AffPrix(),
-				5=>$ins,
 			);
+			if ($theme!="phone")
+			{
+				$ret["data"][$ii][5]=$ins;
+			}
 			$ii=$ii+1;
 		}
 	}
@@ -110,59 +114,32 @@
 			else
 			  { $dte=$t1; }
 
-			$tabValeur[$i]["dte_deb"]["val"]=strtotime($resa->dte_deb);
-			$tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".$t1."</a>";
-
-			$tabValeur[$i]["nom"]["val"]=$usrpil->fullname;
-			$tabValeur[$i]["nom"]["aff"]=$usrpil->Aff("fullname").(($resa->uid_instructeur>0) ? " / ".$usrinst->Aff("fullname") : "");
-
-			$tabValeur[$i]["tarif"]["val"]=$resa->tarif;
-			$tabValeur[$i]["tarif"]["aff"]=$resa->tarif;
-			$tabValeur[$i]["tarif"]["align"]="center";
-
-			$tabValeur[$i]["dest"]["val"]=$resa->destination;
-			$tabValeur[$i]["dest"]["aff"]=$resa->destination;
-
-			$tabValeur[$i]["heure_deb"]["val"]=strtotime($resa->dte_deb);
-			$tabValeur[$i]["heure_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".sql2time($resa->dte_deb,"nosec")."</a>";
-			$tabValeur[$i]["heure_deb"]["align"]="center";
-			$tabValeur[$i]["heure_fin"]["val"]=strtotime($resa->dte_deb);
-			$tabValeur[$i]["heure_fin"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".sql2time($resa->dte_fin,"nosec")."</a>";
-			$tabValeur[$i]["heure_fin"]["align"]="center";
-		
-			$tabValeur[$i]["heure"]["val"]=$resa->tpsreel;
-			$tabValeur[$i]["heure"]["aff"]=$resa->AffTempsReel();
-			$tabValeur[$i]["heure"]["align"]="center";
-
-			$tabValeur[$i]["carbavant"]["val"]=$resa->carbavant;
-			$tabValeur[$i]["carbavant"]["aff"]=($resa->carbavant>0) ? $resa->carbavant."L" : " ";
-			$tabValeur[$i]["carbavant"]["align"]="center";
-
-			$tabValeur[$i]["carbapres"]["val"]=$resa->carbapres;
-			$tabValeur[$i]["carbapres"]["aff"]=($resa->carbapres>0) ? $resa->carbapres."L" : " ";
-			$tabValeur[$i]["carbapres"]["align"]="center";
-
-			$tabValeur[$i]["potentiel"]["val"]="";
-			$tabValeur[$i]["potentiel"]["aff"]=$resa->AffPotentiel("fin");
-			$tabValeur[$i]["potentiel"]["align"]="center";
-
-			$tabValeur[$i]["total"]["val"]=$resa->TempsVols("fin");
-			$tabValeur[$i]["total"]["aff"]=$resa->AffTempsVols("fin");
-			$tabValeur[$i]["total"]["align"]="center";
-
-			$ret["data"][$ii]=array(
-				0=>"<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($t1,ENT_QUOTES,"utf-8")."</a>",
-				1=>$usrpil->Aff("fullname").(($resa->uid_instructeur>0) ? " / ".$usrinst->Aff("fullname") : ""),
-				2=>$resa->tarif,
-				3=>$resa->destination,
-				4=>"<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".htmlentities(sql2time($resa->dte_deb,"nosec"),ENT_QUOTES,"utf-8")."</a>",
-				5=>"<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".htmlentities(sql2time($resa->dte_fin,"nosec"),ENT_QUOTES,"utf-8")."</a>",
-				6=>$resa->AffTempsReel(),
-				7=>($resa->carbavant>0) ? $resa->carbavant."L" : " ",
-				8=>($resa->carbapres>0) ? $resa->carbapres."L" : " ",
-				9=>$resa->AffPotentiel("fin"),
-				10=>$resa->AffTempsVols("fin"),
-			);
+			if ($theme!="phone")
+			{
+				$ret["data"][$ii]=array(
+					0=>"<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($t1,ENT_QUOTES,"utf-8")."</a>",
+					1=>$usrpil->Aff("fullname").(($resa->uid_instructeur>0) ? " / ".$usrinst->Aff("fullname") : ""),
+					2=>$resa->tarif,
+					3=>$resa->destination,
+					4=>"<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".htmlentities(sql2time($resa->dte_deb,"nosec"),ENT_QUOTES,"utf-8")."</a>",
+					5=>"<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".htmlentities(sql2time($resa->dte_fin,"nosec"),ENT_QUOTES,"utf-8")."</a>",
+					6=>$resa->AffTempsReel(),
+					7=>($resa->carbavant>0) ? $resa->carbavant."L" : " ",
+					8=>($resa->carbapres>0) ? $resa->carbapres."L" : " ",
+					9=>$resa->AffPotentiel("fin"),
+					10=>$resa->AffTempsVols("fin"),
+				);
+			}
+			else
+			{
+				$ret["data"][$ii]=array(
+					0=>"<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($t1,ENT_QUOTES,"utf-8")."</a>",
+					1=>$usrpil->Aff("fullname"),
+					2=>$resa->AffTempsReel(),
+					3=>($resa->carbavant>0) ? $resa->carbavant."L" : (($resa->carbapres>0) ? $resa->carbapres."L" : " "),
+					4=>$resa->AffPotentiel("fin"),
+				);
+			}
 			$ii=$ii+1;
 
 		}

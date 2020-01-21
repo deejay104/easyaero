@@ -6,14 +6,6 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
-<div class="pagetitle pagemenu">
-	<p><A href="index.php?mod=admin&rub=exercices" {class_exercices}>Exercices</A></p>
-	<p><A href="index.php?mod=admin&rub=references" {class_references}>Références</A></p>
-	<p><A href="index.php?mod=admin&rub=refenac" {class_refenac}>Ref. ENAC</A></p>
-	<p style='padding-left:30px;'><a id='edit_new' href="#">Ajouter</a></p>
-
-</div>
-
 
 <script>
 $( function() {
@@ -21,7 +13,7 @@ $( function() {
 	function loadExercice(id) {
 		$.ajax({
 			type: 'GET',
-			url: 'api.php?mod=admin&rub=updexo&fonc=get&id='+id,
+			url: '{path_root}/api.php?mod=admin&rub=updexo&fonc=get&id='+id,
 			dataType: 'JSON',
 
 			success: function(response) {
@@ -83,7 +75,7 @@ $( function() {
 			data["4_prog_id"]=document.getElementById('4_prog_id').value;
 
 			$.ajax({
-				url:'api.php?mod=admin&rub=updexo&fonc=post',
+				url:'{path_root}/api.php?mod=admin&rub=updexo&fonc=post',
 				type: 'POST',
 				data: data,
 				dataType: 'JSON',
@@ -92,7 +84,7 @@ $( function() {
 					if (response.result=="OK")
 					{
 						console.log("ok");
-						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>L'exercice a été enregistré</div>";
+						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>L'exercice a Ã©tÃ© enregistrÃ©</div>";
 					}
 					else
 					{
@@ -130,6 +122,8 @@ $( function() {
 		dialog.dialog( "open" );
     });
 <!-- END: lst_edit -->
+
+
 	$( "#edit_new" ).on( "click", function() {
 		loadExercice(0);
 		dialog.dialog( "open" );
@@ -142,9 +136,9 @@ $( function() {
 	<p><label>Description</label>{form_description}</p>
 	<p><label>Type</label>{form_type}</p>
 	<p><label>Module</label>{form_module}</p>
-	<p><label>Référence</label>{form_refffa}</p>
+	<p><label>RÃ©fÃ©rence</label>{form_refffa}</p>
 	<p><label>ENAC</label>{form_refenac}</p>
-	<p><label>Compétence</label>{form_competence}</p>
+	<p><label>CompÃ©tence</label>{form_competence}</p>
 
 	<p><label>Progression</label>{form_1_refffa} {form_1_progression}<input type="hidden" id="1_prog_id" /></p>
 	<p><label></label>{form_2_refffa} {form_2_progression}<input type="hidden" id="2_prog_id" /></p>
@@ -155,7 +149,7 @@ $( function() {
 	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 </div>
 
-<FORM id="form_tableau" method="post" action="index.php" enctype="multipart/form-data">
+<FORM id="form_tableau" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="exercices">

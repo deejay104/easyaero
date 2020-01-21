@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,18 +19,14 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesCredite")) { FatalError("Accès non autorisé (AccesCredite)"); }
+<?php
+	if (!GetDroit("AccesCredite")) { FatalError("AccÃ¨s non autorisÃ© (AccesCredite)"); }
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("credite.htm"));
-	$tmpl_x->assign("path_module",$module."/".$mod);
-
-// ---- Initialise les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
+
+// ---- Initialise les variables
 
 	$form_tiers=checkVar("form_tiers","numeric");
 	$form_montant=checkVar("form_montant","numeric");
@@ -39,9 +35,9 @@
 
 	$tabType=array();
 	$tabType["virement"]="Virement";
-	$tabType["cheque"]="Chèque";
-	$tabType["espece"]="Espèce";
-	$tabType["vacances"]="Chèque vacances";
+	$tabType["cheque"]="ChÃ¨que";
+	$tabType["espece"]="EspÃ¨ce";
+	$tabType["vacances"]="ChÃ¨que vacances";
 	
 // ---- Affiche le menu
 	$aff_menu="";
@@ -54,12 +50,13 @@
 
 	if (($fonc=="Enregistrer") && ($val>0) && ($MyOpt["PosteCredite"][$form_type]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$ret="";
 		$dte=date("Y-m-d");
 	
 		$ventil=array();
 		if ($form_commentaire=="")
 		{
-			$form_commentaire="Crédit compte pilote ".$usr->val("fullname");
+			$form_commentaire="CrÃ©dit compte pilote ".$usr->val("fullname");
 		}
 	
 		$mvt = new compte_class(0,$sql);
@@ -79,7 +76,7 @@
 		}
 		else
 		{
-			affInformation("Votre compte a été autorisé pour un crédit de ".AffMontant($val).". Cette somme sera crédité définitivement sur votre compte après validation par le trésorier.","ok");
+			affInformation("Votre compte a Ã©tÃ© autorisÃ© pour un crÃ©dit de ".AffMontant($val).". Cette somme sera crÃ©ditÃ© dÃ©finitivement sur votre compte aprÃ¨s validation par le trÃ©sorier.","ok");
 		}
 
 		
@@ -104,7 +101,7 @@
 	$tmpl_x->assign("solde_temp",AffMontant($s));
 
 	$tmpl_x->assign("form_montant", "0.00");
-	$tmpl_x->assign("form_commentaire", "Crédit compte ".$usr->val("fullname"));
+	$tmpl_x->assign("form_commentaire", "CrÃ©dit compte ".$usr->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 
 // ---- Liste des mouvements

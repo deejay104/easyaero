@@ -1,4 +1,4 @@
-<?
+<?php
 // ---------------------------------------------------------------------------------------------
 //   Facturation des abonnements sur les comptes
 // ---------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@
 */
 ?>
 
-<?
+<?php
 	set_time_limit(0);
 
 // ---- Variables
@@ -36,13 +36,13 @@
 	if (!file_exists("config/config.inc.php"))
 	  { myPrint("Fichier de configuration introuvable","Il manque le fichier de configuration 'config/config.inc.php'."); exit; }
 
-// ---- RÈcupËre l'adresse email de l'Èmetteur
+// ---- R√©cup√®re l'adresse email de l'√©metteur
 	$clubusr = new user_class($MyOpt["uid_club"],$sql);
 	$from=$clubusr->data["mail"];
 
 
-// ---- DÈfinit les variables
-	myPrint("Script pour la notification des vols non cloturÈs.");
+// ---- D√©finit les variables
+	myPrint("Script pour la notification des vols non clotur√©s.");
 	$OB="----=_OuterBoundary_000";
 
 	if (file_exists("temp/vols.txt"))
@@ -52,7 +52,7 @@
 
 	if ((time()-$t)<5*60*0)
 	  {
-		myPrint("Ce script ne peut s'exÈcuter que toures les 5 minutes.");
+		myPrint("Ce script ne peut s'ex√©cuter que toures les 5 minutes.");
 	  }
 	else
 	  {
@@ -112,7 +112,7 @@
 		    	$headers.="X-Mailer: PHP/" . phpversion() ."\r\n";
 			$headers.="Content-Type: multipart/mixed;\n\t boundary=\"".$OB."\"\r\n";
 
-			MyMail($from,$usr->mail,$from,"[".$MyOpt["site_title"]."] : Vol de ".$usr->fullname." non cloturÈ dans les temps",$mail,$headers);
+			MyMail($from,$usr->mail,$from,"[".$MyOpt["site_title"]."] : Vol de ".$usr->fullname." non clotur√© dans les temps",$mail,$headers);
 	
 			unset($mail);
 		  }

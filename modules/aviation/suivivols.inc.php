@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,21 +19,15 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesSuiviVolsMembres")) { FatalError("Accès non authorisé (AccesSuiviVolsMembres)"); }
+<?php
+	if (!GetDroit("AccesSuiviVolsMembres")) { FatalError("AccÃ¨s non authorisÃ© (AccesSuiviVolsMembres)"); }
 
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
-	
-// ---- Charge le template
-	// $tmpl_x = new XTemplate (MyRep("suivivols.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
 
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
-	$order=checkVar("order","varchar");
+// ---- VÃ©rifie les variables
+	$order=checkVar("order","varchar",20,"nom");
 	$trie=checkVar("trie","varchar");
 
 
@@ -42,7 +36,7 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
-// ---- Liste des échéances
+// ---- Liste des Ã©chÃ©ances
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype WHERE resa='instructeur' ORDER BY description";
 	$sql->Query($query);
 
@@ -55,7 +49,7 @@
 
 // ---- Entete du tableau
 	$tabTitre=array();
-	$tabTitre["prenom"]["aff"]="Prénom";
+	$tabTitre["prenom"]["aff"]="PrÃ©nom";
 	$tabTitre["prenom"]["width"]=150;
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=210;

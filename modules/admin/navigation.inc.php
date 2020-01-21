@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,18 +19,9 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/navigation.inc.php");
-	if (!GetDroit("AccesConfigNavigation")) { FatalError("Accès non autorisé (AccesConfigNavigation)"); }
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("navigation.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
-	$checktime=checkVar("checktime","numeric");
-
+	if (!GetDroit("AccesConfigNavigation")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigNavigation)"); }
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -71,7 +62,7 @@
 
 
 	
-	// Génération des conditions
+	// GÃ©nÃ©ration des conditions
 	$q="1=1 ";
 	foreach($tabsearch as $k=>$v)
 	{
@@ -96,7 +87,7 @@
 	$res=$sql->QueryRow($query);
 	$totligne=$res["nb"];
 
-	// Récupération des lignes
+	// RÃ©cupÃ©ration des lignes
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_navpoints ".(($q!="") ? "WHERE ".$q : "")." ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT ".$ts.",".$tl;
 	$sql->Query($query);
 	$tabValeur=array();
@@ -115,7 +106,7 @@
 		$tabValeur[$i]["taxe"]["aff"]="<div id='taxe_".$sql->data["id"]."'>".$sql->data["taxe"]."</div>";
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
-		$tabValeur[$i]["action"]["aff"]="<div id='action_".$sql->data["id"]."' style='display:none;'><a id='edit_".$sql->data["id"]."' class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"]="<div id='action_".$sql->data["id"]."' style='display:none;'><a id='edit_".$sql->data["id"]."' class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a></div>";
 
 		$tmpl_x->assign("lst_id",$sql->data["id"]);
 		$tmpl_x->parse("corps.lst_edit");

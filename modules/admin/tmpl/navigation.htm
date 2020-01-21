@@ -14,7 +14,7 @@ $( function() {
 	function loadNavpoint(id) {
 		$.ajax({
 			type: 'GET',
-			url: 'api.php?mod=navigation&rub=getwp&id='+id,
+			url: '{path_root}/api.php?mod=navigation&rub=getwp&id='+id,
 			dataType: 'JSON',
 
 			success: function(response) {
@@ -52,7 +52,7 @@ $( function() {
 			document.getElementById('taxe_'+id).innerHTML=data["taxe"];
 
 			$.ajax({
-				url:'api.php?mod=navigation&rub=updnav&fonc=post&id='+id,
+				url:'{path_root}/api.php?mod=navigation&rub=updnav&fonc=post&id='+id,
 				type: 'POST',
 				data: data,
 				dataType: 'JSON',
@@ -61,7 +61,7 @@ $( function() {
 					if (response.result=="OK")
 					{
 						console.log("ok");
-						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>Le point de navigation a été enregistré</div>";
+						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>Le point de navigation a Ã©tÃ© enregistrÃ©</div>";
 					}
 					else
 					{
@@ -112,7 +112,7 @@ $( function() {
 	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 </div>
 
-<FORM id="form_tableau" method="post" action="index.php" enctype="multipart/form-data">
+<FORM id="form_tableau" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="navigation">

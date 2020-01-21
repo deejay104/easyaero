@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,18 +19,13 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesTransfert")) { FatalError("Accès non autorisé (AccesTransfert)"); }
+<?php
+	if (!GetDroit("AccesTransfert")) { FatalError("AccÃ¨s non autorisÃ© (AccesTransfert)"); }
 
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("transfert.htm"));
-	$tmpl_x->assign("path_module",$module."/".$mod);
-
 // ---- Initialise les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 	$form_tiers=checkVar("form_tiers","numeric");
 	$form_montant=checkVar("form_montant","numeric");
@@ -50,11 +45,11 @@
 
 	if ($max<0)
 	{
-		affInformation("Le compte est négatif, vous ne pouvez pas faire de transfert.","error");
+		affInformation("Le compte est nÃ©gatif, vous ne pouvez pas faire de transfert.","error");
 	}
 	else if ($val>$max)
 	{
-		affInformation("Le montant du transfert est supérieur au solde du compte.","error");
+		affInformation("Le montant du transfert est supÃ©rieur au solde du compte.","error");
 	}
 	else if (($fonc=="Enregistrer") && ($form_tiers>0) && ($val>0) && ($MyOpt["id_PosteTransfert"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
@@ -77,7 +72,7 @@
 		$mvt->Save();
 		$nbmvt=$mvt->Debite();
 
-		// A voir si cette partie est nécessaire ?
+		// A voir si cette partie est nÃ©cessaire ?
 		$tmpl_x->assign("aff_mouvement_detail", $mvt->Affiche());
 		$tmpl_x->parse("corps.msg_enregistre.lst_enregistre");
 		
@@ -89,11 +84,11 @@
 		
 		if ($ret!="")
 		{
-			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,"error");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : "")."<br />".$ret,"error");
 		}
 		else
 		{
-			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : ""),"ok");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : ""),"ok");
 		}
 
 		$tmpl_x->parse("corps.msg_enregistre");
@@ -102,7 +97,7 @@
 	}
 	else if ($MyOpt["id_PosteTransfert"]==0)
 	{
-		affInformation("L'id du poste pour le transfère n'est pas renseigné. Contactez votre administrateur.","error");
+		affInformation("L'id du poste pour le transfÃ¨re n'est pas renseignÃ©. Contactez votre administrateur.","error");
 	}
 
 	
@@ -120,7 +115,7 @@
 	}
 
 	$tmpl_x->assign("form_montant", "0.00");
-	$tmpl_x->assign("form_commentaire", "Transféré par ".$myuser->val("fullname"));
+	$tmpl_x->assign("form_commentaire", "TransfÃ©rÃ© par ".$myuser->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 	
 	

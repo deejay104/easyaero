@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -20,23 +20,18 @@
 ?>
 
 
-<?
+<?php
 	if (!is_numeric($id))
 	  { $id=0; }
 
 	if (!GetDroit("AccesBapteme"))
-	  { FatalError("AccËs non autorisÈ (AccesBapteme)"); }
+	  { FatalError("Acc√®s non autoris√© (AccesBapteme)"); }
 
 	require_once ($appfolder."/class/bapteme.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("bapteme.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
 // ---- Initialisation des variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 	$id=checkVar("id","numeric");
 	$form_data=checkVar("form_data","array");
@@ -81,7 +76,7 @@
 		{
 			$id=$btm->id;
 		}
-		$msg_confirmation.="Vos donnÈes ont ÈtÈ enregistrÈes.<BR>";
+		$msg_confirmation.="Vos donn√©es ont √©t√© enregistr√©es.<BR>";
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
@@ -95,7 +90,7 @@
 		  { $btm->Valid("status","4"); }
 
 		$btm->Save();
-		$msg_confirmation.="Vos donnÈes ont ÈtÈ enregistrÈes.<BR>";
+		$msg_confirmation.="Vos donn√©es ont √©t√© enregistr√©es.<BR>";
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
@@ -106,13 +101,13 @@
 			$affrub="baptemes";
 	}
 
-// ---- RÈserve l'avion
+// ---- R√©serve l'avion
 	if (($fonc=="reserver") && ($btm->data["id_resa"]==0))
 	{
 		require_once ($appfolder."/class/reservation.inc.php");
 		$resa=new resa_class(0,$sql);
 
-		$resa->description="Bapteme ".$btm->data["nom"]."\nTÈlÈphone: ".$btm->data["telephone"];
+		$resa->description="Bapteme ".$btm->data["nom"]."\nT√©l√©phone: ".$btm->data["telephone"];
 		$resa->uid_pilote=$btm->data["id_pilote"];
 		$resa->uid_debite=($MyOpt["uid_bapteme"]>0) ? $MyOpt["uid_bapteme"] : $btm->data["id_pilote"];
 		$resa->uid_instructeur=0;
@@ -132,7 +127,7 @@
 		$btm->data["status"]=4;
 		$btm->Save();
 
-		$msg_confirmation.=($msg_resa!="") ? $msg_resa : "RÈservation confirmÈe.<BR>";
+		$msg_confirmation.=($msg_resa!="") ? $msg_resa : "R√©servation confirm√©e.<BR>";
 	}
 
 // ---- Attribuer le bapteme
@@ -143,7 +138,7 @@
 		$btm->Save();
 	  }
 
-// ---- Vol effectuÈ
+// ---- Vol effectu√©
 	if (($fonc=="effectue") && ($id>0))
 	{
 		$btm->data["status"]=5;
@@ -188,46 +183,78 @@
 	$tmpl_x->assign("deb", strtotime($btm->data["dte"]));
 	$tmpl_x->assign("fin", strtotime($btm->data["dte"])+45*60);
 
-	// Menu
-	if (GetDroit("CreeBapteme"))
-	  {
-	  	$tmpl_x->parse("infos.ajout");
-	  }
-	if (GetDroit("ModifBapteme"))
-	  {
-	  	$tmpl_x->parse("infos.modification");	  	
-	  }
-	if (GetDroit("SupprimeBapteme"))
-	  {
-	  	$tmpl_x->parse("infos.suppression");
-	  }
-
-	
+// ---- Menu
 	$ress = new ress_class($btm->data["id_avion"],$sql);
 
-	if (($btm->data["id_pilote"]==0) && ($btm->data["status"]>0))
-	  {
-	  	$tmpl_x->parse("infos.affecter");
-		$tmpl_x->parse("corps.info_prendre");
-	  }
+// <p><A href="index.php?mod=aviation&rub=baptemes"><IMG src="{path_module}/img/icn32_retour.png" alt="">&nbsp;Liste</A></p>
+	addPageMenu("",$mod,"Liste",geturl("aviation","baptemes",""),"icn32_retour.png",false);
 
+// <!-- BEGIN: affecter -->
+// <p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=affecte"><IMG src="{path_module}/img/icn32_affecte.png" alt="">&nbsp;Prendre</A></p>
+// <!-- END: affecter -->
+	if (($btm->data["id_pilote"]==0) && ($btm->data["status"]>0))
+	{
+		addPageMenu("",$mod,"Prendre",geturl("aviation","bapteme","fonc=affecte&id=".$id),"icn32_retour.png",false);
+		$tmpl_x->parse("corps.info_prendre");
+	}
+
+// <!-- BEGIN: planifier -->
+// <p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=planifier"><IMG src="{path_module}/img/icn32_planifie.png" alt="">&nbsp;Planifier</A></p>
+// <!-- END: planifier -->
 	if (($btm->data["status"]==2) || ($btm->data["status"]==3) || (($btm->data["status"]==4) && ($btm->data["id_resa"]==0)))
 	{
-		$tmpl_x->parse("infos.planifier");
+		addPageMenu("",$mod,"Planifier",geturl("aviation","bapteme","fonc=planifier&id=".$id),"icn32_planifie.png",false);
 		$tmpl_x->parse("corps.info_planifier");
 	}
 
+// <!-- BEGIN: reserver -->
+// <p><a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=reserver"><IMG src="{path_module}/img/icn32_reservation.png" alt="">&nbsp;R√©server</A></p>
+// <!-- END: reserver -->
 	if (($ress->CheckDispo(strtotime($btm->data["dte"]),strtotime($btm->data["dte"])+45*60)) && ($btm->data["id_pilote"]>0) && ($btm->data["id_avion"]>0) && ($btm->data["dte"]!='0000-00-00 00:00'))
 	{
-	  	$tmpl_x->parse("infos.reserver");
+		addPageMenu("",$mod,"R√©server",geturl("aviation","bapteme","fonc=reserver&id=".$id),"icn32_reservation.png",false);
 		$tmpl_x->parse("corps.info_reserver");
 	}
 
+
+// <!-- BEGIN: effectue -->
+// <p><a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=effectue"><IMG src="{path_module}/img/icn32_effectue.png" alt="">&nbsp;Effectu√©</A></p>
+// <!-- END: effectue -->
 	if ( ($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4) )
 	{
-	  	$tmpl_x->parse("infos.effectue");
+		addPageMenu("",$mod,"Effectu√©",geturl("aviation","bapteme","fonc=effectue&id=".$id),"icn32_effectue.png",false);
 		$tmpl_x->parse("corps.info_effectuer");
 	}
+	
+// <!-- BEGIN: ajout -->
+// <p><A href="index.php?mod=aviation&rub=bapteme&fonc=add&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="">&nbsp;Ajouter</A></p>
+// <!-- END: ajout -->
+	if (GetDroit("CreeBapteme"))
+	{
+		addPageMenu("",$mod,"Ajouter",geturl("aviation","bapteme","fonc=add&id=0"),"icn32_ajouter.png",false);
+	}
+
+// <!-- BEGIN: modification -->
+// <p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" alt="">&nbsp;Modifier</A></p>
+// <!-- END: modification -->
+	if (GetDroit("ModifBapteme"))
+	{
+		addPageMenu("",$mod,"Modifier",geturl("aviation","bapteme","fonc=modifier&id=".$id),"icn32_modifier.png",($fonc=="modifier") ? true : false);
+	}
+
+// <!-- BEGIN: suppression -->
+// <p><A href="#" OnClick="ConfirmeClick('index.php?mod=aviation&rub=bapteme&id={id}&fonc=delete','Voulez-vous supprimer ce bapt√®me ?');"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">&nbsp;Supprimer</A></p>
+// <!-- END: suppression -->
+
+
+	if (GetDroit("SupprimeBapteme"))
+	{
+		addPageMenu("",$mod,"Supprimer",geturl("aviation","bapteme","fonc=delete&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer ce bapt√®me ?");
+	}
+
+
+
+
 
 
 	if (($fonc=="planifier") && (($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4)))
@@ -258,7 +285,7 @@
 		$tmpl_x->assign("lst_uid_avion", $id);
 		$tmpl_x->assign("dispo_immat", $ress->val("immatriculation"));
 		$tmpl_x->parse("corps.lst_dispo");
-		
+		$tmpl_x->parse("corps.lst_dispo_reload");
 	  }
 
 

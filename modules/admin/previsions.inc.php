@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,14 +19,10 @@
 */
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesConfigPrevisions")) { FatalError("Accès non autorisé (AccesConfigPrevisions)"); }
+// ---- VÃ©rifie le droit d'accÃ¨s
+	if (!GetDroit("AccesConfigPrevisions")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigPrevisions)"); }
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("previsions.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$dte=checkVar("dte","varchar",4);
 	
 // ---- Affiche le menu
@@ -34,7 +30,7 @@
 	require_once("modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Liste des années
+// ---- Liste des annÃ©es
 
 	if (($dte=="") || (!preg_match("/[0-9]{4}/",$dte)))
 	{
@@ -55,7 +51,7 @@
 		$tmpl_x->parse("corps.lst_annee");
 	}
 
-// ---- Liste des prévisions
+// ---- Liste des prÃ©visions
 	$tabPrev=array();
 	$tabRess=array();
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_prevision WHERE annee='".$dte."' ORDER by avion";
@@ -96,7 +92,7 @@
 
 // ---- Valeurs
 	$tabMois[1]="Janvier";
-	$tabMois[2]="Février";
+	$tabMois[2]="FÃ©vrier";
 	$tabMois[3]="Mars";
 	$tabMois[4]="Avril";
 	$tabMois[5]="Mai";
@@ -106,7 +102,7 @@
 	$tabMois[9]="Septembre";
 	$tabMois[10]="Octobre";
 	$tabMois[11]="Nomvembre";
-	$tabMois[12]="Décembre";
+	$tabMois[12]="DÃ©cembre";
 
 
 	foreach($tabMois as $m=>$nom)

@@ -28,7 +28,7 @@
 					$m=new manip_class($r,$sql);
 		
 					$input_arrays[$ii]["id"]=$m->id;
-					$input_arrays[$ii]["title"]=utf8_encode($m->val("titre"));
+					$input_arrays[$ii]["title"]=$m->val("titre");
 					$input_arrays[$ii]["start"]=date("c",strtotime($m->val("dte_manip")));
 					$input_arrays[$ii]["end"]=date("c",strtotime($m->val("dte_manip")));
 					$input_arrays[$ii]["color"]='#38a9e3';

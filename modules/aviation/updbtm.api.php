@@ -1,4 +1,4 @@
-<?
+<?php
 // ---- Refuse l'accès en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
@@ -19,7 +19,7 @@
 	{
 		foreach($data["data"] as $k=>$v)
 		{
-			$msg_erreur.=$btm->Valid($k,utf8_decode($v));
+			$msg_erreur.=$btm->Valid($k,$v);
 		}
 	}
 	

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,19 +19,13 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesSuiviMouvements")) { FatalError("Accès non autorisé (AccesSuiviMouvements)"); }
+<?php
+	if (!GetDroit("AccesSuiviMouvements")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviMouvements)"); }
 	
-// ---- Charge le template
-	// $tmpl_x = LoadTemplate("index");
-	$tmpl_x->assign("path_module","$module/$mod");
-
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$form_poste=checkVar("form_poste","numeric");
 	$form_tiers=checkVar("form_tiers","numeric");
 	$form_commentaire=checkVar("form_commentaire","varchar");
@@ -124,7 +118,7 @@
 	}
 
 
-// ---- Enregistre les opérations
+// ---- Enregistre les opÃ©rations
 	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$form_mid=checkVar("form_mid","array");
@@ -146,7 +140,7 @@
 		}
 
 		$form_tiers=0;
-		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
+		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 		$tmpl_x->assign("form_page", "vols");
 	  }
 

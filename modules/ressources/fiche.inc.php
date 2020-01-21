@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,7 +19,7 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
@@ -29,10 +29,10 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche le sous-menu
-	addSubMenu("","Créer",geturl("ressources","fichemaint",""),"icn32_ajouter.png",false,"");
+	addSubMenu("","CrÃ©er",geturl("ressources","fichemaint",""),"icn32_ajouter.png",false,"");
 	affSubMenu();
 
-// ---- Vérification des données
+// ---- VÃ©rification des donnÃ©es
 	$uid_avion=checkVar("uid_avion","numeric");
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
@@ -85,7 +85,7 @@
 			"width"=>350
 		),
 		"dteresolv"=>array(
-			"aff"=>"Prévision",
+			"aff"=>"PrÃ©vision",
 			"width"=>100
 		),
 		"action"=>array(
@@ -156,7 +156,7 @@
 	if ($order=="") { $order="ress"; }
 	if ($trie=="") { $trie="d"; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,"action"));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 
 // ---- Affecte les variables d'affichage

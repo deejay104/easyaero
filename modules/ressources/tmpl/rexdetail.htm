@@ -10,9 +10,9 @@
 <!-- BEGIN: corps -->
 
 
-<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+<p class="lastupdate">DerniÃ¨re mise Ã  jour : {info_maj}</p>
 
-<FORM name="rex" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="rex" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="ressources">
 	<INPUT type="hidden" name="rub" value="rexdetail">
@@ -22,13 +22,13 @@
 	<div class="formulaireTitre">Informations</div>
 	<div class="formulaire">
 		<label>Titre</label>{form_titre}<br />
-		<label>Date de création</label>{form_dte_rex}<br />
+		<label>Date de crÃ©ation</label>{form_dte_rex}<br />
 		<label>Status</label>{form_status}<br />
 	</div>
 
 	<div class="formulaireTitre">Descriptif</div>
 	<div class="formulaire">
-	<div><b>Descriptif de l'événement</b></div>
+	<div><b>Descriptif de l'Ã©vÃ©nement</b></div>
 	{form_description}
 	<div><b>Commentaire</b></div>
 	{form_commentaire}
@@ -39,15 +39,15 @@
 	<table>
 		<tr>
 			<td width="500">
-				<label>Catégorie</label>{form_categorie}<br />
+				<label>CatÃ©gorie</label>{form_categorie}<br />
 				<label>Nature du vol</label>{form_nature}<br />
-				<label>Condition Météo</label>{form_mto}<br />
+				<label>Condition MÃ©tÃ©o</label>{form_mto}<br />
 				<label>Environnement</label>{form_environnement}<br />
 			</td>
 			<td>
 				<label>Phase du vol</label>{form_phase}<br />
 				<label>Type de vol</label>{form_typevol}<br />
-				<label>Type d'événement</label>{form_typeevt}<br />
+				<label>Type d'Ã©vÃ©nement</label>{form_typeevt}<br />
 				<label>Avion</label>{form_uid_avion}<br />
 			</td>
 		</tr>
@@ -61,7 +61,7 @@
 
 	<div class="formulaireTitre">Conclusion</div>
 	<div class="formulaire">
-		<div><b>Synthèse</b></div>
+		<div><b>SynthÃ¨se</b></div>
 		{form_synthese}
 
 		

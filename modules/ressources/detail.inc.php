@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,7 +19,7 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
@@ -62,7 +62,7 @@
 	}
 	else
 	{
-		FatalError("Paramètre d'id non valide");
+		FatalError("ParamÃ¨tre d'id non valide");
 	}
 
 // ---- Supprimer la ressource
@@ -74,7 +74,7 @@
 			return;
 	}
 
-// ---- Désactive la ressource
+// ---- DÃ©sactive la ressource
 	if (($fonc=="desactive") && ($id>0) && (GetDroit("DesactiveRessource")))
 	{
 		$ress->Desactive();
@@ -98,7 +98,7 @@
 	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="oui"))
 	{
 		// $tmpl_x->parse("corps.desactive");
-		addSubMenu("","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"icn32_desactive.png",false,"Voulez-vous désactiver cet avion ?");
+		addSubMenu("","DÃ©sactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"icn32_desactive.png",false,"Voulez-vous dÃ©sactiver cet avion ?");
 	}
 
 	if ((GetDroit("SupprimeRessource")) && ($ress->data["actif"]=="off"))
@@ -117,7 +117,7 @@
 
 	if (($fonc=="Enregistrer") && (GetDroit("ModifRessourceSauve")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
-		// Sauvegarde les données
+		// Sauvegarde les donnÃ©es
 		if (count($form_data)>0)
 		{
 			foreach($form_data as $k=>$v)
@@ -147,7 +147,7 @@
 			}
 		}
 
-		// Sauvegarde des échéances
+		// Sauvegarde des Ã©chÃ©ances
 		$form_echeance=checkVar("form_echeance","array");
 		$form_echeance_type=checkVar("form_echeance_type","array");
 		foreach($form_echeance as $i=>$d)
@@ -169,7 +169,7 @@
 			}
 		}
 		
-		$msg_confirmation.="Vos données ont été enregistrées.<BR>";
+		$msg_confirmation.="Vos donnÃ©es ont Ã©tÃ© enregistrÃ©es.<BR>";
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	  }
@@ -194,7 +194,7 @@
 		  { $tmpl_x->assign("titre", "Modification : ".$ress->data["nom"]); }
 	  }
 	else if ($typeaff=="html")
-	  {	$tmpl_x->assign("titre", "Détail de ".$ress->data["immatriculation"]); }
+	  {	$tmpl_x->assign("titre", "DÃ©tail de ".$ress->data["immatriculation"]); }
 
 	$tmpl_x->parse("corps.caracteristique");
 
@@ -220,7 +220,7 @@
 		$dtem=$maint->Aff("dte_deb");
 		$dtes="(".$maint->Aff("status").")";
 
-		// $dtes="(Planifié)";
+		// $dtes="(PlanifiÃ©)";
 	}
 	$tmpl_x->assign("aff_dtemaint",$dtem." ".$dtes);
 
@@ -250,7 +250,7 @@
 		}
 	}
 
-// ---- Affiche les échéances
+// ---- Affiche les Ã©chÃ©ances
 	$lstdte=ListEcheance($sql,$id,"ressources");
 
 	if ((is_numeric($id)) && ($id>0))

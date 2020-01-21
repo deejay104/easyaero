@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,12 +19,12 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesRex")) { FatalError("Accès non autorisé (AccesRex)"); }
+<?php
+	if (!GetDroit("AccesRex")) { FatalError("AccÃ¨s non autorisÃ© (AccesRex)"); }
 	
 	require_once ($appfolder."/class/rex.inc.php");
 
-// ---- Vérification des données
+// ---- VÃ©rification des donnÃ©es
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 
@@ -36,7 +36,7 @@
 // ---- Affiche le sous-menu
 	if (GetDroit("CreeRex"))
 	{
-		addSubMenu("","Créer",geturl("ressources","rexdetail","id=0"),"icn32_ajouter.png",false,"");
+		addSubMenu("","CrÃ©er",geturl("ressources","rexdetail","id=0"),"icn32_ajouter.png",false,"");
 		affSubMenu();
 	}
 
@@ -48,7 +48,7 @@
 	$tabTitre["titre"]["width"]=350;
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=100;
-	$tabTitre["categorie"]["aff"]="Catégorie";
+	$tabTitre["categorie"]["aff"]="CatÃ©gorie";
 	$tabTitre["categorie"]["width"]=150;
 
 	$lst=ListRex($sql,array());

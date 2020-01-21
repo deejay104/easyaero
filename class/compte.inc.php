@@ -28,6 +28,7 @@ class compte_class{
 		$this->status="brouillon";
 		$this->uid_creat=$gl_uid;
 		$this->date_creat=now();
+		$this->erreur="";
 		
 		if ($id>0)
 		{

@@ -1,6 +1,6 @@
 <?php
 	if ($gl_mode!="batch")
-	  { FatalError("Acces refusé","Ne peut etre executé qu'en arriere plan"); }
+	  { FatalError("Acces refusÃ©","Ne peut etre executÃ© qu'en arriere plan"); }
 
   	require_once ($appfolder."/class/user.inc.php");
   	require_once ($appfolder."/class/ressources.inc.php");
@@ -16,7 +16,7 @@
 
 
 	
-// ---- Liste des membres à notifier
+// ---- Liste des membres Ã  notifier
 	$tabUser=array();
 	$lst=ListActiveUsers($sql,"",array("NotifMaintenance"),"non");
 	foreach($lst as $i=>$id)

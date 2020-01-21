@@ -1,35 +1,43 @@
-<?
-// ---- Refuse l'acc�s en direct
+<?php
+// ---- Refuse l'accès en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Charge le template
-  	$tmpl_menu = new XTemplate (MyRep("menu.htm"));
-	$tmpl_menu->assign("path_module","$module/$mod");
+	// <p><A href="index.php?mod=comptes" {class_index}><IMG src="{path_module}/img/icn32_compte.png" />Mon compte</A></p>
+	addPageMenu("",$mod,"Mon Compte",geturl("comptes","",""),"icn32_compte.png",($rub=="index") ? true : false);
 
-// ---- S�lectionne le menu courant
-	$tmpl_menu->assign("class_".$rub,"class='pageTitleSelected'");
-
+	// <!-- BEGIN: liste_compte -->
+		// <p><A href="index.php?mod=suivi&rub=liste"><IMG src="{path_module}/img/icn32_comptes.png" />Liste des comptes</A></p>
+	// <!-- END: liste_compte -->
 	if (GetDroit("AccesSuiviListeComptes"))
 	{
-		$tmpl_menu->parse("infos.liste_compte");
+		addPageMenu("",$mod,"Liste des comptes",geturl("suivi","liste",""),"icn32_comptes.png",($rub=="liste") ? true : false);
 	}
+	
+	// <!-- BEGIN: transfert -->
+		// <p><A href="index.php?mod=comptes&rub=transfert" {class_transfert}><IMG src="{path_module}/img/icn32_transfert.png" />Transfèrer</A></p>
+	// <!-- END: transfert -->
 	if (GetDroit("AccesTransfert"))
 	{
-		$tmpl_menu->parse("infos.transfert");
+		addPageMenu("",$mod,"Transfèrer",geturl("comptes","transfert",""),"icn32_transfert.png",($rub=="transfert") ? true : false);
 	}
+
+	// <!-- BEGIN: credite -->
+		// <p><A href="index.php?mod=comptes&rub=credite" {class_credite}><IMG src="{path_module}/img/icn32_credite.png" />Créditer</A></p>
+	// <!-- END: credite -->
 	if (GetDroit("AccesCredite"))
 	{
-		$tmpl_menu->parse("infos.credite");
+		addPageMenu("",$mod,"Créditer",geturl("comptes","credite",""),"icn32_credite.png",($rub=="credite") ? true : false);
 	}
+
+	// <!-- BEGIN: affiche_signature -->
+		// <p><A href="index.php?mod=comptes&fonc=showhash&id={form_id}"><IMG src="{path_module}/img/icn32_cle.png" />Afficher les signatures</A></p>
+	// <!-- END: affiche_signature -->
 
 	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone") && ($rub=="index"))
 	{
-		$tmpl_menu->parse("infos.affiche_signature");
+		addPageMenu("",$mod,"Afficher les signatures",geturl("comptes","","fonc=showhash&id=".$id),"icn32_cle.png",false);
 	}
 
-// ---- Affiche les menus
-	$tmpl_menu->parse("infos");
-	$aff_menu=$tmpl_menu->text("infos");
 	
 ?>

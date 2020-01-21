@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,19 +19,13 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesSuiviListeComptes")) { FatalError("Accès non autorisé (AccesSuiviListeComptes)"); }
+<?php
+	if (!GetDroit("AccesSuiviListeComptes")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviListeComptes)"); }
 
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-	
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("liste.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 
@@ -42,7 +36,7 @@
 
 // ---- Affiche les infos
 	$tabTitre=array();
-	$tabTitre["prenom"]["aff"]="Prénom";
+	$tabTitre["prenom"]["aff"]="PrÃ©nom";
 	$tabTitre["prenom"]["width"]=150;
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=200;
@@ -56,7 +50,7 @@
 	$tabTitre["soldetmp"]["aff"]="En attente";
 	$tabTitre["soldetmp"]["width"]=120;
 
-	$tabTitre["decouvert"]["aff"]="Découvert";
+	$tabTitre["decouvert"]["aff"]="DÃ©couvert";
 	$tabTitre["decouvert"]["width"]=70;
 
 	$lstusr=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,24 +19,12 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesConfigTarifs")) { FatalError("Accès non autorisé (AccesConfigTarifs)"); }
+<?php
+	if (!GetDroit("AccesConfigTarifs")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigTarifs)"); }
 
 	require_once ($appfolder."/class/ressources.inc.php");
-	
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("tarifs.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-// ---- Vérifie les variables
-	$tarif_code=checkVar("tarif_code","array");
-	$tarif_pilote=checkVar("tarif_pilote","array");
-	$tarif_instructeur=checkVar("tarif_instructeur","array");
-	$tarif_reduction=checkVar("tarif_reduction","array");
-	$tarif_nom=checkVar("tarif_nom","array");
-	$tarif_reservation=checkVar("tarif_reservation","array");
-	$tarif_poste=checkVar("tarif_poste","array");
+// ---- VÃ©rifie les variables
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -46,6 +34,17 @@
 // ---- Enregistre les tarifs
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
+		$idavion=checkVar("idavion","numeric");
+		$tarif_code=checkVar("tarif_code","array");
+		$tarif_pilote=checkVar("tarif_pilote","array");
+		$tarif_instructeur=checkVar("tarif_instructeur","array");
+		$tarif_reduction=checkVar("tarif_reduction","array");
+		$tarif_nom=checkVar("tarif_nom","array");
+		$tarif_reservation=checkVar("tarif_reservation","array");
+		$tarif_poste=checkVar("tarif_poste","array");
+		$tarif_defaut_pil=checkVar("tarif_defaut_pil","array");
+		$tarif_defaut_ins=checkVar("tarif_defaut_ins","array");
+
 		foreach($tarif_pilote as $i=>$t)
 		{
 			if ($tarif_code[$i]!="")
@@ -129,7 +128,7 @@
 		$tabMvt[$sql->data["id"]]=$sql->data;
 	}
 
-// ---- Affiche la page demandée
+// ---- Affiche la page demandÃ©e
 	$query = "SELECT tarifs.*,ressources.id as idavion,ressources.immatriculation FROM ".$MyOpt["tbl"]."_tarifs AS tarifs LEFT JOIN ".$MyOpt["tbl"]."_ressources AS ressources ON tarifs.ress_id=ressources.id WHERE ressources.actif='oui' ORDER BY ressources.immatriculation,tarifs.nom";
 	$sql->Query($query);
 	$ress="";

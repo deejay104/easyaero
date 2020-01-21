@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -18,8 +18,8 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */?>
 
-<?
-	if (!GetDroit("AccesSuiviTaxeAT")) { FatalError("Accès non autorisé (AccesSuiviTaxeAT)"); }
+<?php
+	if (!GetDroit("AccesSuiviTaxeAT")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviTaxeAT)"); }
 
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/compte.inc.php");
@@ -27,10 +27,6 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/navigation.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("taxeat.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("FormulaireBackgroundNormal",$MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 
 
@@ -38,6 +34,9 @@
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
+
+	addSubMenu("","Ajouter","#","icn32_ajouter",false,"","OpenDialog()");
+	affSubMenu();
 
 // ---- Enregistre
 	if ($fonc=="Enregistrer")
@@ -52,7 +51,7 @@
 		}
 	}
 
-// ---- Débiter nouvelle entrée
+// ---- DÃ©biter nouvelle entrÃ©e
 	if (($fonc=="debite") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$dest=checkVar("ddest","varchar");
@@ -94,7 +93,7 @@
 			$mvt->Save();
 			$mvt->Debite();
 			
-			// A voir si cette partie est nécessaire ?
+			// A voir si cette partie est nÃ©cessaire ?
 			$tmpl_x->assign("aff_mouvement_detail", $mvt->Affiche());
 			$tmpl_x->parse("corps.aff_mvt_detail.aff_mvt_ligne");
 			$tmpl_x->parse("corps.aff_mvt_detail");

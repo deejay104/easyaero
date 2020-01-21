@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,11 +19,11 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/user.inc.php");
 
 
-// ---- Vérifie si l'on veut quitter la page
+// ---- VÃ©rifie si l'on veut quitter la page
 	if ($fonc=="Retour")  	
 	{
 		$mod="reservations";
@@ -43,25 +43,25 @@
 	$maj=checkVar("maj","numeric");
 	
 
-// ---- Vérifie les variables
-	if (!is_numeric($id)) { FatalError("Les paramètres de la page sont incorrectes."); }
+// ---- VÃ©rifie les variables
+	if (!is_numeric($id)) { FatalError("Les paramÃ¨tres de la page sont incorrectes."); }
 
 
-// ---- Affiche les valeurs enregistrée pour la page
+// ---- Affiche les valeurs enregistrÃ©e pour la page
 
 	$tmpl_x->assign("id", $id);
 
-	// Récupère les informations sur le vol
+	// RÃ©cupÃ¨re les informations sur le vol
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_calendrier WHERE id='$id'";
 	$res=$sql->QueryRow($query);
 
-	// Charge les données de l'avion
+	// Charge les donnÃ©es de l'avion
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_ressources WHERE id='".$res["uid_avion"]."'";
 
 	$resavion=$sql->QueryRow($query);
 	$data=$resavion["centrage"];
 
-	// Décode les données de l'avion
+	// DÃ©code les donnÃ©es de l'avion
 	$parser = xml_parser_create();
 	xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
 	xml_parser_set_option($parser,XML_OPTION_SKIP_WHITE,1);
@@ -70,7 +70,7 @@
 
 	$tabplace=array();
 
-	// boucle à travers les structures
+	// boucle Ã  travers les structures
 	foreach ($tags as $key=>$val)
 	{
 		if ($key == "place")
@@ -101,7 +101,7 @@
 		return $t;
 	}
 
-	// Récupère la liste des passagers
+	// RÃ©cupÃ¨re la liste des passagers
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_masses WHERE uid_vol='$id'";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
@@ -112,7 +112,7 @@
 		$tabplace[$sql->data["uid_place"]]["idenr"]=$sql->data["id"];
 	  }
 
-	// Met à jour avec les nouvelles infos
+	// Met Ã  jour avec les nouvelles infos
 	if (is_array($form_passager_poids))
 	  {
 		foreach($form_passager_poids as $k=>$v)
@@ -170,8 +170,7 @@
 					
 					// $tmpl_x->assign("uid_pilote", $sql->data["id"]);
 					// $tmpl_x->assign("nom_pilote", AffInfo($sql->data["prenom"],"prenom")." ".AffInfo($sql->data["nom"],"nom"));
-
-					if ($form_passager_pilote[$k]==$resusr->id)
+					if ( (isset($form_passager_pilote[$k])) && ($form_passager_pilote[$k]==$resusr->id) )
 					{
 						$tmpl_x->assign("chk_pilote", "selected");
 						if ($tv["poids"]=="")
@@ -183,21 +182,22 @@
 					else if ( ( (($res["uid_pilote"]==$resusr->id) && ($tv["type"]=="pilote"))
 						   || ($tv["idpilote"]==$resusr->id)
 						   || (($res["uid_instructeur"]==$resusr->id) && ($tv["type"]=="copilote") && ($tv["idpilote"]==0)) )
-						   && ($form_passager_pilote[$k]=="")
-					   )
+						   )
 					{
-						$tmpl_x->assign("chk_pilote", "selected");
-						if ($tv["poids"]=="")
-						  {
-							$tabplace[$k]["poids"]=$resusr->data["poids"];
-						  }
-						$tabplace[$k]["idpilote"]=$resusr->id;
+						if (!isset($form_passager_pilote[$k]) || ($form_passager_pilote[$k]==""))
+						{
+							$tmpl_x->assign("chk_pilote", "selected");
+							if ($tv["poids"]=="")
+							  {
+								$tabplace[$k]["poids"]=$resusr->data["poids"];
+							  }
+							$tabplace[$k]["idpilote"]=$resusr->id;
+						}
 					}
 					else
 					{
 						$tmpl_x->assign("chk_pilote", "");
 					}
-
 
 					$tmpl_x->parse("corps.lst_passager.aff_pilote.lst_pilote");
 				  }
@@ -206,12 +206,25 @@
 			}
 			else if ($tv["type"]=="essence")
 			{
-				$tmpl_x->assign("passager_unite", $MyOpt["unitVol"]." (=".round($tabplace[$k]["poids"]*$coef,0)." ".$MyOpt["unitPoids"].")");
+				if (isset($tabplace[$k]["poids"]))
+				{
+					$tmpl_x->assign("passager_unite", $MyOpt["unitVol"]." (=".round($tabplace[$k]["poids"]*$coef,0)." ".$MyOpt["unitPoids"].")");
+				}
+				else
+				{
+					$tmpl_x->assign("passager_unite", $MyOpt["unitVol"]." (=0 ".$MyOpt["unitPoids"].")");
+				}
 			}
 		}
-		$tmpl_x->assign("passager_poids", $tabplace[$k]["poids"]);
-		$tot=$tot+round($tabplace[$k]["poids"]*$coef,0);
-
+		if (isset($tabplace[$k]["poids"]))
+		{
+			$tmpl_x->assign("passager_poids", $tabplace[$k]["poids"]);
+			$tot=$tot+round($tabplace[$k]["poids"]*$coef,0);
+		}
+		else
+		{
+			$tmpl_x->assign("passager_poids", "");
+		}
 		$tmpl_x->parse("corps.lst_passager");
 	  }
 
@@ -227,7 +240,7 @@
 	  }
 
 
-// ---- Enregistre les données
+// ---- Enregistre les donnÃ©es
 
 
 	foreach($tabplace as $k=>$v)
@@ -238,7 +251,7 @@
 			$sql->Update($query);
 		  	//echo $query."<br>\n";
 		  }
-		else if ($v["poids"]>0)
+		else if ((isset($v["poids"])) && ($v["poids"]>0))
 		  {
 		  	if (!is_numeric($v["idpilote"]))
 		  	  { $v["idpilote"]=0; }

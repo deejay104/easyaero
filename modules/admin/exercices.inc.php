@@ -20,17 +20,11 @@
 ?>
 
 <?php
-	if (!GetDroit("AccesConfigExercices")) { FatalError("Accès non autorisé (AccesConfigExercices)"); }
+	if (!GetDroit("AccesConfigExercices")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigExercices)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("exercices.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
-	$checktime=checkVar("checktime","numeric");
+// ---- VÃ©rifie les variables
 	$form_data=checkVar("form_data","array");
 
 // ---- Affiche le menu
@@ -51,7 +45,7 @@
 	}
 
 
-// ---- Affiche la page demandée
+// ---- Affiche la page demandÃ©e
 	$tabTitre=array(
 		"description"=>array(
 			"aff"=>"Description",
@@ -70,7 +64,7 @@
 			"width"=>50
 		),
 		"competence"=>array(
-			"aff"=>"Compétence",
+			"aff"=>"CompÃ©tence",
 			"width"=>400
 		),
 		"progression"=>array(
@@ -82,8 +76,8 @@
 			"width"=>40
 		),
 	);
-	$order=checkVar("order","varchar");
-	$trie=checkVar("trie","varchar",1);
+	$order=checkVar("order","varchar",15,"refffa");
+	$trie=checkVar("trie","varchar",1,"d");
 	$ts=checkVar("ts","numeric");
 	$tabsearch=checkVar("tabsearch","array");
 	
@@ -115,8 +109,8 @@
 		$tabValeur[$i]["competence"]["val"]=$exo->val("competence");
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
-		$tabValeur[$i]["action"]["aff"] ="<div id='action_".$d["id"]."' style='display:none;'><a id='edit_".$d["id"]."' class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a>";
-		$tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'  class='imgDelete' ><img src='".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"] ="<div id='action_".$d["id"]."' style='display:none;'><a id='edit_".$d["id"]."' class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a>";
+		$tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'  class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
 
 		$lstp=ListProgression($sql,$d["id"]);
 		$tabValeur[$i]["progression"]["val"]="";
@@ -130,7 +124,8 @@
 		$tmpl_x->parse("corps.lst_edit");
 	}
 
-	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,"",$ts,$tl,$totligne,true,true,"action"));
+// function AfficheTableau($tabValeur,$tabTitre=array(),$order="",$trie="",$url="",$start=0,$limit=-1,$nbline=0,$showicon="")
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,$totligne,"action"));
 
 
 

@@ -1,15 +1,15 @@
 <?php
-// ---- Refuse l'accËs en direct
+// ---- Refuse l'acc√®s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Charge les dÈpendances
+// ---- Charge les d√©pendances
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/manifestation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- VÈrifie les paramËtres
+// ---- V√©rifie les param√®tres
 
 	// Short-circuit if the client did not give us a date range.
 	if (!isset($_GET['start']) || !isset($_GET['end'])) {
@@ -35,7 +35,7 @@
 		$lstres[]=$ress;
 	}
 	
-	// Affichage des rÈservations	
+	// Affichage des r√©servations	
 	foreach ($lstres as $i=>$rid)
 	{
 		$tresa=GetReservation($sql,$start,$end,$rid);
@@ -74,10 +74,10 @@
 	
 				$input_arrays[$ii]["id"]=$resa["resa"]->id;
 				$input_arrays[$ii]["resourceId"]=$resa["resa"]->uid_ressource;
-				$input_arrays[$ii]["title"]=utf8_encode((($d==1) ? $resa["ress"]->val("immatriculation")." : \n" : "").$resa["pilote"]->val($affnom).(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->val($affnom)) : "")).(($resa["resa"]->invite=="oui") ? " <img src='static/modules/reservations/img/icn16_invite.png'>" : "");
+				$input_arrays[$ii]["title"]=(($d==1) ? $resa["ress"]->val("immatriculation")." : \n" : "").$resa["pilote"]->val($affnom).(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->val($affnom)) : "").(($resa["resa"]->invite=="oui") ? " <img src='static/modules/reservations/img/icn16_invite.png'>" : "");
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
 				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
-				$input_arrays[$ii]["description"]=utf8_encode($resa["ress"]->val("immatriculation")." de ".sql2time($resa["resa"]->dte_deb,"nosec")." ‡ ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->id>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : ""));
+				$input_arrays[$ii]["description"]=$resa["ress"]->val("immatriculation")." de ".sql2time($resa["resa"]->dte_deb,"nosec")." √† ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->id>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");
 				$input_arrays[$ii]["editable"]=($resa["resa"]->edite=='non') ? false : true;
 				if ($col!="") { $input_arrays[$ii]["color"]='#'.$col; }
 				$ii=$ii+1;
@@ -95,7 +95,7 @@
 			$m=new manip_class($r,$sql);
 
 			$input_arrays[$ii]["id"]="M".$m->id;
-			$input_arrays[$ii]["title"]=utf8_encode($m->data["titre"]);
+			$input_arrays[$ii]["title"]=$m->data["titre"];
 			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_manip"]." 00:00:00"));
 			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_manip"]." 23:59:59"));
 			$input_arrays[$ii]["color"]='#'.$MyOpt["tabcolresa"]["meeting"];
@@ -114,7 +114,7 @@
 			$m=new maint_class($r,$sql);
 
 			$input_arrays[$ii]["id"]="M".$m->id;
-			$input_arrays[$ii]["title"]=utf8_encode("Maintenance");
+			$input_arrays[$ii]["title"]="Maintenance";
 			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_deb"]));
 			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_fin"])+86400);
 			$input_arrays[$ii]["color"]='#'.(($m->data["status"]>1) ? $MyOpt["tabcolresa"]["maintconf"] : $MyOpt["tabcolresa"]["maintplan"]);
@@ -164,7 +164,7 @@ function CalculSoleil($jour,$lo,$la)
 	// Hauteur du soleil au lever et au coucher
 	$ht = -50/60;
 	$ht = $ht * $dr;
-	// Fuseau horaire et coordonn√©es g√©ographiques
+	// Fuseau horaire et coordonn√É¬©es g√É¬©ographiques
 	$jo=date("j",$jour);
 	$mo=date("n",$jour);
 //$la=48.905;
@@ -172,20 +172,20 @@ function CalculSoleil($jour,$lo,$la)
 	$lo=$lo*$dr;
 	$la=$la*$dr;
 	if ($mo<3) { $mo = $mo + 12; }
-	// Heure TU du milieu de la journ√©e
+	// Heure TU du milieu de la journ√É¬©e
 	$h = 12 + $lo/$hr;
-	// Nombre de jours ÈcoulÈs depuis le 1 Mars O h TU
+	// Nombre de jours √©coul√©s depuis le 1 Mars O h TU
 	$j = floor(30.61 * ($mo + 1)) + $jo + $h / 24 - 123;
 	// Anomalie et longitude moyenne
 	$m = $k * ($j - $jm);
 	$l = $k * ($j - $jl);
 	// Longitude vrai
 	$s = $l + 2 * $e * sin($m) + 1.25 * $e * $e * sin(2 * $m);
-	// CoordonnÈes rectangulaires du soleil dans le repËre Èquatorial
+	// Coordonn√©es rectangulaires du soleil dans le rep√®re √©quatorial
 	$x = cos($s);
 	$y = cos($ob) * sin($s);
 	$z = sin($ob) * sin($s);
-	// equation du temps et dÈclinaison
+	// equation du temps et d√©clinaison
 	$r = $l;
 	$rx = cos($r) * $x + sin($r) * $y;
 	$ry = -sin($r) * $x + cos($r) * $y;
@@ -193,7 +193,7 @@ function CalculSoleil($jour,$lo,$la)
 	$y = $ry;
 	$et = atan($y / $x);
 	$dc = atan($z / sqrt(1 - $z * $z)) ;
-	// Heure de passage au mÈridien
+	// Heure de passage au m√©ridien
 	$pm = $h + $fh + $et / $hr;
 	$hs = floor($pm);
 	$pm = 60 * ($pm - $hs);

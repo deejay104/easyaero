@@ -1,12 +1,8 @@
-<?
+<?php
 	require_once("class/echeance.inc.php");
 	require_once($appfolder."/class/echeance.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = LoadTemplate ("echeances");
-	$tmpl_x->assign("path_module",$corefolder."/".$module."/".$mod);
-
-// ---- Vérifie le droit d'accès
+// ---- VÃ©rifie le droit d'accÃ¨s
 	if (!GetDroit("AccesConfigEcheances")) { FatalError($tabLang["lang_accessdenied"]." (AccesConfigEcheances)"); }
 
 // ---- Variables
@@ -39,7 +35,7 @@
 		}
 	}
 
-// ---- Supprime une échéance
+// ---- Supprime une Ã©chÃ©ance
 	if (($fonc=="delete") && ($id>0))
 	{
 		$ech = new echeancetype_class($id,$sql);
@@ -126,7 +122,7 @@
 		
 		$tabValeur[$i]["id"]["val"]=$id;
 		$tabValeur[$i]["action"]["val"]=$id;
-		$tabValeur[$i]["action"]["aff"]="<div id='action_".$id."' style='display:none;'><a id='edit_".$id."' class='imgDelete' href='index.php?mod=admin&rub=echeances&fonc=delete&id=".$id."'><img src='".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"]="<div id='action_".$id."' style='display:none;'><a id='edit_".$id."' class='imgDelete' href='".geturl("admin","echeances","fonc=delete&id=".$id)."'><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
 
 
 		$tabValeur[$i]["poste"]["val"]=$ech->val("poste");
@@ -141,7 +137,8 @@
 	if ($order=="") { $order="context"; }
 	if ($trie=="") { $trie="d"; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,"action"));
+// function AfficheTableau($tabValeur,$tabTitre=array(),$order="",$trie="",$url="",$start=0,$limit=-1,$nbline=0,$showicon="")
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"action"));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

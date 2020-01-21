@@ -14,8 +14,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","FÃ©vrier","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","DÃ©cembre"],
+			prevText: "PrÃ©cÃ©dent",
 			nextText: "Suivant"
 		});
 	});
@@ -28,7 +28,7 @@ function Recharge()
   	var form_tiers = document.getElementById("form_tiers").value;
   	var form_date = document.getElementById("form_date").value;
   	var form_commentaire = document.getElementById("form_commentaire").value;
-	document.location='index.php?mod=suivi&rub=mouvement&form_poste='+form_poste+'&form_tiers='+form_tiers+'&form_date='+form_date+'&form_commentaire='+form_commentaire;
+	document.location='{path_root}/index.php?mod=suivi&rub=mouvement&form_poste='+form_poste+'&form_tiers='+form_tiers+'&form_date='+form_date+'&form_commentaire='+form_commentaire;
 }
 
 function AffVentilation()
@@ -50,7 +50,7 @@ function AffVentilation()
 }
 </script>
 
-<FORM name="mouvement" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="mouvement" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="mouvement">
@@ -101,8 +101,8 @@ function AffVentilation()
 		</TD>
 		<TD>
 			<div id='mod_{form_id}'  style='display:none;'>
-			<a href="index.php?mod=suivi&rub=mouvement&fonc=edit&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_editer.png" border=0 /></a>
-			<a href="index.php?mod=suivi&rub=mouvement&fonc=deltemp&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
+			<a href="{path_root}/index.php?mod=suivi&rub=mouvement&fonc=edit&id={form_id}" class='imgDelete'><img src="{path_root}/{path_module}/img/icn16_editer.png" border=0 /></a>
+			<a href="{path_root}/index.php?mod=suivi&rub=mouvement&fonc=deltemp&id={form_id}" class='imgDelete'><img src="{path_root}/{path_module}/img/icn16_supprimer.png" border=0 /></a>
 			</div>
 		</TD>
 	  </TR>
@@ -163,8 +163,8 @@ function AffVentilation()
 			Ventilation du mouvement :
 			<SELECT id="form_ventilation" name="form_ventilation"  OnChange="AffVentilation();">
 			<OPTION value="non">Non</OPTION>
-			<OPTION value="debiteur">Débiteur</OPTION>
-			<OPTION value="crediteur">Créditeur</OPTION>
+			<OPTION value="debiteur">DÃ©biteur</OPTION>
+			<OPTION value="crediteur">CrÃ©diteur</OPTION>
 	        </SELECT>
 		</TD>
 		<TD></TD>

@@ -1,14 +1,14 @@
-<?
-// ---- Refuse l'accès en direct
+<?php
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Vérifie les paramètres
+// ---- VÃ©rifie les paramÃ¨tres
 	$ret=array();
 	if (!isset($_GET["mois"]))
 	{
-		$ret["result"]=utf8_encode("NOK");
-		$ret["msg"]=utf8_encode("mois not provided.");
+		$ret["result"]="NOK";
+		$ret["msg"]="mois not provided.";
 		echo json_encode($ret);
 	  	exit;
 	}
@@ -17,8 +17,8 @@
 
 	if (!isset($_GET["dte"]))
 	{
-		$ret["result"]=utf8_encode("NOK");
-		$ret["msg"]=utf8_encode("dte not provided.");
+		$ret["result"]="NOK";
+		$ret["msg"]="dte not provided.";
 		echo json_encode($ret);
 	  	exit;
 	}
@@ -26,8 +26,8 @@
 
 	if (!isset($_GET["ress"]))
 	{
-		$ret["result"]=utf8_encode("NOK");
-		$ret["msg"]=utf8_encode("ress not provided.");
+		$ret["result"]="NOK";
+		$ret["msg"]="ress not provided.";
 		echo json_encode($ret);
 	  	exit;
 	}
@@ -37,22 +37,22 @@
 
 	if ((!is_numeric($mois)) || ($mois<1) || ($mois>12))
 	{
-		$ret["result"]=utf8_encode("NOK");
-		$ret["msg"]=utf8_encode("mois is not a valid month");
+		$ret["result"]="NOK";
+		$ret["msg"]="mois is not a valid month";
 		echo json_encode($ret);
 	  	exit;
 	}
 	if ((!is_numeric($dte)) || ($dte==0))
 	{
-		$ret["result"]=utf8_encode("NOK");
-		$ret["msg"]=utf8_encode("dte is not a year");
+		$ret["result"]="NOK";
+		$ret["msg"]="dte is not a year";
 		echo json_encode($ret);
 	  	exit;
 	}
 	if ($ress==0)
 	{
-		$ret["result"]=utf8_encode("NOK");
-		$ret["msg"]=utf8_encode("Invalid ressource");
+		$ret["result"]="NOK";
+		$ret["msg"]="Invalid ressource";
 		echo json_encode($ret);
 	  	exit;
 	}

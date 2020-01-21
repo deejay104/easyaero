@@ -517,10 +517,13 @@
 		$tmpl_x->parse("corps.aff_reservation.aff_enregistrer");
 	}
 
+// ---- Menu
+
+
 	// Affiche le boutton supprimer
 	if ($resa["resa"]->edite!="non")
 	{
-		$tmpl_x->parse("infos.supprimer");
+		addPageMenu("",$mod,"Supprimer",geturl("reservations","reservation_sauve","id=".$id),"icn32_supprimer.png",false,"Souhaitez-vous supprimer cette réservation ?");
 	}
 	
 	// Liste les fiches de synthèse du vol
@@ -549,7 +552,7 @@
 		}
 	}
 
-		
+// ---- Affichage		
 	if ($ok_aff==0)
 	{ 
 		$tmpl_x->parse("corps.aff_reservation"); 

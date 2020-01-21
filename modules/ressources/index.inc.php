@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,12 +19,12 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/echeance.inc.php");
 
-// ---- VÈrifie les variables
+// ---- V√©rifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 
@@ -40,8 +40,8 @@
 		affSubMenu();
 	}
 	
-// ---- Droit d'accËs
-	if (!GetDroit("AccesAvions")) { FatalError("AccËs non authorisÈ (AccesAvions)"); }
+// ---- Droit d'acc√®s
+	if (!GetDroit("AccesAvions")) { FatalError("Acc√®s non authoris√© (AccesAvions)"); }
 
 // ---- Liste des ressources
 	$tabTitre=array();
@@ -57,7 +57,7 @@
 	$tabTitre["estimemaint"]["width"]=150;
 	if ($theme!="phone")
 	{
-		$tabTitre["echeance"]["aff"]="EchÈance(s)";
+		$tabTitre["echeance"]["aff"]="Ech√©ance(s)";
 		$tabTitre["echeance"]["width"]=350;
 	}
 
@@ -107,7 +107,7 @@
 				{
 					if ($d["resa"]=="obligatoire")
 					{
-						$tabValeur[$i]["echeance"]["aff"].="Aucune ÈchÈance pour ".$d["description"]."<br/>";
+						$tabValeur[$i]["echeance"]["aff"].="Aucune √©ch√©ance pour ".$d["description"]."<br/>";
 						$nb++;
 					}
 				}

@@ -3,8 +3,6 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-<p><a href="index.php?mod=reservations"><img src="{path_module}/img/icn32_titre.png" alt="">Calendrier</a></p>
-<p><a href="index.php?mod=reservations&rub=scheduler"><img src="{path_module}/img/icn32_scheduler.png" alt="">Journée</a></p>
 
 <p><a style='color: #000000;'>
 	{TexteTitre} 
@@ -29,20 +27,20 @@
 		if (ns6)
 		  {
 		  	var a = document.getElementById("ress").value;
-		  	document.location="index.php?mod=reservations&ress="+a+"&jour={form_jour}";
+		  	document.location="{path_root}/index.php?mod=reservations&ress="+a+"&jour={form_jour}";
 		  }
 		else
 		  {
-		  	document.location='index.php?mod=reservations&ress='+ress.value+'&jour={form_jour}';
+		  	document.location='{path_root}/index.php?mod=reservations&ress='+ress.value+'&jour={form_jour}';
 		  }
 	  }
 </SCRIPT>
 
-<link href='{corefolder}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+<link href='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
 
-<script src='{corefolder}/external/fullcalendar/lib/moment.min.js'></script>
-<script src='{corefolder}/external/fullcalendar/fullcalendar.min.js'></script>
-<script src='{corefolder}/external/fullcalendar/locale/fr.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/lib/moment.min.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
 
 <style>
 	#script-warning {
@@ -203,16 +201,16 @@
 			},
 
 			select: function(start, end) {
-				document.location="index.php?mod=reservations&rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
+				document.location="{path_root}/index.php?mod=reservations&rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
 			},
 
 			eventClick: function(event, element) {
-				document.location="index.php?mod=reservations&rub=reservation&id="+event.id;
+				document.location="{path_root}/index.php?mod=reservations&rub=reservation&id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, revertFunc) {
 				$.ajax({
-					url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
 					dataType: 'JSON',
 					success : function(response)
 					{
@@ -230,7 +228,7 @@
 			},
 			eventDrop: function(event,dayDelta,revertFunc) {
 				$.ajax({
-					url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					url: '{path_root}/{path_core}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
 					dataType: 'JSON',
 					success : function(response)
 					{
@@ -248,7 +246,7 @@
 			},
 
 			events: {
-				url: 'api.php?mod=reservations&rub=getcal&ress={form_ress}',
+				url: '{path_root}/api.php?mod=reservations&rub=getcal&ress={form_ress}',
 				error: function() {
 					$('#script-warning').show();
 				}

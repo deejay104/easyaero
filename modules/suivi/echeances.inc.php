@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,22 +19,17 @@
 */
 ?>
 
-<?
-// ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesSuiviEcheances")) { FatalError("Accès non autorisé (AccesSuiviEcheances)"); }
+<?php
+// ---- VÃ©rifie le droit d'accÃ¨s
+	if (!GetDroit("AccesSuiviEcheances")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviEcheances)"); }
 
-// ---- Charge les dépendances
+// ---- Charge les dÃ©pendances
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/echeance.inc.php");
 	require_once ($appfolder."/class/compte.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("echeances.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 
 	$form_id=checkVar("form_id","numeric");
 	$order=checkVar("order","varchar");
@@ -46,7 +41,7 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Affiche les types d'échéance
+// ---- Affiche les types d'Ã©chÃ©ance
 	$lstEcheance=ListEcheanceType($sql,"utilisateurs");
 
 	$form_poste=0;
@@ -63,7 +58,7 @@
 			$form_poste=$ech->data["poste"];
 			$form_commentaire=$ech->data["description"];
 			$tmpl_x->assign("form_cout",$ech->data["cout"]);
-			if (($fonc!="Débiter") && (GetDroit($ech->data["droit"])))
+			if (($fonc!="DÃ©biter") && (GetDroit($ech->data["droit"])))
 			{
 				$tmpl_x->parse("corps.aff_debite");
 			}
@@ -72,10 +67,10 @@
 	}
 	$tmpl_x->assign("form_id",$form_id);
 
-// ---- Valide le débit des échéances
+// ---- Valide le dÃ©bit des Ã©chÃ©ances
 	$save=false;
 
-	if ($fonc=="Débiter")
+	if ($fonc=="DÃ©biter")
 	{
 		$form_date=checkVar("form_date","varchar");
 		$form_cout=checkVar("form_cout","varchar");
@@ -107,7 +102,7 @@
 		$save=true;
 	}
 
-// ---- Enregistre le débit des échéances
+// ---- Enregistre le dÃ©bit des Ã©chÃ©ances
 	if ($fonc=="Valider")
 	{
 		$form_date=checkVar("form_date","varchar");
@@ -132,20 +127,20 @@
 			$dte->Save();
 		}
 
-		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
+		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistrÃ©".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 	}
 	
-// ---- Liste des échéances
+// ---- Liste des Ã©chÃ©ances
 	if ($save==false)
 	{
 		$tabTitre=array();
-		$tabTitre["prenom"]["aff"]="Prénom";
+		$tabTitre["prenom"]["aff"]="PrÃ©nom";
 		$tabTitre["prenom"]["width"]=150;
 		$tabTitre["nom"]["aff"]="Nom";
 		$tabTitre["nom"]["width"]=250;
-		$tabTitre["echeance"]["aff"]="Echéance";
+		$tabTitre["echeance"]["aff"]="EchÃ©ance";
 		$tabTitre["echeance"]["width"]=350;
-		$tabTitre["debiter"]["aff"]="<input type='checkbox' id='form_debite' OnClick='selectAll();'> Débiter";
+		$tabTitre["debiter"]["aff"]="<input type='checkbox' id='form_debite' OnClick='selectAll();'> DÃ©biter";
 		$tabTitre["debiter"]["width"]=100;
 
 		$ech=new echeancetype_core($form_id,$sql);

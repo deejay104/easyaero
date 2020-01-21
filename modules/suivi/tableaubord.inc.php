@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,22 +19,17 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesSuiviTableauBord")) { FatalError("Accès non autorisé (AccesSuiviTableauBord)"); }
+<?php
+	if (!GetDroit("AccesSuiviTableauBord")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviTableauBord)"); }
 
 	require_once ($appfolder."/class/user.inc.php");
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("tableaubord.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$id=checkVar("id","numeric");
 	$dte=checkVar("dte","varchar",4);
 	$annee=checkVar("annee","varchar",4);
@@ -68,7 +63,7 @@
 	  }
 
 
-// ---- Liste des années
+// ---- Liste des annÃ©es
 
 	$query = "SELECT MIN(date_valeur) AS dtedeb FROM ".$MyOpt["tbl"]."_compte";
 	$res=$sql->QueryRow($query);
@@ -131,7 +126,7 @@
 				$tmpl_x->assign("tot_sousposte", AffMontant($mtab["_total"]));
 				$tmpl_x->assign("old_tot_sousposte", (isset($oldtab[$poste]["_total"])) ? AffMontant($oldtab[$poste]["_total"]) : AffMontant(0));
 	
-				// Affiche le résultat
+				// Affiche le rÃ©sultat
 				$tmpl_x->parse("corps.lst_poste.lst_sousposte.lst_old_sousposte");
 				$tmpl_x->parse("corps.lst_poste.lst_sousposte");
 	
@@ -170,7 +165,7 @@
 						$tmpl_x->assign("date_sousposte", sql2date($enr["date_valeur"]));
 						$tmpl_x->assign("tot_sousposte", AffMontant($enr["montant"]));
 				
-						// Affiche le résultat
+						// Affiche le rÃ©sultat
 						$tmpl_x->parse("corps.lst_poste.lst_sousposte");
 					  }
 				  }
@@ -182,7 +177,7 @@
 					$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=suivi&rub=tableaubord&poste=$pwd/$p&id=$id\"><U>$p</U></A>");
 					$tmpl_x->assign("tot_sousposte", AffMontant($v["_total"]));
 			
-					// Affiche le résultat
+					// Affiche le rÃ©sultat
 					$tmpl_x->parse("corps.lst_poste.lst_sousposte.lst_ligne");
 					$tmpl_x->parse("corps.lst_poste.lst_sousposte");
 	
@@ -246,7 +241,7 @@
 			$total=$total+$tab["_total"];
 			$oldtotal=$oldtotal+$taboldposte[$poste]["_total"];
 	
-			// Affiche le résultat
+			// Affiche le rÃ©sultat
 			$tmpl_x->parse("corps.lst_poste.lst_old_poste");
 			$tmpl_x->parse("corps.lst_poste");
 		  }

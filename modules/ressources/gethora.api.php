@@ -1,12 +1,12 @@
 <?php
-// ---- Refuse l'accès en direct
+// ---- Refuse l'accÃ¨s en direct
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
-// ---- Charge les dépendances
+// ---- Charge les dÃ©pendances
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Vérifie les paramètres
+// ---- VÃ©rifie les paramÃ¨tres
 
 	$id=checkVar("id","numeric");
 	$deb=checkVar("deb","varchar");

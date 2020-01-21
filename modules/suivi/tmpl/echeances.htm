@@ -9,7 +9,7 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='index.php?mod=suivi&rub=echeances&form_id='+document.getElementById('form_id').value;
+ 	document.location='{path_root}/index.php?mod=suivi&rub=echeances&form_id='+document.getElementById('form_id').value;
 }
 function selectAll()
 {
@@ -24,7 +24,7 @@ function selectAll()
 }
 </script>
 
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="echeances">
@@ -32,15 +32,15 @@ function selectAll()
 
 	<BR>
 	<select id="form_id" OnChange="Recharge();">
-		<option value="0">Choisissez l'échéance</option>
+		<option value="0">Choisissez l'Ã©chÃ©ance</option>
 	<!-- BEGIN: lst_echeance -->
 		<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
 	<!-- END: lst_echeance -->
 	</select>
 
 	<!-- BEGIN: aff_debite -->
-	Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}">
-	<input type="submit" name="fonc" value="Débiter">
+	Nouvelle Ã©chÃ©ance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}">
+	<input type="submit" name="fonc" value="DÃ©biter">
 	<!-- END: aff_debite -->
 	
 	<br />

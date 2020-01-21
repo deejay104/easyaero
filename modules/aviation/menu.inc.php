@@ -5,7 +5,7 @@
 
 // ---- Affiche le menu
 
-	addPageMenu("",$mod,"Mes vols",geturl("aviation","vols",""),"icn32_carnetvols.png",($rub=="vols") ? true : false);
+	addPageMenu("",$mod,"Mes vols",geturl("aviation","vols",""),"icn32_listevols.png",($rub=="vols") ? true : false);
 	addPageMenu("",$mod,"Carnet de route",geturl("aviation","carnet",""),"icn32_carnetvols.png",($rub=="carnet") ? true : false);
 	if (GetDroit("AccesSuiviVolsMembres"))
 	{

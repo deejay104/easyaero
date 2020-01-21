@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,11 +19,7 @@
 */
 ?>
 
-<?
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module",$module."/".$mod);
-	$tmpl_x->assign("corefolder",$corefolder);
+<?php
 
 	$dte=checkVar("dte","varchar");
 	$dte=($dte!="") ? $dte : date("Y-m-01");

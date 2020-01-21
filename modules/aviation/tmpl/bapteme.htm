@@ -2,28 +2,6 @@
 	<img src="{path_module}/img/icn48_baptemes.png" alt="" />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-<p><A href="index.php?mod=aviation&rub=baptemes"><IMG src="{path_module}/img/icn32_retour.png" alt="">&nbsp;Liste</A></p>
-<!-- BEGIN: affecter -->
-<p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=affecte"><IMG src="{path_module}/img/icn32_affecte.png" alt="">&nbsp;Prendre</A></p>
-<!-- END: affecter -->
-<!-- BEGIN: planifier -->
-<p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=planifier"><IMG src="{path_module}/img/icn32_planifie.png" alt="">&nbsp;Planifier</A></p>
-<!-- END: planifier -->
-<!-- BEGIN: reserver -->
-<p><a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=reserver"><IMG src="{path_module}/img/icn32_reservation.png" alt="">&nbsp;Réserver</A></p>
-<!-- END: reserver -->
-<!-- BEGIN: effectue -->
-<p><a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=effectue"><IMG src="{path_module}/img/icn32_effectue.png" alt="">&nbsp;Effectué</A></p>
-<!-- END: effectue -->
-<!-- BEGIN: ajout -->
-<p><A href="index.php?mod=aviation&rub=bapteme&fonc=add&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="">&nbsp;Ajouter</A></p>
-<!-- END: ajout -->
-<!-- BEGIN: modification -->
-<p><A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" alt="">&nbsp;Modifier</A></p>
-<!-- END: modification -->
-<!-- BEGIN: suppression -->
-<p><A href="#" OnClick="ConfirmeClick('index.php?mod=aviation&rub=bapteme&id={id}&fonc=delete','Voulez-vous supprimer ce baptème ?');"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">&nbsp;Supprimer</A></p>
-<!-- END: suppression -->
 <!-- END: infos -->
 
 
@@ -35,8 +13,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","FÃ©vrier","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","DÃ©cembre"],
+			prevText: "PrÃ©cÃ©dent",
 			nextText: "Suivant"
 		});
 	});
@@ -44,20 +22,31 @@
 
 <script type="text/javascript">
 function reloadImg() {
-var dte_j=document.getElementById("form_dte_j").value;
-var dte_h=document.getElementById("form_dte_h").value;
-var uid_avion=document.getElementById("form_info[id_avion]").value;
-console.log("deb="+dte_j+" "+dte_h);
-var d=new Date(dte_j+" "+dte_h);
-//var d=new Date("2017-08-28 14:30");
-document.getElementById("imgdispo").src="api.php?mod=aviation&rub=disponibilite&id="+uid_avion+"&resa={id_resa}&deb="+Math.round(d.getTime()/1000)+"&fin="+Math.round(d.getTime()/1000+45*60);
-console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
+	var dte_j=document.getElementById("dte_jour").value;
+	var dte_h=document.getElementById("dte_heure").value;
+	var uid_avion=document.getElementById("form_data[id_avion]").value;
+	console.log("deb="+dte_j+" "+dte_h);
+	var d=new Date(dte_j+" "+dte_h);
+	//var d=new Date("2017-08-28 14:30");
+
+<!-- BEGIN: lst_dispo_reload -->
+	document.getElementById("imgdispo_{lst_uid_avion}").src="{path_root}/api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb="+Math.round(d.getTime()/1000)+"&fin="+Math.round(d.getTime()/1000+45*60);
+<!-- END: lst_dispo_reload -->
+
+	console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 }
+
+$(document).ready(function() {
+	$('#dte_jour').change(function() { reloadImg(); });
+})
+$(document).ready(function() {
+	$('#dte_heure').change(function() { reloadImg(); });
+})
 	
 </script>
 
 
-<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 <INPUT type="hidden" name="mod" value="aviation">
 <INPUT type="hidden" name="rub" value="bapteme">
 <INPUT type="hidden" name="id" value="{id}">
@@ -81,7 +70,7 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 
 <div class="formulaire">
 	<p>
-		<label>Numéro</label>{form_num}
+		<label>NumÃ©ro</label>{form_num}
 	</p>
 	<p>
 		<label>Nom client</label>{form_nom}
@@ -96,7 +85,7 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 		<label>Nb de personnes</label>{form_nb}
 	</p>
 	<p>
-		<label>Téléphone</label>{form_telephone}
+		<label>TÃ©lÃ©phone</label>{form_telephone}
 	</p>
 	<p>
 		<label>Mail</label>{form_mail}
@@ -105,7 +94,7 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 		<label>Type</label>{form_type}
 	</p>
 	<p>
-		<label>Payé</label>{form_paye}
+		<label>PayÃ©</label>{form_paye}
 	</p>
 	<p>
 		<label>Date paiement</label>{form_dte_paye}
@@ -131,7 +120,7 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 </p>
 <!-- BEGIN: lst_dispo -->
 <p>
-	<label>{dispo_immat}</label><img id="imgdispo" src="api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
+	<label>{dispo_immat}</label><img id="imgdispo_{lst_uid_avion}" src="{path_root}/api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
 </p>
 <!-- END: lst_dispo -->
 </div>
@@ -153,16 +142,16 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 
 	<!-- BEGIN: info_prendre -->
 	<div class='formulaireInformation'>
-		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
 		<div style='margin-left: 40px;'>
-		Le menu '<u>Prendre</u>' vous affecte le baptème. Son status sera alors changé à affecté. 
+		Le menu '<u>Prendre</u>' vous affecte le baptÃ¨me. Son status sera alors changÃ© Ã  affectÃ©. 
 		</div>
 	</div>
 	<!-- END: info_prendre -->
 
 	<!-- BEGIN: info_planifier -->
 	<div class='formulaireInformation'>
-		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
 		<div style='margin-left: 40px;'>
 		Le menu '<u>Planifier</u>' vous permet de saisir les informations sur le vol : avion, pilote, la date et l'heure. 
 		</div>
@@ -171,18 +160,18 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 
 	<!-- BEGIN: info_reserver -->
 	<div class='formulaireInformation'>
-		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
 		<div style='margin-left: 40px;'>
-		Le menu '<u>Réserver</u>' vous permet de saisir automatiquement la réservation de l'avion en fonction des données d'affectation saisies dans la fiche de baptème. 
+		Le menu '<u>RÃ©server</u>' vous permet de saisir automatiquement la rÃ©servation de l'avion en fonction des donnÃ©es d'affectation saisies dans la fiche de baptÃ¨me. 
 		</div>
 	</div>
 	<!-- END: info_reserver -->
 
 	<!-- BEGIN: info_effectuer -->
 	<div class='formulaireInformation'>
-		<img src='{path_module}/img/icn32_infos.png' style='float: left;'>
+		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
 		<div style='margin-left: 40px;'>
-		Le menu '<u>Effectué</u>' change le status du baptème à effectué. Il est a utiliser lorsque le baptème a été réalisé.
+		Le menu '<u>EffectuÃ©</u>' change le status du baptÃ¨me Ã  effectuÃ©. Il est a utiliser lorsque le baptÃ¨me a Ã©tÃ© rÃ©alisÃ©.
 		</div>
 	</div>
 	<!-- END: info_effectuer -->
@@ -190,6 +179,7 @@ console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 </td>
 </tr>
 </table>
+
 
 </FORM>
 

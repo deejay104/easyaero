@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     SoceIt v3.0
     Copyright (C) 2018 Matthieu Isorez
@@ -19,13 +19,9 @@
 */
 ?>
 
-<?
-// ---- Vérifie les droits d'accès
-	if (!GetDroit("AccesSuiviBilan")) { FatalError("Accès non autorisé (AccesSuiviBilan)"); }
-
-// ---- Charge le template
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+<?php
+// ---- VÃ©rifie les droits d'accÃ¨s
+	if (!GetDroit("AccesSuiviBilan")) { FatalError("AccÃ¨s non autorisÃ© (AccesSuiviBilan)"); }
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -33,7 +29,7 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 
-// ---- Vérifie les variables
+// ---- VÃ©rifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 	$dte=checkVar("dte","varchar",4);
@@ -43,7 +39,7 @@
 		$dte=date("Y");
 	}
 
-// ---- Liste des années
+// ---- Liste des annÃ©es
 
 	$query = "SELECT MIN(date_valeur) AS dtedeb FROM ".$MyOpt["tbl"]."_compte";
 	$res=$sql->QueryRow($query);
@@ -68,7 +64,7 @@
 	$tabTitre["total"]["aff"]="Total";
 	$tabTitre["total"]["width"]=150;
 	
-// ---- Récupère la liste
+// ---- RÃ©cupÃ¨re la liste
 	$query = "SELECT num.description, cpt.compte,SUM(cpt.montant) AS total FROM ".$MyOpt["tbl"]."_compte AS cpt ";
 	$query.= "LEFT JOIN ".$MyOpt["tbl"]."_numcompte AS num ON num.numcpt=cpt.compte ";
 	$query.= "WHERE uid=".$MyOpt["uid_club"]." AND date_valeur>='".$dte."-01-01' AND date_valeur<'".($dte+1)."-01-01' GROUP BY compte ORDER BY compte";
@@ -90,7 +86,10 @@
 		$total=$total+$sql->data["total"];
 	}
 
-	$tmpl_x->assign("total",AffMontant($total));
+
+	$tabTitre["compte"]["bottom"]="";
+	$tabTitre["description"]["bottom"]="RÃ©sultat d'exploitation";
+	$tabTitre["total"]["bottom"]=AffMontant($total);
 
 	if ($order=="") { $order="compte"; }
 	if ($trie=="") { $trie="d"; }

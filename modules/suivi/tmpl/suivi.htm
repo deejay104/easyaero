@@ -9,24 +9,12 @@
 <!-- BEGIN: corps -->
 
 
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="suivi">
 
 	<BR>
-
-	<!-- BEGIN: msg_enregistre -->
-	<TABLE border="0" cellspacing="0" cellpadding="0" background="">
-	  <TR>
-		<TD height=1 width=20><IMG src="images/rien.gif" height=1 width=20></TD>
-		<TD height=1 colspan=5><B>{msg_resultat}<B><BR><BR></TD>
-	  </TR>
-	</TABLE>
-	<BR><BR>
-	<!-- END: msg_enregistre -->
-
-
 
 	<!-- BEGIN: aff_suivi -->
 		<TABLE class="tableauAff">
@@ -36,10 +24,10 @@
 				<th width=250>Mouvement</th>
 				<th width=10>&nbsp;</th>
 				<th width=400>Commentaire</th>
-				<th width=110 align=right>Débit</th>
-				<th width=110 align=right>Crédit</th>
+				<th width=110 align=right>DÃ©bit</th>
+				<th width=110 align=right>CrÃ©dit</th>
 				<th width=10>&nbsp;</th>
-				<th width=80 align=right>Relevé</th>
+				<th width=80 align=right>RelevÃ©</th>
 			</tr>
 			<TR class="tableauTitre">
 				<td >&nbsp;</td>

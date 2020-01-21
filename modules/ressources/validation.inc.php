@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,7 +19,7 @@
 */
 ?>
 
-<?
+<?php
 	require_once ($appfolder."/class/maintenance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
@@ -29,10 +29,10 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Droit d'accès
-	if (!GetDroit("AccesFichesValidation")) { FatalError("Accès non authorisé (AccesFichesValidation)"); }
+// ---- Droit d'accÃ¨s
+	if (!GetDroit("AccesFichesValidation")) { FatalError("AccÃ¨s non authorisÃ© (AccesFichesValidation)"); }
 
-// ---- Vérification des données
+// ---- VÃ©rification des donnÃ©es
 	$uid_avion=checkVar("uid_avion","numeric");
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
@@ -73,7 +73,7 @@
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("msg_erreur", $msg_erreur);
 
-// ---- Affiche la liste des opérations à valider
+// ---- Affiche la liste des opÃ©rations Ã  valider
 		$tabTitre=array();
 		$tabTitre["valid"]["aff"]=" ";
 		$tabTitre["valid"]["width"]=30;

@@ -10,20 +10,20 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='index.php?mod=suivi&rub=bilan&dte='+document.getElementById('form_date').value;
+ 	document.location='{path_root}/index.php?mod=suivi&rub=bilan&dte='+document.getElementById('form_date').value;
 }
 
 </script>
 
 
-<FORM name="compte" id="compte" method="post" action="index.php" enctype="multipart/form-data" OnSubmit="return false;">
+<FORM name="compte" id="compte" method="post" action="{path_root}/index.php" enctype="multipart/form-data" OnSubmit="return false;">
 
 	<INPUT type="hidden" name="mod" value="suivi">
 	<INPUT type="hidden" name="rub" value="bilan">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 	<p>
-		Année : 
+		AnnÃ©e : 
 		<SELECT id="form_date" name="form_date" OnChange="Recharge();">
 		<!-- BEGIN: lst_annee -->
 			<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
@@ -33,13 +33,7 @@ function Recharge()
 	<br />
 
 	{aff_tableau}
-	<table class="tableauAff">
-	<td>
-		<th style="width:400px; text-align:right;">Résultat d'exploitation :</th>
-		<th style="width:170px; text-align:left;padding-left:20px;">{total}</th>
-	</td>
-	</table>
-	
+
 </FORM>
 
 

@@ -20,17 +20,11 @@
 ?>
 
 <?php
-	if (!GetDroit("AccesConfigReferences")) { FatalError("Accès non autorisé (AccesConfigReferences)"); }
+	if (!GetDroit("AccesConfigReferences")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigReferences)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("references.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
-	$checktime=checkVar("checktime","numeric");
+// ---- VÃ©rifie les variables
 	$form_data=checkVar("form_data","array");
 
 // ---- Enregistre les modifications
@@ -50,7 +44,7 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
-// ---- Supprime une référence
+// ---- Supprime une rÃ©fÃ©rence
 	if ($fonc=="delete")
 	{
 		$id=checkVar("id","numeric");
@@ -69,11 +63,11 @@
 
 	$tabTitre=array(
 		"refffa"=>array(
-			"aff"=>"Référence",
+			"aff"=>"RÃ©fÃ©rence",
 			"width"=>120
 		),
 		"theme"=>array(
-			"aff"=>"Thème",
+			"aff"=>"ThÃ¨me",
 			"width"=>500
 		),
 		"action"=>array(
@@ -81,8 +75,8 @@
 			"width"=>24
 		),
 	);
-	$order=checkVar("order","varchar");
-	$trie=checkVar("trie","varchar",1);
+	$order=checkVar("order","varchar",10,"refffa");
+	$trie=checkVar("trie","varchar",1,"d");
 	
 
 	$lst=ListReference($sql);
@@ -99,20 +93,17 @@
 		$tabValeur[$i]["theme"]["aff"]=$ref->aff("theme","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='index.php?mod=admin&rub=references&fonc=delete&id=".$d["id"]."' class='imgDelete' style='display:none;'><img src='".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".$MyOpt["host"]."/index.php?mod=admin&rub=references&fonc=delete&id=".$d["id"]."' class='imgDelete' style='display:none;'><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a>";
 	}
 
-	$ref=new reference_class(0,$sql);
+	$ref=new reference_class(0,$sql);	
 	$tabValeur[0]["id"]["val"]=0;
-	$tabValeur[0]["refffa"]["val"]=$ref->val("refffa");
-	$tabValeur[0]["refffa"]["val"]=$ref->aff("refffa","form","form_data[0]");
-	$tabValeur[0]["theme"]["val"]=$ref->val("theme");
-	$tabValeur[0]["theme"]["val"]=$ref->aff("theme","form","form_data[0]");
+	$tabValeur[0]["refffa"]["val"]="";
+	$tabValeur[0]["refffa"]["aff"]=$ref->aff("refffa","form","form_data[0]");
+	$tabValeur[0]["theme"]["val"]="";
+	$tabValeur[0]["theme"]["aff"]=$ref->aff("theme","form","form_data[0]");
 
-	if ((!isset($order)) || ($order=="")) { $order="refffa"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
-
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,"del"));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"del"));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

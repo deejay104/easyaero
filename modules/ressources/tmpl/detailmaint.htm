@@ -16,8 +16,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","FÃ©vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","DÃ©cembre"],
+			prevText: "PrÃ©cÃ©dent",
 			nextText: "Suivant"
 		});
 	});
@@ -27,8 +27,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","FÃ©vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","DÃ©cembre"],
+			prevText: "PrÃ©cÃ©dent",
 			nextText: "Suivant"
 		});
 	});
@@ -112,7 +112,7 @@
 <div id="dialog-form" title="Ajouter un atelier de maintenance" class="formulaire" style='display:none;'>
   <p class="validateTips">Saisissez le nom et l'email de l'atelier.</p>
  
-  <form id="atelier" method="post" action="index.php" enctype="multipart/form-data">
+  <form id="atelier" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
     <fieldset>
 		<INPUT type="hidden" name="checktime" value="{form_checktime}">
 		<input type="hidden" name="mod" value="ressources">
@@ -134,7 +134,7 @@
 	<INPUT type="hidden" name="rub" value="detailmaint">
 	<INPUT type="hidden" name="id" value="{id}">
 
-	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+	<p class="lastupdate">DerniÃ¨re mise Ã  jour : {info_maj}</p>
 
 	<table width="100%">
 		<tr valign="top">
@@ -151,7 +151,7 @@
 					<label>Atelier</label>{form_uid_atelier} <a id="ajouter" class='imgDelete'><img id="addatelier" src="{path_root}/{path_module}/img/icn16_editer.png" style="display:none;"></a>
 				</p>
 				<p>
-					<label>Début de l'intervention</label>{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
+					<label>DÃ©but de l'intervention</label>{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
 				</p>
 				<p>
 					<label>Fin de l'intervention</label>{form_dte_fin} <FONT color=red>{msg_dtefin}</FONT>
@@ -160,7 +160,7 @@
 					<label>Cout</label>{form_cout}
 				</p>
 				<p>
-					<label title="Nombre de minutes reportées à la fin de l'intervention. Ces minutes sont déduites du potentiel.">Temps consommé</label>{form_potentiel}
+					<label title="Nombre de minutes reportÃ©es Ã  la fin de l'intervention. Ces minutes sont dÃ©duites du potentiel.">Temps consommÃ©</label>{form_potentiel}
 				</p>
 			</div>
 		</td>
@@ -172,12 +172,12 @@
 	</table>
 
 	<br />
-	<div class="formulaireTitre">Dernier vol effectué avant la maintenance</div>
+	<div class="formulaireTitre">Dernier vol effectuÃ© avant la maintenance</div>
 	{aff_resa}
 
 	<br />
 
-	<div class="formulaireTitre">Liste des fiches associées</div>
+	<div class="formulaireTitre">Liste des fiches associÃ©es</div>
 	{aff_fiche}
 
 <!-- BEGIN: form_submit -->

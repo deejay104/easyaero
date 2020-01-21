@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,16 +19,8 @@
 */
 ?>
 
-<?
-	if (!GetDroit("AccesConfigComptes")) { FatalError("Accès non autorisé (AccesConfigComptes)"); }
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("comptes.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Vérifie les variables
-	$checktime=checkVar("checktime","numeric");
+<?php
+	if (!GetDroit("AccesConfigComptes")) { FatalError("AccÃ¨s non autorisÃ© (AccesConfigComptes)"); }
 
 
 // ---- Affiche le menu
@@ -39,6 +31,9 @@
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (is_array($form_numcpt)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
+		$form_numcpt=checkVar("form_numcpt","array");
+		$form_description=checkVar("form_description","array");
+
 	  	foreach($form_numcpt as $id=>$num)
 	  	{
 			if ($num!="")
@@ -55,7 +50,7 @@
 		$sql->Edit("numcompte",$MyOpt["tbl"]."_numcompte",$id,array("actif"=>"non"));		
 	}
 
-// ---- Affiche la page demandée
+// ---- Affiche la page demandÃ©e
 
 	// Liste des mouvements
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_numcompte WHERE actif='oui' ORDER BY numcpt";

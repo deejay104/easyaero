@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	Easy Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -19,8 +19,8 @@
 */
 ?>
 
-<?
-	// if (!GetDroit("AccesSynthese")) { FatalError("Accès non autorisé (AccesSynthese)"); }
+<?php
+	// if (!GetDroit("AccesSynthese")) { FatalError("AccÃ¨s non autorisÃ© (AccesSynthese)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 	require_once ($appfolder."/class/reservation.inc.php");
@@ -47,9 +47,9 @@
 // ---- Affiche le sous menu
 	if ($theme!="phone")
 	{
-		addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",true);
+		addSubMenu("","SynthÃ¨ses",geturl("aviation","syntheses"),"",true);
 		addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
-		addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
+		addSubMenu("","CompÃ©tences",geturl("aviation","competences"),"",false);
 		addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
 		addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
 		affSubMenu();
@@ -83,7 +83,7 @@
 		"dte" => array("aff"=>"Date","width"=>100),
 		"inst" => array("aff"=>"Instructeur","width"=>200, "mobile"=>"no"),
 		"module" => array("aff"=>"Module","width"=>100, "mobile"=>"no"),
-		"refffa" => array("aff"=>"Reférence","width"=>100),
+		"refffa" => array("aff"=>"RefÃ©rence","width"=>100),
 		"status" => array("aff"=>"Status","width"=>100),
 	);
 
@@ -101,7 +101,7 @@
 		$tabValeur[$fid]["dte"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".sql2date($resa->dte_deb,"jour")."</a>";
 		
 		$tabValeur[$fid]["inst"]["val"]=$inst->val("fullname");
-		$tabValeur[$fid]["inst"]["val"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
+		$tabValeur[$fid]["inst"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
 	
 
 		$tabValeur[$fid]["module"]["val"]=$fiche->val("module");
@@ -113,9 +113,11 @@
 	}
 
 	if ((!isset($order)) || ($order=="")) { $order="dte"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
+	if ((!isset($trie)) || ($trie=="")) { $trie="i"; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,"",0,""));
+	// $tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"type=".$type."&dte=".$dte));
+
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 	
 // ---- Affecte les variables d'affichage
