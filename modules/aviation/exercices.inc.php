@@ -87,6 +87,7 @@
 		"progref" => array("aff"=>"Requis","width"=>100),
 	);
 	$tabValeur=array();
+
 	foreach($lst as $fid=>$d)
 	{	
 		$exo = new exercice_conf_class($fid,$sql);
@@ -95,7 +96,8 @@
 		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
 		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
 		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
-		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
+		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? "<a href='".geturl("aviation","synthese","id=".$d["idsynthese"])."'>".sql2date($d["dte_acquis"],"jour")."</a>" : " ";
+		// $tabValeur[$fid]["dte"]["aff"]=$d["dte_acquis"];
 		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
 		$tabValeur[$fid]["progression"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/".(($d["progression"]=="A") ? "icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"] : "icn16_nc.png")."'>";
 		$tabValeur[$fid]["progression"]["align"]="center";

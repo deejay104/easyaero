@@ -539,16 +539,16 @@ class resa_class extends objet_core
 		);
 
 		$this->id=$sql->Edit("reservation",$MyOpt["tbl"]."_calendrier",$this->id,$t);
-		
+
 		$query ="UPDATE ".$this->tbl."_masses SET uid_pilote=".$this->uid_pilote." ";
-		$query.="WHERE uid_vol='$this->id' AND uid_place=1";
-		$sql->Delete($query);
+		$query.="WHERE uid_vol='".$this->id."' AND uid_place=1";
+		$sql->Update($query);
 
 		if ($this->uid_instructeur>0)
 		{
 			$query ="UPDATE ".$this->tbl."_masses SET uid_pilote=".$this->uid_instructeur." ";
 			$query.="WHERE uid_vol='$this->id' AND uid_place=2";
-			$sql->Delete($query);
+			$sql->Update($query);
 		}
 
 		return "";

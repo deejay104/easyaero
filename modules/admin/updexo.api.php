@@ -58,11 +58,27 @@
 			
 			$exo->Save();
 
-			$prog=new exercice_prog_class(checkVar("1_prog_id","numeric"),$sql);
-			$prog->Valid("idexercice",$exo->id);
-			$prog->Valid("refffa",checkVar("1_refffa","varchar",20));
-			$prog->Save();
-error_log(		checkVar("1_prog_id","numeric")." ".(checkVar("1_refffa","varchar",20)));
+			for ($i=1; $i<=4; $i++)
+			{
+				$ii=checkVar($i."_prog_id","numeric");
+					$prog=new exercice_prog_class($ii,$sql);
+					
+					$ref=checkVar($i."_prog_ref","varchar",10);
+					$p=checkVar($i."_prog_val","varchar",1);
+					if ($ref!="")
+					{
+						$prog->Valid("idexercice",$exo->id);
+						$prog->Valid("refffa",$ref);
+						$prog->Valid("progression",$p);
+						$prog->Save();
+error_log("id:".$ii.",ref:".$ref."(".$i."_prog_ref):".$ref.",prog:".$p);
+					}
+					else if ($ii>0)
+					{
+						$prog->Delete();
+					}
+			}
+
 			$result["result"]="OK";
 		}
 	}

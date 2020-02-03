@@ -47,7 +47,7 @@ $( function() {
 		});   
 	}
 
-    function saveNavpoint() {
+    function saveExercice() {
 		var valid = true;
 
 		if ( valid ) {
@@ -64,16 +64,51 @@ $( function() {
 			data["refenac"]=document.getElementById('refenac').value;
 			data["competence"]=document.getElementById('competence').value;
 
-			data["1_refffa"]=document.getElementById('1_refffa').value;
-			data["2_refffa"]=document.getElementById('2_refffa').value;
-			data["3_refffa"]=document.getElementById('3_refffa').value;
-			data["4_refffa"]=document.getElementById('4_refffa').value;
-
 			data["1_prog_id"]=document.getElementById('1_prog_id').value;
 			data["2_prog_id"]=document.getElementById('2_prog_id').value;
 			data["3_prog_id"]=document.getElementById('3_prog_id').value;
 			data["4_prog_id"]=document.getElementById('4_prog_id').value;
 
+			data["1_prog_ref"]=document.getElementById('1_refffa').value;
+			data["2_prog_ref"]=document.getElementById('2_refffa').value;
+			data["3_prog_ref"]=document.getElementById('3_refffa').value;
+			data["4_prog_ref"]=document.getElementById('4_refffa').value;
+
+<!-- Pas value ! Mais le fait que cela soit sélectionné ou non -->
+			if (document.getElementById('1_progression_A').checked)
+			{
+				data["1_prog_val"]='A';
+			}
+			else
+			{
+				data["1_prog_val"]='E';
+			}
+			if (document.getElementById('2_progression_A').checked)
+			{
+				data["2_prog_val"]='A';
+			}
+			else
+			{
+				data["2_prog_val"]='E';
+			}
+			if (document.getElementById('3_progression_A').checked)
+			{
+				data["3_prog_val"]='A';
+			}
+			else
+			{
+				data["3_prog_val"]='E';
+			}
+			if (document.getElementById('4_progression_A').checked)
+			{
+				data["4_prog_val"]='A';
+			}
+			else
+			{
+				data["4_prog_val"]='E';
+			}
+
+console.log(data);
 			$.ajax({
 				url:'{path_root}/api.php?mod=admin&rub=updexo&fonc=post',
 				type: 'POST',
@@ -109,7 +144,7 @@ $( function() {
 	  top: 10,
       modal: true,
       buttons: {
-        "Enregistrer": saveNavpoint,
+        "Enregistrer": saveExercice,
         Cancel: function() {
           dialog.dialog( "close" );
         }

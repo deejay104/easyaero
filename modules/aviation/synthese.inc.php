@@ -125,6 +125,7 @@
 	$tmpl_x->assign("form_id",$id);
 	$tmpl_x->assign("prev_uid",$uid);
 	$tmpl_x->assign("prev_idvol",$idvol);
+	$tmpl_x->assign("LineBackgroundHover",$MyOpt["styleColor"]["LineBackgroundHover"]);
 
 	$signed=false;
 	if ($fiche->val("skey_instructeur")!="")
@@ -160,6 +161,13 @@
 		if ($ok==true)
 		{
 			$fiche->Delete();
+			// Supprime les exercices
+			$lst=ListExercices($sql,$id);
+			foreach($lst as $i=>$v)
+			{
+				$c_line=new exercice_class($v["id"],$sql);
+				$c_line->Delete();
+			}
 			$mod="aviation";
 			$affrub="syntheses";
 		}
@@ -346,10 +354,11 @@
 	$tmpl_x->assign("form_uid_pilote",$fiche->val("uid_pilote"));
 	$tmpl_x->assign("form_uid_instructeur",$fiche->val("uid_instructeur"));
 	$tmpl_x->assign("form_uid_avion",$fiche->val("uid_avion"));
+	$tmpl_x->assign("form_dte_vol",$fiche->val("dte_vol"));
 	
 	$tmpl_x->assign("form_eleve",$pil->aff("fullname"));
 	$tmpl_x->assign("form_instructeur",$ins->aff("fullname"));
-	$tmpl_x->assign("form_dtevol",$resa->Aff("dte_deb"));
+	$tmpl_x->assign("form_dtevol",$fiche->aff("dte_vol"));
 	$tmpl_x->assign("form_duree",AffTemps($resa->tpsreel));
 
 	$tmpl_x->assign("form_cumuldc",$pil->AffNbHeuresSynthese($fiche->val("dte_vol"),"dc"));

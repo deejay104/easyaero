@@ -24,6 +24,7 @@
 	<INPUT type="hidden" name="form_data[uid_pilote]" value="{form_uid_pilote}">
 	<INPUT type="hidden" name="form_data[uid_instructeur]" value="{form_uid_instructeur}">
 	<INPUT type="hidden" name="form_data[uid_avion]" value="{form_uid_avion}">
+	<INPUT type="hidden" name="form_data[dte_vol]" value="{form_dte_vol}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 	<p class="lastupdate">Dernière mise à  jour : {form_usr_maj} {form_dte_maj}</p>
@@ -58,18 +59,22 @@
 
 	<div class='formulaireTitre'>EXERCICES PEDAGOGIQUES</div>
 <!-- BEGIN: lst_pedagogique -->
-		<div style='{form_color}'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div style='{form_color}' class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		{form_progression} {form_progref}
 		</div>
 <!-- END: lst_pedagogique -->
-	
+
+<style>
+.formulaireHover:hover { background-color: #{LineBackgroundHover}!important; }
+</style>
+
 	<div id="affpedagogique">
 	</div>
 	<br />
 
 	<div class='formulaireTitre'>EXERCICES</div>
 <!-- BEGIN: lst_exercice -->
-		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		{form_progression}
 		</div>
 <!-- END: lst_affexercice -->
@@ -78,7 +83,7 @@
 
 	<div class='formulaireTitre'>PANNES</div>
 <!-- BEGIN: lst_panne -->
-		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		{form_progression}
 		</div>
 <!-- END: lst_panne -->
@@ -96,15 +101,15 @@
 
 	<div class='formulaireTitre'>Non technique / Menace, Erreurs, Situation non désirées</div>
 
-	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div>{form_info_1}</div>
-	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div>{form_info_2}</div>
-	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div>{form_info_3}</div>
-	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div>{form_info_4}</div>
-	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div>{form_info_5}</div>
+	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div>{form_info_1}</div>
+	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div>{form_info_2}</div>
+	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div>{form_info_3}</div>
+	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div>{form_info_4}</div>
+	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div>{form_info_5}</div>
 
 	<br />
-	<table>
-		<tr class='formulaireTitre'>
+	<table class='formulaireTableau'>
+		<tr>
 			<th width=200>Nb Atterrissage</th>
 			<th width=200>Total Atterrissage</th>
 			<th width=200>Remise(s) des Gaz</th>
@@ -168,18 +173,29 @@
 
 			success: function(response) {
 				$("#affpedagogique").text("");
-				var txt="";
+				$("#affexercices").text("");
+				var txtpeda="";
+				var txtexo="";
 				if (response.length>0)
 				{
 					$.each(response, function (index, value) {
-						txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+						txt="<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
 						txt=txt+"</div>";
+						if (value.type=="peda")
+						{
+							txtpeda=txtpeda+txt;
+						}
+						if (value.type=="exercice")
+						{
+							txtexo=txtexo+txt;
+						}
 					});
 				}
-				$("#affpedagogique").append(txt);
+				$("#affpedagogique").append(txtpeda);
+				$("#affexercices").append(txtexo);
 			}
 		});
 

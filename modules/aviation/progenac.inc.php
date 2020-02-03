@@ -100,19 +100,8 @@
 		$tabValeur[$fid]["description"]["val"]=$exo->val("description");
 		$tabValeur[$fid]["description"]["aff"]=$exo->aff("description");
 
-		// $tabValeur[$fid]["progression"]["val"]=$d["progression"];
-		// $tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "<div style='padding-left:50px;'>A</div>" : "E";
-		// $tabValeur[$fid]["progref"]["val"]=$d["progref"];
-		// $tabValeur[$fid]["progref"]["aff"]=($d["progref"]=="A") ? "Acquis" : "Etude";
-
-		// $tabValeur[$fid]["nbenac"]["val"]=$d["nbenac"];
-		// $tabValeur[$fid]["nbprog"]["val"]=$d["nbprog"];
-		
 		if (($d["nbprog"]>=$d["nbenac"]) && ($d["nbenac"]>0))
 		{
-			// $tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
-			// $tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
-
 			$tabValeur[$fid]["prog"]["val"]="A";
 			$tabValeur[$fid]["prog"]["align"]="center";
 			$tabValeur[$fid]["prog"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"]."'>";

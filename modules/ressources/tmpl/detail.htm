@@ -11,9 +11,8 @@
 <!-- BEGIN: corps -->
 
 <style>
-.showColor { display: inline-block; width:190px; }
-@media (max-device-width: 714px) { 
-	.showColor { padding-left:20px; }
+.showColor { display: inline-block; width:190px; padding:0px;}
+@media (max-device-width: 714px) { .showColor { width:175px; padding-left:5px; }
 }
 </style>
 
@@ -35,18 +34,11 @@
 
 
 <div class="formulaire">
-	<p>
-			<label>Immatriculation</label>{form_immatriculation}
-	</p>
-	<p>
-			<label>Nom</label>{form_nom}</p>
-	<p>
-			<label>Marque</label>{form_marque}</p>
-	<p>
-			<label>Modèle</label>{form_modele}</p>
-	<p>
-			<div class="showColor">Couleur</div>{form_couleur}
-	</p>
+	<p><label>Immatriculation</label>{form_immatriculation}</p>
+	<p><label>Nom</label>{form_nom}</p>
+	<p><label>Marque</label>{form_marque}</p>
+	<p><label>Modèle</label>{form_modele}</p>
+	<div class="showColor">Couleur</div>{form_couleur}
 </div>
 
 <table width='100%'>
@@ -69,9 +61,8 @@
 		{form_centrage}
 		<!-- END: parametres -->
 		<img src="{path_root}/api.php?mod=aviation&rub=imgcentrage&rid={id}" />
-
 	</td>
-	<td width='50%' valign="top" style='padding: 5px;'>
+	<td valign="top" style='padding: 0px;'>
 
 		<div class="formulaireTitre">Maintenance</div>
 		<div class="formulaire">

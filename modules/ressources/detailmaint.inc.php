@@ -259,8 +259,10 @@
 	$tabTitre["chk"]["width"]=30;
 	$tabTitre["ress"]["aff"]="Avion";
 	$tabTitre["ress"]["width"]=70;
+	$tabTitre["ress"]["mobile"]="no";
 	$tabTitre["auteur"]["aff"]="Auteur";
 	$tabTitre["auteur"]["width"]=200;
+	$tabTitre["auteur"]["mobile"]="no";
 	$tabTitre["dtecreat"]["aff"]="Date";
 	$tabTitre["dtecreat"]["width"]=100;
 	$tabTitre["description"]["aff"]="Description";
@@ -290,7 +292,7 @@
 				  }
 				
 				$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
-				$tabValeur[$i]["ress"]["val"]=$ress->aff("immatriculation","val");
+				$tabValeur[$i]["ress"]["val"]=$ress->val("immatriculation");
 				$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
 				
 				$usr = new user_class($fiche->uid_creat,$sql,false);

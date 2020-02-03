@@ -37,7 +37,7 @@
 // ---- Initialisation des variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-	$id=checkVar("id","numeric");
+	$id=checkVar("id","numeric",0,isset($idvol) ? $idvol : 0);
 	$form_passager_pilote=checkVar("form_passager_pilote","array");
 	$form_passager_poids=checkVar("form_passager_poids","array");
 	$maj=checkVar("maj","numeric");
@@ -187,7 +187,7 @@
 						if (!isset($form_passager_pilote[$k]) || ($form_passager_pilote[$k]==""))
 						{
 							$tmpl_x->assign("chk_pilote", "selected");
-							if ($tv["poids"]=="")
+							if ((!isset($tv["poids"])) || ($tv["poids"]==""))
 							  {
 								$tabplace[$k]["poids"]=$resusr->data["poids"];
 							  }

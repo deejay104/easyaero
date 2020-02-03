@@ -32,6 +32,8 @@
 	$prev=checkVar("prev","varchar");
 	$ress=checkVar("ress","numeric");
 	$heure=checkVar("heure","numeric");
+	$jstart=checkVar("jstart","numeric");
+	$jend=checkVar("jend","numeric");
 	$jour=checkVar("jour","date");
 
 	$res=array();

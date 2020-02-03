@@ -30,7 +30,7 @@
 		}
 	}
 
-	myPrint("Notification DÈcouvert : ".implode(",",$tabTre));
+	myPrint("Notification D√©couvert : ".implode(",",$tabTre));
 
 // ---- Liste les comptes actifs
 	$lstusr=ListActiveUsers($sql,"std",array(),"non");
@@ -47,7 +47,7 @@
 			$tabvar=array();
 			$tabvar["solde"]=AffMontant($solde);
 			
-			SendMailFromFile($mailtre,$usr->data["mail"],$tabTre,"[".$MyOpt["site_title"]."] Compte ‡ dÈcouvert",$tabvar,"decouvert");
+			SendMailFromFile($mailtre,$usr->data["mail"],$tabTre,"[".$MyOpt["site_title"]."] Compte √† d√©couvert",$tabvar,"decouvert");
 		}
 		if (!$ret)
 		{

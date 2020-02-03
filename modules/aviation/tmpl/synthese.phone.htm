@@ -34,7 +34,7 @@
 	</div>
 
 	<div class='formulaire'>
-		<table width=420px style='margin-left:15px;'>
+		<table width=420px>
 		<tr><td width=180>Module</td><td>{form_module}</td></tr>
 		<tr><td>Réf. du programme</td><td>{form_refffa}</td></tr>
 		<tr><td>Type de vol</td><td>{form_type}</td></tr>
@@ -52,7 +52,11 @@
 	{form_bilan_gen}
 	</div>
 
-	<div class='formulaireTitre'>EXERCICES DU DOMAINE TECHNIQUE</div>
+	<div class='formulaireTitre'>METEO DU JOUR</div>
+	{form_mto}
+	<br/>
+
+	<div class='formulaireTitre'>EXERCICES PEDAGOGIQUES</div>
 <!-- BEGIN: lst_pedagogique -->
 	<div  style='{form_color}'>
 		<div class='formulaire' style='border-bottom: 1px #dddddd solid;'>
@@ -68,8 +72,8 @@
 
 	<div class='formulaireTitre'>EXERCICES</div>
 <!-- BEGIN: lst_exercice -->
-		<div class='formulaire'>
-		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div class='formulaire' style='border-bottom: 1px #dddddd solid;'>
+		<div style='width:400px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		<div style='padding-right:20px; text-align: right;'>{form_progression}</div>
 		</div>
 <!-- END: lst_affexercice -->
@@ -78,8 +82,8 @@
 
 	<div class='formulaireTitre'>PANNES</div>
 <!-- BEGIN: lst_panne -->
-		<div class='formulaire'>
-		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div class='formulaire' style='border-bottom: 1px #dddddd solid;'>
+		<div style='width:400px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		<div style='padding-right:20px; text-align: right;'>{form_progression}</div>
 		</div>
 <!-- END: lst_panne -->
@@ -88,16 +92,11 @@
 
 
 	<br />
-	<div class='formulaire'>
+	<div class='formulaire' style='border-top: 1px solid #dddddd; padding-top:15px;'>
 	<p>Ajouter un exercice / panne :</p>
 	<input id="addexercice" style="width:400px; margin-left:10px;">
 	</div>
 	<br />
-
-	<div class='formulaireTitre'>METEO DU JOUR</div>
-	{form_mto}
-	<br/>
-	<br/>
 
 	<div class='formulaireTitre'>Non technique</div>
 
@@ -108,12 +107,13 @@
 	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div><div style='padding-right:20px; text-align: right;'>{form_info_5}</div></div>
 
 	<br />
-	<table>
-		<tr class='formulaireTitre'>
-			<th width=200>Nb Atterrissage</th>
-			<th width=200>Total Atterrissage</th>
-			<th width=200>Remise(s) des Gaz</th>
-			<th width=200>Total RMG</th>
+		
+	<table class='formulaireTableau'>
+		<tr>
+			<th width='25%'>Nb ATT</th>
+			<th width='25%'>Total ATT</th>
+			<th width='25%'>RMG</th>
+			<th width='25%'>Total RMG</th>
 		</tr>
 		<tr>
 			<td>{form_nb_att}</td>
@@ -175,20 +175,29 @@
 
 			success: function(response) {
 				$("#affpedagogique").text("");
-				var txt="";
+				$("#affexercices").text("");
+				var txtpeda="";
+				var txtexo="";
 				if (response.length>0)
 				{
 					$.each(response, function (index, value) {
-						txt=txt+"<div style='border-top:1px solid #dddddd; margin-left:15px;'><div style='padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-						txt=txt+"<div style='padding-left:40px;'>";
+						txt="<div class='formulaire' style='border-bottom: 1px #dddddd solid;'><div style='width:400px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
 						txt=txt+"</div>";
-						txt=txt+"</div>";
+						if (value.type=="peda")
+						{
+							txtpeda=txtpeda+txt;
+						}
+						if (value.type=="exercice")
+						{
+							txtexo=txtexo+txt;
+						}
 					});
 				}
-				$("#affpedagogique").append(txt);
+				$("#affpedagogique").append(txtpeda);
+				$("#affexercices").append(txtexo);
 			}
 		});
 

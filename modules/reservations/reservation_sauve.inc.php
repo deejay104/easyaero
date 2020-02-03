@@ -210,6 +210,11 @@
 	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$msg_err2.=$resa["resa"]->Save();
+		if ($id==0)
+		{
+			$id=$resa["resa"]->id;
+		}
+
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 
 		if (($msg_err2=="") && ($msg_err==""))
@@ -225,9 +230,6 @@
 
 				SendMailFromFile("","",array(),"",$tabvar,"invite","","actualite");
 			}
-			
-			if ($id==0)
-			  {	$id=$resa["resa"]->id; }
 
 			$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 
@@ -299,6 +301,7 @@
 	else if ($fonch=="centrage")  	
 	{
 		$ok=0;
+		$idvol=$id;
 		$mod="aviation";
 		$affrub="centrage";
 	}

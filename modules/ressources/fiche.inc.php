@@ -74,7 +74,8 @@
 		),
 		"auteur"=>array(
 			"aff"=>"Auteur",
-			"width"=>150
+			"width"=>150,
+			"mobile"=>"no"
 		),
 		"dtecreat"=>array(
 			"aff"=>"Date",
