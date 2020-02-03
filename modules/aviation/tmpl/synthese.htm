@@ -14,7 +14,7 @@
 #mto { width: 100%!important; }
 </style>
 
-<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="aviation">
 	<INPUT type="hidden" name="rub" value="synthese">
 	<INPUT type="hidden" name="id" value="{form_id}">
@@ -26,7 +26,7 @@
 	<INPUT type="hidden" name="form_data[uid_avion]" value="{form_uid_avion}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-	<p class="lastupdate">Dernière mise à  jour : {form_usr_maj} {form_dte_maj}</p>
+	<p class="lastupdate">DerniÃ¨re mise Ã Â  jour : {form_usr_maj} {form_dte_maj}</p>
 
 	<div class='formulaireTitre'>
 		FICHE DE SYNTHESE DE VOL
@@ -35,21 +35,31 @@
 	<div class='formulaire'>
 		<table width=100%>
 		<tr><td width=300>Module</td><td>{form_module}</td></tr>
-		<tr><td>Référence du programme</td><td>{form_refffa}</td></tr>
+		<tr><td>RÃ©fÃ©rence du programme</td><td>{form_refffa}</td></tr>
 		<tr><td>Type de vol</td><td>{form_type}</td></tr>
+		<tr><td>Conclusion du vol</td><td>{form_conclusion}</td></tr>
 		</table>
 	</div>
 
 	<div class='formulaireTitre'>THEMES</div>
+	<div class='formulaire'>
 	{form_themes}
+	</div>
 	
 	<div class='formulaireTitre'>APPRECIATION GENERALE DU VOL</div>
+	<div class='formulaire'>
 	{form_bilan_gen}
+	</div>
 
-	<div class='formulaireTitre'>EXERCICES DU DOMAINE TECHNIQUE</div>
+	<div class='formulaireTitre'>METEO DU JOUR</div>
+	<div class='formulaire'>
+	{form_mto}
+	</div>
+
+	<div class='formulaireTitre'>EXERCICES PEDAGOGIQUES</div>
 <!-- BEGIN: lst_pedagogique -->
-		<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
-		{form_progression}
+		<div style='{form_color}'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		{form_progression} {form_progref}
 		</div>
 <!-- END: lst_pedagogique -->
 	
@@ -76,23 +86,21 @@
 	</div>
 
 
+<!-- BEGIN: add_exercice -->
 	<br />
 	Ajouter un exercice / panne : <input id="addexercice" style="width:500px;">
 	<br />
+<!-- END: add_exercice -->
 	<br />
 
-	<div class='formulaireTitre'>METEO DU JOUR</div>
-	{form_mto}
-	<br/>
-	<br/>
 
-	<div class='formulaireTitre'>Non technique / Menace, Erreurs, Situation non désirées</div>
+	<div class='formulaireTitre'>Non technique / Menace, Erreurs, Situation non dÃ©sirÃ©es</div>
 
 	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div>{form_info_1}</div>
 	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div>{form_info_2}</div>
-	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div>{form_info_3}</div>
+	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de dÃ©cisions</div>{form_info_3}</div>
 	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div>{form_info_4}</div>
-	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div>{form_info_5}</div>
+	<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de lâ€™environnement en vol</div>{form_info_5}</div>
 
 	<br />
 	<table>
@@ -113,8 +121,8 @@
 	$(document).ready(function() {
 	  $(window).keydown(function(event){
 		if(event.keyCode == 13) {
-		  event.preventDefault();
-		  return false;
+		  <!-- event.preventDefault(); -->
+		  <!-- return false; -->
 		}
 	  });
 	});
@@ -182,6 +190,7 @@
 
 			success: function(response) {
 				var txt="";
+				$("#themes").text("");
 				$("#themes").text(response.theme);
 			}
 		});
@@ -211,7 +220,7 @@
 		</td>
 		<td width='10%'>
 			<div class='formulaire' style='margin-left:10px; height:90px;'>
-			<b>Durée</b><br />
+			<b>DurÃ©e</b><br />
 			{form_duree}
 			</div>
 		</td>
@@ -230,8 +239,8 @@
 				<input type="submit" name="fonc" value="Signature Instructeur">
 <!-- END: signinst -->
 <!-- BEGIN: signedinst -->
-				<br />Signé par {form_signinst_name} le {form_signinst_dte}<br />
-				(Clé: {form_signinst_key})
+				<br />SignÃ© par {form_signinst_name} le {form_signinst_dte}<br />
+				(ClÃ©: {form_signinst_key})
 <!-- END: signedinst -->
 			</div>
 		</td>
@@ -239,11 +248,11 @@
 			<div class='formulaire' style='margin-left:10px; height:90px;'>
 				<b>Eleve</b> : {form_eleve}<br />
 <!-- BEGIN: signeleve -->
-				<input type="submit" name="fonc" value="Signature Elève">
+				<input type="submit" name="fonc" value="Signature ElÃ¨ve">
 <!-- END: signeleve -->
 <!-- BEGIN: signedeleve -->
-				<br />Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
-				(Clé: {form_signeleve_key})
+				<br />SignÃ© par {form_signeleve_name} le {form_signeleve_dte}<br />
+				(ClÃ©: {form_signeleve_key})
 <!-- END: signedeleve -->
 			</div>
 		</td>

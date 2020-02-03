@@ -34,7 +34,7 @@
 
 
 // ---- Supprime un poste
-	if ($fonc=="delete")
+	if (($fonc=="delete") && (GetDroit("ModifExercice")))
 	{
 		$id=checkVar("id","numeric");
 		if ($id>0)
@@ -47,6 +47,10 @@
 
 // ---- Affiche la page demandée
 	$tabTitre=array(
+		"id"=>array(
+			"aff"=>"#id",
+			"width"=>40
+		),
 		"description"=>array(
 			"aff"=>"Description",
 			"width"=>400
@@ -109,8 +113,13 @@
 		$tabValeur[$i]["competence"]["val"]=$exo->val("competence");
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
-		$tabValeur[$i]["action"]["aff"] ="<div id='action_".$d["id"]."' style='display:none;'><a id='edit_".$d["id"]."' class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a>";
-		$tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'  class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"] ="";
+		
+		if (GetDroit("ModifExercice"))
+		{
+			$tabValeur[$i]["action"]["aff"].="<div id='action_".$d["id"]."' style='display:none;'><a id='edit_".$d["id"]."' class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a>";
+			$tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'  class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		}
 
 		$lstp=ListProgression($sql,$d["id"]);
 		$tabValeur[$i]["progression"]["val"]="";

@@ -49,11 +49,12 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
 // ---- Affiche le sous menu
-	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
-	addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
-	addSubMenu("","Compétences",geturl("aviation","competences"),"",true);
-	addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
-	addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
+	addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",false);
+	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
+	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",false);
+	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",false);
+	addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",true);
+	addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
 	affSubMenu();
 
 // ---- Change membre
@@ -80,7 +81,7 @@
 	$lst=ListCompetences($sql,$uid);
 
 	$tabTitre=array(
-		"exercice" => array("aff"=>"Exercice","width"=>400),
+		"competence" => array("aff"=>"Compétences","width"=>400),
 		"dte" => array("aff"=>"Date","width"=>120),
 		"progression" => array("aff"=>"Progression","width"=>100),
 	);
@@ -89,8 +90,8 @@
 	{	
 		$exo = new exercice_conf_class($fid,$sql);
 
-		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
-		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
+		$tabValeur[$fid]["competence"]["val"]=$exo->val("competence");
+		$tabValeur[$fid]["competence"]["aff"]=$exo->aff("competence");
 		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
 		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
 		$tabValeur[$fid]["progression"]["val"]=$d["progression"];

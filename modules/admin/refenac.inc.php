@@ -20,7 +20,7 @@
 ?>
 
 <?php
-	if (!GetDroit("AccesConfigReferences")) { FatalError("Accès non autorisé (AccesConfigReferences)"); }
+	if (!GetDroit("AccesConfigRefEnac")) { FatalError("Accès non autorisé (AccesConfigRefEnac)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 

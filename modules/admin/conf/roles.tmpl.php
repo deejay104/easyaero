@@ -62,7 +62,8 @@ $tabRoles["AccesConfigInstruction"]="Accès à la page de configuration des synt
 
 
 $tabRoles["AccesConfigExercices"]="Accès à la page de configuration de la liste des exercices (Synthèse de vol)";
-$tabRoles["AccesConfigReferences"]="Accès à la page de configuration de la liste des références ENAC (Synthèse de vol)";
+$tabRoles["AccesConfigReferences"]="Accès à la page de configuration de la liste des références d'exercice (Synthèse de vol)";
+$tabRoles["AccesConfigRefEnac"]="Accès à la page de configuration de la liste des références ENAC (Synthèse de vol)";
 
 
 
@@ -105,6 +106,7 @@ $tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";
 $tabRoles["CreeSynthese"]="Création d'un fiche de synthèse de vol";
 $tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthèse de vol";
 $tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse de vol";
+$tabRoles["ModifExercice"]="Modification des exercices du livret de progression";
 
 
 

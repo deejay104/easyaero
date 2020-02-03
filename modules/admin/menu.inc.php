@@ -47,17 +47,22 @@
 
 	if (GetDroit("AccesConfigInstruction"))
 	{
-		addPageMenu("",$mod,"Instruction",geturl("admin","exercices",""),"icn32_synthese.png",(($rub=="exercices")|| ($rub=="references") || ($rub=="refenac")) ? true : false);
-		
-		addSubMenu("","Exercices",geturl("admin","exercices",""),"icn32_synthese.png",($rub=="exercices") ? true : false);
-		addSubMenu("","Références",geturl("admin","references",""),"icn32_synthese.png",($rub=="references") ? true : false);
-		addSubMenu("","Ref. ENAC",geturl("admin","refenac",""),"icn32_synthese.png",($rub=="refenac") ? true : false);
-
-		if ($rub=="exercices")
+		$aff=false;
+		if (($rub=="exercices")|| ($rub=="references") || ($rub=="refenac")) 
 		{
-			addSubMenu("","Ajouter","#","icn32_synthese.png",false,"","\" id=\"edit_new");
+			addSubMenu("","Exercices",geturl("admin","exercices",""),"icn32_synthese.png",($rub=="exercices") ? true : false);
+			addSubMenu("","Vols",geturl("admin","references",""),"icn32_synthese.png",($rub=="references") ? true : false);
+			addSubMenu("","Prog ENAC",geturl("admin","refenac",""),"icn32_synthese.png",($rub=="refenac") ? true : false);
+
+			if ($rub=="exercices")
+			{
+				addSubMenu("","Ajouter","#","icn32_synthese.png",false,"","\" id=\"edit_new");
+			}
+			affSubMenu();
+			$aff=true;
 		}
-		affSubMenu();
+		addPageMenu("",$mod,"Instruction",geturl("admin","exercices",""),"icn32_synthese.png",$aff);
+
 	}
 	
 

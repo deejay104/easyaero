@@ -15,7 +15,7 @@
 </style>
 
 
-<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="mod" value="aviation">
 	<INPUT type="hidden" name="rub" value="synthese">
 	<INPUT type="hidden" name="id" value="{form_id}">
@@ -27,7 +27,7 @@
 	<INPUT type="hidden" name="form_data[uid_avion]" value="{form_uid_avion}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-	<p class="lastupdate">Dernière mise à  jour : {form_usr_maj} {form_dte_maj}</p>
+	<p class="lastupdate">DerniÃ¨re mise Ã Â  jour : {form_usr_maj} {form_dte_maj}</p>
 
 	<div class='formulaireTitre'>
 		FICHE DE SYNTHESE DE VOL
@@ -36,8 +36,9 @@
 	<div class='formulaire'>
 		<table width=420px style='margin-left:15px;'>
 		<tr><td width=180>Module</td><td>{form_module}</td></tr>
-		<tr><td>Réf. du programme</td><td>{form_refffa}</td></tr>
+		<tr><td>RÃ©f. du programme</td><td>{form_refffa}</td></tr>
 		<tr><td>Type de vol</td><td>{form_type}</td></tr>
+		<tr><td>Conclusion du vol</td><td>{form_conclusion}</td></tr>
 		</table>
 	</div>
 
@@ -53,10 +54,12 @@
 
 	<div class='formulaireTitre'>EXERCICES DU DOMAINE TECHNIQUE</div>
 <!-- BEGIN: lst_pedagogique -->
+	<div  style='{form_color}'>
 		<div class='formulaire' style='border-bottom: 1px #dddddd solid;'>
 		<div style='width:400px; max-width:400px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		<div style='padding-right:20px; text-align: right;'>{form_progression}</div>
 		</div>
+	</div>
 <!-- END: lst_pedagogique -->
 	
 	<div id="affpedagogique" class='formulaire'>
@@ -100,9 +103,9 @@
 
 	<div style='margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div><div style='padding-right:20px; text-align: right;'>{form_info_1}</div></div>
 	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div><div style='padding-right:20px; text-align: right;'>{form_info_2}</div></div>
-	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div><div style='padding-right:20px; text-align: right;'>{form_info_3}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de dÃ©cisions</div><div style='padding-right:20px; text-align: right;'>{form_info_3}</div></div>
 	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div><div style='padding-right:20px; text-align: right;'>{form_info_4}</div></div>
-	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div><div style='padding-right:20px; text-align: right;'>{form_info_5}</div></div>
+	<div style='border-top:1px solid #dddddd; margin-left:10px;'><div style='padding-top:2px; padding-bottom:2px;'>Conscience de lâ€™environnement en vol</div><div style='padding-right:20px; text-align: right;'>{form_info_5}</div></div>
 
 	<br />
 	<table>
@@ -221,8 +224,8 @@
 				<input type="submit" name="fonc" value="Signature Instructeur" style='width:300px;'>
 <!-- END: signinst -->
 <!-- BEGIN: signedinst -->
-				Signé par {form_signinst_name} le {form_signinst_dte}<br />
-				(Clé: {form_signinst_key})<br />
+				SignÃ© par {form_signinst_name} le {form_signinst_dte}<br />
+				(ClÃ©: {form_signinst_key})<br />
 <!-- END: signedinst -->
 			</div>
 		</td>
@@ -230,11 +233,11 @@
 			<div class='formulaire' style='margin-left:10px; margin-top:10px;'>
 				<b>Eleve</b> : {form_eleve}<br />
 <!-- BEGIN: signeleve -->
-				<input type="submit" name="fonc" value="Signature Elève" style='width:300px;'>
+				<input type="submit" name="fonc" value="Signature ElÃ¨ve" style='width:300px;'>
 <!-- END: signeleve -->
 <!-- BEGIN: signedeleve -->
-				Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
-				(Clé: {form_signeleve_key})
+				SignÃ© par {form_signeleve_name} le {form_signeleve_dte}<br />
+				(ClÃ©: {form_signeleve_key})
 <!-- END: signedeleve -->
 			</div>
 </form>

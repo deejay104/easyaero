@@ -48,11 +48,12 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche le sous menu
-	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
-	addSubMenu("","Exercices",geturl("aviation","exercices"),"",true);
-	addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
-	addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
-	addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
+	addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",false);
+	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",true);
+	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",false);
+	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",false);
+	addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",false);
+	addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
 	affSubMenu();
 
 // ---- Change membre
@@ -76,10 +77,10 @@
 	}
 
 // ---- Affiche la liste	
-	$lst=ListExercicesProg($sql,$uid);
+	$lst=ListExercicesProg($sql,$uid,"peda");
 
 	$tabTitre=array(
-		"id" => array("aff"=>"#","width"=>40),
+		// "id" => array("aff"=>"#","width"=>40),
 		"exercice" => array("aff"=>"Exercice","width"=>400),
 		"dte" => array("aff"=>"Date","width"=>120),
 		"progression" => array("aff"=>"Progression","width"=>100),
@@ -101,7 +102,7 @@
 		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
 		$tabValeur[$fid]["progref"]["aff"]=($d["progref"]=="A") ? "Acquis" : "Etude";
 		
-		if (($d["progref"]=="A") && ($d["progression"]!="A"))
+		if ((($d["progref"]=="A") && ($d["progression"]!="A")) || (($d["progref"]=="E") && ($d["progression"]=="V")))
 		{
 			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
 			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];

@@ -48,11 +48,12 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
 // ---- Affiche le sous menu
-	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
-	addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
-	addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
-	addSubMenu("","Progression",geturl("aviation","progenac"),"",true);
-	addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
+	addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",false);
+	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
+	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",false);
+	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",false);
+	addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",false);
+	addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",true);
 	affSubMenu();
 
 // ---- Change membre

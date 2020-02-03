@@ -32,6 +32,7 @@ class synthese_class extends objet_core
 	protected $fields = Array(
 		"idvol" => Array("type" => "number", "default" => "0", "index" => "1" ),
 		"status" => Array("type" => "enum","index"=>1, "default" => "edit"),
+		"conclusion" => Array("type" => "enum","index"=>1, "default" => "ok"),
 		"type" => Array("type" => "radio","index"=>1, "default" => "dc"),
 		"uid_pilote" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_instructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
@@ -67,6 +68,10 @@ class synthese_class extends objet_core
 		"status"=>array(
 			"fr"=>array('edit'=>'Rédaction','signed'=>'Signé','cancel'=>'Annulé'),
 			"en"=>array('edit'=>'Edit','signed'=>'Signed','cancel'=>'Canceled'),
+		),
+		"conclusion"=>array(
+			"fr"=>array('ok'=>'Validé','nok'=>'Non Validé'),
+			"en"=>array('ok'=>'Validé','nok'=>'Non Validé'),
 		),
 		"type" =>array(
 			"fr"=>array('dc'=>'Double Commande','solo'=>'Solo'),	
@@ -140,7 +145,7 @@ class synthese_class extends objet_core
 			}
 			$ret.="</select>";			
 		}
-		
+
 		return $ret;
 	}
 	
@@ -308,7 +313,7 @@ function ListExercicesProg($sql,$uid,$type="")
 {
 	global $MyOpt;
 	
-	$q ="SELECT id,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
+	$q ="SELECT id,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref,(SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A') AS nb ";
 	$q.="FROM ".$MyOpt["tbl"]."_exercice_conf AS exo ";
 	if ($type!="")
 	{

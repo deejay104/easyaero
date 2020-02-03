@@ -103,14 +103,24 @@
 
 		if ($n>0)
 		{
-			affInformation("Vos données ont été enregistrées.","ok");
+			affInformation("Vos donnÃ©es ont Ã©tÃ© enregistrÃ©es.","ok");
 		}
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
-// ---- Charge la fiche de synthèse
+// ---- Charge la fiche de synthÃ¨se
 	$fiche=new synthese_class($id,$sql);
+
+	if ((!GetDroit("AccesSynthese")) && ($fiche->val("uid_pilote")!=$gl_uid))
+	{
+		FatalError("AccÃ¨s non autorisÃ© (AccesSynthese)");
+	}
+
+	if ($uid==0)
+	{
+		$uid=$fiche->val("uid_pilote");
+	}
 
 	$tmpl_x->assign("form_id",$id);
 	$tmpl_x->assign("prev_uid",$uid);
@@ -170,12 +180,12 @@
 		$n=$fiche->Save();
 		if ($n>0)
 		{
-			affInformation("Vos données ont été enregistrées.","ok");
+			affInformation("Vos donnÃ©es ont Ã©tÃ© enregistrÃ©es.","ok");
 		}
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 	
-	if ((($fonc=="Signature Elève") || ($fonc=="Sign. Elève")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ((($fonc=="Signature ElÃ¨ve") || ($fonc=="Sign. ElÃ¨ve")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_pilote","sdte_pilote");
 		$s=$fiche->sign($t);
@@ -188,7 +198,7 @@
 		$n=$fiche->Save();
 		if ($n>0)
 		{
-			affInformation("Vos données ont été enregistrées.","ok");
+			affInformation("Vos donnÃ©es ont Ã©tÃ© enregistrÃ©es.","ok");
 		}
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
@@ -221,17 +231,15 @@
 	affSubMenu();
 	
 // ---- Charge la fiche
-
-	if ((!GetDroit("AccesSynthese")) && ($fiche->val("uid_pilote")!=$id))
-	{
-		FatalError("Accès non autorisé (AccesSynthese)");
-	}
-
 	
 	$typeaff="form";
-	if (($fiche->val("skey_instructeur")!="") || ($fiche->val("skey_pilote")!=""))
+	if ($signed)
 	{
 		$typeaff="html";
+	}
+	else
+	{
+		$tmpl_x->parse("corps.add_exercice");
 	}
 
 	$fiche->Render("form",$typeaff);
@@ -248,9 +256,8 @@
 		}
 	}
 
-// ---- Charge les exercices de la fiche de synthèse
+// ---- Charge les exercices de la fiche de synthÃ¨se
 	$lst=ListExercices($sql,$id);
-
 	foreach($lst as $i=>$v)
 	{
 		$c_conf=new exercice_conf_class($v["idexercice"],$sql);
@@ -259,11 +266,28 @@
 		$render=$typeaff;
 		$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
 		$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compec[".$v["id"]."]",$render,$v["id"]."_"));
+
+		if (($c_line->val("progref")!=$c_line->val("progression")) && ($c_line->val("progref")=="A"))
+		{
+			$tmpl_x->assign("form_progref", " (devrait Ãªtre ".$c_line->aff("progref")." <img src='".$MyOpt["host"]."/static/modules/aviation/img/icn16_erreur.png'>)");
+			$tmpl_x->assign("form_color", "background-color:#".$MyOpt["styleColor"]["msgboxBackgroundError"]);
+		}
+		else if (($c_line->val("progression")=="V") && ($c_line->val("progref")=="E"))
+		{
+			$tmpl_x->assign("form_progref", " (devrait Ãªtre ".$c_line->aff("progref")." <img src='".$MyOpt["host"]."/static/modules/aviation/img/icn16_erreur.png'>)");
+			$tmpl_x->assign("form_color", "background-color:#".$MyOpt["styleColor"]["msgboxBackgroundError"]);
+		}
+		else
+		{
+			$tmpl_x->assign("form_progref", "");
+			$tmpl_x->assign("form_color", "");
+		}
+
 		if ($c_conf->val("type")=="panne")
 		{
 			$tmpl_x->parse("corps.lst_panne");
 		}
-		else if ($c_conf->val("type")=="ecercice")
+		else if ($c_conf->val("type")=="exercice")
 		{
 			$tmpl_x->parse("corps.lst_exercice");
 		}
@@ -316,7 +340,7 @@
 	$tmpl_x->assign("form_total_att",$fiche->NbAtt());
 	$tmpl_x->assign("form_total_rmg",$fiche->NbRmg());
 
-// ---- Affiche les paramètres
+// ---- Affiche les paramÃ¨tres
 
 	$tmpl_x->assign("form_idvol",$fiche->val("idvol"));
 	$tmpl_x->assign("form_uid_pilote",$fiche->val("uid_pilote"));

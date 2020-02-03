@@ -44,9 +44,9 @@
 			$r["value"]=$sql->data["id"];
 			$r["label"]=$sql->data["description"]." (".$sql->data["progression"].")";
 			$r["id"]=$sql->data["id"];
-			$r["description"]=htmlentities($sql->data["description"],ENT_HTML5,"ISO-8859-1");
-			$r["type"]=htmlentities($sql->data["type"],ENT_HTML5,"ISO-8859-1");
-			$r["module"]=htmlentities($sql->data["module"],ENT_HTML5,"ISO-8859-1");
+			$r["description"]=htmlentities($sql->data["description"],ENT_HTML5,"UTF-8");
+			$r["type"]=htmlentities($sql->data["type"],ENT_HTML5,"UTF-8");
+			$r["module"]=htmlentities($sql->data["module"],ENT_HTML5,"UTF-8");
 			$r["progression"]=$sql->data["progression"];
 			array_push($ret,$r);
 		}

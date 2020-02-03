@@ -32,6 +32,7 @@
 	$order=checkVar("order","varchar",12);
 	$trie=checkVar("trie","varchar",1);
 	$ts=checkVar("ts","numeric");
+	$type=checkVar("type","varchar",8,"panne");
 
 	if ($uid==0)
 	{
@@ -48,11 +49,14 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche le sous menu
-	addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",false);
-	addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
-	addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
-	addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
-	addSubMenu("","Pannes",geturl("aviation","pannes"),"",true);
+	addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",false);
+	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
+	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",($type=="panne") ? true : false);
+	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",($type=="exercice") ? true : false);
+	addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",false);
+	addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
+
+
 	affSubMenu();
 
 // ---- Change membre
@@ -76,13 +80,16 @@
 	}
 
 // ---- Affiche la liste	
-	$lst=ListExercicesProg($sql,$uid,"panne");
+
+
+	$lst=ListExercicesProg($sql,$uid,$type);
 
 	$tabTitre=array(
-		"id" => array("aff"=>"#","width"=>40),
+		// "id" => array("aff"=>"#","width"=>40),
 		"exercice" => array("aff"=>"Exercice","width"=>400),
-		"dte" => array("aff"=>"Date","width"=>120),
+		// "dte" => array("aff"=>"Date","width"=>120),
 		"progression" => array("aff"=>"Progression","width"=>100),
+		"nb" => array("aff"=>"Nombre vol(s)","width"=>100),
 	);
 	$tabValeur=array();
 	foreach($lst as $fid=>$d)
@@ -92,11 +99,13 @@
 		$tabValeur[$fid]["id"]["val"]=$fid;
 		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
 		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
-		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
-		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
+		// $tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
+		// $tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? sql2date($d["dte_acquis"],"jour") : " ";
 		$tabValeur[$fid]["progression"]["val"]=($d["progression"]=="A") ? "A" : "";
 		$tabValeur[$fid]["progression"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/".(($d["progression"]=="A") ? "icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"] : "icn16_nc.png")."'>";
 		$tabValeur[$fid]["progression"]["align"]="center";
+		$tabValeur[$fid]["nb"]["val"]=$d["nb"];
+		$tabValeur[$fid]["nb"]["aff"]=$d["nb"];
 		
 	}
 

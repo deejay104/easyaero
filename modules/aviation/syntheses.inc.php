@@ -47,11 +47,12 @@
 // ---- Affiche le sous menu
 	if ($theme!="phone")
 	{
-		addSubMenu("","Synthèses",geturl("aviation","syntheses"),"",true);
-		addSubMenu("","Exercices",geturl("aviation","exercices"),"",false);
-		addSubMenu("","Compétences",geturl("aviation","competences"),"",false);
-		addSubMenu("","Progression",geturl("aviation","progenac"),"",false);
-		addSubMenu("","Pannes",geturl("aviation","pannes"),"",false);
+		addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",true);
+		addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
+		addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",false);
+		addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",false);
+		addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",false);
+		addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
 		affSubMenu();
 	}
 // ---- Change membre
@@ -84,6 +85,7 @@
 		"inst" => array("aff"=>"Instructeur","width"=>200, "mobile"=>"no"),
 		"module" => array("aff"=>"Module","width"=>100, "mobile"=>"no"),
 		"refffa" => array("aff"=>"Reférence","width"=>100),
+		"conclusion" => array("aff"=>"Conclusion","width"=>100),
 		"status" => array("aff"=>"Status","width"=>100),
 	);
 
@@ -108,6 +110,8 @@
 		$tabValeur[$fid]["module"]["val"]=$fiche->aff("module");
 		$tabValeur[$fid]["refffa"]["val"]=$fiche->val("refffa");
 		$tabValeur[$fid]["refffa"]["val"]=$fiche->aff("refffa");
+		$tabValeur[$fid]["conclusion"]["val"]=$fiche->val("conclusion");
+		$tabValeur[$fid]["conclusion"]["val"]=$fiche->aff("conclusion");
 		$tabValeur[$fid]["status"]["val"]=$fiche->val("status");
 		$tabValeur[$fid]["status"]["val"]=$fiche->aff("status");
 	}
