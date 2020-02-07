@@ -12,6 +12,7 @@
 <!-- BEGIN: corps -->
 <style>
 #mto { width: 100%!important; }
+.formulaireHover:hover { background-color: #{LineBackgroundHover}!important; }
 </style>
 
 <FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
@@ -59,14 +60,16 @@
 
 	<div class='formulaireTitre'>EXERCICES PEDAGOGIQUES</div>
 <!-- BEGIN: lst_pedagogique -->
-		<div style='{form_color}' class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
-		{form_progression} {form_progref}
+		<div id='exo_{aff_id}' style='{form_color}' class='formulaireHover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+		<div style='width:480px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div style='display:inline-block;'>{form_progression} {form_progref}</div>
+<!-- BEGIN: lst_delete -->
+		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
+			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+		</div>
+<!-- END: lst_delete -->
 		</div>
 <!-- END: lst_pedagogique -->
-
-<style>
-.formulaireHover:hover { background-color: #{LineBackgroundHover}!important; }
-</style>
 
 	<div id="affpedagogique">
 	</div>
@@ -74,8 +77,14 @@
 
 	<div class='formulaireTitre'>EXERCICES</div>
 <!-- BEGIN: lst_exercice -->
-		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div id='exo_{aff_id}' class='formulaireHover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		{form_progression}
+<!-- BEGIN: lst_delete -->
+		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
+			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+		</div>
+<!-- END: lst_delete -->
 		</div>
 <!-- END: lst_affexercice -->
 	<div id="affexercices">
@@ -83,8 +92,17 @@
 
 	<div class='formulaireTitre'>PANNES</div>
 <!-- BEGIN: lst_panne -->
-		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div id='exo_{aff_id}' class='formulaireHover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		{form_progression}
+		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
+			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+		</div>
+<!-- BEGIN: lst_delete -->
+		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
+			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+		</div>
+<!-- END: lst_delete -->
 		</div>
 <!-- END: lst_panne -->
 	<div id="affpannes">
@@ -123,6 +141,18 @@
 		</tr>
 	</table>
 <script>
+	function deleteExo(id)
+	{
+		$.ajax({
+			type: "GET",
+			url: "{path_root}/api/v1/aviation/exercice/delete?id="+id,
+			dataType: 'JSON',
+			success: function(response) {
+				$("#exo_"+id).text("");
+			}
+		});   
+	}
+
 	$(document).ready(function() {
 	  $(window).keydown(function(event){
 		if(event.keyCode == 13) {
@@ -179,7 +209,7 @@
 				if (response.length>0)
 				{
 					$.each(response, function (index, value) {
-						txt="<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+						txt="<div id='exo_"+value.id+"' class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
 						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
@@ -229,19 +259,19 @@
 	<table width='100%'>
 	<tr>
 		<td width='15%'>
-			<div class='formulaire' style='height:90px;'>
+			<div class='formulaire' style='height:140px;'>
 			<b>Date du vol</b><br />
 			{form_dtevol}
 			</div>
 		</td>
 		<td width='10%'>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<div class='formulaire' style='margin-left:10px; height:140px;'>
 			<b>Durée</b><br />
 			{form_duree}
 			</div>
 		</td>
 		<td width='10%'>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<div class='formulaire' style='margin-left:10px; height:140px;'>
 			<b>Cumul DC</b><br />
 			{form_cumuldc}<br />
 			<b>Cumul Solo</b><br />
@@ -249,7 +279,7 @@
 			</div>
 		</td>
 		<td width='33%'>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<div class='formulaire' style='margin-left:10px; height:140px;'>
 				<b>Instructeur</b> : {form_instructeur}<br />
 <!-- BEGIN: signinst -->
 				<input type="submit" name="fonc" value="Signature Instructeur">
@@ -261,7 +291,7 @@
 			</div>
 		</td>
 		<td>
-			<div class='formulaire' style='margin-left:10px; height:90px;'>
+			<div class='formulaire' style='margin-left:10px; height:140px;'>
 				<b>Eleve</b> : {form_eleve}<br />
 <!-- BEGIN: signeleve -->
 				<input type="submit" name="fonc" value="Signature Elève">

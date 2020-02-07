@@ -351,7 +351,7 @@ class user_class extends user_core
 	{
 		$sql=$this->sql;
 		// Compte le nombre de vols
-		$query="SELECT COUNT(*) AS nb FROM `".$this->tbl."_calendrier` WHERE (uid_pilote = ".$this->id." OR uid_instructeur = ".$this->id.") AND (prix>0 OR tpsreel>0) AND dte_deb>'".((date("n")<=$nbmois)?(date("Y")-1):date("Y"))."-".((date("n")<=$nbmois)?(12+date("n")-$nbmois):(date("n")-$nbmois))."-".date("d")."'";
+		$query="SELECT COUNT(*) AS nb FROM `".$this->tbl."_calendrier` WHERE actif='oui' AND (uid_pilote = ".$this->id." OR uid_instructeur = ".$this->id.") AND (prix>0 OR tpsreel>0) AND dte_deb>'".((date("n")<=$nbmois)?(date("Y")-1):date("Y"))."-".((date("n")<=$nbmois)?(12+date("n")-$nbmois):(date("n")-$nbmois))."-".date("d")."'";
 		$res=$sql->QueryRow($query);
 
 		$ret=$res["nb"];
@@ -393,7 +393,7 @@ class user_class extends user_core
 		}
 		
 		$sql=$this->sql;
-		$query="SELECT SUM( tpsreel ) AS nb FROM `".$this->tbl."_calendrier` WHERE ".$q." AND dte_deb>='".$dte."' AND dte_deb<'".$dtef."' AND (prix<>0 OR tpsreel<>0)";
+		$query="SELECT SUM( tpsreel ) AS nb FROM `".$this->tbl."_calendrier` WHERE ".$q." AND dte_deb>='".$dte."' AND dte_deb<'".$dtef."' AND (prix<>0 OR tpsreel<>0) AND actif='oui'";
 
 		$res=$sql->QueryRow($query);
 
@@ -415,7 +415,7 @@ class user_class extends user_core
 	{
 		$query ="SELECT SUM(resa.tpsreel) AS nb FROM ".$this->tbl."_synthese AS synt ";
 		$query.="LEFT JOIN ".$this->tbl."_calendrier AS resa ON resa.id=synt.idvol ";
-		$query.="WHERE synt.type='".$type."' AND synt.dte_vol<='".$dte."' AND synt.uid_pilote=".$this->id;
+		$query.="WHERE synt.type='".$type."' AND synt.actif='oui' AND synt.dte_vol<='".$dte."' AND synt.uid_pilote=".$this->id;
 		$sql=$this->sql;
 		$res=$sql->QueryRow($query);
 		return (($res["nb"]>0) ? $res["nb"] : "0");
@@ -431,6 +431,32 @@ class user_class extends user_core
 		  { $ret="0h 00"; }
 		return "<a href='index.php?mod=aviation&rub=vols&id=".$this->id."'>".$ret."</a>";
 	}
+
+	function NbAtt($type)
+	{
+		$sql=$this->sql;
+		$query="SELECT SUM(nb_att) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->id."  AND actif='oui' ".(($type!="") ? " AND type='".$type."'" : "");
+		$res=$sql->QueryRow($query);
+		
+		return (is_numeric($res["nb"])) ? $res["nb"] : 0;
+	}
+	function NbRmg($type)
+	{
+		$sql=$this->sql;
+		$query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->id."  AND actif='oui' ".(($type!="") ? " AND type='".$type."'" : "");
+		$res=$sql->QueryRow($query);
+
+		return (is_numeric($res["nb"])) ? $res["nb"] : 0;
+	}
+	function DebFormation()
+	{
+		$sql=$this->sql;
+		$query="SELECT MIN(dte_vol) AS dte FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->id." AND dte_vol<>'0000-00-00 00:00:00' AND actif='oui'";
+		$res=$sql->QueryRow($query);
+
+		return $res["dte"];
+	}
+
 
 	function AffNbHeures12mois($type="")
 	{

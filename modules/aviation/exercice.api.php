@@ -5,6 +5,7 @@
   
 	require_once ($appfolder."/class/synthese.inc.php");
 
+	$id=checkVar("id","numeric");
 	$ref=checkVar("ref","varchar");
 	$term=checkVar("term","varchar");
 	$fonc=checkVar("fonc","varchar",10);
@@ -17,6 +18,13 @@
 		$res=$sql->QueryRow($query);
 		$ret["refffa"]=$res["refffa"];
 		$ret["theme"]=$res["theme"];
+	}
+	if ($fonc=="delete")
+	{
+		$exo=new exercice_class($id,$sql);
+		$exo->Delete();
+		$ret["status"]="deleted";
+		error_log("exo $id deleted");
 	}
 	else
 	{

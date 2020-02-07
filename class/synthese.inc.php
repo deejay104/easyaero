@@ -157,8 +157,6 @@ class synthese_class extends objet_core
 		}
 		$sql=$this->sql;
 		$query="SELECT SUM(nb_att) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND id<'".$this->id."'";
-
-		$sql=$this->sql;
 		$res=$sql->QueryRow($query);
 		
 		return $res["nb"];
@@ -171,8 +169,6 @@ class synthese_class extends objet_core
 		}
 		$sql=$this->sql;
 		$query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND id<'".$this->id."'";
-
-		$sql=$this->sql;
 		$res=$sql->QueryRow($query);
 		
 		return $res["nb"];
@@ -203,7 +199,7 @@ class exercice_conf_class extends objet_core
 	protected $rub="";
 
 	protected $fields = Array(
-		"description" => array("type"=>"varchar","len"=>100, "formlen"=>400),
+		"description" => array("type"=>"varchar","len"=>200, "formlen"=>400),
 		"competence" => array("type"=>"varchar","len"=>100, "formlen"=>400),
 		"type" => Array("type" => "enum","default"=>"peda"),
 		"module" => Array("type" => "enum","default"=>"maniabilite"),
@@ -295,7 +291,7 @@ function ListExercicesNonAcquis($sql,$uid)
 	$q ="SELECT idexercice AS id,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
 
 	$q ="SELECT idexercice AS id FROM ".$MyOpt["tbl"]."_exercice AS exo ";
-	$q.="WHERE uid='".$uid."' AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progression='A')=0 AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progref='A')=1 ";
+	$q.="WHERE actif='oui' AND uid='".$uid."' AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progression='A')=0 AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progref='A')=1 ";
 	$q.="GROUP BY idexercice";
 	$sql->Query($q);
 
@@ -319,10 +315,10 @@ function ListExercicesProg($sql,$uid,$type="")
 	// $q.="(SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.actif='oui' AND prog.uid='".$uid."' AND prog.progref='A') AS nb ";
 
 	
-	$q ="SELECT id FROM ".$MyOpt["tbl"]."_exercice_conf AS exo ";
+	$q ="SELECT id FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE actif='oui' ";
 	if ($type!="")
 	{
-		$q.="WHERE exo.type='".$type."' ";
+		$q.=" AND exo.type='".$type."' ";
 	}
 	$sql->Query($q);
 
@@ -346,11 +342,11 @@ function ListExercicesProg($sql,$uid,$type="")
 		{ 
 			$sql->GetRow($i);
 			
+			$lst[$id]["nb"]=$lst[$id]["nb"]+1;
 			if ($sql->data["progression"]=="A")
 			{
 				$lst[$id]["idsynthese"]=$sql->data["idsynthese"];
 				$lst[$id]["progression"]="A";
-				$lst[$id]["nb"]=$lst[$id]["nb"]+1;
 			}
 			if ($sql->data["progref"]=="A")
 			{
@@ -395,7 +391,7 @@ function ListCompetences($sql,$uid)
 	global $MyOpt;
 	
 	$q ="SELECT id ";
-	$q.="FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE exo.competence<>''";
+	$q.="FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE actif='oui' AND exo.competence<>''";
 	$sql->Query($q);
 
 	// ,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,

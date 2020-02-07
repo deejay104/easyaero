@@ -107,7 +107,7 @@ $tabRoles["CreeSynthese"]="Création d'un fiche de synthèse de vol";
 $tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthèse de vol";
 $tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse de vol";
 $tabRoles["ModifExercice"]="Modification des exercices du livret de progression";
-
+$tabRoles["SupprimeExercice"]="Suppression d'un exercice dans une fiche de synthèse";
 
 
 

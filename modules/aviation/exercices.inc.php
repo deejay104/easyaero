@@ -102,12 +102,17 @@
 		$tabValeur[$fid]["progression"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/".(($d["progression"]=="A") ? "icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"] : "icn16_nc.png")."'>";
 		$tabValeur[$fid]["progression"]["align"]="center";
 		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
-		$tabValeur[$fid]["progref"]["aff"]=($d["progref"]=="A") ? "Acquis" : "Etude";
+		$tabValeur[$fid]["progref"]["aff"]=(($d["progref"]=="A") ? "Acquis" : "Etude");
 		
-		if ((($d["progref"]=="A") && ($d["progression"]!="A")) || (($d["progref"]=="E") && ($d["progression"]=="V")))
+		if ((($d["progref"]!=$d["progression"]) && ($d["progref"]=="A")))
 		{
 			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
 			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+		}
+		else if ((($d["progression"]=="V")|| ($d["progression"]=="")) && ($d["progref"]=="E"))
+		{
+			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundWarning"];
+			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundWarning"];
 		}
 	}
 

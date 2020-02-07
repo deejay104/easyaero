@@ -39,14 +39,14 @@
 		if ($sql->rows>0)
 		  {
 			$ok="nok";
-			$txt="Occupé";
+			$txt=utf8_decode("Occupé");
 			for($i=0; $i<$sql->rows; $i++)
 			  { 
 				$sql->GetRow($i);
 				if ($sql->data["id"]==$_REQUEST["resa"])
 				  {
 				  	$ok="ok";
-					$txt="Réservé";
+					$txt=utf8_decode("Réservé");
 				  }
 			  }
 		  }
@@ -60,7 +60,7 @@
 	{
 		if (($deb>0) && ($deb>0))
 		{
-			erreur("Les paramètres sont incorrects.");
+			erreur(utf8_decode("Les paramètres sont incorrects."));
 		}
 		else
 		{

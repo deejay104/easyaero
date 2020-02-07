@@ -127,6 +127,46 @@
 	$tmpl_x->assign("prev_idvol",$idvol);
 	$tmpl_x->assign("LineBackgroundHover",$MyOpt["styleColor"]["LineBackgroundHover"]);
 
+
+// ---- Signe
+	if ((($fonc=="Signature Instructeur") || ($fonc=="Sign. Instructeur")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	{
+		$fiche->Valid("sid_instructeur",$gl_uid);
+		$fiche->Valid("sdte_instructeur",now());
+		$fiche->Valid("status","signed");
+
+		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_instructeur","sdte_instructeur");
+		$s=$fiche->sign($t);
+		
+		$fiche->Valid("skey_instructeur",$s);
+		
+		$n=$fiche->Save();
+		if ($n>0)
+		{
+			affInformation("Vos données ont été enregistrées.","ok");
+		}
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+	}
+	
+	if ((($fonc=="Signature Elève") || ($fonc=="Sign. Elève")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	{
+		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_pilote","sdte_pilote");
+		$s=$fiche->sign($t);
+		
+		$fiche->Valid("sid_pilote",$gl_uid);
+		$fiche->Valid("sdte_pilote",now());
+		$fiche->Valid("skey_pilote",$s);
+		$fiche->Valid("status","signed");
+		
+		$n=$fiche->Save();
+		if ($n>0)
+		{
+			affInformation("Vos données ont été enregistrées.","ok");
+		}
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+	}
+
+
 	$signed=false;
 	if ($fiche->val("skey_instructeur")!="")
 	{
@@ -171,44 +211,6 @@
 			$mod="aviation";
 			$affrub="syntheses";
 		}
-	}
-
-// ---- Signe
-	if ((($fonc=="Signature Instructeur") || ($fonc=="Sign. Instructeur")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	{
-		$fiche->Valid("sid_instructeur",$gl_uid);
-		$fiche->Valid("sdte_instructeur",now());
-		$fiche->Valid("status","signed");
-
-		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_instructeur","sdte_instructeur");
-		$s=$fiche->sign($t);
-		
-		$fiche->Valid("skey_instructeur",$s);
-		
-		$n=$fiche->Save();
-		if ($n>0)
-		{
-			affInformation("Vos données ont été enregistrées.","ok");
-		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	}
-	
-	if ((($fonc=="Signature Elève") || ($fonc=="Sign. Elève")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	{
-		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_pilote","sdte_pilote");
-		$s=$fiche->sign($t);
-		
-		$fiche->Valid("sid_pilote",$gl_uid);
-		$fiche->Valid("sdte_pilote",now());
-		$fiche->Valid("skey_pilote",$s);
-		$fiche->Valid("status","signed");
-		
-		$n=$fiche->Save();
-		if ($n>0)
-		{
-			affInformation("Vos données ont été enregistrées.","ok");
-		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
 // ---- Affiche le menu
@@ -272,6 +274,7 @@
 		$c_line=new exercice_class($v["id"],$sql);
 
 		$render=$typeaff;
+		$tmpl_x->assign("aff_id",$v["id"]);
 		$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
 		$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compec[".$v["id"]."]",$render,$v["id"]."_"));
 
@@ -293,14 +296,26 @@
 
 		if ($c_conf->val("type")=="panne")
 		{
+			if ((GetDroit("SupprimeExercice")) && (!$signed))
+			{
+				$tmpl_x->parse("corps.lst_panne.lst_delete");
+			}
 			$tmpl_x->parse("corps.lst_panne");
 		}
 		else if ($c_conf->val("type")=="exercice")
 		{
+			if ((GetDroit("SupprimeExercice")) && (!$signed))
+			{
+				$tmpl_x->parse("corps.lst_exercice.lst_delete");
+			}
 			$tmpl_x->parse("corps.lst_exercice");
 		}
 		else
 		{
+			if ((GetDroit("SupprimeExercice")) && (!$signed))
+			{
+				$tmpl_x->parse("corps.lst_pedagogique.lst_delete");
+			}
 			$tmpl_x->parse("corps.lst_pedagogique");
 		}
 	}
@@ -373,6 +388,8 @@
 		$tmpl_x->parse("corps.aff_addcomp");
 		$tmpl_x->parse("corps.submit");
 	}
+
+// ---- Signature
 
 	if ((GetDroit("SignSynthese")) && ($fiche->val("skey_instructeur")=="") && ($id>0))
 	{

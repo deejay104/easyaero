@@ -75,6 +75,15 @@
 			$tmpl_x->parse("corps.users");
 	}
 
+// ---- Information sur la formation
+	$pil=new user_class($uid,$sql);
+	$tmpl_x->assign("dte_deb",sql2date($pil->DebFormation(),"jour"));
+	$tmpl_x->assign("total_heure_dc",$pil->AffNbHeuresSynthese(date("Y-m-d"),"dc"));
+	$tmpl_x->assign("total_heure_solo",$pil->AffNbHeuresSynthese(date("Y-m-d"),"solo"));
+	$tmpl_x->assign("total_att_dc",$pil->NbAtt("dc"));
+	$tmpl_x->assign("total_att_solo",$pil->NbAtt("solo"));
+	$tmpl_x->assign("total_rmg_dc",$pil->NbRmg("dc"));
+	$tmpl_x->assign("total_rmg_solo",$pil->NbRmg("solo"));
 	
 // ---- Affiche la liste	
 	$lst=ListMySynthese($sql,$uid);
