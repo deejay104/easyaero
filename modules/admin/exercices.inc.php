@@ -63,17 +63,21 @@
 			"aff"=>"Ref",
 			"width"=>70
 		),
+		"progression"=>array(
+			"aff"=>"Progression",
+			"width"=>200
+		),
 		"refenac"=>array(
 			"aff"=>"ENAC",
 			"width"=>50
 		),
+		"compcat"=>array(
+			"aff"=>"Catégorie",
+			"width"=>200
+		),
 		"competence"=>array(
 			"aff"=>"Compétence",
-			"width"=>400
-		),
-		"progression"=>array(
-			"aff"=>"Progression",
-			"width"=>400
+			"width"=>200
 		),
 		"action"=>array(
 			"aff"=>"",
@@ -110,6 +114,7 @@
 		$tabValeur[$i]["type"]["aff"]=$exo->aff("type");
 		$tabValeur[$i]["refffa"]["val"]=$exo->val("refffa");
 		$tabValeur[$i]["refenac"]["val"]=$exo->val("refenac");
+		$tabValeur[$i]["compcat"]["val"]=$exo->val("compcat");
 		$tabValeur[$i]["competence"]["val"]=$exo->val("competence");
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];

@@ -23,6 +23,7 @@ $( function() {
 				document.getElementById('module').value=response.module;
 				document.getElementById('refffa').value=response.refffa;
 				document.getElementById('refenac').value=response.refenac;
+				document.getElementById('compcat').value=response.compcat;
 				document.getElementById('competence').value=response.competence;
 				
 				$('#1_refffa')[0].value = response.progression[1].ref;
@@ -62,6 +63,7 @@ $( function() {
 			data["module"]=document.getElementById('module').value;
 			data["refffa"]=document.getElementById('refffa').value;
 			data["refenac"]=document.getElementById('refenac').value;
+			data["compcat"]=document.getElementById('compcat').value;
 			data["competence"]=document.getElementById('competence').value;
 
 			data["1_prog_id"]=document.getElementById('1_prog_id').value;
@@ -139,7 +141,7 @@ console.log(data);
 
     dialog = $( "#dialog-form" ).dialog({
       autoOpen: false,
-      height: 450,
+      height: 490,
       width: 800,
 	  top: 10,
       modal: true,
@@ -173,6 +175,7 @@ console.log(data);
 	<p><label>Module</label>{form_module}</p>
 	<p><label>Référence</label>{form_refffa}</p>
 	<p><label>ENAC</label>{form_refenac}</p>
+	<p><label>Catégorie</label>{form_compcat}</p>
 	<p><label>Compétence</label>{form_competence}</p>
 
 	<p><label>Progression</label>{form_1_refffa} {form_1_progression}<input type="hidden" id="1_prog_id" /></p>

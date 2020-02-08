@@ -30,8 +30,6 @@
 
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
-	$order=checkVar("order","varchar",12);
-	$trie=checkVar("trie","varchar",1);
 	$ts=checkVar("ts","numeric");
 
 	if ($uid==0)
@@ -81,6 +79,7 @@
 	$lst=ListCompetences($sql,$uid);
 
 	$tabTitre=array(
+		"compcat" => array("aff"=>"Catégorie","width"=>200),
 		"competence" => array("aff"=>"Compétences","width"=>400),
 		"dte" => array("aff"=>"Date","width"=>120),
 		"progression" => array("aff"=>"Progression","width"=>100),
@@ -90,6 +89,8 @@
 	{	
 		$exo = new exercice_conf_class($fid,$sql);
 
+		$tabValeur[$fid]["compcat"]["val"]=$exo->val("compcat");
+		$tabValeur[$fid]["compcat"]["aff"]=$exo->aff("compcat");
 		$tabValeur[$fid]["competence"]["val"]=$exo->val("competence");
 		$tabValeur[$fid]["competence"]["aff"]=$exo->aff("competence");
 		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
@@ -98,10 +99,9 @@
 		$tabValeur[$fid]["progression"]["aff"]=($d["progression"]=="A") ? "Acquis" : "Etude";
 	}
 
-	if ((!isset($order)) || ($order=="")) { $order="dte"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
+	$taborder=array("compcat"=>"asc","dte"=>"asc");
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$taborder,""));
 
 	
 // ---- Affecte les variables d'affichage

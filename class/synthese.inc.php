@@ -201,6 +201,7 @@ class exercice_conf_class extends objet_core
 	protected $fields = Array(
 		"description" => array("type"=>"varchar","len"=>200, "formlen"=>400),
 		"competence" => array("type"=>"varchar","len"=>100, "formlen"=>400),
+		"compcat" => array("type"=>"varchar","len"=>100, "formlen"=>400),
 		"type" => Array("type" => "enum","default"=>"peda"),
 		"module" => Array("type" => "enum","default"=>"maniabilite"),
 		"refffa" => Array("type" => "varchar","len"=>10,"formlen"=>100),

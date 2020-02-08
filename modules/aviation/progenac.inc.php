@@ -29,8 +29,6 @@
 
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
-	$order=checkVar("order","varchar",12);
-	$trie=checkVar("trie","varchar",1);
 	$ts=checkVar("ts","numeric");
 
 	if ($uid==0)
@@ -122,10 +120,8 @@
 		}
 	}
 
-	if ((!isset($order)) || ($order=="")) { $order=""; }
-	if ((!isset($trie)) || ($trie=="")) { $trie=""; }
-
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+	$tabOrder=array("module"=>"asc","phase"=>"asc");
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$tabOrder,""));
 
 	
 // ---- Affecte les variables d'affichage

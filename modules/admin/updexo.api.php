@@ -22,6 +22,7 @@
 		$result["module"]=$exo->val("module");
 		$result["refffa"]=$exo->val("refffa");
 		$result["refenac"]=$exo->val("refenac");
+		$result["compcat"]=$exo->val("compcat");
 		$result["competence"]=$exo->val("competence");
 		
 		$lstp=ListProgression($sql,$id);
@@ -49,11 +50,12 @@
 		{
 			$id=checkVar("id","numeric");
 			$exo=new exercice_conf_class($id,$sql);
-			$exo->Valid("description",checkVar("description","varchar",100));
+			$exo->Valid("description",checkVar("description","varchar",200));
 			$exo->Valid("type",checkVar("type","varchar",20));
 			$exo->Valid("module",checkVar("module","varchar",40));
-			$exo->Valid("refffa",checkVar("refffa","varchar",20));
+			$exo->Valid("refffa",checkVar("refffa","varchar",10));
 			$exo->Valid("refenac",checkVar("refenac","numeric"));
+			$exo->Valid("compcat",checkVar("compcat","varchar",100));
 			$exo->Valid("competence",checkVar("competence","varchar",100));
 			
 			$exo->Save();
