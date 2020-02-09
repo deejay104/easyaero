@@ -118,6 +118,8 @@
 			$tabValeur[$fid]["prog"]["align"]="center";
 			$tabValeur[$fid]["prog"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/icn16_nc.png'>";
 		}
+		
+		
 	}
 
 	$tabOrder=array("module"=>"asc","phase"=>"asc");

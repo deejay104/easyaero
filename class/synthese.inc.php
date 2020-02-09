@@ -509,7 +509,7 @@ function ListProgressionEnac($sql,$uid)
 	
 	$q ="SELECT id,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
 
-	$q ="SELECT ref.*, (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice_conf AS conf WHERE ref.refenac=conf.refenac)  AS nbenac ";
+	$q ="SELECT ref.*, (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice_conf AS conf WHERE ref.refenac=conf.refenac) AS nbenac ";
 	// $q.="(SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog LEFT JOIN ".$MyOpt["tbl"]."_exercice_conf AS conf ON prog.idexercice=conf.id WHERE conf.refenac=ref.refenac AND prog.uid='".$uid."' AND prog.progression='A')  AS nbprog, ";
 	// $q.="(SELECT MAX(prog.dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog LEFT JOIN ".$MyOpt["tbl"]."_exercice_conf AS conf ON prog.idexercice=conf.id WHERE conf.refenac=ref.refenac AND prog.uid='".$uid."' AND prog.progression='A')  AS dteprog ";
 	$q.="FROM ".$MyOpt["tbl"]."_refenac AS ref ";
@@ -520,10 +520,7 @@ function ListProgressionEnac($sql,$uid)
 	for($i=0; $i<$sql->rows; $i++)
 	{ 
 		$sql->GetRow($i);
-		$lst[$sql->data["id"]]["id"]=$sql->data["id"];
-		$lst[$sql->data["id"]]["module"]=$sql->data["module"];
-		$lst[$sql->data["id"]]["phase"]=$sql->data["phase"];
-		$lst[$sql->data["id"]]["description"]=$sql->data["description"];
+		$lst[$sql->data["id"]]["refenac"]=$sql->data["refenac"];
 		$lst[$sql->data["id"]]["nbenac"]=$sql->data["nbenac"];
 		$lst[$sql->data["id"]]["nbprog"]=0;
 		$lst[$sql->data["id"]]["dteprog"]="0000-00-00 00:00:00";
@@ -532,12 +529,16 @@ function ListProgressionEnac($sql,$uid)
 
 	foreach($lst as $id=>$d)
 	{
-		$q="SELECT prog.id,prog.idsynthese,prog.progression,prog.progref,synthese.dte_vol FROM ".$MyOpt["tbl"]."_exercice AS prog LEFT JOIN ".$MyOpt["tbl"]."_synthese AS synthese ON prog.idsynthese=synthese.id WHERE prog.idexercice='".$id."' AND prog.actif='oui' AND prog.uid='".$uid."'";
+		$q ="SELECT prog.id,prog.idsynthese,prog.progression,prog.progref,exo.refenac,synthese.dte_vol FROM ".$MyOpt["tbl"]."_exercice AS prog ";
+		$q.="LEFT JOIN ".$MyOpt["tbl"]."_exercice_conf AS exo ON prog.idexercice=exo.id ";
+		$q.="LEFT JOIN ".$MyOpt["tbl"]."_synthese AS synthese ON prog.idsynthese=synthese.id ";
+		$q.="WHERE exo.refenac='".$d["refenac"]."' AND prog.actif='oui' AND prog.uid='".$uid."'";
+
 		$sql->Query($q);
 		for($i=0; $i<$sql->rows; $i++)
 		{ 
 			$sql->GetRow($i);
-			$lst[$id]["idsynthese"]=$sql->data["idsynthese"];
+			// $lst[$id]["idsynthese"]=$sql->data["idsynthese"];
 			
 			if ($sql->data["progression"]=="A")
 			{

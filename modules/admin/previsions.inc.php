@@ -101,7 +101,7 @@
 	$tabMois[8]="Aout";
 	$tabMois[9]="Septembre";
 	$tabMois[10]="Octobre";
-	$tabMois[11]="Nomvembre";
+	$tabMois[11]="Novembre";
 	$tabMois[12]="Décembre";
 
 
