@@ -40,7 +40,7 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Titre
-	$tmpl_x->assign("url",geturl("ressources","horametre",""));
+	$tmpl_x->assign("url",geturl("ressources","horametre","q=1"));
 
 	$tabTitre=array();
 	if ($theme!="phone")
@@ -66,7 +66,7 @@
 	$tabTitre["horadeb"]["aff"]="Hora Début";
 	$tabTitre["horadeb"]["width"]=110;
 	
-// ---- Chargement des données
+// ---- Affiche la liste des avions
 	$tabValeur=array();
 	$lstress=ListeRessources($sql);
 
@@ -93,8 +93,9 @@
 	}
 
 	
+// ---- Affiche le tableau
 	if ($order=="") { $order="dte_deb"; }
-	if ($trie=="") { $trie="i"; }
+	if ($trie=="") { $trie="d"; }
 	if (!is_numeric($ts))
 	  { $ts = 0; }
 	$tl=50;

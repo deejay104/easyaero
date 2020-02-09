@@ -8,16 +8,12 @@
 
 <!-- BEGIN: corps -->
 
-	<form name="form_avion" method="post" action="index.php" enctype="multipart/form-data">
-		<input type="hidden" name="checktime" value="{form_checktime}">
-		<input type="hidden" name="mod" value="aviation">
-		<input type="hidden" name="rub" value="carnet">
-		<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='{url}?id='+id;">
-		<!-- BEGIN: lst_avion -->
-		<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
-		<!-- END: lst_avion -->
-		</select>
-	</form>
+	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='{url}&id='+id;">
+	<!-- BEGIN: lst_avion -->
+	<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
+	<!-- END: lst_avion -->
+	</select>
+
 	<br />
 	{tab_liste}	
 
