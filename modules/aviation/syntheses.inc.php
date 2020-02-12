@@ -56,7 +56,7 @@
 		affSubMenu();
 	}
 // ---- Change membre
-	$tmpl_x->assign("url",geturl("aviation","syntheses",""));
+	$tmpl_x->assign("url",geturl("aviation","syntheses","q=1"));
 	
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))

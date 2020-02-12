@@ -60,7 +60,7 @@
 	affSubMenu();
 
 // ---- Change membre
-	$tmpl_x->assign("url",geturl("aviation","pannes",""));
+	$tmpl_x->assign("url",geturl("aviation","pannes","type=".$type));
 
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))

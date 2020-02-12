@@ -55,7 +55,7 @@
 	affSubMenu();
 
 // ---- Change membre
-	$tmpl_x->assign("url",geturl("aviation","progenac",""));
+	$tmpl_x->assign("url",geturl("aviation","progenac","q=1"));
 
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))
