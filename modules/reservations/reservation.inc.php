@@ -525,7 +525,7 @@
 	// Affiche le boutton supprimer
 	if ($resa["resa"]->edite!="non")
 	{
-		addPageMenu("",$mod,"Supprimer",geturl("reservations","reservation_sauve","id=".$id),"icn32_supprimer.png",false,"Souhaitez-vous supprimer cette réservation ?");
+		addPageMenu("",$mod,"Supprimer",geturl("reservations","reservation_sauve","fonc=delete&id=".$id),"icn32_supprimer.png",false,"Souhaitez-vous supprimer cette réservation ?");
 	}
 	
 	// Liste les fiches de synthèse du vol
