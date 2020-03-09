@@ -61,7 +61,7 @@
 	<div class='formulaireTitre'>EXERCICES PEDAGOGIQUES</div>
 <!-- BEGIN: lst_pedagogique -->
 		<div id='exo_{aff_id}' style='{form_color}' class='formulaireHover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
-		<div style='width:480px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
 		<div style='display:inline-block;'>{form_progression} {form_progref}</div>
 <!-- BEGIN: lst_delete -->
 		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
@@ -74,6 +74,11 @@
 	<div id="affpedagogique">
 	</div>
 	<br />
+<!-- BEGIN: add_exercicepeda -->
+	<input id="addexercicepeda" style="width:500px;">
+	<br />
+	<br />
+<!-- END: add_exercicepeda -->
 
 	<div class='formulaireTitre'>EXERCICES</div>
 <!-- BEGIN: lst_exercice -->
@@ -89,6 +94,12 @@
 <!-- END: lst_affexercice -->
 	<div id="affexercices">
 	</div>
+	<br />
+<!-- BEGIN: add_exercice -->
+	<input id="addexercice" style="width:500px;">
+	<br />
+	<br />
+<!-- END: add_exercice -->
 
 	<div class='formulaireTitre'>PANNES</div>
 <!-- BEGIN: lst_panne -->
@@ -107,13 +118,13 @@
 <!-- END: lst_panne -->
 	<div id="affpannes">
 	</div>
-
-
-<!-- BEGIN: add_exercice -->
 	<br />
-	Ajouter un exercice / panne : <input id="addexercice" style="width:500px;">
+<!-- BEGIN: add_panne -->
+	<input id="addpanne" style="width:500px;">
 	<br />
-<!-- END: add_exercice -->
+	<br />
+<!-- END: add_panne -->
+
 	<br />
 
 
@@ -162,8 +173,8 @@
 	  });
 	});
 	
-	$("#addexercice").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice",
+	$("#addexercicepeda").autocomplete({
+		source: "{path_root}/api/v1/aviation/exercice/peda",
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -191,7 +202,63 @@
 		delay: 200
 	});
 
+	$("#addexercice").autocomplete({
+		source: "{path_root}/api/v1/aviation/exercice/exercice",
+		select: function(event, ui) {
+			var txt="";
+			value=ui.item;
+			console.log(value);
+			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+			txt=txt+"</div>";
+			
+			if (value.type=="panne")
+			{
+				$("#affpannes").append(txt);
+			}
+			else if (value.type=="exercice")
+			{
+				$("#affexercices").append(txt);
+			}
+			else
+			{
+				$("#affpedagogique").append(txt);
+			}
+			ui.item.value="";
+		},
+		delay: 200
+	});
 
+	$("#addpanne").autocomplete({
+		source: "{path_root}/api/v1/aviation/exercice/panne",
+		select: function(event, ui) {
+			var txt="";
+			value=ui.item;
+			console.log(value);
+			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+			txt=txt+"</div>";
+			
+			if (value.type=="panne")
+			{
+				$("#affpannes").append(txt);
+			}
+			else if (value.type=="exercice")
+			{
+				$("#affexercices").append(txt);
+			}
+			else
+			{
+				$("#affpedagogique").append(txt);
+			}
+			ui.item.value="";
+		},
+		delay: 200
+	});
 
 	$("#refffa").change(function() {
 		var ref=$("#refffa").val();

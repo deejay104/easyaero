@@ -249,7 +249,9 @@
 	}
 	else
 	{
+		$tmpl_x->parse("corps.add_exercicepeda");
 		$tmpl_x->parse("corps.add_exercice");
+		$tmpl_x->parse("corps.add_panne");
 	}
 
 	$fiche->Render("form",$typeaff);
