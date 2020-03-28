@@ -217,29 +217,34 @@
 						if (response.result=="NOK")
 						{
 							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
+							console.log(response.value);
 							revertFunc();
 						}
 					},
 					error : function(response)
 					{
+						console.log(response);
 						revertFunc();
 					}
 				});
 			},
 			eventDrop: function(event,dayDelta,revertFunc) {
+				console.log("drop");
 				$.ajax({
-					url: '{path_root}/{path_core}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
 					dataType: 'JSON',
 					success : function(response)
 					{
 						if (response.result=="NOK")
 						{
 							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
+							console.log(response.value);
 							revertFunc();
 						}
 					},
 					error : function(response)
 					{
+						console.log(response);
 						revertFunc();
 					}
 				});
