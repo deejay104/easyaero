@@ -106,8 +106,11 @@ $tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";
 $tabRoles["CreeSynthese"]="Création d'un fiche de synthèse de vol";
 $tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthèse de vol";
 $tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse de vol";
-$tabRoles["ModifExercice"]="Modification des exercices du livret de progression";
-$tabRoles["SupprimeExercice"]="Suppression d'un exercice dans une fiche de synthèse";
+$tabRoles["ModifExercice"]="Modification des exercices dans la configuration des livret de progression";
+$tabRoles["ModifFormation"]="Modification d'une formation pour les livret de progression";
+$tabRoles["ModifLivret"]="Modification/Création d'un livret de progression";
+$tabRoles["SupprimeExercice"]="Suppression d'un exercice dans la configuration des livret de progression";
+$tabRoles["SupprimeFormation"]="Suppression d'un livret de progression";
 
 
 

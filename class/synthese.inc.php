@@ -22,6 +22,131 @@
     ($Revision: 460 $)
 */
 
+// Livret de formation
+class formation_class extends objet_core
+{
+	protected $table="formation";
+	protected $mod="aviation";
+	protected $rub="syntheses";
+
+	protected $fields = Array(
+		"description" => Array("type" => "varchar", "len"=>20 ),
+	);
+
+}
+
+function ListFormation($sql)
+{
+	return ListeObjets($sql,"formation",array("id"),array("actif"=>"oui"));
+}
+
+
+class livret_class extends objet_core
+{
+	protected $table="livret";
+	protected $mod="aviation";
+	protected $rub="syntheses";
+
+	protected $fields = Array(
+		"idformation" => Array("type" => "number", "default" => "0", "index" => "1" ),
+		"iduser" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"dte_deb" => Array("type" => "date"),
+		"dte_fin" => Array("type" => "date"),
+		"tpsdc" => Array("type" => "number"),
+		"tpssolo" => Array("type" => "number"),
+	);
+
+	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
+	{
+		if ($this->id>0)
+		{
+			if ($key=="idformation")
+			{
+				$render="html";
+				$typeaff="html";
+			}
+		}
+
+		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
+
+		if (($key=="idformation") && ($typeaff=="form"))
+		{
+			$txt=$this->val($key);
+			$lst=ListFormation($this->sql);
+
+			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' name=\"".$formname."[$key]\">";
+			foreach($lst as $i=>$tmp)
+			{
+				$res=new formation_class($tmp["id"],$this->sql);
+				$ret.="<option value=\"".$tmp["id"]."\" ".(($txt==$tmp["id"]) ? "selected" : "").">".$res->val("description")."</option>";
+			}
+			$ret.="</select>";			
+		}
+		return $ret;
+	}
+
+	function displayDescription()
+	{
+		$r=new formation_class($this->data["idformation"],$this->sql);
+		return $r->val("description")." (".sql2date($this->val("dte_deb")).")";
+	}
+
+	function NbHeures($dte,$type)
+	{
+		$sql=$this->sql;
+		$total=0;
+		if ($type=="dc")
+		{
+			$total=$total+$this->val("tpsdc");
+		}
+		else if ($type=="solo")
+		{
+			$total=$total+$this->val("tpssolo");
+		}
+
+		$query ="SELECT SUM(resa.tpsreel) AS nb FROM ".$this->tbl."_synthese AS synt ";
+		$query.="LEFT JOIN ".$this->tbl."_calendrier AS resa ON resa.id=synt.idvol ";
+		$query.="WHERE synt.idlivret='".$this->id."' AND type='".$type."' AND synt.actif='oui' ".(($dte!="now") ? "AND synt.dte_vol<='".$dte."' " :"")."AND synt.uid_pilote=".$this->data["iduser"];
+		$res=$sql->QueryRow($query);
+		$total=$total+(($res["nb"]>0) ? $res["nb"] : "0");
+		
+		return $total;
+	}
+
+	function AffNbHeures($dte,$type)
+	{
+		$t=$this->NbHeures($dte,$type);
+
+		if ($t>0)
+		  { $ret=AffTemps($t); }
+		else
+		  { $ret="0h 00"; }
+		return "<a href='index.php?mod=aviation&rub=vols&id=".$this->id."'>".$ret."</a>";
+	}
+
+	function NbAtt($dte,$type)
+	{
+		$sql=$this->sql;
+		$query="SELECT SUM(nb_att) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE idlivret='".$this->id."' AND uid_pilote=".$this->data["iduser"]." ".(($dte!="now") ? "AND synt.dte_vol<='".$dte."' " :"")."AND actif='oui' ".(($type!="") ? " AND type='".$type."'" : "");
+		$res=$sql->QueryRow($query);
+		
+		return (is_numeric($res["nb"])) ? $res["nb"] : 0;
+	}
+	function NbRmg($dte,$type)
+	{
+		$sql=$this->sql;
+		$query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE idlivret='".$this->id."' AND uid_pilote=".$this->data["iduser"]." ".(($dte!="now") ? "AND synt.dte_vol<='".$dte."' " :"")."AND actif='oui' ".(($type!="") ? " AND type='".$type."'" : "");
+		$res=$sql->QueryRow($query);
+
+		return (is_numeric($res["nb"])) ? $res["nb"] : 0;
+	}
+}
+
+function ListLivret($sql,$uid)
+{
+	return ListeObjets($sql,"livret",array("id"),array("actif"=>"oui","iduser"=>$uid),array("dte_deb"));
+}
+
 // Class Synthese
 class synthese_class extends objet_core
 {
@@ -30,6 +155,7 @@ class synthese_class extends objet_core
 	protected $rub="synthese";
 
 	protected $fields = Array(
+		"idlivret" => Array("type" => "number", "default" => "0", "index" => "1", "nomodif"=>1 ),
 		"idvol" => Array("type" => "number", "default" => "0", "index" => "1" ),
 		"status" => Array("type" => "enum","index"=>1, "default" => "edit"),
 		"conclusion" => Array("type" => "enum","index"=>1, "default" => "ok"),
@@ -38,8 +164,8 @@ class synthese_class extends objet_core
 		"uid_instructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_avion" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"dte_vol" => Array("type" => "datetime", ),
-		"module" => Array("type" => "enum","default"=>"maniabilite"),
-		"refffa" => Array("type" => "uppercase","len"=>10),
+		"module" => Array("type" => "enum","default"=>"maniabilite", "nomodif"=>1),
+		"refffa" => Array("type" => "uppercase","len"=>10, "nomodif"=>1),
 
 		"themes" => Array("type" => "text"),
 		"bilan_gen" => Array("type" => "text"),
@@ -116,39 +242,78 @@ class synthese_class extends objet_core
 	
 	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
-		if ($this->id>0)
-		{
-			if ($key=="refffa")
-			{
-				$render="html";
-				$typeaff="html";
-			}
-			else if ($key=="module")
-			{
-				$render="html";
-				$typeaff="html";
-			}
-		}
+		// if (($this->id>0) && ($typeaff=="form"))
+		// {
+			// if ($key=="refffa")
+			// {
+				// $render="read";
+				// $typeaff="html";
+			// }
+			// else if ($key=="module")
+			// {
+				// $render="read";
+				// $typeaff="html";
+			// }
+			// else if ($key=="idlivret")
+			// {
+				// $render="read";
+				// $typeaff="html";
+			// }
+		// }
 
 		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 
-		if (($key=="refffa") && ($typeaff=="form"))
+		if (($key=="refffa") && ($render=="form"))
 		{
 			$txt=$this->val($key);
-			$t=ListeObjets($this->sql,"reference",array("id","refffa"),array("actif"=>"oui"),array("refffa"));
+
+			$livret=new livret_class($this->data["idlivret"],$this->sql);
+			$fid=$livret->val("idformation");
+
+			$t=ListeObjets($this->sql,"reference",array("id","refffa"),array("actif"=>"oui","idformation"=>($fid>0)?$fid:0),array("refffa"));
 			
 			$ret ="<select id='".(($formid!="") ? $formid : "").$key."'  name=\"".$formname."[$key]\">";
-				$ret.="<option value=\"\" ".(($txt=="") ? "selected" : "").">Aucun</option>";
+			$ret.="<option value=\"\" ".(($txt=="") ? "selected" : "").">Aucun</option>";
 			foreach($t as $k=>$v)
 			{
 				$ret.="<option value=\"".$v["refffa"]."\" ".(($txt==$v["refffa"]) ? "selected" : "").">".$v["refffa"]."</option>";
 			}
 			$ret.="</select>";			
 		}
+		else if (($key=="idlivret") && ($render=="form"))
+		{
+			$txt=$this->val($key);
+			$lst=ListLivret($this->sql,$this->data["uid_pilote"]);
 
+			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' name=\"".$formname."[$key]\" OnChange=\"document.location='".geturl("aviation","synthese","id=".$this->id."&idvol=".$this->val("idvol"))."&lid='+document.getElementById('idlivret').value;\">";
+			foreach($lst as $i=>$tmp)
+			{
+				$res=new livret_class($tmp["id"],$this->sql);
+				$ret.="<option value=\"".$tmp["id"]."\" ".(($txt==$tmp["id"]) ? "selected" : "").">".$res->displayDescription()."</option>";
+			}
+			$ret.="</select>";			
+		}
+		else if (($key=="idlivret") && ($render!="form"))
+		{
+			$txt=$this->val($key);
+			$res=new livret_class($txt,$this->sql);
+			$ret=$res->displayDescription();
+		}
 		return $ret;
 	}
 	
+	function temps()
+	{
+		if ($this->id==0)
+		{
+			return 0;
+		}
+		$sql=$this->sql;
+		$query="SELECT tpsreel FROM ".$this->tbl."_calendrier AS cal WHERE id=".$this->data["idvol"]."";
+		$res=$sql->QueryRow($query);
+		
+		return $res["tpsreel"];
+	}
 	function NbAtt()
 	{
 		if ($this->id==0)
@@ -182,13 +347,10 @@ function ListSyntheseVol($sql,$idvol)
 {
 	return ListeObjets($sql,"synthese",array("id","module","refffa"),array("actif"=>"oui","idvol"=>$idvol));
 }
-function ListMySynthese($sql,$uid)
+function ListMySynthese($sql,$uid,$lid)
 {
-	return ListeObjets($sql,"synthese",array("id"),array("actif"=>"oui","uid_pilote"=>$uid));
+	return ListeObjets($sql,"synthese",array("id"),array("actif"=>"oui","uid_pilote"=>$uid,"idlivret"=>$lid));
 }
-
-
-
 
 
 
@@ -199,11 +361,12 @@ class exercice_conf_class extends objet_core
 	protected $rub="";
 
 	protected $fields = Array(
+		"idformation" => array("type"=>"number","default"=>0,"index"=>1),
 		"description" => array("type"=>"varchar","len"=>200, "formlen"=>400),
 		"competence" => array("type"=>"varchar","len"=>100, "formlen"=>400),
 		"compcat" => array("type"=>"varchar","len"=>100, "formlen"=>400),
-		"type" => Array("type" => "enum","default"=>"peda"),
-		"module" => Array("type" => "enum","default"=>"maniabilite"),
+		"type" => Array("type" => "enum","default"=>"peda", "index"=>1),
+		"module" => Array("type" => "enum","default"=>"maniabilite", "index"=>1),
 		"refffa" => Array("type" => "varchar","len"=>10,"formlen"=>100),
 		"refenac" => Array("type" => "number"),
 	);
@@ -306,7 +469,7 @@ function ListExercicesNonAcquis($sql,$uid)
 }
 
 // Liste des exercices avec la progression pour un membre
-function ListExercicesProg($sql,$uid,$type="")
+function ListExercicesProg($sql,$lid,$uid,$type="")
 {
 	global $MyOpt;
 
@@ -315,8 +478,10 @@ function ListExercicesProg($sql,$uid,$type="")
 	// $q.="IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.actif='oui' AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref,";
 	// $q.="(SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice  AND prog.actif='oui' AND prog.uid='".$uid."' AND prog.progref='A') AS nb ";
 
+	$livret=new livret_class($lid,$sql);
+	// $formation=new formation_class($livret->val("idformation"),$sql);
 	
-	$q ="SELECT id FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE actif='oui' ";
+	$q ="SELECT id FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE actif='oui' AND idformation='".$livret->val("idformation")."'";
 	if ($type!="")
 	{
 		$q.=" AND exo.type='".$type."' ";
@@ -337,7 +502,9 @@ function ListExercicesProg($sql,$uid,$type="")
 
 	foreach($lst as $id=>$d)
 	{
-		$q="SELECT id,idsynthese,progression,progref FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE prog.idexercice='".$id."' AND prog.actif='oui' AND prog.uid='".$uid."'";
+		$q ="SELECT prog.id,prog.idsynthese,prog.progression,prog.progref FROM ".$MyOpt["tbl"]."_exercice AS prog ";
+		$q.="LEFT JOIN ".$MyOpt["tbl"]."_synthese AS synt ON prog.idsynthese=synt.id ";
+		$q.="WHERE synt.idlivret='".$lid."' AND prog.idexercice='".$id."' AND prog.actif='oui' AND prog.uid='".$uid."'";
 		$sql->Query($q);
 		for($i=0; $i<$sql->rows; $i++)
 		{ 
@@ -468,13 +635,14 @@ class reference_class extends objet_core
 	protected $rub="";
 
 	protected $fields = Array(
-		"refffa" => Array("type" => "varchar","len"=>10, "formlen"=>100),
+		"idformation" => Array("type" => "number", "default"=>"0","index"=>1),
+		"refffa" => Array("type" => "varchar","len"=>10, "formlen"=>100,"index"=>1),
 		"theme" => Array("type" => "text"),
 	);
 }
-function ListReference($sql)
+function ListReference($sql,$fid)
 {
-	return ListeObjets($sql,"reference",array("id"),array("actif"=>"oui"));
+	return ListeObjets($sql,"reference",array("id"),array("actif"=>"oui","idformation"=>$fid));
 }
 
 class refenac_class extends objet_core

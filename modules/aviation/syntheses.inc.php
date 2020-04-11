@@ -29,6 +29,7 @@
 
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
+	$lid=checkVar("lid","numeric");
 
 	if ($uid==0)
 	{
@@ -44,17 +45,6 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
-// ---- Affiche le sous menu
-	if ($theme!="phone")
-	{
-		addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",true);
-		addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
-		addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",false);
-		addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",false);
-		addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",false);
-		addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
-		affSubMenu();
-	}
 // ---- Change membre
 	$tmpl_x->assign("url",geturl("aviation","syntheses","q=1"));
 	
@@ -75,18 +65,59 @@
 			$tmpl_x->parse("corps.users");
 	}
 
+// ---- Liste des formations
+	$lst=ListLivret($sql,$uid);
+
+	foreach($lst as $i=>$tmp)
+	{
+		$res=new livret_class($tmp["id"],$sql);
+
+		if ($lid==0)
+		{
+			$lid=$res->id;
+		}
+
+		$tmpl_x->assign("id_livret", $res->id);
+		$tmpl_x->assign("chk_livret", ($res->id==$lid) ? "selected" : "") ;
+		$tmpl_x->assign("nom_livret", $res->displayDescription());
+		$tmpl_x->parse("corps.lst_livret");
+	}
+
+	$livret=new livret_class($lid,$sql);
+
+// ---- Affiche le sous menu
+	if ($theme!="phone")
+	{
+		addSubMenu("","Synthèses",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",true);
+		addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
+		addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
+		addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
+		addSubMenu("","Compétences",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
+		addSubMenu("","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
+		affSubMenu();
+	}
+
+	if (GetDroit("ModifLivret"))
+	{
+		$tmpl_x->parse("corps.aff_editer");
+	}
+	
 // ---- Information sur la formation
 	$pil=new user_class($uid,$sql);
-	$tmpl_x->assign("dte_deb",sql2date($pil->DebFormation(),"jour"));
-	$tmpl_x->assign("total_heure_dc",$pil->AffNbHeuresSynthese(date("Y-m-d 23:59:59"),"dc"));
-	$tmpl_x->assign("total_heure_solo",$pil->AffNbHeuresSynthese(date("Y-m-d 23:59:59"),"solo"));
-	$tmpl_x->assign("total_att_dc",$pil->NbAtt("dc"));
-	$tmpl_x->assign("total_att_solo",$pil->NbAtt("solo"));
-	$tmpl_x->assign("total_rmg_dc",$pil->NbRmg("dc"));
-	$tmpl_x->assign("total_rmg_solo",$pil->NbRmg("solo"));
+	$tmpl_x->assign("dte_deb",$livret->Aff("dte_deb"));
+	$tmpl_x->assign("dte_fin",$livret->Aff("dte_fin"));
+	$tmpl_x->assign("total_heure_dc",$livret->AffNbHeures("now","dc"));
+	$tmpl_x->assign("total_heure_solo",$livret->AffNbHeures("now","solo"));
+	$tmpl_x->assign("total_att_dc",$livret->NbAtt("now","dc"));
+	$tmpl_x->assign("total_att_solo",$livret->NbAtt("now","solo"));
+	$tmpl_x->assign("total_rmg_dc",$livret->NbRmg("now","dc"));
+	$tmpl_x->assign("total_rmg_solo",$livret->NbRmg("now","solo"));
+
+	$livret=new livret_class(0,$sql);
+	$livret->Render("form","form");
 	
 // ---- Affiche la liste	
-	$lst=ListMySynthese($sql,$uid);
+	$lst=ListMySynthese($sql,$uid,$lid);
 
 	$tabTitre=array(
 		"ress" => array("aff"=>"Avion","width"=>80),
@@ -94,6 +125,7 @@
 		"inst" => array("aff"=>"Instructeur","width"=>200, "mobile"=>"no"),
 		"module" => array("aff"=>"Module","width"=>100, "mobile"=>"no"),
 		"refffa" => array("aff"=>"Reférence","width"=>100),
+		"temps" => array("aff"=>"Temps","width"=>100),
 		"conclusion" => array("aff"=>"Conclusion","width"=>100),
 		"status" => array("aff"=>"Status","width"=>100),
 	);
@@ -119,6 +151,8 @@
 		$tabValeur[$fid]["module"]["val"]=$fiche->aff("module");
 		$tabValeur[$fid]["refffa"]["val"]=$fiche->val("refffa");
 		$tabValeur[$fid]["refffa"]["val"]=$fiche->aff("refffa");
+		$tabValeur[$fid]["temps"]["val"]=$fiche->temps();
+		$tabValeur[$fid]["temps"]["val"]=AffTemps($fiche->temps());
 		$tabValeur[$fid]["conclusion"]["val"]=$fiche->val("conclusion");
 		$tabValeur[$fid]["conclusion"]["val"]=$fiche->aff("conclusion");
 		$tabValeur[$fid]["status"]["val"]=$fiche->val("status");

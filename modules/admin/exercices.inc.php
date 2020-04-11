@@ -26,6 +26,9 @@
 
 // ---- Vérifie les variables
 	$form_data=checkVar("form_data","array");
+	$fid=checkVar("fid","numeric");
+
+	$tmpl_x->assign("url",geturl("admin","exercices",""));
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -34,7 +37,7 @@
 
 
 // ---- Supprime un poste
-	if (($fonc=="delete") && (GetDroit("ModifExercice")))
+	if (($fonc=="delete") && (GetDroit("SupprimeExercice")))
 	{
 		$id=checkVar("id","numeric");
 		if ($id>0)
@@ -44,7 +47,24 @@
 		}
 	}
 
+// ---- Liste des formations
+	$lst=ListFormation($sql);
 
+	foreach($lst as $i=>$tmp)
+	{
+		$res=new formation_class($tmp["id"],$sql);
+
+		if ($fid==0)
+		{
+			$fid=$res->id;
+		}
+
+		$tmpl_x->assign("id_formation", $res->id);
+		$tmpl_x->assign("chk_formation", ($res->id==$fid) ? "selected" : "") ;
+		$tmpl_x->assign("nom_formation", $res->val("description"));
+		$tmpl_x->parse("corps.lst_formation");
+	}
+	
 // ---- Affiche la page demandée
 	$tabTitre=array(
 		"id"=>array(
@@ -91,18 +111,11 @@
 	
 	if ($order=="") { $order="refffa"; }
 
-	$search=array("actif"=>"oui");
-	foreach ($tabsearch as $k=>$v)
-	{
-		if ($v!="")
-		{
-			$search[$k]=$v;
-		}
-	}
-
+	$search=array("actif"=>"oui","idformation"=>$fid);
 	$lst=ListExercicesConf($sql,$search,array($order));
 	$totligne=count($lst);
 	$tl=$totligne;
+	$tabValeur=array();
 
 	foreach($lst as $i=>$d)
 	{

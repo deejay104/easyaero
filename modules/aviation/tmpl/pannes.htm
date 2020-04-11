@@ -9,16 +9,22 @@
 
 <!-- BEGIN: corps -->
 
+<div class="formulaire">
 <!-- BEGIN: users -->
 	<select id="form_id" name="form_id" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
 	<!-- BEGIN: lst_users -->
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
 	<!-- END: lst_users -->
 	</select>
-	<br />
-	<br />
 <!-- END: users -->
 
+	<select id="form_livret" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
+	<!-- BEGIN: lst_livret -->
+	<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
+	<!-- END: lst_livret -->
+	</select>
+</div>
+<br />
 
 {aff_tableau}
 

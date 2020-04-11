@@ -24,11 +24,11 @@ class bapteme_class extends objet_core
 	protected $mod="aviation";
 	protected $rub="bapteme";
 
-	protected $droit=array("num"=>"[readonly]", "paye"=>"ModifBaptemePaye","dte_paye"=>"ModifBaptemePaye");
+	protected $droit=array("paye"=>"ModifBaptemePaye","dte_paye"=>"ModifBaptemePaye");
 	// protected $type=array("nom"=>"varchar","telephone"=>"tel","mail"=>"email","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","dte_paye"=>"date","description"=>"text");
 
 	protected $fields=array(
-		"num" => Array("type" => "varchar", "len"=>20 ),
+		"num" => Array("type" => "varchar", "len"=>20,"readonly"=>1 ),
 		"nom" => Array("type" => "varchar", "len"=>50 ),
 		"passager" => Array("type" => "varchar", "len"=>50 ),
 		"telephone" => Array("type" => "tel" ),

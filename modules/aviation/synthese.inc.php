@@ -28,6 +28,7 @@
 // ---- Initialise les variables
 	$id=checkVar("id","numeric");
 	$uid=checkVar("uid","numeric");
+	$lid=checkVar("lid","numeric");
 	$idvol=checkVar("idvol","numeric");
 
 // ---- Enregistrer
@@ -223,15 +224,15 @@
 
 	if ($idvol>0)
 	{
-		addSubMenu("","Retour",geturl("index.php","","mod=reservations&rub=reservation&id=".$idvol),"icn32_retour.png",false);
+		addSubMenu("","Retour",geturl("reservations","reservation","id=".$idvol),"icn32_retour.png",false);
 	}
 	else if ($uid>0)
 	{
-		addSubMenu("","Retour",geturl("index.php","","mod=aviation&rub=syntheses&uid=".$uid),"icn32_retour.png",false);
+		addSubMenu("","Retour",geturl("aviation","syntheses","uid=".$uid),"icn32_retour.png",false);
 	}
 	else
 	{
-		addSubMenu("","Retour",geturl("index.php","","mod=aviation&rub=syntheses"),"icn32_retour.png",false);
+		addSubMenu("","Retour",geturl("aviation","syntheses",""),"icn32_retour.png",false);
 	}
 	if ($ok)
 	{
@@ -239,8 +240,57 @@
 	}
 
 	affSubMenu();
-	
-// ---- Charge la fiche
+
+// ---- Informations Users
+	if ($fiche->val("idvol")==0)
+	{
+		if ($idvol==0)
+		{
+			FatalError("L'id du vol est vide");
+		}
+		else
+		{
+			$fiche->Valid("idvol",$idvol);
+		}
+	}
+
+	$resa=new resa_class($fiche->val("idvol"),$sql);
+
+	if ($fiche->val("uid_pilote")==0)
+	{
+		$fiche->valid("uid_pilote",$resa->uid_pilote);
+	}
+	if ($fiche->val("uid_instructeur")==0)
+	{
+		$fiche->valid("uid_instructeur",$resa->uid_instructeur);
+	}
+	if ($fiche->val("uid_avion")==0)
+	{
+		$fiche->valid("uid_avion",$resa->uid_ressource);
+	}
+	if ($fiche->val("dte_vol")=="0000-00-00 00:00:00")
+	{
+		$fiche->valid("dte_vol",$resa->dte_deb);
+	}
+
+	$pil=new user_class($fiche->val("uid_pilote"),$sql);
+	$ins=new user_class($fiche->val("uid_instructeur"),$sql);
+
+	if ($fiche->val("idlivret")==0)
+	{
+		if ($lid==0)
+		{
+			$lst=ListLivret($sql,$fiche->val("uid_pilote"));
+			foreach($lst as $i=>$tmp)
+			{
+				$lid=$tmp["id"];
+			}
+		}
+		$fiche->valid("idlivret",$lid);
+	}
+	$livret=new livret_class($fiche->val("idlivret"),$sql);
+
+// ---- Affiche la fiche
 	
 	$typeaff="form";
 	if ($signed)
@@ -256,17 +306,6 @@
 
 	$fiche->Render("form",$typeaff);
 
-	if ($fiche->val("idvol")==0)
-	{
-		if ($idvol==0)
-		{
-			FatalError("L'id du vol est vide");
-		}
-		else
-		{
-			$fiche->Valid("idvol",$idvol);
-		}
-	}
 
 // ---- Charge les exercices de la fiche de synthèse
 	$lst=ListExercices($sql,$id);
@@ -322,27 +361,6 @@
 		}
 	}
 
-// ---- Informations Users
-	$resa=new resa_class($fiche->val("idvol"),$sql);
-	$pil=new user_class($resa->uid_pilote,$sql);
-	$ins=new user_class($resa->uid_instructeur,$sql);
-
-	if ($fiche->val("uid_pilote")==0)
-	{
-		$fiche->valid("uid_pilote",$resa->uid_pilote);
-	}
-	if ($fiche->val("uid_instructeur")==0)
-	{
-		$fiche->valid("uid_instructeur",$resa->uid_instructeur);
-	}
-	if ($fiche->val("uid_avion")==0)
-	{
-		$fiche->valid("uid_avion",$resa->uid_ressource);
-	}
-	if ($fiche->val("dte_vol")=="0000-00-00 00:00:00")
-	{
-		$fiche->valid("dte_vol",$resa->dte_deb);
-	}
 
 // ---- Charge les exercices non acquis
 	if ($id==0)
@@ -362,8 +380,10 @@
 	}
 
 // ---- Calcul totaux
-	$tmpl_x->assign("form_total_att",$fiche->NbAtt());
-	$tmpl_x->assign("form_total_rmg",$fiche->NbRmg());
+	$tmpl_x->assign("form_total_att",$fiche->NbAtt($fiche->val("dte_vol")));
+	$tmpl_x->assign("form_total_rmg",$fiche->NbRmg($fiche->val("dte_vol")));
+	$tmpl_x->assign("form_cumuldc",$livret->AffNbHeures($fiche->val("dte_vol"),"dc"));
+	$tmpl_x->assign("form_cumulsolo",$livret->AffNbHeures($fiche->val("dte_vol"),"solo"));
 
 // ---- Affiche les paramètres
 
@@ -376,10 +396,7 @@
 	$tmpl_x->assign("form_eleve",$pil->aff("fullname"));
 	$tmpl_x->assign("form_instructeur",$ins->aff("fullname"));
 	$tmpl_x->assign("form_dtevol",$fiche->aff("dte_vol"));
-	$tmpl_x->assign("form_duree",AffTemps($resa->tpsreel));
-
-	$tmpl_x->assign("form_cumuldc",$pil->AffNbHeuresSynthese($fiche->val("dte_vol"),"dc"));
-	$tmpl_x->assign("form_cumulsolo",$pil->AffNbHeuresSynthese($fiche->val("dte_vol"),"solo"));
+	$tmpl_x->assign("form_duree",AffTemps($fiche->temps()));
 
 	$ress=new ress_class($resa->uid_ressource,$sql);
 	$tmpl_x->assign("form_immat",$ress->Aff("immatriculation"));

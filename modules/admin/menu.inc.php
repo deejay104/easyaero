@@ -48,8 +48,9 @@
 	if (GetDroit("AccesConfigInstruction"))
 	{
 		$aff=false;
-		if (($rub=="exercices")|| ($rub=="references") || ($rub=="refenac")) 
+		if (($rub=="formations") || ($rub=="exercices") || ($rub=="references") || ($rub=="refenac")) 
 		{
+			addSubMenu("","Formations",geturl("admin","formations",""),"icn32_synthese.png",($rub=="formations") ? true : false);
 			addSubMenu("","Exercices",geturl("admin","exercices",""),"icn32_synthese.png",($rub=="exercices") ? true : false);
 			addSubMenu("","Vols",geturl("admin","references",""),"icn32_synthese.png",($rub=="references") ? true : false);
 			addSubMenu("","Prog ENAC",geturl("admin","refenac",""),"icn32_synthese.png",($rub=="refenac") ? true : false);

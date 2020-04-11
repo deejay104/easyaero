@@ -191,7 +191,7 @@
 	if ($manip->data["cout"]>0) 
 	  { $tmpl_x->parse("corps.aff_form_cout"); }
 
-	if ($id>0)
+	if (($id>0) && ($fonc!="supprimer"))
 	{
 		addPageMenu("",$mod,"Retour",geturl("manifestations","",""),"icn32_retour.png",false);
 
@@ -324,7 +324,7 @@
 
 // ---- Affecte les variables d'affichage
 
-	if (($fonc=="supprimer") || ($fonc=="Annuler"))
+	if ($fonc=="supprimer")
 	{
 	  	$affrub="index";
 	}

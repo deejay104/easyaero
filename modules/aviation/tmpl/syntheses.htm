@@ -8,6 +8,126 @@
 
 
 <!-- BEGIN: corps -->
+<script>
+$( function() {
+
+
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 600,
+	  top: 10,
+      modal: true,
+      buttons: {
+        "Enregistrer": savelivret,
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+    });
+
+	$( "#edit" ).on( "click", function() {
+		loadLivret();
+		dialog.dialog( "open" );
+    });
+	$( "#new" ).on( "click", function() {
+		newLivret();
+		dialog.dialog( "open" );
+    });
+	
+    function savelivret() {
+		dialog.dialog("close");
+
+		valid=true;
+
+		data = {};
+		data["id"]=document.getElementById('livretid').value;
+		data["idformation"]=document.getElementById('idformation').value;
+		data["iduser"]=document.getElementById('form_id').value;
+		data["dte_deb"]=document.getElementById('dte_deb').value;
+		data["dte_fin"]=document.getElementById('dte_fin').value;
+		data["tpsdc"]=document.getElementById('tpsdc').value;
+		data["tpssolo"]=document.getElementById('tpssolo').value;
+		
+		<!-- console.log(data); -->
+		$.ajax({
+			url:'{path_root}/api.php?mod=aviation&rub=updlivret&fonc=post',
+			type: 'POST',
+			data: data,
+			dataType: 'JSON',
+			success: function(response)
+			{
+				if (response.result=="OK")
+				{
+					console.log("ok");
+					console.log(response);
+					document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+response.id;
+				}
+				else
+				{
+					console.log("nok");
+					document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde ("+response.result+")</div>";
+				}
+			},
+			error : function()
+			{
+				console.log("nok");
+				document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde</div>";
+			}
+		});
+		return valid;
+	}
+
+	function loadLivret() {
+		$.ajax({
+			type: 'GET',
+			url: '{path_root}/api.php?mod=aviation&rub=updlivret&fonc=get&id='+document.getElementById('form_livret').value,
+			dataType: 'JSON',
+
+			success: function(response) {
+				document.getElementById('livretid').value=response.id;
+				document.getElementById('showform').style.display="block";
+				document.getElementById('editform').style.display="none";
+				document.getElementById('show_idformation').value=response.showformation;
+				document.getElementById('idformation').value=response.idformation;
+				document.getElementById('dte_deb').value=response.dte_deb;
+				document.getElementById('dte_fin').value=response.dte_fin;
+				document.getElementById('tpsdc').value=response.tpsdc;
+				document.getElementById('tpssolo').value=response.tpssolo;
+			},
+			error: function(response) {
+				console.log("error");
+				console.log(response);
+			}
+		});   
+	}
+
+	function newLivret() {
+		document.getElementById('livretid').value=0;
+		document.getElementById('showform').style.display="none";
+		document.getElementById('editform').style.display="block";
+		document.getElementById('show_idformation').value=0;
+		document.getElementById('dte_deb').value="";
+		document.getElementById('dte_fin').value="";
+		document.getElementById('tpsdc').value=0;
+		document.getElementById('tpssolo').value=0;
+	}
+});
+</script>
+
+<div id="dialog-form" title="Editer un livret de formation" class="formulaire" style="display:none;">
+	<input id="livretid" type="hidden" value="0">
+	<p id='editform'><label>Formation</label>{form_idformation}</p>
+	<p id='showform'><label>Formation</label><input id='show_idformation' readonly value="" style="background-color:#eeeeee;"></p>
+	<p><label>Début de la formation</label>{form_dte_deb}</p>
+	<p><label>Fin de la formation</label>{form_dte_fin}</p>
+	<p><label>Temps initial (DC)</label>{form_tpsdc} (min)</p>
+	<p><label>Temps initial (Solo)</label>{form_tpssolo} (min)</p>
+
+	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+</div>
+
+<div class='formulaire'>
 
 <!-- BEGIN: users -->
 	<select id="form_id" name="form_id" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
@@ -15,11 +135,23 @@
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
 	<!-- END: lst_users -->
 	</select>
-	<br />
-	<br />
 <!-- END: users -->
 
+	<select id="form_livret" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
+	<!-- BEGIN: lst_livret -->
+	<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
+	<!-- END: lst_livret -->
+	</select>
+
+<!-- BEGIN: aff_editer -->
+	<a id="edit" href="#">Editer</a> <a id="new" href="#">Nouveau</a>
+<!-- END: aff_editer -->
+
+	<br />
+	<br />
+
 	Début de formation : {dte_deb}<br />
+	Fin de formation : {dte_fin}<br />
 
 	<table class='formulaire'>
 		<tr class='formulaireTitre'>
@@ -41,6 +173,7 @@
 			<td>{total_rmg_solo}</td>
 		</tr>
 	</table>
+</div>
 <br />
 
 {aff_tableau}

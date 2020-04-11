@@ -23,10 +23,53 @@ class user_class extends user_core
 	protected $mod="membres";
 	protected $rub="detail";
 
-	protected $typeea=array("tel_fixe"=>"tel","tel_portable"=>"tel","tel_bureau"=>"tel","ville"=>"uppercase","dte_inscription"=>"date","dte_naissance"=>"date","disponibilite"=>"enum",'poids'=>'number',"tarif"=>"number","decouvert"=>"number","sexe"=>"enum");
+	protected $fields_loc = Array
+	(
+		"idcpt" => Array("type" => "number", "default" => "0"),
+		"sexe" => Array("type" => "enum", "default" => "NA", ),
+		"pere" => Array("type" => "number", "default" => "0", "index" => "1"),
+		"mere" => Array("type" => "number", "default" => "0", "index" => "1"),
+		"disponibilite" => Array("type" => "enum", "default" => "dispo", ),
+		"tel_fixe" => Array("type" => "tel", ),
+		"tel_portable" => Array("type" => "tel", ),
+		"tel_bureau" => Array("type" => "tel", ),
+		"adresse1" => Array("type" => "varchar","len"=>255, ),
+		"adresse2" => Array("type" => "varchar","len"=>255, ),
+		"ville" => Array("type" => "varchar","len"=>100, ),
+		"codepostal" => Array("type" => "varchar","len"=>10, ),
+		"zone" => Array("type" => "varchar","len"=>3, ),
+		"profession" => Array("type" => "varchar","len"=>50, ),
+		"avatar" => Array("type" => "varchar","len"=>50, ),
+		"lache" => Array("type" => "varchar","len"=>2, ),
+		"type" => Array("type" => "enum", "default" => "pilote", "index" => "1", ),
+		"decouvert" => Array("type" => "number", "default" => "0", ),
+		"tarif" => Array("type" => "number", "default" => "0", ),
+		"dte_naissance" => Array("type" => "date", "default" => "0000-00-00", ),
+		"dte_inscription" => Array("type" => "date", "default" => "0000-00-00"),
+		"poids" => Array("type" => "number", "default" => "75", ),
+		"aff_rapide" => Array("type" => "varchar","len"=>1, "default" => "n", ),
+		"aff_mois" => Array("type" => "varchar","len"=>1, ),
+		"aff_jour" => Array("type" => "date", "default" => "0000-00-00", ),
+		"aff_msg" => Array("type" => "number", "default" => "0", ),
+	);
 
+	public $tabList_loc=array(
+		"type"=>array(
+			"fr"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
+			"en"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
+		),
+		"disponibilite"=>array(
+			"fr"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
+			"en"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
+		),
+		"sexe"=>array(
+			"fr"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné"),
+			"fr"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné")
+		),
 
-	protected $droitea=array(
+			
+	);
+	protected $droit_loc=array(
 		"dte_inscription"=>"ModifUserDteInscription",
 		"decouvert"=>"ModifUserDecouvert",
 		"idcpt"=>"ModifUserIdCpt",
@@ -46,11 +89,6 @@ class user_class extends user_core
 
 	// protected $type=array("description"=>"text","status"=>"enum","module"=>"enum");
 	
-	public $tabList=array(
-			"type"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
-			"disponibilite"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
-			"sexe"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné")
-			);
 	
 	# Constructor
 	function __construct($id=0,$sql,$me=false,$setdata=true)
@@ -82,8 +120,10 @@ class user_class extends user_core
 		$this->data["lache"]=array();
 
 
-		$this->type=array_merge($this->typeea, $this->type); 
-		$this->droit=array_merge($this->droitea, $this->droit); 
+		// $this->type=array_merge($this->typeea, $this->type); 
+		$this->fields=array_merge($this->fields,$this->fields_loc); 
+		$this->tabList=array_merge($this->tabList, $this->tabList_loc); 
+		$this->droit=array_merge($this->droit, $this->droit_loc); 
 
 		parent::__construct($id,$sql);
 		
@@ -410,53 +450,6 @@ class user_class extends user_core
 		  { $ret="0h 00"; }
 		return "<a href='index.php?mod=aviation&rub=vols&id=".$this->id."'>".$ret."</a>";
 	}
-
-	function NbHeuresSynthese($dte,$type)
-	{
-		$query ="SELECT SUM(resa.tpsreel) AS nb FROM ".$this->tbl."_synthese AS synt ";
-		$query.="LEFT JOIN ".$this->tbl."_calendrier AS resa ON resa.id=synt.idvol ";
-		$query.="WHERE synt.type='".$type."' AND synt.actif='oui' AND synt.dte_vol<='".$dte."' AND synt.uid_pilote=".$this->id;
-		$sql=$this->sql;
-		$res=$sql->QueryRow($query);
-		return (($res["nb"]>0) ? $res["nb"] : "0");
-	}
-
-	function AffNbHeuresSynthese($dte,$type)
-	{
-		$t=$this->NbHeuresSynthese($dte,$type);
-
-		if ($t>0)
-		  { $ret=AffTemps($t); }
-		else
-		  { $ret="0h 00"; }
-		return "<a href='index.php?mod=aviation&rub=vols&id=".$this->id."'>".$ret."</a>";
-	}
-
-	function NbAtt($type)
-	{
-		$sql=$this->sql;
-		$query="SELECT SUM(nb_att) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->id."  AND actif='oui' ".(($type!="") ? " AND type='".$type."'" : "");
-		$res=$sql->QueryRow($query);
-		
-		return (is_numeric($res["nb"])) ? $res["nb"] : 0;
-	}
-	function NbRmg($type)
-	{
-		$sql=$this->sql;
-		$query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->id."  AND actif='oui' ".(($type!="") ? " AND type='".$type."'" : "");
-		$res=$sql->QueryRow($query);
-
-		return (is_numeric($res["nb"])) ? $res["nb"] : 0;
-	}
-	function DebFormation()
-	{
-		$sql=$this->sql;
-		$query="SELECT MIN(dte_vol) AS dte FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->id." AND dte_vol<>'0000-00-00 00:00:00' AND actif='oui'";
-		$res=$sql->QueryRow($query);
-
-		return $res["dte"];
-	}
-
 
 	function AffNbHeures12mois($type="")
 	{

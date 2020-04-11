@@ -11,18 +11,8 @@
 <FORM id="form_tableau" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="admin">
-	<INPUT type="hidden" name="rub" value="references">
+	<INPUT type="hidden" name="rub" value="formations">
 
-
-	<div class='formulaireTitre'>
-	Formation : <select id="form_formation" name="fid" OnChange="document.location='{url}&fid='+document.getElementById('form_formation').value;">
-	<!-- BEGIN: lst_formation -->
-	<option value="{id_formation}" {chk_formation}>{nom_formation}</OPTION>
-	<!-- END: lst_formation -->
-	</select>
-	</div>
-	<br />
-	
 {aff_tableau}
 	<br />
 	<br />

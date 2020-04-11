@@ -26,6 +26,9 @@
 
 // ---- Vérifie les variables
 	$form_data=checkVar("form_data","array");
+	$fid=checkVar("fid","numeric");
+
+	$tmpl_x->assign("url",geturl("admin","references",""));
 
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
@@ -35,6 +38,7 @@
 			if ($d["refffa"]!="")
 			{
 				$ref=new reference_class($id,$sql);
+				$ref->Valid("idformation",$fid);
 				$ref->Valid("refffa",$d["refffa"]);
 				$ref->Valid("theme",$d["theme"]);
 				
@@ -55,12 +59,30 @@
 		}
 	}
 
+// ---- Liste des formations
+	$lst=ListFormation($sql);
 
+	foreach($lst as $i=>$tmp)
+	{
+		$res=new formation_class($tmp["id"],$sql);
+
+		if ($fid==0)
+		{
+			$fid=$res->id;
+		}
+
+		$tmpl_x->assign("id_formation", $res->id);
+		$tmpl_x->assign("chk_formation", ($res->id==$fid) ? "selected" : "") ;
+		$tmpl_x->assign("nom_formation", $res->val("description"));
+		$tmpl_x->parse("corps.lst_formation");
+	}
+	
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once("modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
+// ---- Affiche la liste
 	$tabTitre=array(
 		"refffa"=>array(
 			"aff"=>"Référence",
@@ -79,7 +101,7 @@
 	$trie=checkVar("trie","varchar",1,"d");
 	
 
-	$lst=ListReference($sql);
+	$lst=ListReference($sql,$fid);
 	
 	$tabValeur=array();
 	foreach($lst as $i=>$d)

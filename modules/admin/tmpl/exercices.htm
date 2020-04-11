@@ -58,6 +58,7 @@ $( function() {
 			console.log("edit: "+id);
 			data = {};
 			data["id"]=id;
+			data["idformation"]=document.getElementById('fid').value;
 			data["description"]=document.getElementById('description').value;
 			data["type"]=document.getElementById('type').value;
 			data["module"]=document.getElementById('module').value;
@@ -192,6 +193,14 @@ console.log(data);
 	<input type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="exercices">
 
+<div class='formulaireTitre'>
+	Formation : <select id="fid" name="fid" OnChange="document.location='{url}&fid='+document.getElementById('fid').value;">
+	<!-- BEGIN: lst_formation -->
+	<option value="{id_formation}" {chk_formation}>{nom_formation}</OPTION>
+	<!-- END: lst_formation -->
+	</select>
+</div>
+<br />
 {aff_tableau}
 
 </FORM>

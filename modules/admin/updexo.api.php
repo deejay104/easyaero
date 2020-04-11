@@ -17,6 +17,7 @@
 		$exo=new exercice_conf_class($id,$sql);
 
 		$result["id"]=$id;
+		$result["idformation"]=$exo->val("idformation");
 		$result["description"]=$exo->val("description");
 		$result["type"]=$exo->val("type");
 		$result["module"]=$exo->val("module");
@@ -50,6 +51,7 @@
 		{
 			$id=checkVar("id","numeric");
 			$exo=new exercice_conf_class($id,$sql);
+			$exo->Valid("idformation",checkVar("idformation","numeric"));
 			$exo->Valid("description",checkVar("description","varchar",200));
 			$exo->Valid("type",checkVar("type","varchar",20));
 			$exo->Valid("module",checkVar("module","varchar",40));
@@ -73,7 +75,7 @@
 						$prog->Valid("refffa",$ref);
 						$prog->Valid("progression",$p);
 						$prog->Save();
-error_log("id:".$ii.",ref:".$ref."(".$i."_prog_ref):".$ref.",prog:".$p);
+// error_log("id:".$ii.",ref:".$ref."(".$i."_prog_ref):".$ref.",prog:".$p);
 					}
 					else if ($ii>0)
 					{

@@ -74,19 +74,6 @@ $tabCustom=Array
 		"uid_modif" => Array("Type" => "smallint(5) unsigned", "Default" => "0", ),
 		"dte_modif" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),
-	"cron" => Array
-	(
-		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"description" => Array("Type" => "varchar(40)", ),
-		"module" => Array("Type" => "varchar(20)", ),
-		"script" => Array("Type" => "varchar(20)", ),
-		"schedule" => Array("Type" => "int(10) unsigned", ),
-		"lastrun" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"nextrun" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
-		"txtretour" => Array("Type" => "varchar(20)", ),
-		"txtlog" => Array("Type" => "text", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
-	),
 	"disponibilite" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -238,35 +225,6 @@ $tabCustom=Array
 		"nom" => Array("Type" => "varchar(50)", ),
 		"libelle" => Array("Type" => "varchar(50)", ),
 	),
-	"utilisateurs" => Array
-	(
-		"idcpt" => Array("Type" => "int(10) unsigned", "Default" => "0"),
-		"sexe" => Array("Type" => "enum('M','F','NA')", "Default" => "NA", ),
-		"pere" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1"),
-		"mere" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1"),
-		"disponibilite" => Array("Type" => "enum('dispo','occupe')", "Default" => "dispo", ),
-		"tel_fixe" => Array("Type" => "varchar(20)", ),
-		"tel_portable" => Array("Type" => "varchar(20)", ),
-		"tel_bureau" => Array("Type" => "varchar(20)", ),
-		"adresse1" => Array("Type" => "varchar(255)", ),
-		"adresse2" => Array("Type" => "varchar(255)", ),
-		"ville" => Array("Type" => "varchar(100)", ),
-		"codepostal" => Array("Type" => "varchar(10)", ),
-		"zone" => Array("Type" => "varchar(3)", ),
-		"profession" => Array("Type" => "varchar(50)", ),
-		"avatar" => Array("Type" => "varchar(50)", ),
-		"lache" => Array("Type" => "varchar(2)", ),
-		"type" => Array("Type" => "enum('pilote','eleve','instructeur','invite','membre','parent','enfant','employe')", "Default" => "pilote", "Index" => "1", ),
-		"decouvert" => Array("Type" => "smallint(6)", "Default" => "0", ),
-		"tarif" => Array("Type" => "smallint(6)", "Default" => "0", ),
-		"dte_naissance" => Array("Type" => "date", "Default" => "0000-00-00", ),
-		"dte_inscription" => Array("Type" => "date", "Default" => "0000-00-00"),
-		"poids" => Array("Type" => "tinyint(3) unsigned", "Default" => "75", ),
-		"aff_rapide" => Array("Type" => "char(1)", "Default" => "n", ),
-		"aff_mois" => Array("Type" => "char(1)", ),
-		"aff_jour" => Array("Type" => "date", "Default" => "0000-00-00", ),
-		"aff_msg" => Array("Type" => "tinyint(3) unsigned", "Default" => "0", ),
-	),
 	"vacances" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
@@ -277,6 +235,9 @@ $tabCustom=Array
 
 );
 
+	require_once ($appfolder."/class/user.inc.php");
+	$obj=new user_class(0,$sql);
+	$obj->genSqlTab($tabTmpl);
 
 	require_once ($appfolder."/class/bapteme.inc.php");
 	$obj=new bapteme_class(0,$sql);
@@ -318,6 +279,12 @@ $tabCustom=Array
 	$obj->genSqlTab($tabCustom);
 
 	require_once ($appfolder."/class/synthese.inc.php");
+
+	$obj=new formation_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+	$obj=new livret_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+
 	$obj=new synthese_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
 

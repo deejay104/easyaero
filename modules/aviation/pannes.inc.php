@@ -28,6 +28,7 @@
 	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Initialise les variables
+	$lid=checkVar("lid","numeric");
 	$uid=checkVar("uid","numeric");
 	$order=checkVar("order","varchar",12);
 	$trie=checkVar("trie","varchar",1);
@@ -47,17 +48,6 @@
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
-
-// ---- Affiche le sous menu
-	addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",false);
-	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
-	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",($type=="panne") ? true : false);
-	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",($type=="exercice") ? true : false);
-	addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",false);
-	addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
-
-
-	affSubMenu();
 
 // ---- Change membre
 	$tmpl_x->assign("url",geturl("aviation","pannes","type=".$type));
@@ -79,10 +69,38 @@
 			$tmpl_x->parse("corps.users");
 	}
 
+// ---- Liste des formations
+	$lst=ListLivret($sql,$uid);
+
+	foreach($lst as $i=>$tmp)
+	{
+		$res=new livret_class($tmp["id"],$sql);
+
+		if ($lid==0)
+		{
+			$lid=$res->id;
+		}
+
+		$tmpl_x->assign("id_livret", $res->id);
+		$tmpl_x->assign("chk_livret", ($res->id==$lid) ? "selected" : "") ;
+		$tmpl_x->assign("nom_livret", $res->displayDescription());
+		$tmpl_x->parse("corps.lst_livret");
+	}
+
+// ---- Affiche le sous menu
+	addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",false);
+	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
+	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",($type=="panne") ? true : false);
+	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",($type=="exercice") ? true : false);
+	addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",false);
+	addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
+
+
+	affSubMenu();
+
 // ---- Affiche la liste	
 
-
-	$lst=ListExercicesProg($sql,$uid,$type);
+	$lst=ListExercicesProg($sql,$lid,$uid,$type);
 
 	$tabTitre=array(
 		// "id" => array("aff"=>"#","width"=>40),
