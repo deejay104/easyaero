@@ -90,7 +90,7 @@
 // ---- Affiche le sous menu
 	if ($theme!="phone")
 	{
-		addSubMenu("","Synthèses",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
+		addSubMenu("","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
 		addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",true);
 		addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
 		addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);

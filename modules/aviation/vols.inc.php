@@ -41,7 +41,7 @@
 	if (GetDroit("ListeVols"))
 	{
 		if ($id==0)
-		  { $id=$uid; }
+		  { $id=$gl_uid; }
 
 		$lstusr=ListActiveUsers($sql,"prenom","");
 
@@ -80,62 +80,9 @@
 		$tabTitre["instructeur"]["mobile"]="no";
 	}
 
-// ---- Chargement des données
-	// if ($order=="") { $order="dte_deb"; }
-	// if ($trie=="") { $trie="i"; }
-
-	// $tl=40;
-	// $lstresa=ListReservationVols($sql,$id,$order,$trie,$ts,$tl);
-	// $usr=new user_class($id,$sql);
-	// $tmpl_x->assign("username",$usr->Aff("prenom")." ".$usr->Aff("nom"));
-
-	// $totligne=ListReservationNbLignes($sql,$id);
-	
-	// $tabresa=array();
-	// $tabValeur=array();
-	// foreach($lstresa as $i=>$rid)
-	// {
-		// $resa = new resa_class($rid,$sql,false);
-		// $ress = new ress_class($resa->uid_ressource,$sql);
-		// $usrinst = new user_class($resa->uid_instructeur,$sql);
-
-		// $t1=sql2date($resa->dte_deb,"jour");
-		// $t2=sql2date($resa->dte_fin,"jour");
-
-		// if ($t1!=$t2)
-		  // { $dte=$t1." - ".$t2; }
-		// else if ((sql2time($resa->dte_deb)!="00:00:00") && ($theme!="phone"))
-		  // { $dte=$t1." (".sql2time($resa->dte_deb,"nosec")." à ".sql2time($resa->dte_fin,"nosec").")"; }
-		// else if  ($theme!="phone")
-		  // { $dte=$t1." (N/A)"; }
-		// else
-		  // { $dte=$t1; }
-
-		// $tabValeur[$i]["dte_deb"]["val"]=strtotime($resa->dte_deb);
-		// $tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".$dte."</a>";
-		// $tabValeur[$i]["immat"]["val"]=$ress->val("nom");
-		// $tabValeur[$i]["immat"]["aff"]=$ress->aff("immatriculation");
-		// $tabValeur[$i]["tpsreel"]["val"]=$resa->tpsreel;
-		// $tabValeur[$i]["tpsreel"]["aff"]=$resa->AffTempsReel();
-		// $tabValeur[$i]["temps"]["val"]=$resa->temps;
-		// $tabValeur[$i]["temps"]["aff"]=$resa->AffTemps();
-		// $tabValeur[$i]["cout"]["val"]=$resa->prix;
-		// $tabValeur[$i]["cout"]["aff"]=$resa->AffPrix()."&nbsp;&nbsp;";
-		// $tabValeur[$i]["cout"]["align"]="right";
-		// if ($id==$resa->uid_instructeur)
-		// {
-		  	// $usrinst = new user_class($resa->uid_pilote,$sql);
-			// $tabValeur[$i]["instructeur"]["val"]="Avec : ".$usrinst->Aff("fullname");
-		// }
-		// else
-		// {
-			// $tabValeur[$i]["instructeur"]["val"]=$usrinst->Aff("fullname");
-		// }
-
-	// }
 
 // ---- Affiche le tableau
-	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","mesvols","id=".$id."&theme=".$theme),$order,$trie,false));
+	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","mesvols","id=".$id."&theme=".$theme),$order,$trie,false,($theme=="phone") ? 16 : 25));
 
 
 // ---- Affecte les variables d'affichage

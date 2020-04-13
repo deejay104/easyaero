@@ -51,8 +51,8 @@
 		if (($rub=="formations") || ($rub=="exercices") || ($rub=="references") || ($rub=="refenac")) 
 		{
 			addSubMenu("","Formations",geturl("admin","formations",""),"icn32_synthese.png",($rub=="formations") ? true : false);
-			addSubMenu("","Exercices",geturl("admin","exercices",""),"icn32_synthese.png",($rub=="exercices") ? true : false);
 			addSubMenu("","Vols",geturl("admin","references",""),"icn32_synthese.png",($rub=="references") ? true : false);
+			addSubMenu("","Exercices",geturl("admin","exercices",""),"icn32_synthese.png",($rub=="exercices") ? true : false);
 			addSubMenu("","Prog ENAC",geturl("admin","refenac",""),"icn32_synthese.png",($rub=="refenac") ? true : false);
 
 			if ($rub=="exercices")
@@ -62,7 +62,7 @@
 			affSubMenu();
 			$aff=true;
 		}
-		addPageMenu("",$mod,"Instruction",geturl("admin","exercices",""),"icn32_synthese.png",$aff);
+		addPageMenu("",$mod,"Formation",geturl("admin","exercices",""),"icn32_synthese.png",$aff);
 
 	}
 	

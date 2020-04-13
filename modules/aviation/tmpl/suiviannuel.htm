@@ -22,8 +22,7 @@ function Recharge()
 }
 </script>
 
-
-	<p>
+<div class="formulaire">
 		Année : 
 		<SELECT id="form_date" name="form_date" OnChange="Recharge();">
 		<!-- BEGIN: lst_annee -->
@@ -33,9 +32,9 @@ function Recharge()
 
 		<input type="radio" id="form_type_an" name="form_type" value="an" {chk_annuel} OnChange="Recharge();"> Année
 		<input type="radio" id="form_type_12" name="form_type" value="12" {chk_12mois} OnChange="Recharge();"> 12 mois
-	</p>
-	
-	{tab_liste}
- 	<p>Attention : Ne sont comptabilisées que les heures effectuées dans le club.</p>
+</div>
+<br />
+{tab_liste}
+<p>Attention : Ne sont comptabilisées que les heures effectuées dans le club.</p>
 
 <!-- END: corps -->

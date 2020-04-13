@@ -30,20 +30,20 @@ function selectAll()
 	<INPUT type="hidden" name="rub" value="echeances">
 	<INPUT type="hidden" name="form_id" value="{form_id}">
 
-	<BR>
-	<select id="form_id" OnChange="Recharge();">
-		<option value="0">Choisissez l'échéance</option>
-	<!-- BEGIN: lst_echeance -->
-		<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
-	<!-- END: lst_echeance -->
-	</select>
+	<div class="formulaire">
+		<select id="form_id" OnChange="Recharge();">
+			<option value="0">Choisissez l'échéance</option>
+		<!-- BEGIN: lst_echeance -->
+			<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
+		<!-- END: lst_echeance -->
+		</select>
 
-	<!-- BEGIN: aff_debite -->
-	Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}">
-	<input type="submit" name="fonc" value="Débiter">
-	<!-- END: aff_debite -->
-	
-	<br />
+		<!-- BEGIN: aff_debite -->
+		&nbsp;- Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}">
+		<input type="submit" name="fonc" value="Débiter">
+		<!-- END: aff_debite -->
+		
+	</div>
 	<!-- BEGIN: msg_enregistre -->
 	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
 	<!-- END: msg_enregistre -->

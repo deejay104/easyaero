@@ -32,6 +32,9 @@
 		$usr=new user_class($gl_uid,$sql);
 		$id=$usr->data["idcpt"];
 	}
+
+	$order=checkVar("order","varchar",10,"date");
+	$trie=checkVar("trie","varchar",1,"i");
 	
 // ---- Affiche le menu
 	$aff_menu="";
@@ -115,32 +118,31 @@
 	$tabTitre["date_valeur"]["aff"]="Date";
 	$tabTitre["date_valeur"]["width"]=110;
 	if ($theme!="phone")
-	  {
+	{
 		$tabTitre["mouvement"]["aff"]="Mouvement";
 		$tabTitre["mouvement"]["width"]=350;
 		$tabTitre["mouvement"]["mobile"]="no";
 		$tabTitre["commentaire"]["aff"]="Commentaire";
 		$tabTitre["commentaire"]["width"]=400;
-	  }
+	}
 	else
-	  {
+	{
 		$tabTitre["commentaire"]["aff"]="Commentaire";
 		$tabTitre["commentaire"]["width"]=250;
-	  }
-	$tabTitre["line"]["aff"]="<line>";
-	$tabTitre["line"]["width"]=1;
+	}
 	$tabTitre["montant"]["aff"]="Montant";
 	$tabTitre["montant"]["width"]=100;
+	$tabTitre["montant"]["calign"]="right";
 	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
 	{
 		$tabTitre["signature"]["aff"]="";
 		$tabTitre["signature"]["width"]=20;
 	}
-	if ($trie=="")
-	{
-		$tabTitre["solde"]["aff"]="Solde";
-		$tabTitre["solde"]["width"]=110;
-	}
+
+	$tabTitre["solde"]["aff"]="Solde";
+	$tabTitre["solde"]["width"]=110;
+	$tabTitre["solde"]["calign"]="right";
+
 	if ($theme!="phone")
 	{
 		$tabTitre["releve"]["aff"]="&nbsp;";
@@ -151,104 +153,15 @@
 	}
 	
 
-	
 	$tabValeur=array();
 	$tl=50;
 
 	// Affiche le solde du compte
 	$tmpl_x->assign("solde_compte", $cptusr->AffSolde());
-	
-	
-	// Calcul le nombre ligne totale
-	$query = "SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id";
-	$res=$sql->QueryRow($query);
-	$totligne=$res["nb"];
 
-	// Calcul le solde du compte au début de l'affichage
-	$query = "SELECT SUM(lignes.montant) AS solde FROM (SELECT montant FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$totligne) AS lignes";
-	$res=$sql->QueryRow($query);
-	$solde=$res["solde"];
-	
-	// Affiche les lignes
-	$query = "SELECT id,mid,uid,date_valeur,date_creat,mouvement,commentaire,montant,hash,precedent,pointe FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
-	$sql->Query($query);
-	$col=50;
-	for($i=0; $i<$sql->rows; $i++)
-	{ 
-		$sql->GetRow($i);
-
-		$tabValeur[$i]["lid"]["val"]=$sql->data["id"];
-		$tabValeur[$i]["date_valeur"]["val"]=CompleteTxt($i,"20","0");
-		$tabValeur[$i]["date_valeur"]["aff"]=date("d/m/Y",strtotime($sql->data["date_valeur"]));
-		$tabValeur[$i]["mid"]["val"]=$sql->data["mid"];
-		$tabValeur[$i]["precedent"]["val"]=$sql->data["precedent"];
-		$tabValeur[$i]["date_creat"]["val"]=$sql->data["date_creat"];
-		$tabValeur[$i]["mouvement"]["val"]=$sql->data["mouvement"];
-		$tabValeur[$i]["commentaire"]["val"]=$sql->data["commentaire"];
-		$tabValeur[$i]["line"]["val"]="<line>";
-		$tabValeur[$i]["montant"]["val"]=$sql->data["montant"];
-		$tabValeur[$i]["montant"]["align"]="right";
-		$tabValeur[$i]["montant"]["aff"]=AffMontant($sql->data["montant"])."&nbsp;&nbsp;";
-
-		if ((!isset($trie)) || ($trie==""))
-		  {
-			$afftotal=round($solde,2);
-			$tabValeur[$i]["solde"]["val"]=(($afftotal==0) ? "0" : $afftotal);
-			$tabValeur[$i]["solde"]["align"]="right";
-			$tabValeur[$i]["solde"]["aff"]=(($afftotal==0) ? "0,00 ".$MyOpt["devise"] : AffMontant($afftotal))."&nbsp;&nbsp;";
-			$solde=$solde-$sql->data["montant"];
-		  }
-		$tabValeur[$i]["releve"]["val"]=$sql->data["pointe"];
-		if (GetDroit("AfficheSignatureCompte"))
-		{
-			$tabValeur[$i]["hash"]["val"]=$sql->data["hash"];
-		}
-		else
-		{
-			$tabValeur[$i]["hash"]["val"]="";
-		}
-	}
-
-	if (GetDroit("AfficheDetailMouvement"))
-	{
-		foreach($tabValeur as $i=>$d)
-		{
-			$tabValeur[$i]["date_valeur"]["aff"]="<a title='Créé le ".sql2date($tabValeur[$i]["date_creat"]["val"])."'>".$tabValeur[$i]["date_valeur"]["aff"]."</a>";
-			$tabValeur[$i]["mouvement"]["aff"]="<a title='".AfficheDetailMouvement($id,$d["mid"]["val"])."'>".$tabValeur[$i]["mouvement"]["val"]."</a>";
-		}
-	}
-
-	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
-	{
-		foreach($tabValeur as $i=>$d)
-		{
-			$confirm=AfficheSignatureCompte($d["lid"]["val"]);
-			$aff="";
-			if ($confirm["res"]=="ok")
-			{
-				$aff="<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>";
-				if ($fonc!="showhash")
-				{
-					$tabValeur[$i]["hash"]["val"]="";
-				}
-			}
-			else if ($confirm["res"]=="nok")
-			{
-				$aff="<a title='Cette transaction ou la précédente sont altérées.\nID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."'><img src='static/images/icn16_warning.png' /></a>";
-				$tabValeur[$i]["hash"]["aff"]="<s>".$tabValeur[$i]["hash"]["val"]."</s><br />".$confirm["hash"];
-			}
-			else if ($confirm["res"]=="mvt")
-			{
-				$aff="<a title=\"Le mouvement n'a pas un total nul. Une des transaction a pu être altérée.\nMouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\"><img src='static/images/icn16_warning.png' /></a>";
-			}
-			
-			$tabValeur[$i]["signature"]["val"]=$confirm;
-			$tabValeur[$i]["signature"]["aff"]=$aff;
-		}
-	}
-	
-	if ($order=="") { $order="date"; }
-	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
+	$trie="none";
+	$order="";
+	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"compte",$fonc,"id=".$id."&theme=".$theme),$order,$trie,true));
 
 
 // ---- Affecte les variables d'affichage

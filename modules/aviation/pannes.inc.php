@@ -88,7 +88,7 @@
 	}
 
 // ---- Affiche le sous menu
-	addSubMenu("","Synthèses",geturl("aviation","syntheses","uid=".$uid),"",false);
+	addSubMenu("","Formations",geturl("aviation","syntheses","uid=".$uid),"",false);
 	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
 	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",($type=="panne") ? true : false);
 	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",($type=="exercice") ? true : false);

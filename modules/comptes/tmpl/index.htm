@@ -8,13 +8,11 @@
 
 
 <!-- BEGIN: corps -->
-<br />
-
 	<input type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="compte">
 
 <!-- BEGIN: compte -->
-	
+<div class="formulaire">
 	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=comptes&id='+id;">
 	<!-- BEGIN: lst_compte -->
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
@@ -24,8 +22,8 @@
 	&nbsp;-&nbsp;
 <!-- END: compte -->
 	<div class="soldeCompte">Solde du compte : {solde_compte}</div>
-	<br /><br />
-
+</div>
+<br />
 
 {aff_tableau}
 <br/>

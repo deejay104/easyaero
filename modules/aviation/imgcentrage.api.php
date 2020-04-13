@@ -101,15 +101,15 @@
 				$offset = $ranges[$i] + 1;
 				$len = $ranges[$i + 1] - $offset;
 				$t = parsePlace(array_slice($values, $offset, $len));
-				$tabplace[$t["id"]]["id"]=$t["id"];
-				$tabplace[$t["id"]]["name"]=$t["name"];
-				$tabplace[$t["id"]]["bras"]=$t["bras"];
-				$tabplace[$t["id"]]["coef"]=$t["coef"];
-				$tabplace[$t["id"]]["type"]=$t["type"];
+				$tabplace[$t["id"]]["id"]=(isset($t["id"])) ? $t["id"] : 0;
+				$tabplace[$t["id"]]["name"]=(isset($t["name"])) ? $t["name"] : "";
+				$tabplace[$t["id"]]["bras"]=(isset($t["bras"])) ? $t["bras"] : 1;
+				$tabplace[$t["id"]]["coef"]=(isset($t["coef"])) ? $t["coef"] : 1;
+				$tabplace[$t["id"]]["type"]=(isset($t["type"])) ? $t["type"] : "";
 
-				if ($tabplace[$t["id"]]["poids"]==0)
+				if ((!isset($tabplace[$t["id"]]["poids"])) || ($tabplace[$t["id"]]["poids"]==0))
 				{
-					$tabplace[$t["id"]]["poids"]=$t["poids"];
+					$tabplace[$t["id"]]["poids"]=(isset($t["poids"])) ? $t["poids"] : 0;
 				}
 
 				// print_r($t);
@@ -135,9 +135,12 @@
 
 	imagefill($img,0,0,$white); 
 
+	$ddeb=(isset($resvol["dte_deb"])) ? sql2date($resvol["dte_deb"],"nosec") : "NA";
+	$dfin=(isset($resvol["dte_fin"])) ? sql2date($resvol["dte_deb"],"nosec") : "NA";
+
 	// Titre
 	imagestring($img, 5, 40, 15, "Devis de masse et centrage", $textcolor);
-	imagestring($img, 2, 40, 30, "Vol du ".sql2date($resvol["dte_deb"],"nosec")." au ".sql2date($resvol["dte_fin"],"nosec")." sur le ".strtoupper($resvol["immatriculation"]), $textcolor);
+	imagestring($img, 2, 40, 30, "Vol du ".$ddeb." au ".$dfin." sur le ".strtoupper($resvol["immatriculation"]), $textcolor);
 
 	// Axes
 	imageline($img,20,50,20,$h-10,$black);
@@ -151,6 +154,11 @@
 
 	// Trace l'enveloppe de tolérance
 	$env = preg_split("/,/",$resvol["tolerance"]);
+
+	if (count($env)<6)
+	{
+		$env=array(0=>0,1=>0,2=>0,3=>0,4=>0,5=>0);
+	}
 
 	$minx=$env[0];
 	$maxx=0;
@@ -197,15 +205,18 @@
 	$xx=0;
 	$yy=0;
 	foreach ($tabplace as $k=>$v)
-	  {
+	{
 		if (!isset($v["coef"])) { $v["coef"]=1; }
 		if (!isset($v["poids"])) { $v["poids"]=0; }
 		if (!isset($v["bras"])) { $v["bras"]=0; }
 		$coef=($v["coef"]>0) ? $v["coef"] : 1;
 		$xx=$xx+$v["poids"]*$coef*$v["bras"];
 		$yy=$yy+round($v["poids"]*$coef,0);
-	  }
-	$xx=round($xx/$yy,3);
+	}
+	if ($yy>0)
+	{
+		$xx=round($xx/$yy,3);
+	}
 
 	$t=CalcCoor($xx,$yy);
 

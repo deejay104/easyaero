@@ -669,9 +669,9 @@ function ListReservationPaye($sql,$id)
 	return $res;
 }	
 
-function ListReservationVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
+function ListReservationVols($sql,$id,$order="dte_deb",$trie="asc",$ts=0,$tl=0)
 { global $MyOpt;
-	$query="SELECT ".$MyOpt["tbl"]."_calendrier.id FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "ASC" : "DESC") : "")." ".(($tl>0) ? "LIMIT $ts,$tl" : "");
+	$query="SELECT ".$MyOpt["tbl"]."_calendrier.id FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".$trie : "")." ".(($tl>0) ? "LIMIT $ts,$tl" : "");
 
 	$res=array();
 	$sql->Query($query);

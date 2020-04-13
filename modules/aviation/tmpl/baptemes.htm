@@ -27,16 +27,17 @@
 		  }
 	</script>
 
+<div class="formulaire">
+	Filtrer la liste des baptèmes : 
+	<select id="form_status" name="form_status" OnChange="Recharge();">
+	<option value="-2" {form_selected_open}>Ouvert</option>		
+	<option value="-1" {form_selected_all}>Tous</option>		
+	<!-- BEGIN: lst_status -->
+		<option value="{form_statusid}" {form_selected}>{form_status}</option>		
+	<!-- END: lst_status -->
+	</select>
+</div>
 <br />
-
-<select id="form_status" name="form_status" OnChange="Recharge();">
-<option value="-2" {form_selected_open}>Ouvert</option>		
-<option value="-1" {form_selected_all}>Tous</option>		
-<!-- BEGIN: lst_status -->
-	<option value="{form_statusid}" {form_selected}>{form_status}</option>		
-<!-- END: lst_status -->
-</select>
-<br /><br />
 
 {aff_tableau}
 

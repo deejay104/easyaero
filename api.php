@@ -3,9 +3,9 @@
 	{
 		require ("config/config.inc.php");
 	}
-	if (file_exists("config/variables.inc.php"))
+	if (file_exists("static/cache/config/variables.inc.php"))
 	{
-		require ("config/variables.inc.php");
+		require ("static/cache/config/variables.inc.php");
 	}
 
 	$appfolder="..";

@@ -30,24 +30,18 @@
 <div class="msgok">{msg_confirmation}</div>
 <!-- END: msg_enregistre -->
 
-<div class="formulaireTitre">Informations générales</div>
-
-
-<div class="formulaire">
-	<p><label>Immatriculation</label>{form_immatriculation}</p>
-	<p><label>Nom</label>{form_nom}</p>
-	<p><label>Marque</label>{form_marque}</p>
-	<p><label>Modèle</label>{form_modele}</p>
-	<div class="showColor">Couleur</div>{form_couleur}
-</div>
 
 <table width='100%'>
 <tr>
-	<td width='50%' valign="top" style="padding: 5px;" class="noMobile">
+	<td width='50%' valign="top" style="padding-right: 5px;" class="noMobile">
+		<div class="formulaireTitre">Informations générales</div>
 
-		<div class="formulaireTitre">Description</div>
 		<div class="formulaire">
-		{form_description}
+			<p><label>Immatriculation</label>{form_immatriculation}</p>
+			<p><label>Nom</label>{form_nom}</p>
+			<p><label>Marque</label>{form_marque}</p>
+			<p><label>Modèle</label>{form_modele}</p>
+			<div class="showColor">Couleur</div>{form_couleur}
 		</div>
 
 		<div class="formulaireTitre">Paramètres</div>
@@ -58,11 +52,17 @@
 				{form_tolerance}
 			</p>
 		</div>
+		<div class="formulaire">
 		{form_centrage}
+		</div>
 		<!-- END: parametres -->
 		<img src="{path_root}/api.php?mod=aviation&rub=imgcentrage&rid={id}" />
 	</td>
 	<td valign="top" style='padding: 0px;'>
+		<div class="formulaireTitre">Description</div>
+		<div class="formulaire">
+		{form_description}
+		</div>
 
 		<div class="formulaireTitre">Maintenance</div>
 		<div class="formulaire">

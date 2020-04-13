@@ -50,8 +50,8 @@
 		$tabTitre["heure"]["width"]=110;
 		$tabTitre["carbavant"]["aff"]="Carbu";
 		$tabTitre["carbavant"]["width"]=100;
-		$tabTitre["carbapres"]["aff"]="Total";
-		$tabTitre["carbapres"]["width"]=100;
+		$tabTitre["potentiel"]["aff"]="Total";
+		$tabTitre["potentiel"]["width"]=100;
 	}
 	else
 	{
@@ -115,7 +115,7 @@
 
 // ---- Affiche le tableau
 	// $tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne,false,false));
-	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","carnet","id=".$id."&theme=".$theme),$order,$trie,false));
+	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","carnet","id=".$id."&theme=".$theme),$order,$trie,false,($theme=="phone") ? 16 : 25));
 
 
 // ---- Affecte les variables d'affichage

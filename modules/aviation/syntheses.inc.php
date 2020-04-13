@@ -88,7 +88,7 @@
 // ---- Affiche le sous menu
 	if ($theme!="phone")
 	{
-		addSubMenu("","Synthèses",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",true);
+		addSubMenu("","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",true);
 		addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
 		addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
 		addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
@@ -127,7 +127,7 @@
 		"refffa" => array("aff"=>"Reférence","width"=>100),
 		"temps" => array("aff"=>"Temps","width"=>100),
 		"conclusion" => array("aff"=>"Conclusion","width"=>100),
-		"status" => array("aff"=>"Status","width"=>100),
+		"status" => array("aff"=>"Status","width"=>100, "mobile"=>"no"),
 	);
 
 	$tabValeur=array();
