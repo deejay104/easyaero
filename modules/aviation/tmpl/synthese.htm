@@ -58,6 +58,7 @@
 	</div>
 
 	<div class='formulaireTitre'>EXERCICES PEDAGOGIQUES</div>
+	<div class='formulaire'>
 <!-- BEGIN: lst_pedagogique -->
 		<div id='exo_{aff_id}' style='{form_color}' class='formulaireHover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
@@ -70,16 +71,17 @@
 		</div>
 <!-- END: lst_pedagogique -->
 
-	<div id="affpedagogique">
-	</div>
-	<br />
+		<div id="affpedagogique">
+		</div>
+		<br />
 <!-- BEGIN: add_exercicepeda -->
-	<input id="addexercicepeda" style="width:500px;">
-	<br />
-	<br />
+		<input id="addexercicepeda" style="width:500px!important;">
+		<br />
 <!-- END: add_exercicepeda -->
+	</div>
 
 	<div class='formulaireTitre'>EXERCICES</div>
+	<div class='formulaire'>
 <!-- BEGIN: lst_exercice -->
 		<div id='exo_{aff_id}' class='formulaireHover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
@@ -95,12 +97,13 @@
 	</div>
 	<br />
 <!-- BEGIN: add_exercice -->
-	<input id="addexercice" style="width:500px;">
-	<br />
+	<input id="addexercice" style="width:500px!important;">
 	<br />
 <!-- END: add_exercice -->
+	</div>
 
 	<div class='formulaireTitre'>PANNES</div>
+	<div class='formulaire'>
 <!-- BEGIN: lst_panne -->
 		<div id='exo_{aff_id}' class='formulaireHover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
@@ -115,28 +118,30 @@
 <!-- END: lst_delete -->
 		</div>
 <!-- END: lst_panne -->
-	<div id="affpannes">
-	</div>
-	<br />
+		<div id="affpannes">
+		</div>
+		<br />
 <!-- BEGIN: add_panne -->
-	<input id="addpanne" style="width:500px;">
-	<br />
-	<br />
+		<input id="addpanne" style="width:500px!important;">
+		<br />
 <!-- END: add_panne -->
+	</div>
 
 	<br />
 
 
 	<div class='formulaireTitre'>Non technique / Menace, Erreurs, Situation non désirées</div>
 
-	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div>{form_info_1}</div>
-	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div>{form_info_2}</div>
-	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div>{form_info_3}</div>
-	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div>{form_info_4}</div>
-	<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div>{form_info_5}</div>
-
+	<div class='formulaire'>
+		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div>{form_info_1}</div>
+		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div>{form_info_2}</div>
+		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div>{form_info_3}</div>
+		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div>{form_info_4}</div>
+		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div>{form_info_5}</div>
+	</div>
+	
 	<br />
-	<table class='formulaireTableau'>
+	<table class='formulaireTableau formulaire'>
 		<tr>
 			<th width=200>Nb Atterrissage</th>
 			<th width=200>Total Atterrissage</th>
@@ -179,9 +184,9 @@
 			value=ui.item;
 			console.log(value);
 			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -208,9 +213,9 @@
 			value=ui.item;
 			console.log(value);
 			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -237,9 +242,9 @@
 			value=ui.item;
 			console.log(value);
 			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
+			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -276,9 +281,9 @@
 				{
 					$.each(response, function (index, value) {
 						txt="<div id='exo_"+value.id+"' class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu";
-						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude";
-						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
+						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
 						txt=txt+"</div>";
 						if (value.type=="peda")
 						{
