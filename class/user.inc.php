@@ -45,7 +45,7 @@ class user_class extends user_core
 		"decouvert" => Array("type" => "number", "default" => "0", ),
 		"tarif" => Array("type" => "number", "default" => "0", ),
 		"dte_naissance" => Array("type" => "date", "default" => "0000-00-00", ),
-		"dte_inscription" => Array("type" => "date", "default" => "0000-00-00"),
+		"dte_inscription" => Array("type" => "date", "default" => "now"),
 		"poids" => Array("type" => "number", "default" => "75", ),
 		"aff_rapide" => Array("type" => "varchar","len"=>1, "default" => "n", ),
 		"aff_mois" => Array("type" => "varchar","len"=>1, ),
@@ -346,13 +346,15 @@ class user_class extends user_core
 
 	function CheckLache($ress)
 	{
-		$query = "SELECT * FROM ".$this->tbl."_lache WHERE uid_pilote='".$this->id."' AND id_avion='".$ress."' AND actif='oui'";
+		$query = "SELECT id FROM ".$this->tbl."_lache WHERE uid_pilote='".$this->id."' AND id_avion='".$ress."' AND actif='oui'";
 		$sql=$this->sql;
 		$res=$sql->QueryRow($query);
 
-		if (!is_numeric($res["id"]))
-		  { return false; }
-		return true;
+		if ((is_array($res)) && ($res["id"]>0))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	function CheckDisponibilite($deb,$fin)
@@ -478,6 +480,12 @@ class user_class extends user_core
 		$sql=$this->sql;
 
 		$res=$this->DernierVol("",0);
+		
+		if ($res["dte"]=="0000-00-00")
+		{
+			return "NA";
+		}
+		
 		$dc = (($res["ins"]>0) && ($res["ins"]!=$this->id)) ? " (DC)" : "";
 		$l=floor((time()-strtotime($res["dte"]))/86400);
 		$d=sql2date($res["dte"],"jour");
@@ -509,6 +517,15 @@ class user_class extends user_core
 			$res=$sql->QueryRow($query);
 		}
 
+		if (!is_array($res))
+		{
+			$res=array(
+				"id"=>0,
+				"tpsreel"=>0,
+				"dte"=>"0000-00-00",
+				"ins"=>0
+			);
+		}
 		return $res;
 	}
 

@@ -30,6 +30,7 @@
 
 // ---- Initialise les variables
 	$uid=checkVar("uid","numeric");
+	$lid=checkVar("lid","numeric");
 	$ts=checkVar("ts","numeric");
 
 	if ($uid==0)
@@ -47,12 +48,12 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
 // ---- Affiche le sous menu
-	addSubMenu("","Formations",geturl("aviation","syntheses","uid=".$uid),"",false);
-	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","uid=".$uid),"",false);
-	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&uid=".$uid),"",false);
-	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&uid=".$uid),"",false);
-	addSubMenu("","Compétences",geturl("aviation","competences","uid=".$uid),"",true);
-	addSubMenu("","Progression ENAC",geturl("aviation","progenac","uid=".$uid),"",false);
+	addSubMenu("","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
+	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
+	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&uid=".$uid),"",false);
+	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
+	addSubMenu("","Compétences",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",true);
+	addSubMenu("","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
 	affSubMenu();
 
 // ---- Change membre

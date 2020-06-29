@@ -146,16 +146,16 @@
 		$query="DELETE FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='$id' AND idusr='$idusr' AND participe='N'";
 		$sql->Delete($query);
 
-		if ($ins["idusr"]>0)
-		  {
-				$query="UPDATE ".$MyOpt["tbl"]."_participants SET nb='".($ins["nb"]+1)."', uid_creat='$uid', dte_creat='".now()."' WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
-				$sql->Update($query);
-		  }
+		if ((isset($ins["idusr"])) && ($ins["idusr"]>0))
+		{
+			$query="UPDATE ".$MyOpt["tbl"]."_participants SET nb='".($ins["nb"]+1)."', uid_creat='$uid', dte_creat='".now()."' WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
+			$sql->Update($query);
+		}
 		else
-		  {
-				$query="INSERT INTO ".$MyOpt["tbl"]."_participants SET idmanip='$id', idusr='$idusr', participe='Y', nb='1', uid_creat='$uid', dte_creat='".now()."'";
-				$sql->Insert($query);
-		  }
+		{
+			$query="INSERT INTO ".$MyOpt["tbl"]."_participants SET idmanip='$id', idusr='$idusr', participe='Y', nb='1', uid_creat='$uid', dte_creat='".now()."'";
+			$sql->Insert($query);
+		}
 	}
 	elseif (($fonc=="nok") && ($id>0))
 	{

@@ -80,7 +80,7 @@ class resa_class extends objet_core
 		$this->description="";
 		$this->horadeb="0";
 		$this->horafin="0";
-		$this->temps="";
+		$this->temps=0;
 		$this->tpsestime="";
 		$this->tpsreel=0;
 		$this->destination="LOCAL";
@@ -261,7 +261,8 @@ class resa_class extends objet_core
 		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_deb>'".$resvol["dte_deb"]."' AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 		$respot=$sql->QueryRow($query);
 
-		if ($respot["tot"]>0)
+		$t=0;
+		if ((isset($respot["tot"])) && ($respot["tot"]>0))
 		{
 			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
 			$resreel=$sql->QueryRow($query);
@@ -270,6 +271,8 @@ class resa_class extends objet_core
 		}
 		else
 		{
+			$respot=array();
+			$respot["dte_fin"]="0000-00-00";
 			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>'".$resvol["dte_deb"]."' AND dte_deb<'".$this->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
 			$resreel=$sql->QueryRow($query);
 			$t=$resvol["tot"]+$resreel["tot"];
@@ -537,6 +540,12 @@ class resa_class extends objet_core
 			"uid_maj"=>$gl_uid,
 			"dte_maj"=>now()
 		);
+
+		if ($this->id==0)
+		{
+			$t["uid_creat"]=$gl_uid;
+			$t["dte_creat"]=now();
+		}
 
 		$this->id=$sql->Edit("reservation",$MyOpt["tbl"]."_calendrier",$this->id,$t);
 

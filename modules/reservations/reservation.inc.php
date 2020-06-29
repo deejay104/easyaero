@@ -459,6 +459,9 @@
 		$tmpl_x->assign("form_hor_fin", sql2date($resa["resa"]->dte_fin,"heure"));
 	  }
 
+	// Sauve le jour de la réservation pour afficher cette date lors du retour sur le calendrier
+	$_SESSION["caltime"]=strtotime($resa["resa"]->dte_deb);
+
 	$tmpl_x->assign("form_destination", $resa["resa"]->destination);
 	$tmpl_x->assign("form_nbpassager", $resa["resa"]->nbpersonne);
 	$tmpl_x->assign("chk_invite_".$resa["resa"]->invite, "checked='checked'");

@@ -21,9 +21,6 @@
 
 
 <?php
-	if (!is_numeric($id))
-	  { $id=0; }
-
 	if (!GetDroit("AccesBapteme"))
 	  { FatalError("Accès non autorisé (AccesBapteme)"); }
 

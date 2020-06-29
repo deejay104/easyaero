@@ -68,7 +68,8 @@ class bapteme_class extends objet_core
 		if ($this->data["num"]=="")
 		{
 			$res["num"]="xxxxxx";
-			while($res["num"]!="")
+
+			while((isset($res["num"])) && ($res["num"]!=""))
 			{
 				$this->data["num"]=mt_rand(100000, 999999);
 			

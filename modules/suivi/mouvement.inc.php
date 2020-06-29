@@ -125,7 +125,7 @@
 		$form_montant=checkVar("form_montant","varchar");
 
 		$ret="";
-		$nbmvt="";
+		$nbmvt=0;
 		$ok=0;
 		foreach ($form_mid as $id=>$d)
 		{			

@@ -217,12 +217,25 @@ class ress_class extends objet_core
 		$query.="WHERE cal.idmaint>0 AND maint.actif='oui' AND cal.dte_deb<'".now()."' AND cal.uid_avion='".$this->id."' ORDER BY cal.dte_fin DESC LIMIT 0,1";
 		$resvol=$sql->QueryRow($query);
 
-		// $query="SELECT potentiel AS tot, actif FROM ".$this->tbl."_maintenance WHERE id='".$resvol["idmaint"]."'";
-		// $resmaint=$sql->QueryRow($query);
+		if ((!isset($resvol)) ||(!is_array($resvol)))
+		{
+			$resvol=array();
+			$resvol["dte_deb"]="0000-00-00";
+			$resvol["tot"]="0";
+		}
 
+
+		$t=0;
+		
 		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_deb>'".$resvol["dte_deb"]."' AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
 		$respot=$sql->QueryRow($query);
 
+		if ((!isset($respot)) ||(!is_array($respot)))
+		{
+			$respot=array();
+			$respot["tot"]=0;
+		}
+		
 		if ($respot["tot"]>0)
 		{
 			$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
@@ -339,9 +352,13 @@ class ress_class extends objet_core
 		$query="SELECT id FROM ".$this->tbl."_maintenance WHERE dte_deb>='".now()."' AND actif='oui' AND uid_ressource='".$this->id."' ORDER BY dte_deb LIMIT 0,1";
 		$res=$sql->QueryRow($query);
 		
-		if ($res["id"]>0)
+		if ((is_array($res)) && ($res["id"]>0))
 		{
 			$id=$res["id"];
+		}
+		else
+		{
+			$id=0;
 		}
 
 		return $id;

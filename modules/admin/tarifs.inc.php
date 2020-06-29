@@ -92,10 +92,14 @@
 		}
 	}
 // ---- Supprime un tarif
-	if (($fonc=="delete") && ($id>0))
+	if ($fonc=="delete")
 	{
-		$query="DELETE FROM ".$MyOpt["tbl"]."_tarifs WHERE id='$id'";
-		$sql->Delete($query);
+		$id=checkVar("id","numeric");
+		if ($id>0)
+		{
+			$query="DELETE FROM ".$MyOpt["tbl"]."_tarifs WHERE id='$id'";
+			$sql->Delete($query);
+		}
 	}
 
 

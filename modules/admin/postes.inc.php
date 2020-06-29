@@ -28,6 +28,8 @@
 	require_once("modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
+	$form_poste=checkVar("form_poste","array");
+
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (is_array($form_poste)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
@@ -59,7 +61,11 @@
 // ---- Supprime un poste
 	if ($fonc=="delete")
 	{
-		$sql->Edit("mouvement",$MyOpt["tbl"]."_mouvement",$id,array("actif"=>"non"));		
+		$id=checkVar("id","numeric");
+		if ($id>0)
+		{
+			$sql->Edit("mouvement",$MyOpt["tbl"]."_mouvement",$id,array("actif"=>"non"));		
+		}
 	}
 
 // ---- Affiche la page demandée

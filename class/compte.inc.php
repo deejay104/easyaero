@@ -29,6 +29,7 @@ class compte_class{
 		$this->uid_creat=$gl_uid;
 		$this->date_creat=now();
 		$this->erreur="";
+		$this->mvt=array();
 		
 		if ($id>0)
 		{

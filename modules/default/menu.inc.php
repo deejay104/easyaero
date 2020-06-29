@@ -4,7 +4,7 @@
 		"icone"=>$MyOpt["host"]."/"."static/modules/reservations/img/icn32_titre.png",
 		"nom"=>"Réservations",
 		"droit"=>"AccesReservations",
-		"url"=>geturl("reservations","",""),
+		"url"=>geturl("reservations","","start=today"),
 	);
 	$tabMenu["bapteme"]=array(
 		"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_baptemes.png",

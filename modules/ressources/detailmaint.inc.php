@@ -168,7 +168,7 @@
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("id", $maint->id);
 
-	if (($maint->data["status"]!="cloture") && ($maint->data["actif"]=="oui") && (GetDroit("ModifMaintenance")))
+	if (($maint->data["status"]!="cloture") && ($maint->actif=="oui") && (GetDroit("ModifMaintenance")))
 	  { $typeaff="form"; }
 	else
 	  { $typeaff="html"; }
@@ -240,8 +240,16 @@
 			$query="SELECT * FROM ".$MyOpt["tbl"]."_tarifs WHERE code='".$resa->tarif."' AND ress_id='".$resa->uid_ressource."'";
 			$res=$sql->QueryRow($query);
 
-			$tabValeur[$ii]["tarif"]["val"]=$resa->tarif;
-			$tabValeur[$ii]["tarif"]["aff"]=$res["reservation"];
+			if (is_array($res))
+			{
+				$tabValeur[$ii]["tarif"]["val"]=$resa->tarif;
+				$tabValeur[$ii]["tarif"]["aff"]=$res["reservation"];
+			}
+			else
+			{
+				$tabValeur[$ii]["tarif"]["val"]="";
+				$tabValeur[$ii]["tarif"]["aff"]="";
+			}
 		
 			$ii++;
 		}
@@ -280,11 +288,11 @@
 		  {
 			$fiche = new fichemaint_class($fid,$sql);
 
-			if ((($maint->data["status"]!="cloture") && (GetDroit("EnregistreMaintenance") && ($maint->data["actif"]=="oui"))) || ($maint->id==$fiche->data["uid_planif"]))
+			if ((($maint->data["status"]!="cloture") && (GetDroit("EnregistreMaintenance") && ($maint->actif=="oui"))) || ($maint->id==$fiche->data["uid_planif"]))
 			  {
 
 				$tabValeur[$i]["chk"]["val"]=(($fiche->data["uid_planif"]==$maint->id) ? "1" : "0");
-				if (($maint->data["status"]!="cloture") && ($maint->data["actif"]=="oui") && ($typeaff=="form"))
+				if (($maint->data["status"]!="cloture") && ($maint->actif=="oui") && ($typeaff=="form"))
 				  {
 					$tabValeur[$i]["chk"]["aff"]="<input type='checkbox' name='form_fiche[".$fid."]' ".(($fiche->data["uid_planif"]==$maint->id) ? "checked" : "").">";
 				} else {
@@ -333,7 +341,7 @@
 
 	$tmpl_x->assign("aff_fiche",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"id=".$id));
 
-	if (($maint->data["status"]!="cloture") && (GetDroit("ModifMaintenance")) && ($maint->data["actif"]=="oui"))
+	if (($maint->data["status"]!="cloture") && (GetDroit("ModifMaintenance")) && ($maint->actif=="oui"))
 	  {
 			$tmpl_x->parse("corps.form_submit.aff_bouttons");
 	  }

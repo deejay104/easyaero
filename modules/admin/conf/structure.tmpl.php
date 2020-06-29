@@ -33,7 +33,7 @@ $tabCustom=Array
 		"date_valeur" => Array("Type" => "date", "Default" => "0000-00-00", ),
 		"dte" => Array("Type" => "varchar(6)", "Index" => "1", ),
 		"compte" => Array("Type" => "varchar(10)", "Index" => "1", ),
-		"pointe" => Array("Type" => "char(1)", "Default" => ""),
+		"pointe" => Array("Type" => "char(1)", ),
 		"facture" => Array("Type" => "varchar(10)", "Index" => "1", ),
 		"rembfact" => Array("Type" => "varchar(10)", "Index" => "1", ),
 		"hash" => Array("Type" => "varchar(64)", ),

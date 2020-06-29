@@ -249,6 +249,8 @@
 // ---- Annule les enregistrements
 	else if ($fonc=="Annuler")
 	{
+		$form_mid=checkVar("form_mid","array");
+
 		if (is_array($form_mid))
 		{
 			foreach ($form_mid as $id=>$d)

@@ -27,13 +27,14 @@ class manip_class extends objet_core
 	
 	protected $fields=array(
 		"titre" => Array("type" => "varchar", "len"=>100, "default"=>"Nouvelle manifestation"),
-		"comment" => Array("type" => "text", ),
+		"comment" => Array("type" => "text"),
 		"type" => Array("type" => "multi", "len"=>100, ),
 		"cout" => Array("type" => "price", "default" => "0.00", ),
 		"facture" => Array("type" => "bool", "default" => "non", ),
 		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
-		"dte_manip" => Array("type" => "date", ),
-		"dte_limite" => Array("type" => "date", )
+		"dte_manip" => Array("type" => "date", "default"=>"now"),
+		"dte_limite" => Array("type" => "date", "default"=>"0000-00-00"),
+		"test" => Array("type" => "date", "default"=>"0000-00-00")
 	);
 	
 	protected $tabList=array(
@@ -58,7 +59,7 @@ class manip_class extends objet_core
 			}
 		}
 		
-		$this->data["dte_manip"]=date("Y-m-d");
+		// $this->data["dte_manip"]=date("Y-m-d");
 	
 		parent::__construct($id,$sql);
 	}

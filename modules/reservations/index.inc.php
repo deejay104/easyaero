@@ -38,7 +38,7 @@
 	}
 
 	$ress=checkVar("ress","numeric");
-	$jour=checkVar("jour","date");
+	$start=checkVar("start","varchar");
 
 	
 	$h=30;
@@ -75,34 +75,31 @@
 
 
 // ---- Affichage pour la journée
+	if ($start!="")
+	{
+		$caltime=time();
+		$_SESSION["caltime"]=$caltime;
+	}
+	else if (isset($_SESSION["caltime"]))
+	{
+		$caltime=$_SESSION["caltime"];
+	}
+	else
+	{
+		$caltime=time();
+		$_SESSION["caltime"]=$caltime;
+	}
 	
 	if ($theme=="phone")
 	{
-		if ($jour=="0000-00-00")
-		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
-		else if ($jour!="")
-		  { $myuser->Valid("aff_jour",$jour); }
-	
-		if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
-		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
-	
-		$jour=$myuser->data["aff_jour"];
+		$jour=date("Y-m-d",$caltime);
 		$tmpl_x->assign("defaultView","agendaDay");
 		$tmpl_x->assign("headerListe","agendaWeek,agendaDay");
 		$tmpl_x->assign("TexteTitre","");
 	}
 	else
 	{
-		if ($jour=="0000-00-00")
-		  { $myuser->Valid("aff_jour",date("Y-m-d",time()-24*3600*2)); }
-		  // { $myuser->Valid("aff_jour",date("Y-m-d")); }
-		else if ($jour!="")
-		  { $myuser->Valid("aff_jour",$jour); }
-	
-		if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
-		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
-	
-		$jour=date2sql($myuser->data["aff_jour"]);
+		$jour=date("Y-m-d",$caltime-24*3600*2);
 
 		$tmpl_x->assign("defaultView","agendaTwoWeeks");
 		$tmpl_x->assign("headerListe","agendaMonth,agendaFourWeeks,agendaTwoWeeks,agendaWeek,agendaDay");

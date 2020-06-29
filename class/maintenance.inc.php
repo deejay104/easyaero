@@ -28,16 +28,15 @@ class maint_class extends objet_core
 	protected $droit=array();
 	// protected $type=array("dte_deb"=>"date","dte_fin"=>"date","status"=>"enum","potentiel"=>"duration","commentaire"=>"text","cout"=>"price");
 	protected $fields=array(
-		"uid_ressource" => Array("type" => "number", "default" => "0", "Index" => "1", ),
-		"uid_atelier" => Array("type" => "number", "default" => "0", "Index"=>1),
-		"status" => Array("type" => "enum", "default" => "planifie", "Index"=>1),
-		"dte_deb" => Array("type" => "date", "default" => "0000-00-00", ),
-		"dte_fin" => Array("type" => "date", "default" => "0000-00-00", ),
+		"uid_ressource" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"uid_atelier" => Array("type" => "number", "default" => "0", "index"=>1),
+		"status" => Array("type" => "enum", "default" => "planifie", "index"=>1),
+		"dte_deb" => Array("type" => "date", "default" => "now", ),
+		"dte_fin" => Array("type" => "date", "default" => "now", ),
 		"potentiel" => Array("type" => "number", "default" => "0", ),
-		"cout" => Array("type" => "price" ),
+		"cout" => Array("type" => "price", "default"=>0, ),
 		"commentaire" => Array("type" => "text" ),
 		"uid_lastresa" => Array("type" => "number", "default" => "0", ),
-	
 	);
 	
 	protected $tabList=array(
@@ -45,23 +44,13 @@ class maint_class extends objet_core
 	);
 
 	# Constructor
-	function __construct($id=0,$sql)
-	{
-		global $gl_uid;
+	// function __construct($id=0,$sql)
+	// {
+		// global $gl_uid;
 		
-		$this->data["actif"]="oui";
-		$this->data["dte_deb"]=date("Y-m-d");
-		$this->data["dte_fin"]=date("Y-m-d");
-		$this->data["potentiel"]=0;
-		$this->data["cout"]=0;
-		$this->data["status"]="planifie";
-		$this->data["commentaire"]="";
-		$this->data["uid_ressource"]=0;
-		$this->data["uid_atelier"]=0;
-		$this->data["uid_lastresa"]=0;
 
-		parent::__construct($id,$sql);
-	}
+		// parent::__construct($id,$sql);
+	// }
 	
 	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
