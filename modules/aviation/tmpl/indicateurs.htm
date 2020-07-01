@@ -25,11 +25,11 @@
 			if (ns6)
 			  {
 			  	var a = document.getElementById("dte").value;
-			  	document.location="{url}?dte="+a;
+			  	document.location="{url}&dte="+a;
 			  }
 			else
 			  {
-			  	document.location='{url}?dte='+dte.value;
+			  	document.location='{url}&dte='+dte.value;
 			  }
 		  }
 	</script>
@@ -78,7 +78,7 @@ $(function () {
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            headerFormat: '<span style="font-size:10px">{pointkey}</span><table>',
             pointFormat: '<tr><td style="color:{seriescolor};padding:0">{seriesname} : </td><td style="padding:0"><b>{point.y:.1f} h</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
@@ -131,7 +131,7 @@ $(function () {
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            headerFormat: '<span style="font-size:10px">{pointkey}</span><table>',
             pointFormat: '<tr><td style="color:{seriescolor};padding:0">{seriesname}: </td>' +
                 '<td style="padding:0"><b>{point.y:.1f} h</b></td></tr>',
             footerFormat: '</table>',

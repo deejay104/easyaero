@@ -205,6 +205,7 @@
 
 	$tmpl_x->assign("seriesname","\{series.name\}");
 	$tmpl_x->assign("seriescolor","\{series.color\}");
+	$tmpl_x->assign("pointkey","\{{point.key}\}");
 
 
 	$txt="";

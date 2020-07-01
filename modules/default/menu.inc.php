@@ -65,7 +65,7 @@
 		"icone"=>$MyOpt["host"]."/"."static/modules/reservations/img/icn48_titre.png",
 		"nom"=>"Réservations",
 		"droit"=>"AccesReservations",
-		"url"=>geturl("reservations","",""),
+		"url"=>geturl("reservations","","start=today"),
 	);
 	$tabMenuPhone["suivivols"]=array(
 		"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn48_suivivols.png",
