@@ -89,8 +89,6 @@
 		$caltime=time();
 		$_SESSION["caltime"]=$caltime;
 	}
-
-echo date("Y-m-d",$caltime);
 	
 	if ($theme=="phone")
 	{
