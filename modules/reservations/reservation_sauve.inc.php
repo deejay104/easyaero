@@ -210,8 +210,10 @@
 	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$msg_err2.=$resa["resa"]->Save();
+		$create=false;
 		if ($id==0)
 		{
+			$create=true;
 			$id=$resa["resa"]->id;
 		}
 
@@ -219,7 +221,7 @@
 
 		if (($msg_err2=="") && ($msg_err==""))
 		{
-			if (($id==0) && ($resa["resa"]->invite=='oui'))
+			if (($create) && ($resa["resa"]->invite=='oui'))
 			{
 				$tabvar=array(
 					"dte_deb"=>sql2date($resa["resa"]->dte_deb,"jour"),
