@@ -25,6 +25,7 @@
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/echeance.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
+	require_once ($appfolder."/class/manifestation.inc.php");
 
 // ---- Charge l'utilisateur
 	$myuser = new user_class($gl_uid,$sql,true);
@@ -35,7 +36,21 @@
 	$tmpl_custom->assign("nb_vols", $myuser->NombreVols($nbmois));
 	$tmpl_custom->assign("nb_mois", $nbmois);
 
+// ---- Affiche les manifestations
+	$lstmanip=GetManifestation($sql,now(),date("Y-m-d",time()+24*3600*30));
+	if ((is_array($lstmanip)) && (count($lstmanip)>0))
+	{
+		foreach($lstmanip as $i=>$did)
+		  {
+			$manip = new manip_class($did,$sql,$gl_uid);
+			$tmpl_custom->assign("form_manifestation",$manip->Aff("titre")." le ".$manip->Aff("dte_manip"));
+			$tmpl_custom->parse("custom.manifestation.lst_manifestation");
+		  }
+			$tmpl_custom->parse("custom.manifestation");
+	}
 
+
+// ---- Affichage des informations
   	if (GetModule("compta"))
 	{
 	  	$tmpl_custom->parse("custom.mod_compta_detail");
