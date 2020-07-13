@@ -37,7 +37,7 @@
 	$tmpl_custom->assign("nb_mois", $nbmois);
 
 // ---- Affiche les manifestations
-	$lstmanip=GetManifestation($sql,now(),date("Y-m-d",time()+24*3600*30));
+	$lstmanip=GetManifestation($sql,date("Y-m-d"),date("Y-m-d",time()+24*3600*30));
 	if ((is_array($lstmanip)) && (count($lstmanip)>0))
 	{
 		foreach($lstmanip as $i=>$did)
