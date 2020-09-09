@@ -139,8 +139,8 @@
 	$dfin=(isset($resvol["dte_fin"])) ? sql2date($resvol["dte_deb"],"nosec") : "NA";
 
 	// Titre
-	imagestring($img, 5, 40, 15, "Devis de masse et centrage", $textcolor);
-	imagestring($img, 2, 40, 30, "Vol du ".$ddeb." au ".$dfin." sur le ".strtoupper($resvol["immatriculation"]), $textcolor);
+	imagestring($img, 5, 40, 15, utf8_decode("Devis de masse et centrage"), $textcolor);
+	imagestring($img, 2, 40, 30, utf8_decode("Vol du ".$ddeb." au ".$dfin." sur le ".strtoupper($resvol["immatriculation"])), $textcolor);
 
 	// Axes
 	imageline($img,20,50,20,$h-10,$black);
@@ -148,7 +148,7 @@
 	imageline($img,10,$h-20,$l-10,$h-20,$black);
 	imageline($img,$l-11,$h-21,$l-11,$h-19,$black);
 	imagestring($img, 2, $l-20, $h-20, "m", $textcolor);
-	imagestring($img, 2, 5, 50, $MyOpt["unitPoids"], $textcolor);
+	imagestring($img, 2, 5, 50, utf8_decode($MyOpt["unitPoids"]), $textcolor);
 	imagefilledrectangle($img,21,60,$l-20,$h-21,$grisclair);
 	imagerectangle($img,0,0,$l-1,$h-1,$black);
 
@@ -227,7 +227,7 @@
 	imageline($img,$t[0],$t[1]-4,$t[0],$t[1]+4,$black);
 
 	imagestring($img, 2, $t[0]-8, $h-17, "$xx", $textcolor);
-	imagestring($img, 2, $t[0]+4, $t[1]-15, "$yy ".$MyOpt["unitPoids"], $textcolor);
+	imagestring($img, 2, $t[0]+4, $t[1]-15, utf8_decode("$yy ".$MyOpt["unitPoids"]), $textcolor);
 
 
 	// Affiche l'image
@@ -248,7 +248,7 @@ function erreur($txt)
 	imagecopy($error,$logo,5,15,0,0,$width,$height);
 
 	imagestring($error, 5, 50, 15, "ERREUR", $textcolor);
-	imagestring($error, 2, 50, 30, $txt, $textcolor);
+	imagestring($error, 2, 50, 30, utf8_decode($txt), $textcolor);
 	imagepng($error);
   }
 

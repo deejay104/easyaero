@@ -124,6 +124,7 @@
 	{
 		$atelier=new atelier_class(0,$sql);
 		
+		$form_atelier=checkVar("form_atelier","array");
 		if (count($form_atelier)>0)
 		{
 			foreach($form_atelier as $k=>$v)

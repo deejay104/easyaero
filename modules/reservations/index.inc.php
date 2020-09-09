@@ -77,7 +77,11 @@
 // ---- Affichage pour la journée
 	if ($start!="")
 	{
-		$caltime=time();
+		if ($start=="today")
+		{
+			$start=date("Y-m-d");
+		}
+		$caltime=strtotime($start);
 		$_SESSION["caltime"]=$caltime;
 	}
 	else if (isset($_SESSION["caltime"]))

@@ -42,7 +42,7 @@
 		$dte_fin=date("Y-m-d H:i:s",$fin);
 		$usr_inst=new user_class($mid,$sql,false,true);
 		if ($usr_inst->CheckDisponibilite($dte_deb,$dte_fin))
-		{
+		{	
 			$ok="ok";
 			$txt="Disponible";
 		}
@@ -87,7 +87,7 @@
 	list($width, $height) = getimagesize($appfolder."/static/".$module."/".$mod."/img/icn16_".$ok.".png");
 	imagecopy($img,$logo,0,0,0,0,$width,$height);
 
-	imagestring($img, 2, 20, 2, $txt, $textcolor);
+	imagestring($img, 2, 20, 2, utf8_decode($txt), $textcolor);
 
 	// Affiche l'image
 	imagepng($img);
@@ -106,7 +106,7 @@ function erreur($txt)
 	imagefill($error,0,0,$white); 
 	imagecopy($error,$logo,0,0,0,0,$width,$height);
 
-	imagestring($error, 2, 30, 0, $txt, $textcolor);
+	imagestring($error, 2, 30, 0, utf8_decode($txt), $textcolor);
 	imagepng($error);
   }
 
