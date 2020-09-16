@@ -423,9 +423,8 @@ class resa_class extends objet_core
 		if ($this->accept!="oui")
 		  { $this->accept="non"; }
 
-		if (($MyOpt["ChkValidResa"]=="on") && ($this->accept!="oui") && ($ValidResa==false))
+		if (($MyOpt["ChkValidResa"]=="on") && ($this->accept!="oui") && ($ValidResa==false) && ($this->uid_instructeur==0))
 		  { return "Vous devez accepter les conditions de vol.<br />"; }
-
 
 
 		// Vérifie si la réservation n'empiète pas sur une autre
