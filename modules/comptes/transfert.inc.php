@@ -45,13 +45,14 @@
 
 	if ($max<0)
 	{
-		affInformation("Le compte est négatif, vous ne pouvez pas faire de transfert.","error");
+		affInformation($tabLang["lang_transferlow"],"error");
 	}
 	else if ($val>$max)
 	{
-		affInformation("Le montant du transfert est supérieur au solde du compte.","error");
+		affInformation($tabLang["lang_transferhigh"],"error");
 	}
-	else if (($fonc=="Enregistrer") && ($form_tiers>0) && ($val>0) && ($MyOpt["id_PosteTransfert"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	
+	else if (($fonc==$tabLang["lang_save"]) && ($form_tiers>0) && ($val>0) && ($MyOpt["id_PosteTransfert"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$res=new user_class($form_tiers,$sql);
 		
@@ -115,7 +116,7 @@
 	}
 
 	$tmpl_x->assign("form_montant", "0.00");
-	$tmpl_x->assign("form_commentaire", "Transféré par ".$myuser->val("fullname"));
+	$tmpl_x->assign("form_commentaire", $tabLang["lang_postcomment"]." ".$myuser->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 	
 	

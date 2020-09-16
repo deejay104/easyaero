@@ -119,18 +119,18 @@
 	$tabTitre["date_valeur"]["width"]=110;
 	if ($theme!="phone")
 	{
-		$tabTitre["mouvement"]["aff"]="Mouvement";
+		$tabTitre["mouvement"]["aff"]=$tabLang["lang_movement"];
 		$tabTitre["mouvement"]["width"]=350;
-		$tabTitre["mouvement"]["mobile"]="no";
-		$tabTitre["commentaire"]["aff"]="Commentaire";
+		// $tabTitre["mouvement"]["mobile"]="no";
+		$tabTitre["commentaire"]["aff"]=$tabLang["lang_comment"];
 		$tabTitre["commentaire"]["width"]=400;
 	}
 	else
 	{
-		$tabTitre["commentaire"]["aff"]="Commentaire";
+		$tabTitre["commentaire"]["aff"]=$tabLang["lang_comment"];
 		$tabTitre["commentaire"]["width"]=250;
 	}
-	$tabTitre["montant"]["aff"]="Montant";
+	$tabTitre["montant"]["aff"]=$tabLang["lang_amount"];
 	$tabTitre["montant"]["width"]=100;
 	$tabTitre["montant"]["calign"]="right";
 	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
@@ -139,7 +139,7 @@
 		$tabTitre["signature"]["width"]=20;
 	}
 
-	$tabTitre["solde"]["aff"]="Solde";
+	$tabTitre["solde"]["aff"]=$tabLang["lang_balance"];
 	$tabTitre["solde"]["width"]=110;
 	$tabTitre["solde"]["calign"]="right";
 

@@ -1,0 +1,11 @@
+<?php
+	$tabLang["lang_schedule"]="Schedules";
+	$tabLang["lang_bapteme"]="Baptèmes";
+	$tabLang["lang_meeting"]="Meetings";
+	$tabLang["lang_account"]="Account";
+	$tabLang["lang_club"]="Management";
+	$tabLang["lang_flight"]="Flights";
+	$tabLang["lang_plane"]="Planes";
+	$tabLang["lang_rex"]="REX";
+	$tabLang["lang_followup"]="Follow-up";
+?>

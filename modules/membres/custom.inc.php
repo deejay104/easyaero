@@ -18,7 +18,8 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-	$tmpl_custom = new XTemplate (MyRep("custom.htm"));
+	// $tmpl_custom = new XTemplate (MyRep("custom.htm"));
+	$tmpl_custom = LoadTemplate("custom");
 	$tmpl_custom->assign("path_module",$corefolder."/".$module."/".$mod);
 
 	require_once ($appfolder."/class/ressources.inc.php");

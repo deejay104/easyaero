@@ -123,20 +123,19 @@
 .lstecheance p { display: block; }
 </style>
 
-
 	<div class="encadreInfos">
-		<div class="encadreTitre">Mes Informations</div>
+		<div class="encadreTitre">{lang_mydata}</div>
 		<!-- BEGIN: mod_compta_detail -->
-		<p><label>Solde du compte pilote</label>{solde}</p>
+		<p><label>{lang_balance}</label>{solde}</p>
 		<!-- END: mod_compta_detail -->
 		<!-- BEGIN: mod_aviation_detail -->
-		<p><label>Nombre de vols dans les {nb_mois} derniers mois</label>{nb_vols} vols</p>
+		<p><label>{lang_nbflights} {nb_mois} {lang_lastmonth}</label>{nb_vols} vols</p>
 		<!-- END: mod_aviation_detail -->
 	</div>
 
 <!-- BEGIN: manifestation -->
 	<div class="encadreInfos" >
-		<div class="encadreTitre">Prochaine(s) Manifestation(s)</div>
+		<div class="encadreTitre">{lang_nextmeeting}</div>
 
 		<!-- BEGIN: lst_manifestation -->
 		<p>{form_manifestation}</p>
@@ -146,7 +145,7 @@
 
 <!-- BEGIN: aff_echeance_avion -->
 	<div class="encadreInfos" >
-		<div class="encadreTitre">Echéances avions</div>
+		<div class="encadreTitre">{lang_planedeadline}</div>
 
 		<!-- BEGIN: lst_echeance -->
 		<p class="lstecheance">{form_echeance_avion}</p>
@@ -156,10 +155,10 @@
 	
 <!-- BEGIN: aff_reservation -->
 	<div class="encadreInfos" style='height:440px;'>
-		<div class="encadreTitre">Réservations du jour</div>
+		<div class="encadreTitre">{lang_schedule}</div>
 		
 		<div id='script-warning'>
-			Erreur : <code>api.php</code> doit être accessible.
+			Error : <code>api.php</code> unreachable.
 		</div>
 
 		<div id='loading'>loading...</div>

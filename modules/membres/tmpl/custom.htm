@@ -1,77 +1,76 @@
 <!-- BEGIN: left -->
-
 	<p>
-		<label for="sexe">Sexe :</label>{form_sexe}
+		<label for="sexe">{lang_sexe}</label>{form_sexe}
 	</p>
 	<p>
-		<label for="tel_fixe">Tel domicile :</label>{form_tel_fixe}
+		<label for="tel_fixe">{lang_homephone}</label>{form_tel_fixe}
 	</p>
 	<p>
-		<label for="tel_portable">Tel portable :</label>{form_tel_portable}
+		<label for="tel_portable">{lang_mobilephone}</label>{form_tel_portable}
 	</p>
 	<p>
-		<label for="tel_bureau">Tel bureau :</label>{form_tel_bureau}
+		<label for="tel_bureau">{lang_workphone}</label>{form_tel_bureau}
 	</p>
 	<p>
-		<label for="adresse1">Adresse :</label>{form_adresse1}
+		<label for="adresse1">{lang_address}</label>{form_adresse1}
 	</p>
 	<p>
 		<label for="adresse2"></label>{form_adresse2}
 	</p>
 	<p>
-		<label for="codepostal">Code Postal :</label>{form_codepostal}
+		<label for="codepostal">{lang_zipcode}</label>{form_codepostal}
 	</p>
 	<p>
-		<label for="ville">Ville :</label>{form_ville}
+		<label for="ville">{lang_city}</label>{form_ville}
 	</p>
 
 	<p>
-		<label for="idcpt">Compte de saisie</label>{form_idcpt}
+		<label for="idcpt">{lang_account}</label>{form_idcpt}
 	</p>
 	<!-- BEGIN: disponibilite -->
 	<p>
-		<label for="disponibilite">Disponibilité par défaut</label>{form_disponibilite}
+		<label for="disponibilite">{lang_availability}</label>{form_disponibilite}
 	</p>
 	<!-- END: disponibilite -->
 	<p>
-		<label for="dte_naissance">Date de naissance</label>{form_dte_naissance}
+		<label for="dte_naissance">{lang_birthdate}</label>{form_dte_naissance}
 	</p>
 	<p>
-		<label for="dte_inscription">Date d'inscription</label>{form_dte_inscription}
+		<label for="dte_inscription">{lang_createdate}</label>{form_dte_inscription}
 	</p>
 	<p>
-		<label for="poids">Poids (en {unitPoids})</label>{form_poids}
+		<label for="poids">{lang_weight} (en {unitPoids})</label>{form_poids}
 	</p>
 
 	<!-- BEGIN: mod_aviation_lache -->
 	<p>
-		<label for="lache">Laché avions</label><span>{form_lache}</span>
+		<label for="lache">{lang_allowedplane}</label><span>{form_lache}</span>
 	</p>
 	<!-- END: mod_aviation_lache -->
 
 	<!-- BEGIN: decouvert -->
 	<p>
-		<label for="decouvert">Découvert autorisé</label>{form_decouvert}
+		<label for="decouvert">{lang_decouvert}</label>{form_decouvert}
 	</p>
 	<!-- END: decouvert -->
 
 	<!-- BEGIN: tarif -->
 	<p>
-		<label for="tarif">Tarif instructeur</label>{form_tarif}
+		<label for="tarif">{lang_price}</label>{form_tarif}
 	</p>
 	<!-- END: tarif -->
 <!-- END: left -->
 
 <!-- BEGIN: right -->
-<div class="formulaireTitre">Résumé</div>
+<div class="formulaireTitre">{lang_summary}</div>
 <div class="formulaire">
 	<!-- BEGIN: compta -->
-	<p><label>Solde du compte</label>{aff_solde}</p>
+	<p><label>{lang_balance}</label>{aff_solde}</p>
 	<!-- END: compta -->
 	<!-- BEGIN: aviation -->
-	<p><label>Nombre d'heures de vol</label>{aff_voltotal}</p>
-	<p><label>12 derniers mois</label>{aff_vol12mois}</p>
-	<p><label>Depuis début d'année</label>{aff_volannee}</p>
+	<p><label>{lang_flighthour}</label>{aff_voltotal}</p>
+	<p><label>{lang_last12month}</label>{aff_vol12mois}</p>
+	<p><label>{lang_thisyear}</label>{aff_volannee}</p>
 	<!-- END: aviation -->
 </div>
 <!-- END: right -->

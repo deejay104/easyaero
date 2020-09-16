@@ -15,20 +15,19 @@
 	<input type="hidden" name="mod" value="comptes">
 	<input type="hidden" name="rub" value="credite">
 
-	<div class='formulaireTitre' style='width:780px;'>Créditer votre compte</div>
+	<div class='formulaireTitre' style='width:780px;'>{lang_credit}</div>
 
 	
 	<div class='formulaire' style='width:780px;'>
-	<p>Vous pouvez effectuer un crédit sur votre compte. La somme sera effectivement crédité sur votre compte après validation par le trésorier, mais en attendant vous pourrez effectuer une réservation.
-	Vous pouvez laisser un commentaire sur votre crédit afin que qu'il soit identifiable plus facilement.</p>
+	<p>{lang_creditexplain}</p>
 	</div>
 	
 	<table>
 	  <tr class="tableauTitre" >
 		<th width=10>&nbsp;</th>
-		<th width=250>Type</th>
-		<th width=110>Montant</th>
-		<th width=410>Commentaire</th>
+		<th width=250>{lang_type}</th>
+		<th width=110>{lang_amount}</th>
+		<th width=410>{lang_comment}</th>
 	  </tr>
 	
 	  <tr>
@@ -51,15 +50,15 @@
 	  <TR style='border-top:1px solid #{FormulaireBackgroundNormal};'>
 		<TD></TD>
 		<TD colspan=3>
-			Solde actuel du compte {solde_reel}.<br />
-			Solde prévision du compte {solde_temp}.<br />
+			{lang_balance} {solde_reel}.<br />
+			{lang_balanceprev} {solde_temp}.<br />
 		</TD>
 	  </TR>
 
 	</table>
 
 	<br />
-	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"><br />
+	<INPUT type="submit" name="fonc" value="{lang_save}"> <INPUT type="submit" name="fonc" value="{lang_cancel}"><br />
 	
 	<!-- BEGIN: brouillon -->
 	

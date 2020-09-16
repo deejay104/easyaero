@@ -22,19 +22,18 @@
 	<br />
 <!-- END: msg_enregistre -->
 
-	<div class='formulaireTitre' style='width:780px;'>Transfère de votre compte vers celui d'un autre membre</div>
+	<div class='formulaireTitre' style='width:780px;'>{lang_tranfert}</div>
 
 	<div class='formulaire' style='width:780px;'>
-	<p>Vous pouvez effectuer un transfert de votre compte vers celui d'un autre membre. Attention, votre transfert ne peut excéder le solde de votre compte. 
-	Laisser un commentaire afin que qu'il soit plus facilement identifiable par le membre destinataire.</p>
+	<p>{lang_tranfertexplain}</p>
 	</div>
 	
 	<table>
 	  <tr class="tableauTitre" >
 		<th width=10>&nbsp;</th>
-		<th width=250>Tiers</th>
-		<th width=110>Montant</th>
-		<th width=410>Commentaire</th>
+		<th width=250>{lang_tiers}</th>
+		<th width=110>{lang_amount}</th>
+		<th width=410>lang_comment</th>
 	  </tr>
 	
 	  <tr>
@@ -57,14 +56,14 @@
 	  <TR style='border-top:1px solid #{FormulaireBackgroundNormal};'>
 		<td></td>
 		<TD colspan=3>
-			Solde actuel du compte {montant_max}.
+			{lang_balance} {montant_max}.
 		</TD>
 	  </TR>
 
 	</table>
 
 	<br />
-	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
+	<INPUT type="submit" name="fonc" value="{lang_save}"> <INPUT type="submit" name="fonc" value="{lang_cancel}">
 	
 </form>
 

@@ -48,7 +48,7 @@
 	$usr=new user_class($gl_uid,$sql);
 	$val=abs($form_montant);
 
-	if (($fonc=="Enregistrer") && ($val>0) && ($MyOpt["PosteCredite"][$form_type]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if (($fonc==$tabLang["lang_save"]) && ($val>0) && ($MyOpt["PosteCredite"][$form_type]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$ret="";
 		$dte=date("Y-m-d");

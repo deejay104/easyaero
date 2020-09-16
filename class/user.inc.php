@@ -64,7 +64,7 @@ class user_class extends user_core
 		),
 		"sexe"=>array(
 			"fr"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné"),
-			"fr"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné")
+			"en"=>array("M"=>"Male","F"=>"Female","NA"=>"Non set")
 		),
 
 			
