@@ -52,7 +52,7 @@
 	addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
 	addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&uid=".$uid),"",false);
 	addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
-	addSubMenu("","Compétences",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",true);
+	addSubMenu("","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",true);
 	addSubMenu("","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
 	affSubMenu();
 
