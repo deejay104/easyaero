@@ -77,10 +77,14 @@ $tabRoles["ModifUserIdCpt"]="Modifier le compte de saisie";
 $tabRoles["ModifUserDisponibilite"]="Modifier les disponibilités";
 $tabRoles["ModifUserDteInscription"]="Modifier la date d'inscription";
 
-$tabRoles["ModifParents"]="Modifier les parents";
+$tabRoles["CreeRessource"]="Créer une nouvelle ressource (avion)";
 $tabRoles["ModifRessourceSauve"]="Sauvegarde une ressource (avion)";
 $tabRoles["ModifRessource"]="Modifier les ressources (avion)";
 $tabRoles["ModifRessourceParametres"]="Modification des paramètres d'une ressource";
+$tabRoles["DesactiveRessource"]="Désactive une ressource (avion)";
+$tabRoles["SupprimeRessource"]="Supprimer une ressource (avion)";
+
+$tabRoles["ModifParents"]="Modifier les parents";
 $tabRoles["ModifMessage"]="Modification d'un message dans le module document";
 $tabRoles["ModifClasseur"]="Modification d'un classeur dans le module document";
 
@@ -119,13 +123,11 @@ $tabRoles["SupprimeFormation"]="Suppression d'un livret de progression";
 $tabRoles["CreeFacture"]="Créer une nouvelle facture";
 
 $tabRoles["CreeFamille"]="Créer une famille";
-$tabRoles["CreeRessource"]="Créer une nouvelle ressource (avion)";
 $tabRoles["CreeClasseur"]="Créer un nouveau classeur dans le module document";
 $tabRoles["CreeNavigation"]="Créer une navigation";
 
 $tabRoles["SupprimeActualite"]="Suppression d'une actualite";
 $tabRoles["SupprimeUser"]="Supprimer un membre";
-$tabRoles["SupprimeRessource"]="Supprimer une ressource (avion)";
 $tabRoles["SupprimeMessage"]="Supprimer un message dans le module document";
 $tabRoles["SupprimeGroupe"]="Supprimer un groupe";
 

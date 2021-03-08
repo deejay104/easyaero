@@ -143,7 +143,15 @@ class ress_class extends objet_core
 		global $gl_uid;
 		$sql=$this->sql;
 		$this->actif="off";
+		$this->data["actif"]="off";
 		$sql->Edit("ressource",$this->tbl."_ressources",$this->id,array("actif"=>'off', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
+	}
+	function Active(){
+		global $gl_uid;
+		$sql=$this->sql;
+		$this->actif="oui";
+		$this->data["actif"]="oui";
+		$sql->Edit("ressource",$this->tbl."_ressources",$this->id,array("actif"=>'oui', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
 	}
 	
 	function CalcHorametre($deb,$fin)

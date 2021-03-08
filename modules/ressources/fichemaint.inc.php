@@ -52,6 +52,7 @@
 		  	$_SESSION['tab_checkpost'][$checktime]=$checktime;
 		  	$form_description="";
 		  	$msg_ok="Fiche créée.<BR>";
+			$affrub="fiche";
 		}
 		else
 		{

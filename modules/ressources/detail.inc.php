@@ -74,6 +74,12 @@
 			return;
 	}
 
+// ---- Active la ressource
+	if (($fonc=="active") && ($id>0) && (GetDroit("DesactiveRessource")))
+	{
+		$ress->Active();
+	}
+	
 // ---- Désactive la ressource
 	if (($fonc=="desactive") && ($id>0) && (GetDroit("DesactiveRessource")))
 	{
@@ -97,13 +103,21 @@
 
 	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="oui"))
 	{
-		// $tmpl_x->parse("corps.desactive");
 		addSubMenu("","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"icn32_desactive.png",false,"Voulez-vous désactiver cet avion ?");
+	}
+	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="off"))
+	{
+		addSubMenu("","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"icn32_desactive.png",false,"Voulez-vous activer cet avion ?");
 	}
 	if ((GetDroit("SupprimeRessource")) && ($ress->data["actif"]=="off"))
 	{
 		// $tmpl_x->parse("corps.suppression");
 		addSubMenu("","Supprimer",geturl("ressources","detail","id=".$id."&fonc=delete"),"icn32_supprime.png",false,"Voulez-vous supprimer cet avion ?");
+	}	
+	if ((GetDroit("RestoreRessource")) && ($ress->data["actif"]=="non"))
+	{
+		// $tmpl_x->parse("corps.suppression");
+		addSubMenu("","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"icn32_supprime.png",false,"Voulez-vous re activer cet avion ?");
 	}
 
 	affSubMenu();
