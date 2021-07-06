@@ -129,33 +129,37 @@
 	foreach($lstusr as $i=>$id)
 	  {
 		$usr = new user_class($id,$sql,false);
-		$tabValeur[$i]["prenom"]["val"]=$usr->prenom;
-		$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
-		$tabValeur[$i]["nom"]["val"]=$usr->nom;
-		$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
-		$tabValeur[$i]["type"]["val"]=$usr->val("groupe");
-		$tabValeur[$i]["type"]["aff"]=$usr->aff("groupe");
-
-
 		$t=$usr->NbHeures($ddeb,$dfin,"");
-		$tabValeur[$i]["total"]["val"]=$t;
-		$tabValeur[$i]["total"]["aff"]=AffTemps($t);
-		$tabTotal["total"]=$tabTotal["total"]+$t;
 
-		$t=$usr->NbHeures($ddeb,$dfin,"cdb");
-		$tabValeur[$i]["cdb"]["val"]=$t;
-		$tabValeur[$i]["cdb"]["aff"]=AffTemps($t);
-		$tabTotal["cdb"]=$tabTotal["cdb"]+$t;
-		
-		$t=$usr->NbHeures($ddeb,$dfin,"dc");
-		$tabValeur[$i]["dc"]["val"]=$t;
-		$tabValeur[$i]["dc"]["aff"]=AffTemps($t);
-		$tabTotal["dc"]=$tabTotal["dc"]+$t;
+		// if (($usr->actif=="oui") || ($usr->actif=="off") || $t>0)
+		if ($t>0)
+		{
+			$tabValeur[$i]["prenom"]["val"]=$usr->prenom;
+			$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
+			$tabValeur[$i]["nom"]["val"]=$usr->nom;
+			$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
+			$tabValeur[$i]["type"]["val"]=$usr->val("groupe");
+			$tabValeur[$i]["type"]["aff"]=$usr->aff("groupe");
 
-		$t=$usr->NbHeures($ddeb,$dfin,"inst");
-		$tabValeur[$i]["inst"]["val"]=$t;
-		$tabValeur[$i]["inst"]["aff"]=AffTemps($t);
-		$tabTotal["inst"]=$tabTotal["inst"]+$t;
+			$tabValeur[$i]["total"]["val"]=$t;
+			$tabValeur[$i]["total"]["aff"]=AffTemps($t);
+			$tabTotal["total"]=$tabTotal["total"]+$t;
+
+			$t=$usr->NbHeures($ddeb,$dfin,"cdb");
+			$tabValeur[$i]["cdb"]["val"]=$t;
+			$tabValeur[$i]["cdb"]["aff"]=AffTemps($t);
+			$tabTotal["cdb"]=$tabTotal["cdb"]+$t;
+			
+			$t=$usr->NbHeures($ddeb,$dfin,"dc");
+			$tabValeur[$i]["dc"]["val"]=$t;
+			$tabValeur[$i]["dc"]["aff"]=AffTemps($t);
+			$tabTotal["dc"]=$tabTotal["dc"]+$t;
+
+			$t=$usr->NbHeures($ddeb,$dfin,"inst");
+			$tabValeur[$i]["inst"]["val"]=$t;
+			$tabValeur[$i]["inst"]["aff"]=AffTemps($t);
+			$tabTotal["inst"]=$tabTotal["inst"]+$t;
+		}
 	}
 
 	if ($order=="") { $order="nom"; }
