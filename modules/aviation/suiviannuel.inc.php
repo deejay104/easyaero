@@ -111,7 +111,7 @@
 // ---- Liste des membres
 	if (GetDroit("AccesSuiviAnnuel"))
 	{
-		$lstusr=ListActiveUsers($sql,"std","");
+		$lstusr=ListActiveUsers($sql,"std",array(),"non","all");
 	}
 	else
 	{
