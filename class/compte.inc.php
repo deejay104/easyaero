@@ -67,7 +67,7 @@ class compte_class{
 		$sql=$this->sql;
 		$query="SELECT * FROM ".$this->tbl."_mouvement WHERE id='".$poste."'";
 		$res=$sql->QueryRow($query);
-		$compte=$res["compte"];
+		$compte=(isset($res["compte"])) ? $res["compte"] : 0;
 
 		$this->tiers=$uid;
 		
@@ -235,7 +235,7 @@ class compte_class{
 			// Charge les données de la transaction précédente
 			$query="SELECT id,hash FROM ".$this->tbl."_compte WHERE id='".$prev_id."'";
 			$res=$sql->QueryRow($query);
-			$prev_hash=$res["hash"];
+			$prev_hash=(isset($res["hash"])) ? $res["hash"] : "initial";
 
 			$montant=number_format($m["montant"],2,'.','');
 			$dte_creat=now();

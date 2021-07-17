@@ -27,8 +27,13 @@
 */
 ?>
 <?
-// ---- Charge le template
-  	require_once ("class/facture.inc.php");
+	if ((!GetDroit("AccesFactures")) && (!GetMyId($fac->uid)))
+	  { FatalError("Accès non autorisé (AccesFactures)"); }
+
+  	require_once ($appfolder."/class/facture.inc.php");
+  	require_once ($appfolder."/class/user.inc.php");
+
+	$facid=checkVar("facid","varchar",10);
 
 	$tmpl_prg = new XTemplate (MyRep("vide.htm"));
 	if ($facid!="")

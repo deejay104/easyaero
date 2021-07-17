@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------------------------------------
 //   Facturation
 // ---------------------------------------------------------------------------------------------
-//   Variables  : $id - numéro du compte
+//   Variables  : $id - numÃ©ro du compte
 // ---------------------------------------------------------------------------------------------
 /*
     SoceIt v2.0 ($Revision: 432 $)
@@ -25,14 +25,22 @@
 ?>
 
 <?
-  	require_once ("class/facture.inc.php");
+	if (!GetDroit("AccesFactures")) { FatalError("AccÃ¨s non autorisÃ© (AccesFactures)"); }
+
+  	require_once ($appfolder."/class/facture.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
+	// $tmpl_x = new XTemplate (MyRep("index.htm"));
+	// $tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Initialise les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+	// $tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+	$dte=checkVar("dte","varchar",6);
+	$uid=checkVar("uid","numeric");
+	$ts=checkVar("ts","numeric");
+	$order=checkVar("order","varchar",10,"date");
+	$trie=checkVar("trie","varchar",1,"i");
 
 	if ((!is_numeric($dte)) && preg_match("/[0-9]{6}/",$dte))
 	  { $dte=""; }
@@ -41,23 +49,23 @@
 	$tmpl_x->assign("year2",date("Y"));
 
 // ---- Liste des comptes
-	if (!is_numeric($usr))
+	if (!is_numeric($uid))
 	  {
-	  	$usr=$myuser->idcpt;
+	  	$uid=$myuser->idcpt;
 	  }
 
-	if (!isset($usr))
-	  { $usr=$myuser->idcpt; }
+	if (!isset($uid))
+	  { $uid=$myuser->idcpt; }
 
-	if ((GetDroit("ListeFactures")) && ($liste==""))
-	  {		
-		if (($myuser->data["type"]!=$FacturationMembre) && ($FacturationMembre!=""))
-		  {
-			$tmpl_x->assign("id_compte", "0");
-			$tmpl_x->assign("chk_compte", "") ;
-			$tmpl_x->assign("nom_compte", "-");
-			$tmpl_x->parse("corps.aff_compte.lst_compte");
-		  }
+	if (GetDroit("ListeFactures"))
+	{		
+		// if (($myuser->data["type"]!=$FacturationMembre) && ($FacturationMembre!=""))
+		  // {
+			// $tmpl_x->assign("id_compte", "0");
+			// $tmpl_x->assign("chk_compte", "") ;
+			// $tmpl_x->assign("nom_compte", "-");
+			// $tmpl_x->parse("corps.aff_compte.lst_compte");
+		  // }
 
 		$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["facturation"]);
 
@@ -69,49 +77,17 @@
 		foreach($lst as $i=>$tmpuid)
 		  {
 		  	$resusr=new user_class($tmpuid,$sql);
-
-			$tmpl_x->assign("id_compte", $resusr->data["id"]);
-			$tmpl_x->assign("chk_compte", ($resusr->data["id"]==$usr) ? "selected" : "") ;
+			$tmpl_x->assign("id_compte", $resusr->id);
+			$tmpl_x->assign("chk_compte", ($resusr->id==$uid) ? "selected" : "") ;
 			$tmpl_x->assign("nom_compte", $resusr->fullname);
 			$tmpl_x->parse("corps.aff_compte.lst_compte");
 		}
 		$tmpl_x->parse("corps.aff_compte");
-	  }
+	}
 	else
-	  {
-		if (GetModule("creche"))
-		  {
-		  	$ok=0;
-		  	$myuser->LoadEnfants();
-			$tmpl_x->assign("id_compte", $myuser->uid);
-			$tmpl_x->assign("chk_compte", ($myuser->uid==$usr) ? "selected" : "") ;
-			$tmpl_x->assign("nom_compte", $myuser->fullname);
-			$tmpl_x->parse("corps.aff_compte.lst_compte");
-			if ($myuser->uid==$id)
-			  { $ok=1; }
-
-	  	  	foreach($myuser->data["enfant"] as $enfant)
-	  	  	  {
-	  	  		if ($enfant["id"]>0)
-	  	  		{
-					if ($enfant["id"]==$usr)
-					  { $ok=1; }
-					$tmpl_x->assign("id_compte", $enfant["id"]);
-					$tmpl_x->assign("chk_compte", ($enfant["id"]==$usr) ? "selected" : "") ;
-					$tmpl_x->assign("nom_compte", $enfant["usr"]->fullname);
-					$tmpl_x->parse("corps.aff_compte.lst_compte");
-				}
-			}
-			$tmpl_x->parse("corps.aff_compte");
-			
-			if ($ok==0)
-			  { $usr=$uid; }
-		  }
-		else
-		  {
-	  		$usr=$uid;
-	  	  }
-	  }
+	{
+  		$uid=$gl_uid;
+	}
 
 // ---- Affiche les 12 derniers mois
 
@@ -130,15 +106,15 @@
 		  { $m=12; $y=$y-1; }
 	  }
 
-// ---- Affiche le compte demandé
+// ---- Affiche le compte demandÃ©
 
 	// Nom de l'utilisateur
-	$cptusr=new user_class($usr,$sql);
+	$cptusr=new user_class($uid,$sql);
 	$tmpl_x->assign("nom_compte", $cptusr->Aff("prenom")." ".$cptusr->Aff("nom"));
 
-	$tmpl_x->assign("id_user",$usr);
+	$tmpl_x->assign("id_user",$uid);
 
-	// Définition des variables
+	// DÃ©finition des variables
 	$myColor[50]="F0F0F0";
 	$myColor[60]="F7F7F7";
 	if (!is_numeric($ts))
@@ -148,7 +124,7 @@
 
 	// Entete du tableau d'affichage
 	$tabTitre=array();
-	$tabTitre["num"]["aff"]="Numéro";
+	$tabTitre["num"]["aff"]="NumÃ©ro";
 	$tabTitre["num"]["width"]=110;
 	$tabTitre["date"]["aff"]="Date";
 	$tabTitre["date"]["width"]=110;
@@ -164,8 +140,10 @@
 	$tabTitre["prel"]["width"]=70;
 
 
-	$nbline=NbFactures($sql,$usr,$dte);
-	$lst=ListeFactures($sql,$usr,$ts,80,"id","DESC",$dte);
+	$nbline=NbFactures($sql,$uid,$dte);
+	$lst=ListeFactures($sql,$uid,$ts,80,"id","DESC",$dte);
+
+	$tabValeur=array();
 
 	if (is_array($lst))
 	  {	
@@ -173,7 +151,7 @@
 		  {
 		  	$fac=new facture_class($id,$sql);
 			$tabValeur[$i]["num"]["val"]=$fac->id;
-			$tabValeur[$i]["num"]["aff"]="<a href='index.php?mod=facturation&rub=detail&usr=".$fac->uid."&facid=".$fac->id."'>".$fac->id."</a>";
+			$tabValeur[$i]["num"]["aff"]="<a href='index.php?mod=facturation&rub=detail&uid=".$fac->uid."&facid=".$fac->id."'>".$fac->id."</a>";
 			$tabValeur[$i]["date"]["val"]=CompleteTxt($i,"20","0");
 			$tabValeur[$i]["date"]["aff"]=sql2date($fac->dte);
 			$tabValeur[$i]["rem"]["val"]=$fac->comment;
@@ -187,7 +165,7 @@
 			  }
 
 			$tabValeur[$i]["paid"]["val"]=(($fac->paid=="Y") ? "0" : AffMontant($r));
-			$tabValeur[$i]["paid"]["aff"]=(($fac->paid=="Y") ? "payée&nbsp;&nbsp;&nbsp;&nbsp;" : "<font color=red>".AffMontant($r)." &nbsp;&nbsp;</font>");
+			$tabValeur[$i]["paid"]["aff"]=(($fac->paid=="Y") ? "payÃ©e&nbsp;&nbsp;&nbsp;&nbsp;" : "<font color=red>".AffMontant($r)." &nbsp;&nbsp;</font>");
 			$tabValeur[$i]["paid"]["align"]="right";
 	
 			$m=new user_class($fac->uid,$sql);
@@ -199,20 +177,20 @@
 	  }
 
 	if ($order=="") { $order="date"; }
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,$url="usr=$usr&dte=$dte",0,80,$nbline));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,$url="uid=$uid&dte=$dte",0,80,$nbline));
 
 	if (GetDroit("CreeFacture"))
-	  {
+	{
 		$tmpl_x->parse("corps.aff_nouvellefacture");
-	  }
+	}
 
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
-	$icone=&$tmpl_x->text("icone");
+	$icone=$tmpl_x->text("icone");
 	$tmpl_x->parse("infos");
-	$infos=&$tmpl_x->text("infos");
+	$infos=$tmpl_x->text("infos");
 	$tmpl_x->parse("corps");
-	$corps=&$tmpl_x->text("corps");
+	$corps=$tmpl_x->text("corps");
 
 ?>

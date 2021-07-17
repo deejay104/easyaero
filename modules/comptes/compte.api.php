@@ -65,8 +65,6 @@
 	$solde=$res["solde"];
 
 	
-
-	
 	// Affiche les lignes
 	$query = "SELECT id,mid,uid,date_valeur,date_creat,mouvement,commentaire,montant,hash,precedent,pointe FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid='".$id."' ".$qs." ORDER BY $order $trie, id DESC LIMIT $ts,$tl";
 	$sql->Query($query);

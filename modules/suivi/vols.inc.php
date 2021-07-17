@@ -516,7 +516,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 	}
 	
 	$mvt = new compte_class(0,$sql);
-	$mvt->Generate($pilote->data["idcpt"],$poste,"Vol de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,$p,$ventil);
+	$mvt->Generate($pilote->data["idcpt"],$poste,"Vol de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,$p,$ventil,($MyOpt["facturevol"]=="on") ? "" : "NOFAC");
 	$mvt->Save();
 	$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 

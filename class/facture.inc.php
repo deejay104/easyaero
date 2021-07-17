@@ -68,6 +68,7 @@ class facture_class{
 		$this->lignes=array();
 		$this->dte_creat="";
 		$this->uid_creat="";
+		$this->reglements=array();
 
 		$clubusr = new user_class($MyOpt["uid_club"],$sql);
 
@@ -113,8 +114,14 @@ class facture_class{
 			  }
 		}
 
+		if ($this->comment=="")
+		{
+			$this->comment="Facture ".$this->id;
+		}
+
 		if (is_array($this->lignes))
 		{
+			$total=0;
 			foreach($this->lignes as $i=>$val)
 			  {
 		  	  	$query="UPDATE ".$this->tbl."_compte SET facture='".$this->id."' WHERE id='".$val["id"]."'";
@@ -128,6 +135,7 @@ class facture_class{
  	  	$query="INSERT INTO ".$this->tbl."_factures SET id='".$this->id."', uid='".$this->uid."', total='".$this->total."', dte='".now()."', dteid='".date("Ym")."', comment='".$this->comment."'";
 		$sql->Insert($query);
 	}
+
 
 	function Restant() {
 		global $MyOpt;
@@ -185,6 +193,8 @@ class facture_class{
 
 	function ChargeReglements() {
 		global $MyOpt;
+		
+		$this->reglements=array();
 		
 		$sql=$this->sql;
 		$query = "SELECT * FROM ".$this->tbl."_compte WHERE uid='".$this->uid."' AND rembfact='".$this->id."' ORDER BY date_valeur, id";

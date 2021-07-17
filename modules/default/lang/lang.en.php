@@ -3,6 +3,7 @@
 	$tabLang["lang_bapteme"]="Baptèmes";
 	$tabLang["lang_meeting"]="Meetings";
 	$tabLang["lang_account"]="Account";
+	$tabLang["lang_facturation"]="Billing";
 	$tabLang["lang_club"]="Management";
 	$tabLang["lang_flight"]="Flights";
 	$tabLang["lang_plane"]="Planes";
