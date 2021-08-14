@@ -256,7 +256,7 @@
 
 	if (($fonc=="planifier") && (($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4)))
 	{
-		$tmpl_x->assign("form_id_pilote", AffListeMembres($sql,$btm->data["id_pilote"],"form_data[id_pilote]",$type="",$sexe="",$order="std",$virtuel="non"));
+		$tmpl_x->assign("form_id_pilote", AffListeMembres($sql,$btm->data["id_pilote"],"form_data[id_pilote]","","","std","non",array("AutoriseBapteme")));
 		$tmpl_x->assign("form_id_avion",AffListeRessources($sql,$btm->data["id_avion"],"form_data[id_avion]",array("oui")));
 		$tmpl_x->assign("form_dte", $btm->aff("dte","form"));
 	  	$tmpl_x->parse("corps.submit");
@@ -270,7 +270,7 @@
 	}
 	else
 	{
-		$tmpl_x->assign("form_id_pilote", AffListeMembres($sql,$btm->data["id_pilote"],"form_data[id_pilote]",$type="",$sexe="",$order="std",$virtuel="non"));
+		$tmpl_x->assign("form_id_pilote", AffListeMembres($sql,$btm->data["id_pilote"],"form_data[id_pilote]","","","std","non",array("AutoriseBapteme")));
 		$tmpl_x->assign("form_id_avion",AffListeRessources($sql,$btm->data["id_avion"],"form_data[id_avion]",array("oui")));
 	}
 

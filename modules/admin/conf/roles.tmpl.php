@@ -169,6 +169,7 @@ $tabRoles["AccesBapteme"]="Accès à la page d'un baptème";
 $tabRoles["ModifBapteme"]="Modifier un baptème";
 $tabRoles["ModifBaptemePaye"]="Modification de la date de paiement d'un baptème";
 $tabRoles["SupprimeBapteme"]="Suppression d'un baptème";
+$tabRoles["AutoriseBapteme"]="Autorisé à effecturer des baptèmes";
 
 
 
