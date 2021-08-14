@@ -49,7 +49,7 @@ class bapteme_class extends objet_core
 
 	
 	protected $tabList=array(
-		"status"=>array("0"=>"Nouveau","1"=>"Analyse","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé"),
+		"status"=>array("0"=>"Nouveau","1"=>"Contacté","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé"),
 		"nb"=>array("1"=>"1","2"=>"2","3"=>"3"),
 		"type"=>array("btm"=>"Baptème","vi"=>"VI"),
 		"nb"=>array(
