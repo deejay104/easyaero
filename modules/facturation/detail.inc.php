@@ -4,7 +4,7 @@
 //     (@Revision: $usr$ )
 // ---------------------------------------------------------------------------------------------
 //   Variables  :
-//	$usr - id user
+//	$uid - id user
 //	$facid - id facture	
 // ---------------------------------------------------------------------------------------------
 /*
@@ -28,36 +28,40 @@
 ?>
 <?
 	if ((!GetDroit("AccesFactures")) && (!GetMyId($fac->uid)))
-	  { FatalError("Accès non autorisé (AccesFactures)"); }
+	  { FatalError("AccÃ¨s non autorisÃ© (AccesFactures)"); }
 
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("detail.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
 
+  	require_once ($appfolder."/class/facture.inc.php");
+	require_once ($appfolder."/class/compte.inc.php");
+	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Initialise les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
-  	require_once ("class/facture.inc.php");
-	require_once ("class/compte.inc.php");
 
-// ---- Création d'une facture
+	$uid=checkVar("uid","numeric");
+	$hideline=checkVar("hideline","numeric");
+	$facid=checkVar("facid","numeric");
+	$texte_paiement=checkVar("texte_paiement","varchar");
+	$form_facture=checkVar("form_facture","array");
+
+
+// ---- CrÃ©ation d'une facture
 	if (($fonc=="Enregistrer") && GetDroit("EnregistreFacture") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$fac = new facture_class(0,$sql);
 		// Enregistre les valeurs
-		$fac->uid=$usr;
-		$fac->comment="Facture ".$tabMois[date("n")]." ".date("Y");
+		$fac->uid=$uid;
 
 		// Enregistre les lignes
 		$i=0;
+		$total=0;
 	  	if (is_array($form_facture))
 		{
 			foreach($form_facture as $idcpt=>$val)
 			{
 				$fac->lignes[$i]["id"]=$idcpt;
 				$fac->lignes[$i]["montant"]=$val;
-		  	  	$total=$total+$val;
+		  	  	$total=$total+$val*1;
 		  	  	$i=$i+1;
 			}
 		}
@@ -113,7 +117,7 @@
 
 	if ($facid=="")
 	{
-		$fac->uid=$usr;
+		$fac->uid=$uid;
 	}
 
 
@@ -122,29 +126,32 @@
 	$fac->ChargeReglements();
 
 // ---- Paiement d'une facture
-	if ((($fonc=="Chèque") || ($fonc=="Virement") || ($fonc=="Prélèvement") || ($fonc=="Compte")) && ($facid!="") && GetDroit("PayerFacture") && (!isset($_SESSION['tab_checkpost'][$checktime])) )
-	  {
+	if ((($fonc=="ChÃ¨que") || ($fonc=="Virement") || ($fonc=="PrÃ©lÃ¨vement") || ($fonc=="Compte")) && ($facid!="") && GetDroit("PayerFacture") && (!isset($_SESSION['tab_checkpost'][$checktime])) )
+	{
 		$restant=$fac->Restant();
 
+		$montant=checkVar("montant","varchar",10);
+		$montantcpt=checkVar("montantcpt","varchar",10);
+
 		if ($fonc=="Compte")
-		  {
+		{
 		  	$montant=$montantcpt;
-		  }
+		}
 
 		if (abs($montant)<=abs($restant))
 		{
 
 // Utiliser la classe de compte
-// Charger $usr par la valeur présente dans la facture
+// Charger $usr par la valeur prÃ©sente dans la facture
 			
 			// Rembourse le compte membre
 			if ($fonc=="Compte")
 			{
 				// $query="SELECT description FROM ".$MyOpt["tbl"]."_mouvement WHERE id='".$MyOpt["id_PosteFacture"]."'";
 				// $res2=$sql->QueryRow($query);
-		 	  	// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$usr."', tiers='".$usr."', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Prélèvement compte pour facture $facid', date_valeur='".now()."', facture='NOFAC', rembfact='', uid_creat='$uid', date_creat='".now()."'";
+		 	  	// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$usr."', tiers='".$usr."', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='PrÃ©lÃ¨vement compte pour facture $facid', date_valeur='".now()."', facture='NOFAC', rembfact='', uid_creat='$uid', date_creat='".now()."'";
 				// $sql->Insert($query);
-		 	  	// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$usr."', tiers='".$usr."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur='".now()."', facture='NOFAC', rembfact='$facid', uid_creat='$gl_uid', date_creat='".now()."'";
+		 	  	// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$usr."', tiers='".$usr."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='RÃ¨glement facture $facid (".$fonc.")', date_valeur='".now()."', facture='NOFAC', rembfact='$facid', uid_creat='$gl_uid', date_creat='".now()."'";
 				// $sql->Insert($query);
 
 // La classe facture initialise le champ rembfact pour les 2 lignes
@@ -153,7 +160,7 @@
 				$usrfac = new user_class($fac->uid,$sql,false);
 				$mvt = new compte_class(0,$sql);
 
-				$mvt->Generate($usrfac->idcpt,$MyOpt["id_PosteFacture"],"Règlement facture ".$facid." (".$fonc.")",date("Y-m-d"),$montant,array(),'NOFAC',$facid);
+				$mvt->Generate($usrfac->idcpt,$MyOpt["id_PosteFacture"],"RÃ¨glement facture ".$facid." (".$fonc.")",date("Y-m-d"),$montant,array(),'NOFAC',$facid);
 				$mvt->mvt=array();
 				$mvt->mvt[0]["uid"]=$usrfac->idcpt;
 				$mvt->mvt[0]["tiers"]=$usrfac->idcpt;
@@ -179,13 +186,13 @@
 				$usrfac = new user_class($fac->uid,$sql,false);
 				$mvt = new compte_class(0,$sql);
 
-				$mvt->Generate($usrfac->idcpt,$MyOpt["id_PosteFacture"],"Règlement facture ".$facid." (".$fonc.")",date("Y-m-d"),$montant,array(),'NOFAC',$facid);
+				$mvt->Generate($usrfac->idcpt,$MyOpt["id_PosteFacture"],"RÃ¨glement facture ".$facid." (".$fonc.")",date("Y-m-d"),$montant,array(),'NOFAC',$facid);
 				$mvt->Save();
 				$mvt->Debite();
 
-				// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur='".now()."', facture='NOFAC', rembfact='$facid', uid_creat='$uid', date_creat='".now()."'";
+				// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='RÃ¨glement facture $facid (".$fonc.")', date_valeur='".now()."', facture='NOFAC', rembfact='$facid', uid_creat='$uid', date_creat='".now()."'";
 				// $sql->Insert($query);
-		 	  	// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_banque"]."', tiers='$usr', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur='".now()."', facture='NOFAC', rembfact='$facid', uid_creat='$gl_uid', date_creat='".now()."'";
+		 	  	// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_banque"]."', tiers='$usr', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='RÃ¨glement facture $facid (".$fonc.")', date_valeur='".now()."', facture='NOFAC', rembfact='$facid', uid_creat='$gl_uid', date_creat='".now()."'";
 				// $sql->Insert($query);
 
 				if ($MyOpt["CompenseClub"]=="on")
@@ -205,47 +212,49 @@
 		}
 		else
 		{
-		  	echo "Le montant dépasse le restant à payer";
+		  	echo "Le montant dÃ©passe le restant Ã  payer";
 		}
 	}
 
 // ---- Liste des comptes
-	if ((GetDroit("ListeFactures")) && ($liste==""))
-	  {
-		if (!isset($usr))
-		  { $usr=$gl_uid; }
+	if (GetDroit("ListeFactures"))
+	{
+		if (!isset($uid))
+		{
+			$uid=$gl_uid;
+		}
 
 		$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["facturation"],"");
 	
 		foreach($lst as $i=>$tmpuid)
 		  {
 		  	$resusr=new user_class($tmpuid,$sql);
-			$tmpl_x->assign("id_compte", $resusr->data["id"]);
-			$tmpl_x->assign("chk_compte", ($resusr->data["id"]==$usr) ? "selected" : "") ;
+			$tmpl_x->assign("id_compte", $resusr->id);
+			$tmpl_x->assign("chk_compte", ($resusr->id==$uid) ? "selected" : "") ;
 			$tmpl_x->assign("nom_compte", $resusr->fullname);
 			$tmpl_x->parse("corps.aff_compte.lst_compte");
 		}
 		$tmpl_x->parse("corps.aff_compte");
-	  }
+	}
 	else
-	  {
-	  	$usr=$gl_uid;
-	  }
+	{
+	  	$uid=$gl_uid;
+	}
 
 
-// ---- Affiche la facture demandée
+// ---- Affiche la facture demandÃ©e
 	$tmpl_x->assign("id_facture",$facid);
 
 	// Nom de l'utilisateur
-	$cptusr=new user_class($usr,$sql);
+	$cptusr=new user_class($uid,$sql);
 	$tmpl_x->assign("nom_compte", $cptusr->Aff("prenom")." ".$cptusr->Aff("nom"));
-	$tmpl_x->assign("id_user",$usr);
+	$tmpl_x->assign("id_user",$uid);
 
-	// Définition des variables
+	// DÃ©finition des variables
 	$myColor[0]="F0F0F0";
 	$myColor[1]="F7F7F7";
-	if (!is_numeric($start))
-	  { $start = 0; }
+	// if (!is_numeric($start))
+	  // { $start = 0; }
 
 	$tmpl_x->assign("titre_facture",$fac->comment);
 
@@ -260,10 +269,11 @@
 			$tmpl_x->assign("ligne_color", $myColor[$col]);
 			$col=1-$col;
 			$tmpl_x->assign("id_ligne", $v["id"]);
-			$tmpl_x->assign("designation_ligne", htmlentities($v["mouvement"],ENT_HTML5,"ISO-8859-1"));
-			$tmpl_x->assign("comment_ligne", htmlentities($v["commentaire"],ENT_HTML5,"ISO-8859-1"));
+			$tmpl_x->assign("designation_ligne", htmlentities($v["mouvement"],ENT_HTML5,"UTF-8"));
+			$tmpl_x->assign("comment_ligne", htmlentities($v["commentaire"],ENT_HTML5,"UTF-8"));
 			$tmpl_x->assign("date_ligne", date("d/m/Y",strtotime($v["date_valeur"])));
-			$tmpl_x->assign("montant_ligne", htmlentities(AffMontant(round(-$v["montant"],2)),ENT_HTML5,"ISO-8859-1"));
+			$tmpl_x->assign("aff_montant_ligne", htmlentities(AffMontant(round(-$v["montant"],2)),ENT_HTML5,"UTF-8"));
+			$tmpl_x->assign("montant_ligne", htmlentities(round(-$v["montant"],2),ENT_HTML5,"UTF-8"));
 	
 			if ($facid=="")
 			{
@@ -317,10 +327,10 @@
 	}
 
 // ---- Affiche les blocs de la page
-	if (($facid=="") && ($usr>0) && ($nb>0))
+	if (($facid=="") && ($uid>0) && ($nb>0))
 	  { 
 		if (!GetDroit("CreeFacture"))
-		  { FatalError("Accès non autorisé à cette facture (CreerFacture)"); }
+		  { FatalError("AccÃ¨s non autorisÃ© Ã  cette facture (CreerFacture)"); }
 		if  ($nb>0)
 		  {
 		  	$tmpl_x->parse("corps.edit_facture");
@@ -342,11 +352,11 @@
 
 // ---- Affiche la page
 	$tmpl_x->parse("icone");
-	$icone=&$tmpl_x->text("icone");
+	$icone=$tmpl_x->text("icone");
 	$tmpl_x->parse("infos");
-	$infos=&$tmpl_x->text("infos");
+	$infos=$tmpl_x->text("infos");
 	$tmpl_x->parse("corps");
-	$corps=&$tmpl_x->text("corps");
+	$corps=$tmpl_x->text("corps");
 
 
 ?>

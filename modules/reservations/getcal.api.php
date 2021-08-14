@@ -125,19 +125,26 @@
 	}
 
 	// Affichage du jour et de la nuit
+	// date_default_timezone_set("UTC");
+
 	for($i=floor(strtotime($start)/86400)*86400; $i<=floor(strtotime($end)/86400)*86400; $i=$i+86400)
 	{
 			$tabcs=CalculSoleil($i,-$MyOpt["terrain"]["longitude"],$MyOpt["terrain"]["latitude"]);
 
-			$input_arrays[$ii]["title"]="";
+			$input_arrays[$ii]["title"]="morning";
+			date_default_timezone_set("UTC");
 			$input_arrays[$ii]["start"]=date("c",$i);
+			date_default_timezone_set($MyOpt["timezone"]);
 			$input_arrays[$ii]["end"]=date("c",$i+$tabcs["ls"]-30*60);
 			$input_arrays[$ii]["color"]='gray';
 			$input_arrays[$ii]["rendering"]='background';
 			$ii=$ii+1;
-			$input_arrays[$ii]["title"]="";
+
+			$input_arrays[$ii]["title"]="evening";
 			$input_arrays[$ii]["start"]=date("c",$i+$tabcs["cs"]+30*60);
+			// date_default_timezone_set("UTC");
 			$input_arrays[$ii]["end"]=date("c",$i+86399);
+			// date_default_timezone_set($MyOpt["timezone"]);
 			$input_arrays[$ii]["color"]='gray';
 			$input_arrays[$ii]["rendering"]='background';
 			$ii=$ii+1;
@@ -164,7 +171,7 @@ function CalculSoleil($jour,$lo,$la)
 	// Hauteur du soleil au lever et au coucher
 	$ht = -50/60;
 	$ht = $ht * $dr;
-	// Fuseau horaire et coordonnÃ©es gÃ©ographiques
+	// Fuseau horaire et coordonnées géographiques
 	$jo=date("j",$jour);
 	$mo=date("n",$jour);
 //$la=48.905;
@@ -172,7 +179,7 @@ function CalculSoleil($jour,$lo,$la)
 	$lo=$lo*$dr;
 	$la=$la*$dr;
 	if ($mo<3) { $mo = $mo + 12; }
-	// Heure TU du milieu de la journÃ©e
+	// Heure TU du milieu de la journée
 	$h = 12 + $lo/$hr;
 	// Nombre de jours écoulés depuis le 1 Mars O h TU
 	$j = floor(30.61 * ($mo + 1)) + $jo + $h / 24 - 123;
@@ -214,19 +221,25 @@ function CalculSoleil($jour,$lo,$la)
 
 	// Lever du soleil
 	$pm = $h + $fh + ($et - $ah) / $hr;
-	if ($pm < 0) { $pm = $pm + 24; }
+	// if ($pm < 0) { $pm = $pm + 24; }
 	$hs = floor($pm);
 	$pm = floor(60 * ($pm - $hs));
-//echo "$hs:$pm ";
+// echo date("c",$jour)."=$hs:$pm ";
 	$res["ls"]=$hs*3600+$pm*60;
 
 	// Coucher du soleil
 	$pm = $h + $fh + ($et + $ah) / $hr;
-	if ($pm >24) { $pm = $pm - 24; }
+	// if ($pm >24) { $pm = $pm - 24; }
 	$hs = floor($pm);
 	$pm = floor(60 * ($pm - $hs));
-//echo " $hs:$pm, ";	
+// echo "$hs:$pm, ";	
 	$res["cs"]=$hs*3600+$pm*60;
+
+	// if ($res["cs"]>24*60)
+	// {
+		// $res["cs"]=$res["cs"]-24*60*60;
+	// }
+	// $res["cs"]=21*3600;
 	return $res;
 }
 

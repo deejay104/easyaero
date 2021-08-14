@@ -24,6 +24,12 @@
 		"droit"=>"AccesCompte",
 		"url"=>geturl("comptes","",""),
 	);
+	$tabMenu["facturation"]=array(
+		"icone"=>$MyOpt["host"]."/"."static/modules/facturation/img/icn32_titre.png",
+		"nom"=>$tabLang["lang_facturation"],
+		"droit"=>"AccesFactures",
+		"url"=>geturl("facturation","",""),
+	);
 	$tabMenu["suivi"]=array(
 		"icone"=>$MyOpt["host"]."/"."static/modules/suivi/img/icn32_titre.png",
 		"nom"=>$tabLang["lang_club"],
