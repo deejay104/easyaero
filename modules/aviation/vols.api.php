@@ -120,6 +120,7 @@
 		$ret["recordsFiltered"]=$totligne;
 		$ret["data"]=array();
 
+
 		$ii=0;
 		foreach($lstresa as $i=>$rid)
 		{

@@ -25,8 +25,8 @@ class resa_class extends objet_core
 	
 	protected $fields=array(
 		"description" => Array("type" => "text", ),
-		"dte_deb" => Array("type" => "datetime", "default" => "0000-00-00 00:00:00", ),
-		"dte_fin" => Array("type" => "datetime", "default" => "0000-00-00 00:00:00", ),
+		"dte_deb" => Array("type" => "datetime", "default" => "0000-00-00 00:00:00", "index" => "1",),
+		"dte_fin" => Array("type" => "datetime", "default" => "0000-00-00 00:00:00", "index" => "1",),
 		"uid_pilote" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_debite" => Array("type" => "number", "default" => "0", ),
 		"uid_instructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
@@ -41,7 +41,7 @@ class resa_class extends objet_core
 		"tarif" => Array("type" => "varchar", "len"=>2 ),
 		"prix" => Array("type" => "price" ),
 		"tpsestime" => Array("type" => "number", ),
-		"tpsreel" => Array("type" => "number", ),
+		"tpsreel" => Array("type" => "number", "index" => "1",),
 		"horadeb" => Array("type" => "varchar", "len"=>10, "default" => "0", ),
 		"horafin" => Array("type" => "varchar", "len"=>10, "default" => "0", ),
 		"idmaint" => Array("type" => "number"),
