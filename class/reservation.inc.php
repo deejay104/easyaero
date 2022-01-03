@@ -77,6 +77,8 @@ class resa_class extends objet_core
 		$this->actif="oui";
 		$this->reel="oui";
 		$this->edite="oui";
+		$this->dte_deb="0000-00-00";
+		$this->dte_fin="0000-00-00";
 		$this->description="";
 		$this->horadeb="0";
 		$this->horafin="0";

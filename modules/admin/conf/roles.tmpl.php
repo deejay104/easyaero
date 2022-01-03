@@ -123,7 +123,6 @@ $tabRoles["SupprimeFormation"]="Suppression d'un livret de progression";
 $tabRoles["CreeFacture"]="Créer une nouvelle facture";
 
 $tabRoles["CreeFamille"]="Créer une famille";
-$tabRoles["CreeClasseur"]="Créer un nouveau classeur dans le module document";
 $tabRoles["CreeNavigation"]="Créer une navigation";
 
 $tabRoles["SupprimeActualite"]="Suppression d'une actualite";

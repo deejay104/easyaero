@@ -27,6 +27,7 @@
 
   	$ok=1;
 	$msg_err="";
+	$notif=false;
 
 //echo "Mettre le test de résa ici";
 
@@ -123,6 +124,23 @@
 		{
 		  	if ($ok==1)
 			{
+				if ($resa["resa"]->dte_deb!=date2sql($form_dte_deb)." ".$form_hor_deb.":00")
+				{
+					$notif=true;
+				}
+				if ($resa["resa"]->dte_fin!=date2sql($form_dte_fin)." ".$form_hor_fin.":00")
+				{
+					$notif=true;
+				}
+				if ($resa["resa"]->uid_pilote!=$form_uid_pilote)
+				{
+					$notif=true;
+				}
+				if ($resa["resa"]->uid_instructeur!=$form_uid_instructeur)
+				{
+					$notif=true;
+				}
+
 				$resa["resa"]->description=$form_description;
 				$resa["resa"]->uid_pilote=$form_uid_pilote;
 				$resa["resa"]->uid_debite=$form_uid_debite;
@@ -150,6 +168,7 @@
 				{
 					$resa["resa"]->Valid("taxe",$form_data["taxe"]);
 				}
+
 			}
 
 
@@ -215,6 +234,7 @@
 		{
 			$create=true;
 			$id=$resa["resa"]->id;
+			$notif=true;
 		}
 
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
@@ -235,7 +255,7 @@
 
 			$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 
-			if ($resa["resa"]->uid_pilote!=$gl_uid)
+			if (($resa["resa"]->uid_pilote!=$gl_uid) && ($notif))
 			{
 				// $resp=new user_class($resa["resa"]->uid_pilote,$sql);
 				
@@ -253,7 +273,7 @@
 			}
 			
 			// Email l'instructeur
-			if ($resa["resa"]->uid_instructeur>0)
+			if (($resa["resa"]->uid_instructeur>0) && ($notif))
 			{
 				$resi=new user_class($resa["resa"]->uid_instructeur,$sql);
 				
@@ -279,6 +299,7 @@
 				$f[0]["data"]=$ics->to_string();
 
 				SendMailFromFile($resa["pilote"]->mail,$resi->mail,array(),"",$tabvar,"resa_inst",$f);
+				affInformation($resi->Aff("fullname","val")." a été notifié".(($resi->data["sexe"]=="F") ? "e" : "")." que la réservation a été mise à jour.","ok");
 			}
 			
 			// Valide la page
