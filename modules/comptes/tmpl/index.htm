@@ -11,17 +11,17 @@
 	<input type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="compte">
 
-<!-- BEGIN: compte -->
 <div class="formulaire">
+<!-- BEGIN: compte -->
 	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=comptes&id='+id;">
 	<!-- BEGIN: lst_compte -->
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
 	<!-- END: lst_compte -->
 	</select>
-
 	&nbsp;-&nbsp;
 <!-- END: compte -->
-	<div class="soldeCompte">{lang_total} : {solde_compte}</div>
+
+	<div class="soldeCompte formulaireTitre">{lang_total} : {solde_compte}</div>
 </div>
 <br />
 

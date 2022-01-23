@@ -80,7 +80,7 @@
 	$tmpl_custom->assign("unitPoids", $MyOpt["unitPoids"]);
 
 
-  	if (GetModule("compta"))
+  	if (((GetDroit("AccesSuiviListeComptes")) || (GetMyId($id))) && (GetModule("compta")))
 	{
 		$tmpl_custom->assign("aff_solde", $usrcus->AffSolde());
 	  	$tmpl_custom->parse("right.compta");
