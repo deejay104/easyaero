@@ -39,11 +39,15 @@ function selectAll()
 		</select>
 
 		<!-- BEGIN: aff_debite -->
-		&nbsp;- Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}">
-		<input type="submit" name="fonc" value="Débiter">
+		&nbsp;- Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}" style="width:80px!important;">
+		<input type="submit" name="fonc" value="Débiter" style="width:150px!important; margin-left:20px;">
 		<!-- END: aff_debite -->
+
+		<input type="submit" name="print" value="Imprimer" style="width:150px!important; margin-left:20px;" onClick="window.print()">
 		
 	</div>
+
+
 	<!-- BEGIN: msg_enregistre -->
 	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
 	<!-- END: msg_enregistre -->
@@ -63,7 +67,5 @@ function selectAll()
 	{aff_tableau}
 
 </FORM>
-
-
 
 <!-- END: corps -->
