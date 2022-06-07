@@ -35,11 +35,13 @@
 	$order["name"]=$c[$s[0]["column"]]["data"];
 	$order["dir"]=$s[0]["dir"];
 
-	$lstusr=ListeBaptemes($sql,array("oui"),$form_status,$crit,$order);
+	$tot=TotalBaptemes($sql,array("oui"),$form_status,$crit);
+	$ret["recordsTotal"]=$tot;
+	$ret["recordsFiltered"]=$tot;
+
+	$lstusr=ListeBaptemes($sql,array("oui"),$form_status,$crit,$order,$ts,$tl);
 
 	$ret["draw"]=$draw;
-	$ret["recordsTotal"]=count($lstusr);
-	$ret["recordsFiltered"]=count($lstusr);
 	$ret["data"]=array();
 
 
