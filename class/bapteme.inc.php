@@ -137,16 +137,16 @@ function ListeBaptemes($sql,$actif=array("oui"),$status=-2,$crit="",$order=array
 
 	if ((isset($order)) && (count($order)>0))
 	{
-		$query.=" ORDER BY ".$order["name"]." ".$order["dir"];
+		$query.=" ORDER BY ".$order["name"]." ".$order["dir"].",id";
 	}
 
 	if (($ts>0) || ($tl>0))
 	{
-		$query.=" LIMIT $ts,$tl";
+		$query.=" LIMIT ".$ts.",".$tl;
 	}
 
 	$sql->Query($query);
-
+// echo $query;
 	$res=array();
 	for($i=0; $i<$sql->rows; $i++)
 	{ 

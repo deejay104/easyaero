@@ -75,7 +75,7 @@
 		{
 			foreach ($form_tempsresa as $k=>$tps)
 			{
-				if ($tps!="")
+				if ($tps<>0)
 				{
 					$res=new resa_class($k,$sql);
 
@@ -114,6 +114,14 @@
 						DebiteVol($k,$tps,$res->uid_ressource,($res->uid_debite>0) ? $res->uid_debite : $res->uid_pilote,$res->uid_instructeur,$form_tarif[$k],$p,$pi,date('Y-m-d',strtotime($res->dte_deb)));
 					}
 				}
+				else if ($fonc=="Débiter")
+				{
+					if (($form_horadeb[$k]=="0") && ($form_horafin[$k]=="0"))
+					{
+						$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET temps='0', prix=0, tpsreel=0, edite='non' WHERE id=".$k;
+						$sql->Update($query);
+					}
+				}
 			}
 		}
 
@@ -121,7 +129,7 @@
 		{
 			foreach ($form_temps as $k=>$tps)
 			{
-				if ($tps!="")
+				if ($tps<>0)
 				{
 					$dte=date2sql($form_date[$k]);
 					if (($dte=="nok") || ($form_date[$k]==""))
@@ -302,15 +310,18 @@
 		}
 
 		// Récupère la plus vieille date de saisie des vols
-		$query = "SELECT dte_deb,horafin FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
-		$res=$sql->QueryRow($query);
-		$dte=$res["dte_deb"];
-		$horadeb_prec=$res["horafin"];
+		$horadeb_prec=0;
+
+		// $query = "SELECT dte_deb,horafin FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
+		// $res=$sql->QueryRow($query);
+		// $dte=$res["dte_deb"];
+		// $horadeb_prec=$res["horafin"];
 
 		// Liste des vols réservés
 		$query = "SELECT id ";
 		$query.= "FROM ".$MyOpt["tbl"]."_calendrier ";
-		$query.= "WHERE dte_deb>='$dte' AND dte_deb<'".now()."' AND actif='oui' AND prix=0 AND uid_avion='$idavion' ORDER BY dte_deb,horadeb";
+		// $query.= "WHERE dte_deb>='$dte' AND dte_deb<'".now()."' AND actif='oui' AND prix=0 AND uid_avion='$idavion' ORDER BY dte_deb,horadeb";
+		$query.= "WHERE dte_deb<'".now()."' AND actif='oui' AND edite='oui' AND uid_avion='".$idavion."' ORDER BY dte_deb,horadeb";
 		$sql->Query($query);
 		$tvols=array();
 		for($i=0; $i<$sql->rows; $i++)

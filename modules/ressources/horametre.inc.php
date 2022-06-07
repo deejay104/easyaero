@@ -65,6 +65,9 @@
 
 	$tabTitre["horadeb"]["aff"]="Hora Début";
 	$tabTitre["horadeb"]["width"]=110;
+
+	$tabTitre["edite"]["aff"]="Comptabilisé";
+	$tabTitre["edite"]["width"]=110;
 	
 // ---- Affiche la liste des avions
 	$tabValeur=array();
@@ -157,10 +160,17 @@
 		}
 
 		$tabValeur[$i]["horadeb"]["val"]=$resa->horadeb;
-		$tabValeur[$i]["horadeb"]["aff"]=$resa->horadeb;
+		// $tabValeur[$i]["horadeb"]["aff"]=$resa->horadeb;
 		$tabValeur[$i]["horadeb"]["aff"]=($resa_next->horafin!=$resa->horadeb) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horadeb."</div>" : $resa->horadeb;
+
 		$tabValeur[$i]["horafin"]["val"]=$resa->horafin;
 		$tabValeur[$i]["horafin"]["aff"]=($resa->horafin!=$horadeb_prec) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horafin."</div>" : $resa->horafin;
+
+		$c=array("oui"=>"Non","non"=>"Oui");
+
+		$tabValeur[$i]["edite"]["val"]=$resa->edite;
+		$tabValeur[$i]["edite"]["aff"]=(($resa->edite=="oui") && ($resa->tpsreel>0)) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$c[$resa->edite]."</div>" : $c[$resa->edite];
+		$tabValeur[$i]["edite"]["align"]="center";
 
 		$horadeb_prec=$resa->horadeb;
 

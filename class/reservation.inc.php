@@ -156,8 +156,8 @@ class resa_class extends objet_core
 		  {
 				$query = "SELECT horafin FROM ".$this->tbl."_calendrier WHERE dte_fin<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 				$res2 = $sql->QueryRow($query);
-				$this->horadeb=$res2["horafin"];
-				$this->horadeb_orig=$res2["horafin"];
+				$this->horadeb=(isset($res2["horafin"])) ? $res2["horafin"] : 0;
+				$this->horadeb_orig=(isset($res2["horafin"])) ? $res2["horafin"] : 0;
 		  }
 
 	}
