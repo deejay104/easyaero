@@ -33,7 +33,7 @@ $tabValeurRex["cancel"]="Annulé";
 class rex_class extends objet_core
 {
 	protected $table="rex";
-	protected $mod="ressources";
+	protected $mod="aviation";
 	protected $rub="rexdetail";
 
 	protected $droit=array("status"=>"ModifRexStatus","planaction"=>"ModifRexSynthese","synthese"=>"ModifRexSynthese");

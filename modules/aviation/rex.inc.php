@@ -36,7 +36,7 @@
 // ---- Affiche le sous-menu
 	if (GetDroit("CreeRex"))
 	{
-		addSubMenu("","Créer",geturl("ressources","rexdetail","id=0"),"icn32_ajouter.png",false,"");
+		addSubMenu("","Créer",geturl("aviation","rexdetail","id=0"),"icn32_ajouter.png",false,"");
 		affSubMenu();
 	}
 

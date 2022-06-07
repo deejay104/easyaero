@@ -10,11 +10,11 @@
 <!-- BEGIN: corps -->
 
 
-<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+<!-- <p class="lastupdate">Dernière mise à jour : {info_maj}</p> -->
 
 <FORM name="rex" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="ressources">
+	<INPUT type="hidden" name="mod" value="aviation">
 	<INPUT type="hidden" name="rub" value="rexdetail">
 	<INPUT type="hidden" name="id" value="{id}">
 
@@ -23,6 +23,7 @@
 	<div class="formulaire">
 		<label>Titre</label>{form_titre}<br />
 		<label>Date de création</label>{form_dte_rex}<br />
+		<label>Dernière modification</label>{form_dte_maj}<br />
 		<label>Status</label>{form_status}<br />
 	</div>
 

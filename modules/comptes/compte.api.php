@@ -139,7 +139,7 @@
 			$aff="";
 			if ($confirm["res"]=="ok")
 			{
-				$aff="<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>";
+				$aff="<img src='static/images/icn16_signed.png' title='Signature de la transaction confirmée' />";
 				if ($fonc!="showhash")
 				{
 					$tabValeur[$i]["hash"]["val"]="";
@@ -148,12 +148,12 @@
 			}
 			else if ($confirm["res"]=="nok")
 			{
-				$aff="<a title='Cette transaction ou la précédente sont altérées.\nID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."'><img src='static/images/icn16_warning.png' /></a>";
+				$aff="<img src='static/images/icn16_warning.png' title='Cette transaction ou la précédente sont altérées. ID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."' />";
 				$tabValeur[$i]["hash"]["aff"]="<s>".$tabValeur[$i]["hash"]["val"]."</s><br />".$confirm["hash"];
 			}
 			else if ($confirm["res"]=="mvt")
 			{
-				$aff="<a title=\"Le mouvement n'a pas un total nul. Une des transaction a pu être altérée.\nMouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\"><img src='static/images/icn16_warning.png' /></a>";
+				$aff="<img src='static/images/icn16_warning.png' title=\"Le mouvement n'a pas un total nul. Une des transaction a pu être altérée. Mouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\" />";
 			}
 			
 			$tabValeur[$i]["signature"]["val"]=$confirm;
@@ -175,7 +175,6 @@
 		if (GetDroit("AfficheSignatureCompte"))
 		{
 					$ret["data"][$i]["signature"]=$d["signature"]["aff"];
-
 		}
 	}
 

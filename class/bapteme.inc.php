@@ -49,7 +49,7 @@ class bapteme_class extends objet_core
 
 	
 	protected $tabList=array(
-		"status"=>array("0"=>"Nouveau","1"=>"Contacté","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé"),
+		"status"=>array("0"=>"Nouveau","1"=>"Contacté","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé","7"=>"Bon envoyé"),
 		"nb"=>array("1"=>"1","2"=>"2","3"=>"3"),
 		"type"=>array("btm"=>"Baptème","vi"=>"VI"),
 		"nb"=>array(
@@ -87,35 +87,58 @@ class bapteme_class extends objet_core
 
 
 
-function ListeBaptemes($sql,$actif=array("oui"),$status=-2)
+function ListeBaptemes($sql,$actif=array("oui"),$status=-2,$crit="",$order=array())
 { global $MyOpt;
 	$txt="1=0";
 	foreach($actif as $a)
-	  {
+	{
 	  	$txt.=" OR actif='$a'";
-	  }
+	}
 
 	if (!is_numeric($status))
-	  { $status=-2; }
+	{
+		$status=-2;
+	}
 
 	if (($status==-2) && (GetDroit("ModifBapteme")))
-	  {
+	{
 	  	$st="status<>'5' AND status<>'6'";
-	  }
+	}
 	else if ($status==-2)
-	  {
+	{
 	  	$st="status<>'0' AND status<>'1' AND status<>'5' AND status<>'6'";
-	  }
+	}
 	else if ($status==-1)
-	  {
+	{
 	  	$st="1=1";
-	  }
+	}
 	else
-	  {
+	{
 	  	$st="status='".$status."'";
-	  }
+	}
 
-	$query = "SELECT id FROM ".$MyOpt["tbl"]."_bapteme WHERE ($txt) AND ($st)";
+	$c="";
+	if ($crit!="")
+	{
+		$c.="AND (";
+		$c.="num LIKE '%".$crit."%'";
+		$c.="OR nom LIKE '%".$crit."%'";
+		$c.="OR passager LIKE '%".$crit."%'";
+		$c.="OR telephone LIKE '%".$crit."%'";
+		$c.="OR mail LIKE '%".$crit."%'";
+		$c.="OR dte LIKE '%".$crit."%'";
+		$c.="OR mail LIKE '%".$crit."%'";
+		$c.="OR status LIKE '%".$crit."%'";
+		$c.="OR description LIKE '%".$crit."%'";
+		$c.=")";
+	}
+
+	$query = "SELECT id FROM ".$MyOpt["tbl"]."_bapteme WHERE ($txt) AND ($st) ".$c;
+
+	if ((isset($order)) && (count($order)>0))
+	{
+		$query.=" ORDER BY ".$order["name"]." ".$order["dir"];
+	}
 
 	$sql->Query($query);
 	$res=array();

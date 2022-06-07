@@ -260,6 +260,11 @@ class resa_class extends objet_core
 		$query.="WHERE cal.idmaint>0 AND maint.actif='oui' AND ".(($affvol=="fin") ? "cal.dte_deb" : "cal.dte_fin")."<'".$this->dte_deb."' AND cal.uid_avion='".$this->uid_ressource."' ORDER BY cal.dte_fin DESC LIMIT 0,1";
 		$resvol=$sql->QueryRow($query);
 
+		if (!is_array($resvol))
+		{
+			$resvol=array("dte_deb"=>"0000-00-00","tot"=>0);
+		}
+
 		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_deb>'".$resvol["dte_deb"]."' AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 		$respot=$sql->QueryRow($query);
 

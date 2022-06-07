@@ -57,10 +57,10 @@
 			"url"=>geturl("ressources","",""),
 		);
 		$tabMenu["rex"]=array(
-			"icone"=>$MyOpt["host"]."/"."static/modules/ressources/img/icn32_rex.png",
+			"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_rex.png",
 			"nom"=>$tabLang["lang_rex"],
 			"droit"=>"AccesRex",
-			"url"=>geturl("ressources","rex",""),
+			"url"=>geturl("aviation","rex",""),
 		);
 		$tabMenu["indicateurs"]=array(
 			"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_indicateurs.png",

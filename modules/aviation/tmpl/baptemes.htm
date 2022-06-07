@@ -8,24 +8,14 @@
 
 <!-- BEGIN: corps -->
 
-	<script language="JavaScript">
-		var ns4=document.layers
-		var ie4=document.all
-		var ns6=document.getElementById&&!document.all
-	
-		function Recharge()
-		  {
-			if (ns6)
-			  {
-			  	var a = document.getElementById("form_status").value;
-			  	document.location="index.php?mod=aviation&rub=baptemes&form_status="+a+"";
-			  }
-			else
-			  {
-			  	document.location="index.php?mod=aviation&rub=baptemes&form_status="+form_status.value+"&scale=yes";
-			  }
-		  }
-	</script>
+<script language="JavaScript">
+function Recharge()
+{
+	<!-- document.location="index.php?mod=aviation&rub=baptemes&form_status="+form_status.value+"&scale=yes"; -->
+	$('#tbl_baptemes').DataTable().ajax.url("/api/v1/aviation/baptemes?status="+$('#form_status').val());
+	$('#tbl_baptemes').DataTable().ajax.reload();
+}
+</script>
 
 <div class="formulaire">
 	Filtrer la liste des baptèmes : 

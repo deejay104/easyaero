@@ -59,46 +59,18 @@
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_ressources WHERE id='".$res["uid_avion"]."'";
 
 	$resavion=$sql->QueryRow($query);
-	$data=$resavion["centrage"];
+	$data=json_decode($resavion["centrage"],true);
 
-	// Décode les données de l'avion
-	$parser = xml_parser_create();
-	xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
-	xml_parser_set_option($parser,XML_OPTION_SKIP_WHITE,1);
-	xml_parse_into_struct($parser,$data,$values,$tags);
-	xml_parser_free($parser);
-
-	$tabplace=array();
-
-	// boucle à travers les structures
-	foreach ($tags as $key=>$val)
+	foreach ($data as $key=>$t)
 	{
-		if ($key == "place")
-		{
-			$ranges = $val;
-			// each contiguous pair of array entries are the
-			// lower and upper range for each molecule definition
-			for ($i=0; $i < count($ranges); $i+=2)
-			  {
-				$offset = $ranges[$i] + 1;
-				$len = $ranges[$i + 1] - $offset;
-				$t = parsePlace(array_slice($values, $offset, $len));
-				$tabplace[$t["id"]]=$t;
-				$tabplace[$t["id"]]["idpilote"]=0;
-				$tabplace[$t["id"]]["idenr"]=0;
-			  }
-		}
-		else
-		{
-			continue;
-		}
-	}
-
-	function parsePlace($mvalues)
-	{
-		for ($i=0; $i < count($mvalues); $i++)
-		$t[$mvalues[$i]["tag"]] = $mvalues[$i]["value"];
-		return $t;
+		$tabplace[$key]["id"]=$key;
+		$tabplace[$key]["name"]=(isset($t["name"])) ? $t["name"] : "";
+		$tabplace[$key]["bras"]=(isset($t["bras"])) ? $t["bras"] : 1;
+		$tabplace[$key]["coef"]=(isset($t["coef"])) ? $t["coef"] : 1;
+		$tabplace[$key]["type"]=(isset($t["type"])) ? $t["type"] : "";
+		$tabplace[$key]["poids"]=(isset($t["poids"])) ? $t["poids"] : 0;
+		$tabplace[$key]["idpilote"]=0;
+		$tabplace[$key]["idenr"]=0;
 	}
 
 	// Récupère la liste des passagers

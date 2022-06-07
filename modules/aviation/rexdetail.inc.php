@@ -114,40 +114,25 @@
 		affInformation($msg_confirmation,"ok");
 	}
 
-// ---- Menu
-// <div class="pagetitle pagemenu">
-	// <A href="index.php?mod=ressources&rub=rex"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
-// <!-- BEGIN: editer -->
-	// <A href="index.php?mod=ressources&rub=rexdetail&fonc=editer&id={id}"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
-// <!-- END: editer -->
-// <!-- BEGIN: supprimer -->
-	// <A href="index.php?mod=ressources&rub=rexdetail&fonc=supprimer&id={id}"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">Supprimer</A>
-// <!-- END: supprimer -->
-	// <a href="index.php?mod=ressources&rub=rexdetail&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a>
-// <!-- BEGIN: notifier -->
-	// <a href="index.php?mod=ressources&rub=rexdetail&id={id}&fonc=notifier"><img src="{path_module}/img/icn32_notifier.png" alt="">Notifier</a>
-// <!-- END: notifier -->
-// </div>
-
-	addSubMenu("","Liste",geturl("ressources","rex",""),"icn32_retour.png",false,"");
+	addSubMenu("","Liste",geturl("aviation","rex",""),"icn32_retour.png",false,"");
 	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat))
 	{
-		addSubMenu("","Modifier",geturl("ressources","rexdetail","fonc=editer&id=".$id),"icn32_modifier.png",false,"");
+		addSubMenu("","Modifier",geturl("aviation","rexdetail","fonc=editer&id=".$id),"icn32_modifier.png",false,"");
 	}
 	if (GetDroit("SupprimeRex"))
 	{
-		addSubMenu("","Supprimer",geturl("ressources","rexdetail","fonc=supprimer&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer ce REX ?");
+		addSubMenu("","Supprimer",geturl("aviation","rexdetail","fonc=supprimer&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer ce REX ?");
 	}	
-	addSubMenu("","Imprimer",geturl("ressources","rexdetail","fonc=imprimer&id=".$id),"icn32_printer.png",false,"");
+	addSubMenu("","Imprimer",geturl("aviation","rexdetail","fonc=imprimer&id=".$id),"icn32_printer.png",false,"");
 	if ((GetDroit("NotifierRex")) && ($rex->data["status"]=="close"))
 	{
-		addSubMenu("","Notifier",geturl("ressources","rexdetail","fonc=notifier&id=".$id),"icn32_notifier.png",false,"");
+		addSubMenu("","Notifier",geturl("aviation","rexdetail","fonc=notifier&id=".$id),"icn32_notifier.png",false,"");
 	}
 	affSubMenu();
 
 // ---- Infos de dernières maj
 	$usrmaj = new user_class($rex->uid_maj,$sql);
-	$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($rex->dte_maj));
+	$tmpl_x->assign("form_dte_maj", sql2date($rex->dte_maj,"jour"));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

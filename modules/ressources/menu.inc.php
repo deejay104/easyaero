@@ -37,10 +37,6 @@
 		// $tmpl_menu->parse("infos.maintenance");
 		addPageMenu("",$mod,"Maintenances",geturl("ressources","liste",""),"icn32_maintenance.png",(($rub=="liste") || ($rub=="detailmaint")) ? true : false);
 	}
-	if (GetDroit("AccesRex"))
-	{
-		// $tmpl_menu->parse("infos.rex");
-		addPageMenu("",$mod,"REX",geturl("ressources","rex",""),"icn32_rex.png",(($rub=="rex") || ($rub=="rexdetail")) ? true : false);
-	}
+
 
 ?>

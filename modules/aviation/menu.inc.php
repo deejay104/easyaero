@@ -35,5 +35,9 @@
 		$sel=true;
 	}
 	addPageMenu("","aviation","Livret de progression",geturl("aviation","syntheses",""),"icn32_synthese.png",$sel);
-
+	if (GetDroit("AccesRex"))
+	{
+		// $tmpl_menu->parse("infos.rex");
+		addPageMenu("",$mod,"REX",geturl("aviation","rex",""),"icn32_rex.png",(($rub=="rex") || ($rub=="rexdetail")) ? true : false);
+	}
 ?>
