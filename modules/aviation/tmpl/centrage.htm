@@ -23,7 +23,7 @@
 	<!-- BEGIN: lst_passager -->
 	<p>
 		<label for="passager{passager_id}">{passager_txt}</label>
-		<span id="passager{passager_id}" style="width: 250px;">
+		<span id="passager{passager_id}" style="min-width: 200px;">
 		<!-- BEGIN: aff_pilote -->
 			<select name="form_passager_pilote[{passager_id}]" OnChange="document.getElementById('maj').value='{passager_id}'; reservation.submit();">
 				<option value="0">Aucun</option>
@@ -35,7 +35,7 @@
 		<!-- END: aff_pilote -->
 		&nbsp;
 		</span>		
-		<input type="text" name="form_passager_poids[{passager_id}]" value="{passager_poids}" size="3" /> {passager_unite}
+		<input type="text" name="form_passager_poids[{passager_id}]" value="{passager_poids}" style="width:70px!important;" /> {passager_unite}
 	</p>
 	<!-- END: lst_passager -->
 

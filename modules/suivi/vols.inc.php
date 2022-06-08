@@ -96,12 +96,15 @@
 						}
 					}
 
+
 					// S'il y a une réduction de temps on l'a soustrait au temps pilote
+					$pc=0;
 					if ($tabTarif[$res->uid_ressource][$form_tarif[$k]]["reduction"]>0)
 					{
-						$p=round($tabTarif[$res->uid_ressource][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$res->uid_ressource][$form_tarif[$k]]["reduction"])/60,2);
+						// $pc=round($tabTarif[$res->uid_ressource][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$res->uid_ressource][$form_tarif[$k]]["reduction"])/60,2);
+						$pc=round($tabTarif[$res->uid_ressource][$form_tarif[$k]]["pilote"]*($tabTarif[$res->uid_ressource][$form_tarif[$k]]["reduction"])/60,2);
 					}
-			
+
 					$res->horadeb=$form_horadeb[$k];
 					$res->horafin=$form_horafin[$k];
 					$res->temps=$tps;
@@ -111,7 +114,8 @@
 
 					if ($fonc=="Débiter")
 					{
-						DebiteVol($k,$tps,$res->uid_ressource,($res->uid_debite>0) ? $res->uid_debite : $res->uid_pilote,$res->uid_instructeur,$form_tarif[$k],$p,$pi,date('Y-m-d',strtotime($res->dte_deb)));
+						DebiteVol($k,$tps,$res->uid_ressource,($res->uid_debite>0) ? $res->uid_debite : $res->uid_pilote,$res->uid_instructeur,$form_tarif[$k],$p,$pi,$pc,date('Y-m-d',strtotime($res->dte_deb)));
+
 					}
 				}
 				else if ($fonc=="Débiter")
@@ -163,9 +167,11 @@
 						}
 
 						// S'il y a une réduction de temps on l'a soustrait au temps pilote
+						$pc=0;
 						if ($tabTarif[$uid_a][$form_tarif[$k]]["reduction"]>0)
 						{
-							$p=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$uid_a][$form_tarif[$k]]["reduction"])/60,2);
+							// $pc=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$uid_a][$form_tarif[$k]]["reduction"])/60,2);
+							$pc=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$uid_a][$form_tarif[$k]]["reduction"])/60,2);
 						}
 
 					  	if (!isset($_SESSION['tab_checkpost'][$checktime]))
@@ -190,7 +196,7 @@
 
 						if ($fonc=="Débiter")
 						{
-							DebiteVol($id,$tps,$uid_a,$uid_p,$uid_i,$tarif,$p,$pi,$dte);
+							DebiteVol(0,$tps,$uid_a,$uid_p,$uid_i,$tarif,$p,$pi,$pc,$dte);
 						}
 					}
 				}
@@ -496,7 +502,7 @@
 // ---- FONCTIONS
 
 
-function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p,$pi,$dte)
+function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p,$pi,$pc,$dte)
 {
 	global $MyOpt, $uid,$tmpl_x,$sql,$tabTarif;
 
@@ -525,6 +531,30 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$ventil["data"][0]["tiers"]=$tier;
 		$ventil["data"][0]["montant"]=$p;
 	}
+
+	if ($pc<>0)
+	{
+		$ventil=array();
+		$ventil["ventilation"]="debiteur";
+
+		if ($pc>=$p)
+		{
+			$pilote = new user_class($MyOpt["uid_club"],$sql);
+			$ventil["data"][0]["poste"]=$tabTarif[$idavion][$tarif]["poste"];
+			$ventil["data"][0]["tiers"]=$MyOpt["uid_club"];
+			$ventil["data"][0]["montant"]=$p;
+		}
+		else
+		{
+			$ventil["data"][0]["poste"]=$ress->data["poste"];
+			$ventil["data"][0]["tiers"]=$tier;
+			$ventil["data"][0]["montant"]=$p-$pc;
+			$ventil["data"][1]["poste"]=$tabTarif[$idavion][$tarif]["poste"];
+			$ventil["data"][1]["tiers"]=$MyOpt["uid_club"];
+			$ventil["data"][1]["montant"]=$pc;
+		}
+		
+	}
 	
 	$mvt = new compte_class(0,$sql);
 	$mvt->Generate($pilote->data["idcpt"],$poste,"Vol de $temps min (".$ress->val("immatriculation")."/$tarif)",$dte,$p,$ventil,($MyOpt["facturevol"]=="on") ? "" : "NOFAC");
@@ -548,6 +578,18 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$tmpl_x->assign("form_calid","0");
 		$tmpl_x->parse("corps.enregistre.lst_enregistre");
 	}
+
+	// if ($pc<>0)
+	// {
+		// $mvt = new compte_class(0,$sql);
+		// $mvt->Generate($pilote->data["idcpt"],$poste,"Remb. convoyage (".$ress->val("immatriculation")."/$tarif)",$dte,-$pc,array());
+		// $mvt->Save();
+		// $tmpl_x->assign("enr_mouvement",$mvt->Affiche());
+
+		// $tmpl_x->assign("form_mvtid",$mvt->id);
+		// $tmpl_x->assign("form_calid","0");
+		// $tmpl_x->parse("corps.enregistre.lst_enregistre");
+	// }
 }
 
 ?>

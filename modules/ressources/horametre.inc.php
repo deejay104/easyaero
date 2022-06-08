@@ -53,8 +53,8 @@
 
 	if ($theme!="phone")
 	{
-		$tabTitre["dest"]["aff"]="Lieu";
-		$tabTitre["dest"]["width"]=100;
+		$tabTitre["dest"]["aff"]="Destination";
+		$tabTitre["dest"]["width"]=150;
 		$tabTitre["dest"]["mobile"]="no";
 	}
 	$tabTitre["heure"]["aff"]="Temps de vol";
