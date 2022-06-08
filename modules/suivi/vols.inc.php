@@ -444,28 +444,34 @@
 
 
 
+		// Liste des pilotes
+		// $lstPilotes=ListActiveUsers($sql,"prenom,nom",array("TypePilote"),"","",array("prenom","nom","idcpt"));
+		$lstPilotes=ListUsers($sql,array("prenom","nom","idcpt"),array("virtuel"=>"non"),array("TypePilote"),array("prenom","nom"));
+
+		// Liste des instructeurs
+		// $lstInstructeurs=ListActiveUsers($sql,"prenom,nom",array("TypeInstructeur"),"");
+		$lstInstructeurs=ListUsers($sql,array("prenom","nom","idcpt"),array("virtuel"=>"non"),array("TypeInstructeur"),array("prenom","nom"));
+
+
 		// Liste vierge
 		for($ii=0; $ii<5; $ii++)
 		{ 
-			// Liste des pilotes
-			$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"),"");
 		
-			foreach($lst as $i=>$id)
+			foreach($lstPilotes as $i=>$v)
 			{
-			  	$resusr=new user_class($id,$sql);
-
-				$tmpl_x->assign("id_pilote", $resusr->idcpt);
-				$tmpl_x->assign("nom_pilote",  $resusr->Aff("fullname","val"));
+			  	// $resusr=new user_class($id,$sql);
+				// $tmpl_x->assign("id_pilote", $resusr->idcpt);
+				// $tmpl_x->assign("nom_pilote",  $resusr->Aff("fullname","val"));
+				$tmpl_x->assign("id_pilote", $v["idcpt"]);
+				$tmpl_x->assign("nom_pilote",   AffFullname($v["prenom"],$v["nom"]));
 				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_pilote");
 			}
 
-			// Liste des instructeurs
-			$lst=ListActiveUsers($sql,"prenom,nom",array("TypeInstructeur"),"");
-			foreach($lst as $i=>$id)
+			foreach($lstInstructeurs as $i=>$v)
 			{ 
 				$resusr=new user_class($id,$sql);
-				$tmpl_x->assign("id_instructeur", $resusr->idcpt);
-				$tmpl_x->assign("nom_instructeur", $resusr->Aff("fullname","val"));
+				$tmpl_x->assign("id_instructeur", $v["idcpt"]);
+				$tmpl_x->assign("nom_instructeur", AffFullname($v["prenom"],$v["nom"]));
 				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_instructeur");
 			}
 
@@ -475,9 +481,7 @@
 				{ 
 					$tmpl_x->assign("tarif_code", $c);
 					$tmpl_x->assign("tarif_nom", $t["nom"]);
-
 					$tmpl_x->assign("tarif_selected", "");
-
 					$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_tarifs");	
 				}
 			}
@@ -578,18 +582,6 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$tmpl_x->assign("form_calid","0");
 		$tmpl_x->parse("corps.enregistre.lst_enregistre");
 	}
-
-	// if ($pc<>0)
-	// {
-		// $mvt = new compte_class(0,$sql);
-		// $mvt->Generate($pilote->data["idcpt"],$poste,"Remb. convoyage (".$ress->val("immatriculation")."/$tarif)",$dte,-$pc,array());
-		// $mvt->Save();
-		// $tmpl_x->assign("enr_mouvement",$mvt->Affiche());
-
-		// $tmpl_x->assign("form_mvtid",$mvt->id);
-		// $tmpl_x->assign("form_calid","0");
-		// $tmpl_x->parse("corps.enregistre.lst_enregistre");
-	// }
 }
 
 ?>
