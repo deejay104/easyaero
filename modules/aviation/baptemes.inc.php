@@ -119,7 +119,7 @@
 	if ((!isset($order)) || ($order=="")) { $order="status"; }
 	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
 
-	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"baptemes","","status=".$form_status),$order,$trie,true,5,"tbl_baptemes"));
+	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"baptemes","","status=".$form_status),$order,$trie,true,25,"tbl_baptemes"));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
