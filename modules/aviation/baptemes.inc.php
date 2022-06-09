@@ -102,10 +102,6 @@
 	$tabTitre["paye"]["mobile"]="no";
 	$tabTitre["paye"]["mobile"]=($theme=="phone") ? "no" : "";
 
-	$tabTitre["date"]["aff"]="Date prévue";
-	$tabTitre["date"]["width"]=170;
-	$tabTitre["date"]["mobile"]=($theme=="phone") ? "no" : "";
-
 	$tabTitre["pilote"]["aff"]="Pilote";
 	$tabTitre["pilote"]["width"]=180;
 	$tabTitre["pilote"]["mobile"]=($theme=="phone") ? "no" : "";
@@ -114,6 +110,9 @@
 	$tabTitre["resa"]["width"]=100;
 	$tabTitre["resa"]["mobile"]=($theme=="phone") ? "no" : "";
 
+	$tabTitre["date"]["aff"]="Date prévue";
+	$tabTitre["date"]["width"]=170;
+	$tabTitre["date"]["mobile"]=($theme=="phone") ? "no" : "";
 
 
 	if ((!isset($order)) || ($order=="")) { $order="status"; }

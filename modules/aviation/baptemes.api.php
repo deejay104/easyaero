@@ -74,7 +74,7 @@
 		}
 
 		$tabValeur[$i]["date"]["val"]=strtotime($btm->data["dte"]);
-		$tabValeur[$i]["date"]["aff"]=$btm->aff("dte","html");
+		$tabValeur[$i]["date"]["aff"]=($btm->data["dte"]!='0000-00-00 00:00:00') ? $btm->aff("dte","html") : "-";
 
 		$usr = new user_class($btm->data["id_pilote"],$sql,true);
 
