@@ -14,6 +14,14 @@ function Recharge()
 	{
 		var type='12';
 	}
+	else if (document.getElementById('form_type_01').checked)
+	{
+		var type='01';
+	}
+	else if (document.getElementById('form_type_00').checked)
+	{
+		var type='00';
+	}
 	else
 	{
 		var type='an';
@@ -23,15 +31,16 @@ function Recharge()
 </script>
 
 <div class="formulaire">
-		Année : 
+		<input type="radio" id="form_type_an" name="form_type" value="an" {chk_annuel} OnChange="Recharge();"> Année
 		<SELECT id="form_date" name="form_date" OnChange="Recharge();">
 		<!-- BEGIN: lst_annee -->
 			<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
 		<!-- END: lst_annee -->
 		</SELECT>
 
-		<input type="radio" id="form_type_an" name="form_type" value="an" {chk_annuel} OnChange="Recharge();"> Année
-		<input type="radio" id="form_type_12" name="form_type" value="12" {chk_12mois} OnChange="Recharge();"> 12 mois
+		<input type="radio" id="form_type_12" name="form_type" value="12" {chk_12mois} OnChange="Recharge();"> 12 derniers mois
+		<input type="radio" id="form_type_01" name="form_type" value="mois" {chk_01mois} OnChange="Recharge();"> Mois en cours
+		<input type="radio" id="form_type_00" name="form_type" value="mois" {chk_00mois} OnChange="Recharge();"> Mois précédent
 </div>
 <br />
 {tab_liste}

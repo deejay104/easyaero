@@ -273,10 +273,12 @@
 			dataType: 'JSON',
 
 			success: function(response) {
-				$("#affpedagogique").text("");
-				$("#affexercices").text("");
+				<!-- $("#affpedagogique").text(""); -->
+				<!-- $("#affexercices").text(""); -->
+				<!-- $("#affpannes").text(""); -->
 				var txtpeda="";
 				var txtexo="";
+				var txtpanne="";
 				if (response.length>0)
 				{
 					$.each(response, function (index, value) {
@@ -293,10 +295,15 @@
 						{
 							txtexo=txtexo+txt;
 						}
+						if (value.type=="panne")
+						{
+							txtpanne=txtpanne+txt;
+						}
 					});
 				}
-				$("#affpedagogique").append(txtpeda);
-				$("#affexercices").append(txtexo);
+				$("#affpedagogique").html(txtpeda);
+				$("#affexercices").html(txtexo);
+				$("#affpannes").html(txtpanne);
 			}
 		});
 

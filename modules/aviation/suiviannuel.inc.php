@@ -50,6 +50,26 @@
 		$ddeb=($dte-1)."-".date("m-d");
 		$dfin=$dte."-".date("m-d");
 	}
+	else if ($type=="01")
+	{
+		$tmpl_x->assign("chk_01mois", "checked");
+		$dte=date("Y");
+		$ddeb=$dte.".".date("m")."-01";
+		$dfin=$dte."-".date("m-d");
+	}
+	else if ($type=="00")
+	{
+		$tmpl_x->assign("chk_00mois", "checked");
+		$dte=date("Y");
+		$m=date("m")-1;
+		if ($m==0)
+		{
+			$m=12;
+			$dte=$dte-1;
+		}
+		$ddeb=$dte."-".$m."-01";
+		$dfin=$dte."-".date("m")."-01";
+	}
 	else
 	{
 		$tmpl_x->assign("chk_annuel", "checked");
