@@ -321,7 +321,8 @@ class synthese_class extends objet_core
 			return 0;
 		}
 		$sql=$this->sql;
-		$query="SELECT SUM(nb_att) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND id<='".$this->id."'";
+		// $query="SELECT SUM(nb_att) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND id<='".$this->id."'";
+		$query="SELECT SUM(nb_att) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND dte_vol<='".$this->val("dte_vol")."'";
 		$res=$sql->QueryRow($query);
 		
 		return $res["nb"];
@@ -333,7 +334,8 @@ class synthese_class extends objet_core
 			return 0;
 		}
 		$sql=$this->sql;
-		$query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND id<='".$this->id."'";
+		// $query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND id<='".$this->id."'";
+		$query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND dte_vol<='".$this->val("dte_vol")."'";
 		$res=$sql->QueryRow($query);
 		
 		return $res["nb"];
