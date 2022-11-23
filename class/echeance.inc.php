@@ -67,7 +67,7 @@ class echeancetype_class extends echeancetype_core
 					$tabposte[$sql->data["id"]]=$sql->data["description"];
 				}
 
-				$ret="<select name=\"".$formname."[$key]\">";
+				$ret="<select name=\"".$formname."[$key]\"  class='form-control'>";
 				$ret.="<option value='0'>Aucun</option>";
 				foreach($tabposte as $id=>$d)
 				{

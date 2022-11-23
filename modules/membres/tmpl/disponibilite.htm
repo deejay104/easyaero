@@ -16,40 +16,102 @@
 <script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
 
 <style>
-	#script-warning {
-		display: none;
-		background: #eee;
-		border-bottom: 1px solid #ddd;
-		padding: 0 10px;
-		line-height: 40px;
-		text-align: center;
-		font-weight: bold;
-		font-size: 12px;
-		color: red;
-	}
 
-	#loading {
-		display: none;
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
+.fc-body { 
+	background-color:#{backcolor};
+}
+.fc-event { 
+	background-color:#{eventcolor};
+}
 
-	#calendar {
-		width: 90%;
-		padding: 0 10px;
-	}
+/* Full Calendar */
 
-.fc-time-grid .fc-slats td {
-	height: 16px;
-    line-height: 16px;
-    font-size: 10px;
-	}
+/*
 
-.fc-time {	color: #000000; }
-.fc-title {	color: black; }
-.fc-end-resizer { color: #777777; }
-		
+
+
+.fc .fc-widget-header table tr th {
+  border-width: 0 0 1px 0;
+  text-align: right;
+  padding: 1rem;
+}
+
+@media (max-width: 767px) {
+  .fc .fc-widget-header table tr th {
+    padding: 1rem .25rem;
+  }
+}
+
+.fc .fc-widget-header table tr th span {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #a8b2b9;
+  letter-spacing: 1px;
+}
+
+.fc .fc-content-skeleton table tr td {
+  padding: .5rem;
+  font-size: .875rem;
+}
+
+.fc .fc-event {
+  border: 0;
+  color: #ffffff;
+  padding: .5rem;
+}
+
+.fc .fc-event.fc-start {
+  background: #267CB9;
+  border-radius: 4px;
+  border-left: 4px solid #267CB9;
+}
+
+.fc .fc-event.fc-not-start, .fc .fc-event.fc-not-end {
+  background: #f10075;
+  border-left: 4px solid #f10075;
+  padding-left: .5rem;
+}
+
+.fc .fc-event.fc-not-end {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.fc .fc-event .fc-title,
+.fc .fc-event .fc-time {
+  color: #ffffff;
+}
+
+.fc-external-events .fc-event {
+  background: #ffffff;
+  color: #000;
+  border-width: 0 0 0 4px;
+  padding: 16px;
+  border-radius: 0;
+  margin-bottom: 10px;
+}
+
+.fc-external-events .fc-event:nth-child(1) {
+  border-color: #267CB9;
+}
+
+.fc-external-events .fc-event:nth-child(2) {
+  border-color: #f10075;
+}
+
+.fc-external-events .fc-event:nth-child(3) {
+  border-color: #3bb001;
+}
+
+.fc-external-events .fc-event:nth-child(4) {
+  border-color: #00BBE0;
+}
+
+.fc-external-events .fc-event:nth-child(4) {
+  border-color: #f29d56;
+}
+*/
+
 </style>
 
 <script>
@@ -138,7 +200,7 @@
 			events: {
 				url: '{path_root}/api.php?mod=membres&rub=getdispo&mid={mid}',
 				error: function() {
-					$('#script-warning').show();
+					showToast("","L'API n'est pas accessible","error");
 				}
 			},
 
@@ -151,14 +213,8 @@
 
 </script>
 
-	<br />
+<div id='loading'>loading...</div>
 
-	<div id='script-warning'>
-		Erreur : <code>api.php</code> doit être accessible.
-	</div>
-
-	<div id='loading'>loading...</div>
-
-	<div id='calendar'></div>
+<div id='calendar'></div>
 
 <!-- END: corps -->

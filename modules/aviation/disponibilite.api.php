@@ -4,33 +4,23 @@
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
   
-// ---- Header de la page
-
-	// Date du passé
-	header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
-	
-	// toujours modifié
-	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-	
-	// HTTP/1.1
-	header("Cache-Control: no-store, no-cache, must-revalidate");
-	
-	// HTTP/1.0
-	header("Pragma: no-cache");
-
-	// Image PNG
-	header('Content-type: image/png');
-
 
 // ---- Récupère les paramètres
-	$id=(is_numeric($_REQUEST["id"]) ? $_REQUEST["id"] : 0);
-	$deb=(is_numeric($_REQUEST["deb"]) ? $_REQUEST["deb"] : 0);
-	$fin=(is_numeric($_REQUEST["fin"]) ? $_REQUEST["fin"] : 0);
+	// $id=(is_numeric($_REQUEST["id"]) ? $_REQUEST["id"] : 0);
+	// $deb=(is_numeric($_REQUEST["deb"]) ? $_REQUEST["deb"] : 0);
+	// $fin=(is_numeric($_REQUEST["fin"]) ? $_REQUEST["fin"] : 0);
+
+	$id=checkVar("id","numeric");
+	$deb=checkVar("deb","numeric");
+	$fin=checkVar("fin","numeric");
+	$resa=checkVar("resa","numeric");
 
 //	$deb=strtotime("2013-08-07 17:00");
 //	$fin=strtotime("2013-08-07 18:00");
 
 // ---- Charge les informations sur le chargement
+	$ret=array();
+
 	if (($id>0) && ($deb>0) && ($fin>0))
 	  {
 		$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier AS cal WHERE uid_avion='$id' AND dte_deb<'".date("Y-m-d H:i:s",$fin)."' AND dte_fin>'".date("Y-m-d H:i:s",$deb)."' AND actif='oui'";
@@ -39,20 +29,20 @@
 		if ($sql->rows>0)
 		  {
 			$ok="nok";
-			$txt=utf8_decode("Occupé");
+			$txt="Occupé";
 			for($i=0; $i<$sql->rows; $i++)
 			  { 
 				$sql->GetRow($i);
-				if ($sql->data["id"]==$_REQUEST["resa"])
+				if ($sql->data["id"]==$resa)
 				  {
 				  	$ok="ok";
-					$txt=utf8_decode("Réservé");
+					$txt="Réservé";
 				  }
 			  }
 		  }
 		else
 		  {
-		  	$ok="ok";
+		  	$ok="nc";
 			$txt="Disponible";
 		  }
 	}
@@ -60,14 +50,26 @@
 	{
 		if (($deb>0) && ($deb>0))
 		{
-			erreur(utf8_decode("Les paramètres sont incorrects."));
+			// erreur(utf8_decode("Les paramètres sont incorrects."));
+			$ok="error";
+			$txt="Les paramètres sont incorrects.";
 		}
 		else
 		{
-			erreur("");
+			$ok="error";
+			$txt="";
 		}
 		exit;
 	}
+
+	$ret["status"]=200;
+	$ret["idavion"]=$id;
+	$ret["availability"]=$ok;
+	$ret["message"]=$txt;
+
+// print_r($ret);
+	echo json_encode($ret);
+	exit;
 
 // ---- Variables d'affichage
 	$l = 100;

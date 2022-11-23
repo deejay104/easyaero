@@ -9,61 +9,88 @@
 
 <!-- BEGIN: corps -->
 
-<form name="compte" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<form name="compte" method="post" action="{path_root}/comptes/transfert" enctype="multipart/form-data">
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="comptes">
-	<input type="hidden" name="rub" value="transfert">
+
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<h4>{lang_tranfert}</h4>
+
+					<div class="form-group">
+						{lang_tranfertexplain}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <!-- BEGIN: msg_enregistre -->
-	<!-- BEGIN: lst_enregistre -->
-	{aff_mouvement_detail}
-	<!-- END: lst_enregistre -->
-	<br />
-<!-- END: msg_enregistre -->
-
-	<div class='formulaireTitre' style='width:780px;'>{lang_tranfert}</div>
-
-	<div class='formulaire' style='width:780px;'>
-	<p>{lang_tranfertexplain}</p>
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+					<!-- BEGIN: lst_enregistre -->
+					{aff_mouvement_detail}
+					<!-- END: lst_enregistre -->
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	
-	<table>
-	  <tr class="tableauTitre" >
-		<th width=10>&nbsp;</th>
-		<th width=250>{lang_tiers}</th>
-		<th width=110>{lang_amount}</th>
-		<th width=410>lang_comment</th>
-	  </tr>
-	
-	  <tr>
-		<Td style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
-		<TD>
-			<select id="form_tiers" name="form_tiers">
-			<!-- BEGIN: lst_compte -->
-			<option value="{id_compte}" {chk_compte}>{nom_compte}</option>
-			<!-- END: lst_compte -->
-		    </select>
-		</TD>
-		<TD>
-			<INPUT id="form_montant" name="form_montant" value="{form_montant}" style="width:100px;">
-		</TD>
-		<TD>
-			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:400px;">
-		</TD>
-	  </TR>
+<!-- END: msg_enregistre -->	
 
-	  <TR style='border-top:1px solid #{FormulaireBackgroundNormal};'>
-		<td></td>
-		<TD colspan=3>
-			{lang_balance} {montant_max}.
-		</TD>
-	  </TR>
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
 
-	</table>
+					
+							<div class="col-md-3">
+							
+								<label>{lang_tiers}</label>
+								<select id="form_tiers" class='form-control'  name="form_tiers">
+									<!-- BEGIN: lst_compte -->
+									<option value="{id_compte}" {chk_compte}>{nom_compte}</option>
+									<!-- END: lst_compte -->
+								</select>
+							</div>
+				
+							<div class="col-md-3">
+								<label>{lang_amount}</label>
+								<INPUT id="form_montant" class='form-control'  name="form_montant" value="{form_montant}">
+							</div>
+						
+							<div class="col-md-6">
+								<label>{lang_comment}</label>
+								<INPUT id="form_commentaire" class='form-control'  name="form_commentaire" value="{form_commentaire}">
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<br />
-	<INPUT type="submit" name="fonc" value="{lang_save}"> <INPUT type="submit" name="fonc" value="{lang_cancel}">
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+					{lang_balance} {montant_max}.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="{lang_save}"> <INPUT type="submit" class="btn btn-light" name="fonc" value="{lang_cancel}">
 	
 </form>
 

@@ -128,70 +128,97 @@
 </div>
 
 
-<FORM name="maintenance" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<FORM name="maintenance" class="forms-sample" method="post" action="{path_root}/ressources/detailmaint" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="ressources">
-	<INPUT type="hidden" name="rub" value="detailmaint">
 	<INPUT type="hidden" name="id" value="{id}">
 
-	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
-
-	<table width="100%">
-		<tr valign="top">
-		<td width="50%" style="padding-right:10px;">
-			<div class="formulaireTitre">Informations</div>
-			<div class="formulaire">
-				<p>
-					<label>Avion</label>{form_uid_ressource}
-				</p>
-				<p>
-					<label>Status</label>{form_status}
-				</p>
-				<p OnMouseOver="document.getElementById('addatelier').style.display='inline-block';" OnMouseOut="document.getElementById('addatelier').style.display='none';">
-					<label>Atelier</label>{form_uid_atelier} <a id="ajouter" class='imgDelete'><img id="addatelier" src="{path_root}/{path_module}/img/icn16_editer.png" style="display:none;"></a>
-				</p>
-				<p>
-					<label>Début de l'intervention</label>{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
-				</p>
-				<p>
-					<label>Fin de l'intervention</label>{form_dte_fin} <FONT color=red>{msg_dtefin}</FONT>
-				</p>
-				<p>
-					<label>Cout</label>{form_cout}
-				</p>
-				<p>
-					<label title="Nombre de minutes reportées à la fin de l'intervention. Ces minutes sont déduites du potentiel.">Temps consommé</label>{form_potentiel}
-				</p>
+<div class="row">
+	<div class="col-md-12 border-top">
+		<div class="d-flex ">
+			<div class="ml-4 small">
+				Dernière mise à jour : {info_maj}
 			</div>
-		</td>
-		<td class="noMobile">
-			<div class="formulaireTitre">Commentaire</div>
-			<div class="formulaire">{form_commentaire}</div>
-		</td>
-		</tr>
-	</table>
+		</div>
+	</div>
+</div>
 
-	<br />
-	<div class="formulaireTitre">Dernier vol effectué avant la maintenance</div>
-	<div class="formulaire">
-	{aff_resa}
+
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+
+				<h5>Informations</h5>
+
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Avion</label>
+					<div class="col-lg-7">{form_uid_ressource}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Status</label>
+					<div class="col-lg-7">{form_status}</div>
+				</div>
+				<div class="form-group row" OnMouseOver="document.getElementById('addatelier').style.display='inline-block';" OnMouseOut="document.getElementById('addatelier').style.display='none';">
+					<label class="col-lg-3 col-form-label">Atelier</label>
+					<div class="col-lg-7 form-inline">{form_uid_atelier} <a id="ajouter"><i id="addatelier" class="mdi mdi-library-plus" style="display:none;"></i></a></div>
+			
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Début de l'intervention</label>
+					<div class="col-lg-7">{form_dte_deb}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Fin de l'intervention</label>
+					<div class="col-lg-7">{form_dte_fin}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Cout</label>
+					<div class="col-lg-7">{form_cout}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label" title="Nombre de minutes reportées à la fin de l'intervention. Ces minutes sont déduites du potentiel.">Temps consommé</label>
+					<div class="col-lg-7">{form_potentiel}</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<br />
-
-	<div class="formulaireTitre">Liste des fiches associées</div>
-	<div class="formulaire">
-	{aff_fiche}
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h5>Commentaire</h5>
+				{form_commentaire}
+			</div>
+		</div>
 	</div>
-
+</div>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h5>Dernier vol effectué avant la maintenance</h5>
+				{aff_resa}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h5>Liste des fiches associées</h5>
+				{aff_fiche}
+			</div>
+		</div>
+	</div>
+</div>
+	
 <!-- BEGIN: form_submit -->
-	<div class="formulaireSubmit">
-		<!-- BEGIN: aff_bouttons -->
-		<INPUT type="submit" name="fonc" value="Enregistrer">
-		<!-- END: aff_bouttons -->
+	<!-- BEGIN: aff_bouttons -->
+	<INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">
+	<!-- END: aff_bouttons -->
 
-		<INPUT type="submit" name="fonc" value="Retour">
-	</div>
+	<INPUT type="submit" class="btn btn-light" name="fonc" value="Retour">
 <!-- END: form_submit -->
 
 </FORM>

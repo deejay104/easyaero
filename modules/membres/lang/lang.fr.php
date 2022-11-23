@@ -1,5 +1,5 @@
 <?php
-	$tabLang["lang_sexe"]="Gender";
+	$tabLang["lang_sexe"]="Sexe";
 	$tabLang["lang_homephone"]="Tel domicile";
 	$tabLang["lang_mobilephone"]="Tel portable";
 	$tabLang["lang_workphone"]="Tel bureau";

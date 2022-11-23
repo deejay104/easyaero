@@ -123,7 +123,7 @@
 		$tabTitre["mouvement"]["width"]=350;
 		// $tabTitre["mouvement"]["mobile"]="no";
 		$tabTitre["commentaire"]["aff"]=$tabLang["lang_comment"];
-		$tabTitre["commentaire"]["width"]=400;
+		$tabTitre["commentaire"]["width"]=350;
 	}
 	else
 	{

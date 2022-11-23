@@ -27,15 +27,11 @@
 
 
 // ---- Menu
-	addPageMenu("",$mod,"Calendrier",geturl("reservations","",""),"icn32_titre.png",true);
-	addPageMenu("",$mod,"Journée",geturl("reservations","scheduler",""),"icn32_scheduler.png",false);
+	// addPageMenu("",$mod,"Calendrier",geturl("reservations","",""),"icn32_titre.png",true);
+	// addPageMenu("",$mod,"Journée",geturl("reservations","scheduler",""),"icn32_scheduler.png",false);
 
   
 // ---- Définition des constantes
-	if ((!isset($ress)) || (!is_numeric($ress)))
-	{
-	  	$ress=0;
-	}
 
 	$ress=checkVar("ress","numeric");
 	$start=checkVar("start","varchar");
@@ -63,7 +59,7 @@
 
 		$tmpl_x->assign("couleur_col", $tress[$ii]->val("couleur"));
 		$tmpl_x->assign("couleur_nom", $tress[$ii]->aff("immatriculation"));
-		$tmpl_x->parse("infos.lst_ress");
+		$tmpl_x->parse("corps.lst_ress");
 		$tmpl_x->parse("corps.lst_couleur");
 		$ii=$ii+1;
 	}

@@ -36,85 +36,108 @@
 	<input type="hidden" name="checktime" value="{form_checktime}" />
 
 
-<div class="formulaireTitre">Informations</div>
 
-<div class="formulaire">
-	<p>
-		<label>Titre</label>{form_titre}
-	</p>
-	<p>
-		<label>Date de la manifestation</label>{form_dte_manip}
-	</p>
-	<p>
-		<label>Type de participants</label>{form_type}
-	</p>
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4>Informations</h4>
 
-	<p>
-		<label>Date limite d'inscription</label>{form_dte_limite}
-	</p>
-	<p>
-		<label>Cout par personne</label>{form_cout}
-	</p>
+				<div class="form-group">
+					<label class="col-form-label">Titre</label>{form_titre}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Date de la manifestation</label>{form_dte_manip}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Type de participants</label>{form_type}
+				</div>
+
+				<div class="form-group">
+					<label class="col-form-label">Date limite d'inscription</label>{form_dte_limite}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Cout par personne</label>{form_cout}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Description</label>
+					{form_comment}
+				</div>
+
+				<!-- BEGIN: aff_retour -->
+				<div class="form-group">
+					<a href="index.php?mod=manifestations">Retourner à la liste des manifestations</a><br /><br />
+				</div>
+				<!-- END: aff_retour -->
+
+				<!-- BEGIN: submit -->
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary mr-2" name="fonc" value="Enregistrer" />&nbsp;
+					<input type="submit" class="btn btn-light" name="fonc" value="Annuler" />
+				</div>
+				<!-- END: submit -->
+
+				<!-- BEGIN: msg_enregistre -->
+					<!-- BEGIN: lst_enregistre -->
+					{aff_mouvement_detail}
+					<!-- END: lst_enregistre -->
+				<!-- END: msg_enregistre -->
+
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="formulaireTitre">Description</div>
-<div class="formulaire">
-{form_comment}
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<!-- BEGIN: participants -->
+					<h4>Participants ({aff_nbok})</h4>
+					<div class="form-group">
+						{aff_participants_manip}
+					</div>
+				<!-- END: participants -->
+
+				<!-- BEGIN: absents -->
+					<h4>Absents ({aff_nbnok})</h4>
+					<div class="form-group">
+						{aff_absents_manip}
+					</div>
+					<br />
+				<!-- END: absents -->
+
+				<!-- BEGIN: na -->
+					<h4>Non répondus</h4>
+					<div class="form-group">
+						{aff_na_manip}
+					</div>
+					<br />
+				<!-- END: na -->
+			</div>
+		</div>
+	</div>
 </div>
-
-<!-- BEGIN: aff_retour -->
-	<a href="index.php?mod=manifestations">Retourner à la liste des manifestations</a><br /><br />
-<!-- END: aff_retour -->
-
-<!-- BEGIN: submit -->
-<div class="formulaireSubmit">
-	<input type="submit" name="fonc" value="Enregistrer" />&nbsp;
-	<input type="submit" name="fonc" value="Annuler" />
-</div>
-<br />
-<!-- END: submit -->
-
-<!-- BEGIN: msg_enregistre -->
-	<!-- BEGIN: lst_enregistre -->
-	{aff_mouvement_detail}
-	<!-- END: lst_enregistre -->
-<!-- END: msg_enregistre -->
-
-<!-- BEGIN: participants -->
-	<div class="formulaireTitre">Participants ({aff_nbok})</div>
-	<div  class="formulaireListe">
-		{aff_participants_manip}
-	</div>
-	<br />
-<!-- END: participants -->
-
-<!-- BEGIN: absents -->
-	<div class="formulaireTitre">Absents ({aff_nbnok})</div>
-	<div  class="formulaireListe">
-		{aff_absents_manip}
-	</div>
-	<br />
-<!-- END: absents -->
-
-<!-- BEGIN: na -->
-	<div class="formulaireTitre">Non répondus</div>
-	<div  class="formulaireListe">
-		{aff_na_manip}
-	</div>
-	<br />
-<!-- END: na -->
 
 <!-- BEGIN: autre_manip -->
-<div class="formulaireTitre">Autre(s) manifestation(s) ayant lieu le meme jour</div>
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4>Autre(s) manifestation(s) ayant lieu le même jour</h4>
 
-<div class="formulaire">
-<!-- BEGIN: lst_autre_manip -->
-	<p>
-		<a href="index.php?mod=manifestations&rub=detail&id={id_autre_manip}">{aff_autre_manip}</a>
-	</p>
-<!-- END: lst_autre_manip -->
-<!-- END: autre_manip -->
+				<div class="form-group">
+				<!-- BEGIN: lst_autre_manip -->
+					<div class="form-group">
+						<a href="index.php?mod=manifestations&rub=detail&id={id_autre_manip}">{aff_autre_manip}</a>
+					</div>
+				<!-- END: lst_autre_manip -->
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+<!-- END: autre_manip -->
 
 </form>
 

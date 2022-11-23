@@ -10,30 +10,41 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='{path_root}/index.php?mod=suivi&rub=bilan&dte='+document.getElementById('form_date').value;
+ 	document.location='{path_root}/suivi/bilan?dte='+document.getElementById('form_date').value;
 }
 
 </script>
 
 
-<FORM name="compte" id="compte" method="post" action="{path_root}/index.php" enctype="multipart/form-data" OnSubmit="return false;">
+<FORM name="compte" id="compte" method="post" action="{path_root}/suivi/bilan" enctype="multipart/form-data" OnSubmit="return false;">
 
-	<INPUT type="hidden" name="mod" value="suivi">
-	<INPUT type="hidden" name="rub" value="bilan">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-	<p>
-		Année : 
-		<SELECT id="form_date" name="form_date" OnChange="Recharge();">
-		<!-- BEGIN: lst_annee -->
-			<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
-		<!-- END: lst_annee -->
-		</SELECT>
-	</p>
-	<br />
-
-	{aff_tableau}
-
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<div class="form-inline">
+					Année : 
+					<SELECT id="form_date" class="form-control" name="form_date" OnChange="Recharge();">
+					<!-- BEGIN: lst_annee -->
+						<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
+					<!-- END: lst_annee -->
+					</SELECT>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+			{aff_tableau}
+			</div>
+		</div>
+	</div>
+</div>
 </FORM>
 
 

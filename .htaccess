@@ -21,7 +21,7 @@
   RewriteRule ^([a-z]*)/([a-z]*)$ /index.php?mod=$1&rub=$2 [QSA,L]
   RewriteRule ^([a-z]*)$ /index.php?mod=$1 [QSA,L]
 
-  RewriteCond %{REQUEST_FILENAME} !\.(css|js|svg|gif|png|html|ttf|woff2?|ico|jpg|jpeg)$
+  RewriteCond %{REQUEST_FILENAME} !\.(css|js|svg|gif|png|html|ttf|woff2?|ico|jpg|jpeg|eot|woff2)$
   RewriteCond %{REQUEST_FILENAME} !/index.php
   RewriteCond %{REQUEST_FILENAME} !/doc.php
   RewriteCond %{REQUEST_FILENAME} !/api.php

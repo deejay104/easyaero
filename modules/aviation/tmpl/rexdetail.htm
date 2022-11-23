@@ -12,67 +12,127 @@
 
 <!-- <p class="lastupdate">Dernière mise à jour : {info_maj}</p> -->
 
-<FORM name="rex" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<FORM name="rex" method="post" action="{path_root}/aviation/rexdetail" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="aviation">
-	<INPUT type="hidden" name="rub" value="rexdetail">
 	<INPUT type="hidden" name="id" value="{id}">
 
 
-	<div class="formulaireTitre">Informations</div>
-	<div class="formulaire">
-		<label>Titre</label>{form_titre}<br />
-		<label>Date de création</label>{form_dte_rex}<br />
-		<label>Dernière modification</label>{form_dte_maj}<br />
-		<label>Status</label>{form_status}<br />
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>Informations</h5>
+
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Titre</label></div>
+					<div class="col-lg-8">{form_titre}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Date de création</label></div>
+					<div class="col-lg-8">{form_dte_rex}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Dernière modification</label></div>
+					<div class="col-lg-8">{form_dte_maj}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Status</label></div>
+					<div class="col-lg-8">{form_status}</div>
+				</div>
+
+			</div>
+		</div>
 	</div>
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>Classification</h5>
 
-	<div class="formulaireTitre">Descriptif</div>
-	<div class="formulaire">
-	<div><b>Descriptif de l'événement</b></div>
-	{form_description}
-	<div><b>Commentaire</b></div>
-	{form_commentaire}
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Catégorie</label></div>
+					<div class="col-lg-9">{form_categorie}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Nature du vol</label></div>
+					<div class="col-lg-9">{form_nature}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Condition Météo</label></div>
+					<div class="col-lg-9">{form_mto}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Environnement</label></div>
+					<div class="col-lg-9">{form_environnement}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Phase du vol</label></div>
+					<div class="col-lg-9">{form_phase}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Type de vol</label></div>
+					<div class="col-lg-9">{form_typevol}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Type d'événement</label></div>
+					<div class="col-lg-9">{form_typeevt}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-3"><label class="col-form-label">Avion</label></div>
+					<div class="col-lg-9">{form_uid_avion}</div>
+				</div>
+
+			</div>
+		</div>
 	</div>
+</div>
 
-	<div class="formulaireTitre">Classification</div>
-	<div class="formulaire">
-	<table>
-		<tr>
-			<td width="500">
-				<label>Catégorie</label>{form_categorie}<br />
-				<label>Nature du vol</label>{form_nature}<br />
-				<label>Condition Météo</label>{form_mto}<br />
-				<label>Environnement</label>{form_environnement}<br />
-			</td>
-			<td>
-				<label>Phase du vol</label>{form_phase}<br />
-				<label>Type de vol</label>{form_typevol}<br />
-				<label>Type d'événement</label>{form_typeevt}<br />
-				<label>Avion</label>{form_uid_avion}<br />
-			</td>
-		</tr>
-	</table>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>Descriptif</h5>
+
+				<h6>Descriptif de l'événement</h6>
+				{form_description}
+				<h6>Commentaire</h6>
+				{form_commentaire}
+
+			</div>
+		</div>
 	</div>
+</div>
 
-	<div class="formulaireTitre">Evaluation du risque</div>
-	<div class="formulaire">
-	<p>{form_risque}</p>
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>Evaluation du risque</h5>
+	
+				{form_risque}
+			</div>
+		</div>
 	</div>
+</div>
 
-	<div class="formulaireTitre">Conclusion</div>
-	<div class="formulaire">
-		<div><b>Synthèse</b></div>
-		{form_synthese}
-
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>Conclusion</h5>
+				<h6>Synthèse</h6>
+				{form_synthese}
 		
-		<div><b>Plan d'action</b></div>
-		{form_planaction}
+				<h6>Plan d'action</h6>
+				{form_planaction}
+			</div>
+		</div>
 	</div>
+</div>
 
 <!-- BEGIN: form_submit -->
-	<input type="submit" name="fonc" value="Enregistrer">
-	<input type="submit" name="fonc" value="Annuler">
+	<input type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">
+	<input type="submit" class="btn btn-light"  name="fonc" value="Annuler">
 <!-- END: form_submit -->
 </form>
 <!-- END: corps -->

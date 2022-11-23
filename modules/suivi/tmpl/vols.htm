@@ -6,12 +6,16 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
-
+<style>
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 2px 4px;
+}
+</style>
 
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='{path_root}/index.php?mod=suivi&rub=vols&idavion='+document.getElementById('idavion').value;
+ 	document.location='{path_root}/suivi/vols?idavion='+document.getElementById('idavion').value;
 }
 
 function calcHorametre(id)
@@ -41,111 +45,128 @@ function calcHorametre(id)
 }
 </script>
 
-<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="{path_root}/suivi/vols" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="suivi">
-	<INPUT type="hidden" name="rub" value="vols">
 
-	<!-- BEGIN: msg_enregistre -->
-	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
-	<!-- END: msg_enregistre -->
 
 
 	<!-- BEGIN: enregistre -->
-	<!-- BEGIN: lst_enregistre -->
-	<input type="hidden" name="form_calid[{form_mvtid}]" value="{form_calid}">
-	{enr_mouvement}
-	<!-- END: lst_enregistre -->
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<!-- BEGIN: lst_enregistre -->
+				<input type="hidden" name="form_calid[{form_mvtid}]" value="{form_calid}">
+				{enr_mouvement}
+				<!-- END: lst_enregistre -->
 
-	<div class="formulaireSubmit">
-		<INPUT type="submit" name="fonc" value="Valider"> <INPUT type="submit" name="fonc" value="Annuler">
+				<div class="formulaireSubmit">
+					<INPUT type="submit" class="btn btn-primary"  name="fonc" value="Valider"> <INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
 	<!-- END: enregistre -->
 
 	<!-- BEGIN: aff_vols -->
-	<p>
-		Avion : 
-		<SELECT id="idavion" name="idavion" OnChange="Recharge();">
-			<!-- BEGIN: lst_avion -->
-			<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
-			<!-- END: lst_avion -->
-		</SELECT>
-	</p>
-	<TABLE  class='tableauAff'>
-		<tr>
-			<th width=20>&nbsp;</TD>
-			<th width=165><B>Date</B></TD>
-			<th width=240><B>Pilote</B></TD>
-			<th width=170><B>Instructeur</B></TD>
-			<th width=170><B>Tarif</B></TD>
-			<th width=140 colspan=2><B>Horamètre</B></TD>
-			<th width=70><B>Temps (min)</B></TD>
-			<th width=70><B>Bloc (min.)</B></TD>
-			<th width=100><B>Destination</B></TD>
-			<th width=100><B>Distance</B></TD>
-		</tr>
-		<!-- BEGIN: lst_vols -->
-		<TR>
-			<TD width=20>&nbsp;</TD>
-			<TD><a href="{path_root}/index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
-			<TD>{pilote_vols}</TD>
-			<TD>{instructeur_vols}</TD>
-			<TD>
-				{tarif_vols}
-				<SELECT name="form_tarif[{id_ligne}]">
-				<!-- BEGIN: lst_tarifs -->
-				<OPTION value="{tarif_code}" {tarif_selected}>{tarif_nom}</OPTION>
-				<!-- END: lst_tarifs -->
-			      </SELECT>
-			</TD>
-			<TD>{horadeb}</TD>
-			<TD>{horafin}</TD>
-			<TD>{temps_vols}</TD>
-			<TD>{bloc_vols}</TD>
-			<TD>{destination_vols}</TD>
-			<TD>{distance_vols}</TD>
-		</TR>
-		<!-- END: lst_vols -->
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-inline">
+					Avion :&nbsp; 
+					<SELECT id="idavion" class='form-control' name="idavion" OnChange="Recharge();">
+						<!-- BEGIN: lst_avion -->
+						<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
+						<!-- END: lst_avion -->
+					</SELECT>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-		<!-- BEGIN: lst2_vols -->
-		<TR>
-			<TD>&nbsp;</TD>
-			<TD><INPUT type="date" name="form_date[{id_new}]" style='width: 160px!important;'></TD>
-			<TD>
-				<SELECT name="form_pilote[{id_new}]">
-				<OPTION value="">...</OPTION>
-				<!-- BEGIN: lst_pilote -->
-				<OPTION value="{id_pilote}">{nom_pilote}</OPTION>
-				<!-- END: lst_pilote -->
-			        </SELECT>
-			</TD>
-			<TD>
-				<SELECT name="form_instructeur[{id_new}]">
-				<OPTION value="0">Aucun</OPTION>
-				<!-- BEGIN: lst_instructeur -->
-				<OPTION value="{id_instructeur}">{nom_instructeur}</OPTION>
-				<!-- END: lst_instructeur -->
-			        </SELECT>
-			</TD>
-			<TD>
-				<SELECT name="form_tarif[{id_new}]">
-				<!-- BEGIN: lst_tarifs -->
-				<OPTION value="{tarif_code}">{tarif_nom}</OPTION>
-				<!-- END: lst_tarifs -->
-			      </SELECT>
-			</TD>
-			<TD><INPUT type="text" name="form_horadeb[{id_new}]" style='width:65px;'></TD>
-			<TD><INPUT type="text" name="form_horafin[{id_new}]" style='width:65px;'></TD>
-			<TD><INPUT type="text" name="form_temps[{id_new}]" style='width:65px;'></TD>
-			<TD><INPUT type="text" name="form_bloc[{id_new}]" style='width:65px;'></TD>
-			<TD>&nbsp;</TD>
-			<TD>&nbsp;</TD>
-		</TR>
-		<!-- END: lst2_vols -->
-	</TABLE>
-	<br />
-	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Débiter"> <INPUT type="submit" name="fonc" value="Annuler">
-	<!-- END: aff_vols -->
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+		<div class="card-body">
+			<TABLE  class='table table-hover dataTable no-footer'>
+				<tr>
+					<th width=165><B>Date</B></TD>
+					<th width=240><B>Pilote</B></TD>
+					<th width=170><B>Instructeur</B></TD>
+					<th width=170><B>Tarif</B></TD>
+					<th width=140 colspan=2><B>Horamètre</B></TD>
+					<th width=70><B>Temps (min)</B></TD>
+					<th width=70><B>Bloc (min.)</B></TD>
+					<th width=100><B>Destination</B></TD>
+					<th width=100><B>Distance</B></TD>
+				</tr>
+				<!-- BEGIN: lst_vols -->
+				<TR>
+					<TD><a href="{path_root}/reservations/reservation&id={idresa}">{date_vols}</a></TD>
+					<TD>{pilote_vols}</TD>
+					<TD>{instructeur_vols}</TD>
+					<TD>
+						{tarif_vols}
+						<SELECT name="form_tarif[{id_ligne}]" class='form-control'>
+						<!-- BEGIN: lst_tarifs -->
+						<OPTION value="{tarif_code}" {tarif_selected}>{tarif_nom}</OPTION>
+						<!-- END: lst_tarifs -->
+						  </SELECT>
+					</TD>
+					<TD>{horadeb}</TD>
+					<TD>{horafin}</TD>
+					<TD>{temps_vols}</TD>
+					<TD>{bloc_vols}</TD>
+					<TD>{destination_vols}</TD>
+					<TD>{distance_vols}</TD>
+				</TR>
+				<!-- END: lst_vols -->
+
+				<!-- BEGIN: lst2_vols -->
+				<TR>
+					<TD><INPUT type="date" class='form-control' name="form_date[{id_new}]" style='width: 160px!important;'></TD>
+					<TD>
+						<SELECT name="form_pilote[{id_new}]" class='form-control'>
+						<OPTION value="">...</OPTION>
+						<!-- BEGIN: lst_pilote -->
+						<OPTION value="{id_pilote}">{nom_pilote}</OPTION>
+						<!-- END: lst_pilote -->
+							</SELECT>
+					</TD>
+					<TD>
+						<SELECT name="form_instructeur[{id_new}]" class='form-control'>
+						<OPTION value="0">Aucun</OPTION>
+						<!-- BEGIN: lst_instructeur -->
+						<OPTION value="{id_instructeur}">{nom_instructeur}</OPTION>
+						<!-- END: lst_instructeur -->
+							</SELECT>
+					</TD>
+					<TD>
+						<SELECT name="form_tarif[{id_new}]" class='form-control'>
+						<!-- BEGIN: lst_tarifs -->
+						<OPTION value="{tarif_code}">{tarif_nom}</OPTION>
+						<!-- END: lst_tarifs -->
+						  </SELECT>
+					</TD>
+					<TD><INPUT type="text" name="form_horadeb[{id_new}]" class='form-control' style='width:65px;'></TD>
+					<TD><INPUT type="text" name="form_horafin[{id_new}]" class='form-control' style='width:65px;'></TD>
+					<TD><INPUT type="text" name="form_temps[{id_new}]" class='form-control' style='width:65px;'></TD>
+					<TD><INPUT type="text" name="form_bloc[{id_new}]" class='form-control' style='width:65px;'></TD>
+					<TD>&nbsp;</TD>
+					<TD>&nbsp;</TD>
+				</TR>
+				<!-- END: lst2_vols -->
+			</TABLE>
+			<br />
+			<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary" > <INPUT type="submit" name="fonc" value="Débiter" class="btn btn-light" > <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
+			<!-- END: aff_vols -->
+		</div>
+	</div>
+	</div>
+</div>
 
 </FORM>
 

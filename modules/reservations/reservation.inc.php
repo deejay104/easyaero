@@ -62,6 +62,7 @@
 
 		$dte_deb=$jour." ".$heure.":00:00";
 		$dte_fin=$jour." ".($heure+1).":00:00";
+
 		if ((isset($jstart)) && ($jstart>0))
 		{
 			$fh=date("O",floor($jstart)/1000+4*3600)/100;
@@ -136,15 +137,16 @@
 // ---- Charge le template
 
 
-	if ($resa["resa"]->edite=='non')
-	{
-		$tmpl_x = new XTemplate (MyRep("reservation-visu.htm"));
-	  	$tmpl_hora = new XTemplate (MyRep("horametre-visu.htm"));
-	}
-	else
-	{
+	// if ($resa["resa"]->edite=='non')
+	// {
+		// $tmpl_x = new XTemplate (MyRep("reservation-visu.htm"));
+	  	// $tmpl_hora = new XTemplate (MyRep("horametre-visu.htm"));
+	// }
+	// else
+	// {
+	  	// $tmpl_hora = new XTemplate (MyRep("horametre.htm"));
+	// }
 	  	$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
-	}
 
 // ---- Initialise les variables
 	$ok_aff=0;
@@ -163,23 +165,25 @@
 		{
 			if ($d["dte_echeance"]!="")
 			{
-				$m ="<b><font color='red'>L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).").</font></b><br />";
+				$m="L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).").";
+				affInformation($m,"warning");
 			}
 			else
 			{
-				$m ="<b><font color='red'>Vous n'avez pas de date d'échéance pour ".$d["description"].".</font></b><br />";
+				$m="Vous n'avez pas de date d'échéance pour ".$d["description"].".";
+				affInformation($m,"warning");
 			}
 			
 			if ($d["resa"]=="instructeur")
 			{
-				$m.="La présence d'un instructeur est obligatoire.<br />";
+				$m="La présence d'un instructeur est obligatoire.";
 				affInformation($m,"warning");
 
 				$ok_inst=1;
 			}
 			else if ($d["resa"]=="obligatoire")
 			{
-				$m.="La réservation n'est pas possible.<br />";
+				$m="La réservation n'est pas possible.";
 				affInformation($m,"error");
 				$save=1;
 			}
@@ -194,8 +198,8 @@
 	if ($resa["pilote"]->isSoldeNegatif())
 	{
 		$s=$resa["pilote"]->CalcSolde();
-		$m ="<b><font color='red'>Le compte du pilote est NEGATIF ($s €).</font></b><br />";
-		$m.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+		$m ="Le compte du pilote est NEGATIF ($s €).<br />";
+		$m.="Appeller le trésorier pour l'autorisation d'un découvert.";
 		affInformation($m,"error");
 
 		if ($id==0)
@@ -208,7 +212,7 @@
 // ---- Vérifie si l'utilisateur est laché sur l'avion
 	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
 	{
-		$m="<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.";
+		$m="Vous n'êtes pas laché sur cet avion.<br />La présence d'un instructeur est obligatoire.";
 		affInformation($m,"warning");
 
 		$ok_inst=1;
@@ -223,7 +227,7 @@
 // ---- Affiche les messages d'erreurs
 	if ($msg_err!="")
 	{ 
-		affInformation($msg_err,"error");
+		// affInformation($msg_err,"error");
 	}
 	
 
@@ -454,6 +458,7 @@
 		$tmpl_x->assign("form_dte_debsql", date2sql($resa["resa"]->dte_deb));
 		$tmpl_x->assign("form_hor_deb", sql2date($resa["resa"]->dte_deb,"heure"));
 
+		// $tmpl_x->assign("form_dte_fin", sql2date($resa["resa"]->dte_fin,"jour"));
 		$tmpl_x->assign("form_dte_fin", sql2date($resa["resa"]->dte_fin,"jour"));
 		$tmpl_x->assign("form_dte_finsql", date2sql($resa["resa"]->dte_fin));
 		$tmpl_x->assign("form_hor_fin", sql2date($resa["resa"]->dte_fin,"heure"));
@@ -504,18 +509,20 @@
 	$tmpl_x->assign("form_prixcarbu", ($resa["resa"]->prixcarbu>0) ? $resa["resa"]->prixcarbu : "0");
 
 	// Texte d'acceptation
-	if ($MyOpt["ChkValidResa"]=="on")
-	{
-		if ($resa["pilote"]->NombreVols(floor($MyOpt["maxDernierVol"]/30),"val",$resa["resa"]->uid_ressource)>0)
-		{
-			$tmpl_x->parse("corps.aff_reservation.aff_chkreservation_ok");
-		}
-		else
-		{
-			$tmpl_x->assign("TxtValidResa", $MyOpt["TxtValidResa"]);
-			$tmpl_x->parse("corps.aff_reservation.aff_chkreservation");
-		}
-	}
+	// if ($MyOpt["ChkValidResa"]=="on")
+	// {
+		// {
+			// $tmpl_x->parse("corps.aff_reservation.aff_chkreservation_ok");
+		// }
+		// else
+		// {
+			// $tmpl_x->assign("TxtValidResa", $MyOpt["TxtValidResa"]);
+			// $tmpl_x->parse("corps.aff_reservation.aff_chkreservation");
+		// }
+	// }
+
+	$tmpl_x->assign("TxtValidResa", $MyOpt["TxtValidResa"]);
+
 
 	if ( ($resa["resa"]->edite!='non') && ($ok_save==0) )
 	{
@@ -528,8 +535,11 @@
 	// Affiche le boutton supprimer
 	if ($resa["resa"]->edite!="non")
 	{
-		addPageMenu("",$mod,"Supprimer",geturl("reservations","reservation_sauve","fonc=delete&id=".$id),"icn32_supprimer.png",false,"Souhaitez-vous supprimer cette réservation ?");
+		addPageMenu("",$mod,"Supprimer",geturl("reservations","reservation_sauve","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?");
 	}
+
+	addPageMenu("",$mod,"Devis de masse",geturl("reservations","reservation#",""),"",false,"","goCentrage();");
+
 	
 	// Liste les fiches de synthèse du vol
 	if ($id>0)
@@ -553,7 +563,7 @@
 		// Ajoute une synthèse de vol
 		if ((GetDroit("CreeSynthese")) && (count($t)==0))
 		{
-			$tmpl_x->parse("infos.synthese"); 
+			addPageMenu("",$mod,"Ajouter Synthèse",geturl("aviation","synthese",""),"",false,"","goSynthese();");
 		}
 	}
 

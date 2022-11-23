@@ -50,166 +50,179 @@ function AffVentilation()
 }
 </script>
 
-<FORM name="mouvement" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<FORM name="mouvement" method="post" action="{path_root}/suivi/mouvement" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="suivi">
-	<INPUT type="hidden" name="rub" value="mouvement">
-
-	<BR>
 
 	<!-- BEGIN: enregistre -->
-		<!-- BEGIN: lst_visualisation -->
-		{enr_mouvement}
-		<!-- END: lst_visualisation -->
-		<INPUT type="hidden" name="form_date" id="form_date" value="{form_date}">
-		<INPUT type="hidden" name="form_poste" id="form_poste" value="{form_poste}">
-		<INPUT type="hidden" name="form_tiers" id="form_tiers" value="{form_tiers}">
-		<INPUT type="hidden" name="form_commentaire" id="form_commentaire" value="{form_commentaire}">
-		<INPUT type="hidden" name="form_montant" id="form_montant" value="{form_montant}">
-		<br />
-		<INPUT type="submit" name="fonc" value="Valider"> <INPUT type="submit" name="fonc" value="Annuler">
-		<br /><br />
+	<div class="row">
+		<div class="grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+			<!-- BEGIN: lst_visualisation -->
+			{enr_mouvement}
+			<!-- END: lst_visualisation -->
+			<INPUT type="hidden" name="form_date" id="form_date" value="{form_date}">
+			<INPUT type="hidden" name="form_poste" id="form_poste" value="{form_poste}">
+			<INPUT type="hidden" name="form_tiers" id="form_tiers" value="{form_tiers}">
+			<INPUT type="hidden" name="form_commentaire" id="form_commentaire" value="{form_commentaire}">
+			<INPUT type="hidden" name="form_montant" id="form_montant" value="{form_montant}">
+			<br />
+			<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="Valider"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler">
+			<br /><br />
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- END: enregistre -->
 
 	<!-- BEGIN: aff_mouvement -->
-	<TABLE>
-	  <tr class="tableauTitre" >
-		<th width=30>&nbsp;</th>
-		<th width=120 >Date</th>
-		<th width=400>Poste</th>
-		<th width=250>Tiers</th>
-		<th width=150>Montant</th>
-		<th width=48>&nbsp;</th>
-	  </tr>
+	<div class="row">
+		<div class="grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
 
-	<!-- BEGIN: lst_aff_brouillon -->
-	  <tr OnMouseOver="document.getElementById('mod_{form_id}').style.display='block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
-		<TD>
-			<INPUT type="checkbox" name="form_temp_select[{form_id}]" value="oui" {form_select}>			
-		</TD>	
-		<TD>
-			{form_date}
-		</TD>
-		<TD>
-			{form_poste}
-		</TD>
-		<TD>
-			{form_tiers}
-		</TD>
-		<TD>
-			{form_montant}
-		</TD>
-		<TD>
-			<div id='mod_{form_id}'  style='display:none;'>
-			<a href="{path_root}/index.php?mod=suivi&rub=mouvement&fonc=edit&id={form_id}" class='imgDelete'><img src="{path_root}/{path_module}/img/icn16_editer.png" border=0 /></a>
-			<a href="{path_root}/index.php?mod=suivi&rub=mouvement&fonc=deltemp&id={form_id}" class='imgDelete'><img src="{path_root}/{path_module}/img/icn16_supprimer.png" border=0 /></a>
+					<TABLE class="table table-hover">
+						<thead>
+							<tr>
+								<th width=30>&nbsp;</th>
+								<th width=120 >Date</th>
+								<th width=400>Poste</th>
+								<th width=250>Tiers</th>
+								<th width=200>Montant</th>
+							</tr>
+						</thead>
+
+						<tbody>
+						<!-- BEGIN: lst_aff_brouillon -->
+						  <tr OnMouseOver="document.getElementById('mod_{form_id}').style.display='inline-block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
+							<TD>
+								<INPUT type="checkbox" name="form_temp_select[{form_id}]" value="oui" {form_select}>			
+							</TD>	
+							<TD>
+								{form_date}
+							</TD>
+							<TD>
+								<div class="">{form_poste}</div>
+								<div>{form_commentaire}</div>
+							</TD>
+							<TD>
+								{form_tiers}
+							</TD>
+							<TD>
+								{form_montant}
+								<div id='mod_{form_id}'  style='display:none;'>
+								<a href="{path_root}/suivi/mouvement?fonc=edit&id={form_id}" ><i class='mdi mdi-border-color' /></i></a>
+								<a href="{path_root}/suivi/mouvement?fonc=deltemp&id={form_id}" ><i class='mdi mdi-delete' /></i></a>
+								</div>
+							</TD>
+						  </TR>
+						<!-- END: lst_aff_brouillon -->
+						</tbody>
+					</TABLE>
+				</div>
 			</div>
-		</TD>
-	  </TR>
-
-	  <tr style='border-bottom: 1px solid #{FormulaireBackgroundNormal};' OnMouseOver="document.getElementById('mod_{form_id}').style.display='block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
-		<TD>&nbsp;</TD>
-		<TD></TD>
-		<TD colspan=3 style='padding-bottom: 10px;'>
-			{form_commentaire}
-		</TD>
-		<TD></TD>
-	  </tr>
-   <!-- END: lst_aff_brouillon -->
-
+		</div>
+	</div>
 	  
 	<!-- BEGIN: lst_aff_mouvement -->
-	  <TR>
-		<TD style="padding-top:30px;">&nbsp;</TD>
-		<TD>
-			<INPUT type="text" name="form_date" id="form_date" style='width:110px;' value="{date_mouvement}">
-		</TD>
-		<TD>
-			<SELECT id="form_poste" name="form_poste" OnChange="Recharge();" >
-			<!-- BEGIN: lst_mouvement -->
-				<OPTION value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</OPTION>
-			<!-- END: lst_mouvement -->
-		    </SELECT>
-		</TD>
-		<TD>
-			<SELECT id="form_tiers" name="form_tiers">
-			<OPTION value="0">Aucun</OPTION>
-			<OPTION value="*">Tous</OPTION>
-			<!-- BEGIN: lst_tiers -->
-			<OPTION value="{id_tiers}" {chk_tiers}>{nom_tiers}</OPTION>
-			<!-- END: lst_tiers -->
-		        </SELECT>
-		</TD>
-		<TD>
-			<INPUT name="form_montant" value="{form_montant}" size=10>
-		</TD>
-	  </TR>
-
-	  <TR>
-		<TD>&nbsp;</TD>
-		<TD>Commentaire</TD>
-		<TD colspan=3>
-			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:777px;">
-		</TD>
-	  </TR>
-
-	  <TR>
-		<TD width=20>&nbsp;</TD>
-		<TD colspan=4>&nbsp;</TD>
-	  </TR>	
-	  <TR style="padding-top:10px; padding-bottom:10px;" class="tableauTitre">
-		<TD width=20 style="padding-top:5px; padding-bottom:5px;">&nbsp;</TD>
-		<TD colspan=4>
-			Ventilation du mouvement :
-			<SELECT id="form_ventilation" name="form_ventilation"  OnChange="AffVentilation();">
-			<OPTION value="non">Non</OPTION>
-			<OPTION value="debiteur">Débiteur</OPTION>
-			<OPTION value="crediteur">Créditeur</OPTION>
-	        </SELECT>
-		</TD>
-		<TD></TD>
-	  </TR>
-	  <TR>
-		<TD width=20>&nbsp;</TD>
-		<TD>&nbsp;</TD>
-		<TD colspan=3 style="padding-bottom:10px;">
-			<div id="aff_ventilation" style="visibility: hidden; height:0px;">
-				<!-- BEGIN: lst_ventilation -->
-				<div style="padding-top: 5px;">
-					<SELECT id="form_poste_ventil[{ventilid}]" name="form_poste_ventil[{ventilid}]" >
-					<!-- BEGIN: lst_mouvement -->
-					<OPTION value="{id_mouvement}" {chk_mvt_ventil}>{nom_mouvement}</OPTION>
-					<!-- END: lst_mouvement -->
-					</SELECT>
-					<SELECT id="form_tiers_ventil[{ventilid}]" name="form_tiers_ventil[{ventilid}]" >
-					<OPTION value="0">Aucun</OPTION>
-					<!-- BEGIN: lst_tiers -->
-					<OPTION value="{id_tiers}" {chk_tiers_ventil}>{nom_tiers}</OPTION>
-					<!-- END: lst_tiers -->
-					</SELECT>
-					<INPUT name="form_montant_ventil[{ventilid}]" value="0" size=10>
+	<div class="row">
+		<div class="grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+				
+					<div class="row">
+						<div class="col-md-2">
+							<INPUT type="text" class='form-control' name="form_date" id="form_date" value="{date_mouvement}">
+						</div>
+						<div class="col-md-5">
+							<SELECT id="form_poste" class='form-control' name="form_poste" OnChange="Recharge();" >
+							<!-- BEGIN: lst_mouvement -->
+								<OPTION value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</OPTION>
+							<!-- END: lst_mouvement -->
+							</SELECT>
+						</div>
+						<div class="col-md-3">
+							<SELECT id="form_tiers" class='form-control' name="form_tiers">
+								<OPTION value="0">Aucun</OPTION>
+								<OPTION value="*">Tous</OPTION>
+								<!-- BEGIN: lst_tiers -->
+								<OPTION value="{id_tiers}" {chk_tiers}>{nom_tiers}</OPTION>
+								<!-- END: lst_tiers -->
+							</SELECT>
+						</div>
+						<div class="col-md-2">
+							<INPUT name="form_montant" class='form-control'  value="{form_montant}" size=10>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col">
+							<INPUT id="form_commentaire" class='form-control'  name="form_commentaire" value="{form_commentaire}" placeholder="Commentaire">
+						</div>
+					</div>
 				</div>
-				<!-- END: lst_ventilation -->
 			</div>
-		</TD>
-	  </TR>
-	  <TR style="border-top: 1px solid #{FormulaireBackgroundNormal};">
-		<TD width=20>&nbsp;</TD>
-		<TD colspan=4 >
-			Saisir en Facturation : <input type='checkbox' name='form_facture' value="on"> 
-		</TD>
-		<TD></TD>
-	  </TR> 
-   <!-- END: lst_aff_mouvement -->
-	</TABLE>
-	
+		</div>
+	</div>
+	  
+	<div class="row">
+		<div class="grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
 
-	<br />
-	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
+						<div class="form-inline">
+							Ventilation du mouvement : &nbsp;
+							<SELECT id="form_ventilation" class='form-control' name="form_ventilation"  OnChange="AffVentilation();">
+							<OPTION value="non">Non</OPTION>
+							<OPTION value="debiteur">Débiteur</OPTION>
+							<OPTION value="crediteur">Créditeur</OPTION>
+							</SELECT>
+						</div>
+
+						<div id="aff_ventilation" style="visibility: hidden; height:0px;">
+							<!-- BEGIN: lst_ventilation -->
+							<div class="row">
+								<div class="col-md-5">
+									<SELECT id="form_poste_ventil[{ventilid}]" class='form-control' name="form_poste_ventil[{ventilid}]" >
+									<!-- BEGIN: lst_mouvement -->
+									<OPTION value="{id_mouvement}" {chk_mvt_ventil}>{nom_mouvement}</OPTION>
+									<!-- END: lst_mouvement -->
+									</SELECT>
+								</div>
+								<div class="col-md-4">
+									<SELECT id="form_tiers_ventil[{ventilid}]" class='form-control' name="form_tiers_ventil[{ventilid}]" >
+									<OPTION value="0">Aucun</OPTION>
+									<!-- BEGIN: lst_tiers -->
+									<OPTION value="{id_tiers}" {chk_tiers_ventil}>{nom_tiers}</OPTION>
+									<!-- END: lst_tiers -->
+									</SELECT>
+								</div>
+								<div class="col-md-2">
+									<INPUT name="form_montant_ventil[{ventilid}]" class='form-control' value="0">
+								</div>
+							</div>
+							<!-- END: lst_ventilation -->
+						</div>
+
+						<div class="form-inline">
+							<label class="form-check-label">
+								<input type="checkbox" class="form-check-input">
+								Saisir en Facturation
+								<i class="input-helper"></i>
+							</label>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	  
+   <!-- END: lst_aff_mouvement -->
+
+	<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="Enregistrer"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler">
+
 	<!-- END: aff_mouvement -->
 </FORM>
 
 
 
 <!-- END: corps -->
-: corps -->
+

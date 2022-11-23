@@ -4,7 +4,7 @@
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 // ---- Livret de progression
-	addPageMenu("","aviation","Livret de progression",geturl("aviation","syntheses","uid=".$id),"icn32_synthese.png");
+	addPageMenu("","aviation","Livret de progression",geturl("aviation","syntheses","uid=".$id),"");
 
 // ---- Disponibilité instructeur
 	require_once ($appfolder."/class/user.inc.php");
@@ -14,7 +14,7 @@
 	if (($usrcus->TstDroit("TypeInstructeur")) && ((GetMyId($id)) || (GetDroit("ModifUserDisponibilite"))))
 	{
 	  	// $tmpl_menu->parse("infos.disponibilite");
-		addPageMenu($corefolder,$mod,"Disponibilités",geturl("membres","disponibilite","id=".$id),"icn32_editer.png",($rub=="disponibilite") ? true : false);
+		addPageMenu("",$mod,"Disponibilités",geturl("membres","disponibilite","id=".$id),"",($rub=="disponibilite") ? true : false);
 	}
 
 

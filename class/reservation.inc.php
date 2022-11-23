@@ -314,24 +314,26 @@ class resa_class extends objet_core
 		return $t;
 	}
 	
-	function Save($ValidResa=false)
+
+	function CheckResa($ValidResa=false)
 	{ global $gl_uid,$MyOpt;
 
 		$sql=$this->sql;
 
+		$ret=array();
 		if (($this->dte_deb=="") && ($this->dte_fin==""))
-		  { return "La date est obligatoire"; }
+		  { return array("txt"=>"La date est obligatoire","status"=>"error"); }
 
-		if ($this->dte_deb=="")
-		  { $this->dte_fin=$this->dte_deb; }
-		else if ($this->dte_fin=="")
-		  { $this->dte_deb=$this->dte_fin; }
+		// if ($this->dte_deb=="")
+		  // { $this->dte_fin=$this->dte_deb; }
+		// else if ($this->dte_fin=="")
+		  // { $this->dte_deb=$this->dte_fin; }
 
 		// Vérifie la date/heure de début
-		if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} ?[^$]*$/",$this->dte_deb)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_deb)) )
-		  { return "La date de début n'a pas un format correct (".$this->dte_deb."<>jj/mm/aaaa).<br />"; }
-		if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_deb))
-		  { return "L'heure de début n'a pas un format correct (".$this->dte_deb."<>hh:mm:ss).<br />"; }
+		// if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} ?[^$]*$/",$this->dte_deb)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_deb)) )
+		  // { return "La date de début n'a pas un format correct (".$this->dte_deb."<>jj/mm/aaaa).<br />"; }
+		// if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_deb))
+		  // { return "L'heure de début n'a pas un format correct (".$this->dte_deb."<>hh:mm:ss).<br />"; }
 
 		$hdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\1', $this->dte_deb);
 		$mdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\2', $this->dte_deb);
@@ -339,10 +341,10 @@ class resa_class extends objet_core
 		$this->dte_deb=$dte;
 
 		// Vérifie la date/heure de fin
-		if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} [^$]*$/",$this->dte_fin)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_fin)) )
-		  { return "La date de fin n'a pas un format correct (".$this->dte_fin."<>jj/mm/aaaa).<br />"; }
-		if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_fin))
-		  { return "L'heure de fin n'a pas un format correct (".$this->dte_fin."<>hh:mm:ss).<br />"; }
+		// if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} [^$]*$/",$this->dte_fin)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_fin)) )
+		  // { return "La date de fin n'a pas un format correct (".$this->dte_fin."<>jj/mm/aaaa).<br />"; }
+		// if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_fin))
+		  // { return "L'heure de fin n'a pas un format correct (".$this->dte_fin."<>hh:mm:ss).<br />"; }
 
 		$hdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\1', $this->dte_fin);
 		$mdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\2', $this->dte_fin);
@@ -357,25 +359,29 @@ class resa_class extends objet_core
 		  }
 
 		if (!is_numeric($this->uid_pilote))
-		  { return "Erreur avec l'id pilote"; }
+		  { return array("txt"=>"Erreur avec l'id pilote","status"=>"error"); }
 
 		if (!is_numeric($this->uid_debite))
-		  { return "Erreur avec l'id du debite"; }
+		  { return array("txt"=>"Erreur avec l'id du debite","status"=>"error"); }
 
 		if (!is_numeric($this->uid_instructeur))
-		  { return "Erreur avec l'id instructeur"; }
+		  { return array("txt"=>"Erreur avec l'id instructeur","status"=>"error"); }
 
 		if (!is_numeric($this->uid_ressource))
-		  { return "Il faut sélectionner un avion.<br />"; }
+		  { return array("txt"=>"Il faut sélectionner un avion","status"=>"error"); }
 
 		if ($this->destination=="")
-		  { return "La destination est obligatoire"; }
+		{
+			$ret[]=array("txt"=>"La destination est obligatoire","status"=>"warning");
+		}
 
 		if (!is_numeric($this->tpsestime))
 	  	  { $this->tpsestime=0; }
 
 		if ($this->tpsestime==0)
-	  	  { return "Vous devez saisir un temps de vol estimé.<br />"; }
+		{
+			$ret[]=array("txt"=>"Vous devez saisir un temps de vol estimé","status"=>"warning");
+		}
 
 		if (!is_numeric($this->tpsreel))
 	  	  { $this->tpsreel=0; }
@@ -430,8 +436,10 @@ class resa_class extends objet_core
 		if ($this->accept!="oui")
 		  { $this->accept="non"; }
 
-		if (($MyOpt["ChkValidResa"]=="on") && ($this->accept!="oui") && ($ValidResa==false) && ($this->uid_instructeur==0))
-		  { return "Vous devez accepter les conditions de vol.<br />"; }
+		// if (($MyOpt["ChkValidResa"]=="on") && ($this->accept!="oui") && ($ValidResa==false) && ($this->uid_instructeur==0))
+		// {
+			// $ret[]=array("txt"=>"Vous devez accepter les conditions de vol","status"=>"warning");
+		// }
 
 
 		// Vérifie si la réservation n'empiète pas sur une autre
@@ -441,28 +449,25 @@ class resa_class extends objet_core
 		$query.="LEFT JOIN ".$this->tbl."_utilisateurs AS ins ON cal.uid_instructeur=ins.id ";
 		$query.="LEFT JOIN ".$this->tbl."_ressources AS avion ON cal.uid_avion=avion.id ";
 		$query.="WHERE cal.actif='oui' ";
-		$query.="AND cal.uid_avion='$this->uid_ressource' ";
-		$query.="AND cal.dte_deb<'$this->dte_fin' ";
-		$query.="AND cal.dte_fin>'$this->dte_deb' ";
-		$query.="AND cal.id<>'$this->id' ORDER BY dte_deb";
+		$query.="AND cal.uid_avion='".$this->uid_ressource."' ";
+		$query.="AND cal.dte_deb<'".$this->dte_fin."' ";
+		$query.="AND cal.dte_fin>'".$this->dte_deb."' ";
+		$query.="AND cal.id<>'".$this->id."' ORDER BY dte_deb";
 	
-
 		$sql->Query($query);
-		$msg_err_t="<U>L'avion est déja réservé</U> :<BR>";
-		$okresa=0;
+		$msg_err_t="";
 		for($i=0; $i<$sql->rows; $i++)
-		  { 
+		{ 
 			$sql->GetRow($i);
-			$msg_err_t.="<p style='padding-left:20px;'>*&nbsp;".strtoupper($sql->data["immatriculation"])." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
+			$msg_err_t.=strtoupper($sql->data["immatriculation"])." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
 			if ($sql->data["insnom"]!="")
 				{
 					$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
 				}
-			$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
+			$msg_err_t.="<br />de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
 
-		  	return $msg_err_t;
-			$okresa=1;
-		  }
+			$ret[]=array("title"=>"L'avion est déja réservé","txt"=>$msg_err_t,"status"=>"warning");
+		}
 
 
 		// Vérifie si l'instructeur est disponible
@@ -476,7 +481,7 @@ class resa_class extends objet_core
 			$query.="LEFT JOIN ".$this->tbl."_utilisateurs AS ins ON cal.uid_instructeur=ins.id ";
 			$query.="LEFT JOIN ".$this->tbl."_ressources AS avion ON cal.uid_avion=avion.id ";
 			$query.="WHERE cal.actif='oui' ";
-			$query.="AND ((cal.uid_instructeur>0 AND cal.uid_instructeur='$this->uid_instructeur') OR (cal.uid_pilote='$this->uid_instructeur')) ";
+			$query.="AND ((cal.uid_instructeur>0 AND cal.uid_instructeur='$this->uid_instructeur') OR (cal.uid_pilote='".$this->uid_instructeur."')) ";
 			$query.="AND cal.dte_deb<'$this->dte_fin' ";
 			$query.="AND cal.dte_fin>'$this->dte_deb' ";
 			$query.="AND cal.id<>'$this->id' ORDER BY dte_deb";
@@ -485,18 +490,19 @@ class resa_class extends objet_core
 			for($i=0; $i<$sql->rows; $i++)
 			{ 
 				$sql->GetRow($i);
-				$msg_err_t.="<p style='padding-left:20px;'>*&nbsp;".strtoupper($sql->data["immatriculation"])." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
+				$msg_err_t.=strtoupper($sql->data["immatriculation"])." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
 				if ($sql->data["insnom"]!="")
 				{
 					$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
 				}
-				$msg_err_t.="<br />&nbsp;&nbsp;de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
+				$msg_err_t.="<br />de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
 	
 				$okresa=1;
 			}
 			if ($okresa==1)
 			{
-				return "<U>L'instructeur a déjà une réservation</U> :<BR>".$msg_err_t;
+				$ret[]=array("title"=>"L'instructeur a déjà une réservation","txt"=>$msg_err_t,"status"=>"warning");
+
 			}
 		}
 			  
@@ -506,16 +512,24 @@ class resa_class extends objet_core
 			if (!$usr_inst->CheckDisponibilite($this->dte_deb,$this->dte_fin))
 			{
 				$okresa=1;
-				return "<U>L'instructeur n'est pas disponible</U><BR>";
+				$ret[]=array("txt"=>"L'instructeur n'est pas disponible","status"=>"warning");
 			}
 		}
 
 		// Traite les erreurs
 		
-		if ($okresa==1)
-		  {
-		  	return $msg_err_t;
-		  }
+	 	return $ret;
+	}
+
+	function Save($ValidResa=false)
+	{ global $gl_uid,$MyOpt;
+		$sql=$this->sql;
+
+		$r=$this->checkResa();
+		if (count($r)>0)
+		{
+			return $r;
+		}
 
 		$t=array(
 			"edite"=>$this->edite,
@@ -552,6 +566,7 @@ class resa_class extends objet_core
 			$t["uid_creat"]=$gl_uid;
 			$t["dte_creat"]=now();
 		}
+
 
 		$this->id=$sql->Edit("reservation",$MyOpt["tbl"]."_calendrier",$this->id,$t);
 

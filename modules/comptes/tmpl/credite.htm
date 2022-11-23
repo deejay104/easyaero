@@ -9,95 +9,104 @@
 
 <!-- BEGIN: corps -->
 
-<form name="compte" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<form name="compte" method="post" action="{path_root}/comptes/credite" enctype="multipart/form-data">
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="comptes">
-	<input type="hidden" name="rub" value="credite">
 
-	<div class='formulaireTitre' style='width:780px;'>{lang_credit}</div>
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<h4>{lang_credit}</h4>
 
 	
-	<div class='formulaire' style='width:780px;'>
-	<p>{lang_creditexplain}</p>
+					<div class="form-group">
+					{lang_creditexplain}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	
-	<table>
-	  <tr class="tableauTitre" >
-		<th width=10>&nbsp;</th>
-		<th width=250>{lang_type}</th>
-		<th width=110>{lang_amount}</th>
-		<th width=410>{lang_comment}</th>
-	  </tr>
-	
-	  <tr>
-		<td style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
-		<TD>
-			<select id="form_type" name="form_type">
-			<!-- BEGIN: lst_type -->
-				<option value="{form_type}">{form_typename}</option>
-			<!-- END: lst_type -->
-		    </select>
-		</TD>
-		<TD>
-			<INPUT id="form_montant" name="form_montant" value="{form_montant}" style="width:100px;">
-		</TD>
-		<TD>
-			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:400px;">
-		</TD>
-	  </TR>
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+							<div class="col-md-3">
+								<label>{lang_type}</label>
+								<select id="form_type" class='form-control' name="form_type">
+								<!-- BEGIN: lst_type -->
+									<option value="{form_type}">{form_typename}</option>
+								<!-- END: lst_type -->
+								</select>
+							</div>
+							<div class="col-md-3">
+								<label>{lang_amount}</label>
+								<INPUT id="form_montant" class='form-control'  name="form_montant" value="{form_montant}">
+							</div>
+							<div class="col-md-6">
+								<label>{lang_comment}</label>
+								<INPUT id="form_commentaire" class='form-control'  name="form_commentaire" value="{form_commentaire}">
+							</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							{lang_balance} {solde_reel}.<br />
+							{lang_balanceprev} {solde_temp}.<br />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	  <TR style='border-top:1px solid #{FormulaireBackgroundNormal};'>
-		<TD></TD>
-		<TD colspan=3>
-			{lang_balance} {solde_reel}.<br />
-			{lang_balanceprev} {solde_temp}.<br />
-		</TD>
-	  </TR>
 
-	</table>
+	<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="{lang_save}"> <INPUT type="submit" class="btn btn-light" name="fonc" value="{lang_cancel}">
 
 	<br />
-	<INPUT type="submit" name="fonc" value="{lang_save}"> <INPUT type="submit" name="fonc" value="{lang_cancel}"><br />
+	<br />
 	
 	<!-- BEGIN: brouillon -->
 	
-	<br />
-	<br />
-	<div class='formulaireTitre' style='width:780px;'>Mouvement(s) en attente de validation</div>
-	<TABLE>
-		<tr class="tableauTitre" >
-			<th width=10>&nbsp;</th>
-			<th width=120>Date</th>
-			<th width=500>Poste</th>
-			<th width=150>Montant</th>
-		</tr>
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<h4>Mouvement(s) en attente de validation</h4>
 
-		<!-- BEGIN: lst_mvt -->
-		<tr>
-			<TD>
-			</TD>	
-			<TD>
-				{lst_date}
-			</TD>
-			<TD>
-				{lst_poste}
-			</TD>
-			<TD>
-				{lst_montant}
-			</TD>
-		  </TR>
+						<TABLE class="table table-hover">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Poste</th>
+									<th>Montant</th>
+								</tr>
+							</thead>
+							<tbody>
+							<!-- BEGIN: lst_mvt -->
+							<tr>
+								<TD>
+									{lst_date}
+								</TD>
+								<TD>
+									{lst_poste}<br />
+									{lst_commentaire}
+								</TD>
+								<TD>
+									{lst_montant}
+								</TD>
+							</TR>
+							<!-- END: lst_mvt -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-		  <tr style='border-bottom: 1px solid #{FormulaireBackgroundNormal};' OnMouseOver="document.getElementById('mod_{form_id}').style.display='block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
-			<TD>&nbsp;</TD>
-			<TD></TD>
-			<TD colspan=2 style='padding-bottom: 10px;'>
-				{lst_commentaire}
-			</TD>
-			<TD></TD>
-		</tr>
-		<!-- END: lst_mvt -->
-	</table>
 	<!-- END: brouillon -->
 
 </form>

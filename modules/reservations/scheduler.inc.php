@@ -25,11 +25,7 @@
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 
-// ---- Menu
-	addPageMenu("",$mod,"Calendrier",geturl("reservations","",""),"icn32_titre.png",false);
-	addPageMenu("",$mod,"Journée",geturl("reservations","scheduler",""),"icn32_scheduler.png",true);
-
-  
+ 
 // ---- Définition des constantes
 	$ress=checkVar("ress","numeric");
 	$start=checkVar("start","varchar");

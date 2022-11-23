@@ -31,6 +31,7 @@
 
 		$input_arrays[$i]["id"]=$sql->data["id"];
 		$input_arrays[$i]["title"]=($usr->data["disponibilite"]=="dispo") ? "Occupé" : "Disponible";
+		$input_arrays[$i]["title"]="";
 		$input_arrays[$i]["start"]=date("c",strtotime($sql->data["dte_deb"]));
 		$input_arrays[$i]["end"]=date("c",strtotime($sql->data["dte_fin"]));
 	}

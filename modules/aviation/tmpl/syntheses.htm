@@ -8,35 +8,161 @@
 
 
 <!-- BEGIN: corps -->
+
+<style>
+.form-inline label { min-width: 150px;}
+</style>
+
+<div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Livret de formation</h5>
+				<button id='close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<input id="livretid" type="hidden" value="0">
+					<div id='editform' class="form-inline"><label>Formation</label>{form_idformation}</div>
+					<div id='showform' class="form-inline"><label>Formation</label><input id='show_idformation' readonly value="" class="form-control" ></div>
+					<div class="form-inline"><label>Début de la formation</label>{form_dte_deb}</div>
+					<div class="form-inline"><label>Fin de la formation</label>{form_dte_fin}</div>
+					<div class="form-inline"><label>Temps initial (DC)</label>{form_tpsdc} (min)</div>
+					<div class="form-inline"><label>Temps initial (Solo)</label>{form_tpssolo} (min)</div>
+				</div>
+				<br />
+				<div class="form-inline"><label></label>
+					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+					<button class="btn btn-light" id="cancel">Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body row">	
+				<div class="col-lg-3">
+					<!-- BEGIN: users -->
+					<select id="form_id" class="form-control" name="form_id" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
+						<!-- BEGIN: lst_users -->
+						<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+						<!-- END: lst_users -->
+					</select>
+					<!-- END: users -->
+				</div>
+
+				<div class="col-lg-3">
+					<select id="form_livret" class="form-control" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
+					<!-- BEGIN: lst_livret -->
+					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
+					<!-- END: lst_livret -->
+					</select>
+				</div>
+
+				<div class="col-lg-3">
+					<!-- BEGIN: aff_editer -->
+					<span class="noMobile">
+						<button id="edit" type="button" class="btn btn-light" data-toggle="modal" data-target="#dialogForm">Editer</button>
+						<button id="new" type="button" class="btn btn-light" data-toggle="modal" data-target="#dialogForm">Nouveau</button>
+					</span>
+					<!-- END: aff_editer -->
+				</div>
+			</div>
+
+			<div class="card-body">	
+				Début de formation : {dte_deb}<br />
+				Fin de formation : {dte_fin}<br />
+
+				<table class='formulaire'>
+					<tr class='formulaireTitre'>
+						<th width=200>&nbsp;</th>
+						<th width=200>Total Heures</th>
+						<th width=200>Total Atterrissage</th>
+						<th width=200>Total RMG</th>
+					</tr>
+					<tr>
+						<td>Double</td>
+						<td>{total_heure_dc}</td>
+						<td>{total_att_dc}</td>
+						<td>{total_rmg_dc}</td>
+					</tr>
+					<tr>
+						<td>Solo</td>
+						<td>{total_heure_solo}</td>
+						<td>{total_att_solo}</td>
+						<td>{total_rmg_solo}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body" id="lst">	
+			{aff_tableau}
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 $( function() {
 
 
-    dialog = $( "#dialog-form" ).dialog({
-      autoOpen: false,
-      height: 300,
-      width: 600,
-	  top: 10,
-      modal: true,
-      buttons: {
-        "Enregistrer": savelivret,
-        Cancel: function() {
-          dialog.dialog( "close" );
-        }
-      },
-    });
+    <!-- dialog = $( "#dialog-form" ).dialog({ -->
+      <!-- autoOpen: false, -->
+      <!-- height: 600, -->
+      <!-- width: 600, -->
+	  <!-- top: 10, -->
+      <!-- modal: true, -->
+      <!-- buttons: { -->
+        <!-- "Enregistrer": savelivret, -->
+        <!-- Cancel: function() { -->
+          <!-- dialog.dialog( "close" ); -->
+        <!-- } -->
+      <!-- }, -->
+    <!-- }); -->
 
 	$( "#edit" ).on( "click", function() {
 		loadLivret();
-		dialog.dialog( "open" );
+		<!-- dialog.dialog( "open" ); -->
+		$("#dialogForm").css("display","block");
+		$("#dialogForm").css("opacity",100);
+		$("#lst").css("opacity",0.25);
+
     });
 	$( "#new" ).on( "click", function() {
 		newLivret();
-		dialog.dialog( "open" );
+		$("#dialogForm").css("display","block");
+		$("#dialogForm").css("opacity",100);
+    });	
+	$( "#close" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$("#lst").css("opacity",1);
+    });
+	$( "#save" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$("#lst").css("opacity",1);
+		savelivret();
+    });
+	$( "#cancel" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$("#lst").css("opacity",1);
     });
 	
+
     function savelivret() {
-		dialog.dialog("close");
+		<!-- dialog.dialog("close"); -->
 
 		valid=true;
 
@@ -86,7 +212,7 @@ $( function() {
 
 			success: function(response) {
 				document.getElementById('livretid').value=response.id;
-				document.getElementById('showform').style.display="block";
+				document.getElementById('showform').style.display="inline-";
 				document.getElementById('editform').style.display="none";
 				document.getElementById('show_idformation').value=response.showformation;
 				document.getElementById('idformation').value=response.idformation;
@@ -105,7 +231,7 @@ $( function() {
 	function newLivret() {
 		document.getElementById('livretid').value=0;
 		document.getElementById('showform').style.display="none";
-		document.getElementById('editform').style.display="block";
+		document.getElementById('editform').style.display="flex";
 		document.getElementById('show_idformation').value=0;
 		document.getElementById('dte_deb').value="";
 		document.getElementById('dte_fin').value="";
@@ -114,68 +240,4 @@ $( function() {
 	}
 });
 </script>
-
-<div id="dialog-form" title="Editer un livret de formation" class="formulaire" style="display:none;">
-	<input id="livretid" type="hidden" value="0">
-	<p id='editform'><label>Formation</label>{form_idformation}</p>
-	<p id='showform'><label>Formation</label><input id='show_idformation' readonly value="" style="background-color:#eeeeee;"></p>
-	<p><label>Début de la formation</label>{form_dte_deb}</p>
-	<p><label>Fin de la formation</label>{form_dte_fin}</p>
-	<p><label>Temps initial (DC)</label>{form_tpsdc} (min)</p>
-	<p><label>Temps initial (Solo)</label>{form_tpssolo} (min)</p>
-
-	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-</div>
-
-<div class='formulaire'>
-
-<!-- BEGIN: users -->
-	<select id="form_id" name="form_id" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
-	<!-- BEGIN: lst_users -->
-	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-	<!-- END: lst_users -->
-	</select>
-<!-- END: users -->
-
-	<select id="form_livret" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
-	<!-- BEGIN: lst_livret -->
-	<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
-	<!-- END: lst_livret -->
-	</select>
-
-<!-- BEGIN: aff_editer -->
-	<span class="noMobile"><a id="edit" href="#">Editer</a> <a id="new" href="#">Nouveau</a></span>
-<!-- END: aff_editer -->
-
-	<br />
-	<br />
-
-	Début de formation : {dte_deb}<br />
-	Fin de formation : {dte_fin}<br />
-
-	<table class='formulaire'>
-		<tr class='formulaireTitre'>
-			<th width=200>&nbsp;</th>
-			<th width=200>Total Heures</th>
-			<th width=200>Total Atterrissage</th>
-			<th width=200>Total RMG</th>
-		</tr>
-		<tr>
-			<td>Double</td>
-			<td>{total_heure_dc}</td>
-			<td>{total_att_dc}</td>
-			<td>{total_rmg_dc}</td>
-		</tr>
-		<tr>
-			<td>Solo</td>
-			<td>{total_heure_solo}</td>
-			<td>{total_att_solo}</td>
-			<td>{total_rmg_solo}</td>
-		</tr>
-	</table>
-</div>
-<br />
-
-{aff_tableau}
-
 <!-- END: corps -->

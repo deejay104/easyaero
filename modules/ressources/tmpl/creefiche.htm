@@ -1,0 +1,47 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+		<div class="formulaireTitre">Création d'une fiche de maintenance</div>
+
+
+<FORM name="reservation" method="post" action="{path_root}/ressources/creefiche" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-inline">
+					Liste des fiches en cours :&nbsp; 
+					<select id="uid_avion" class='form-control' name="form_avion" >
+						<!-- BEGIN: lst_avion -->
+						<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
+						<!-- END: lst_avion -->
+					</select>
+				</div>
+
+				<label>Description de l'incident</label>
+				<TEXTAREA name="form_description" class="form-control" rows=10>{form_description}</TEXTAREA>
+
+				<INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">&nbsp;
+				<INPUT type="submit" class="btn btn-light" name="fonc" value="Retour">&nbsp;
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</FORM>
+
+
+
+<!-- END: corps -->

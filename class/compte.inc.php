@@ -318,7 +318,7 @@ class compte_class{
 	{
 		$sql=$this->sql;
 		$txt ="<input type='hidden' name='form_mid[".$this->id."]' value='ok'>";
-		$txt.="<table class='tableauCompte'>";
+		$txt.="<table class='table table-hover'>";
 
 		$tabcol=array();
 		$tabcol[0]="fafafa";
@@ -357,8 +357,8 @@ class compte_class{
 	
 	function AfficheEntete()
 	{
-		$txt ="<table>";
-		$txt.="<tr class='tableauTitre'>";
+		$txt ="<table class='table'>";
+		$txt.="<tr>";
 		$txt.="<th width=120>Date</th>";
 		$txt.="<th width=350>Poste</th>";
 		$txt.="<th width=350>Commentaire</th>";

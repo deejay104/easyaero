@@ -22,16 +22,26 @@
 <?php
 	$id=checkVar("id","numeric");
 
-	if (!is_numeric($id))
-      { $id=0; }
-
 	if ( (!GetDroit("AccesDisponibilites")) && (!GetMyId($id)) )
 	  { FatalError("Accès non autorisé (AccesDisponibilites)"); }
 
   	require_once ($appfolder."/class/user.inc.php");
 
   	if ($id>0)
-	  { $usr = new user_class($id,$sql,((GetMyId($id)) ? true : false)); }
+	{ 
+		$usr = new user_class($id,$sql,((GetMyId($id)) ? true : false));
+
+		if ($usr->data["disponibilite"]=="dispo")
+		{
+			$tmpl_x->assign("backcolor",$MyOpt["styleColor"]["msgboxBackgroundOk"]);
+			$tmpl_x->assign("eventcolor",$MyOpt["styleColor"]["msgboxBackgroundError"]);
+		}
+		else
+		{
+			$tmpl_x->assign("backcolor",$MyOpt["styleColor"]["msgboxBackgroundError"]);
+			$tmpl_x->assign("eventcolor",$MyOpt["styleColor"]["msgboxBackgroundOk"]);
+		}
+	}
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -60,6 +70,7 @@
 
 	$tmpl_x->assign("form_debjour",$debjour);
 	$tmpl_x->assign("form_finjour",$finjour);
+
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

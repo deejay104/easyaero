@@ -85,10 +85,8 @@ function HideLine(id)
 </script>
 
 		
-<FORM id="debite" name="debite" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<FORM id="debite" name="debite" method="post" action="{path_root}/suivi/taxeat" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="suivi">
-	<INPUT type="hidden" name="rub" value="taxeat">
 	<INPUT type="hidden" name="fonc" value="debite">
 	<INPUT type="hidden" name="id" value="0">
 	<INPUT type="hidden" id="dia_dest" name="ddest" value="">
@@ -132,45 +130,49 @@ Mouvements débités :<br />
 </div>
 <!-- END: aff_mvt_detail -->
 
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
-	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="suivi">
-	<INPUT type="hidden" name="rub" value="taxeat">
+<FORM name="reservation" method="post" action="{path_root}/suivi/taxeat" enctype="multipart/form-data">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-	
-	<!-- BEGIN: aff_debiter -->
-	<p><INPUT type="submit" name="fonc" value="Débiter"></p>
-	<!-- END: aff_debiter -->
-	
-	<TABLE  class='tableauAff'>
-		<tr>
-			<th width=20>&nbsp;</TD>
-			<th width=170><B>Date</B></TD>
-			<th width=80><B>Avion</B></TD>
-			<th width=240><B>Pilote</B></TD>
-			<th width=170><B>Destination</B></TD>
-			<th width=180><B>Status</B></TD>
-			<th width=140><B>Taxe AT</B></TD>
-			<th width=25></TD>
-			<th width=25></TD>
-		</tr>
-		<!-- BEGIN: lst_vols -->
-		<TR OnMouseOver="ShowLine({id});" OnMouseOut="HideLine({id});">
-			<TD width=20>&nbsp;</TD>
-			<TD><a href="index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
-			<TD>{avion_vols}</TD>
-			<TD>{pilote_vols}</TD>
-			<TD><input id="dest_{id}" name="dest[{id}]" value="{destination_vols}" style="width:160px; "></TD>
-			<TD>{status_vols}</TD>
-			<TD><input id="taxe_{id}" name="taxe[{id}]" type="hidden" value="{taxe_vols}" style="width:70px;"><div id="taxeaff_{id}">{taxe_vols}</div></TD>
-			<td><a id='hide_{id}' href="{path_root}/index.php?mod=suivi&rub=taxeat&fonc=taxeok&id={id}" class='imgDelete' style='display:none;'><img src="{path_root}/{path_module}/img/icn16_cacher.png"></a></td>
-			<td><a id='pay_{id}' href="{path_root}/index.php?mod=suivi&rub=taxeat&fonc=debite&id={id}" class='imgDelete' style='display:none;'><img src="{path_root}/{path_module}/img/icn16_debiter.png"></a></td>
-		</TR>
-		<!-- END: lst_vols -->
-	</table>
-	
-	<br />
-	<p><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></p>
+
+<!-- BEGIN: aff_debiter -->
+<p><INPUT type="submit" name="fonc" value="Débiter"></p>
+<!-- END: aff_debiter -->
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">		
+				<TABLE  class='table'>
+					<tr>
+						<th width=170><B>Date</B></th>
+						<th width=80><B>Avion</B></th>
+						<th width=240><B>Pilote</B></th>
+						<th width=170><B>Destination</B></th>
+						<th width=180><B>Status</B></th>
+						<th width=140><B>Taxe AT</B></th>
+						<th style="width:25px!important"></th>
+						<th ></th>
+					</tr>
+					<!-- BEGIN: lst_vols -->
+					<TR OnMouseOver="ShowLine({id});" OnMouseOut="HideLine({id});">
+						<TD><a href="index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
+						<TD>{avion_vols}</TD>
+						<TD>{pilote_vols}</TD>
+						<TD><input id="dest_{id}" class='form-control' name="dest[{id}]" value="{destination_vols}" style="width:160px; "></TD>
+						<TD>{status_vols}</TD>
+						<TD><input id="taxe_{id}" class='form-control' name="taxe[{id}]" type="hidden" value="{taxe_vols}" style="width:70px;"><div id="taxeaff_{id}">{taxe_vols}</div></TD>
+						<td ><a id='hide_{id}' href="{path_root}/suivi/taxeat?fonc=taxeok&id={id}" class='imgDelete' style='display:none;'><i class='mdi mdi-eye-off' /></i></a></td>
+						<td><a id='pay_{id}' href="{path_root}/suivi/taxeat?fonc=debite&id={id}" class='imgDelete' style='display:none;'><i class='mdi mdi-credit-card' /></i></a></td>
+					</TR>
+					<!-- END: lst_vols -->
+				</table>
+		
+				<br />
+				<p><INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler"></p>
+			</div>
+		</div>
+	</div>
+</div>
 </FORM>
 
 

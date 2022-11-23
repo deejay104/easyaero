@@ -7,63 +7,69 @@
 
 
 <!-- BEGIN: corps -->
+<style>
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 2px 4px;
+}
+</style>
 
+<FORM name="reservation" method="post" action="{path_root}/suivi/suivi" enctype="multipart/form-data">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
-	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="suivi">
-	<INPUT type="hidden" name="rub" value="suivi">
+<!-- BEGIN: aff_suivi -->
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<TABLE class="table table-hover dataTable no-footer">
+					<TR>
+						<th width=100>Date</th>
+						<th width=250>Mouvement</th>
+						<th width=10>&nbsp;</th>
+						<th width=400>Commentaire</th>
+						<th width=110 style="text-align:right;">Débit</th>
+						<th width=110 style="text-align:right;">Crédit</th>
+						<th width=10>&nbsp;</th>
+						<th width=110 style="text-align:center;">Relevé</th>
+					</tr>
+					<TR class="tableauTitre">
+						<td colspan=4 align="right"><I>Ancien solde</I>&nbsp;</td>
+						<td align="right" class="tableauBorderLeft"><I>{ancien_debit}</I></td>
+						<td align="right"><I>{ancien_credit}</I></td>
+						<td>&nbsp;</td>
+						<td class="tableauBorderLeft">&nbsp;</td>
+					</TR>
+			
+				<!-- BEGIN: lst_suivi -->
+				  <TR valign=top>
+					<TD>{date_suivi}</TD>
+					<TD>{mouvement_suivi}<BR><I><FONT size=1>{tiers_suivi}</FONT></I></TD>
+					<TD>&nbsp;</TD>
+					<TD>{commentaire_suivi}</TD>
+					<TD align="right" class="tableauBorderLeft">{montant_debit}</TD>
+					<TD align="right">{montant_credit}</TD>
+					<TD>&nbsp;</TD>
+					<TD align=center class="tableauBorderLeft"><INPUT type="checkbox" name="form_releve[{id_suivi}]" {chk_suivi}></TD>
+				  </TR>
+				<!-- END: lst_suivi -->
+				  <TR class="tableauBas">
+						<TD colspan=4 align=right><B><I>Solde</I></B>&nbsp;</TD>
+						<TD align="right" class="tableauBorderLeft"><B><I>{nouveau_debit}</I></B></TD>
+						<TD align="right"><B><I>{nouveau_credit}</I></B></TD>
+						<TD>&nbsp;</TD>
+						<TD align=right class="tableauBorderLeft"><B><I>{pointe_solde}</I></B></TD>
+				  </TR>
+				</TABLE>
+				<br />
+				<INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">&nbsp;
+				<INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">&nbsp;
+				<INPUT type="submit" class="btn btn-light"  name="fonc" value="Clore">
 
-
-	<!-- BEGIN: aff_suivi -->
-		<TABLE class="tableauAff">
-			<TR>
-				<th width=20>&nbsp;</th>
-				<th width=100>Date</th>
-				<th width=250>Mouvement</th>
-				<th width=10>&nbsp;</th>
-				<th width=400>Commentaire</th>
-				<th width=110 style="text-align:right;">Débit</th>
-				<th width=110 style="text-align:right;">Crédit</th>
-				<th width=10>&nbsp;</th>
-				<th width=110 style="text-align:center;">Relevé</th>
-			</tr>
-			<TR class="tableauTitre">
-				<td >&nbsp;</td>
-				<td colspan=4 align="right"><I>Ancien solde</I>&nbsp;</td>
-				<td align="right" class="tableauBorderLeft"><I>{ancien_debit}</I></td>
-				<td align="right"><I>{ancien_credit}</I></td>
-				<td>&nbsp;</td>
-				<td class="tableauBorderLeft">&nbsp;</td>
-			</TR>
-	
-		<!-- BEGIN: lst_suivi -->
-		  <TR valign=top>
-			<TD width=20>&nbsp;</TD>
-			<TD>{date_suivi}</TD>
-			<TD>{mouvement_suivi}<BR><I><FONT size=1>{tiers_suivi}</FONT></I></TD>
-			<TD>&nbsp;</TD>
-			<TD>{commentaire_suivi}</TD>
-			<TD align="right" class="tableauBorderLeft">{montant_debit}</TD>
-			<TD align="right">{montant_credit}</TD>
-			<TD>&nbsp;</TD>
-			<TD align=center class="tableauBorderLeft"><INPUT type="checkbox" name="form_releve[{id_suivi}]" {chk_suivi}></TD>
-		  </TR>
-		<!-- END: lst_suivi -->
-		  <TR class="tableauBas">
-				<TD>&nbsp;</TD>
-				<TD colspan=4 align=right><B><I>Solde</I></B>&nbsp;</TD>
-				<TD align="right" class="tableauBorderLeft"><B><I>{nouveau_debit}</I></B></TD>
-				<TD align="right"><B><I>{nouveau_credit}</I></B></TD>
-				<TD>&nbsp;</TD>
-				<TD align=right class="tableauBorderLeft"><B><I>{pointe_solde}</I></B></TD>
-		  </TR>
-		</TABLE>
-		<br />
-		<INPUT type="submit" name="fonc" value="Enregistrer">&nbsp;
-		<INPUT type="submit" name="fonc" value="Annuler">&nbsp;
-		<INPUT type="submit" name="fonc" value="Clore">
-	<!-- END: aff_suivi -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: aff_suivi -->
 
 
 </FORM>

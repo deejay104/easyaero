@@ -43,10 +43,10 @@
 			},
 
 			select: function(start, end) {
-				document.location="{path_root}/index.php?mod=manifestations&rub=detail&jstart="+start;
+				document.location="{path_root}/manifestations/detail?jstart="+start;
 			},
 			eventClick: function(event, element) {
-				document.location="{path_root}/index.php?mod=manifestations&rub=detail&id="+event.id;
+				document.location="{path_root}/manifestations/detail?id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {
@@ -74,7 +74,7 @@
 
 
 
-	<div id='script-warning'>
+	<div id='script-warning' style='display:none;'>
 		Erreur : <code>api.php</code> doit être accessible.
 	</div>
 

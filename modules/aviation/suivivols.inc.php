@@ -127,7 +127,7 @@
 		  	if ($usr->CheckLache($res->id))
 		  	{
 					$tabValeur[$i]["av".$ii]["val"]="1";
-					$tabValeur[$i]["av".$ii]["aff"]="<a href='".geturl("membres","detail","id=".$id)."'><img src='".$MyOpt["host"]."/".$module."/".$mod."/"."img/icn16_ok2.png' alt=''></a>";
+					$tabValeur[$i]["av".$ii]["aff"]="<a href='".geturl("membres","detail","id=".$id)."'><i class='mdi mdi-check'></i></a>";
 			}
 			else
 		  	{

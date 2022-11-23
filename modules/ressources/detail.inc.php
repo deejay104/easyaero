@@ -87,40 +87,45 @@
 	}
 	
 // ---- Affiche le sous-menu
-	addSubMenu("","Liste",geturl("ressources",""),"icn32_retour.png",false);
+	addPageMenu("","ressources","Liste",geturl("ressources","index",""),"mdi-backburger");
 
 	if (GetDroit("CreeRessource"))
 	{
 		// $tmpl_x->parse("corps.ajout");
-		addSubMenu("","Ajouter",geturl("ressources","detail","id=0"),"icn32_ajouter.png",false);
+		// addSubMenu("","Ajouter",geturl("ressources","detail","id=0"),"icn32_ajouter.png",false);
+		addPageMenu("","ressources","Ajouter",geturl("ressources","detail","id=0"),"");
 	}	
 
 	if (($id==$gl_uid) || (GetDroit("ModifRessource")))
 	{
 		// $tmpl_x->parse("corps.modification");
-		addSubMenu("","Modifier",geturl("ressources","detail","id=".$id."&fonc=modifier"),"",false);
+		// addSubMenu("","Modifier",geturl("ressources","detail","id=".$id."&fonc=modifier"),"",false);
+		addPageMenu("","ressources","Modifier",geturl("ressources","detail","id=".$id."&fonc=modifier"),"");
 	}
 
 	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="oui"))
 	{
-		addSubMenu("","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"icn32_desactive.png",false,"Voulez-vous désactiver cet avion ?");
+		// addSubMenu("","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"icn32_desactive.png",false,"Voulez-vous désactiver cet avion ?");
+		addPageMenu("","ressources","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"");
 	}
 	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="off"))
 	{
-		addSubMenu("","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"icn32_desactive.png",false,"Voulez-vous activer cet avion ?");
+		// addSubMenu("","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"icn32_desactive.png",false,"Voulez-vous activer cet avion ?");
+		addPageMenu("","ressources","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"");
 	}
 	if ((GetDroit("SupprimeRessource")) && ($ress->data["actif"]=="off"))
 	{
 		// $tmpl_x->parse("corps.suppression");
-		addSubMenu("","Supprimer",geturl("ressources","detail","id=".$id."&fonc=delete"),"icn32_supprime.png",false,"Voulez-vous supprimer cet avion ?");
+		// addSubMenu("","Supprimer",geturl("ressources","detail","id=".$id."&fonc=delete"),"icn32_supprime.png",false,"Voulez-vous supprimer cet avion ?");
+		addPageMenu("","ressources","Supprimer",geturl("ressources","detail","id=".$id."&fonc=delete"),"Voulez-vous supprimer cet avion ?");
 	}	
 	if ((GetDroit("RestoreRessource")) && ($ress->data["actif"]=="non"))
 	{
 		// $tmpl_x->parse("corps.suppression");
-		addSubMenu("","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"icn32_supprime.png",false,"Voulez-vous re activer cet avion ?");
+		// addSubMenu("","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"icn32_supprime.png",false,"Voulez-vous re activer cet avion ?");
+		// addPageMenu("","ressources","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"Voulez-vous re activer cet avion ?");
 	}
 
-	affSubMenu();
 
 // ---- Sauvegarde les infos
 	if (($fonc=="Enregistrer") && (isset($_SESSION['tab_checkpost'][$checktime])))
@@ -274,7 +279,7 @@
 			$dte->editmode="form";
 			$dte->context="ressources";
 			$tmpl_x->assign("form_echeance",$dte->Affiche());
-			$tmpl_x->parse("corps.aff_echeances.lst_echeance");
+			$tmpl_x->parse("corps.lst_echeance");
 		}
 			
 		if (is_array($lstdte))
@@ -284,12 +289,12 @@
 				$dte = new echeance_core($did,$sql,$id);
 				$dte->editmode=($typeaff=="form") ? "edit" : "html";
 				$tmpl_x->assign("form_echeance",$dte->Affiche());
-				$tmpl_x->parse("corps.aff_echeances.lst_echeance");
+				$tmpl_x->parse("corps.lst_echeance");
 			}
 		}
 	}
 	
-	$tmpl_x->parse("corps.aff_echeances");			
+	// $tmpl_x->parse("corps.aff_echeances");			
 	
 // ---- Messages
 	if ($msg_erreur!="")

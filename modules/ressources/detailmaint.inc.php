@@ -65,7 +65,8 @@
 	{
 		foreach($form_data as $k=>$v)
 		{
-			$msg_erreur.=$maint->Valid($k,$v);
+			$msg_erreur=$maint->Valid($k,$v);
+			affInformation($msg_erreur,"error");
 		}
 	}
 
@@ -74,7 +75,8 @@
 		$ok=$maint->Save();
 		if ($ok<>1)
 		{
-			$msg_erreur.="Erreur lors de la sauvegarde des données";
+			$msg_erreur="Erreur lors de la sauvegarde des données";
+			affInformation($msg_erreur,"error");
 		}
 		$maint->SetIntervention();
 		if ($id==0)
@@ -108,7 +110,10 @@
 
 
 		if ($msg_erreur=="")
-		  { $msg_ok="Enregistrement effectué."; }
+		{
+			$msg_ok="Enregistrement effectué.";
+			affInformation($msg_ok,"ok");
+		}
 	}
 	else if (GetDroit("SupprimeMaintenance") && ($fonc=="Supprimer"))
 	{
@@ -129,25 +134,17 @@
 		{
 			foreach($form_atelier as $k=>$v)
 		  	{
-		  		$msg_erreur.=$atelier->Valid($k,$v);
+		  		$msg_erreur=$atelier->Valid($k,$v);
+				affInformation($msg_erreur,"error");
 		  	}
-			$msg_ok="Atelier ajouté.<BR>";
 			$atelier->Save();
+			$msg_ok="Atelier ajouté";
+			affInformation($msg_ok,"ok");
 		}
 		
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;		
 	}
 
-// ---- Messages
-	if ($msg_erreur!="")
-	{
-		affInformation($msg_erreur,"error");
-	}		
-
-	if ($msg_ok!="")
-	{
-		affInformation($msg_ok,"ok");
-	}
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -155,15 +152,15 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche le sous-menu
-	addSubMenu("","Liste",geturl("ressources","liste",""),"icn32_retour.png",false);
-	addSubMenu("","Imprimer",geturl("ressources","detailmaint","id=".$id."&fonc=imprimer"),"icn32_printer.png",false);
+
+	addPageMenu("","ressources","Liste",geturl("ressources","liste",""),"");
+	addPageMenu("","ressources","Imprimer",geturl("ressources","detailmaint","id=".$id."&fonc=imprimer"),"");
 		
 	if (GetDroit("SupprimeMaintenance"))
-	  {
-		addSubMenu("","Supprimer la maintenance",geturl("ressources","detailmaint","id=".$id."&fonc=Supprimer"),"icn32_supprimer.png",false,"Voulez-vous supprimer cette maintenance ?");
-	  }
+	{
+		addPageMenu("","ressources","Supprimer la maintenance",geturl("ressources","detailmaint","id=".$id."&fonc=Supprimer"),"",false,"Voulez-vous supprimer cette maintenance ?");
+	}
 
-	affSubMenu();
 
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
@@ -224,7 +221,7 @@
 			}
 			else
 			{
-				$tabValeur[$ii]["chk"]["aff"]=($resa->id==$maint->data["uid_lastresa"]) ? "<img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_ok.png'>" : "";
+				$tabValeur[$ii]["chk"]["aff"]=($resa->id==$maint->data["uid_lastresa"]) ? "<i class='mdi mdi-check'></i>" : "";
 			}
 
 
@@ -297,7 +294,7 @@
 				  {
 					$tabValeur[$i]["chk"]["aff"]="<input type='checkbox' name='form_fiche[".$fid."]' ".(($fiche->data["uid_planif"]==$maint->id) ? "checked" : "").">";
 				} else {
-					$tabValeur[$i]["chk"]["aff"]=($fiche->data["uid_planif"]==$maint->id) ? "<img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_ok.png'>" : "";
+					$tabValeur[$i]["chk"]["aff"]=($fiche->data["uid_planif"]==$maint->id) ? "<i class='mdi mdi-check'></i>" : "";
 				  }
 				
 				$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
@@ -314,7 +311,7 @@
 				$tabValeur[$i]["description"]["aff"]=$fiche->aff("description");
 
 				$tabValeur[$i]["maint"]["val"]=(($fiche->data["uid_planif"]>0) ? "1" : "0");
-				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='".geturl("ressources","detailmaint","id=".$fiche->data["uid_planif"])."' title='Cette fiche est déjà affectée à une autre maintenance'><img src='".$MyOpt["host"]."/".$corefolder."/static/images/icn16_liste	.png'></a>" : " ");
+				$tabValeur[$i]["maint"]["aff"]=((($fiche->data["uid_planif"]>0) && ($fiche->data["uid_planif"]!=$id)) ? "<a href='".geturl("ressources","detailmaint","id=".$fiche->data["uid_planif"])."' title='Cette fiche est déjà affectée à une autre maintenance'><i class='mdi mdi-file'></i></a>" : " ");
 			  }	
 		  }
 	  }

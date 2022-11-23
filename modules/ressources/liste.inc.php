@@ -37,8 +37,7 @@
 // ---- Affiche le sous-menu
 	if (GetDroit("CreeMaintenance"))
 	{
-		addSubMenu("","Planifier une maintenance",geturl("ressources","detailmaint","id=0"),"icn32_supprime.png",false);
-		affSubMenu();
+		addPageMenu("","ressources","Planifier une maintenance",geturl("ressources","detailmaint","id=0"),"");
 	}
 
 

@@ -4,20 +4,44 @@
 
 <!-- BEGIN: infos -->
 
-<p><a style='color: #000000;'>
-	{TexteTitre} 
-	<select id="ress" name="ress" OnChange="Recharge();" style="font-size:14px;">
-		<option value="0">Tous</OPTION>
-		<!-- BEGIN: lst_ress -->
-		<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
-		<!-- END: lst_ress -->
-	</select>
-</a></p>
+
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
 
-<SCRIPT language="JavaScript">
+
+
+<link href='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+
+<script src='{path_root}/{path_core}/external/fullcalendar/lib/moment.min.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
+
+<style>
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	#calendar {
+	}
+	.calendarDesc {
+		background: white;
+		border: 1px solid #cccccc;
+		padding:10px;
+		border-radius: 2px;
+	}
+
+	.afficheLegende { line-height:16px; margin: 5px; }
+	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
+
+	
+</style>
+
+<script>
+
 	var ns4=document.layers
 	var ie4=document.all
 	var ns6=document.getElementById&&!document.all
@@ -27,102 +51,14 @@
 		if (ns6)
 		  {
 		  	var a = document.getElementById("ress").value;
-		  	document.location="{path_root}/index.php?mod=reservations&ress="+a+"&jour={form_jour}";
+		  	document.location="{path_root}/reservations/index?ress="+a+"&jour={form_jour}";
 		  }
 		else
 		  {
-		  	document.location='{path_root}/index.php?mod=reservations&ress='+ress.value+'&jour={form_jour}';
+		  	document.location='{path_root}/reservations/index?ress='+ress.value+'&jour={form_jour}';
 		  }
 	  }
-</SCRIPT>
 
-<link href='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
-
-<script src='{path_root}/{path_core}/external/fullcalendar/lib/moment.min.js'></script>
-<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.js'></script>
-<script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
-
-<style>
-	#script-warning {
-		display: none;
-		background: #eee;
-		border-bottom: 1px solid #ddd;
-		padding: 0 10px;
-		line-height: 40px;
-		text-align: center;
-		font-weight: bold;
-		font-size: 12px;
-		color: red;
-	}
-
-	#loading {
-		display: none;
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
-
-	#calendar {
-		width: 90%;
-		padding: 0 10px;
-	}
-
-	.fc-time-grid .fc-slats td {
-		height: 16px;
-		line-height: 16px;
-		font-size: 10px;
-		}
-
-	.fc-time {	color: #000000; }
-	.fc-title {	color: black; }
-	.fc-end-resizer { color: #777777; }
-
-	.fc-week {
-		height: 100px!important;
-	}
-		
-	.afficheLegende { line-height:16px; margin: 5px; }
-	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
-
-	
-
-		.preloader5 {
-		}
-		.preloader5 span {
-		   vertical-align:middle;
-		   border-radius:100%;
-		   background:#000000;
-		   display:inline-block;
-		   width:8px;
-		   height:8px;
-		   margin:3px 2px;
-		   -webkit-animation:preloader5 0.08s linear infinite alternate;
-		   animation:preloader5 0.08s linear infinite alternate;
-		}
-		.preloader5 span:nth-child(1) {
-		   -webkit-animation-delay:-0.08s;
-		   animation-delay:-0.08s;
-		}
-		.preloader5 span:nth-child(2) {
-		   -webkit-animation-delay:-0.053333s;
-		   animation-delay:-0.053333s;
-		}
-		.preloader5 span:nth-child(3) {
-		   -webkit-animation-delay:-0.026666s;
-		   animation-delay:-0.026666s;
-		}
-		@keyframes preloader5 {
-		   from {transform: scale(0, 0);}
-		   to {transform: scale(1, 1);}
-		}
-		@-webkit-keyframes preloader5 {
-		   from {-webkit-transform: scale(0, 0);}
-		   to {-webkit-transform: scale(1, 1);}
-		}
-	
-</style>
-
-<script>
 	var oldView="old";
 	
 	$(document).ready(function() { showCalendar(); });
@@ -255,7 +191,7 @@
 			events: {
 				url: '{path_root}/api.php?mod=reservations&rub=getcal&ress={form_ress}',
 				error: function() {
-					$('#script-warning').show();
+					showToast("","L'API n'est pas accessible","error");
 				}
 			},
 			eventRender: function( event, element, view ) {
@@ -313,24 +249,28 @@ console.log(view.name+" "+oldView);
 
 </script>
 
-	<br />
-
-	<div id='script-warning'>
-		Erreur : <code>api.php</code> doit être accessible.
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-inline">
+					{TexteTitre}&nbsp;
+					<select id="ress" name="ress" class="form-control" OnChange="Recharge();">
+						<option value="0">Tous</OPTION>
+						<!-- BEGIN: lst_ress -->
+						<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
+						<!-- END: lst_ress -->
+					</select>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
 
-	<div id='loading' class="preloader5">
-		<span></span>
-		<span></span>
-		<span></span>
-	</div>
-
-	<div id='calendar' style='min-height: 620px;'></div>
-
-
-	<p style="font-size: 10px; line-height:12px;">
-	Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
-	</p>
+<div id='calendar' style='min-height: 620px;'></div>
+<p style="font-size: 10px; line-height:12px;">
+Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
+</p>
 	
 <table>
 <tr>

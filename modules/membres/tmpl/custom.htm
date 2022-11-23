@@ -1,76 +1,82 @@
 <!-- BEGIN: left -->
-	<p>
-		<label for="sexe">{lang_sexe}</label>{form_sexe}
-	</p>
-	<p>
-		<label for="tel_fixe">{lang_homephone}</label>{form_tel_fixe}
-	</p>
-	<p>
-		<label for="tel_portable">{lang_mobilephone}</label>{form_tel_portable}
-	</p>
-	<p>
-		<label for="tel_bureau">{lang_workphone}</label>{form_tel_bureau}
-	</p>
-	<p>
-		<label for="adresse1">{lang_address}</label>{form_adresse1}
-	</p>
-	<p>
-		<label for="adresse2"></label>{form_adresse2}
-	</p>
-	<p>
-		<label for="codepostal">{lang_zipcode}</label>{form_codepostal}
-	</p>
-	<p>
-		<label for="ville">{lang_city}</label>{form_ville}
-	</p>
+	<div class="form-group">
+		<label class="col-form-label" for="sexe">{lang_sexe}</label>{form_sexe}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="tel_fixe">{lang_homephone}</label>{form_tel_fixe}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="tel_portable">{lang_mobilephone}</label>{form_tel_portable}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="tel_bureau">{lang_workphone}</label>{form_tel_bureau}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="adresse1">{lang_address}</label>{form_adresse1}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="adresse2"></label>{form_adresse2}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="codepostal">{lang_zipcode}</label>{form_codepostal}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="ville">{lang_city}</label>{form_ville}
+	</div>
 
-	<p>
-		<label for="idcpt">{lang_account}</label>{form_idcpt}
-	</p>
+	<div class="form-group">
+		<label class="col-form-label" for="idcpt">{lang_account}</label>{form_idcpt}
+	</div>
 	<!-- BEGIN: disponibilite -->
-	<p>
-		<label for="disponibilite">{lang_availability}</label>{form_disponibilite}
-	</p>
+	<div class="form-group">
+		<label class="col-form-label" for="disponibilite">{lang_availability}</label>{form_disponibilite}
+	</div>
 	<!-- END: disponibilite -->
-	<p>
-		<label for="dte_naissance">{lang_birthdate}</label>{form_dte_naissance}
-	</p>
-	<p>
-		<label for="dte_inscription">{lang_createdate}</label>{form_dte_inscription}
-	</p>
-	<p>
-		<label for="poids">{lang_weight} (en {unitPoids})</label>{form_poids}
-	</p>
+	<div class="form-group">
+		<label class="col-form-label" for="dte_naissance">{lang_birthdate}</label>{form_dte_naissance}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="dte_inscription">{lang_createdate}</label>{form_dte_inscription}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" for="poids">{lang_weight} (en {unitPoids})</label>{form_poids}
+	</div>
 
 	<!-- BEGIN: mod_aviation_lache -->
-	<p>
-		<label for="lache">{lang_allowedplane}</label><span>{form_lache}</span>
-	</p>
+	<div class="form-group">
+		<label class="col-form-label" for="lache">{lang_allowedplane}</label><span>{form_lache}</span>
+	</div>
 	<!-- END: mod_aviation_lache -->
 
 	<!-- BEGIN: decouvert -->
-	<p>
-		<label for="decouvert">{lang_decouvert}</label>{form_decouvert}
-	</p>
+	<div class="form-group">
+		<label class="col-form-label" for="decouvert">{lang_decouvert}</label>{form_decouvert}
+	</div>
 	<!-- END: decouvert -->
 
 	<!-- BEGIN: tarif -->
-	<p>
-		<label for="tarif">{lang_price}</label>{form_tarif}
-	</p>
+	<div class="form-group">
+		<label class="col-form-label" for="tarif">{lang_price}</label>{form_tarif}
+	</div>
 	<!-- END: tarif -->
 <!-- END: left -->
 
 <!-- BEGIN: right -->
-<div class="formulaireTitre">{lang_summary}</div>
-<div class="formulaire">
+	<h4>{lang_summary}</h4>
 	<!-- BEGIN: compta -->
-	<p><label>{lang_balance}</label>{aff_solde}</p>
+	<div class="form-group">
+		<label class="col-form-label" >{lang_balance}</label>{aff_solde}
+	</div>
 	<!-- END: compta -->
 	<!-- BEGIN: aviation -->
-	<p><label>{lang_flighthour}</label>{aff_voltotal}</p>
-	<p><label>{lang_last12month}</label>{aff_vol12mois}</p>
-	<p><label>{lang_thisyear}</label>{aff_volannee}</p>
+	<div class="form-group">
+		<label class="col-form-label" >{lang_flighthour}</label>{aff_voltotal}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" >{lang_last12month}</label>{aff_vol12mois}
+	</div>
+	<div class="form-group">
+		<label class="col-form-label" >{lang_thisyear}</label>{aff_volannee}
+	</div>
 	<!-- END: aviation -->
-</div>
 <!-- END: right -->

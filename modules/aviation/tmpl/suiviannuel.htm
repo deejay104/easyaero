@@ -26,24 +26,40 @@ function Recharge()
 	{
 		var type='an';
 	}
-	document.location='{path_root}/index.php?mod=aviation&rub=suiviannuel&dte='+document.getElementById('form_date').value+'&type='+type;
+	document.location='{path_root}/aviation/suiviannuel?dte='+document.getElementById('form_date').value+'&type='+type;
 }
 </script>
 
-<div class="formulaire">
-		<input type="radio" id="form_type_an" name="form_type" value="an" {chk_annuel} OnChange="Recharge();"> Année
-		<SELECT id="form_date" name="form_date" OnChange="Recharge();">
-		<!-- BEGIN: lst_annee -->
-			<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
-		<!-- END: lst_annee -->
-		</SELECT>
-
-		<input type="radio" id="form_type_12" name="form_type" value="12" {chk_12mois} OnChange="Recharge();"> 12 derniers mois
-		<input type="radio" id="form_type_01" name="form_type" value="mois" {chk_01mois} OnChange="Recharge();"> Mois en cours
-		<input type="radio" id="form_type_00" name="form_type" value="mois" {chk_00mois} OnChange="Recharge();"> Mois précédent
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<div class="form-inline">
+					<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_an" name="form_type" value="an" {chk_annuel} OnChange="Recharge();"> Année<i class="input-helper"></i></label>&nbsp;
+					<SELECT id="form_date" class="form-control" name="form_date" OnChange="Recharge();">
+					<!-- BEGIN: lst_annee -->
+						<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
+					<!-- END: lst_annee -->
+					</SELECT>
+					&nbsp;
+					<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_12" name="form_type" value="12" {chk_12mois} OnChange="Recharge();"> 12 derniers mois<i class="input-helper"></i></label>&nbsp;
+					<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_01" name="form_type" value="mois" {chk_01mois} OnChange="Recharge();"> Mois en cours<i class="input-helper"></i></label>&nbsp;
+					<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_00" name="form_type" value="mois" {chk_00mois} OnChange="Recharge();"> Mois précédent<i class="input-helper"></i></label>&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<br />
-{tab_liste}
-<p>Attention : Ne sont comptabilisées que les heures effectuées dans le club.</p>
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+			{tab_liste}
+			<p>Attention : Ne sont comptabilisées que les heures effectuées dans le club.</p>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- END: corps -->

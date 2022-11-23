@@ -7,6 +7,140 @@
 
 <!-- BEGIN: corps -->
 
+
+
+<FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="mod" value="aviation">
+<INPUT type="hidden" name="rub" value="bapteme">
+<INPUT type="hidden" name="id" value="{id}">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4>Informations</h4>
+				<div class="form-group">
+					<label class="col-form-label">Numéro</label>{form_num}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Nom client</label>{form_nom}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Nom passager</label>{form_passager}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Bon cadeau</label>{form_bonkdo}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Nb de personnes</label>{form_nb}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Téléphone</label>{form_telephone}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Mail</label>{form_mail}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Type</label>{form_type}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Payé</label>{form_paye}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Date paiement</label>{form_dte_paye}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+
+				<h4>Affectation</h4>
+
+				<div class="form-group">
+					<label class="col-form-label">Statut</label>{form_status}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Pilote</label>{form_id_pilote}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Avion</label>{form_id_avion}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Date</label>{form_dte}
+				</div>
+				<!-- BEGIN: lst_dispo -->
+				<div class="form-group">
+					<label class="col-form-label">{dispo_immat}</label><div id='avion-{lst_uid_avion}' style='display:inline-block;'><img id="imgdispo_{lst_uid_avion}" src="/{path_module}/img/icn16_nc.png"></div>
+				</div>
+				<!-- END: lst_dispo -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h4>Commentaires</h4>
+				<div class="formulaire">
+				{form_description}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- BEGIN: submit -->
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<input type="submit" class="btn btn-primary mr-2" name="fonc" id="enregistrer" value="Enregistrer">
+				<input type="submit" class="btn btn-light" name="fonc" id="annuler" value="Annuler">
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: submit -->
+
+
+	<!-- BEGIN: info_prendre -->
+	<div class='alert-fill-primary alert'>
+		<i class="mdi mdi-alert-circle"></i>
+		Le menu '<u>Prendre</u>' vous affecte le baptème. Son status sera alors changé à affecté. 
+	</div>
+	<!-- END: info_prendre -->
+
+	<!-- BEGIN: info_planifier -->
+	<div class='alert-fill-primary alert'>
+		<i class="mdi mdi-alert-circle"></i>
+		Le menu '<u>Planifier</u>' vous permet de saisir les informations sur le vol : avion, pilote, la date et l'heure. 
+	</div>
+	<!-- END: info_planifier -->
+
+	<!-- BEGIN: info_reserver -->
+	<div class='alert-fill-primary alert'>
+		<i class="mdi mdi-alert-circle"></i>
+		Le menu '<u>Réserver</u>' vous permet de saisir automatiquement la réservation de l'avion en fonction des données d'affectation saisies dans la fiche de baptème. 
+	</div>
+	<!-- END: info_reserver -->
+
+	<!-- BEGIN: info_effectuer -->
+	<div class='alert-fill-primary alert'>
+		<i class="mdi mdi-alert-circle"></i>
+				Le menu '<u>Effectué</u>' change le status du baptème à effectué. Il est a utiliser lorsque le baptème a été réalisé.
+	</div>
+	<!-- END: info_effectuer -->
+
+
+</FORM>
+
+
 <script type="text/javascript">
 	$(function() {
 		$("#form_dte_j2").datepicker({
@@ -17,10 +151,12 @@
 			prevText: "Précédent",
 			nextText: "Suivant"
 		});
-	});
-</script>
 
-<script type="text/javascript">
+<!-- BEGIN: lst_dispo_script -->
+		getAvailability({lst_uid_avion},{id_resa},{deb},{fin});
+<!-- END: lst_dispo_script -->
+	});
+
 function reloadImg() {
 	var dte_j=document.getElementById("dte_jour").value;
 	var dte_h=document.getElementById("dte_heure").value;
@@ -30,154 +166,31 @@ function reloadImg() {
 	//var d=new Date("2017-08-28 14:30");
 
 <!-- BEGIN: lst_dispo_reload -->
-	document.getElementById("imgdispo_{lst_uid_avion}").src="{path_root}/api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb="+Math.round(d.getTime()/1000)+"&fin="+Math.round(d.getTime()/1000+45*60);
+	<!-- document.getElementById("imgdispo_{lst_uid_avion}").src="{path_root}/api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb="+Math.round(d.getTime()/1000)+"&fin="+Math.round(d.getTime()/1000+45*60); -->
+	getAvailability('{lst_uid_avion}','{id_resa}',Math.round(d.getTime()/1000),Math.round(d.getTime()/1000+45*60));
 <!-- END: lst_dispo_reload -->
 
 	console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
 }
 
+function getAvailability(id,resa,deb,fin)
+{
+	$.get('{path_root}/api.php?mod=aviation&rub=disponibilite&id='+id+'&resa='+resa+'&deb='+deb+'&fin='+fin ).done(function(data)
+	{
+		if (data.status==200)
+		{
+			$("#avion-"+id).html('<img id="imgdispo-'+id+'" src="/{path_module}/img/icn16_'+data.availability+'.png"> '+data.message);
+		}
+	});
+}
+
 $(document).ready(function() {
 	$('#dte_jour').change(function() { reloadImg(); });
-})
-$(document).ready(function() {
 	$('#dte_heure').change(function() { reloadImg(); });
 })
 	
+
+
 </script>
-
-
-<FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
-<INPUT type="hidden" name="mod" value="aviation">
-<INPUT type="hidden" name="rub" value="bapteme">
-<INPUT type="hidden" name="id" value="{id}">
-<INPUT type="hidden" name="checktime" value="{form_checktime}">
-
-<!-- BEGIN: msgerror -->
-<div id="msgerror">{msg_erreur}</div>
-<!-- END: msgerror -->
-<!-- BEGIN: msgok -->
-<div id="msgok">{msg_confirmation}</div>
-<!-- END: msgok -->
-
-<table>
-<tr>
-<td style='min-width:400px; width:800px;'>
-
-<div class="formulaireTitre">Informations</div>
-
-<div class="formulaire">
-	<p>
-		<label>Numéro</label>{form_num}
-	</p>
-	<p>
-		<label>Nom client</label>{form_nom}
-	</p>
-	<p>
-		<label>Nom passager</label>{form_passager}
-	</p>
-	<p>
-		<label>Bon cadeau</label>{form_bonkdo}
-	</p>
-	<p>
-		<label>Nb de personnes</label>{form_nb}
-	</p>
-	<p>
-		<label>Téléphone</label>{form_telephone}
-	</p>
-	<p>
-		<label>Mail</label>{form_mail}
-	</p>
-	<p>
-		<label>Type</label>{form_type}
-	</p>
-	<p>
-		<label>Payé</label>{form_paye}
-	</p>
-	<p>
-		<label>Date paiement</label>{form_dte_paye}
-	</p>
-</div>
-
-<BR>
-
-<div class="formulaireTitre">Affectation</div>
-
-<div class="formulaire">
-<p>
- 	<label>Statut</label>{form_status}
-</p>
-<p>
-	<label>Pilote</label>{form_id_pilote}
-</p>
-<p>
-	<label>Avion</label>{form_id_avion}
-</p>
-<p>
-	<label>Date</label>{form_dte}
-</p>
-<!-- BEGIN: lst_dispo -->
-<p>
-	<label>{dispo_immat}</label><img id="imgdispo_{lst_uid_avion}" src="{path_root}/api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
-</p>
-<!-- END: lst_dispo -->
-</div>
-
-<div class="formulaireTitre">Commentaires</div>
-<div class="formulaire">
-{form_description}
-</div>
-
-<!-- BEGIN: submit -->
-<div class="formulaireSubmit">
-	<input type="submit" name="fonc" id="enregistrer" value="Enregistrer">
-	<input type="submit" name="fonc" id="annuler" value="Annuler">
-</div>
-<!-- END: submit -->
-
-</td>
-<td valign='top'>
-
-	<!-- BEGIN: info_prendre -->
-	<div class='formulaireInformation'>
-		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
-		<div style='margin-left: 40px;'>
-		Le menu '<u>Prendre</u>' vous affecte le baptème. Son status sera alors changé à affecté. 
-		</div>
-	</div>
-	<!-- END: info_prendre -->
-
-	<!-- BEGIN: info_planifier -->
-	<div class='formulaireInformation'>
-		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
-		<div style='margin-left: 40px;'>
-		Le menu '<u>Planifier</u>' vous permet de saisir les informations sur le vol : avion, pilote, la date et l'heure. 
-		</div>
-	</div>
-	<!-- END: info_planifier -->
-
-	<!-- BEGIN: info_reserver -->
-	<div class='formulaireInformation'>
-		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
-		<div style='margin-left: 40px;'>
-		Le menu '<u>Réserver</u>' vous permet de saisir automatiquement la réservation de l'avion en fonction des données d'affectation saisies dans la fiche de baptème. 
-		</div>
-	</div>
-	<!-- END: info_reserver -->
-
-	<!-- BEGIN: info_effectuer -->
-	<div class='formulaireInformation'>
-		<img src='{path_root}/{path_module}/img/icn32_infos.png' style='float: left;'>
-		<div style='margin-left: 40px;'>
-		Le menu '<u>Effectué</u>' change le status du baptème à effectué. Il est a utiliser lorsque le baptème a été réalisé.
-		</div>
-	</div>
-	<!-- END: info_effectuer -->
-
-</td>
-</tr>
-</table>
-
-
-</FORM>
 
 <!-- END: corps -->

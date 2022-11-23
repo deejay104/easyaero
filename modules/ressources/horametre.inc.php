@@ -177,7 +177,7 @@
 	}
 	
 // ---- Affiche le tableau
-	$tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne,false,false));
+	$tmpl_x->assign("tab_liste",AfficheTableau($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne,false,false));
 
 
 // ---- Affecte les variables d'affichage

@@ -229,12 +229,12 @@ class user_class extends user_core
 				$ret="";
 		  	  	foreach($this->data[$key] as $avion)
 		  	  	  {
-		  	  		$ret.="<input type='checkbox' name='form_lache[".$avion["idavion"]."]' ".(($avion["idlache"]>0) ? "checked" : "")." value='".(($avion["idlache"]>0) ? $avion["idlache"] : "N")."' /> ".$avion["avion"]->val("immatriculation")."<br />";
+		  	  		$ret.="<div class='form-check form-check-success'><label class='form-check-label'><input type='checkbox' name='form_lache[".$avion["idavion"]."]' ".(($avion["idlache"]>0) ? "checked" : "")." value='".(($avion["idlache"]>0) ? $avion["idlache"] : "N")."' /> ".$avion["avion"]->val("immatriculation")."<i class='input-helper'></i></label></div>";
 		  	  	  }
 			}
 			else if ($key=="idcpt")
 		    {
-		    	$ret ="<select id='".$key."'  name=\"".$formname."[$key]\">";
+		    	$ret ="<select id='".$key."' class='form-control' name=\"".$formname."[$key]\">";
 		    	$ret.="<option value=\"".$this->id."\" ".(($txt==$this->id)?"selected":"").">".$this->aff("fullname")."</option>";
 				if ((isset($this->data["enfant"])) && (is_array($this->data["enfant"])))
 				{

@@ -34,9 +34,7 @@
 // --- Charge la réservation
 	$id=checkVar("id","numeric");
 	$prev=checkVar("prev","varchar");
-	$fonch=checkVar("fonch","varchar");
 
-	$form_data=checkVar("form_data","array");
 
 	$form_accept=checkVar("form_accept","varchar",3);
 	$form_uid_ress=checkVar("form_uid_ress","numeric");
@@ -65,7 +63,7 @@
 	$resa["resa"]=new resa_class($id,$sql);
 
 // ---- Vérifie les infos
-	if (($fonc=="Enregistrer") || ($fonc=="Actualiser") || ($fonch=="centrage") || ($fonch=="synthese"))
+	if (($fonc=="enregistrer") || ($fonc=="Actualiser") || ($fonc=="centrage") || ($fonc=="synthese"))
 	  {
 		$ok=1;
 
@@ -91,32 +89,36 @@
 		if ($resa["pilote"]->isSoldeNegatif())
 		{
 			$s=$resa["pilote"]->CalcSolde();
-		  	$msg_err.="<u>Le compte du pilote est NEGATIF ($s €)</u>.<br />";
+		  	$msg_err="<u>Le compte du pilote est NEGATIF ($s €)</u>.<br />";
 		  	$msg_err.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+			affInformation($msg_err,"error");
 			$ok=4;
 		}
 
 		if ($resa["resa"]->edite=='non')
 		{
-		  	$msg_err.="<u>Réservation déjà saisie en compta</u>.<br />";
+		  	$msg_err="<u>Réservation déjà saisie en compta</u>.<br />";
 		  	$msg_err.="Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta.<br />";
+			affInformation($msg_err,"error");
 			$ok=3;
 		}
 
 		// Vérifie si le pilote est laché sur l'avion
 		if ((!$resa["pilote"]->CheckLache($form_uid_ress)) && ($form_uid_instructeur==0))
 		{
-		  	$msg_err.="<u>Réservation impossible</u>.<br />";
+		  	$msg_err="<u>Réservation impossible</u>.<br />";
 		  	$msg_err.="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
 		  	$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
+			affInformation($msg_err,"error");
 			$ok=3;
 		}
 
 		// Vérifie si le pilote est autorisé
 		if (!$resa["pilote"]->CheckDroit("TypePilote"))
 		{ 
-		  	$msg_err.="<u>Réservation impossible</u>.<br />";
+		  	$msg_err="<u>Réservation impossible</u>.<br />";
 			$msg_err.="Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion<BR>";
+			affInformation($msg_err,"error");
 			$ok=3;
 		}
 
@@ -311,6 +313,7 @@
 		else
 		  {
 		  	$msg_err.=$msg_err2;
+			affInformation($msg_err2,"error");
 		  	$ok=3;
 		  }
 	  }
@@ -321,14 +324,14 @@
 		$affrub=($prev=="scheduler") ? "scheduler" : "index";
 		$ress=$form_uid_ress;
 	}
-	else if ($fonch=="centrage")  	
+	else if ($fonc=="centrage")  	
 	{
 		$ok=0;
 		$idvol=$id;
 		$mod="aviation";
 		$affrub="centrage";
 	}
-	else if ($fonch=="synthese")  	
+	else if ($fonc=="synthese")  	
 	{
 		$ok=0;
 		$mod="aviation";

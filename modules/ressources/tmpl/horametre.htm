@@ -8,13 +8,30 @@
 
 <!-- BEGIN: corps -->
 
-	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='{url}&id='+id;">
-	<!-- BEGIN: lst_avion -->
-	<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
-	<!-- END: lst_avion -->
-	</select>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-inline">
+					Avion :&nbsp; 
+					<select id="idavion" class='form-control' name="idavion" OnChange="var id=document.getElementById('idavion').value; document.location='{path_root}/ressources/horametre?id='+id;">
+						<!-- BEGIN: lst_avion -->
+						<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
+						<!-- END: lst_avion -->
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-	<br />
-	{tab_liste}	
-
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+			{tab_liste}	
+			</div>
+		</div>
+	</div>
+</div>
 <!-- END: corps -->

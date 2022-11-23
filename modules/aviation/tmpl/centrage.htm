@@ -16,52 +16,65 @@
 	<input type="hidden" id="maj" name="maj" value="" />
 	<input type="hidden" name="checktime" value="{form_checktime}" />
 
-<div class="formulaireTitre">Sélection des passagers</div>
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<h4>Sélection des passagers</h4>
 
-<div class="formulaire">
+					<div class="form-group ">
+					<!-- BEGIN: lst_passager -->
+					<div class="row">
+						<label for="passager{passager_id}" class="col-sm-2 col-form-label">{passager_txt}</label>
 
-	<!-- BEGIN: lst_passager -->
-	<p>
-		<label for="passager{passager_id}">{passager_txt}</label>
-		<span id="passager{passager_id}" style="min-width: 200px;">
-		<!-- BEGIN: aff_pilote -->
-			<select name="form_passager_pilote[{passager_id}]" OnChange="document.getElementById('maj').value='{passager_id}'; reservation.submit();">
-				<option value="0">Aucun</option>
-				<option value="65535" {chk_pax}>PAX</option>
-				<!-- BEGIN: lst_pilote -->
-				<option value="{uid_pilote}" {chk_pilote}>{nom_pilote}</option>
-				<!-- END: lst_pilote -->
-			</select>
-		<!-- END: aff_pilote -->
-		&nbsp;
-		</span>		
-		<input type="text" name="form_passager_poids[{passager_id}]" value="{passager_poids}" style="width:70px!important;" /> {passager_unite}
-	</p>
-	<!-- END: lst_passager -->
+						<div id="passager{passager_id}" class="col-sm-6">
+							<!-- BEGIN: aff_pilote -->
+							<select name="form_passager_pilote[{passager_id}]" class="form-control" OnChange="document.getElementById('maj').value='{passager_id}'; reservation.submit();">
+								<option value="0">Aucun</option>
+								<option value="65535" {chk_pax}>PAX</option>
+								<!-- BEGIN: lst_pilote -->
+								<option value="{uid_pilote}" {chk_pilote}>{nom_pilote}</option>
+								<!-- END: lst_pilote -->
+							</select>
+							<!-- END: aff_pilote -->
+						</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="form_passager_poids[{passager_id}]" value="{passager_poids}" style="width:70px!important;" /> {passager_unite}
+						</div>
+					</div>
+					<!-- END: lst_passager -->
+					</div>
 
-	<p>
-		<label for="passager{passager_id}">&nbsp;</label>
-		<span id="passager{passager_id}" style="width: 250px; text-align:right;">
-			Masse Totale :
-		</span>
-		<b>{masse_totale} {masse_max}</b>
-	</p>
-</div>
+					<div class="form-group row">
+						<label for="passager{passager_id}" class="col-sm-2 col-form-label">&nbsp;</label>
+						<div id="passager{passager_id}" class="col-sm-6">
+							Masse Totale :
+						</div>
+						<div class="col-sm-3">{masse_totale} {masse_max}</div>
+					</div>
 
-<div class="formulaireSubmit">
-	<input type="submit" name="fonc" value="Actualiser">
-	<input type="submit" name="fonc" value="Retour">
-</div>
-<br />
-<div class="formulaireTitre">Graphique de centrage et masse</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary mr-2" name="fonc" id="enregistrer" value="Actualiser">
+						<input type="submit" class="btn btn-light mr-2" name="fonc" value="Retour">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
- 	<table border="0" cellspacing="0" cellpadding="0">	
- 	<tr height=1>
-  		<td width=20>&nbsp;</td>
-  		<td><img src="api.php?mod=aviation&rub=imgcentrage&id={id}" border="0" /></td>
-	</tr>
-	</table>
+	<div class="row">
+		<div class="col-md-10 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
 
-	<br />
+					<h4>Graphique de centrage et masse</h4>
+
+					<img src="api.php?mod=aviation&rub=imgcentrage&id={id}" border="0" />
+				</div>
+			</div>
+		</div>
+	</div>
+					
+
 </form>
 <!-- END: corps -->

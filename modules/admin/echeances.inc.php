@@ -31,6 +31,7 @@
 					affInformation($err,"error");
 				}
 				$ech->Save();
+				affInformation("Echéances saubegardées","ok");
 			}
 		}
 	}
@@ -122,7 +123,7 @@
 		
 		$tabValeur[$i]["id"]["val"]=$id;
 		$tabValeur[$i]["action"]["val"]=$id;
-		$tabValeur[$i]["action"]["aff"]="<div id='action_".$id."' style='display:none;'><a id='edit_".$id."' class='imgDelete' href='".geturl("admin","echeances","fonc=delete&id=".$id)."'><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+		$tabValeur[$i]["action"]["aff"]="<div id='action_".$id."' style='display:none;'><a id='edit_".$id."' class='imgDelete' href='".geturl("admin","echeances","fonc=delete&id=".$id)."'><i class='mdi mdi-window-close'></i></a></div>";
 
 
 		$tabValeur[$i]["poste"]["val"]=$ech->val("poste");

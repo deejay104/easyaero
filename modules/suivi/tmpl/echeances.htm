@@ -9,7 +9,7 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='{path_root}/index.php?mod=suivi&rub=echeances&form_id='+document.getElementById('form_id').value;
+ 	document.location='{path_root}/suivi/echeances?form_id='+document.getElementById('form_id').value;
 }
 function selectAll()
 {
@@ -24,47 +24,67 @@ function selectAll()
 }
 </script>
 
-<FORM name="reservation" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="{path_root}/suivi/echeances" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="suivi">
-	<INPUT type="hidden" name="rub" value="echeances">
 	<INPUT type="hidden" name="form_id" value="{form_id}">
 
-	<div class="formulaire">
-		<select id="form_id" OnChange="Recharge();">
-			<option value="0">Choisissez l'échéance</option>
-		<!-- BEGIN: lst_echeance -->
-			<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
-		<!-- END: lst_echeance -->
-		</select>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
 
-		<!-- BEGIN: aff_debite -->
-		&nbsp;- Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}" style="width:80px!important;">
-		<input type="submit" name="fonc" value="Débiter" style="width:150px!important; margin-left:20px;">
-		<!-- END: aff_debite -->
+				<div class="form-inline">
+					<select id="form_id" class='form-control' OnChange="Recharge();">
+						<option value="0">Choisissez l'échéance</option>
+					<!-- BEGIN: lst_echeance -->
+						<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
+					<!-- END: lst_echeance -->
+					</select>
 
-		<input type="submit" name="print" value="Imprimer" style="width:150px!important; margin-left:20px;" onClick="window.print()">
-		
+					<!-- BEGIN: aff_debite -->
+					&nbsp;- Nouvelle échéance : <input type="date" class='form-control' name="form_date"> Cout : <input type="text" class='form-control' name="form_cout" value="{form_cout}" style="width:80px!important;">
+					<input type="submit" class="btn btn-light" name="fonc" value="Débiter" style="width:150px!important; margin-left:20px;">
+					<!-- END: aff_debite -->
+
+					<input type="submit" class="btn btn-light" name="print" value="Imprimer" style="width:150px!important; margin-left:20px;" onClick="window.print()">
+
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
 
-
-	<!-- BEGIN: msg_enregistre -->
-	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
-	<!-- END: msg_enregistre -->
-	<br />
 	
-	<!-- BEGIN: aff_visualisation -->
-		<input type="hidden" name="form_date" value="{form_date}">
-		<!-- BEGIN: lst_visualisation -->
-		<input type="hidden" name="form_dteid[{form_mvtid}]" value="{form_dteid}">
-		{enr_mouvement}
-		<!-- END: lst_visualisation -->
+<!-- BEGIN: aff_visualisation -->
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-group">
+					<input type="hidden" name="form_date" value="{form_date}">
+					<!-- BEGIN: lst_visualisation -->
+					<input type="hidden" name="form_dteid[{form_mvtid}]" value="{form_dteid}">
+					{enr_mouvement}
+					<!-- END: lst_visualisation -->
 
-		<input type="submit" name="fonc" value="Valider">
-		<input type="submit" name="fonc" value="Annuler">
-	<!-- END: aff_visualisation -->
-	
-	{aff_tableau}
+					<input type="submit" class="btn btn-primary" name="fonc" value="Valider">
+					<input type="submit" class="btn btn-light" name="fonc" value="Annuler">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: aff_visualisation -->
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+			{aff_tableau}
+			</div>
+		</div>
+	</div>
+</div>
 
 </FORM>
 

@@ -9,21 +9,31 @@
 <!-- BEGIN: corps -->
 
 <!-- BEGIN: listeVols -->
-<div class="formulaire">
-<form name="users" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
-	<input type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="aviation">
-	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='{path_root}/index.php?mod=aviation&rub=vols&id='+id;">
-	<!-- BEGIN: lst_user -->
-	<option value="{id_user}" {chk_user}>{nom_user}</OPTION>
-	<!-- END: lst_user -->
-	</select>
-</form>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+			
+				<select id="form_id" class="form-control" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='{path_root}/aviation/vols?id='+id;">
+				<!-- BEGIN: lst_user -->
+				<option value="{id_user}" {chk_user}>{nom_user}</OPTION>
+				<!-- END: lst_user -->
+				</select>
+			</div>
+		</div>
+	</div>
 </div>
-<br />
+
 <!-- END: listeVols -->
 
-	{tab_liste}
-	<p>Attention : Ne sont comptabilisées que les heures effectuées dans le club.</p>
-
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+			{tab_liste}
+			<p>Attention : Ne sont comptabilisées que les heures effectuées dans le club.</p>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- END: corps -->

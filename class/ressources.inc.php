@@ -96,12 +96,22 @@ class ress_class extends objet_core
 			if ($key=="couleur")
 		  	{
 				$ret="<INPUT id='ress_col' name=\"".$formname."[$key]\" value=\"".strtoupper($txt)."\" style=\"display: inline-block;\" OnKeyUp=\"document.getElementById('ress_showcol').style.backgroundColor='#'+document.getElementById('ress_col').value;\"><div id='ress_showcol' style='margin-left:10px; display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".strtoupper($txt).";'></div>";
+				$ret='						<div class="asColorPicker-wrap">
+							<input type="text" id="ress_col" name="'.$formname.'['.$key.']" class="color-picker asColorPicker-input" value="'.strtoupper($txt).'" OnKeyUp='."\"document.getElementById('ress_col_show').style.backgroundColor='#'+document.getElementById('ress_col').value;\"".'\>
+							<a href="#" class="asColorPicker-clear"></a>
+							<div id="ress_col_show" class="asColorPicker-trigger" style="width:32px; background-color: #'.strtoupper($txt).';">
+								<span style="background-color: #ffe74c;"></span>
+							</div>
+						</div>';
+				
+				
+				// <INPUT id='ress_col' name=\"".$formname."[$key]\" value=\"".strtoupper($txt)."\" style=\"display: inline-block;\" OnKeyUp=\"document.getElementById('ress_showcol').style.backgroundColor='#'+document.getElementById('ress_col').value;\"><div id='ress_showcol' style='margin-left:10px; display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".strtoupper($txt).";'></div>";
 			}
 			else if ($key=="poste")
 			{
 				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE actif='oui' ORDER BY ordre,description";
 				$sql->Query($query);
-		  	  	$ret ="<SELECT name=\"".$formname."[$key]\">";
+		  	  	$ret ="<SELECT name=\"".$formname."[$key]\" class='form-control'>";
 				for($i=0; $i<$sql->rows; $i++)
 				{ 
 					$sql->GetRow($i);
@@ -203,7 +213,7 @@ class ress_class extends objet_core
 	function CheckDispo($deb,$fin)
 	  { global $MyOpt;
 		$sql=$this->sql;
-  		$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier AS cal WHERE uid_avion='$this->id' AND dte_deb<'".date("Y-m-d H:i:s",$fin)."' AND dte_fin>'".date("Y-m-d H:i:s",$deb)."'";
+  		$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier AS cal WHERE actif='oui' AND uid_avion='".$this->id."' AND dte_deb<'".date("Y-m-d H:i:s",$fin)."' AND dte_fin>'".date("Y-m-d H:i:s",$deb)."'";
 		$sql->Query($query);
 
 		if ($sql->rows>0)
@@ -425,7 +435,7 @@ function AffListeRessources($sql,$form_uid,$name,$actif=array())
 	$query = "SELECT id,immatriculation FROM ".$MyOpt["tbl"]."_ressources WHERE ($txt ".((GetDroit("SupprimeRessource")) ? "OR actif='off'" : "" ).") ORDER BY immatriculation";
 	$sql->Query($query);
 
-	$lstress ="<select id=\"$name\" name=\"$name\">";
+	$lstress ="<select id='".$name."' name='".$name."' class='form-control form-control-lg'>";
 	$lstress.="<option value=\"0\">Aucun</option>";
 
 	for($i=0; $i<$sql->rows; $i++)

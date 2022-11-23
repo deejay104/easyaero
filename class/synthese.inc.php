@@ -74,7 +74,7 @@ class livret_class extends objet_core
 			$txt=$this->val($key);
 			$lst=ListFormation($this->sql);
 
-			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' name=\"".$formname."[$key]\">";
+			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name='".$formname."[".$key."]'>";
 			foreach($lst as $i=>$tmp)
 			{
 				$res=new formation_class($tmp["id"],$this->sql);
@@ -272,7 +272,7 @@ class synthese_class extends objet_core
 
 			$t=ListeObjets($this->sql,"reference",array("id","refffa"),array("actif"=>"oui","idformation"=>($fid>0)?$fid:0),array("refffa"));
 			
-			$ret ="<select id='".(($formid!="") ? $formid : "").$key."'  name=\"".$formname."[$key]\">";
+			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name=\"".$formname."[$key]\">";
 			$ret.="<option value=\"\" ".(($txt=="") ? "selected" : "").">Aucun</option>";
 			foreach($t as $k=>$v)
 			{
@@ -285,7 +285,7 @@ class synthese_class extends objet_core
 			$txt=$this->val($key);
 			$lst=ListLivret($this->sql,$this->data["uid_pilote"]);
 
-			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' name=\"".$formname."[$key]\" OnChange=\"document.location='".geturl("aviation","synthese","id=".$this->id."&idvol=".$this->val("idvol"))."&lid='+document.getElementById('idlivret').value;\">";
+			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name=\"".$formname."[$key]\" OnChange=\"document.location='".geturl("aviation","synthese","id=".$this->id."&idvol=".$this->val("idvol"))."&lid='+document.getElementById('idlivret').value;\">";
 			foreach($lst as $i=>$tmp)
 			{
 				$res=new livret_class($tmp["id"],$this->sql);

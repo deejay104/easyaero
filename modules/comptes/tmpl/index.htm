@@ -11,9 +11,14 @@
 	<input type="hidden" name="checktime" value="{form_checktime}">
 	<input type="hidden" name="mod" value="compte">
 
-<div class="formulaire">
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+
+				<div class="form-inline">
 <!-- BEGIN: compte -->
-	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=comptes&id='+id;">
+	<select id="form_id" name="form_id"  class='form-control' OnChange="var id=document.getElementById('form_id').value; document.location='/comptes/index?id='+id;">
 	<!-- BEGIN: lst_compte -->
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
 	<!-- END: lst_compte -->
@@ -21,16 +26,23 @@
 	&nbsp;-&nbsp;
 <!-- END: compte -->
 
-	<div class="soldeCompte formulaireTitre">{lang_total} : {solde_compte}</div>
+	<div >{lang_total} : {solde_compte}</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<br />
 
-{aff_tableau}
-<br/>
 
-<!-- BEGIN: nbheures -->
-<p>Total d'heure de vol effectuée dans le club : {nb_heure} dont {nb_heure_an} cette année et {nb_heure_deran} dans les 12 derniers mois.</p>
-<!-- END: nbheures -->
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+			{aff_tableau}
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <!-- END: corps -->

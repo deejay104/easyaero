@@ -11,13 +11,15 @@
 
 <!-- BEGIN: corps -->
 <style>
-#mto { width: 100%!important; }
-.formulaireHover:hover { background-color: #{LineBackgroundHover}!important; }
+.form-inline label { min-width: 200px; justify-content:left; }
+.form-check-label { min-width: 100px!important; }
+
+@media (min-width: 576px) {
+	.form-large label { min-width:500px; }
+}
 </style>
 
-<FORM name="form_detail" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
-	<INPUT type="hidden" name="mod" value="aviation">
-	<INPUT type="hidden" name="rub" value="synthese">
+<FORM name="form_detail" method="post" action="{path_root}/aviation/synthese" enctype="multipart/form-data">
 	<INPUT type="hidden" name="id" value="{form_id}">
 	<INPUT type="hidden" name="idvol" value="{prev_idvol}">
 	<INPUT type="hidden" name="uid" value="{prev_uid}">
@@ -28,45 +30,69 @@
 	<INPUT type="hidden" name="form_data[dte_vol]" value="{form_dte_vol}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-	<p class="lastupdate">Dernière mise à  jour : {form_usr_maj} {form_dte_maj}</p>
-
-	<div class='formulaireTitre'>
-		FICHE DE SYNTHESE DE VOL
-	</div>
-
-	<div class='formulaire formulaireLarge'>
-		<p><label>Livret de formation</label>{form_idlivret}</p>
-		<p><label>Module</label>{form_module}</p>
-		<p><label>Référence du programme</label>{form_refffa}</p>
-		<p><label>Type de vol</label>{form_type}</p>
-		<p><label>Conclusion du vol</label>{form_conclusion}</p>
-	</div>
-
-	<div class='formulaireTitre'>THEMES</div>
-	<div class='formulaire'>
-	{form_themes}
-	</div>
-	
-	<div class='formulaireTitre'>APPRECIATION GENERALE DU VOL</div>
-	<div class='formulaire'>
-	{form_bilan_gen}
-	</div>
-
-	<div class='formulaireTitre'>METEO DU JOUR</div>
-	<div class='formulaire'>
-	{form_mto}
-	</div>
-
-	<div class='formulaireTitre'>BRIEFING SOL : EXERCICES PEDAGOGIQUES</div>
-	<div class='formulaire'>
-<!-- BEGIN: lst_pedagogique -->
-		<div id='exo_{aff_id}' style='{form_color}' class='formulaireHover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
-		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
-		<div style='display:inline-block;'>{form_progression} {form_progref}</div>
-<!-- BEGIN: lst_delete -->
-		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+<div class="row">
+	<div class="col-md-12 border-top">
+		<div class="d-flex ">
+			<div class="ml-4 small">
+				Dernière mise à  jour : {form_usr_maj} {form_dte_maj}
+			</div>
 		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>FICHE DE SYNTHESE DE VOL</h5>
+
+				<div class="form-inline"><label>Livret de formation</label>{form_idlivret}</div>
+				<div class="form-inline"><label>Module</label>{form_module}</div>
+				<div class="form-inline"><label>Référence du programme</label>{form_refffa}</div>
+				<div class="form-inline"><label>Type de vol</label>{form_type}</div>
+				<div class="form-inline"><label>Conclusion du vol</label>{form_conclusion}</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>THEMES</h5>
+
+				{form_themes}
+
+	
+				<h5>APPRECIATION GENERALE DU VOL</h5>
+				{form_bilan_gen}
+
+
+				<h5>METEO DU JOUR</h5>
+				{form_mto}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>BRIEFING SOL : EXERCICES PEDAGOGIQUES</h5>
+
+<!-- BEGIN: lst_pedagogique -->
+		<div id='exo_{aff_id}' style='{form_color}' class='form-inline form-large form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+			<label>{aff_exo_description}</label>
+			{form_progression} {form_progref}
+<!-- BEGIN: lst_delete -->
+			<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
+				<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+			</div>
 <!-- END: lst_delete -->
 		</div>
 <!-- END: lst_pedagogique -->
@@ -75,16 +101,23 @@
 		</div>
 		<br />
 <!-- BEGIN: add_exercicepeda -->
-		<input id="addexercicepeda" style="width:500px!important;">
+		<input id="addexercicepeda" class="form-control">
 		<br />
 <!-- END: add_exercicepeda -->
+			</div>
+		</div>
 	</div>
+</div>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
 
-	<div class='formulaireTitre'>EXERCICES</div>
+	<h5>EXERCICES</h5>
 	<div class='formulaire'>
 <!-- BEGIN: lst_exercice -->
-		<div id='exo_{aff_id}' class='formulaireHover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
-		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
+		<div id='exo_{aff_id}' class='form-inline form-large form-hover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+		<label>{aff_exo_description}</label>
 		{form_progression}
 <!-- BEGIN: lst_delete -->
 		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
@@ -97,64 +130,157 @@
 	</div>
 	<br />
 <!-- BEGIN: add_exercice -->
-	<input id="addexercice" style="width:500px!important;">
+	<input id="addexercice" class="form-control" >
 	<br />
 <!-- END: add_exercice -->
 	</div>
-
-	<div class='formulaireTitre'>PANNES</div>
-	<div class='formulaire'>
-<!-- BEGIN: lst_panne -->
-		<div id='exo_{aff_id}' class='formulaireHover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
-		<div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>{aff_exo_description}</div>
-		{form_progression}
-		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+			</div>
 		</div>
-<!-- BEGIN: lst_delete -->
-		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
-		</div>
-<!-- END: lst_delete -->
-		</div>
-<!-- END: lst_panne -->
-		<div id="affpannes">
-		</div>
-		<br />
-<!-- BEGIN: add_panne -->
-		<input id="addpanne" style="width:500px!important;">
-		<br />
-<!-- END: add_panne -->
 	</div>
+</div>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>PANNES</h5>
 
+				<!-- BEGIN: lst_panne -->
+				<div id='exo_{aff_id}' class='form-inline form-large form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+					<label>{aff_exo_description}</label>
+					{form_progression}
+					<!-- BEGIN: lst_delete -->
+					<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
+						<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+					</div>
+					<!-- END: lst_delete -->
+				</div>
+				<!-- END: lst_panne -->
+				<div id="affpannes">
+				</div>
+				<br />
+				<!-- BEGIN: add_panne -->
+				<input id="addpanne" class="form-control">
+				<br />
+				<!-- END: add_panne -->
+			</div>
+		</div>
+	</div>
+</div>
 	<br />
 
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<h5>Non technique / Menace, Erreurs, Situation non désirées</h5>
 
-	<div class='formulaireTitre'>Non technique / Menace, Erreurs, Situation non désirées</div>
-
-	<div class='formulaire'>
-		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion de la charge de travail</div>{form_info_1}</div>
-		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des automatismes</div>{form_info_2}</div>
-		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Gestion des risques - Prise de décisions</div>{form_info_3}</div>
-		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de la situation</div>{form_info_4}</div>
-		<div class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>Conscience de l’environnement en vol</div>{form_info_5}</div>
+				<div class="form-inline form-large form-hover"><label>Gestion de la charge de travail</label>{form_info_1}</div>
+				<div class="form-inline form-large form-hover"><label>Gestion des automatismes</label>{form_info_2}</div>
+				<div class="form-inline form-large form-hover"><label>Gestion des risques - Prise de décisions</label>{form_info_3}</div>
+				<div class="form-inline form-large form-hover"><label>Conscience de la situation</label>{form_info_4}</div>
+				<div class="form-inline form-large form-hover"><label>Conscience de l’environnement en vol</label>{form_info_5}</div>
+			</div>
+		</div>
 	</div>
-	
-	<br />
-	<table class='formulaireTableau formulaire'>
-		<tr>
-			<th width=200>Nb Atterrissage</th>
-			<th width=200>Total Atterrissage</th>
-			<th width=200>Remise(s) des Gaz</th>
-			<th width=200>Total RMG</th>
-		</tr>
-		<tr>
-			<td>{form_nb_att}</td>
-			<td>{form_total_att}</td>
-			<td>{form_nb_rmg}</td>
-			<td>{form_total_rmg}</td>
-		</tr>
-	</table>
+</div>	
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<div class="row">
+					<div class="col-md-4 grid-margin stretch-card">
+						<div class="form-inline"><label>Nb Atterrissage</label>{form_nb_att}</div>
+					</div>
+					<div class="col-md-4 grid-margin stretch-card">
+						<div class="form-inline"><label>Total Atterrissage</label>{form_total_att}</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 grid-margin stretch-card">
+						<div class="form-inline"><label>Remise(s) des Gaz</label>{form_nb_rmg}</div>
+					</div>
+					<div class="col-md-4 grid-margin stretch-card">
+						<div class="form-inline"><label>Total Remise des Gaz</label>{form_total_rmg}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+<!-- BEGIN: submit -->
+<div class="row">
+	<div class="form-inline">
+		<input type="submit" name="fonc" id="enregistrer" class="btn btn-primary mb-2" value="Enregistrer">
+		<input type="submit" name="fonc" id="annuler"  class="btn btn-light ml-2 mb-2"  value="Annuler">
+	</div>
+</div>
+<!-- END: submit -->
+
+<div class="row">
+	<div class="col-12 grid-margin">
+		<div class="card">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="card-body">
+							<b>Date du vol</b><br />
+							{form_dtevol}
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="card-body">
+							<b>Durée</b><br />
+							{form_duree}
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="card-body">
+							<b>Cumul DC</b><br />
+							{form_cumuldc}<br />
+							<b>Cumul Solo</b><br />
+							{form_cumulsolo}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<div class="form-inline"><label>Instructeur</label>{form_instructeur}</div>
+					<!-- BEGIN: signinst -->
+					<input type="submit" class="btn btn-light"  name="fonc" value="Signature Instructeur">
+					<!-- END: signinst -->
+					<!-- BEGIN: signedinst -->
+					Signé par {form_signinst_name} le {form_signinst_dte}<br />
+					(Clé: {form_signinst_key})
+					<!-- END: signedinst -->
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<div class="form-inline"><label>Eleve</label>{form_eleve}</div>
+					<!-- BEGIN: signeleve -->
+					<input type="submit" class="btn btn-light"  name="fonc" value="Signature Elève">
+					<!-- END: signeleve -->
+					<!-- BEGIN: signedeleve -->
+					Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
+					(Clé: {form_signeleve_key})
+					<!-- END: signedeleve -->
+			</div>
+		</div>
+	</div>
+</div>	
+
+</form>
+
+
 <script>
 	function deleteExo(id)
 	{
@@ -183,10 +309,10 @@
 			var txt="";
 			value=ui.item;
 			console.log(value);
-			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
+			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -212,10 +338,11 @@
 			var txt="";
 			value=ui.item;
 			console.log(value);
-			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
+
+			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -241,10 +368,10 @@
 			var txt="";
 			value=ui.item;
 			console.log(value);
-			txt=txt+"<div><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
-			txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
+			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -282,11 +409,13 @@
 				if (response.length>0)
 				{
 					$.each(response, function (index, value) {
-						txt="<div id='exo_"+value.id+"' class='formulaireHover'><div style='width:500px; display:inline-block; padding-top:2px; padding-bottom:2px;'>"+value.description+"</div> ";
-						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu ";
-						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude ";
-						txt=txt+"<input type='radio' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis ";
+
+						txt="<div id='exo_"+value.id+"' class='form-inline form-large form-hover'><label>"+value.description+"</label> ";
+						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
+						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
+						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
 						txt=txt+"</div>";
+
 						if (value.type=="peda")
 						{
 							txtpeda=txtpeda+txt;
@@ -322,67 +451,5 @@
 	});
 </script>
 
-	
-<!-- BEGIN: submit -->
-	<div class="formulaireSubmit" style=" padding-left:55px;">
-		<input type="submit" name="fonc" id="enregistrer" value="Enregistrer">
-		<input type="submit" name="fonc" id="annuler" value="Annuler">
-	</div>
-	<br />
-<!-- END: submit -->
-
-	<div class='formulaireTitre'>
-		VISAS
-	</div>
-	<table width='100%'>
-	<tr>
-		<td width='15%'>
-			<div class='formulaire' style='height:140px;'>
-			<b>Date du vol</b><br />
-			{form_dtevol}
-			</div>
-		</td>
-		<td width='10%'>
-			<div class='formulaire' style='margin-left:10px; height:140px;'>
-			<b>Durée</b><br />
-			{form_duree}
-			</div>
-		</td>
-		<td width='10%'>
-			<div class='formulaire' style='margin-left:10px; height:140px;'>
-			<b>Cumul DC</b><br />
-			{form_cumuldc}<br />
-			<b>Cumul Solo</b><br />
-			{form_cumulsolo}
-			</div>
-		</td>
-		<td width='33%'>
-			<div class='formulaire' style='margin-left:10px; height:140px;'>
-				<b>Instructeur</b> : {form_instructeur}<br />
-<!-- BEGIN: signinst -->
-				<input type="submit" name="fonc" value="Signature Instructeur">
-<!-- END: signinst -->
-<!-- BEGIN: signedinst -->
-				<br />Signé par {form_signinst_name} le {form_signinst_dte}<br />
-				(Clé: {form_signinst_key})
-<!-- END: signedinst -->
-			</div>
-		</td>
-		<td>
-			<div class='formulaire' style='margin-left:10px; height:140px;'>
-				<b>Eleve</b> : {form_eleve}<br />
-<!-- BEGIN: signeleve -->
-				<input type="submit" name="fonc" value="Signature Elève">
-<!-- END: signeleve -->
-<!-- BEGIN: signedeleve -->
-				<br />Signé par {form_signeleve_name} le {form_signeleve_dte}<br />
-				(Clé: {form_signeleve_key})
-<!-- END: signedeleve -->
-			</div>
-		</td>
-	</tr>
-	</table>
-</form>
-<br />
 
 <!-- END: corps -->
