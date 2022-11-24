@@ -142,33 +142,35 @@ Mouvements débités :<br />
 	<div class="grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">		
-				<TABLE  class='table'>
-					<tr>
-						<th width=170><B>Date</B></th>
-						<th width=80><B>Avion</B></th>
-						<th width=240><B>Pilote</B></th>
-						<th width=170><B>Destination</B></th>
-						<th width=180><B>Status</B></th>
-						<th width=140><B>Taxe AT</B></th>
-						<th style="width:25px!important"></th>
-						<th ></th>
-					</tr>
-					<!-- BEGIN: lst_vols -->
-					<TR OnMouseOver="ShowLine({id});" OnMouseOut="HideLine({id});">
-						<TD><a href="index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
-						<TD>{avion_vols}</TD>
-						<TD>{pilote_vols}</TD>
-						<TD><input id="dest_{id}" class='form-control' name="dest[{id}]" value="{destination_vols}" style="width:160px; "></TD>
-						<TD>{status_vols}</TD>
-						<TD><input id="taxe_{id}" class='form-control' name="taxe[{id}]" type="hidden" value="{taxe_vols}" style="width:70px;"><div id="taxeaff_{id}">{taxe_vols}</div></TD>
-						<td ><a id='hide_{id}' href="{path_root}/suivi/taxeat?fonc=taxeok&id={id}" class='imgDelete' style='display:none;'><i class='mdi mdi-eye-off' /></i></a></td>
-						<td><a id='pay_{id}' href="{path_root}/suivi/taxeat?fonc=debite&id={id}" class='imgDelete' style='display:none;'><i class='mdi mdi-credit-card' /></i></a></td>
-					</TR>
-					<!-- END: lst_vols -->
-				</table>
-		
-				<br />
-				<p><INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler"></p>
+				<div class="table-responsive">
+					<TABLE  class='table'>
+						<tr>
+							<th width=170><B>Date</B></th>
+							<th width=80><B>Avion</B></th>
+							<th width=240><B>Pilote</B></th>
+							<th width=170><B>Destination</B></th>
+							<th width=180><B>Status</B></th>
+							<th width=140><B>Taxe AT</B></th>
+							<th style="width:25px!important"></th>
+							<th ></th>
+						</tr>
+						<!-- BEGIN: lst_vols -->
+						<TR OnMouseOver="ShowLine({id});" OnMouseOut="HideLine({id});">
+							<TD><a href="index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
+							<TD>{avion_vols}</TD>
+							<TD>{pilote_vols}</TD>
+							<TD><input id="dest_{id}" class='form-control' name="dest[{id}]" value="{destination_vols}" style="width:160px; "></TD>
+							<TD>{status_vols}</TD>
+							<TD><input id="taxe_{id}" class='form-control' name="taxe[{id}]" type="hidden" value="{taxe_vols}" style="width:70px;"><div id="taxeaff_{id}">{taxe_vols}</div></TD>
+							<td ><a id='hide_{id}' href="{path_root}/suivi/taxeat?fonc=taxeok&id={id}" class='imgDelete' style='display:none;'><i class='mdi mdi-eye-off' /></i></a></td>
+							<td><a id='pay_{id}' href="{path_root}/suivi/taxeat?fonc=debite&id={id}" class='imgDelete' style='display:none;'><i class='mdi mdi-credit-card' /></i></a></td>
+						</TR>
+						<!-- END: lst_vols -->
+					</table>
+			
+					<br />
+					<p><INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler"></p>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -58,17 +58,20 @@ function AffVentilation()
 		<div class="grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
-			<!-- BEGIN: lst_visualisation -->
-			{enr_mouvement}
-			<!-- END: lst_visualisation -->
-			<INPUT type="hidden" name="form_date" id="form_date" value="{form_date}">
-			<INPUT type="hidden" name="form_poste" id="form_poste" value="{form_poste}">
-			<INPUT type="hidden" name="form_tiers" id="form_tiers" value="{form_tiers}">
-			<INPUT type="hidden" name="form_commentaire" id="form_commentaire" value="{form_commentaire}">
-			<INPUT type="hidden" name="form_montant" id="form_montant" value="{form_montant}">
-			<br />
-			<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="Valider"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler">
-			<br /><br />
+					<div class="table-responsive">
+
+						<!-- BEGIN: lst_visualisation -->
+						{enr_mouvement}
+						<!-- END: lst_visualisation -->
+						<INPUT type="hidden" name="form_date" id="form_date" value="{form_date}">
+						<INPUT type="hidden" name="form_poste" id="form_poste" value="{form_poste}">
+						<INPUT type="hidden" name="form_tiers" id="form_tiers" value="{form_tiers}">
+						<INPUT type="hidden" name="form_commentaire" id="form_commentaire" value="{form_commentaire}">
+						<INPUT type="hidden" name="form_montant" id="form_montant" value="{form_montant}">
+						<br />
+						<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="Valider"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler">
+						<br /><br />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -80,45 +83,47 @@ function AffVentilation()
 		<div class="grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
+					<div class="table-responsive">
 
-					<TABLE class="table table-hover">
-						<thead>
-							<tr>
-								<th width=30>&nbsp;</th>
-								<th width=120 >Date</th>
-								<th width=400>Poste</th>
-								<th width=250>Tiers</th>
-								<th width=200>Montant</th>
-							</tr>
-						</thead>
+						<TABLE class="table table-hover">
+							<thead>
+								<tr>
+									<th width=30>&nbsp;</th>
+									<th width=120 >Date</th>
+									<th width=400>Poste</th>
+									<th width=250>Tiers</th>
+									<th width=200>Montant</th>
+								</tr>
+							</thead>
 
-						<tbody>
-						<!-- BEGIN: lst_aff_brouillon -->
-						  <tr OnMouseOver="document.getElementById('mod_{form_id}').style.display='inline-block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
-							<TD>
-								<INPUT type="checkbox" name="form_temp_select[{form_id}]" value="oui" {form_select}>			
-							</TD>	
-							<TD>
-								{form_date}
-							</TD>
-							<TD>
-								<div class="">{form_poste}</div>
-								<div>{form_commentaire}</div>
-							</TD>
-							<TD>
-								{form_tiers}
-							</TD>
-							<TD>
-								{form_montant}
-								<div id='mod_{form_id}'  style='display:none;'>
-								<a href="{path_root}/suivi/mouvement?fonc=edit&id={form_id}" ><i class='mdi mdi-border-color' /></i></a>
-								<a href="{path_root}/suivi/mouvement?fonc=deltemp&id={form_id}" ><i class='mdi mdi-delete' /></i></a>
-								</div>
-							</TD>
-						  </TR>
-						<!-- END: lst_aff_brouillon -->
-						</tbody>
-					</TABLE>
+							<tbody>
+							<!-- BEGIN: lst_aff_brouillon -->
+							  <tr OnMouseOver="document.getElementById('mod_{form_id}').style.display='inline-block';" OnMouseOut="document.getElementById('mod_{form_id}').style.display='none';">
+								<TD>
+									<INPUT type="checkbox" name="form_temp_select[{form_id}]" value="oui" {form_select}>			
+								</TD>	
+								<TD>
+									{form_date}
+								</TD>
+								<TD>
+									<div class="">{form_poste}</div>
+									<div>{form_commentaire}</div>
+								</TD>
+								<TD>
+									{form_tiers}
+								</TD>
+								<TD>
+									{form_montant}
+									<div id='mod_{form_id}'  style='display:none;'>
+									<a href="{path_root}/suivi/mouvement?fonc=edit&id={form_id}" ><i class='mdi mdi-border-color' /></i></a>
+									<a href="{path_root}/suivi/mouvement?fonc=deltemp&id={form_id}" ><i class='mdi mdi-delete' /></i></a>
+									</div>
+								</TD>
+							  </TR>
+							<!-- END: lst_aff_brouillon -->
+							</tbody>
+						</TABLE>
+					</div>
 				</div>
 			</div>
 		</div>

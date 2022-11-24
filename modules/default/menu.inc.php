@@ -120,12 +120,14 @@
 	
 	$tabMenuPhone["reservations"]=array(
 		"icone"=>$MyOpt["host"]."/"."static/modules/reservations/img/icn48_titre.png",
+		"icone"=>"mdi-calendar",
 		"nom"=>$tabLang["lang_schedule"],
 		"droit"=>"AccesReservations",
 		"url"=>geturl("reservations","","start=today"),
 	);
 	$tabMenuPhone["suivivols"]=array(
 		"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn48_suivivols.png",
+		"icone"=>"mdi-airplane-takeoff",
 		"nom"=>$tabLang["lang_flight"],
 		"droit"=>"AccesVols",
 		"url"=>geturl("aviation","vols",""),

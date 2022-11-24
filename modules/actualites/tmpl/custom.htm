@@ -123,39 +123,38 @@
 .lstecheance p { display: block; }
 </style>
 
-	<div class="encadreInfos">
-		<div class="encadreTitre">{lang_mydata}</div>
+<div class="align-items-start profile-feed-item">
+	<h4>{lang_mydata}</h4>
 		<!-- BEGIN: mod_compta_detail -->
-		<p><label>{lang_balance}</label>{solde}</p>
+		<p><label class="col-lg-8 col-form-label">{lang_balance}</label>{solde}</p>
 		<!-- END: mod_compta_detail -->
 		<!-- BEGIN: mod_aviation_detail -->
-		<p><label>{lang_nbflights} {nb_mois} {lang_lastmonth}</label>{nb_vols} vols</p>
+		<p><label class="col-lg-8 col-form-label">{lang_nbflights} {nb_mois} {lang_lastmonth}</label>{nb_vols} vols</p>
 		<!-- END: mod_aviation_detail -->
-	</div>
-
+</div>
 <!-- BEGIN: manifestation -->
-	<div class="encadreInfos" >
-		<div class="encadreTitre">{lang_nextmeeting}</div>
+<div class="align-items-start profile-feed-item">
+	<h4>{lang_nextmeeting}</h4>
 
 		<!-- BEGIN: lst_manifestation -->
 		<p>{form_manifestation}</p>
 		<!-- END: lst_manifestation -->	
-	</div>
+</div>
 <!-- END: manifestation -->
 
 <!-- BEGIN: aff_echeance_avion -->
-	<div class="encadreInfos" >
-		<div class="encadreTitre">{lang_planedeadline}</div>
+<div class="align-items-start profile-feed-item">
+	<h4>{lang_planedeadline}</h4>
 
-		<!-- BEGIN: lst_echeance -->
-		<p class="lstecheance">{form_echeance_avion}</p>
-		<!-- END: lst_echeance -->	
-	</div>
+	<!-- BEGIN: lst_echeance -->
+	<p class="lstecheance">{form_echeance_avion}</p>
+	<!-- END: lst_echeance -->	
+</div>
 <!-- END: aff_echeance_avion -->
 	
 <!-- BEGIN: aff_reservation -->
-	<div class="encadreInfos" style='height:440px;'>
-		<div class="encadreTitre">{lang_schedule}</div>
+<div class="align-items-start profile-feed-item">
+	<h4>{lang_schedule}</h4>
 		
 		<div id='script-warning'>
 			Error : <code>api.php</code> unreachable.
@@ -164,7 +163,7 @@
 		<div id='loading'>loading...</div>
 
 		<div id='calendar'></div>
-	</div>
+</div>
 <!-- END: aff_reservation -->
 
 <!-- END: custom -->
