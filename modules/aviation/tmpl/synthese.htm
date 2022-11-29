@@ -91,7 +91,7 @@
 			{form_progression} {form_progref}
 <!-- BEGIN: lst_delete -->
 			<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-				<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+				<a href="" OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
 			</div>
 <!-- END: lst_delete -->
 		</div>
@@ -121,7 +121,7 @@
 		{form_progression}
 <!-- BEGIN: lst_delete -->
 		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-			<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+			<a href="" OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
 		</div>
 <!-- END: lst_delete -->
 		</div>
@@ -203,6 +203,14 @@
 						<div class="form-inline"><label>Total Remise des Gaz</label>{form_total_rmg}</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-4 grid-margin stretch-card">
+						<div class="form-inline"><label>Formation théorique (min)</label>{form_tps_theo}</div>
+					</div>
+					<div class="col-md-4 grid-margin stretch-card">
+						<div class="form-inline"><label>Total Formation théorique</label>{form_total_theo}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -211,9 +219,15 @@
 
 <!-- BEGIN: submit -->
 <div class="row">
-	<div class="form-inline">
-		<input type="submit" name="fonc" id="enregistrer" class="btn btn-primary mb-2" value="Enregistrer">
-		<input type="submit" name="fonc" id="annuler"  class="btn btn-light ml-2 mb-2"  value="Annuler">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<div class="form-inline">
+					<input type="submit" name="fonc" id="enregistrer" class="btn btn-primary mb-2" value="Enregistrer">
+					<input type="submit" name="fonc" id="annuler"  class="btn btn-light ml-2 mb-2"  value="Annuler">
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- END: submit -->
@@ -247,7 +261,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-lg-4 grid-margin stretch-card">
+	<div class="col-lg-6 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">	
 				<div class="form-inline"><label>Instructeur</label>{form_instructeur}</div>
@@ -262,7 +276,7 @@
 		</div>
 	</div>
 
-	<div class="col-lg-4 grid-margin stretch-card">
+	<div class="col-lg-6 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">	
 				<div class="form-inline"><label>Eleve</label>{form_eleve}</div>
@@ -310,9 +324,9 @@
 			value=ui.item;
 			console.log(value);
 			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -340,9 +354,9 @@
 			console.log(value);
 
 			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -369,9 +383,9 @@
 			value=ui.item;
 			console.log(value);
 			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
+			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
 			txt=txt+"</div>";
 			
 			if (value.type=="panne")
@@ -411,9 +425,9 @@
 					$.each(response, function (index, value) {
 
 						txt="<div id='exo_"+value.id+"' class='form-inline form-large form-hover'><label>"+value.description+"</label> ";
-						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>&nbsp;";
-						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>&nbsp;";
-						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>&nbsp;";
+						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
+						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
+						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
 						txt=txt+"</div>";
 
 						if (value.type=="peda")

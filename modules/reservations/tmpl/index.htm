@@ -139,16 +139,16 @@
 			},
 
 			select: function(start, end) {
-				document.location="{path_root}/index.php?mod=reservations&rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
+				document.location="{path_root}/reservationsreservation?ress={form_ress}"+"&jstart="+start+"&jend="+end;
 			},
 
 			eventClick: function(event, element) {
-				document.location="{path_root}/index.php?mod=reservations&rub=reservation&id="+event.id;
+				document.location="{path_root}/reservations/reservation?id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, revertFunc) {
 				$.ajax({
-					url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					url: '{path_root}/api/v1/reservations/updatecal?id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
 					dataType: 'JSON',
 					success : function(response)
 					{
@@ -169,7 +169,7 @@
 			eventDrop: function(event,dayDelta,revertFunc) {
 				console.log("drop");
 				$.ajax({
-					url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					url: '{path_root}/api/v1/reservations/updatecal?id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
 					dataType: 'JSON',
 					success : function(response)
 					{
@@ -189,7 +189,7 @@
 			},
 
 			events: {
-				url: '{path_root}/api.php?mod=reservations&rub=getcal&ress={form_ress}',
+				url: '{path_root}/api/v1/reservations/getcal?ress={form_ress}',
 				error: function() {
 					showToast("","L'API n'est pas accessible","error");
 				}

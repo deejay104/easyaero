@@ -382,6 +382,7 @@
 // ---- Calcul totaux
 	$tmpl_x->assign("form_total_att",$fiche->NbAtt($fiche->val("dte_vol")));
 	$tmpl_x->assign("form_total_rmg",$fiche->NbRmg($fiche->val("dte_vol")));
+	$tmpl_x->assign("form_total_theo",AffTemps($fiche->TotalTheorie($fiche->val("dte_vol"))));
 	$tmpl_x->assign("form_cumuldc",$livret->AffNbHeures($fiche->val("dte_vol"),"dc"));
 	$tmpl_x->assign("form_cumulsolo",$livret->AffNbHeures($fiche->val("dte_vol"),"solo"));
 

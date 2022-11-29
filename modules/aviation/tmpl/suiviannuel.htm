@@ -35,21 +35,23 @@ function Recharge()
 		<div class="card">
 			<div class="card-body">	
 				<div class="row">
-					<div class="col-lg-3 form-inline">
+					<div class="col-lg-2">
+						<div class='form-inline'>
 						<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_an" name="form_type" value="an" {chk_annuel} OnChange="Recharge();"> Année<i class="input-helper"></i></label>&nbsp;
 						<SELECT id="form_date" class="form-control" name="form_date" OnChange="Recharge();">
 						<!-- BEGIN: lst_annee -->
 							<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
 						<!-- END: lst_annee -->
 						</SELECT>
+						</div>
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-2">
 						<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_12" name="form_type" value="12" {chk_12mois} OnChange="Recharge();"> 12 derniers mois<i class="input-helper"></i></label>&nbsp;
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-2">
 						<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_01" name="form_type" value="mois" {chk_01mois} OnChange="Recharge();"> Mois en cours<i class="input-helper"></i></label>&nbsp;
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-2">
 						<label class="form-check-label"><input type="radio" class="form-check-input" id="form_type_00" name="form_type" value="mois" {chk_00mois} OnChange="Recharge();"> Mois précédent<i class="input-helper"></i></label>&nbsp;
 					</div>
 				</div>

@@ -22,7 +22,7 @@
 	$tabLang["lang_tiers"]="Tiers";
 	$tabLang["lang_amount"]="Montant";
 	$tabLang["lang_comment"]="Commentaire";
-	$tabLang["lang_balance"]="Solde actuel du compte";
+	$tabLang["lang_balance"]="Solde";
 	$tabLang["lang_postcomment"]="Transféré par";
 	$tabLang["lang_credit"]="Créditer votre compte";
 	$tabLang["lang_creditexplain"]="Vous pouvez effectuer un crédit sur votre compte. La somme sera effectivement crédité sur votre compte après validation par le trésorier, mais en attendant vous pourrez effectuer une réservation. Vous pouvez laisser un commentaire sur votre crédit afin que qu'il soit identifiable plus facilement.";

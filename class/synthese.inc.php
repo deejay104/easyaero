@@ -180,6 +180,7 @@ class synthese_class extends objet_core
 
 		"nb_att" => Array("type" => "number", "default" => "1"),
 		"nb_rmg" => Array("type" => "number", "default" => "0"),
+		"tps_theo" => Array("type" => "number", "default" => "0"),
 
 		"sid_pilote" => Array("type" => "number", "default" => 0),
 		"sdte_pilote" => Array("type" => "datetime"),
@@ -336,6 +337,18 @@ class synthese_class extends objet_core
 		$sql=$this->sql;
 		// $query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND id<='".$this->id."'";
 		$query="SELECT SUM(nb_rmg) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND dte_vol<='".$this->val("dte_vol")."'";
+		$res=$sql->QueryRow($query);
+		
+		return $res["nb"];
+	}
+	function TotalTheorie()
+	{
+		if ($this->id==0)
+		{
+			return 0;
+		}
+		$sql=$this->sql;
+		$query="SELECT SUM(tps_theo) AS nb FROM ".$this->tbl."_synthese AS fiche WHERE uid_pilote=".$this->data["uid_pilote"]." AND dte_vol<='".$this->val("dte_vol")."'";
 		$res=$sql->QueryRow($query);
 		
 		return $res["nb"];
