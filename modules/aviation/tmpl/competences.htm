@@ -9,19 +9,31 @@
 
 <!-- BEGIN: corps -->
 <!-- BEGIN: users -->
-<div class="formulaire">
-	<select id="form_id" name="form_id" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
-	<!-- BEGIN: lst_users -->
-	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-	<!-- END: lst_users -->
-	</select>
-	<br />
-	<br />
-	Suivi de la progression format CBT - Les items sont validés quand les exercices et/ou exercices pédagogiques correspondants sont notés ACQUIS lors des vols
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				<select id="form_id" name="form_id" class="form-control" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
+				<!-- BEGIN: lst_users -->
+				<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+				<!-- END: lst_users -->
+				</select>
+				<br />
+				<br />
+				Suivi de la progression format CBT - Les items sont validés quand les exercices et/ou exercices pédagogiques correspondants sont notés ACQUIS lors des vols
+			</div>
+		</div>
+	</div>
 </div>
-<br />
 <!-- END: users -->
 
-{aff_tableau}
-
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body" id="lst">	
+			{aff_tableau}
+			</div>
+		</div>
+	</div>
+</div>
 <!-- END: corps -->

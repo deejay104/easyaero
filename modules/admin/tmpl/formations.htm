@@ -8,17 +8,22 @@
 <!-- BEGIN: corps -->
 
 
-<FORM id="form_tableau" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+
+<FORM id="form_tableau" method="post" action="{path_root}/admin/formations" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="admin">
-	<INPUT type="hidden" name="rub" value="formations">
 
-{aff_tableau}
-	<br />
-	<br />
-	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
+<div class="row" id="page-content">
+	<div class="grid-margin stretch-card">
+		<div class="card">	
+			<div class="card-body">	
+				{aff_tableau}
+				<br />
+				<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary"> <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
 
-
+			</div>
+		</div>
+	</div>
+</div>
 </FORM>
 
 

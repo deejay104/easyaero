@@ -10,7 +10,22 @@
 
 <script>
 $( function() {
-
+	$( "#close" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$("#page-content").css("opacity",1);
+	});
+	$( "#save" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$("#page-content").css("opacity",1);
+		saveNavpoint();
+	});
+	$( "#cancel" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$("#page-content").css("opacity",1);
+	});
 	function loadNavpoint(id) {
 		$.ajax({
 			type: 'GET',
@@ -24,6 +39,11 @@ $( function() {
 				document.getElementById('form_taxe').value=response[0].taxe;
 				document.getElementById('form_lat').value=response[0].lat;
 				document.getElementById('form_lon').value=response[0].lon;
+
+				$("#dialogForm").css("display","block");
+				$("#dialogForm").css("opacity",100);
+				$("#page-content").css("opacity",0.25);
+
 			},
 			error: function(response) {
 				console.log("error");
@@ -96,27 +116,68 @@ $( function() {
 <!-- BEGIN: lst_edit -->
 	$( "#edit_{lst_id}" ).on( "click", function() {
 		loadNavpoint({lst_id});
-		dialog.dialog( "open" );
     });
 <!-- END: lst_edit -->
 });
 </script>
 
-<div id="dialog-form" title="Editer un point de navigation" class="formulaire" style="display:none;">
-	<input id="form_id" type="hidden" value="" />
-	<p><label>Nom</label><input id="form_nom" value=""></p>
-	<p><label>Description</label><input id="form_description" value=""></p>
-	<p><label>Taxe</label><input id="form_taxe" value=""></p>
-	<p><label>Longitude</label><input id="form_lon" value=""></p>
-	<p><label>Latitide</label><input id="form_lat" value=""></p>
-	<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+<div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Editer un point</h5>
+				<button id='close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+
+					<input id="form_id" type="hidden" value="" />
+
+					<div class="form-group row">
+						<div class="col-lg-1"><label>Nom</label></div>
+						<div class="col-lg-4"><input id="form_nom" class="form-control" value=""></div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-1"><label>Description</label></div>
+						<div class="col-lg-4"><input id="form_description" class="form-control" value=""></div>
+					</div>		
+					<div class="form-group row">
+						<div class="col-lg-1"><label>Taxe</label></div>
+						<div class="col-lg-4"><input id="form_taxe" class="form-control" value=""></div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-1"><label>Longitude</label></div>
+						<div class="col-lg-4"><input id="form_lon" class="form-control" value=""></div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-1"><label>Latitude</label></div>
+						<div class="col-lg-4"><input id="form_lat" class="form-control" value=""></div>
+					</div>
+					
+				</div>
+				<br />
+				<div class="form-inline"><label></label>
+					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+					<button class="btn btn-light" id="cancel">Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-<FORM id="form_tableau" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
-	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="mod" value="admin">
-	<INPUT type="hidden" name="rub" value="navigation">
-{aff_tableau}
-</form>
 
+<div class="row" id="page-content">
+	<div class="grid-margin stretch-card">
+		<div class="card">	
+			<div class="card-body">	
+				<FORM id="form_tableau" method="post" action="{path_root}/admin/navigation" enctype="multipart/form-data">
+					<INPUT type="hidden" name="checktime" value="{form_checktime}">
+					{aff_tableau}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- END: corps -->

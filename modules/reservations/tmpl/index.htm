@@ -55,7 +55,7 @@
 		  }
 		else
 		  {
-		  	document.location='{path_root}/reservations/index?ress='+ress.value+'&jour={form_jour}';
+		  	<!-- document.location='{path_root}/reservations/index?ress='+ress.value+'&jour={form_jour}'; -->
 		  }
 	  }
 
@@ -139,7 +139,7 @@
 			},
 
 			select: function(start, end) {
-				document.location="{path_root}/reservationsreservation?ress={form_ress}"+"&jstart="+start+"&jend="+end;
+				document.location="{path_root}/reservations/reservation?ress={form_ress}"+"&jstart="+start+"&jend="+end;
 			},
 
 			eventClick: function(event, element) {

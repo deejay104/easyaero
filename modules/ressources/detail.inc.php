@@ -87,7 +87,7 @@
 	}
 	
 // ---- Affiche le sous-menu
-	addPageMenu("","ressources","Liste",geturl("ressources","index",""),"mdi-backburger");
+	addPageMenu("","ressources","Liste",geturl("ressources","index",""),"mdi-keyboard-backspace");
 
 	if (GetDroit("CreeRessource"))
 	{

@@ -47,6 +47,10 @@
 		}
 	}
 
+
+// ---- Liste des formations
+			// addPageMenu("",$mod,"Ajouter","#","",false);
+
 // ---- Liste des formations
 	$lst=ListFormation($sql);
 
@@ -135,8 +139,11 @@
 		
 		if (GetDroit("ModifExercice"))
 		{
-			$tabValeur[$i]["action"]["aff"].="<div id='action_".$d["id"]."' style='display:none;'><a id='edit_".$d["id"]."' class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_editer.png'></a>";
-			$tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'  class='imgDelete' ><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a></div>";
+			$tabValeur[$i]["action"]["aff"].="<div id='action_".$d["id"]."' style='display:none;'>";
+			$tabValeur[$i]["action"]["aff"].="<a id='edit_".$d["id"]."' href='#'><i class='mdi mdi-pencil'></i></a>";
+			// $tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'><index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'><i class='mdi mdi-close'></i></a>";
+			$tabValeur[$i]["action"]["aff"].="<a id='del_".$d["id"]."' href='#'><i class='mdi mdi-close'></i></a>";
+			$tabValeur[$i]["action"]["aff"].="</div>";
 		}
 
 		$lstp=ListProgression($sql,$d["id"]);

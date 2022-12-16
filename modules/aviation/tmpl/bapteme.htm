@@ -110,28 +110,28 @@
 
 
 	<!-- BEGIN: info_prendre -->
-	<div class='alert-fill-primary alert'>
+	<div class='alert-fill-info alert col-lg-5'>
 		<i class="mdi mdi-alert-circle"></i>
 		Le menu '<u>Prendre</u>' vous affecte le baptème. Son status sera alors changé à affecté. 
 	</div>
 	<!-- END: info_prendre -->
 
 	<!-- BEGIN: info_planifier -->
-	<div class='alert-fill-primary alert'>
+	<div class='alert-fill-info alert col-lg-5'>
 		<i class="mdi mdi-alert-circle"></i>
 		Le menu '<u>Planifier</u>' vous permet de saisir les informations sur le vol : avion, pilote, la date et l'heure. 
 	</div>
 	<!-- END: info_planifier -->
 
 	<!-- BEGIN: info_reserver -->
-	<div class='alert-fill-primary alert'>
+	<div class='alert-fill-info alert col-lg-5'>
 		<i class="mdi mdi-alert-circle"></i>
 		Le menu '<u>Réserver</u>' vous permet de saisir automatiquement la réservation de l'avion en fonction des données d'affectation saisies dans la fiche de baptème. 
 	</div>
 	<!-- END: info_reserver -->
 
 	<!-- BEGIN: info_effectuer -->
-	<div class='alert-fill-primary alert'>
+	<div class='alert-fill-info alert col-lg-5'>
 		<i class="mdi mdi-alert-circle"></i>
 				Le menu '<u>Effectué</u>' change le status du baptème à effectué. Il est a utiliser lorsque le baptème a été réalisé.
 	</div>
@@ -175,11 +175,12 @@ function reloadImg() {
 
 function getAvailability(id,resa,deb,fin)
 {
-	$.get('{path_root}/api.php?mod=aviation&rub=disponibilite&id='+id+'&resa='+resa+'&deb='+deb+'&fin='+fin ).done(function(data)
+	$.get('{path_root}/api/v1/aviation/disponibilite?id='+id+'&resa='+resa+'&deb='+deb+'&fin='+fin ).done(function(data)
 	{
 		if (data.status==200)
 		{
-			$("#avion-"+id).html('<img id="imgdispo-'+id+'" src="/{path_module}/img/icn16_'+data.availability+'.png"> '+data.message);
+			<!-- $("#avion-"+id).html('<img id="imgdispo-'+id+'" src="/{path_module}/img/icn16_'+data.availability+'.png"> '+data.message); -->
+			$("#avion-"+id).html('<i class="mdi '+data.icon+'" style="font-size:20px;"></i> '+data.message);
 		}
 	});
 }

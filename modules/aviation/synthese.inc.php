@@ -224,22 +224,27 @@
 
 	if ($idvol>0)
 	{
-		addSubMenu("","Retour",geturl("reservations","reservation","id=".$idvol),"icn32_retour.png",false);
+		// addSubMenu("","Retour",geturl("reservations","reservation","id=".$idvol),"icn32_retour.png",false);
+		addPageMenu("","aviation","Retour",geturl("reservations","reservation","id=".$idvol),"mdi-keyboard-backspace",false);
+
 	}
 	else if ($uid>0)
 	{
-		addSubMenu("","Retour",geturl("aviation","syntheses","uid=".$uid),"icn32_retour.png",false);
+		// addSubMenu("","Retour",geturl("aviation","syntheses","uid=".$uid),"icn32_retour.png",false);
+		addPageMenu("","aviation","Retour",geturl("aviation","syntheses","uid=".$uid),"mdi-keyboard-backspace",false);
 	}
 	else
 	{
-		addSubMenu("","Retour",geturl("aviation","syntheses",""),"icn32_retour.png",false);
+		// addSubMenu("","Retour",geturl("aviation","syntheses",""),"icn32_retour.png",false);
+		addPageMenu("","aviation","Retour",geturl("aviation","syntheses",""),"mdi-keyboard-backspace",false);
 	}
 	if ($ok)
 	{
-		addSubMenu("","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"icn32_supprimer.png",false);
+		// addSubMenu("","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"icn32_supprimer.png",false);
+		addPageMenu("","aviation","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"mdi-delete",false);
 	}
 
-	affSubMenu();
+	// affSubMenu();
 
 // ---- Informations Users
 	if ($fiche->val("idvol")==0)
@@ -321,12 +326,12 @@
 
 		if (($c_line->val("progref")!=$c_line->val("progression")) && ($c_line->val("progref")=="A"))
 		{
-			$tmpl_x->assign("form_progref", " (devrait être ".$c_line->aff("progref")." <img src='".$MyOpt["host"]."/static/modules/aviation/img/icn16_erreur.png'>)");
+			$tmpl_x->assign("form_progref", "<div>(<i class='mdi mdi-alert-circle-outline' style='font-size:16px;'></i> devrait être ".$c_line->aff("progref").")</div>");
 			$tmpl_x->assign("form_color", "background-color:#".$MyOpt["styleColor"]["msgboxBackgroundError"]);
 		}
 		else if (($c_line->val("progression")=="V") && ($c_line->val("progref")=="E"))
 		{
-			$tmpl_x->assign("form_progref", " (devrait être ".$c_line->aff("progref")." <img src='".$MyOpt["host"]."/static/modules/aviation/img/icn16_erreur.png'>)");
+			$tmpl_x->assign("form_progref", "<div>(<i class='mdi mdi-alert-circle-outline' style='font-size:16px;'></i> devrait être ".$c_line->aff("progref").")</div>");
 			$tmpl_x->assign("form_color", "background-color:#".$MyOpt["styleColor"]["msgboxBackgroundError"]);
 		}
 		else

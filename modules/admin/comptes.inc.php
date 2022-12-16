@@ -29,7 +29,7 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Enregistre les modifications
-	if (($fonc=="Enregistrer") && (is_array($form_numcpt)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 		$form_numcpt=checkVar("form_numcpt","array");
 		$form_description=checkVar("form_description","array");
@@ -45,9 +45,13 @@
 	}
 
 // ---- Supprime un poste
-	if (($fonc=="delete") && ($id>0))
+	if ($fonc=="delete")
 	{
-		$sql->Edit("numcompte",$MyOpt["tbl"]."_numcompte",$id,array("actif"=>"non"));		
+		$id=checkVar("id","numeric");
+		if ($id>0)
+		{
+			$sql->Edit("numcompte",$MyOpt["tbl"]."_numcompte",$id,array("actif"=>"non"));		
+		}
 	}
 
 // ---- Affiche la page demandée

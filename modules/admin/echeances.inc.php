@@ -51,7 +51,7 @@
 		),
 		"calendar"=>array(
 			"aff"=>$tabLang["lang_calendar"],
-			"width"=>120
+			"width"=>150
 		),
 		"multi"=>array(
 			"aff"=>$tabLang["lang_multi"],
@@ -63,7 +63,7 @@
 		),
 		"cout"=>array(
 			"aff"=>"Cout",
-			"width"=>100
+			"width"=>60
 		),
 		"right"=>array(
 			"aff"=>$tabLang["lang_right"],
@@ -75,7 +75,7 @@
 		),
 		"recipient"=>array(
 			"aff"=>$tabLang["lang_recipient"],
-			"width"=>150
+			"width"=>200
 		),
 		"delay"=>array(
 			"aff"=>$tabLang["lang_delay"],

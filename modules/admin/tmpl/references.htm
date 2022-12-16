@@ -13,21 +13,37 @@
 	<input type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="references">
 
-
-	<div class='formulaireTitre'>
-	Formation : <select id="form_formation" name="fid" OnChange="document.location='{url}&fid='+document.getElementById('form_formation').value;">
-	<!-- BEGIN: lst_formation -->
-	<option value="{id_formation}" {chk_formation}>{nom_formation}</OPTION>
-	<!-- END: lst_formation -->
-	</select>
+<div class="row" id="page-content">
+	<div class="grid-margin stretch-card">
+		<div class="card">	
+			<div class="card-body">	
+				<div class='row'>
+					<div class='col-lg-1 form-inline'>Formation :</div>
+					<div class='col-lg-2'>
+						<select id="form_formation" name="fid" class="form-control" OnChange="document.location='{url}&fid='+document.getElementById('form_formation').value;">
+						<!-- BEGIN: lst_formation -->
+						<option value="{id_formation}" {chk_formation}>{nom_formation}</OPTION>
+						<!-- END: lst_formation -->
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<br />
-	
-{aff_tableau}
-	<br />
-	<br />
-	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
+</div>
+				
+<div class="row" id="page-content">
+	<div class="grid-margin stretch-card">
+		<div class="card">	
+			<div class="card-body">	
+				{aff_tableau}
+				<br />
+				<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary"> <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
 
+			</div>
+		</div>
+	</div>
+</div>
 
 </FORM>
 

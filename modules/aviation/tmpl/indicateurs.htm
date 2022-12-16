@@ -3,14 +3,7 @@
 
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	<form name="choixannee">
-	Indicateurs pour l'année
-	<select id="dte" name="dte" OnChange="Recharge();" style="font-size: 22px;">
-		<!-- BEGIN: lst_date -->
-			<option value="{form_dte}" {form_selected}>{form_dte}</option>		
-		<!-- END: lst_date -->
-	</select>
-	</form>
+
 <!-- END: infos -->
 
 
@@ -33,17 +26,44 @@
 			  }
 		  }
 	</script>
-{aff_heures}
-<br />
-<div class="formulaireTitre">Evolution</div>
 
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body row">
+				<div class="col-lg-2"><label>Indicateurs pour l'année</label></div>
+				<div class="col-lg-1">
+					<select id="dte" name="dte" OnChange="Recharge();" class="form-control">
+						<!-- BEGIN: lst_date -->
+							<option value="{form_dte}" {form_selected}>{form_dte}</option>		
+						<!-- END: lst_date -->
+					</select>
+				</div>
+			</div>
+
+			<div class="card-body">
+				{aff_heures}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<h5>Evolution</h5>
+
+				<div id="chart_total" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>
+				<div id="chart_cumul" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script src="{path_root}/{path_core}/external/highchart/js/highcharts.js"></script>
 <script src="{path_root}/{path_core}/external/highchart/js/modules/exporting.js"></script>
-
-<div id="chart_total" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>
-<div id="chart_cumul" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>
-
 
 <script type="text/javascript">
 $(function () {
@@ -52,7 +72,8 @@ $(function () {
             type: 'column'
         },
         title: {
-            text: 'Total des heures de vols par avion et par mois'
+            text: 'Total des heures de vols par avion et par mois',
+			useHTML: true
         },
         xAxis: {
             categories: [

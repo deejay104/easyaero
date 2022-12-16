@@ -90,13 +90,12 @@
 // ---- Affiche le sous menu
 	if ($theme!="phone")
 	{
-		addSubMenu("","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
-		addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",true);
-		addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
-		addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
-		addSubMenu("","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
-		addSubMenu("","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
-		affSubMenu();
+		addPageMenu("","aviation","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",true);
+		addPageMenu("","aviation","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
+		addPageMenu("","aviation","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
 	}
 
 
@@ -123,7 +122,7 @@
 		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? "<a href='".geturl("aviation","synthese","id=".$d["idsynthese"])."'>".sql2date($d["dte_acquis"],"jour")."</a>" : " ";
 		// $tabValeur[$fid]["dte"]["aff"]=$d["dte_acquis"];
 		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
-		$tabValeur[$fid]["progression"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/".(($d["progression"]=="A") ? "icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"] : "icn16_nc.png")."'>";
+		$tabValeur[$fid]["progression"]["aff"]="<i class='mdi ".(($d["progression"]=="A") ? "mdi-checkbox-marked-outline" : "mdi-checkbox-blank-outline")."' style='font-size:18px; ".(($d["progression"]=="A") ? "color:green; " : "color:#888888;")."'>";
 		$tabValeur[$fid]["progression"]["align"]="center";
 		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
 		$tabValeur[$fid]["progref"]["aff"]=(($d["progref"]=="A") ? "Acquis" : "Etude");

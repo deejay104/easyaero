@@ -55,32 +55,33 @@
 		  return valid;
 		}
 	 
-		dialog = $( "#dialog-form" ).dialog({
-		  autoOpen: false,
-		  height: 300,
-		  width: 800,
-		  top: 10,
-		  modal: true,
-		  buttons: {
-			"Ajouter": addFlight,
-			Cancel: function() {
-			  dialog.dialog( "close" );
-			}
-		  },
-		  close: function() {
-			form[ 0 ].reset();
-			allFields.removeClass( "ui-state-error" );
-		  }
-		});
-	 
-		form = dialog.find( "form" ).on( "submit", function( event ) {
-		  event.preventDefault();
-		  addFlight();
-		});
-	 
+
 		$( "#ajouter" ).on( "click", function() {
-		  dialog.dialog( "open" );
+			$("#dialogForm").css("display","block");
+			$("#dialogForm").css("opacity",100);
+			$("#page-content").css("opacity",0.25);
+			$("#page-lst").css("opacity",0.25);
 		});
+		$( "#close" ).on( "click", function() {
+			$("#dialogForm").css("opacity",0);
+			$("#dialogForm").css("display","none");
+			$("#page-content").css("opacity",1);
+			$("#page-lst").css("opacity",1);
+		});
+		$( "#save" ).on( "click", function() {
+			$("#dialogForm").css("opacity",0);
+			$("#dialogForm").css("display","none");
+			$("#page-content").css("opacity",1);
+			$("#page-lst").css("opacity",1);
+			addFlight();
+		});
+		$( "#cancel" ).on( "click", function() {
+			$("#dialogForm").css("opacity",0);
+			$("#dialogForm").css("display","none");
+			$("#page-content").css("opacity",1);
+			$("#page-lst").css("opacity",1);
+		});
+
 	});
 
 	$( function() {
@@ -108,25 +109,50 @@
   
 </script>
 
+<div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Ajouter un atelier de maintenance</h5>
+				<button id='close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
 
-<div id="dialog-form" title="Ajouter un atelier de maintenance" class="formulaire" style='display:none;'>
-  <p class="validateTips">Saisissez le nom et l'email de l'atelier.</p>
+				
+					<p>Saisissez le nom et l'email de l'atelier.</p>
  
-  <form id="atelier" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
-    <fieldset>
-		<INPUT type="hidden" name="checktime" value="{form_checktime}">
-		<input type="hidden" name="mod" value="ressources">
-		<input type="hidden" name="rub" value="detailmaint">
-		<input type="hidden" name="fonc" value="ajoutatelier">
-		<p><label>Nom</label><input name="form_atelier[nom]" id="form_atelier_nom"  value=""></p>
-		<p><label>Email</label><input type="email" name="form_atelier[mail]" id="form_atelier_mail"  value=""></p>
+					<form id="atelier" method="post" action="{path_root}/index.php" enctype="multipart/form-data">
+					<fieldset>
+						<INPUT type="hidden" name="checktime" value="{form_checktime}">
+						<input type="hidden" name="mod" value="ressources">
+						<input type="hidden" name="rub" value="detailmaint">
+						<input type="hidden" name="fonc" value="ajoutatelier">
+						<div class="form-group row">
+							<div class="col-lg-3"><label>Nom</label></div>
+							<div class="col-lg-5"><input name="form_atelier[nom]" id="form_atelier_nom" class="form-control" value=""></div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-3"><label>Email</label></div>
+							<div class="col-lg-5"><input type="email" name="form_atelier[mail]" id="form_atelier_mail" class="form-control" value=""></div>
+						</div>
 
-		<!-- Allow form submission with keyboard without duplicating the dialog button -->
-		<input type="submit" name="fonc" tabindex="-1" style="position:absolute; top:-1000px">
-    </fieldset>
-  </form>
+						<!-- Allow form submission with keyboard without duplicating the dialog button -->
+						<input type="submit" name="fonc" tabindex="-1" style="position:absolute; top:-1000px">
+					</fieldset>
+					</form>
+				</div>
+				<br />
+				<div class="form-inline"><label></label>
+					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+					<button class="btn btn-light" id="cancel">Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
 
 <FORM name="maintenance" class="forms-sample" method="post" action="{path_root}/ressources/detailmaint" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
@@ -160,7 +186,7 @@
 				</div>
 				<div class="form-group row" OnMouseOver="document.getElementById('addatelier').style.display='inline-block';" OnMouseOut="document.getElementById('addatelier').style.display='none';">
 					<label class="col-lg-3 col-form-label">Atelier</label>
-					<div class="col-lg-7 form-inline">{form_uid_atelier} <a id="ajouter"><i id="addatelier" class="mdi mdi-library-plus" style="display:none;"></i></a></div>
+					<div class="col-lg-7 form-inline">{form_uid_atelier} <a id="ajouter"><i id="addatelier" class="mdi mdi-library-plus" style="display:none; font-size:18px; color:#888888;"></i></a></div>
 			
 				</div>
 				<div class="form-group row">

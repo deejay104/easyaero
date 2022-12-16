@@ -35,8 +35,7 @@
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-	addSubMenu("","Ajouter","#","icn32_ajouter",false,"","OpenDialog()");
-	affSubMenu();
+	addPageMenu("","suivi","Ajouter","#","",false,"","OpenDialog()");
 
 // ---- Enregistre
 	if ($fonc=="Enregistrer")

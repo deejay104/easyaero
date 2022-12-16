@@ -88,13 +88,13 @@
 // ---- Affiche le sous menu
 	if ($theme!="phone")
 	{
-		addSubMenu("","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",true);
-		addSubMenu("","Exercices Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
-		addSubMenu("","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
-		addSubMenu("","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
-		addSubMenu("","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
-		addSubMenu("","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
-		affSubMenu();
+		addPageMenu("","aviation","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",true);
+		addPageMenu("","aviation","Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
+		addPageMenu("","aviation","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
+
 	}
 
 	if (GetDroit("ModifLivret"))
@@ -104,8 +104,10 @@
 	
 // ---- Information sur la formation
 	$pil=new user_class($uid,$sql);
+
 	$tmpl_x->assign("dte_deb",$livret->Aff("dte_deb"));
 	$tmpl_x->assign("dte_fin",$livret->Aff("dte_fin"));
+	$tmpl_x->assign("cr",$livret->Aff("cr","form"));
 	$tmpl_x->assign("total_heure_dc",$livret->AffNbHeures("now","dc"));
 	$tmpl_x->assign("total_heure_solo",$livret->AffNbHeures("now","solo"));
 	$tmpl_x->assign("total_att_dc",$livret->NbAtt("now","dc"));

@@ -181,7 +181,7 @@
 	$cs="";
 	foreach ($tabHeures as $id=>$k)
 	{
-		$txt.=$cs."{ type: 'column', name: '".$tabHeures[$id]["avion"]."', data: [";
+		$txt.=$cs."{ type: 'column','animation':false, name: '".$tabHeures[$id]["avion"]."', data: [";
 		$s="";
 		for ($m=1; $m<=12; $m++)
 		{
@@ -189,7 +189,7 @@
 			$s=",";
 		}
 		$txt.="] }";
-		$txt.=",{ type: 'line', name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
+		$txt.=",{ type: 'line', 'animation':false,name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
 		$s="";
 		for ($m=1; $m<=12; $m++)
 		{
@@ -212,7 +212,7 @@
 	$cs="";
 	foreach ($tabHeures as $id=>$k)
 	{
-		$txt.=$cs."{ type: 'column', name: '".$tabHeures[$id]["avion"]."', data: [";
+		$txt.=$cs."{ type: 'column','animation':false, name: '".$tabHeures[$id]["avion"]."', data: [";
 		$s="";
 		for ($m=1; $m<=12; $m++)
 			{
@@ -220,7 +220,7 @@
 			$s=",";
 		}
 		$txt.="] }";
-		$txt.=",{ type: 'line', name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
+		$txt.=",{ type: 'line', 'animation':false, name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
 		$s="";
 		$tot=0;
 		for ($m=1; $m<=12; $m++)
@@ -247,7 +247,7 @@
 
 		$tmpl_x->assign("form_dte", $sql->data["annee"]);
 		$tmpl_x->assign("form_selected", (($sql->data["annee"]==$dte) ? "selected" : "") );
-		$tmpl_x->parse("infos.lst_date");
+		$tmpl_x->parse("corps.lst_date");
 	}
 
 

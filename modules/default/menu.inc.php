@@ -23,7 +23,7 @@
 		"icone"=>"mdi-calendar-text",
 		"nom"=>$tabLang["lang_meeting"],
 		"droit"=>"AccesManifestations",
-		"url"=>geturl("manifestations","",""),
+		"url"=>geturl("manifestations","index",""),
 	);
 	if ($MyOpt["module"]["compta"]=="on")
 	{

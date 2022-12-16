@@ -124,27 +124,27 @@
 			  }
 			},
 			events: {
-				url: '{path_root}/api.php?mod=reservations&rub=getsched',
+				url: '{path_root}/api/v1/reservations/getsched',
 				error: function() {
 					$('#script-warning').show();
 				}
 			},
 
 			select: function(start, end, jsEvent, view, resource) {
-				document.location="{path_root}/index.php?mod=reservations&rub=reservation&prev=scheduler&jstart="+start+"&jend="+end+"&ress="+resource.id;
+				document.location="{path_root}/reservations/reservation?prev=scheduler&jstart="+start+"&jend="+end+"&ress="+resource.id;
 			},
 
 			eventClick: function(event, element) {
-				document.location="{path_root}/index.php?mod=reservations&rub=reservation&prev=scheduler&id="+event.id;
+				document.location="{path_root}/reservations/reservation?prev=scheduler&id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {
-				$.ajax({ url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+				$.ajax({ url: '{path_root}/api/v1/reservations/updatecal?id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
 			},
 			eventDrop: function(event,dayDelta,minuteDelta) {
 				var myResource = $('#calendar').fullCalendar('getResourceById', event.resourceId);
 				console.log('New resource : ' + myResource.id);
-				$.ajax({ url: '{path_root}/api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta+'&ress='+myResource.id });
+				$.ajax({ url: '{path_root}/api/v1/reservations/updatecal?id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta+'&ress='+myResource.id });
 			},
 
 			eventRender: function( event, element, view ) {

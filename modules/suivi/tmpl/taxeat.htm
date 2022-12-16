@@ -14,119 +14,79 @@ ul.ui-autocomplete {
 
 </style>
 
-<script type="text/javascript">
-	$(function() {
-<!-- BEGIN: lst_vols_search -->
-		$("#dest_{id}").autocomplete({
-			source: "{path_root}/api.php?mod=navigation&rub=getwp&type=Airport&taxe=oui",
-			select: function(event, ui) {
-				oFormObject = document.forms['reservation'];
-				oFormObject.elements["dest_{id}"].value=ui.item.value;
-				oFormObject.elements["taxe_{id}"].value=ui.item.taxe;
-				document.getElementById("taxeaff_{id}").innerHTML=ui.item.taxe;
-			},
-			delay: 0
-		});
-<!-- END: lst_vols_search -->
 
-		$("#dest_0").autocomplete({
-			source: "{path_root}/api.php?mod=navigation&rub=getwp&type=Airport",
-			select: function(event, ui) {
-				document.getElementById("dest_0").value=ui.item.value;
-				document.getElementById("taxe_0").value=ui.item.taxe;
-			},
-			delay: 0
-		});
 
-		dialog = $( "#dialog-form" ).dialog({
-			autoOpen: false,
-			height: 250,
-			width: 800,
-			top: 10,
-			modal: true,
-			buttons: {
-				"Débiter": SubmitDialog,
-				Cancel: function() { dialog.dialog( "close" );
-			}
-			},
-			close: function() {
-			<!-- form[ 0 ].reset(); -->
-			<!-- allFields.removeClass( "ui-state-error" ); -->
-			}
-		});
-	});  
 
-function OpenDialog()
-{
-	document.getElementById("dest_0").value="";
-	document.getElementById("taxe_0").value="0.00";
-	dialog.dialog("open");
-}
 
-function SubmitDialog()
-{
-	document.getElementById("dia_date").value=document.getElementById("date_0").value;
-	document.getElementById("dia_dest").value=document.getElementById("dest_0").value;
-	document.getElementById("dia_taxe").value=document.getElementById("taxe_0").value;
-	document.getElementById("dia_pilote").value=document.getElementById("pilote_0").value;
-	document.getElementById("debite").submit();
-	dialog.dialog( "close" );
-}
-function ShowLine(id)
-{
-	document.getElementById('hide_'+id).style.display='block';
-	document.getElementById('pay_'+id).style.display='block';
-}	
-function HideLine(id)
-{
-	document.getElementById('hide_'+id).style.display='none';
-	document.getElementById('pay_'+id).style.display='none';
-}	
-</script>
+<div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Débiter Taxe d'atterrissage</h5>
+				<button id='close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<FORM id="debite" name="debite" method="post" action="{path_root}/suivi/taxeat" enctype="multipart/form-data">
+					<INPUT type="hidden" name="checktime" value="{form_checktime}">
+					<INPUT type="hidden" name="fonc" value="debite">
+					<INPUT type="hidden" name="id" value="0">
+					<INPUT type="hidden" id="dia_dest" name="ddest" value="">
+					<INPUT type="hidden" id="dia_taxe" name="dtaxe" value="">
+					<INPUT type="hidden" id="dia_date" name="ddate" value="">
+					<INPUT type="hidden" id="dia_pilote" name="dpilote" value="">
 
-		
-<FORM id="debite" name="debite" method="post" action="{path_root}/suivi/taxeat" enctype="multipart/form-data">
-	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="fonc" value="debite">
-	<INPUT type="hidden" name="id" value="0">
-	<INPUT type="hidden" id="dia_dest" name="ddest" value="">
-	<INPUT type="hidden" id="dia_taxe" name="dtaxe" value="">
-	<INPUT type="hidden" id="dia_date" name="ddate" value="">
-	<INPUT type="hidden" id="dia_pilote" name="dpilote" value="">
-	<div id="dialog-form" title="Débiter Taxe d'atterrissage" class="formulaire" style="display:none;">
-		<br />
-		<TABLE  class='tableauAff'>
-			<tr>
-				<th width=20>&nbsp;</TD>
-				<th width=190><B>Date</B></TD>
-				<th width=240><B>Pilote</B></TD>
-				<th width=170><B>Destination</B></TD>
-				<th width=140><B>Taxe AT</B></TD>
-			</tr>
-			<TR>
-				<TD width=20>&nbsp;</TD>
-				<TD><input id="date_0" type="date" value="{today}" style="width:180px!important;"></TD>
-				<TD>
-					<SELECT id="pilote_0">
-						<OPTION value="">...</OPTION>
-						<!-- BEGIN: lst_pilote -->
-						<OPTION value="{id_pilote}">{nom_pilote}</OPTION>
-						<!-- END: lst_pilote -->
-					</SELECT>
-				</TD>
-				<TD><input id="dest_0" value="" style="width:160px!important; "></TD>
-				<TD><input id="taxe_0" value="0.00" style="width:70px!important;"></TD>
-			</TR>
-		</TABLE>
+					<TABLE  class='tableauAff'>
+						<tr>
+							<th width=20>&nbsp;</TD>
+							<th width=190><B>Date</B></TD>
+							<th width=240><B>Pilote</B></TD>
+							<th width=170><B>Destination</B></TD>
+							<th width=140><B>Taxe AT</B></TD>
+						</tr>
+						<TR>
+							<TD width=20>&nbsp;</TD>
+							<TD><input id="date_0" type="date" value="{today}" class="form-control"></TD>
+							<TD>
+								<SELECT id="pilote_0"  class="form-control">
+									<OPTION value="">...</OPTION>
+									<!-- BEGIN: lst_pilote -->
+									<OPTION value="{id_pilote}">{nom_pilote}</OPTION>
+									<!-- END: lst_pilote -->
+								</SELECT>
+							</TD>
+							<TD><input id="dest_0" value=""  class="form-control"></TD>
+							<TD><input id="taxe_0" value="0.00"  class="form-control"></TD>
+						</TR>
+					</TABLE>
+					</form>
+				</div>
+				<br />
+				<div class="form-inline"><label></label>
+					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+					<button class="btn btn-light" id="cancel">Annuler</button>
+				</div>
+			</div>
+		</div>
 	</div>
-</form>
+</div>
+
+
 
 <!-- BEGIN: aff_mvt_detail -->
-<div style='width:1050px; padding-top :15px; padding-bottom :15px; margin-bottom:15px;'>
-Mouvements débités :<br />
-<!-- BEGIN: aff_mvt_ligne -->
-{aff_mouvement_detail}
-<!-- END: aff_mvt_ligne -->
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">		
+				Mouvements débités :<br />
+				<!-- BEGIN: aff_mvt_ligne -->
+				{aff_mouvement_detail}
+				<!-- END: aff_mvt_ligne -->
+			</div>
+		</div>
+	</div>
 </div>
 <!-- END: aff_mvt_detail -->
 
@@ -177,6 +137,75 @@ Mouvements débités :<br />
 </div>
 </FORM>
 
+<script type="text/javascript">
 
+	$(function() {
+<!-- BEGIN: lst_vols_search -->
+		$("#dest_{id}").autocomplete({
+			source: "{path_root}/api.php?mod=navigation&rub=getwp&type=Airport&taxe=oui",
+			select: function(event, ui) {
+				oFormObject = document.forms['reservation'];
+				oFormObject.elements["dest_{id}"].value=ui.item.value;
+				oFormObject.elements["taxe_{id}"].value=ui.item.taxe;
+				document.getElementById("taxeaff_{id}").innerHTML=ui.item.taxe;
+			},
+			delay: 0
+		});
+<!-- END: lst_vols_search -->
+
+		$("#dest_0").autocomplete({
+			source: "{path_root}/api.php?mod=navigation&rub=getwp&type=Airport",
+			select: function(event, ui) {
+				document.getElementById("dest_0").value=ui.item.value;
+				document.getElementById("taxe_0").value=ui.item.taxe;
+			},
+			delay: 0
+		});
+	});  
+
+
+
+$( "#close" ).on( "click", function() {
+	$("#dialogForm").css("opacity",0);
+	$("#dialogForm").css("display","none");
+});
+$( "#save" ).on( "click", function() {
+	$("#dialogForm").css("opacity",0);
+	$("#dialogForm").css("display","none");
+	SubmitDialog();
+});
+$( "#cancel" ).on( "click", function() {
+	$("#dialogForm").css("opacity",0);
+	$("#dialogForm").css("display","none");
+});
+
+function OpenDialog()
+{
+	document.getElementById("dest_0").value="";
+	document.getElementById("taxe_0").value="0.00";
+	$("#dialogForm").css("display","block");
+	$("#dialogForm").css("opacity",100);
+}
+
+function SubmitDialog()
+{
+	document.getElementById("dia_date").value=document.getElementById("date_0").value;
+	document.getElementById("dia_dest").value=document.getElementById("dest_0").value;
+	document.getElementById("dia_taxe").value=document.getElementById("taxe_0").value;
+	document.getElementById("dia_pilote").value=document.getElementById("pilote_0").value;
+	document.getElementById("debite").submit();
+	dialog.dialog( "close" );
+}
+function ShowLine(id)
+{
+	document.getElementById('hide_'+id).style.display='block';
+	document.getElementById('pay_'+id).style.display='block';
+}	
+function HideLine(id)
+{
+	document.getElementById('hide_'+id).style.display='none';
+	document.getElementById('pay_'+id).style.display='none';
+}	
+</script>
 
 <!-- END: corps -->

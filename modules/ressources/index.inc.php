@@ -36,8 +36,7 @@
 // ---- Affiche le sous-menu
 	if (GetDroit("CreeRessource"))
 	{
-		addSubMenu("","Ajouter",geturl("ressources","detail","id=0"),"icn32_ajouter.png",false,"");
-		affSubMenu();
+		addPageMenu("","aviation","Ajouter",geturl("ressources","detail","id=0"),"",false);
 	}
 	
 // ---- Droit d'accès

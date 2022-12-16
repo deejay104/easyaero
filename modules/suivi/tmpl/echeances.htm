@@ -33,20 +33,31 @@ function selectAll()
 		<div class="card">
 			<div class="card-body">
 
-				<div class="form-inline">
-					<select id="form_id" class='form-control' OnChange="Recharge();">
-						<option value="0">Choisissez l'échéance</option>
-					<!-- BEGIN: lst_echeance -->
-						<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
-					<!-- END: lst_echeance -->
-					</select>
+				<div class="row">
+					<div class="col-lg-2">
+						<select id="form_id" class='form-control' OnChange="Recharge();">
+							<option value="0">Choisissez l'échéance</option>
+						<!-- BEGIN: lst_echeance -->
+							<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
+						<!-- END: lst_echeance -->
+						</select>
+					</div>
 
 					<!-- BEGIN: aff_debite -->
-					&nbsp;- Nouvelle échéance : <input type="date" class='form-control' name="form_date"> Cout : <input type="text" class='form-control' name="form_cout" value="{form_cout}" style="width:80px!important;">
-					<input type="submit" class="btn btn-light" name="fonc" value="Débiter" style="width:150px!important; margin-left:20px;">
+					<div class="col-lg-3 form-inline">
+						Nouvelle échéance : <input type="date" class='form-control' name="form_date"> 
+					</div>
+					<div class="col-lg-2 form-inline">
+						Cout : <input type="text" class='form-control' name="form_cout" value="{form_cout}" style="width:80px!important;">
+					</div>
+					<div class="col-lg-2 form-inline">
+						<input type="submit" class="btn btn-light" name="fonc" value="Débiter" style="width:150px!important; margin-left:20px;">
+					</div>
 					<!-- END: aff_debite -->
 
+					<div class="col-lg-2">
 					<input type="submit" class="btn btn-light" name="print" value="Imprimer" style="width:150px!important; margin-left:20px;" onClick="window.print()">
+					</div>
 
 				</div>
 			</div>

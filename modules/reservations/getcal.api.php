@@ -28,7 +28,7 @@
 	
 	if ($ress==0)
 	{
-		$lstres=ListeRessources($sql);
+		$lstres=ListeRessources($sql,array("oui","non","off"));
 	}
 	else
 	{

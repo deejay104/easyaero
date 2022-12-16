@@ -11,7 +11,6 @@
 
 <!-- BEGIN: corps -->
 <style>
-.form-inline label { min-width: 200px; justify-content:left; }
 .form-check-label { min-width: 100px!important; }
 
 @media (min-width: 576px) {
@@ -46,11 +45,21 @@
 			<div class="card-body">	
 				<h5>FICHE DE SYNTHESE DE VOL</h5>
 
-				<div class="form-inline"><label>Livret de formation</label>{form_idlivret}</div>
-				<div class="form-inline"><label>Module</label>{form_module}</div>
-				<div class="form-inline"><label>Référence du programme</label>{form_refffa}</div>
-				<div class="form-inline"><label>Type de vol</label>{form_type}</div>
-				<div class="form-inline"><label>Conclusion du vol</label>{form_conclusion}</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Livret de formation</label><div class="col-lg-6">{form_idlivret}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Module</label><div class="col-lg-6">{form_module}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Référence du programme</label><div class="col-lg-6">{form_refffa}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Type de vol</label><div class="col-lg-6">{form_type}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Conclusion du vol</label><div class="col-lg-6">{form_conclusion}</div>
+				</div>
 
 			</div>
 		</div>
@@ -85,25 +94,25 @@
 			<div class="card-body">	
 				<h5>BRIEFING SOL : EXERCICES PEDAGOGIQUES</h5>
 
-<!-- BEGIN: lst_pedagogique -->
-		<div id='exo_{aff_id}' style='{form_color}' class='form-inline form-large form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
-			<label>{aff_exo_description}</label>
-			{form_progression} {form_progref}
-<!-- BEGIN: lst_delete -->
-			<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-				<a href="" OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
-			</div>
-<!-- END: lst_delete -->
-		</div>
-<!-- END: lst_pedagogique -->
+				<!-- BEGIN: lst_pedagogique -->
+				<div id='exo_{aff_id}' style='{form_color}' class='form-group row form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+					<label class="col-lg-5 col-form-label">{aff_exo_description}{form_progref}</label>
+					<div class="col-lg-5 form-inline">{form_progression}</div>
+					<!-- BEGIN: lst_delete -->
+					<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px; width:20px; font-size:20px;'>
+						<a href="" OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
+					</div>
+					<!-- END: lst_delete -->
+				</div>
+				<!-- END: lst_pedagogique -->
 
-		<div id="affpedagogique">
-		</div>
-		<br />
-<!-- BEGIN: add_exercicepeda -->
-		<input id="addexercicepeda" class="form-control">
-		<br />
-<!-- END: add_exercicepeda -->
+				<div id="affpedagogique">
+				</div>
+				<br />
+				<!-- BEGIN: add_exercicepeda -->
+				<input id="addexercicepeda" class="form-control">
+				<br />
+				<!-- END: add_exercicepeda -->
 			</div>
 		</div>
 	</div>
@@ -113,27 +122,25 @@
 		<div class="card">
 			<div class="card-body">	
 
-	<h5>EXERCICES</h5>
-	<div class='formulaire'>
-<!-- BEGIN: lst_exercice -->
-		<div id='exo_{aff_id}' class='form-inline form-large form-hover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
-		<label>{aff_exo_description}</label>
-		{form_progression}
-<!-- BEGIN: lst_delete -->
-		<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-			<a href="" OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
-		</div>
-<!-- END: lst_delete -->
-		</div>
-<!-- END: lst_affexercice -->
-	<div id="affexercices">
-	</div>
-	<br />
-<!-- BEGIN: add_exercice -->
-	<input id="addexercice" class="form-control" >
-	<br />
-<!-- END: add_exercice -->
-	</div>
+			<h5>EXERCICES</h5>
+			<!-- BEGIN: lst_exercice -->
+			<div id='exo_{aff_id}' class='form-group row form-hover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+				<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
+				<div class="col-lg-5 form-inline">{form_progression}</div>
+				<!-- BEGIN: lst_delete -->
+				<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px; width:20px; font-size:20px;'>
+					<a href="" OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
+				</div>
+				<!-- END: lst_delete -->
+			</div>
+			<!-- END: lst_affexercice -->
+			<div id="affexercices">
+			</div>
+			<br />
+			<!-- BEGIN: add_exercice -->
+			<input id="addexercice" class="form-control" >
+			<br />
+			<!-- END: add_exercice -->
 			</div>
 		</div>
 	</div>
@@ -145,12 +152,12 @@
 				<h5>PANNES</h5>
 
 				<!-- BEGIN: lst_panne -->
-				<div id='exo_{aff_id}' class='form-inline form-large form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
-					<label>{aff_exo_description}</label>
-					{form_progression}
+				<div id='exo_{aff_id}' class='form-group row form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+					<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
+					<div class="col-lg-5 form-inline">{form_progression}</div>
 					<!-- BEGIN: lst_delete -->
-					<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px'>
-						<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><img src='{path_root}/{path_module}/img/icn16_supprimer.png'></a>
+					<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px; width:20px; font-size:20px;'>
+						<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></a>
 					</div>
 					<!-- END: lst_delete -->
 				</div>
@@ -174,11 +181,11 @@
 			<div class="card-body">	
 				<h5>Non technique / Menace, Erreurs, Situation non désirées</h5>
 
-				<div class="form-inline form-large form-hover"><label>Gestion de la charge de travail</label>{form_info_1}</div>
-				<div class="form-inline form-large form-hover"><label>Gestion des automatismes</label>{form_info_2}</div>
-				<div class="form-inline form-large form-hover"><label>Gestion des risques - Prise de décisions</label>{form_info_3}</div>
-				<div class="form-inline form-large form-hover"><label>Conscience de la situation</label>{form_info_4}</div>
-				<div class="form-inline form-large form-hover"><label>Conscience de l’environnement en vol</label>{form_info_5}</div>
+				<div class="form-group row form-hover"><label class="col-lg-5 col-form-label">Gestion de la charge de travail</label><div class="col-lg-5 form-inline">{form_info_1}</div></div>
+				<div class="form-group row form-hover"><label class="col-lg-5 col-form-label">Gestion des automatismes</label><div class="col-lg-5 form-inline">{form_info_2}</div></div>
+				<div class="form-group row form-hover"><label class="col-lg-5 col-form-label">Gestion des risques - Prise de décisions</label><div class="col-lg-5 form-inline">{form_info_3}</div></div>
+				<div class="form-group row form-hover"><label class="col-lg-5 col-form-label">Conscience de la situation</label><div class="col-lg-5 form-inline">{form_info_4}</div></div>
+				<div class="form-group row form-hover"><label class="col-lg-5 col-form-label">Conscience de l’environnement en vol</label><div class="col-lg-5 form-inline">{form_info_5}</div></div>
 			</div>
 		</div>
 	</div>
@@ -188,27 +195,27 @@
 		<div class="card">
 			<div class="card-body">	
 				<div class="row">
-					<div class="col-md-4 grid-margin stretch-card">
-						<div class="form-inline"><label>Nb Atterrissage</label>{form_nb_att}</div>
+					<div class="col-md-5 form-group row ">
+						<label class="col-lg-5 col-form-label">Nb Atterrissage</label><div class="col-lg-5">{form_nb_att}</div>
 					</div>
-					<div class="col-md-4 grid-margin stretch-card">
-						<div class="form-inline"><label>Total Atterrissage</label>{form_total_att}</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 grid-margin stretch-card">
-						<div class="form-inline"><label>Remise(s) des Gaz</label>{form_nb_rmg}</div>
-					</div>
-					<div class="col-md-4 grid-margin stretch-card">
-						<div class="form-inline"><label>Total Remise des Gaz</label>{form_total_rmg}</div>
+					<div class="col-md-5 form-group row ">
+						<label class="col-lg-5 col-form-label">Total Atterrissage</label><div class="col-lg-5 py-2">{form_total_att}</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 grid-margin stretch-card">
-						<div class="form-inline"><label>Formation théorique (min)</label>{form_tps_theo}</div>
+					<div class="col-md-5 form-group row ">
+						<label class="col-lg-5 col-form-label">Remise(s) des Gaz</label><div class="col-lg-5">{form_nb_rmg}</div>
 					</div>
-					<div class="col-md-4 grid-margin stretch-card">
-						<div class="form-inline"><label>Total Formation théorique</label>{form_total_theo}</div>
+					<div class="col-md-5 form-group row ">
+						<label class="col-lg-5 col-form-label">Total Remise des Gaz</label><div class="col-lg-5 py-2">{form_total_rmg}</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-5 form-group row ">
+						<label class="col-lg-5 col-form-label">Formation théorique (min)</label><div class="col-lg-5">{form_tps_theo}</div>
+					</div>
+					<div class="col-md-5 form-group row ">
+						<label class="col-lg-5 col-form-label">Total Formation théorique</label><div class="col-lg-5 py-2">{form_total_theo}</div>
 					</div>
 				</div>
 			</div>

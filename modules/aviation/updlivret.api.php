@@ -25,6 +25,7 @@
 		$result["dte_fin"]=$livret->val("dte_fin");
 		$result["tpsdc"]=$livret->val("tpsdc");
 		$result["tpssolo"]=$livret->val("tpssolo");
+		$result["cr"]=$livret->val("cr");
 
 	}
 	else if ($fonc=="post")
@@ -42,15 +43,40 @@
 			$livret->Valid("dte_fin",checkVar("dte_fin","date"));
 			$livret->Valid("tpsdc",checkVar("tpsdc","numeric"));
 			$livret->Valid("tpssolo",checkVar("tpssolo","numeric"));
+			$livret->Valid("cr",checkVar("cr","text"));
 			$livret->Save();
 
 			$result["id"]=$livret->id;
 			if ($livret->id>0)
 			{
+				$result["status"]=200;
 				$result["result"]="OK";
 			}
 			else
 			{
+				$result["status"]=500;
+				$result["result"]="Error";
+			}				
+		}
+	}	
+	else if (($fonc=="cr") && ($id>0))
+	{
+		if (GetDroit("ModifLivret"))
+		{
+			$id=checkVar("id","numeric");
+			$livret=new livret_class($id,$sql);
+			$livret->Valid("cr",checkVar("cr","text"));
+			$livret->Save();
+
+			$result["id"]=$livret->id;
+			if ($livret->id>0)
+			{
+				$result["status"]=200;
+				$result["result"]="OK";
+			}
+			else
+			{
+				$result["status"]=500;
 				$result["result"]="Error";
 			}				
 		}

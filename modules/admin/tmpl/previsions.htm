@@ -15,7 +15,7 @@ function update(id,mois,ress)
 {
 	$(function() {
 		$.ajax({
-			url:'{path_root}/api.php?mod=admin&rub=updprev&mois='+mois+'&dte={aff_annee}&ress='+ress+'&var='+document.getElementById(id).value,
+			url:'{path_root}/api/v1/admin/updprev?mois='+mois+'&dte={aff_annee}&ress='+ress+'&var='+document.getElementById(id).value,
 			type: 'html',
 			dataType: 'JSON',
 			success: function(response)
@@ -40,24 +40,33 @@ function update(id,mois,ress)
 }
 </script>
 
-<select id="dte" name="form_dte" OnChange="document.location='{path_root}/index.php?mod=admin&rub=previsions&dte='+document.getElementById('dte').value;">
-<!-- BEGIN: lst_annee -->
-	<option value="{form_dte}" {form_selected}>{form_dte}</option>		
-<!-- END: lst_annee -->
-</select><br /><br />
+<div class="row" id="page-content">
+	<div class="grid-margin stretch-card">
+		<div class="card">	
+			<div class="card-body">	
 
-	<table class="tableauAff">
-	<tr>
-		<th width='150'>Mois</th>{aff_lst_ress}
-	</tr>
-<!-- BEGIN: lst_mois -->
-	<tr>
-		<td>{aff_nom}</td>
-<!-- BEGIN: lst_ress -->
-		<td><input id='{aff_ress}_{aff_id}' onblur="update('{aff_ress}_{aff_id}','{aff_id}','{aff_ress}');" type="number" style="width:80px;" value="{aff_val}"></td>
-<!-- END: lst_ress -->
-	</tr>
-<!-- END: lst_mois -->
-	</table>
+				<select id="dte" name="form_dte" class="form-control" OnChange="document.location='{path_root}/admin/previsions?dte='+document.getElementById('dte').value;">
+				<!-- BEGIN: lst_annee -->
+					<option value="{form_dte}" {form_selected}>{form_dte}</option>		
+				<!-- END: lst_annee -->
+				</select><br /><br />
+
+				<table class="tableauAff">
+					<tr>
+						<th width='150'>Mois</th>{aff_lst_ress}
+					</tr>
+					<!-- BEGIN: lst_mois -->
+					<tr>
+						<td>{aff_nom}</td>
+						<!-- BEGIN: lst_ress -->
+						<td><input id='{aff_ress}_{aff_id}' class="form-control" onblur="update('{aff_ress}_{aff_id}','{aff_id}','{aff_ress}');" type="number" value="{aff_val}"></td>
+						<!-- END: lst_ress -->
+					</tr>
+					<!-- END: lst_mois -->
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- END: corps -->

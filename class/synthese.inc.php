@@ -54,6 +54,7 @@ class livret_class extends objet_core
 		"dte_fin" => Array("type" => "date"),
 		"tpsdc" => Array("type" => "number"),
 		"tpssolo" => Array("type" => "number"),
+		"cr" => Array("type" => "text"),
 	);
 
 	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
@@ -243,25 +244,6 @@ class synthese_class extends objet_core
 	
 	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
-		// if (($this->id>0) && ($typeaff=="form"))
-		// {
-			// if ($key=="refffa")
-			// {
-				// $render="read";
-				// $typeaff="html";
-			// }
-			// else if ($key=="module")
-			// {
-				// $render="read";
-				// $typeaff="html";
-			// }
-			// else if ($key=="idlivret")
-			// {
-				// $render="read";
-				// $typeaff="html";
-			// }
-		// }
-
 		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 
 		if (($key=="refffa") && ($render=="form"))
@@ -293,12 +275,34 @@ class synthese_class extends objet_core
 				$ret.="<option value=\"".$tmp["id"]."\" ".(($txt==$tmp["id"]) ? "selected" : "").">".$res->displayDescription()."</option>";
 			}
 			$ret.="</select>";			
+		}		
+		else if (($key=="idlivret") && ($render=="read"))
+		{
+			$txt=$this->val($key);
+			$res=new livret_class($txt,$this->sql);
+			$ret="<input readonly class='form-control' value=\"".$res->displayDescription()."\">";
 		}
 		else if (($key=="idlivret") && ($render!="form"))
 		{
 			$txt=$this->val($key);
 			$res=new livret_class($txt,$this->sql);
-			$ret=$res->displayDescription();
+			$ret="<div class='py-2'>".$res->displayDescription()."</div>";
+		}
+		else if (($key=="module") && ($render!="form"))
+		{
+			$ret="<div class='py-2'>".$ret."</div>";
+		}		
+		else if (($key=="refffa") && ($render!="form"))
+		{
+			$ret="<div class='py-2'>".$ret."</div>";
+		}
+		else if (($key=="type") && ($render!="form"))
+		{
+			$ret="<div class='py-2'>".$ret."</div>";
+		}	
+		else if (($key=="conclusion") && ($render!="form"))
+		{
+			$ret="<div class='py-2'>".$ret."</div>";
 		}
 		return $ret;
 	}

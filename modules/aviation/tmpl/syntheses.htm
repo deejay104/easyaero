@@ -42,7 +42,7 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row" id="page-content">
 	<div class="grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body row">	
@@ -74,10 +74,17 @@
 				</div>
 			</div>
 
-			<div class="card-body">	
-				Début de formation : {dte_deb}<br />
-				Fin de formation : {dte_fin}<br />
+			<div class="card-body row">
+				<div class="col-lg-3">
+					Début de formation : {dte_deb}<br />
+					Fin de formation : {dte_fin}<br />
+				</div>
+				<div class="col-lg-7">
+					{cr}
+				</div>
+			</div>
 
+			<div class="card-body">
 				<table class='formulaire'>
 					<tr class='formulaireTitre'>
 						<th width=200>&nbsp;</th>
@@ -102,10 +109,10 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+<div class="row" id="page-lst">
 	<div class="grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body" id="lst">	
+			<div class="card-body" >	
 			{aff_tableau}
 			</div>
 		</div>
@@ -135,31 +142,92 @@ $( function() {
 		<!-- dialog.dialog( "open" ); -->
 		$("#dialogForm").css("display","block");
 		$("#dialogForm").css("opacity",100);
-		$("#lst").css("opacity",0.25);
-
+		$("#page-content").css("opacity",0.25);
+		$("#page-lst").css("opacity",0.25);
     });
 	$( "#new" ).on( "click", function() {
 		newLivret();
 		$("#dialogForm").css("display","block");
 		$("#dialogForm").css("opacity",100);
+		$("#page-content").css("opacity",0.25);
+		$("#page-lst").css("opacity",0.25);
     });	
 	$( "#close" ).on( "click", function() {
 		$("#dialogForm").css("opacity",0);
 		$("#dialogForm").css("display","none");
-		$("#lst").css("opacity",1);
+		$("#page-content").css("opacity",1);
+		$("#page-lst").css("opacity",1);
     });
 	$( "#save" ).on( "click", function() {
 		$("#dialogForm").css("opacity",0);
 		$("#dialogForm").css("display","none");
-		$("#lst").css("opacity",1);
+		$("#page-content").css("opacity",1);
+		$("#page-lst").css("opacity",1);
 		savelivret();
     });
 	$( "#cancel" ).on( "click", function() {
 		$("#dialogForm").css("opacity",0);
 		$("#dialogForm").css("display","none");
-		$("#lst").css("opacity",1);
+		$("#page-content").css("opacity",1);
+		$("#page-lst").css("opacity",1);
     });
+
+	var timer=null;
+	$("#cr").keyup(function(e) {
+		console.log(e);
+
+		text="";
 	
+		if(window.event)
+	          { key = window.event.keyCode;	} //IE
+		else
+	          { key = e.which;  } //firefox
+	
+		if (key==13)
+		 { 
+		 	<!-- document.forms["recherche"].submit();  -->
+			return false;
+	 	 }
+
+		if (timer) {
+			window.clearTimeout(timer);
+		}
+		timer = window.setTimeout( function() {
+			timer = null;
+
+			var cr=$("#cr").val();
+			console.log("save");
+			console.log(cr);
+
+			data = {};
+			data["id"]=$("#form_livret").val();
+			data["cr"]=document.getElementById('cr').value;
+
+			$.ajax({
+				url:'{path_root}/api/v1/aviation/updlivret?fonc=cr',
+				type: 'POST',
+				data: data,
+				dataType: 'JSON',
+				success: function(response)
+				{
+					if (response.status==200)
+					{
+						showToast("","Commentaire sauvegardé","ok");
+					}
+					else
+					{
+						console.log("nok");
+						showToast("","Erreur lors de la sauvegarde ("+response.result+")","error");
+					}
+				},
+				error : function()
+				{
+					console.log("nok");
+						showToast("","Erreur lors de la sauvegarde","error");
+				}
+			});
+		}, 400 );
+	});
 
     function savelivret() {
 		<!-- dialog.dialog("close"); -->
@@ -174,10 +242,11 @@ $( function() {
 		data["dte_fin"]=document.getElementById('dte_fin').value;
 		data["tpsdc"]=document.getElementById('tpsdc').value;
 		data["tpssolo"]=document.getElementById('tpssolo').value;
+		data["cr"]=document.getElementById('cr').value;
 		
 		<!-- console.log(data); -->
 		$.ajax({
-			url:'{path_root}/api/v0/aviation/updlivret?fonc=post',
+			url:'{path_root}/api/v1/aviation/updlivret?fonc=post',
 			type: 'POST',
 			data: data,
 			dataType: 'JSON',
@@ -220,6 +289,7 @@ $( function() {
 				document.getElementById('dte_fin').value=response.dte_fin;
 				document.getElementById('tpsdc').value=response.tpsdc;
 				document.getElementById('tpssolo').value=response.tpssolo;
+				document.getElementById('cr').value=response.cr;
 			},
 			error: function(response) {
 				console.log("error");
@@ -229,14 +299,15 @@ $( function() {
 	}
 
 	function newLivret() {
-		document.getElementById('livretid').value=0;
-		document.getElementById('showform').style.display="none";
-		document.getElementById('editform').style.display="flex";
-		document.getElementById('show_idformation').value=0;
-		document.getElementById('dte_deb').value="";
-		document.getElementById('dte_fin').value="";
-		document.getElementById('tpsdc').value=0;
-		document.getElementById('tpssolo').value=0;
+		$("#livretid").val(0);
+		$("#showform").css("display","none");
+		$("#editform").css("display","flex");
+		$("#show_idformation").val(0);
+		$("#dte_deb").val("");
+		$("#dte_fin").val("");
+		$("#tpsdc").val(0);
+		$("#tpssolo").val(0);
+		$("#cr").val("");
 	}
 });
 </script>

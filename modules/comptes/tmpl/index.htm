@@ -8,25 +8,25 @@
 
 
 <!-- BEGIN: corps -->
-	<input type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="compte">
+<input type="hidden" name="checktime" value="{form_checktime}">
+<input type="hidden" name="mod" value="compte">
 
 <div class="row">
 	<div class="grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
-
 				<div class="form-inline">
-<!-- BEGIN: compte -->
-	<select id="form_id" name="form_id"  class='form-control' OnChange="var id=document.getElementById('form_id').value; document.location='/comptes/index?id='+id;">
-	<!-- BEGIN: lst_compte -->
-	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-	<!-- END: lst_compte -->
-	</select>
-	&nbsp;-&nbsp;
-<!-- END: compte -->
+					<!-- BEGIN: compte -->
+						<select id="form_id" name="form_id"  class='form-control' OnChange="reload('');">
+						<!-- BEGIN: lst_compte -->
+						<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+						<!-- END: lst_compte -->
+						</select>
+						&nbsp;-&nbsp;
+					<!-- END: compte -->
 
-	<div >{lang_total} : {solde_compte}</div>
+					<div >{lang_total} : {solde_compte}</div>
+					&nbsp;<button id="showhash" class="btn-light form-control">Afficher les signatures</button>
 				</div>
 			</div>
 		</div>
@@ -44,5 +44,14 @@
 	</div>
 </div>
 
+<script>
+$("#showhash").click(function(){
+	reload("showhash");
+});
+function reload(fonc)
+{
+	document.location='/comptes/index?id='+$("#form_id").val()+'&fonc='+fonc;
+}
+</script>
 
 <!-- END: corps -->

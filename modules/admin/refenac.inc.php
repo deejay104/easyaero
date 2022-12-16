@@ -106,7 +106,7 @@
 		$tabValeur[$i]["refenac"]["aff"]=$ref->aff("refenac","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='index.php?mod=admin&rub=refenac&fonc=delete&id=".$d["id"]."' class='imgDelete' style='display:none;'><img src='".$MyOpt["host"]."/".$corefolder."/".$module."/".$mod."/img/icn16_supprimer.png'></a>";
+		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='/admin/refenac?fonc=delete&id=".$d["id"]."' style='display:none;'><i class='mdi mdi-close'></i></a>";
 	}
 
 	$ref=new refenac_class(0,$sql);

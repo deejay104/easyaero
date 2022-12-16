@@ -22,14 +22,15 @@ function Recharge()
 	<div class="grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
-				Filtrer la liste des baptèmes : 
-				<select id="form_status" name="form_status" class="form-control" OnChange="Recharge();">
-				<option value="-2" {form_selected_open}>Ouvert</option>		
-				<option value="-1" {form_selected_all}>Tous</option>		
-				<!-- BEGIN: lst_status -->
-					<option value="{form_statusid}" {form_selected}>{form_status}</option>		
-				<!-- END: lst_status -->
-				</select>
+				<div class="form-inline">Filtrer la liste des baptèmes :&nbsp;
+					<select id="form_status" name="form_status" class="form-control" OnChange="Recharge();">
+					<option value="-2" {form_selected_open}>Ouvert</option>		
+					<option value="-1" {form_selected_all}>Tous</option>		
+					<!-- BEGIN: lst_status -->
+						<option value="{form_statusid}" {form_selected}>{form_status}</option>		
+					<!-- END: lst_status -->
+					</select>
+				</div>
 			</div>
 		</div>
 	</div>

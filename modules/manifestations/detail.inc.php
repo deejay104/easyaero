@@ -327,6 +327,10 @@
 	if ($fonc=="supprimer")
 	{
 	  	$affrub="index";
+	}	
+	else if ($fonc=="Annuler")
+	{
+	  	$affrub="index";
 	}
 	else if (($id==0) && (!GetDroit("CreeManifestation")))
 	{

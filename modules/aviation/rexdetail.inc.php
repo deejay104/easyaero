@@ -114,21 +114,21 @@
 		affInformation($msg_confirmation,"ok");
 	}
 
-	addSubMenu("","Liste",geturl("aviation","rex",""),"icn32_retour.png",false,"");
+	addPageMenu("","aviation","Liste",geturl("aviation","rex",""),"mdi-keyboard-backspace",false);
+
 	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat))
 	{
-		addSubMenu("","Modifier",geturl("aviation","rexdetail","fonc=editer&id=".$id),"icn32_modifier.png",false,"");
+		addPageMenu("","aviation","Modifier",geturl("aviation","rexdetail","fonc=editer&id=".$id),"",false);
 	}
 	if (GetDroit("SupprimeRex"))
 	{
-		addSubMenu("","Supprimer",geturl("aviation","rexdetail","fonc=supprimer&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer ce REX ?");
+		addPageMenu("","aviation","Supprimer",geturl("aviation","rexdetail","fonc=supprimer&id=".$id),"",false);
 	}	
-	addSubMenu("","Imprimer",geturl("aviation","rexdetail","fonc=imprimer&id=".$id),"icn32_printer.png",false,"");
+	addPageMenu("","aviation","Imprimer",geturl("aviation","rexdetail","fonc=imprimer&id=".$id),"",false);
 	if ((GetDroit("NotifierRex")) && ($rex->data["status"]=="close"))
 	{
-		addSubMenu("","Notifier",geturl("aviation","rexdetail","fonc=notifier&id=".$id),"icn32_notifier.png",false,"");
+		addPageMenu("","aviation","Notifier",geturl("aviation","rexdetail","fonc=notifier&id=".$id),"",false);
 	}
-	affSubMenu();
 
 // ---- Infos de dernières maj
 	$usrmaj = new user_class($rex->uid_maj,$sql);
