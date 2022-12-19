@@ -70,18 +70,22 @@
 <div class="row">
 	<div class="grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">	
-				<h5>THEMES</h5>
+			<div class="card-body">
+				<div class="">
+					<h5>THEMES</h5>
 
-				{form_themes}
-
+					{form_themes}
+				</div>
 	
-				<h5>APPRECIATION GENERALE DU VOL</h5>
-				{form_bilan_gen}
-
-
-				<h5>METEO DU JOUR</h5>
-				{form_mto}
+				<div class="border-top pt-2">
+					<h5>APPRECIATION GENERALE DU VOL</h5>
+					{form_bilan_gen}
+				</div>
+	
+				<div class="border-top pt-2">
+					<h5>METEO DU JOUR</h5>
+					{form_mto}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -271,7 +275,7 @@
 	<div class="col-lg-6 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">	
-				<div class="form-inline"><label>Instructeur</label>{form_instructeur}</div>
+				<div class="row"><label class="col-lg-2">Instructeur</label><div class="col-lg-5">{form_instructeur}</div></div>
 					<!-- BEGIN: signinst -->
 					<input type="submit" class="btn btn-light"  name="fonc" value="Signature Instructeur">
 					<!-- END: signinst -->
@@ -286,7 +290,7 @@
 	<div class="col-lg-6 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">	
-				<div class="form-inline"><label>Eleve</label>{form_eleve}</div>
+				<div class="row"><label class="col-lg-2">Eleve</label><div class="col-lg-5">{form_eleve}</div></div>
 					<!-- BEGIN: signeleve -->
 					<input type="submit" class="btn btn-light"  name="fonc" value="Signature Elève">
 					<!-- END: signeleve -->
