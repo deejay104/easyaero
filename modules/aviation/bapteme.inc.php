@@ -175,6 +175,7 @@
 	$btm->Render("form",$typeaff);
 
 	$tmpl_x->assign("form_num", $btm->aff("num",$typeaff));
+	$tmpl_x->assign("dte_creat", $btm->aff("dte_creat",$typeaff));
 	$tmpl_x->assign("uid_avion", $btm->data["id_avion"]);
 	$tmpl_x->assign("id_resa", $btm->data["id_resa"]);
 	$tmpl_x->assign("deb", strtotime($btm->data["dte"]));
@@ -183,7 +184,7 @@
 // ---- Menu
 	$ress = new ress_class($btm->data["id_avion"],$sql);
 
-	addPageMenu("",$mod,"Liste",geturl("aviation","baptemes",""),"mdi-backburger",false);
+	addPageMenu("",$mod,"Liste",geturl("aviation","baptemes",""),"mdi-keyboard-backspace",false);
 
 	if (($btm->data["id_pilote"]==0) && ($btm->data["status"]>0))
 	{

@@ -163,31 +163,34 @@
 	{
 		foreach($lstdte as $i=>$d)
 		{
+			$aff_echeance="";
+			$m="";
 			if ($d["dte_echeance"]!="")
 			{
-				$m="L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).").";
-				affInformation($m,"warning");
+				$m="L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).")<br/>";
 			}
 			else
 			{
-				$m="Vous n'avez pas de date d'échéance pour ".$d["description"].".";
-				affInformation($m,"warning");
+				$m="Vous n'avez pas de date d'échéance pour ".$d["description"]."<br/>";
 			}
 			
 			if ($d["resa"]=="instructeur")
 			{
-				$m="La présence d'un instructeur est obligatoire.";
-				affInformation($m,"warning");
-
+				$m.="La présence d'un instructeur est obligatoire";
 				$ok_inst=1;
+				$aff_echeance="info";
 			}
 			else if ($d["resa"]=="obligatoire")
 			{
-				$m="La réservation n'est pas possible.";
-				affInformation($m,"error");
+				$m.="La réservation n'est pas possible";
 				$save=1;
+				$aff_echeance="error";
 			}
 
+			if ($aff_echeance!="")
+			{
+				affInformation($m,$aff_echeance);
+			}
 		}
 	}
 
@@ -535,7 +538,7 @@
 	// Affiche le boutton supprimer
 	if ($resa["resa"]->edite!="non")
 	{
-		addPageMenu("",$mod,"Supprimer",geturl("reservations","reservation_sauve","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?");
+		addPageMenu("",$mod,"Supprimer",geturl("reservations","save","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?");
 	}
 
 	addPageMenu("",$mod,"Devis de masse",geturl("reservations","reservation#",""),"",false,"","goCentrage();");

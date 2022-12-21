@@ -8,9 +8,7 @@
 <!-- BEGIN: corps -->
 
 
-<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
-<input type="hidden" name="mod" value="reservations">
-<input type="hidden" name="rub" value="reservation_sauve">
+<FORM name="reservation" method="post" action="/reservations/save" enctype="multipart/form-data">
 	<INPUT type="hidden" id="id" name="id" value="{id}">
 	<INPUT type="hidden" name="prev" value="{prev}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
@@ -194,19 +192,19 @@
 						</div>
 						<div class="form-group row">
 							<label for="potentiel" class="col-lg-5 col-form-label" title="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant">Potentiel en fin de vol (optionel)</label>
-							<div class="col-lg-5"><INPUT type="number" class="form-control form-input" name="form_potentielh" value="{form_potentielh}" style='width: 60px!important;'> h <INPUT type="number" class="form-control form-input" name="form_potentielm" value="{form_potentielm}" style='width: 60px!important;'></div>
+							<div class="col-lg-5"><INPUT type="number" class="form-control form-input" name="form_potentielh" value="{form_potentielh}" style='width: 80px!important;'> h <INPUT type="number" class="form-control form-input" name="form_potentielm" value="{form_potentielm}" style='width: 80px!important;'></div>
 						</div>
 						<div class="form-group row">
 							<label for="carburant" class="col-lg-5 col-form-label">Carburant ajouté Avant</label>
-							<div class="col-lg-5"><INPUT type="number" class="form-control form-input" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L,</div>
+							<div class="col-lg-5"><INPUT type="number" class="form-control form-input" name="form_carbavant" value="{form_carbavant}" style='width: 80px!important;'> L,</div>
 						</div>
 						<div class="form-group row">
 							<label for="carburant" class="col-lg-5 col-form-label">Carburant ajouté Après</label>
-							<div class="col-lg-5"> <INPUT type="number" class="form-control form-input" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L</div>
+							<div class="col-lg-5"> <INPUT type="number" class="form-control form-input" name="form_carbapres" value="{form_carbapres}" style='width: 80px!important;'> L</div>
 						</div>
 						<div class="form-group row">
 							<label for="carburant" class="col-lg-5 col-form-label">Prix total Carburant</label>
-							<div class="col-lg-5"><INPUT name="form_prixcarbu" class="form-control form-input" value="{form_prixcarbu}" type="number" style='width: 60px!important;'> €</div>
+							<div class="col-lg-5"><INPUT name="form_prixcarbu" class="form-control form-input" value="{form_prixcarbu}" type="number" style='width: 80px!important;'> €</div>
 						</div>
 					</div>
 				</div>

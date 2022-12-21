@@ -94,11 +94,11 @@
 		if ((!$resa["pilote"]->CheckLache($uid_ress)) && ($uid_instructeur==0))
 		{
 			$ret=array();
-		  	$ret["title"]="Réservation impossible";
+		  	$ret["title"]="Attention";
 		  	$msg_err.="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
 		  	$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
 			$ret["message"]=$msg_err;
-			$ret["status"]="error";
+			$ret["status"]="warning";
 			$result["checks"][]=$ret;
 		}
 
@@ -149,7 +149,7 @@
 			if ($resa["resa"]->accept!="oui")
 			{
 				$valid=0;
-				$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"warning");
+				$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"info");
 			}
 		}
 		else

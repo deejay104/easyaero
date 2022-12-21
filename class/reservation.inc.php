@@ -380,7 +380,7 @@ class resa_class extends objet_core
 
 		if ($this->tpsestime==0)
 		{
-			$ret[]=array("txt"=>"Vous devez saisir un temps de vol estimé","status"=>"warning");
+			$ret[]=array("txt"=>"Vous devez saisir un temps de vol estimé","status"=>"info");
 		}
 
 		if (!is_numeric($this->tpsreel))
