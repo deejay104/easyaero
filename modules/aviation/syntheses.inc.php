@@ -51,18 +51,19 @@
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))
 	{
-			$lst=ListActiveUsers($sql,"std");
+			// $lst=ListActiveUsers($sql,"std");
 		
-			foreach($lst as $i=>$tmpuid)
-			{
-			  	$resusr=new user_class($tmpuid,$sql);
+			// foreach($lst as $i=>$tmpuid)
+			// {
+			  	// $resusr=new user_class($tmpuid,$sql);
 	
-				$tmpl_x->assign("id_compte", $resusr->id);
-				$tmpl_x->assign("chk_compte", ($resusr->id==$uid) ? "selected" : "") ;
-				$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
-				$tmpl_x->parse("corps.users.lst_users");
-			}
-			$tmpl_x->parse("corps.users");
+				// $tmpl_x->assign("id_compte", $resusr->id);
+				// $tmpl_x->assign("chk_compte", ($resusr->id==$uid) ? "selected" : "") ;
+				// $tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
+				// $tmpl_x->parse("corps.users.lst_users");
+			// }
+		$tmpl_x->assign("form_lstuser", AffListeMembres($sql,$uid,"form_id","","","std","non",array()));
+		$tmpl_x->parse("corps.users");
 	}
 
 // ---- Liste des formations

@@ -48,16 +48,12 @@
 			<div class="card-body row">	
 				<div class="col-lg-3">
 					<!-- BEGIN: users -->
-					<select id="form_id" class="form-control" name="form_id" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
-						<!-- BEGIN: lst_users -->
-						<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-						<!-- END: lst_users -->
-					</select>
+					{form_lstuser}
 					<!-- END: users -->
 				</div>
 
 				<div class="col-lg-3">
-					<select id="form_livret" class="form-control" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
+					<select id="form_livret" class="form-control form-control-lg" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
 					<!-- BEGIN: lst_livret -->
 					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
 					<!-- END: lst_livret -->
@@ -171,6 +167,10 @@ $( function() {
 		$("#page-content").css("opacity",1);
 		$("#page-lst").css("opacity",1);
     });
+
+	$("#form_id").change(function(){
+		document.location='{path_root}/aviation/syntheses?uid='+$("#form_id").val();
+	});
 
 	var timer=null;
 	$("#cr").keyup(function(e) {

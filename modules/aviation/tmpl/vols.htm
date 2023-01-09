@@ -13,12 +13,7 @@
 	<div class="grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">	
-			
-				<select id="form_id" class="form-control" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='{path_root}/aviation/vols?id='+id;">
-				<!-- BEGIN: lst_user -->
-				<option value="{id_user}" {chk_user}>{nom_user}</OPTION>
-				<!-- END: lst_user -->
-				</select>
+				{form_lstuser}
 			</div>
 		</div>
 	</div>
@@ -36,4 +31,10 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$("#form_uid_user").change(function(){
+	document.location='{path_root}/aviation/vols?id='+$("#form_uid_user").val();
+});
+</script>
 <!-- END: corps -->

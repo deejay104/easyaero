@@ -182,7 +182,7 @@
 			}
 			else if ($d["resa"]=="obligatoire")
 			{
-				$m.="La réservation n'est pas possible";
+				$m.="La réservation n'est pas possible car cette échéance est obligatoire";
 				$save=1;
 				$aff_echeance="error";
 			}
@@ -293,112 +293,18 @@
 	}
 	
 
-	// Liste des pilotes	
-	$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"));
-	
-	$txt="-";
-	foreach($lst as $i=>$tmpuid)
-	{
-		$resusr=new user_class($tmpuid,$sql);
-		$tmpl_x->assign("uid_pilote", $resusr->id);
-		$tmpl_x->assign("nom_pilote", $resusr->val("fullname"));
-		if ($resa["resa"]->uid_pilote==$resusr->id)
-		{
-			$tmpl_x->assign("chk_pilote", "selected");
-		}
-		else
-		{
-			$tmpl_x->assign("chk_pilote", "");
-		}
-		$tmpl_x->parse("corps.aff_reservation.lst_pilote");
-	}
-	
-	$resusr=new user_class($resa["resa"]->uid_pilote,$sql);
-	$tmpl_x->assign("aff_nom_pilote", $resusr->aff("fullname"));
+	// Liste des pilotes
+	$tmpl_x->assign("form_lstpilote", AffListeMembres($sql,$resa["resa"]->uid_pilote,"form_uid_pilote","","","std","non",array("TypePilote")));
 
-	
 	// Liste des pilotes débité	
-	$lst=ListActiveUsers($sql,"prenom,nom","","");
-
-	$txt="-";
-	foreach($lst as $i=>$tmpuid)
-	  {
-	  	$resusr=new user_class($tmpuid,$sql);
-			$tmpl_x->assign("uid_debite", $resusr->id);
-			$tmpl_x->assign("nom_debite", $resusr->val("fullname"));
-			if ($resa["resa"]->uid_debite==$resusr->id)
-			{
-			  	$tmpl_x->assign("chk_debite", "selected");
-			}
-			else
-			{
-				$tmpl_x->assign("chk_debite", "");
-			}
-			$tmpl_x->parse("corps.aff_reservation.lst_debite");
-	}
-
-	$resusr=new user_class($resa["resa"]->uid_debite,$sql);
-	$tmpl_x->assign("aff_nom_debite", $resusr->aff("fullname"));
-
+	$tmpl_x->assign("form_lstdebite", AffListeMembres($sql,$resa["resa"]->uid_debite,"form_uid_debite","","","std","non",array(),"Pilote"));
 	
-	if ($ok_inst==0)
-	{
-		$tmpl_x->assign("uid_instructeur", "0");
-		$tmpl_x->assign("nom_instructeur", "Aucun");
-		$tmpl_x->assign("chk_instructeur", "");
-		$tmpl_x->parse("corps.aff_reservation.aff_instructeur.lst_instructeur");
-	}
-
-
 	// Liste des instructeurs
-	$lst=ListActiveUsers($sql,"prenom,nom",array("TypeInstructeur"));
-	$tmpl_x->assign("aff_nom_instructeur", "-");
-
-	$txt="-";
-	foreach($lst as $i=>$tmpuid)
-	{ 
-		$resusr=new user_class($tmpuid,$sql);
-		$tmpl_x->assign("uid_instructeur", $resusr->id);
-		$tmpl_x->assign("nom_instructeur", $resusr->Aff("fullname","val"));
-		if ($resa["resa"]->uid_instructeur==$resusr->id)
-		{
-			$tmpl_x->assign("chk_instructeur", "selected");
-			$txt=$resusr->Aff("fullname");
-		}
-		else
-		{
-			$tmpl_x->assign("chk_instructeur", "");
-		}
-		
-		if (($ok_inst==1) && ($resa["resa"]->uid_instructeur==0))
-		{
-			$resa["resa"]->uid_instructeur=$tmpuid;
-		}
-
-		$tmpl_x->parse("corps.aff_reservation.aff_instructeur.lst_instructeur");
-	}
-
-	$resusr=new user_class($resa["resa"]->uid_instructeur,$sql);
-	$tmpl_x->assign("aff_nom_instructeur", $resusr->aff("fullname"));
-
-	$tmpl_x->assign("form_uid_instructeur", $resa["resa"]->uid_instructeur);
-
-	if ($ok==2)
-	{
-		$tmpl_x->assign("deb", strtotime(date2sql($form_dte_deb)));
-		$tmpl_x->assign("fin", strtotime(date2sql($form_dte_fin)));
-	}
-	else
-	{
-		$tmpl_x->assign("deb", strtotime($resa["resa"]->dte_deb));
-		$tmpl_x->assign("fin", strtotime($resa["resa"]->dte_fin));
-	}
-
+	$tmpl_x->assign("form_lstinstructeur", AffListeMembres($sql,$resa["resa"]->uid_instructeur,"form_uid_instructeur","","","std","non",array("TypeInstructeur"),($ok_inst==0) ? "Aucun" : ""));
 	$tmpl_x->parse("corps.aff_reservation.aff_instructeur");
 
 
 	// Tarif
-
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_tarifs WHERE reservation<>'' AND ress_id='".$resa["resa"]->uid_ressource."'";		
 	$sql->Query($query);		
 	for($i=0; $i<$sql->rows; $i++)

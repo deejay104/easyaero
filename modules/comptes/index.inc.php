@@ -46,54 +46,12 @@
 	// if ((GetDroit("ListeComptes")) && ($liste==""))
 	if (GetDroit("AccesSuiviListeComptes"))
 	{
-			$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
-		
-			foreach($lst as $i=>$tmpuid)
-			{
-			  	$resusr=new user_class($tmpuid,$sql);
-	
-				$tmpl_x->assign("id_compte", $resusr->id);
-				$tmpl_x->assign("chk_compte", ($resusr->id==$id) ? "selected" : "") ;
-				$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
-				$tmpl_x->parse("corps.compte.lst_compte");
-			}
-			$tmpl_x->parse("corps.compte");
-
+		$tmpl_x->assign("form_lstusers", AffListeMembres($sql,$id,"form_id","","","std","non",array()));
+		$tmpl_x->parse("corps.compte");
 	}
 	else
 	{
-		if (GetModule("creche"))
-		{
-		  	$ok=0;
-		  	$myuser->LoadEnfants();
-			$tmpl_x->assign("id_compte", $myuser->uid);
-			$tmpl_x->assign("chk_compte", ($myuser->uid==$id) ? "selected" : "") ;
-			$tmpl_x->assign("nom_compte", $myuser->fullname);
-			$tmpl_x->parse("corps.compte.lst_compte");
-			if ($myuser->id==$id)
-			  { $ok=1; }
-
-	  	  	foreach($myuser->data["enfant"] as $enfant)
-	  	  	  {
-	  	  		if ($enfant["id"]>0)
-	  	  		{
-					if ($enfant["id"]==$id)
-					  { $ok=1; }
-					$tmpl_x->assign("id_compte", $enfant["id"]);
-					$tmpl_x->assign("chk_compte", ($enfant["id"]==$id) ? "selected" : "") ;
-					$tmpl_x->assign("nom_compte", $enfant["usr"]->fullname);
-					$tmpl_x->parse("corps.compte.lst_compte");
-				}
-			}
-			$tmpl_x->parse("corps.compte");
-			
-			if ($ok==0)
-			  { $id=$gl_uid; }
-		}
-		else
-		{
-	  		$id=$gl_uid;
-	  	}
+		$id=$gl_uid;
 	}
 	$cptusr=new user_class($id,$sql);
 

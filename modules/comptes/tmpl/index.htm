@@ -17,15 +17,10 @@
 			<div class="card-body">
 				<div class="form-inline">
 					<!-- BEGIN: compte -->
-						<select id="form_id" name="form_id"  class='form-control' OnChange="reload('');">
-						<!-- BEGIN: lst_compte -->
-						<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-						<!-- END: lst_compte -->
-						</select>
-						&nbsp;-&nbsp;
+						{form_lstusers}
 					<!-- END: compte -->
 
-					<div class="form-control align-middle" style="line-height:24px; color: #000000; height:40px;">{lang_total} : {solde_compte}</div>
+					<div class="form-control align-middle" style="margin-left:15px; line-height:24px; color: #000000; height:40px;">{lang_total} : {solde_compte}</div>
 					&nbsp;<button id="showhash" class="btn-light form-control">Afficher les signatures</button>
 				</div>
 			</div>
@@ -47,6 +42,9 @@
 <script>
 $("#showhash").click(function(){
 	reload("showhash");
+});
+$("#form_id").change(function(){
+	reload("");
 });
 function reload(fonc)
 {

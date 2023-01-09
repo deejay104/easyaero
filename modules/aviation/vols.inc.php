@@ -43,16 +43,7 @@
 		if ($id==0)
 		  { $id=$gl_uid; }
 
-		$lstusr=ListActiveUsers($sql,"prenom","");
-
-		foreach($lstusr as $i=>$tid)
-		{ 
-			$tmpusr=new user_class($tid,$sql);
-			$tmpl_x->assign("id_user", $tid);
-			$tmpl_x->assign("chk_user", ($tid==$id) ? "selected" : "") ;
-			$tmpl_x->assign("nom_user", $tmpusr->fullname);
-			$tmpl_x->parse("corps.listeVols.lst_user");
-		}
+		$tmpl_x->assign("form_lstuser", AffListeMembres($sql,$id,"form_uid_user","","","std","non",array()));
 		$tmpl_x->parse("corps.listeVols");
 	}
 	else

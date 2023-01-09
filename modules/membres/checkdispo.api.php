@@ -50,7 +50,7 @@
 		{
 			$result["dispo"]="";
 			$result["text"]="no id";
-			$result["icon"]="mdi-alert";
+			$result["icon"]="";
 		}
 		else
 		{

@@ -101,19 +101,9 @@
 		affInformation("L'id du poste pour le transfère n'est pas renseigné. Contactez votre administrateur.","error");
 	}
 
-	
+
 // ---- Affiche la liste des membres
-	$lst=ListActiveUsers($sql,"std","","");
-
-	foreach($lst as $i=>$tmpuid)
-	{
-		$resusr=new user_class($tmpuid,$sql);
-
-		$tmpl_x->assign("id_compte", $resusr->id);
-		$tmpl_x->assign("chk_compte", ($resusr->id==$gl_uid) ? "selected" : "") ;
-		$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
-		$tmpl_x->parse("corps.lst_compte");
-	}
+	$tmpl_x->assign("form_lsttiers", AffListeMembres($sql,$gl_uid,"form_tiers","","","std","non",array()));
 
 	$tmpl_x->assign("form_montant", "0.00");
 	$tmpl_x->assign("form_commentaire", $tabLang["lang_postcomment"]." ".$myuser->val("fullname"));
@@ -121,6 +111,7 @@
 	
 	
 // ---- Affecte les variables d'affichage
+
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");
 	$tmpl_x->parse("infos");
