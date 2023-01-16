@@ -45,7 +45,6 @@ class bapteme_class extends objet_core
 		"id_avion" => Array("type" => "number", "index" => "1", ),
 		"id_resa" => Array("type" => "number", "index"=>1),
 		"description" => Array("type" => "text" ),
-		"dte_creat" => Array("type" => "datetime","readonly"=>1 ),
 	);
 
 	
