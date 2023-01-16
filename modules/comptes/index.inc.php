@@ -46,7 +46,7 @@
 	// if ((GetDroit("ListeComptes")) && ($liste==""))
 	if (GetDroit("AccesSuiviListeComptes"))
 	{
-		$tmpl_x->assign("form_lstusers", AffListeMembres($sql,$id,"form_id","","","std","non",array()));
+		$tmpl_x->assign("form_lstusers", AffListeMembres($sql,$id,"form_id","","","std","oui",array()));
 		$tmpl_x->parse("corps.compte");
 	}
 	else

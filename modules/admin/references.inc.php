@@ -28,7 +28,7 @@
 	$form_data=checkVar("form_data","array");
 	$fid=checkVar("fid","numeric");
 
-	$tmpl_x->assign("url",geturl("admin","references",""));
+	$tmpl_x->assign("url",geturl("admin","formations","page=references"));
 
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))

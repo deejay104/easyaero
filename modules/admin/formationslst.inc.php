@@ -20,6 +20,7 @@
 ?>
 
 <?php
+print_r($myuser->role);
 	if (!GetDroit("AccesConfigFormations")) { FatalError("Accès non autorisé (AccesConfigFormations)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
@@ -27,7 +28,7 @@
 // ---- Vérifie les variables
 	$form_data=checkVar("form_data","array");
 
-	$tmpl_x->assign("url",geturl("admin","references",""));
+	$tmpl_x->assign("url",geturl("admin","formations",""));
 
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (GetDroit("ModifFormation")) && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))

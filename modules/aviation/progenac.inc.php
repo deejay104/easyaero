@@ -103,6 +103,7 @@
 			$tabValeur[$fid]["prog"]["val"]="A";
 			$tabValeur[$fid]["prog"]["align"]="center";
 			$tabValeur[$fid]["prog"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/icn16_ok.png' style='background-color:#".$MyOpt["styleColor"]["msgboxBackgroundOk"]."'>";
+			$tabValeur[$fid]["prog"]["aff"]="<i style='font-size:18px; color:green;' class='mdi mdi-checkbox-marked-outline'></i>";
 
 			$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dteprog"])>0) ? strtotime($d["dteprog"]) : 99999999999 ;
 			$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dteprog"])>0) ? sql2date($d["dteprog"],"jour") : " ";
@@ -117,6 +118,7 @@
 			$tabValeur[$fid]["prog"]["val"]="E";
 			$tabValeur[$fid]["prog"]["align"]="center";
 			$tabValeur[$fid]["prog"]["aff"]="<img src='".$MyOpt["host"]."/".$module."/".$mod."/img/icn16_nc.png'>";
+			$tabValeur[$fid]["prog"]["aff"]="<i style='font-size:18px;color:#888888;' class='mdi mdi-checkbox-blank-outline'></i>";
 		}
 		
 		
