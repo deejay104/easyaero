@@ -20,7 +20,7 @@
 ?>
 
 <?php
-print_r($myuser->role);
+
 	if (!GetDroit("AccesConfigFormations")) { FatalError("Accès non autorisé (AccesConfigFormations)"); }
 
 	require_once ($appfolder."/class/synthese.inc.php");
