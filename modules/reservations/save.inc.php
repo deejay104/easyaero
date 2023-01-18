@@ -86,14 +86,14 @@
 		}
 
 		
-		if ($resa["pilote"]->isSoldeNegatif())
-		{
-			$s=$resa["pilote"]->CalcSolde();
-		  	$msg_err="<u>Le compte du pilote est NEGATIF ($s €)</u>.<br />";
-		  	$msg_err.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
-			affInformation($msg_err,"error");
-			$ok=4;
-		}
+		// if ($resa["pilote"]->isSoldeNegatif())
+		// {
+			// $s=$resa["pilote"]->CalcSolde();
+		  	// $msg_err="<u>Le compte du pilote est NEGATIF ($s €)</u>.<br />";
+		  	// $msg_err.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+			// affInformation($msg_err,"error");
+			// $ok=4;
+		// }
 
 		if ($resa["resa"]->edite=='non')
 		{

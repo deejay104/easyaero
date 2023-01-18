@@ -194,23 +194,6 @@
 		}
 	}
 
-// ---- Vérifie si le compte est provisionné
-
-	// $s=$resa["pilote"]->CalcSolde();
-	// if ($s<-$resa["pilote"]->data["decouvert"])
-	if ($resa["pilote"]->isSoldeNegatif())
-	{
-		$s=$resa["pilote"]->CalcSolde();
-		$m ="Le compte du pilote est NEGATIF ($s €).<br />";
-		$m.="Appeller le trésorier pour l'autorisation d'un découvert.";
-		affInformation($m,"error");
-
-		if ($id==0)
-		{
-			$ok_save=1;
-		}
-	}
-
 
 // ---- Vérifie si l'utilisateur est laché sur l'avion
 	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))

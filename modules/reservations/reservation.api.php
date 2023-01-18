@@ -48,130 +48,132 @@
 	$resa["resa"]=new resa_class($id,$sql);
 
 // --- Check availaibility
-	if ($fonc=="check")
+	$valid=1;
+
+	if ($uid_pilote>0)
 	{
-		$valid=1;
-
-		if ($uid_pilote>0)
-		{
-			$resa["pilote"]=new user_class($uid_pilote,$sql,false,true);
-		}
-		else
-		{
-			$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql,false,true);
-		}
-
-		if ($uid_instructeur>0)
-		{
-			$resa["instructeur"]=new user_class($uid_instructeur,$sql,false,true);
-		}
-		else
-		{
-			$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
-		}
-
-
-		if ($resa["pilote"]->isSoldeNegatif())
-		{
-			$s=$resa["pilote"]->CalcSolde();
-			$ret=array();
-		  	$ret["title"]="Le compte du pilote est NEGATIF";
-		  	$ret["message"]="Solde du compte $s €.<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
-			$ret["status"]="error";
-			$result["checks"][]=$ret;
-		}
-
-		if ($resa["resa"]->edite=='non')
-		{
-			$ret=array();
-		  	$ret["title"]="Réservation déjà saisie en compta";
-			$ret["message"]="Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta";
-			$ret["status"]="information";
-			$result["checks"][]=$ret;
-		}
-
-		// Vérifie si le pilote est laché sur l'avion
-		if ((!$resa["pilote"]->CheckLache($uid_ress)) && ($uid_instructeur==0))
-		{
-			$ret=array();
-		  	$ret["title"]="Attention";
-		  	$msg_err.="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
-		  	$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
-			$ret["message"]=$msg_err;
-			$ret["status"]="warning";
-			$result["checks"][]=$ret;
-		}
-
-		// Vérifie si le pilote est autorisé
-		if (!$resa["pilote"]->CheckDroit("TypePilote"))
-		{ 
-			$ret=array();
-			$ret["title"]="Réservation impossible";
-			$ret["message"]="Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion";
-			$ret["status"]="error";
-			$result["checks"][]=$ret;
-		}
-
-
-		// Mise à jour de la réservation
-		$resa["resa"]->description=$description;
-		$resa["resa"]->uid_pilote=$uid_pilote;
-		$resa["resa"]->uid_debite=$uid_debite;
-		$resa["resa"]->uid_instructeur=$uid_instructeur;
-		$resa["resa"]->uid_ressource=$uid_ress;
-		$resa["resa"]->tarif=$tarif;
-		$resa["resa"]->destination=$destination;
-		$resa["resa"]->nbpersonne=$nbpersonne;
-		$resa["resa"]->invite=$invite;
-		$resa["resa"]->accept=$accept;
-		$resa["resa"]->tpsestime=$tpsestime;
-		$resa["resa"]->dte_deb="$dte_deb $hor_deb";
-		$resa["resa"]->dte_fin="$dte_fin $hor_fin";
-		$resa["resa"]->tpsreel=$tpsreel;
-		$resa["resa"]->horadeb=$horadeb;
-		$resa["resa"]->horafin=$horafin;
-		$resa["resa"]->potentielh=$potentielh;
-		$resa["resa"]->potentielm=$potentielm;
-
-		$resa["resa"]->carbavant=$carbavant;
-		$resa["resa"]->carbapres=$carbapres;
-		$resa["resa"]->prixcarbu=$prixcarbu;
-
-		// Vérifie si on doit cocher la case d'acception des conditions
-		if ($resa["resa"]->edite=='non')
-		{
-			$result["chkreservation"]=0;
-		}
-		else if (($MyOpt["ChkValidResa"]=="on") && ($resa["resa"]->uid_instructeur==0) && ($resa["pilote"]->NombreVols(floor($MyOpt["maxDernierVol"]/30),"val",$resa["resa"]->uid_ressource)>0))
-		{
-			$result["chkreservation"]=1;
-
-			if ($resa["resa"]->accept!="oui")
-			{
-				$valid=0;
-				$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"info");
-			}
-		}
-		else
-		{
-			$result["chkreservation"]=0;
-		}
-
-
-		$r=$resa["resa"]->CheckResa();
-		
-		if (count($r)>0)
-		{
-			foreach($r as $m)
-			{
-				$valid=0;
-				$result["checks"][]=array("title"=>$m["title"],"message"=>$m["txt"],"status"=>$m["status"]);
-			}
-		}
-
-		$result["valid"]=$valid;
-		$result["edite"]=$resa["resa"]->edite;
+		$resa["pilote"]=new user_class($uid_pilote,$sql,false,true);
 	}
+	else
+	{
+		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql,false,true);
+	}
+
+	$debite="pilote";
+	if ($uid_debite>0)
+	{
+		$resa["debite"]=new user_class($uid_debite,$sql,false,true);
+		$debite="debite";
+	}
+
+	if ($uid_instructeur>0)
+	{
+		$resa["instructeur"]=new user_class($uid_instructeur,$sql,false,true);
+	}
+	else
+	{
+		$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
+	}
+
+
+	if ($resa[$debite]->isSoldeNegatif())
+	{
+		$s=$resa[$debite]->CalcSolde();
+		$ret=array();
+		$ret["title"]="Le compte du pilote est NEGATIF";
+		$ret["message"]="Solde du compte $s €.<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+		$ret["status"]="error";
+		$result["checks"][]=$ret;
+		$valid=0;
+	}
+
+	if ($resa["resa"]->edite=='non')
+	{
+		$ret=array();
+		$ret["title"]="Réservation déjà saisie en compta";
+		$ret["message"]="Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta";
+		$ret["status"]="information";
+		$result["checks"][]=$ret;
+		$valid=0;
+	}
+
+	// Vérifie si le pilote est laché sur l'avion
+	if ((!$resa["pilote"]->CheckLache($uid_ress)) && ($uid_instructeur==0))
+	{
+		$ret=array();
+		$ret["title"]="Attention";
+		$msg_err.="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
+		$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
+		$ret["message"]=$msg_err;
+		$ret["status"]="warning";
+		$result["checks"][]=$ret;
+		$valid=0;
+	}
+
+	// Vérifie si le pilote est autorisé
+	if (!$resa["pilote"]->CheckDroit("TypePilote"))
+	{ 
+		$ret=array();
+		$ret["title"]="Réservation impossible";
+		$ret["message"]="Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion";
+		$ret["status"]="error";
+		$result["checks"][]=$ret;
+		$valid=0;
+	}
+
+	// Vérifie si on doit cocher la case d'acception des conditions
+	if ($resa["resa"]->edite=='non')
+	{
+		$result["chkreservation"]=0;
+	}
+	else if (($MyOpt["ChkValidResa"]=="on") && ($resa["resa"]->uid_instructeur==0) && ($resa["pilote"]->NombreVols(floor($MyOpt["maxDernierVol"]/30),"val",$resa["resa"]->uid_ressource)>0))
+	{
+		$result["chkreservation"]=1;
+
+		if ($resa["resa"]->accept!="oui")
+		{
+			$valid=0;
+			$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"info");
+		}
+	}
+	else
+	{
+		$result["chkreservation"]=0;
+	}
+
+
+	$r=$resa["resa"]->CheckResa();
+	
+	if (count($r)>0)
+	{
+		foreach($r as $m)
+		{
+			$valid=0;
+			$result["checks"][]=array("title"=>$m["title"],"message"=>$m["txt"],"status"=>$m["status"]);
+		}
+	}
+
+	$result["valid"]=$valid;
+	$result["edite"]=$resa["resa"]->edite;
+
+	if ($fonc=="submit")
+	{
+		// Mise à jour de la réservation
+		if (($id>0) && (($tpsreel!="") || ($horadeb!="") || ($horafin!="")))
+		{
+			$resa["resa"]->tpsreel=$tpsreel;
+			$resa["resa"]->horadeb=$horadeb;
+			$resa["resa"]->horafin=$horafin;
+			$resa["resa"]->potentielh=$potentielh;
+			$resa["resa"]->potentielm=$potentielm;
+			$resa["resa"]->carbavant=$carbavant;
+			$resa["resa"]->carbapres=$carbapres;
+			$resa["resa"]->prixcarbu=$prixcarbu;
+			$resa["resa"]->Save();
+			$result["checks"][]=array("title"=>"","message"=>"Les informations d'horamete ont été sauvegardées","status"=>"ok");
+		}
+	}
+
 
 	echo json_encode($result);
 ?>

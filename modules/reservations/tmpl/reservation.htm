@@ -405,7 +405,11 @@ function checkData(submit=false)
 	}
 
 	var ret=true;
-	$.post( "/api/v1/reservations/reservation?fonc=check", data )
+	if (submit)
+	{
+		var type="submit";
+	}
+	$.post( "/api/v1/reservations/reservation?fonc="+type, data )
 	.done(function(result) {
 		if (result.chkreservation==1)
 		{
