@@ -248,6 +248,7 @@
 <script>
 
 $(document).ready(function() {
+	showNone=false;
 	checkData();
 	checkDispo()
 	console.log($("#id").val());
@@ -433,6 +434,26 @@ function checkData(submit=false)
 		{
 			showToast(result.checks[key].title,result.checks[key].message,result.checks[key].status);
 		}
+console.log(showNone);
+console.log(result.instructeur);
+		if (result.instructeur==1)
+		{
+			if (!showNone)
+			{
+				$("#form_uid_instructeur").find('option').get(0).remove();
+				showNone=true;
+			}
+		}
+		else
+		{
+			if (showNone)
+			{
+				$("#form_uid_instructeur").prepend('<option value="0">Aucun</option>');
+				showNone=false;
+			}
+		}
+		//$("#form_uid_instructeur").prepend('<option value="0">Aucun</option>');
+		//$("#form_uid_instructeur").find('option').get(0).remove();
 		
 		if ((result.valid==1) && (submit))
 		{

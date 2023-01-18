@@ -196,13 +196,13 @@
 
 
 // ---- Vérifie si l'utilisateur est laché sur l'avion
-	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
-	{
-		$m="Vous n'êtes pas laché sur cet avion.<br />La présence d'un instructeur est obligatoire.";
-		affInformation($m,"warning");
+	// if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
+	// {
+		// $m="Vous n'êtes pas laché sur cet avion.<br />La présence d'un instructeur est obligatoire.";
+		// affInformation($m,"warning");
 
-		$ok_inst=1;
-	}
+		// $ok_inst=1;
+	// }
 	
 // ---- Initialisation des variables
 	$tmpl_x->assign("id", $id);
@@ -283,6 +283,7 @@
 	$tmpl_x->assign("form_lstdebite", AffListeMembres($sql,$resa["resa"]->uid_debite,"form_uid_debite","","","std","",array(),"Pilote"));
 	
 	// Liste des instructeurs
+	$ok_inst=0;
 	$tmpl_x->assign("form_lstinstructeur", AffListeMembres($sql,$resa["resa"]->uid_instructeur,"form_uid_instructeur","","","std","non",array("TypeInstructeur"),($ok_inst==0) ? "Aucun" : ""));
 	$tmpl_x->parse("corps.aff_reservation.aff_instructeur");
 

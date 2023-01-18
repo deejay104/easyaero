@@ -359,16 +359,16 @@ class resa_class extends objet_core
 		  }
 
 		if (!is_numeric($this->uid_pilote))
-		  { return array("txt"=>"Erreur avec l'id pilote","status"=>"error"); }
+		  { return array(array("txt"=>"Erreur avec l'id pilote","status"=>"error")); }
 
 		if (!is_numeric($this->uid_debite))
-		  { return array("txt"=>"Erreur avec l'id du debite","status"=>"error"); }
+		  { return array(array("txt"=>"Erreur avec l'id du debite","status"=>"error")); }
 
 		if (!is_numeric($this->uid_instructeur))
-		  { return array("txt"=>"Erreur avec l'id instructeur","status"=>"error"); }
+		  { return array(array("txt"=>"Erreur avec l'id instructeur","status"=>"error")); }
 
 		if (!is_numeric($this->uid_ressource))
-		  { return array("txt"=>"Il faut sélectionner un avion","status"=>"error"); }
+		  { return array(array("txt"=>"Il faut sélectionner un avion","status"=>"error")); }
 
 		if ($this->destination=="")
 		{
