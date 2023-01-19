@@ -145,7 +145,7 @@
 		$result["chkreservation"]=1;
 
 
-		if ($resa["resa"]->accept!="oui")
+		if ($accept!="oui")
 		{
 			$valid=0;
 			$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"info");

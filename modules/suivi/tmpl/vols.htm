@@ -94,15 +94,15 @@ function calcHorametre(id)
 				<div class="table-responsive">
 					<TABLE  class='table table-hover dataTable no-footer'>
 						<tr>
-							<th width=165><B>Date</B></TD>
-							<th width=240><B>Pilote</B></TD>
-							<th width=170><B>Instructeur</B></TD>
-							<th width=170><B>Tarif</B></TD>
-							<th style="min-width:180px" colspan=2><B>Horamètre</B></TD>
-							<th width=70><B>Temps (min)</B></TD>
-							<th width=70><B>Bloc (min.)</B></TD>
-							<th width=100><B>Destination</B></TD>
-							<th width=100><B>Distance</B></TD>
+							<th>Date</TD>
+							<th>Pilote</TD>
+							<th>Instructeur</TD>
+							<th>Tarif</TD>
+							<th colspan=2>Horamètre</TD>
+							<th>Temps<br />(min)</TD>
+							<th>Bloc<br />(min.)</TD>
+							<th>Destination</TD>
+							<th>Distance</TD>
 						</tr>
 						<!-- BEGIN: lst_vols -->
 						<TR>
@@ -111,7 +111,7 @@ function calcHorametre(id)
 							<TD>{instructeur_vols}</TD>
 							<TD>
 								{tarif_vols}
-								<SELECT name="form_tarif[{id_ligne}]" class='form-control'>
+								<SELECT name="form_tarif[{id_ligne}]" class='form-control' style='min-width:100px;'>
 								<!-- BEGIN: lst_tarifs -->
 								<OPTION value="{tarif_code}" {tarif_selected}>{tarif_nom}</OPTION>
 								<!-- END: lst_tarifs -->
@@ -128,9 +128,9 @@ function calcHorametre(id)
 
 						<!-- BEGIN: lst2_vols -->
 						<TR>
-							<TD><INPUT type="date" class='form-control' name="form_date[{id_new}]" style='width: 160px!important;'></TD>
+							<TD><INPUT type="date" class='form-control' name="form_date[{id_new}]" style='width: 140px!important;'></TD>
 							<TD>
-								<SELECT name="form_pilote[{id_new}]" class='form-control'>
+								<SELECT name="form_pilote[{id_new}]" class='form-control' style='min-width:140px;'>
 								<OPTION value="">...</OPTION>
 								<!-- BEGIN: lst_pilote -->
 								<OPTION value="{id_pilote}">{nom_pilote}</OPTION>
@@ -138,7 +138,7 @@ function calcHorametre(id)
 									</SELECT>
 							</TD>
 							<TD>
-								<SELECT name="form_instructeur[{id_new}]" class='form-control'>
+								<SELECT name="form_instructeur[{id_new}]" class='form-control' style='min-width:140px;'>
 								<OPTION value="0">Aucun</OPTION>
 								<!-- BEGIN: lst_instructeur -->
 								<OPTION value="{id_instructeur}">{nom_instructeur}</OPTION>
@@ -152,10 +152,10 @@ function calcHorametre(id)
 								<!-- END: lst_tarifs -->
 								  </SELECT>
 							</TD>
-							<TD><INPUT type="text" name="form_horadeb[{id_new}]" class='form-control'></TD>
-							<TD><INPUT type="text" name="form_horafin[{id_new}]" class='form-control'></TD>
-							<TD><INPUT type="text" name="form_temps[{id_new}]" class='form-control'></TD>
-							<TD><INPUT type="text" name="form_bloc[{id_new}]" class='form-control'></TD>
+							<TD><INPUT type="text" name="form_horadeb[{id_new}]" class='form-control' style='width:80px;'></TD>
+							<TD><INPUT type="text" name="form_horafin[{id_new}]" class='form-control' style='width:80px;'></TD>
+							<TD><INPUT type="text" name="form_temps[{id_new}]" class='form-control' style='width:50px;'></TD>
+							<TD><INPUT type="text" name="form_bloc[{id_new}]" class='form-control' style='width:50px;'></TD>
 							<TD>&nbsp;</TD>
 							<TD>&nbsp;</TD>
 						</TR>
