@@ -277,14 +277,14 @@
 	
 
 	// Liste des pilotes
-	$tmpl_x->assign("form_lstpilote", AffListeMembres($sql,$resa["resa"]->uid_pilote,"form_uid_pilote","","","std","non",array("TypePilote")));
+	$tmpl_x->assign("form_lstpilote", AffListeMembres($sql,$resa["resa"]->uid_pilote,"form_uid_pilote","","","std","non",array("TypePilote"),""));
 
 	// Liste des pilotes débité	
 	$tmpl_x->assign("form_lstdebite", AffListeMembres($sql,$resa["resa"]->uid_debite,"form_uid_debite","","","std","",array(),"Pilote"));
 	
 	// Liste des instructeurs
 	$ok_inst=0;
-	$tmpl_x->assign("form_lstinstructeur", AffListeMembres($sql,$resa["resa"]->uid_instructeur,"form_uid_instructeur","","","std","non",array("TypeInstructeur"),($ok_inst==0) ? "Aucun" : ""));
+	$tmpl_x->assign("form_lstinstructeur", AffListeMembres($sql,$resa["resa"]->uid_instructeur,"form_uid_instructeur","","","std","non",array("TypeInstructeur"),(($ok_inst==0) ? "Aucun" : "")));
 	$tmpl_x->parse("corps.aff_reservation.aff_instructeur");
 
 
@@ -456,7 +456,10 @@
 		// Ajoute une synthèse de vol
 		if ((GetDroit("CreeSynthese")) && (count($t)==0))
 		{
-			addPageMenu("",$mod,"Ajouter Synthèse",geturl("aviation","synthese",""),"",false,"","goSynthese();");
+			if ($id>0)
+			{
+				addPageMenu("",$mod,"Ajouter Synthèse",geturl("aviation","synthese","id=0&idvol=".$id),"",false,"","");
+			}
 		}
 	}
 
