@@ -12,39 +12,6 @@ table.dataTable tbody th, table.dataTable tbody td {
 }
 </style>
 
-<script language="JavaScript">
-function Recharge()
-{
- 	document.location='{path_root}/suivi/vols?idavion='+document.getElementById('idavion').value;
-}
-
-function calcHorametre(id)
-{
-	var idavion=document.getElementById('idavion').value;
-	var horadeb=document.getElementById('form_horadeb_'+id).value;
-	var horafin=document.getElementById('form_horafin_'+id).value;
-		
-	$(function() {
-		$.ajax({
-			url:'api.php?mod=ressources&rub=gethora&id='+idavion+'&deb='+horadeb+'&fin='+horafin,
-			type: 'html',
-			dataType: 'JSON',
-			success: function(response)
-			{
-				document.getElementById('form_tempsresa_'+id).value=response.tps;
-<!-- BEGIN: updateBloc -->
-				document.getElementById('form_blocresa_'+id).value=response.tps;
-<!-- END: updateBloc -->
-			},
-			error : function(response)
-			{
-
-			}
-		});
-	});
-}
-</script>
-
 <FORM name="reservation" method="post" action="{path_root}/suivi/vols" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
@@ -146,7 +113,7 @@ function calcHorametre(id)
 									</SELECT>
 							</TD>
 							<TD>
-								<SELECT name="form_tarif[{id_new}]" class='form-control'>
+								<SELECT name="form_tarif[{id_new}]" class='form-control' style='min-width:100px;'>
 								<!-- BEGIN: lst_tarifs -->
 								<OPTION value="{tarif_code}">{tarif_nom}</OPTION>
 								<!-- END: lst_tarifs -->
@@ -173,5 +140,37 @@ function calcHorametre(id)
 </FORM>
 
 
+<script language="JavaScript">
+function Recharge()
+{
+ 	document.location='{path_root}/suivi/vols?idavion='+document.getElementById('idavion').value;
+}
+
+function calcHorametre(id)
+{
+	var idavion=document.getElementById('idavion').value;
+	var horadeb=document.getElementById('form_horadeb_'+id).value;
+	var horafin=document.getElementById('form_horafin_'+id).value;
+		
+	$(function() {
+		$.ajax({
+			url:'{path_root}/api/v1/ressources/gethora?id='+idavion+'&deb='+horadeb+'&fin='+horafin,
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				document.getElementById('form_tempsresa_'+id).value=response.tps;
+<!-- BEGIN: updateBloc -->
+				document.getElementById('form_blocresa_'+id).value=response.tps;
+<!-- END: updateBloc -->
+			},
+			error : function(response)
+			{
+
+			}
+		});
+	});
+}
+</script>
 
 <!-- END: corps -->
