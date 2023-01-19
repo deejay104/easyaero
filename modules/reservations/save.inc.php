@@ -227,10 +227,11 @@
 // ---- Enregistre
 	$affrub="index";
 	$jour=(isset($resa["resa"]->dte_deb)) ? $resa["resa"]->dte_deb : now();
-	$msg_err2="";
+	$msg_err2=array();
 	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$msg_err2.=$resa["resa"]->Save();
+		$msg_err2=$resa["resa"]->Save();
+
 		$create=false;
 		if ($id==0)
 		{
@@ -241,7 +242,7 @@
 
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 
-		if (($msg_err2=="") && ($msg_err==""))
+		if ((count($msg_err2)==0) && ($msg_err==""))
 		{
 			if (($create) && ($resa["resa"]->invite=='oui'))
 			{
@@ -312,8 +313,11 @@
 		}
 		else
 		  {
-		  	$msg_err.=$msg_err2;
-			affInformation($msg_err2,"error");
+		  	// $msg_err.=$msg_err2;
+			foreach($msg_err2 as $m)
+			{
+				affInformation($m["txt"],$m["status"]);
+			}
 		  	$ok=3;
 		  }
 	  }

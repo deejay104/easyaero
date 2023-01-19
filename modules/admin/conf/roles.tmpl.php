@@ -21,6 +21,7 @@ $tabRoles["AccesSuivi"]="Accès au module de suivi du club";
 
 $tabRoles["AccesSuiviMouvements"]="Accès à la page de saisi d'un mouvement";
 $tabRoles["AccesSuiviEcheances"]="Accès à la page de suivi des échéances";
+$tabRoles["AccesSuiviEcheancesMembres"]="Accès à la page de suivi des échéances pour les membres";
 $tabRoles["AccesSuiviBanque"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesSuiviListeComptes"]="Accès à la page de la liste des comptes";
 $tabRoles["AccesSuiviListeTarifs"]="Accès à la page des tarifs";

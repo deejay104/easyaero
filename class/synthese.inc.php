@@ -288,6 +288,24 @@ class synthese_class extends objet_core
 			$res=new livret_class($txt,$this->sql);
 			$ret="<div class='py-2'>".$res->displayDescription()."</div>";
 		}
+		else if (($key=="uid_pilote") && ($render=="form"))
+		{
+			$txt=$this->val($key);
+			$res=new user_class($txt,$this->sql);
+			$ret="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
+		}		
+		else if (($key=="uid_pilote") && ($render=="read"))
+		{
+			$txt=$this->val($key);
+			$res=new user_class($txt,$this->sql);
+			$ret="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
+		}
+		else if (($key=="uid_pilote") && ($render!="form"))
+		{
+			$txt=$this->val($key);
+			$res=new user_class($txt,$this->sql);
+			$ret="<div class='py-2'>".$res->val("fullname")."</div>";
+		}
 		else if (($key=="module") && ($render!="form"))
 		{
 			$ret="<div class='py-2'>".$ret."</div>";
@@ -304,6 +322,7 @@ class synthese_class extends objet_core
 		{
 			$ret="<div class='py-2'>".$ret."</div>";
 		}
+
 		return $ret;
 	}
 	

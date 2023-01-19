@@ -57,10 +57,11 @@
 		"submenu"=>array(
 			array("nom"=>"Mouvement","url"=>geturl("suivi","mouvement",""),"droit"=>"AccesSuiviMouvements"),
 			array("nom"=>"Echéances","url"=>geturl("suivi","echeances",""),"droit"=>"AccesSuiviEcheances"),
+			array("nom"=>"Echéances membres","url"=>geturl("suivi","suiviecheances",""),"droit"=>"AccesSuiviEcheancesMembres"),
 			array("nom"=>"Vols","url"=>geturl("suivi","vols",""),"droit"=>"AccesSuiviVols"),
 			array("nom"=>"Taxe AT","url"=>geturl("suivi","taxeat",""),"droit"=>"AccesSuiviTaxeAT"),
 			array("nom"=>"Extrait Comptes","url"=>geturl("suivi","suivi",""),"droit"=>"AccesSuiviSuivi"),
-			array("nom"=>"Suivi Comptes","url"=>geturl("suivi","liste",""),"droit"=>"AccesSuiviListeComptes"),
+			array("nom"=>"Comptes membres","url"=>geturl("suivi","liste",""),"droit"=>"AccesSuiviListeComptes"),
 			array("nom"=>"Tableau de bord","url"=>geturl("suivi","tableaubord",""),"droit"=>"AccesSuiviTableauBord"),
 			array("nom"=>"Bilan Comptable","url"=>geturl("suivi","bilan",""),"droit"=>"AccesSuiviBilan"),
 		)

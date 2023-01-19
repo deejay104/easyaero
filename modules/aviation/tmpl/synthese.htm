@@ -23,9 +23,9 @@
 	<INPUT type="hidden" name="idvol" value="{prev_idvol}">
 	<INPUT type="hidden" name="uid" value="{prev_uid}">
 	<INPUT type="hidden" name="form_data[idvol]" value="{form_idvol}">
-	<INPUT type="hidden" name="form_data[uid_pilote]" value="{form_uid_pilote}">
-	<INPUT type="hidden" name="form_data[uid_instructeur]" value="{form_uid_instructeur}">
-	<INPUT type="hidden" name="form_data[uid_avion]" value="{form_uid_avion}">
+	<INPUT type="hidden" name="form_data[uid_pilote]" value="{form_id_pilote}">
+	<INPUT type="hidden" name="form_data[uid_instructeur]" value="{form_id_instructeur}">
+	<INPUT type="hidden" name="form_data[uid_avion]" value="{form_id_avion}">
 	<INPUT type="hidden" name="form_data[dte_vol]" value="{form_dte_vol}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
@@ -47,6 +47,9 @@
 
 				<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Livret de formation</label><div class="col-lg-6">{form_idlivret}</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Eleve</label><div class="col-lg-6">{form_uid_pilote}</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Module</label><div class="col-lg-6">{form_module}</div>

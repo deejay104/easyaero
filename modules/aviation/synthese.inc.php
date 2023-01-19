@@ -311,7 +311,6 @@
 
 	$fiche->Render("form",$typeaff);
 
-
 // ---- Charge les exercices de la fiche de synthèse
 	$lst=ListExercices($sql,$id);
 	foreach($lst as $i=>$v)
@@ -394,9 +393,9 @@
 // ---- Affiche les paramètres
 
 	$tmpl_x->assign("form_idvol",$fiche->val("idvol"));
-	$tmpl_x->assign("form_uid_pilote",$fiche->val("uid_pilote"));
-	$tmpl_x->assign("form_uid_instructeur",$fiche->val("uid_instructeur"));
-	$tmpl_x->assign("form_uid_avion",$fiche->val("uid_avion"));
+	$tmpl_x->assign("form_id_pilote",$fiche->val("uid_pilote"));
+	$tmpl_x->assign("form_id_instructeur",$fiche->val("uid_instructeur"));
+	$tmpl_x->assign("form_id_avion",$fiche->val("uid_avion"));
 	$tmpl_x->assign("form_dte_vol",$fiche->val("dte_vol"));
 	
 	$tmpl_x->assign("form_eleve",$pil->aff("fullname"));
@@ -432,7 +431,7 @@
 		$tmpl_x->parse("corps.signedinst"); 
 	}
 	
-	if ((GetDroit("SignSynthese") || ($fiche->val("uid_pilote")==$gl_uid)) && ($fiche->val("skey_pilote")=="") && ($id>0))
+	if ((GetDroit("SignSynthese") || ($fiche->val("uid_pilote")==$gl_uid)) && ($fiche->val("skey_pilote")=="") && ($id>0) && ($fiche->val("skey_instructeur")!="") )
 	{
 		$tmpl_x->parse("corps.signeleve"); 
 	}

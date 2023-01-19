@@ -37,7 +37,7 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
 // ---- Liste des échéances
-	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype WHERE resa='instructeur' ORDER BY description";
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype WHERE resa='instructeur' AND actif='oui' ORDER BY description";
 	$sql->Query($query);
 
 	$tabecheance=array();

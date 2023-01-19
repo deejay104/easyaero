@@ -5,7 +5,6 @@
 
 // ---- Load libraries  
   	require_once ("class/echeance.inc.php");
-
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
@@ -47,49 +46,87 @@
 	$result["instructeur"]=0;
 	$result["checks"]=array();
 
-	$resa["resa"]=new resa_class($id,$sql);
+	$resa=new resa_class($id,$sql);
 
-// --- Check availaibility
 	$valid=1;
+
+// ---- Check Echeances
+
+	$lstdte=VerifEcheance($sql,$uid_pilote,"utilisateurs");
+
+	if ( (is_array($lstdte)) && (count($lstdte)>0) )
+	{
+		foreach($lstdte as $i=>$d)
+		{
+			$status="";
+			$m="";
+			if ($d["dte_echeance"]!="")
+			{
+				$m="L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).")<br/>";
+			}
+			else
+			{
+				$m="Vous n'avez pas de date d'échéance pour ".$d["description"]."<br/>";
+			}
+			
+			if ($d["resa"]=="instructeur")
+			{
+				$m.="La présence d'un instructeur est obligatoire";
+				$result["instructeur"]=1;
+				$status="info";
+			}
+			else if ($d["resa"]=="obligatoire")
+			{
+				$m.="La réservation n'est pas possible car cette échéance est obligatoire";
+				$status="error";
+			}
+
+			if ($status!="")
+			{
+				$ret=array();
+				$ret["title"]="";
+				$ret["message"]=$m;
+				$ret["status"]=$status;
+				$result["checks"][]=$ret;
+				$valid=0;
+			}
+		}
+	}
+
+// ---- Check availability
 
 	if ($uid_pilote>0)
 	{
-		$resa["pilote"]=new user_class($uid_pilote,$sql,false,true);
+		$pilote=new user_class($uid_pilote,$sql,false,true);
 	}
 	else
 	{
-		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql,false,true);
+		$pilote=new user_class($resa->uid_pilote,$sql,false,true);
 	}
 
-	$debite="pilote";
 	if ($uid_debite>0)
 	{
-		$resa["debite"]=new user_class($uid_debite,$sql,false,true);
-		$debite="debite";
-	}
-
-	if ($uid_instructeur>0)
-	{
-		$resa["instructeur"]=new user_class($uid_instructeur,$sql,false,true);
+		$debite=new user_class($uid_debite,$sql,false,true);
+		$isSoldeNeg=$debite->isSoldeNegatif();
+		$solde=$debite->CalcSolde();
 	}
 	else
 	{
-		$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
+		$isSoldeNeg=$pilote->isSoldeNegatif();
+		$solde=$pilote->CalcSolde();
 	}
 
-
-	if ($resa[$debite]->isSoldeNegatif())
+	if ($isSoldeNeg)
 	{
-		$s=$resa[$debite]->CalcSolde();
 		$ret=array();
 		$ret["title"]="Le compte du pilote est NEGATIF";
-		$ret["message"]="Solde du compte $s €.<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+		$ret["message"]="Solde du compte ".$solde." €.<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 		$ret["status"]="error";
 		$result["checks"][]=$ret;
 		$valid=0;
 	}
 
-	if ($resa["resa"]->edite=='non')
+	if ($resa->edite=='non')
 	{
 		$ret=array();
 		$ret["title"]="Réservation déjà saisie en compta";
@@ -100,7 +137,7 @@
 	}
 
 	// Vérifie si le pilote est laché sur l'avion
-	if (!$resa["pilote"]->CheckLache($uid_ress))
+	if (!$pilote->CheckLache($uid_ress))
 	{
 		$result["instructeur"]=1;
 
@@ -108,7 +145,7 @@
 		{
 			$ret=array();
 			$ret["title"]="Attention";
-			$msg_err.="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
+			$msg_err ="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
 			$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
 			$ret["message"]=$msg_err;
 			$ret["status"]="warning";
@@ -118,7 +155,7 @@
 	}
 
 	// Vérifie si le pilote est autorisé
-	if (!$resa["pilote"]->CheckDroit("TypePilote"))
+	if (!$pilote->CheckDroit("TypePilote"))
 	{ 
 		$ret=array();
 		$ret["title"]="Réservation impossible";
@@ -128,11 +165,15 @@
 		$valid=0;
 	}
 
-	$result["edite"]=$resa["resa"]->edite;
+	$result["edite"]=$resa->edite;
 
 
 	// Vérifie si on doit cocher la case d'acception des conditions
-	if ($resa["resa"]->edite=='non')
+
+	$nbvol=$pilote->NombreVols(floor($MyOpt["maxDernierVol"]/30),"val",$uid_ress);
+	$result["nbvol"]=$nbvol;
+
+	if ($resa->edite=='non')
 	{
 		$result["chkreservation"]=0;
 	}
@@ -140,10 +181,9 @@
 	{
 		$result["chkreservation"]=0;
 	}
-	else if (($MyOpt["ChkValidResa"]=="on") && ($uid_instructeur==0) && ($resa["pilote"]->NombreVols(floor($MyOpt["maxDernierVol"]/30),"val",$uid_ress)>0))
+	else if (($MyOpt["ChkValidResa"]=="on") && ($uid_instructeur==0) && ($nbvol==0))
 	{
 		$result["chkreservation"]=1;
-
 
 		if ($accept!="oui")
 		{
@@ -156,41 +196,41 @@
 		$result["chkreservation"]=0;
 	}
 
-	$resa["resa"]->tpsreel=$tpsreel;
-	$resa["resa"]->horadeb=$horadeb;
-	$resa["resa"]->horafin=$horafin;
-	$resa["resa"]->potentielh=$potentielh;
-	$resa["resa"]->potentielm=$potentielm;
-	$resa["resa"]->carbavant=$carbavant;
-	$resa["resa"]->carbapres=$carbapres;
-	$resa["resa"]->prixcarbu=$prixcarbu;
+	$resa->tpsreel=$tpsreel;
+	$resa->horadeb=$horadeb;
+	$resa->horafin=$horafin;
+	$resa->potentielh=$potentielh;
+	$resa->potentielm=$potentielm;
+	$resa->carbavant=$carbavant;
+	$resa->carbapres=$carbapres;
+	$resa->prixcarbu=$prixcarbu;
 
 	if ($fonc=="submit")
 	{
 		// Mise à jour de la réservation
 		if (($id>0) && (($tpsreel!="") || ($horadeb!="") || ($horafin!="")))
 		{
-			$resa["resa"]->Save();
+			$resa->Save();
 			$result["checks"][]=array("title"=>"","message"=>"Les informations d'horamètre ont été sauvegardées","status"=>"ok");
 		}
 	}
 
-	$resa["resa"]->description=$form_description;
-	$resa["resa"]->uid_pilote=$uid_pilote;
-	$resa["resa"]->uid_debite=$uid_debite;
-	$resa["resa"]->uid_instructeur=$uid_instructeur;
-	$resa["resa"]->uid_ressource=$uid_ress;
-	$resa["resa"]->tarif=$tarif;
-	$resa["resa"]->destination=$destination;
-	$resa["resa"]->nbpersonne=$nbpersonne;
-	$resa["resa"]->invite=$invite;
-	$resa["resa"]->accept=$accept;
-	$resa["resa"]->tpsestime=$tpsestime;
-	$resa["resa"]->dte_deb=$dte_deb." ".$hor_deb;
-	$resa["resa"]->dte_fin=$dte_fin." ".$hor_fin;
+	$resa->description=$description;
+	$resa->uid_pilote=$uid_pilote;
+	$resa->uid_debite=$uid_debite;
+	$resa->uid_instructeur=$uid_instructeur;
+	$resa->uid_ressource=$uid_ress;
+	$resa->tarif=$tarif;
+	$resa->destination=$destination;
+	$resa->nbpersonne=$nbpersonne;
+	$resa->invite=$invite;
+	$resa->accept=$accept;
+	$resa->tpsestime=$tpsestime;
+	$resa->dte_deb=$dte_deb." ".$hor_deb;
+	$resa->dte_fin=$dte_fin." ".$hor_fin;
 
-	$r=$resa["resa"]->CheckResa();
-	
+	$r=$resa->CheckResa();
+
 	$result["res"]=$r;
 	
 	if (count($r)>0)
@@ -198,7 +238,7 @@
 		foreach($r as $m)
 		{
 			$valid=0;
-			$result["checks"][]=array("title"=>$m["title"],"message"=>$m["txt"],"status"=>$m["status"]);
+			$result["checks"][]=array("title"=>"","message"=>$m["txt"],"status"=>$m["status"]);
 		}
 	}
 

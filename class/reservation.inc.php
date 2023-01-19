@@ -526,6 +526,7 @@ class resa_class extends objet_core
 		$sql=$this->sql;
 
 		$r=$this->checkResa();
+
 		if (count($r)>0)
 		{
 			return $r;
@@ -581,7 +582,7 @@ class resa_class extends objet_core
 			$sql->Update($query);
 		}
 
-		return "";
+		return $r;
 	}
 
 	function Delete()

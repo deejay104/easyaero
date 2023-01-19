@@ -156,53 +156,6 @@
 	$resusr=new user_class($resa["resa"]->uid_pilote,$sql,true);
 	$resa["resa"]->pilote_data=$resusr->data;
 
-// ---- Vérifie les échéances
-	$lstdte=VerifEcheance($sql,$resa["resa"]->uid_pilote,"utilisateurs");
-
-	if ( (is_array($lstdte)) && (count($lstdte)>0) )
-	{
-		foreach($lstdte as $i=>$d)
-		{
-			$aff_echeance="";
-			$m="";
-			if ($d["dte_echeance"]!="")
-			{
-				$m="L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).")<br/>";
-			}
-			else
-			{
-				$m="Vous n'avez pas de date d'échéance pour ".$d["description"]."<br/>";
-			}
-			
-			if ($d["resa"]=="instructeur")
-			{
-				$m.="La présence d'un instructeur est obligatoire";
-				$ok_inst=1;
-				$aff_echeance="info";
-			}
-			else if ($d["resa"]=="obligatoire")
-			{
-				$m.="La réservation n'est pas possible car cette échéance est obligatoire";
-				$save=1;
-				$aff_echeance="error";
-			}
-
-			if ($aff_echeance!="")
-			{
-				affInformation($m,$aff_echeance);
-			}
-		}
-	}
-
-
-// ---- Vérifie si l'utilisateur est laché sur l'avion
-	// if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
-	// {
-		// $m="Vous n'êtes pas laché sur cet avion.<br />La présence d'un instructeur est obligatoire.";
-		// affInformation($m,"warning");
-
-		// $ok_inst=1;
-	// }
 	
 // ---- Initialisation des variables
 	$tmpl_x->assign("id", $id);
