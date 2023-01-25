@@ -74,11 +74,16 @@
 				$m.="La présence d'un instructeur est obligatoire";
 				$result["instructeur"]=1;
 				$status="info";
+				if ($uid_instructeur==0)
+				{
+					$valid=0;
+				}
 			}
 			else if ($d["resa"]=="obligatoire")
 			{
 				$m.="La réservation n'est pas possible car cette échéance est obligatoire";
 				$status="error";
+				$valid=0;
 			}
 
 			if ($status!="")
@@ -88,7 +93,6 @@
 				$ret["message"]=$m;
 				$ret["status"]=$status;
 				$result["checks"][]=$ret;
-				$valid=0;
 			}
 		}
 	}
