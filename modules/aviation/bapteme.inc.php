@@ -104,7 +104,7 @@
 		require_once ($appfolder."/class/reservation.inc.php");
 		$resa=new resa_class(0,$sql);
 
-		$resa->description="Bapteme ".$btm->data["nom"]."\nTéléphone: ".$btm->data["telephone"];
+		$resa->description=$btm->val("type")." ".$btm->val("nom")."\nTéléphone: ".$btm->val("telephone")."\nNuméro: ".$btm->val("num");
 		$resa->uid_pilote=$btm->data["id_pilote"];
 		$resa->uid_debite=($MyOpt["uid_bapteme"]>0) ? $MyOpt["uid_bapteme"] : $btm->data["id_pilote"];
 		$resa->uid_instructeur=0;
