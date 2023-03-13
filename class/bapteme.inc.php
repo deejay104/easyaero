@@ -161,7 +161,7 @@ function ListeBaptemes($sql,$actif=array("oui"),$status=-2,$type="",$search="",$
 	return $res;
 }
 
-function TotalBaptemes($sql,$actif=array("oui"),$status=-2,$crit="")
+function TotalBaptemes($sql,$actif=array("oui"),$status=-2,$type="",$crit="")
 { global $MyOpt;
 	$txt="1=0";
 	foreach($actif as $a)
@@ -191,6 +191,11 @@ function TotalBaptemes($sql,$actif=array("oui"),$status=-2,$crit="")
 	  	$st="status='".$status."'";
 	}
 
+	if ($type!="")
+	{
+		$st.=" AND type='".$type."' ";
+	}
+	
 	$c="";
 	if ($crit!="")
 	{

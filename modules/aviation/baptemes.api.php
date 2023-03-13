@@ -36,7 +36,7 @@
 	$order["name"]=$c[$s[0]["column"]]["data"];
 	$order["dir"]=$s[0]["dir"];
 
-	$tot=TotalBaptemes($sql,array("oui"),$form_status,$crit);
+	$tot=TotalBaptemes($sql,array("oui"),$form_status,$form_type,$crit);
 	$ret["recordsTotal"]=$tot;
 	$ret["recordsFiltered"]=$tot;
 
