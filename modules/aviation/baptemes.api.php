@@ -21,6 +21,7 @@
 	$search=checkVar("search","array");
 
 	$form_status=checkVar("status","numeric");
+	$form_type=checkVar("type","varchar");
 
 	// error_log(print_r($_REQUEST,true));
 
@@ -39,7 +40,8 @@
 	$ret["recordsTotal"]=$tot;
 	$ret["recordsFiltered"]=$tot;
 
-	$lstusr=ListeBaptemes($sql,array("oui"),$form_status,$crit,$order,$ts,$tl);
+	$lstusr=ListeBaptemes($sql,array("oui"),$form_status,$form_type,$crit,$order,$ts,$tl);
+	
 
 	$ret["draw"]=$draw;
 	$ret["data"]=array();

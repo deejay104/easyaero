@@ -12,7 +12,7 @@
 function Recharge()
 {
 	<!-- document.location="index.php?mod=aviation&rub=baptemes&form_status="+form_status.value+"&scale=yes"; -->
-	$('#tbl_baptemes').DataTable().ajax.url("/api/v1/aviation/baptemes?status="+$('#form_status').val());
+	$('#tbl_baptemes').DataTable().ajax.url("/api/v1/aviation/baptemes?status="+$('#form_status').val()+"&type="+$('#form_type').val());
 	$('#tbl_baptemes').DataTable().ajax.reload();
 }
 </script>
@@ -29,6 +29,12 @@ function Recharge()
 					<!-- BEGIN: lst_status -->
 						<option value="{form_statusid}" {form_selected}>{form_status}</option>		
 					<!-- END: lst_status -->
+					</select>
+					&nbsp;
+					<select id="form_type" name="form_type" class="form-control" OnChange="Recharge();">
+					<option value="" {form_type_all}>Tous</option>		
+					<option value="vi" {form_type_vi}>VI</option>		
+					<option value="btm" {form_type_bapteme}>Baptèmes</option>		
 					</select>
 				</div>
 			</div>

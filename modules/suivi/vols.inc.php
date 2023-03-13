@@ -110,7 +110,7 @@
 					$res->temps=$tps;
 					$res->tpsreel=$form_blocresa[$k];
 					$res->tarif=$form_tarif[$k];
-					$msg_result.=$res->Save();
+					$msg_result=$res->Save();
 
 					if ($fonc=="Débiter")
 					{
@@ -138,7 +138,7 @@
 					$dte=date2sql($form_date[$k]);
 					if (($dte=="nok") || ($form_date[$k]==""))
 					{
-					  	$msg_result.="DATE INVALIDE !!!";
+					  	$msg_result="DATE INVALIDE !!!";
 					}
 					else
 					{
@@ -191,7 +191,7 @@
 							$res->tpsestime="60";
 							$res->horadeb=$horadeb;
 							$res->horafin=$horafin;
-							$msg_result.=$res->Save();
+							$msg_result=$res->Save();
 						}
 
 						if ($fonc=="Débiter")
@@ -205,9 +205,12 @@
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
-		if ($msg_result!="")
+		if ((is_array($msg_result)) && (count($msg_result)>0))
 		{
-			affInformation($msg_result,"error");
+			foreach($msg_result as $i=>$t)
+			{
+				affInformation($t["txt"],$t["status"]);
+			}
 		}
 		else
 		{

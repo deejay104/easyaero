@@ -86,7 +86,7 @@ class bapteme_class extends objet_core
 
 
 
-function ListeBaptemes($sql,$actif=array("oui"),$status=-2,$crit="",$order=array(),$ts=0,$tl=0)
+function ListeBaptemes($sql,$actif=array("oui"),$status=-2,$type="",$search="",$order=array(),$ts=0,$tl=0)
 { global $MyOpt;
 	$txt="1=0";
 	foreach($actif as $a)
@@ -101,34 +101,39 @@ function ListeBaptemes($sql,$actif=array("oui"),$status=-2,$crit="",$order=array
 
 	if (($status==-2) && (GetDroit("ModifBapteme")))
 	{
-	  	$st="status<>'5' AND status<>'6'";
+	  	$st="status<>'5' AND status<>'6' ";
 	}
 	else if ($status==-2)
 	{
-	  	$st="status<>'0' AND status<>'1' AND status<>'5' AND status<>'6'";
+	  	$st="status<>'0' AND status<>'1' AND status<>'5' AND status<>'6' ";
 	}
 	else if ($status==-1)
 	{
-	  	$st="1=1";
+	  	$st="1=1 ";
 	}
 	else
 	{
-	  	$st="status='".$status."'";
+	  	$st="status='".$status."' ";
+	}
+
+	if ($type!="")
+	{
+		$st.="AND type='".$type."' ";
 	}
 
 	$c="";
-	if ($crit!="")
+	if ($search!="")
 	{
 		$c.="AND (";
-		$c.="num LIKE '%".$crit."%'";
-		$c.="OR nom LIKE '%".$crit."%'";
-		$c.="OR passager LIKE '%".$crit."%'";
-		$c.="OR telephone LIKE '%".$crit."%'";
-		$c.="OR mail LIKE '%".$crit."%'";
-		$c.="OR dte LIKE '%".$crit."%'";
-		$c.="OR mail LIKE '%".$crit."%'";
-		$c.="OR status LIKE '%".$crit."%'";
-		$c.="OR description LIKE '%".$crit."%'";
+		$c.="num LIKE '%".$search."%'";
+		$c.="OR nom LIKE '%".$search."%'";
+		$c.="OR passager LIKE '%".$search."%'";
+		$c.="OR telephone LIKE '%".$search."%'";
+		$c.="OR mail LIKE '%".$search."%'";
+		$c.="OR dte LIKE '%".$search."%'";
+		$c.="OR mail LIKE '%".$search."%'";
+		$c.="OR status LIKE '%".$search."%'";
+		$c.="OR description LIKE '%".$search."%'";
 		$c.=")";
 	}
 

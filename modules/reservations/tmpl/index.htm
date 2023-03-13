@@ -267,37 +267,46 @@ console.log(view.name+" "+oldView);
 	</div>
 </div>
 
-<div id='calendar' style='min-height: 620px;'></div>
-<p style="font-size: 10px; line-height:12px;">
-Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
-</p>
-	
-<table>
-<tr>
-	<td>
-		<p class="afficheLegende">
-			<label style="background-color: #{maintconf}; "></label>
-			<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
-		</p>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
 
-		<p class="afficheLegende">
-			<label style="background-color: #{maintplan};"></label>
-			Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
-		</p>
-		<p class="afficheLegende">
-			<label style="background-color: #{meeting};"></label>
-			Une manifestation est prévue ce jour là.
-		</p>
-	</td>
-	<td>
+				<div id='calendar' style='min-height: 620px;'></div>
+				<p style="font-size: 10px; line-height:12px;">
+				Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
+				</p>
+					
+				<table>
+				<tr>
+					<td>
+						<p class="afficheLegende">
+							<label style="background-color: #{maintconf}; "></label>
+							<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
+						</p>
 
-	<!-- BEGIN: lst_couleur -->
-	<p class="afficheLegende" style="width:180px; padding-left:20px;">
-		<label style="background-color: #{couleur_col}; "></label>
-		<span>{couleur_nom}</span>
-	</p>
-	<!-- END: lst_couleur -->
-	</td>
-</tr>
-</table>
+						<p class="afficheLegende">
+							<label style="background-color: #{maintplan};"></label>
+							Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
+						</p>
+						<p class="afficheLegende">
+							<label style="background-color: #{meeting};"></label>
+							Une manifestation est prévue ce jour là.
+						</p>
+					</td>
+					<td>
+
+					<!-- BEGIN: lst_couleur -->
+					<p class="afficheLegende" style="width:180px; padding-left:20px;">
+						<label style="background-color: #{couleur_col}; "></label>
+						<span>{couleur_nom}</span>
+					</p>
+					<!-- END: lst_couleur -->
+					</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- END: corps -->
