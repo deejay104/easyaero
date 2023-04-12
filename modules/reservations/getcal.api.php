@@ -125,16 +125,12 @@
 	}
 
 	// Affichage du jour et de la nuit
-	// date_default_timezone_set("UTC");
-
 	for($i=floor(strtotime($start)/86400)*86400; $i<=floor(strtotime($end)/86400)*86400; $i=$i+86400)
 	{
 			$tabcs=CalculSoleil($i,-$MyOpt["terrain"]["longitude"],$MyOpt["terrain"]["latitude"]);
 
 			$input_arrays[$ii]["title"]="morning";
-			date_default_timezone_set("UTC");
-			$input_arrays[$ii]["start"]=date("c",$i);
-			date_default_timezone_set($MyOpt["timezone"]);
+			$input_arrays[$ii]["start"]=date("c",strtotime(date("Y-m-d 00:00:00",$i+$tabcs["ls"]-30*60)));
 			$input_arrays[$ii]["end"]=date("c",$i+$tabcs["ls"]-30*60);
 			$input_arrays[$ii]["color"]='gray';
 			$input_arrays[$ii]["rendering"]='background';
@@ -142,9 +138,8 @@
 
 			$input_arrays[$ii]["title"]="evening";
 			$input_arrays[$ii]["start"]=date("c",$i+$tabcs["cs"]+30*60);
-			// date_default_timezone_set("UTC");
-			$input_arrays[$ii]["end"]=date("c",$i+86399);
-			// date_default_timezone_set($MyOpt["timezone"]);
+			$input_arrays[$ii]["end"]=date("c",strtotime(date("Y-m-d 23:59:59",$i+$tabcs["cs"]+30*60)));
+
 			$input_arrays[$ii]["color"]='gray';
 			$input_arrays[$ii]["rendering"]='background';
 			$ii=$ii+1;
