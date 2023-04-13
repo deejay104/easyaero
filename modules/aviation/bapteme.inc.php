@@ -60,7 +60,11 @@
 		{
 			foreach($form_data as $k=>$v)
 		  	{
-		  		$msg_erreur.=$btm->Valid($k,$v);
+		  		$msg_erreur=$btm->Valid($k,$v);
+				if ($msg_erreur!="")
+				{
+					affInformation($msg_erreur,"error");
+				}
 		  	}
 		}
 
@@ -73,7 +77,7 @@
 		{
 			$id=$btm->id;
 		}
-		$msg_confirmation.="Vos données ont été enregistrées.<BR>";
+		affInformation("Vos données ont été enregistrées","ok");
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
@@ -87,7 +91,7 @@
 		  { $btm->Valid("status","4"); }
 
 		$btm->Save();
-		$msg_confirmation.="Vos données ont été enregistrées.<BR>";
+		affInformation("Vos données ont été enregistrées","ok");
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
@@ -124,7 +128,17 @@
 		$btm->data["status"]=4;
 		$btm->Save();
 
-		$msg_confirmation.=($msg_resa!="") ? $msg_resa : "Réservation confirmée.<BR>";
+		if (count($msg_resa)==0)
+		{
+			affInformation("Réservation confirmée.","ok");
+		}
+		else
+		{
+			foreach($msg_resa as $m)
+			{
+				affInformation($m["txt"],$m["status"]);
+			}
+		}
 	}
 
 // ---- Attribuer le bapteme
@@ -140,6 +154,19 @@
 	{
 		$btm->data["status"]=5;
 		$btm->Save();
+	}
+
+// ---- Annuler réservation
+	if (($fonc=="annulevol") && ($id>0))
+	{
+		require_once ($appfolder."/class/reservation.inc.php");
+		$resa=new resa_class($btm->data["id_resa"],$sql);
+		$resa->Delete();
+
+		$btm->data["id_resa"]=0;
+		$btm->data["status"]=2;
+		$btm->Save();
+		affInformation("Vol annulé.","ok");
 	}
 
 // ---- Supprimer
@@ -205,6 +232,11 @@
 	{
 		addPageMenu("",$mod,"Effectué",geturl("aviation","bapteme","fonc=effectue&id=".$id),"",false);
 		$tmpl_x->parse("corps.info_effectuer");
+
+	}
+	if (( ($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4) ) && ($btm->data["id_resa"]>0))
+	{
+		addPageMenu("",$mod,"Annuler vol",geturl("aviation","bapteme","fonc=annulevol&id=".$id),"",false);
 	}
 	if (GetDroit("ModifBapteme"))
 	{
@@ -251,15 +283,15 @@
 
 
 // ---- Messages
-	if ($msg_erreur!="")
-	{
-		affInformation($msg_erreur,"error");
-	}		
+	// if ($msg_erreur!="")
+	// {
+		// affInformation($msg_erreur,"error");
+	// }		
 
-	if ($msg_confirmation!="")
-	{
-		affInformation($msg_confirmation,"ok");
-	}
+	// if ($msg_confirmation!="")
+	// {
+		// affInformation($msg_confirmation,"ok");
+	// }
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
