@@ -18,6 +18,7 @@
   RewriteRule ^api/v1/([a-z]*)/([a-z]*)/([a-z]*)$ /api.php?ver=1&mod=$1&rub=$2&fonc=$3 [QSA,L]
   RewriteRule ^api/v1/([a-z]*)/([a-z]*)$ /api.php?ver=1&mod=$1&rub=$2 [QSA,L]
 
+  RewriteRule ^([a-z]*)/([a-z]*)/([a-z]*)$ /index.php?mod=$1&rub=$3 [QSA,L]
   RewriteRule ^([a-z]*)/([a-z]*)$ /index.php?mod=$1&rub=$2 [QSA,L]
   RewriteRule ^([a-z]*)$ /index.php?mod=$1 [QSA,L]
 
