@@ -30,6 +30,7 @@
 	$form_tiers=checkVar("form_tiers","numeric");
 	$form_commentaire=checkVar("form_commentaire","varchar");
 	$form_date=checkVar("form_date","date");
+	$form_facture=checkVar("form_facture","varchar");
 	
 // ---- Affiche le menu
 	$aff_menu="";

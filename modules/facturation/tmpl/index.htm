@@ -9,45 +9,60 @@
 
 <!-- BEGIN: corps -->
 
-<form name="facture" method="post" action="index.php" enctype="multipart/form-data">
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
 
-	<input type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="facturation">
+				<form name="facture" method="post" action="index.php" enctype="multipart/form-data">
 
-	<br />
-	<table border="0" cellspacing="0" cellpadding="0" background="">
-	  <tr height=40 valign=top>
-<!-- BEGIN: aff_compte -->
-		<td>
-			<select id="form_id" name="form_id" OnChange="document.location='index.php?mod=facturation&uid='+document.getElementById('form_id').value;">
-			<!-- BEGIN: lst_compte -->
-			<option value="{id_compte}" {chk_compte}>{nom_compte}</option>
-			<!-- END: lst_compte -->
-			</select>
-		</td>
-<!-- END: aff_compte -->
+					<input type="hidden" name="checktime" value="{form_checktime}">
+					<input type="hidden" name="mod" value="facturation">
 
-		<td>
-			&nbsp;
-			<select name="form_dte" OnChange="document.location='index.php?mod=facturation&uid='+document.facture.form_id.value+'&dte='+document.facture.form_dte.value;">
-			<option value="">-</option>
-			<!-- BEGIN: lst_dte -->
-			<option value="{id_dte}" {chk_dte}>{aff_dte}</option>
-			<!-- END: lst_dte -->
-			</select>
-		</td>
+					<br />
+					<table border="0" cellspacing="0" cellpadding="0" background="">
+					  <tr height=40 valign=top>
+				<!-- BEGIN: aff_compte -->
+						<td>
+							<select id="form_id" name="form_id" OnChange="document.location='index.php?mod=facturation&uid='+document.getElementById('form_id').value;">
+							<!-- BEGIN: lst_compte -->
+							<option value="{id_compte}" {chk_compte}>{nom_compte}</option>
+							<!-- END: lst_compte -->
+							</select>
+						</td>
+				<!-- END: aff_compte -->
 
-<!-- BEGIN: aff_nouvellefacture -->
-		<td width=300></td>
-<!-- END: aff_nouvellefacture -->
-	  </tr>
-	</table>
+						<td>
+							&nbsp;
+							<select name="form_dte" OnChange="document.location='index.php?mod=facturation&uid='+document.facture.form_id.value+'&dte='+document.facture.form_dte.value;">
+							<option value="">-</option>
+							<!-- BEGIN: lst_dte -->
+							<option value="{id_dte}" {chk_dte}>{aff_dte}</option>
+							<!-- END: lst_dte -->
+							</select>
+						</td>
 
+				<!-- BEGIN: aff_nouvellefacture -->
+						<td width=300></td>
+				<!-- END: aff_nouvellefacture -->
+					  </tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
 {aff_tableau}
-<br/>
+			</div>
+		</div>
+	</div>
+</div>
 
-</form>
 
 <!-- END: corps -->
 

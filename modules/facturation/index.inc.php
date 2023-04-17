@@ -34,6 +34,11 @@
 	// $tmpl_x = new XTemplate (MyRep("index.htm"));
 	// $tmpl_x->assign("path_module","$module/$mod");
 
+
+
+
+// index.php?mod=facturation&rub=detail&uid={id_user}&facid=
+
 // ---- Initialise les variables
 	// $tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$dte=checkVar("dte","varchar",6);
@@ -47,6 +52,10 @@
 
 	$tmpl_x->assign("year1",date("Y")-1);
 	$tmpl_x->assign("year2",date("Y"));
+
+// ---- Menu
+	addPageMenu($corefolder,$mod,"Nouvelle facture",geturl("facturation","detail","uid=".$uid."&facid="),"",false);
+
 
 // ---- Liste des comptes
 	if (!is_numeric($uid))

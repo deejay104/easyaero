@@ -9,27 +9,40 @@
 
 <!-- BEGIN: corps -->
 
-<form name="facture" method="post" action="index.php" enctype="multipart/form-data">
+<form name="facture" method="post" action="/facturation/detail" enctype="multipart/form-data">
 
-	<input type="hidden" name="checktime" value="{form_checktime}">
-	<input type="hidden" name="mod" value="facturation">
-	<input type="hidden" name="rub" value="detail">
-	<input type="hidden" name="uid" value="{id_user}">
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
 
-	<br />
-<!-- BEGIN: aff_compte -->
-			<select id="form_id" name="form_id" OnChange="document.location='index.php?mod=facturation&rub=detail&uid='+document.getElementById('form_id').value;">
-			<option value="0">-</OPTION>
-			<!-- BEGIN: lst_compte -->
-			<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-			<!-- END: lst_compte -->
-			</select>
-<!-- END: aff_compte -->
+				<input type="hidden" name="checktime" value="{form_checktime}">
+				<input type="hidden" name="uid" value="{id_user}">
 
+				<br />
+				<!-- BEGIN: aff_compte -->
+				<select id="form_id" name="form_id" OnChange="document.location='index.php?mod=facturation&rub=detail&uid='+document.getElementById('form_id').value;" class="form-control">
+				<option value="0">-</OPTION>
+				<!-- BEGIN: lst_compte -->
+				<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+				<!-- END: lst_compte -->
+				</select>
+				<!-- END: aff_compte -->
+
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- BEGIN: msgok -->
 <div id="msgok">Un mail de relance a été envoyé.</div>
 <!-- END: msgok -->
+
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
 
 <table>
 
@@ -38,10 +51,12 @@
   <td>&nbsp;</td><td colspan=2 align=center><h1>{titre_facture}</h1></td>
 	<td>
 <!-- BEGIN: aff_pdf -->
-	<a href="index.php?mod=facturation&rub=facture&uid={id_user}&facid={id_facture}&export=pdf" target="_blank"><img src="static/images/icn32_pdf.png" border="0" /></a>
+	<a href="/facturation/facture&uid={id_user}&facid={id_facture}&export=pdf" target="_blank"><i class="mdi mdi-file-pdf mdi-36px"></i></a>
+
+
 <!-- END: aff_pdf -->
 <!-- BEGIN: aff_relance -->
-	<a href="index.php?mod=facturation&rub=detail&uid={id_user}&facid={id_facture}&fonc=relance"><img src="{path_module}/img/icn32_mail.png" border="0" title="Relancer sur cette facture"/></a>
+	<a href="/facturation/detail?uid={id_user}&facid={id_facture}&fonc=relance"><i class="mdi mdi-file-pdf mdi-36px" title="Relancer sur cette facture"></i></a>
 <!-- END: aff_relance -->
   </td>
 </tr>
@@ -97,7 +112,7 @@
 
 
 <!-- BEGIN: edit_facture -->
-<tr  class="tableauTitre"><td>&nbsp;</td><td colspan=3><input type="submit" name="fonc" value="Enregistrer"></td></tr>
+<tr  class="tableauTitre"><td>&nbsp;</td><td colspan=3><input type="submit" name="fonc" value="Enregistrer" class="btn btn-primary"></td></tr>
 <!-- END: edit_facture -->
 
 </table>
@@ -116,7 +131,11 @@
 <!-- END: aff_payer -->
 
 
-<br/>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 </form>
 

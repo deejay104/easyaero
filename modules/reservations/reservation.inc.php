@@ -384,7 +384,14 @@
 		addPageMenu("",$mod,"Supprimer",geturl("reservations","save","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?");
 	}
 
-	addPageMenu("",$mod,"Devis de masse",geturl("reservations","reservation#",""),"",false,"","goCentrage();");
+	if ($resa["resa"]->edite=="non")
+	{
+		addPageMenu("",$mod,"Devis de masse",geturl("aviation","centrage","id=".$id),"",false,"","");
+	}
+	else
+	{
+		addPageMenu("",$mod,"Devis de masse",geturl("reservations","reservation#",""),"",false,"","goCentrage();");
+	}
 
 	
 	// Liste les fiches de synthèse du vol

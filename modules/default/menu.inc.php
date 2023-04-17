@@ -43,7 +43,7 @@
 	if ($MyOpt["module"]["facture"]=="on")
 	{
 		$tabMenu["facturation"]=array(
-			"icone"=>$MyOpt["host"]."/"."static/modules/facturation/img/icn32_titre.png",
+			"icone"=>"mdi-receipt",
 			"nom"=>$tabLang["lang_facturation"],
 			"droit"=>"AccesFactures",
 			"url"=>geturl("facturation","",""),
