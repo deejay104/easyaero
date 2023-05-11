@@ -58,14 +58,25 @@
 	{
 		if (count($form_data)>0)
 		{
-			foreach($form_data as $k=>$v)
+			// foreach($form_data as $k=>$v)
+		  	// {
+
+			foreach($btm->getFields() as $k=>$v)
 		  	{
-		  		$msg_erreur=$btm->Valid($k,$v);
-				if ($msg_erreur!="")
+				if (isset($form_data[$k]))
 				{
-					affInformation($msg_erreur,"error");
+
+					$msg_erreur=$btm->Valid($k,$form_data[$k]);
+					if ($msg_erreur!="")
+					{
+						affInformation($msg_erreur,"error");
+					}
 				}
-		  	}
+				else if ($v["type"]=="bool")
+				{
+					$msg_erreur=$btm->Valid($k,"non");
+				}
+			}
 		}
 
 		if ( ($form_data["id_pilote"]>0) && ($form_data["id_avion"]>0) && ($form_data["dte"]["date"]!='0000-00-00') && ($form_data["dte"]["time"]!='00:00') && ($btm->val("status")<4) )
