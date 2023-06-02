@@ -28,6 +28,11 @@
 	addPageMenu("",$mod,"Prog ENAC",geturl("admin","formations","page=refenac"),"",($page=="refenac") ? true : false);
 
 	$tmpl_x = LoadTemplate($page);
+	$tmpl_x->assign("path_root",$MyOpt["host"]);
+	$tmpl_x->assign("path_core",$corefolder);
+	$tmpl_x->assign("path_module",$module."/".$mod);
+	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+
 	include($appfolder."/modules/admin/".$page.".inc.php");
 	
 ?>

@@ -31,7 +31,10 @@
 	$tmpl_x->assign("url",geturl("admin","formations","page=references"));
 
 // ---- Enregistre les modifications
-	if (($fonc=="Enregistrer") && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+
+
+	// if (($fonc=="Enregistrer") && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 	  	foreach($form_data as $id=>$d)
 	  	{
@@ -115,7 +118,7 @@
 		$tabValeur[$i]["theme"]["aff"]=$ref->aff("theme","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".$MyOpt["host"]."/admin/references?fonc=delete&id=".$d["id"]."' style='display:none;'><i class='mdi mdi-close mdi-18px'></i></a>";
+		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".geturl("admin","formations","page=references&fonc=delete&fid=".$fid."&id=".$d["id"])."' style='display:none;'><i class='mdi mdi-close mdi-18px'></i></a>";
 	}
 
 	$ref=new reference_class(0,$sql);	

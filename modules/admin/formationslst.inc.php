@@ -28,7 +28,7 @@
 // ---- Vérifie les variables
 	$form_data=checkVar("form_data","array");
 
-	$tmpl_x->assign("url",geturl("admin","formations",""));
+	$tmpl_x->assign("url",geturl("admin","formations","page=formationslst"));
 
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (GetDroit("ModifFormation")) && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
@@ -87,7 +87,7 @@
 		$tabValeur[$i]["description"]["aff"]=$ref->aff("description","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".geturl("admin","formations","fonc=delete&id=".$d["id"])."' style='display:none;'><i class='mdi mdi-close'></i></a>";
+		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".geturl("admin","formations","page=formationslst&fonc=delete&id=".$d["id"])."' style='display:none;'><i class='mdi mdi-close'></i></a>";
 	}
 
 	$ref=new formation_class(0,$sql);	

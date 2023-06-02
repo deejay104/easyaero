@@ -28,7 +28,7 @@
 	$form_data=checkVar("form_data","array");
 	$fid=checkVar("fid","numeric");
 
-	$tmpl_x->assign("url",geturl("admin","exercices",""));
+	$tmpl_x->assign("url",geturl("admin","formations","page=exercices"));
 
 // ---- Affiche le menu
 	$aff_menu="";
