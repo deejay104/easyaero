@@ -58,23 +58,15 @@
 	{
 		if (count($form_data)>0)
 		{
-			// foreach($form_data as $k=>$v)
-		  	// {
-
-			foreach($btm->getFields() as $k=>$v)
+			foreach($form_data as $k=>$v)
 		  	{
-				if (isset($form_data[$k]))
+				if ($btm->isFields($k))
 				{
-
 					$msg_erreur=$btm->Valid($k,$form_data[$k]);
 					if ($msg_erreur!="")
 					{
 						affInformation($msg_erreur,"error");
 					}
-				}
-				else if ($v["type"]=="bool")
-				{
-					$msg_erreur=$btm->Valid($k,"non");
 				}
 			}
 		}

@@ -11,6 +11,7 @@
 	$tabLang["lang_birthdate"]="Date de naissance";
 	$tabLang["lang_createdate"]="Date d'inscription";
 	$tabLang["lang_weight"]="Poids";
+	$tabLang["lang_license"]="Licence";
 	$tabLang["lang_allowedplane"]="Laché avions";
 	$tabLang["lang_decouvert"]="Découvert autorisé";
 	$tabLang["lang_price"]="Tarif instructeur";

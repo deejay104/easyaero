@@ -1,5 +1,4 @@
 <?php
-	// $tabLang["lang_list"]="Liste";
 	$tabLang["lang_sexe"]="Gender";
 	$tabLang["lang_homephone"]="Home phone";
 	$tabLang["lang_mobilephone"]="Mobile phone";
@@ -12,6 +11,7 @@
 	$tabLang["lang_birthdate"]="Birth date";
 	$tabLang["lang_createdate"]="Creation daten";
 	$tabLang["lang_weight"]="Weight";
+	$tabLang["lang_license"]="License";
 	$tabLang["lang_allowedplane"]="Allowed plane";
 	$tabLang["lang_decouvert"]="Overdraft";
 	$tabLang["lang_price"]="Instructor Price";

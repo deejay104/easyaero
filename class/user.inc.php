@@ -51,6 +51,7 @@ class user_class extends user_core
 		"aff_mois" => Array("type" => "varchar","len"=>1, ),
 		"aff_jour" => Array("type" => "date", "default" => "0000-00-00", ),
 		"aff_msg" => Array("type" => "number", "default" => "0", ),
+		"licence" => Array("type" => "varchar", "len"=>10, "default" => "", ),
 	);
 
 	public $tabList_loc=array(
