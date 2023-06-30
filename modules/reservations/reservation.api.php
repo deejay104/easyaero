@@ -59,6 +59,7 @@
 		foreach($lstdte as $i=>$d)
 		{
 			$status="";
+			$field="";
 			$m="";
 			if ($d["dte_echeance"]!="")
 			{
@@ -76,6 +77,7 @@
 				if ($uid_instructeur==0)
 				{
 					$status="warning";
+					$field="form_uid_instructeur";
 				}
 				else
 				{
@@ -99,6 +101,7 @@
 				$ret["title"]="";
 				$ret["message"]=$m;
 				$ret["status"]=$status;
+				$ret["field"]=$field;
 				$result["checks"][]=$ret;
 			}
 		}
@@ -133,6 +136,7 @@
 		$ret["title"]="Le compte du pilote est NEGATIF";
 		$ret["message"]="Solde du compte ".$solde." €.<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 		$ret["status"]="error";
+		$ret["field"]="";
 		$result["checks"][]=$ret;
 		$valid=0;
 	}
@@ -143,6 +147,7 @@
 		$ret["title"]="Réservation déjà saisie en compta";
 		$ret["message"]="Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta";
 		$ret["status"]="information";
+		$ret["field"]="";
 		$result["checks"][]=$ret;
 		$valid=0;
 	}
@@ -160,6 +165,7 @@
 			$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
 			$ret["message"]=$msg_err;
 			$ret["status"]="warning";
+			$ret["field"]="form_uid_instructeur";
 			$result["checks"][]=$ret;
 			$valid=0;			
 		}
@@ -199,7 +205,7 @@
 		if ($accept!="oui")
 		{
 			$valid=0;
-			$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"info");
+			$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"info","field"=>"ValidResa");
 		}
 	}
 	else
@@ -249,7 +255,7 @@
 		foreach($r as $m)
 		{
 			$valid=0;
-			$result["checks"][]=array("title"=>"","message"=>$m["txt"],"status"=>$m["status"]);
+			$result["checks"][]=array("title"=>"","message"=>$m["txt"],"status"=>$m["status"],"field"=>$m["field"]);
 		}
 	}
 

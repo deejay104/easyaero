@@ -199,7 +199,7 @@
 
 <div id="affAcceptCondition" class="row" style="display:none;">
 	<div class="col-md-12 grid-margin stretch-card">
-		<div class="card">
+		<div class="card" id="ValidResa">
 			<div class="card-body">
 				<div class="form-group row">
 					<label class="col-lg-1 col-form-label"><input id="accept" type="checkbox" name="form_accept" value="oui"></label>
@@ -434,6 +434,12 @@ function checkData(submit=false)
 		for(var key in result.checks)
 		{
 			showToast(result.checks[key].title,result.checks[key].message,result.checks[key].status);
+			$(".form-input").css("background-color","");
+			if (result.checks[key].field!="")
+			{
+				console.log(result.checks[key].field);
+				$("#"+result.checks[key].field).css("background-color","rgb(249, 229, 224)");
+			}
 		}
 
 /*
@@ -454,8 +460,6 @@ function checkData(submit=false)
 			}
 		}
 */	
-		//$("#form_uid_instructeur").prepend('<option value="0">Aucun</option>');
-		//$("#form_uid_instructeur").find('option').get(0).remove();
 		
 		if ((result.valid==1) && (submit))
 		{

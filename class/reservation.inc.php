@@ -359,20 +359,20 @@ class resa_class extends objet_core
 		  }
 
 		if (!is_numeric($this->uid_pilote))
-		  { return array(array("txt"=>"Erreur avec l'id pilote","status"=>"error")); }
+		  { return array(array("txt"=>"Erreur avec l'id pilote","status"=>"error","field"=>"")); }
 
 		if (!is_numeric($this->uid_debite))
-		  { return array(array("txt"=>"Erreur avec l'id du debite","status"=>"error")); }
+		  { return array(array("txt"=>"Erreur avec l'id du debite","status"=>"error","field"=>"")); }
 
 		if (!is_numeric($this->uid_instructeur))
-		  { return array(array("txt"=>"Erreur avec l'id instructeur","status"=>"error")); }
+		  { return array(array("txt"=>"Erreur avec l'id instructeur","status"=>"error","field"=>"")); }
 
 		if (!is_numeric($this->uid_ressource))
-		  { return array(array("txt"=>"Il faut sélectionner un avion","status"=>"error")); }
+		  { return array(array("txt"=>"Il faut sélectionner un avion","status"=>"error","field"=>"")); }
 
 		if ($this->destination=="")
 		{
-			$ret[]=array("txt"=>"La destination est obligatoire","status"=>"warning");
+			$ret[]=array("txt"=>"La destination est obligatoire","status"=>"warning","field"=>"destination");
 		}
 
 		if (!is_numeric($this->tpsestime))
@@ -380,7 +380,7 @@ class resa_class extends objet_core
 
 		if ($this->tpsestime==0)
 		{
-			$ret[]=array("txt"=>"Vous devez saisir un temps de vol estimé","status"=>"info");
+			$ret[]=array("txt"=>"Vous devez saisir un temps de vol estimé","status"=>"info","field"=>"tpsestime");
 		}
 
 		if (!is_numeric($this->tpsreel))
@@ -436,11 +436,6 @@ class resa_class extends objet_core
 		if ($this->accept!="oui")
 		  { $this->accept="non"; }
 
-		// if (($MyOpt["ChkValidResa"]=="on") && ($this->accept!="oui") && ($ValidResa==false) && ($this->uid_instructeur==0))
-		// {
-			// $ret[]=array("txt"=>"Vous devez accepter les conditions de vol","status"=>"warning");
-		// }
-
 
 		// Vérifie si la réservation n'empiète pas sur une autre
 		$query ="SELECT cal.*,usr.nom AS nom ,usr.prenom AS prenom,usr.initiales,ins.nom AS insnom,ins.prenom AS insprenom,avion.immatriculation ";
@@ -466,7 +461,7 @@ class resa_class extends objet_core
 				}
 			$msg_err_t.="<br />de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</p>";
 
-			$ret[]=array("title"=>"L'avion est déja réservé","txt"=>$msg_err_t,"status"=>"warning");
+			$ret[]=array("title"=>"L'avion est déja réservé","txt"=>$msg_err_t,"status"=>"warning","field"=>"");
 		}
 
 
@@ -501,7 +496,7 @@ class resa_class extends objet_core
 			}
 			if ($okresa==1)
 			{
-				$ret[]=array("title"=>"L'instructeur a déjà une réservation","txt"=>$msg_err_t,"status"=>"warning");
+				$ret[]=array("title"=>"L'instructeur a déjà une réservation","txt"=>$msg_err_t,"status"=>"warning","field"=>"form_uid_instructeur");
 
 			}
 		}
@@ -512,7 +507,7 @@ class resa_class extends objet_core
 			if (!$usr_inst->CheckDisponibilite($this->dte_deb,$this->dte_fin))
 			{
 				$okresa=1;
-				$ret[]=array("txt"=>"L'instructeur n'est pas disponible","status"=>"warning");
+				$ret[]=array("txt"=>"L'instructeur n'est pas disponible","status"=>"warning","field"=>"form_uid_instructeur");
 			}
 		}
 
