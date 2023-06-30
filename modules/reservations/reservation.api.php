@@ -73,7 +73,14 @@
 			{
 				$m.="La présence d'un instructeur est obligatoire";
 				$result["instructeur"]=1;
-				$status="info";
+				if ($uid_instructeur==0)
+				{
+					$status="warning";
+				}
+				else
+				{
+					$status="info";
+				}
 				if ($uid_instructeur==0)
 				{
 					$valid=0;
