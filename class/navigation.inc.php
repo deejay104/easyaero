@@ -38,10 +38,6 @@ class navpoint_class extends objet_core
 		"icone"=>array("Airport"=>"Aéroport","Waypoint"=>"Point de passage","Navaid"=>"Point personalisé"),
 	);
 
-	# Constructor
-	function __construct($id=0,$sql){
-		parent::__construct($id,$sql);
-	}
 }
 
 function ListWaypoints($sql)

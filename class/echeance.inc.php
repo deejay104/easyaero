@@ -12,7 +12,7 @@ class echeance_class extends echeance_core
 		"paye" => Array("type" => "bool", "default" => "non" ),
 	);
 	
-	function __construct($id=0,$sql,$uid=0)
+	function __construct($id=0,$sql="",$uid=0)
 	{
 
 		$this->fields=array_merge($this->fields,$this->fields_loc); 
@@ -42,7 +42,7 @@ class echeancetype_class extends echeancetype_core
 		"context"=>array('utilisateurs'=>'Utilisateur','ressources'=>'Avion'),
 	);
 	
-	function __construct($id=0,$sql)
+	function __construct($id=0,$sql="")
 	{
 		$this->fields=array_merge($this->fields,$this->fields_loc); 
 		$this->tabList=array_merge($this->tabList,$this->tabList_loc); 

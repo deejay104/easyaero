@@ -58,7 +58,7 @@ class bapteme_class extends objet_core
 	);
 
 			# Constructor
-	function __construct($id=0,$sql){
+	function __construct($id=0,$sql=""){
 		global $MyOpt;
 		global $gl_uid;
 

@@ -66,7 +66,7 @@ class resa_class extends objet_core
 	);
 	
 	# Constructor
-	function __construct($id=0,$sql){
+	function __construct($id=0,$sql=""){
 		global $MyOpt;
 		$this->tbl=$MyOpt["tbl"];
 
@@ -663,7 +663,7 @@ function RechercheReservation($sql,$where="")
 	return $lstress;
 }
 
-function ListLastReservation($sql,$id,$idavion=0,$top=0,$dte)
+function ListLastReservation($sql,$id,$idavion=0,$top=0,$dte="")
 { global $MyOpt;
 	$dte=date2sql(sql2date($dte,"jour"));
 

@@ -64,7 +64,7 @@ class ress_class extends objet_core
 		"actif"=>array("oui"=>"oui","non"=>"non","off"=>"off")
 	);
 
-	function __construct($id=0,$sql)
+	function __construct($id=0,$sql="")
 	{
 		global $MyOpt;
 		global $gl_uid;

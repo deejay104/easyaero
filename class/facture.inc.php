@@ -50,7 +50,7 @@ $tabJour["6"]="Samedi";
 class facture_class{
 
  	# Constructor
-	function __construct($id="",$sql){
+	function __construct($id=0,$sql=""){
 		global $MyOpt;
 		global $gl_uid;
 

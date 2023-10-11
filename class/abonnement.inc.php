@@ -26,7 +26,7 @@
 
 class abonnement_class{
 	# Constructor
-	function __construct($id="",$sql){
+	function __construct($id=0,$sql=""){
 		global $MyOpt;
 
 		$this->sql=$sql;

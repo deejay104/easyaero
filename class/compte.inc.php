@@ -4,7 +4,7 @@ require_once ("class/user.inc.php");
 class compte_class{
 
  	# Constructor
-	function __construct($id="",$sql)
+	function __construct($id=0,$sql="")
 	{
 		global $MyOpt;
 		global $gl_uid;

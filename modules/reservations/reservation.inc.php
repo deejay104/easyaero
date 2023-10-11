@@ -319,9 +319,9 @@
 
 	$tmpl_x->assign("form_tpsestime", $resa["resa"]->tpsestime);
 
-	$tmpl_hora->assign("form_tpsreel", $resa["resa"]->tpsreel);
-	$tmpl_hora->assign("form_horadeb", $resa["resa"]->horadeb);
-	$tmpl_hora->assign("form_horafin", $resa["resa"]->horafin);
+	$tmpl_hora->assign("form_tpsreel", ($resa["resa"]->tpsreel>0) ? $resa["resa"]->tpsreel : "");
+	$tmpl_hora->assign("form_horadeb", ($resa["resa"]->horadeb>0) ? $resa["resa"]->horadeb : "" );
+	$tmpl_hora->assign("form_horafin", ($resa["resa"]->horafin>0) ? $resa["resa"]->horafin : "");
 
 	// Affiche l'horamètre
 	$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
