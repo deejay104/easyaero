@@ -60,7 +60,7 @@
 			array("nom"=>"Echéances membres","url"=>geturl("suivi","suiviecheances",""),"droit"=>"AccesSuiviEcheancesMembres"),
 			array("nom"=>"Vols","url"=>geturl("suivi","vols",""),"droit"=>"AccesSuiviVols"),
 			array("nom"=>"Taxe AT","url"=>geturl("suivi","taxeat",""),"droit"=>"AccesSuiviTaxeAT"),
-			array("nom"=>"Extrait Comptes","url"=>geturl("suivi","suivi",""),"droit"=>"AccesSuiviBanque"),
+			array("nom"=>"Extrait Comptes","url"=>geturl("suivi","extrait",""),"droit"=>"AccesSuiviBanque"),
 			array("nom"=>"Comptes membres","url"=>geturl("suivi","liste",""),"droit"=>"AccesSuiviListeComptes"),
 			array("nom"=>"Tableau de bord","url"=>geturl("suivi","tableaubord",""),"droit"=>"AccesSuiviTableauBord"),
 			array("nom"=>"Bilan Comptable","url"=>geturl("suivi","bilan",""),"droit"=>"AccesSuiviBilan"),

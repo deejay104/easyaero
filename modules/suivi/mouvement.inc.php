@@ -286,8 +286,10 @@
 			$dte=date("d/m/Y");
 		}
 
+		$m=(($form_montant<>0) ? $form_montant : $montant);
 		$tmpl_x->assign("date_mouvement", $dte);
-		$tmpl_x->assign("form_montant", (($form_montant<>0) ? $form_montant : $montant));
+		$tmpl_x->assign("placeholder_montant", $m);
+		$tmpl_x->assign("form_montant", (($m<>0) ? $m : ""));
 		$tmpl_x->assign("form_commentaire", $form_commentaire);
 
 		$tmpl_x->AUTORESET=0;
