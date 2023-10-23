@@ -432,8 +432,8 @@
 			$horadeb_prec=$resa["resa"]->horafin;
 
 			$tmpl_x->assign("horafin", "<INPUT type=\"text\" id=\"form_horafin_".$id."\" class='form-control' name=\"form_horafin[".$id."]\" value=\"".$resa["resa"]->horafin."\" style='width:80px;' OnChange=\"calcHorametre(".$id.");\">");
-			$tmpl_x->assign("temps_vols", " <INPUT type=\"text\" id=\"form_tempsresa_".$id."\" class='form-control' name=\"form_tempsresa[".$id."]\" value=\"".$tps."\" style='width:50px;'>");
-			$tmpl_x->assign("bloc_vols", " <INPUT type=\"text\" id=\"form_blocresa_".$id."\" class='form-control' name=\"form_blocresa[".$id."]\" value=\"".$tbl."\" style='width:50px;' >");
+			$tmpl_x->assign("temps_vols", " <INPUT type=\"text\" id=\"form_tempsresa_".$id."\" class='form-control' name=\"form_tempsresa[".$id."]\" value=\"".$tps."\" style='width:50px;".((abs($tps-$tbl)>1.2*$tbl) ? "color: #ff0000; background-color: #FFBBAA;" : "")."'>");
+			$tmpl_x->assign("bloc_vols", " <INPUT type=\"text\" id=\"form_blocresa_".$id."\" class='form-control' name=\"form_blocresa[".$id."]\" value=\"".$tbl."\" style='width:50px;".((abs($tps-$tbl)>1.2*$tps) ? "color: #ff0000; background-color: #FFBBAA;" : "")."' >");
 
 			$tmpl_x->assign("destination_vols", $resa["resa"]->destination);
 			

@@ -51,6 +51,11 @@
 		$form_montant_ventil=checkVar("form_montant_ventil","array");
 		$form_temp_select=checkVar("form_temp_select","array");
 	
+		if (!is_numeric($form_montant))
+		{
+			$form_montant=0;
+		}
+
 		$msg_result="";
 
 		$mvt = new compte_class(0,$sql);
