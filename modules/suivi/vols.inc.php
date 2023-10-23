@@ -75,6 +75,10 @@
 		{
 			foreach ($form_tempsresa as $k=>$tps)
 			{
+				if (!is_numeric($tps))
+				{
+					$tps=0;
+				}
 				if ($tps<>0)
 				{
 					$res=new resa_class($k,$sql);
@@ -439,7 +443,7 @@
 				$query="SELECT description, lon, lat FROM ".$MyOpt["tbl"]."_navpoints AS wpt WHERE nom='".$resa["resa"]->destination."'";
 				$res=$sql->QueryRow($query);
 
-				if ($res["description"]!="")
+				if ((isset($res["description"])) && ($res["description"]!=""))
 				{
 					$dist=round(getDistance($MyOpt["terrain"]["latitude"], $MyOpt["terrain"]["longitude"], $res["lat"], $res["lon"], "N"),0)." N";
 					$tmpl_x->assign("distance_vols", $dist);

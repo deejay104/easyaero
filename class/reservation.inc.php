@@ -40,7 +40,7 @@ class resa_class extends objet_core
 		"temps" => Array("type" => "number", "default" => "0", ),
 		"tarif" => Array("type" => "varchar", "len"=>2 ),
 		"prix" => Array("type" => "price" ),
-		"tpsestime" => Array("type" => "number", ),
+		"tpsestime" => Array("type" => "number", "placeholder"=>1 ),
 		"tpsreel" => Array("type" => "number", "index" => "1",),
 		"horadeb" => Array("type" => "varchar", "len"=>10, "default" => "0", ),
 		"horafin" => Array("type" => "varchar", "len"=>10, "default" => "0", ),

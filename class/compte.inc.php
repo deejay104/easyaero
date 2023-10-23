@@ -125,6 +125,10 @@ class compte_class{
 				if (($c>0) && ($d>0) && ($dte!=""))
 				{
 					// Vérifie le montant
+					if (!is_numeric($montant))
+					{
+						$montant=0;
+					}
 					preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$montant,$t);
 					$montant=$t[1].".".$t[2];
 
