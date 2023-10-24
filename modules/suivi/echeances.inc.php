@@ -109,7 +109,7 @@
 		$form_mid=checkVar("form_mid","array");
 		$form_dteid=checkVar("form_dteid","array");
 		$ret="";
-		$nbmvt="";
+		$nbmvt=0;
 		$ok=0;
 		foreach ($form_mid as $id=>$d)
 		{			

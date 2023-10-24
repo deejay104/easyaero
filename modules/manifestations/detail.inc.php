@@ -1,4 +1,4 @@
-<?php
+	<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
