@@ -188,7 +188,7 @@ class ress_class extends objet_core
 			{
 				$tfin[3]=$tfin[3]."0";
 			}
-			$t=round(($tfin[1]-$tdeb[1])*60+($tfin[3]-$tdeb[3]));
+			$t=round((intval($tfin[1])-intval($tdeb[1]))*60+(intval($tfin[3])-intval($tdeb[3])));
 		}
 		else if ($this->data["typehora"]=="dix")
 		{

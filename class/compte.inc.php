@@ -409,8 +409,21 @@ function AfficheSignatureCompte($lid)
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE id='".$lid."'";
 	$res_l=$sql->QueryRow($query);
 
+	if (!isset($res_l["id"]))
+	{
+		$ret["res"]="nok";
+		return $ret;
+	}
+
 	$query="SELECT id,hash FROM ".$MyOpt["tbl"]."_compte WHERE id='".$res_l["precedent"]."'";
 	$res_p=$sql->QueryRow($query);
+
+	if (!isset($res_p["id"]))
+	{
+		$ret["res"]="nok";
+		return $ret;
+	}
+
 
 	if ($res_l["mid"]>0)
 	{
