@@ -130,6 +130,14 @@
 			$tabValeur[$i]["mouvement"]["aff"]="<a title='".AfficheDetailMouvement($id,$d["mid"]["val"])."'>".$tabValeur[$i]["mouvement"]["val"]."</a>";
 		}
 	}
+	else
+	{
+		foreach($tabValeur as $i=>$d)
+		{
+			$tabValeur[$i]["date_valeur"]["aff"]=$tabValeur[$i]["date_valeur"]["aff"];
+			$tabValeur[$i]["mouvement"]["aff"]=$tabValeur[$i]["mouvement"]["val"];
+		}
+	}
 
 	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
 	{
