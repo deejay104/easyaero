@@ -125,6 +125,42 @@ A bientôt
 "
 	);
 // *****************************************************************
-	
+
+// *****************************************************************
+$tabMails["btm_create"]=Array
+(
+	"titre"=>"Demande d'information (".$MyOpt["site_title"].")",
+	"balise"=>"id,num,type",
+	"mail"=>
+"Bonjour,
+
+Une nouvelle demande de {type} a été saisie.
+
+Détail :
+".$MyOpt["host"]."/aviation/bapteme?id={id}
+
+A bientôt
+"
+);
+// *****************************************************************
+
+// *****************************************************************
+$tabMails["btm_update"]=Array
+(
+	"titre"=>"Mise à jour demande (".$MyOpt["site_title"].")",
+	"balise"=>"id,num,type",
+	"mail"=>
+"Bonjour,
+
+La demande {num} a été mise à jour.
+
+Détail :
+".$MyOpt["host"]."/aviation/bapteme?id={id}
+
+A bientôt
+"
+);
+// *****************************************************************
+
 
 ?>

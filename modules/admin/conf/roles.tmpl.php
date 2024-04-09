@@ -170,6 +170,7 @@ $tabRoles["ModifBapteme"]="Modifier un baptème";
 $tabRoles["ModifBaptemePaye"]="Modification de la date de paiement d'un baptème";
 $tabRoles["SupprimeBapteme"]="Suppression d'un baptème";
 $tabRoles["AutoriseBapteme"]="Autorisé à effecturer des baptèmes";
+$tabRoles["NotifBapteme"]="Notification en cas d'ajout ou de mise à jour d'un baptème via l'API";
 
 
 

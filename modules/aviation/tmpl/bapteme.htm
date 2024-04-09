@@ -8,12 +8,40 @@
 <!-- BEGIN: corps -->
 
 
+<div id='addComment' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Ajouter un commentaire</h5>
+				<button id='close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="form-group row">
+						<label class="col-lg-2  col-form-label">Commentaire</label>
+						<div class="col-lg-7"><textarea id='contentNewComment' class='form-control' rows=5></textarea></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-2  col-form-label"></label>
+						<div class="col-lg-7">
+							<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+							<button class="btn btn-light" id="cancel">Annuler</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <FORM name="form_detail" method="post" action="{path_root}/aviation/bapteme" enctype="multipart/form-data">
 <INPUT type="hidden" name="id" value="{id}">
 <INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-<div class="row">
+<div class="row" id="baptemeDetails">
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
@@ -78,6 +106,11 @@
 					<label class="col-form-label">{dispo_immat}</label><div id='avion-{lst_uid_avion}' style='display:inline-block;'><img id="imgdispo_{lst_uid_avion}" src="/{path_module}/img/icn16_nc.png"></div>
 				</div>
 				<!-- END: lst_dispo -->
+
+				<h4>Informations Passagers</h4>
+				<div class="formulaire">
+				{form_passagers}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -88,7 +121,7 @@
 		<div class="card">
 			<div class="card-body">
 				<h4>Commentaires</h4>
-				<div class="formulaire">
+				<div id="comments" class="formulaire">
 				{form_description}
 				</div>
 			</div>
@@ -191,6 +224,57 @@ $(document).ready(function() {
 	$('#dte_heure').change(function() { reloadImg(); });
 })
 	
+function addComment()
+{
+	console.log("add comment");
+
+	$("#contentNewComment").val("");
+	$("#addComment").css({"display":"block"});
+	$("#addComment").css("opacity",1);
+	$("#baptemeDetails").css({"opacity":0.25});
+
+}
+
+$( "#cancel" ).on( "click", function() {
+	$("#addComment").css({"display":"none"});
+	$("#addComment").css("opacity",0);
+	$("#baptemeDetails").css({"opacity":1});
+});
+
+$( "#save" ).on( "click", function() {
+	var data={
+		data: {
+			id:{id},
+			description:$("#contentNewComment").val()
+		}
+	};
+
+	$.post( "{path_root}/api/v1/aviation/updbtm", data)
+	.done(function(data) {
+		if (data.status==200)
+		{
+			console.log("ok");
+			$("#comments").append("<p>"+data.description+"</p>")
+		}
+		else
+		{
+			console.log("NOK");
+		}			
+	})
+	.fail(function(data) {
+			console.log("Error");
+	});
+
+	$("#addComment").css({"display":"none"});
+	$("#addComment").css("opacity",0);
+	$("#baptemeDetails").css({"opacity":1});
+});
+
+$( "#close" ).on( "click", function() {
+	$("#addComment").css("opacity",0);
+	$("#addComment").css("display","none");
+	$("#baptemeDetails").css({"opacity":1});
+});
 
 
 </script>

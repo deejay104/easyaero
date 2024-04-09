@@ -45,6 +45,7 @@ class bapteme_class extends objet_core
 		"id_avion" => Array("type" => "number", "index" => "1", ),
 		"id_resa" => Array("type" => "number", "index"=>1),
 		"description" => Array("type" => "text" ),
+		"passagers" => Array("type" => "text" ),
 	);
 
 	
@@ -76,6 +77,15 @@ class bapteme_class extends objet_core
 				$res=$sql->QueryRow($query);
 			}
 		}
+	}
+
+	function getid($num)
+	{
+		global $MyOpt;
+		$sql=$this->sql;
+		$query="SELECT id FROM ".$MyOpt["tbl"]."_bapteme WHERE num='".$num."'";
+		$res=$sql->QueryRow($query);
+		return $res["id"];
 	}
 
 	function ListeStatus()
