@@ -95,7 +95,6 @@
 				$q="UPDATE ".$MyOpt["tbl"]."_compte SET clepublic='".$public_key."',hash='".$hash."', signature='".base64_encode($sign)."', precedent='".$prev_id."' WHERE id=".$d["id"];
 				$sql->Update($q);
 
-				openssl_pkey_free ($key);
 				unset($key);
 				
 				$prev_id=$d["id"];

@@ -412,7 +412,7 @@
 			}
 			else
 			{
-				$tps="";
+				$tps=0;
 			}
 
 			if ($resa["resa"]->tpsreel==0)
