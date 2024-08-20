@@ -116,6 +116,10 @@ $MyOptHelp["restrict"]["comptes"]="Restreint l'affichage de la liste des membres
 $MyOptTmpl["facturevol"]="";
 $MyOptHelp["facturevol"]="Saisi les vols en facturation (on=Activé)";
 
+// Modification des réservations
+$MyOptTmpl["AllowUpdateAllCalendar"]="on";
+$MyOptHelp["AllowUpdateAllCalendar"]="Autorise tous les membres à modifier toutes les réservations";
+
 // Compense le compte CLUB lors du remboursement d'une facture
 $MyOptTmpl["CompenseClub"]="";
 $MyOptHelp["CompenseClub"]="Compense le compte CLUB lors du remboursement d'une facture (on=Activé)";

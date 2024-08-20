@@ -46,6 +46,7 @@ class ress_class extends objet_core
 		"tarif_inst" => Array("type" => "varchar", "len"=>6, "default" => "0", ),
 		"tarif_nue" => Array("type" => "varchar", "len"=>6, "default" => "0", ),
 		"typehora" => Array("type" => "enum", "default" => "min", ),
+		"typegauge" => Array("type" => "enum", "default" => "L", ),
 		"description" => Array("type" => "text", ),
 		"places" => Array("type" => "number", "default" => "0", ),
 		"puissance" => Array("type" => "number", "default" => "0", ),
@@ -61,6 +62,7 @@ class ress_class extends objet_core
 
 	protected $tabList=array(
 		"typehora"=>array("dix"=>"Dixième","cen"=>"Centième","min"=>"Minute"),
+		"typegauge"=>array("G"=>"Galon","L"=>"Litre"),
 		"actif"=>array("oui"=>"oui","non"=>"non","off"=>"off")
 	);
 

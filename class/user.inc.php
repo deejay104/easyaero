@@ -280,6 +280,7 @@ class user_class extends user_core
 					}
 				}
 			}
+
 		}
 		return $ret;
 	}
@@ -532,6 +533,11 @@ class user_class extends user_core
 
 	function AffTel()
 	{
+		if (($this->data["aff_infos"]=="non") && (!GetDroit("ModifUserInfos")))
+		{
+			return "-";
+		}
+
 		if ($this->data["tel_fixe"]!="")
 		  { $tel=$this->data["tel_fixe"]; }
 		else if ($this->data["tel_portable"]!="")

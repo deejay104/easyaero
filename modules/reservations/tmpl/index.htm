@@ -152,10 +152,11 @@
 					dataType: 'JSON',
 					success : function(response)
 					{
-						if (response.result=="NOK")
+						if (response.status!=200)
 						{
-							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
-							console.log(response.value);
+//							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
+//							console.log(response.value);
+							showToast("Mise à jour",response.value,"error");
 							revertFunc();
 						}
 					},
@@ -173,10 +174,9 @@
 					dataType: 'JSON',
 					success : function(response)
 					{
-						if (response.result=="NOK")
+						if (response.status!=200)
 						{
-							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
-							console.log(response.value);
+							showToast("Mise à jour",response.value,"error");
 							revertFunc();
 						}
 					},

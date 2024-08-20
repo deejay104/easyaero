@@ -44,14 +44,35 @@
 	{
 		$resa->uid_ressource=$ress;
 	}
-	$ret=$resa->Save();
 
 	$r=array();
-	$r["result"]="OK";
-	if ($ret!="")
+	$r["status"]=200;
+
+	if ($MyOpt["AllowUpdateAllCalendar"]=="off")
 	{
-		$r["result"]="NOK";
-		$r["value"]=$ret;
+		if (($resa->uid_pilote!=$gl_uid) && ($resa->uid_instructeur!=$gl_uid))
+		{
+			$r["status"]=401;
+			$r["value"]="Modification non autorisée";
+		}
 	}
+
+	if ($r["status"]==200)
+	{
+		$ret=$resa->Save();
+		if (count($ret)==0)
+		{
+			$r["status"]=200;
+			$r["result"]="OK";
+			$r["value"]="";
+		}
+		else
+		{
+			$r["status"]=500;
+			$r["result"]="NOK";
+			$r["value"]=$ret;
+		}	
+	}
+
 	echo json_encode($r);
 ?>

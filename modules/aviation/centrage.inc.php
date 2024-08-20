@@ -108,6 +108,9 @@
 	  }
 
 	// Affiche la liste des places de l'avion
+	$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"));
+
+
 	$tot=0;
 	foreach($tabplace as $k=>$tv)
 	  {
@@ -118,10 +121,13 @@
 		$tmpl_x->assign("passager_unite", $MyOpt["unitPoids"]);
 		$coef=((isset($tv["coef"])) && ($tv["coef"]>0)) ? $tv["coef"] : 1;
 
+		$poids=0;
 
 		// Liste des pilotes
 		if (isset($tv["type"]))
 		{
+			$poids=(is_numeric($tabplace[$k]["poids"]) ? $tabplace[$k]["poids"] : 0);
+			$poids=round($poids*$coef,0);
 			if ( ($tv["type"]=="pilote") || ($tv["type"]=="copilote") || ($tv["type"]=="passager") )
 			{
 				$tmpl_x->assign("chk_pax", "");
@@ -131,7 +137,6 @@
 					$tmpl_x->assign("chk_pax", "selected");
 				  }
 
-				$lst=ListActiveUsers($sql,"prenom,nom",array("TypePilote"));
 
 				foreach($lst as $i=>$tmpuid)
 				{
@@ -145,7 +150,7 @@
 					if ( (isset($form_passager_pilote[$k])) && ($form_passager_pilote[$k]==$resusr->id) )
 					{
 						$tmpl_x->assign("chk_pilote", "selected");
-						if ($tv["poids"]=="")
+						if (($tv["poids"]=="") || ($tv["poids"]==0))
 						  {
 							$tabplace[$k]["poids"]=$resusr->data["poids"];
 						  }
@@ -159,7 +164,7 @@
 						if (!isset($form_passager_pilote[$k]) || ($form_passager_pilote[$k]==""))
 						{
 							$tmpl_x->assign("chk_pilote", "selected");
-							if ((!isset($tv["poids"])) || ($tv["poids"]==""))
+							if ((!isset($tv["poids"])) || ($tv["poids"]=="") || ($tv["poids"]==0))
 							  {
 								$tabplace[$k]["poids"]=$resusr->data["poids"];
 							  }
@@ -180,18 +185,20 @@
 			{
 				if (isset($tabplace[$k]["poids"]))
 				{
-					$tmpl_x->assign("passager_unite", $MyOpt["unitVol"]." (=".round($tabplace[$k]["poids"]*$coef,0)." ".$MyOpt["unitPoids"].")");
+					$poids=round($tabplace[$k]["poids"]*$coef*(($resavion["typegauge"]=="G") ? 3.78541 : 1),0);
+					$tmpl_x->assign("passager_unite", $resavion["typegauge"]." (=".$poids." ".$MyOpt["unitPoids"].")");
 				}
 				else
 				{
-					$tmpl_x->assign("passager_unite", $MyOpt["unitVol"]." (=0 ".$MyOpt["unitPoids"].")");
+					$poids=0;
+					$tmpl_x->assign("passager_unite", $resavion["typegauge"]." (=0 ".$MyOpt["unitPoids"].")");
 				}
 			}
 		}
 		if (isset($tabplace[$k]["poids"]))
 		{
 			$tmpl_x->assign("passager_poids", $tabplace[$k]["poids"]);
-			$tot=$tot+round($tabplace[$k]["poids"]*$coef,0);
+			$tot=$tot+$poids;
 		}
 		else
 		{

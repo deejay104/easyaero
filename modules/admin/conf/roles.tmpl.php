@@ -67,7 +67,6 @@ $tabRoles["AccesConfigReferences"]="Accès à la page de configuration de la lis
 $tabRoles["AccesConfigRefEnac"]="Accès à la page de configuration de la liste des références ENAC (Synthèse de vol)";
 
 
-
 $tabRoles["AffUserComptes"]="Afficher le solde du compte sur la fiche du membre";
 $tabRoles["AffUserHeures"]="Afficher les heure de vol sur la fiche du membre";
 

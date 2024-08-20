@@ -166,7 +166,7 @@
 // ---- Affiche les messages d'erreurs
 	if ($msg_err!="")
 	{ 
-		// affInformation($msg_err,"error");
+		affInformation($msg_err,"error");
 	}
 	
 

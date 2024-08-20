@@ -187,6 +187,15 @@
 				$resa["resa"]->horafin=$form_horafin;
 			}
 		}
+
+		if ($MyOpt["AllowUpdateAllCalendar"]=="off")
+		{
+			if (($resa["resa"]->uid_pilote!=$gl_uid) && ($resa["resa"]->uid_instructeur!=$gl_uid))
+			{
+				$ok=3;
+				$msg_err="Modification non autorisée";
+			}
+		}		
 	}
 
 // ---- Supprime la réservation

@@ -56,12 +56,12 @@
 // ---- Charge les informations de l'avion
 	if ($id>0)
 	{
-		$query="SELECT cal.dte_deb, cal.dte_fin,avion.immatriculation,avion.tolerance,avion.centrage FROM ".$MyOpt["tbl"]."_calendrier AS cal LEFT JOIN ".$MyOpt["tbl"]."_ressources AS avion ON cal.uid_avion=avion.id WHERE cal.id='$id'";
+		$query="SELECT cal.dte_deb, cal.dte_fin,avion.immatriculation,avion.tolerance,avion.centrage,avion.typegauge FROM ".$MyOpt["tbl"]."_calendrier AS cal LEFT JOIN ".$MyOpt["tbl"]."_ressources AS avion ON cal.uid_avion=avion.id WHERE cal.id='$id'";
 		$resvol=$sql->QueryRow($query);
 	}
 	else if ($rid>0)
 	{
-		$query="SELECT avion.immatriculation,avion.tolerance,avion.centrage FROM ".$MyOpt["tbl"]."_ressources AS avion WHERE id='$rid'";
+		$query="SELECT avion.immatriculation,avion.tolerance,avion.centrage,avion.typegauge FROM ".$MyOpt["tbl"]."_ressources AS avion WHERE id='$rid'";
 		$resvol=$sql->QueryRow($query);
 	}
 	else
@@ -169,8 +169,8 @@
 	imageline($img,$t[0],$h-23,$t[0],$h-17,$gris);
 	imagestring($img, 2, $t[0]-8, $h-17, "$minx", $textcolor);
 
-	imagefilledpolygon($img, $affenv, count($env)/2, $white);
-	imagepolygon($img, $affenv, count($env)/2, $black);
+	imagefilledpolygon($img, $affenv,  $white);
+	imagepolygon($img, $affenv,  $black);
 
 	// Affiche le devis
 	$xx=0;
@@ -183,6 +183,15 @@ $i=0;
 		if (!isset($v["poids"])) { $v["poids"]=0; }
 		if (!isset($v["bras"])) { $v["bras"]=0; }
 		$coef=($v["coef"]>0) ? $v["coef"] : 1;
+
+		if ($v["type"]=="essence")
+		{
+			if ($resvol["typegauge"]=="G")
+			{
+				$coef=$coef*3.78541;
+			}
+		}
+
 		$xx=$xx+$v["poids"]*$coef*$v["bras"];
 		$yy=$yy+round($v["poids"]*$coef,0);
 	}
