@@ -190,7 +190,7 @@
 
 		if ($MyOpt["AllowUpdateAllCalendar"]=="off")
 		{
-			if (($resa["resa"]->uid_pilote!=$gl_uid) && ($resa["resa"]->uid_instructeur!=$gl_uid))
+			if (($resa["resa"]->uid_pilote!=$gl_uid) && ($resa["resa"]->uid_instructeur!=$gl_uid) && (!GetDroit("ModifReservations")))
 			{
 				$ok=3;
 				$msg_err="Modification non autorisée";

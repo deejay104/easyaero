@@ -77,6 +77,9 @@ $tabRoles["ModifUserIdCpt"]="Modifier le compte de saisie";
 $tabRoles["ModifUserDisponibilite"]="Modifier les disponibilités";
 $tabRoles["ModifUserDteInscription"]="Modifier la date d'inscription";
 
+$tabRoles["ModifReservations"]="Autorise la modification de toutes les réservations";
+
+
 $tabRoles["CreeRessource"]="Créer une nouvelle ressource (avion)";
 $tabRoles["ModifRessourceSauve"]="Sauvegarde une ressource (avion)";
 $tabRoles["ModifRessource"]="Modifier les ressources (avion)";
