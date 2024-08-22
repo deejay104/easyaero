@@ -145,6 +145,7 @@ class compte_class{
 								// Vérifie le montant
 								preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$v["montant"],$t);
 								$m=$t[1].".".$t[2];
+								$m=round($m,2);
 								// Créé les lignes de mouvement
 								$this->mvt[$i]["uid"]=$v["tiers"];
 								$this->mvt[$i]["tiers"]=($ventilation["ventilation"]=="debiteur") ? $d : $c;
@@ -159,22 +160,22 @@ class compte_class{
 					}
 					
 					// Complète s'il y a un reste
-					if ($tot["debiteur"]<>0)
+					if (round($tot["debiteur"],2)<>0)
 					{
 						$this->mvt[$i]["uid"]=$d;
 						$this->mvt[$i]["tiers"]=$c;
-						$this->mvt[$i]["montant"]=-$tot["debiteur"];
+						$this->mvt[$i]["montant"]=-round($tot["debiteur"],2);
 						$this->mvt[$i]["poste"]=$poste;
 						$this->mvt[$i]["facture"]=$facture;
 						$this->mvt[$i]["rembfact"]=$rembfact;
 						$i=$i+1;
 					}
 
-					if ($tot["crediteur"]<>0)
+					if (round($tot["crediteur"],2)<>0)
 					{
 						$this->mvt[$i]["uid"]=$c;
 						$this->mvt[$i]["tiers"]=$d;
-						$this->mvt[$i]["montant"]=$tot["crediteur"];
+						$this->mvt[$i]["montant"]=round($tot["crediteur"],2);
 						$this->mvt[$i]["poste"]=$poste;
 						$this->mvt[$i]["facture"]=$facture;
 						$this->mvt[$i]["rembfact"]=$rembfact;
