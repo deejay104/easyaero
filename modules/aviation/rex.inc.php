@@ -53,6 +53,7 @@
 	$lst=ListRex($sql,array());
 
 	$tabValeur=array();
+
 	foreach($lst as $i=>$d)
 	{
 		$rex=new rex_class($d["id"],$sql);

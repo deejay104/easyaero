@@ -47,7 +47,7 @@ class rex_class extends objet_core
 		"planaction" => Array("type" => "text" ),
 		"categorie" => Array("type" => "varchar", "len"=>30 ),
 		"nature" => Array("type" => "varchar", "len"=>30 ),
-		"mto" => Array("type" => "varchar", "len"=>30 ),
+		"mto" => Array("type" => "varchar", "len"=>250 ),
 		"environnement" => Array("type" => "varchar","len"=>30 ),
 		"phase" => Array("type" => "varchar","len"=>30 ),
 		"typevol" => Array("type" => "varchar","len"=>30 ),
@@ -65,24 +65,29 @@ class rex_class extends objet_core
 	function __construct($id=0,$sql="")
 	{
 		global $gl_uid;
-		
-		$this->data["titre"] = "";
-		$this->data["status"] = "new";
-		$this->data["description"] = "";
-		$this->data["commentaire"] = "";
-		$this->data["synthese"] = "";
-		$this->data["planaction"] = "";
-		$this->data["categorie"] = "";
-		$this->data["nature"] = "";
-		$this->data["mto"] = "";
-		$this->data["environnement"] = "";
-		$this->data["phase"] = "";
-		$this->data["typevol"] = "";
-		$this->data["typeevt"] = "";
-		$this->data["uid_avion"] = 0;
-		$this->data["risque"] = "";
-		$this->data["dte_rex"] = date("Y-m-d");
-		$this->data["actif"] = "oui";
+	
+		if ($id==0)
+		{
+			$curl = curl_init();
+			curl_setopt_array($curl, [
+			  CURLOPT_URL => 'https://aviationweather.gov/api/data/metar?ids=LFST',
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_ENCODING => '',
+			  CURLOPT_MAXREDIRS => 10,
+			  CURLOPT_TIMEOUT => 0,
+			  CURLOPT_FOLLOWLOCATION => true,
+			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			  CURLOPT_CUSTOMREQUEST => 'GET',
+			  CURLOPT_HTTPHEADER => ['X-API-Key: ']
+			]);
+			
+			$metar = curl_exec($curl);
+			curl_close($curl);
+	
+			$this->fields["mto"]["default"]=$metar;
+		}		
+
+		$this->fields["dte_rex"]["default"]=date("Y-m-d");
 
 		parent::__construct($id,$sql);
 	}	

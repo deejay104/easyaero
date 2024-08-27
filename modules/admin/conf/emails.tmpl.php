@@ -163,4 +163,23 @@ A bientôt
 // *****************************************************************
 
 
+// *****************************************************************
+$tabMails["rex_create"]=Array
+(
+	"titre"=>"Nouveau REX",
+	"balise"=>"id,num,type",
+	"mail"=>
+"Bonjour,
+
+Un nouveau REX a été enregistré.
+
+Détail :
+".$MyOpt["host"]."/aviation/rexdetail?id={id}
+
+A bientôt
+"
+);
+// *****************************************************************
+
+
 ?>

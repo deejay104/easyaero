@@ -50,12 +50,31 @@
 			if ($id==0)
 			{
 				$id=$rex->id;
+
+				$msg_confirmation.="Notification valideur.<BR>";
+
+				$tabvar=array();
+				$tabvar["id"]=$id;
+
+				$lst=ListActiveUsers($sql,"",array("ModifRexStatus"),"non");
+				foreach($lst as $i=>$uid)
+				{
+					$usr = new user_class($uid,$sql,false,true);
+					if ($usr->data["mail"]!="")
+					{
+						$tabMail[]=$usr->data["mail"];
+						SendMailFromFile("",$usr->data["mail"],array(),"",$tabvar,"rex_create","");
+						$msg_confirmation.=$usr->data["mail"].", ";
+
+					}
+				}
+		
 			}
 		}
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
-// ---- Notifer
+// ---- Notifier
 	if ($fonc=="notifier")
 	{
 		$rex=new rex_class($id,$sql);
@@ -90,7 +109,7 @@
 		$typeaff="form";
 		$tmpl_x->parse("corps.form_submit");
 	}
-	
+
 // ---- Affiche les informations
 	$rex=new rex_class($id,$sql);
 	$tmpl_x->assign("id",$id);
@@ -102,7 +121,17 @@
 	
 	$ress=new ress_class($rex->data["uid_avion"],$sql);
 	$tmpl_x->assign("form_avion",$ress->Aff("immatriculation"));
-	
+
+// ---- Affiche les blocs
+	if (GetDroit("ModifRexSynthese"))
+	{
+		$tmpl_x->parse("corps.evaluation");
+	}
+	if ((GetDroit("ModifRexSynthese")) || ($rex->val("status")!="new"))
+	{
+		$tmpl_x->parse("corps.conclusion");
+	}
+
 // ---- Messages
 	if ($msg_erreur!="")
 	{
