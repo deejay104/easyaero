@@ -171,7 +171,7 @@ class synthese_class extends objet_core
 		"themes" => Array("type" => "text"),
 		"bilan_gen" => Array("type" => "text"),
 
-		"mto" => Array("type" => "varchar","len"=>50),
+		"mto" => Array("type" => "varchar","len"=>200),
 
 		"info_1" => Array("type" => "radio", "default" => "NA"),
 		"info_2" => Array("type" => "radio", "default" => "NA"),
@@ -234,10 +234,28 @@ class synthese_class extends objet_core
 	# Constructor
 	function __construct($id=0,$sql="")
 	{
-		global $gl_uid;
+		global $gl_uid,$MyOpt;
 
-		$this->data["idvol"]=0;
-		$this->data["status"]="edit";
+		if ($id==0)
+		{
+			$curl = curl_init();
+			curl_setopt_array($curl, [
+			  CURLOPT_URL => 'https://aviationweather.gov/api/data/metar?ids='.$MyOpt["oacimetar"],
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_ENCODING => '',
+			  CURLOPT_MAXREDIRS => 10,
+			  CURLOPT_TIMEOUT => 0,
+			  CURLOPT_FOLLOWLOCATION => true,
+			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			  CURLOPT_CUSTOMREQUEST => 'GET',
+			  CURLOPT_HTTPHEADER => ['X-API-Key: ']
+			]);
+			
+			$metar = curl_exec($curl);
+			curl_close($curl);
+	
+			$this->fields["mto"]["default"]=$metar;
+		}	
 
 		parent::__construct($id,$sql);
 	}	

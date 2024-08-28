@@ -64,13 +64,13 @@ class rex_class extends objet_core
 	# Constructor
 	function __construct($id=0,$sql="")
 	{
-		global $gl_uid;
+		global $gl_uid,$MyOpt;
 	
 		if ($id==0)
 		{
 			$curl = curl_init();
 			curl_setopt_array($curl, [
-			  CURLOPT_URL => 'https://aviationweather.gov/api/data/metar?ids=LFST',
+			  CURLOPT_URL => 'https://aviationweather.gov/api/data/metar?ids='.$MyOpt["oacimetar"],
 			  CURLOPT_RETURNTRANSFER => true,
 			  CURLOPT_ENCODING => '',
 			  CURLOPT_MAXREDIRS => 10,

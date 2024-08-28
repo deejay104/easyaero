@@ -141,5 +141,8 @@ $MyOptHelp["tabcolresa"]["maintplan"]="Couleur pour ses maintenance planifiée";
 $MyOptTmpl["updateBloc"]="";
 $MyOptHelp["updateBloc"]="Maintiens le temps bloc égale à celui de l'horametre (on=activé)";
 
+// Unité
+$MyOptTmpl["oacimetar"]="LFST";
+$MyOptHelp["oacimetar"]="Code OACI du terrain avec METAR le plus proche";
 
 ?>
