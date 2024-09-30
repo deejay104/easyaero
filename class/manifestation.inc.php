@@ -56,6 +56,7 @@ class manip_class extends objet_core
 			{
 				$this->tabList["type"]["fr"][strtolower($sql->data["groupe"])]=$sql->data["description"];
 				$this->tabList["type"]["en"][strtolower($sql->data["groupe"])]=$sql->data["description"];
+				$this->tabList["type"]["ca"][strtolower($sql->data["groupe"])]=$sql->data["description"];
 			}
 		}
 		

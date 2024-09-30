@@ -146,7 +146,7 @@
 	// {
 	  	// $tmpl_hora = new XTemplate (MyRep("horametre.htm"));
 	// }
-	  	$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
+	$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
 
 // ---- Initialise les variables
 	$ok_aff=0;
@@ -319,24 +319,21 @@
 
 	$tmpl_x->assign("form_tpsestime", $resa["resa"]->tpsestime);
 
-	$tmpl_hora->assign("form_tpsreel", ($resa["resa"]->tpsreel>0) ? $resa["resa"]->tpsreel : "");
-	$tmpl_hora->assign("form_horadeb", ($resa["resa"]->horadeb>0) ? $resa["resa"]->horadeb : "" );
-	$tmpl_hora->assign("form_horafin", ($resa["resa"]->horafin>0) ? $resa["resa"]->horafin : "");
+	$tmpl_x->assign("form_tpsreel", ($resa["resa"]->tpsreel>0) ? $resa["resa"]->tpsreel : "");
+	$tmpl_x->assign("form_horadeb", ($resa["resa"]->horadeb>0) ? $resa["resa"]->horadeb : "" );
+	$tmpl_x->assign("form_horafin", ($resa["resa"]->horafin>0) ? $resa["resa"]->horafin : "");
 
 	// Affiche l'horamètre
 	$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 	$t=$resr->CalcHorametre($resa["resa"]->horadeb,$resa["resa"]->horafin);
 	
-	$tmpl_hora->assign("tps_hora", (($t>0) ? AffTemps($t) : "0h 00"));
+	$tmpl_x->assign("tps_hora", (($t>0) ? AffTemps($t) : "0h 00"));
 
 	if ($MyOpt["updateBloc"]=="on")
 	{
-		$tmpl_hora->parse("aff_horametre.updateBloc");
+		$tmpl_x->parse("updateBloc");
 	}
 	
-	$tmpl_hora->parse("aff_horametre");
-	$tmpl_x->assign("aff_horametre", $tmpl_hora->text("aff_horametre"));
-
 	// Description de la réservation
 	$tmpl_x->assign("form_description", $resa["resa"]->description);
 
@@ -353,6 +350,10 @@
 	$tmpl_x->assign("form_carbavant", $resa["resa"]->carbavant);
 	$tmpl_x->assign("form_carbapres", $resa["resa"]->carbapres);
 	$tmpl_x->assign("form_prixcarbu", ($resa["resa"]->prixcarbu>0) ? $resa["resa"]->prixcarbu : "0");
+
+
+	$tmpl_x->assign("lang_devise", $MyOpt["devise"]);
+	$tmpl_x->assign("lang_volume", $MyOpt["unitVol"]);
 
 	// Texte d'acceptation
 	// if ($MyOpt["ChkValidResa"]=="on")

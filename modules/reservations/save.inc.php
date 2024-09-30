@@ -97,8 +97,8 @@
 
 		if ($resa["resa"]->edite=='non')
 		{
-		  	$msg_err="<u>Réservation déjà saisie en compta</u>.<br />";
-		  	$msg_err.="Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta.<br />";
+		  	$msg_err="<u>".$tabLang["lang_alreadychecked"]."</u>.<br />";
+		  	$msg_err.=$tabLang["lang_alreadychecked_msg"]."<br />";
 			affInformation($msg_err,"error");
 			$ok=3;
 		}
@@ -106,9 +106,9 @@
 		// Vérifie si le pilote est laché sur l'avion
 		if ((!$resa["pilote"]->CheckLache($form_uid_ress)) && ($form_uid_instructeur==0))
 		{
-		  	$msg_err="<u>Réservation impossible</u>.<br />";
-		  	$msg_err.="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
-		  	$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
+		  	$msg_err="<u>".$tabLang["lang_forbiden"]."</u><br />";
+		  	$msg_err.=$tabLang["lang_nocheck"]."<br />";
+		  	$msg_err.=$tabLang["lang_instructorneeded"]."<br />";
 			affInformation($msg_err,"error");
 			$ok=3;
 		}
@@ -116,8 +116,8 @@
 		// Vérifie si le pilote est autorisé
 		if (!$resa["pilote"]->CheckDroit("TypePilote"))
 		{ 
-		  	$msg_err="<u>Réservation impossible</u>.<br />";
-			$msg_err.="Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion<BR>";
+		  	$msg_err="<u>".$tabLang["lang_forbiden"]."</u><br />";
+			$msg_err.=$tabLang["lang_forbiden_msg"]."<BR>";
 			affInformation($msg_err,"error");
 			$ok=3;
 		}

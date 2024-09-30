@@ -1,7 +1,7 @@
 <?php
 	$tabLang["lang_schedule"]="Schedules";
-	$tabLang["lang_bapteme"]="Baptèmes";
-	$tabLang["lang_meeting"]="Meetings";
+	$tabLang["lang_bapteme"]="Initiation";
+	$tabLang["lang_meeting"]="Events";
 	$tabLang["lang_account"]="Account";
 	$tabLang["lang_facturation"]="Billing";
 	$tabLang["lang_club"]="Management";

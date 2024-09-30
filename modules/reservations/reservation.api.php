@@ -72,7 +72,7 @@
 			
 			if ($d["resa"]=="instructeur")
 			{
-				$m.="La présence d'un instructeur est obligatoire";
+				$m.=$tabLang["lang_instructorneeded"];
 				$result["instructeur"]=1;
 				if ($uid_instructeur==0)
 				{
@@ -133,7 +133,7 @@
 	if ($isSoldeNeg)
 	{
 		$ret=array();
-		$ret["title"]="Le compte du pilote est NEGATIF";
+		$ret["title"]=$tabLang["lang_nomoney"];
 		$ret["message"]="Solde du compte ".$solde." €.<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 		$ret["status"]="error";
 		$ret["field"]="";
@@ -144,8 +144,8 @@
 	if ($resa->edite=='non')
 	{
 		$ret=array();
-		$ret["title"]="Réservation déjà saisie en compta";
-		$ret["message"]="Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta";
+		$ret["title"]=$tabLang["lang_alreadychecked"];
+		$ret["message"]=$tabLang["lang_alreadychecked_msg"];
 		$ret["status"]="information";
 		$ret["field"]="";
 		$result["checks"][]=$ret;
@@ -160,9 +160,9 @@
 		if ($uid_instructeur==0)
 		{
 			$ret=array();
-			$ret["title"]="Attention";
-			$msg_err ="Le pilote sélectionné n'est pas laché sur cet avion.<br />";
-			$msg_err.="Il n'est pas possible de réserver sans instructeur.<br />";
+			$ret["title"]=$tabLang["lang_warning"];
+			$msg_err =$tabLang["lang_nocheck"];
+			$msg_err.=$tabLang["lang_instructorneeded"];
 			$ret["message"]=$msg_err;
 			$ret["status"]="warning";
 			$ret["field"]="form_uid_instructeur";
@@ -175,8 +175,8 @@
 	if (!$pilote->CheckDroit("TypePilote"))
 	{ 
 		$ret=array();
-		$ret["title"]="Réservation impossible";
-		$ret["message"]="Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion";
+		$ret["title"]=$tabLang["lang_forbiden"];
+		$ret["message"]=$tabLang["lang_forbiden_msg"];
 		$ret["status"]="error";
 		$result["checks"][]=$ret;
 		$valid=0;
@@ -205,7 +205,7 @@
 		if ($accept!="oui")
 		{
 			$valid=0;
-			$result["checks"][]=array("message"=>"Vous devez accepter les conditions de vol","status"=>"info","field"=>"ValidResa");
+			$result["checks"][]=array("message"=>$tabLang["lang_acceptcond"],"status"=>"info","field"=>"ValidResa");
 		}
 	}
 	else
@@ -228,7 +228,7 @@
 		if (($id>0) && (($tpsreel!="") || ($horadeb!="") || ($horafin!="")))
 		{
 			$resa->Save();
-			$result["checks"][]=array("title"=>"","message"=>"Les informations d'horamètre ont été sauvegardées","status"=>"ok");
+			$result["checks"][]=array("title"=>"","message"=>$tabLang["lang_horasaved"],"status"=>"ok");
 		}
 	}
 

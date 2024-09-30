@@ -58,14 +58,17 @@ class user_class extends user_core
 		"type"=>array(
 			"fr"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
 			"en"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
+			"ca"=>array('pilote'=>'Pilote','eleve'=>'Elève','instructeur'=>'Instructeur','membre'=>'Membre','invite'=>'Invité','employe'=>'Employé'),
 		),
 		"disponibilite"=>array(
 			"fr"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
 			"en"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
+			"ca"=>array('dispo'=>'Disponible','occupe'=>'Occupé'),
 		),
 		"sexe"=>array(
 			"fr"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné"),
-			"en"=>array("M"=>"Male","F"=>"Female","NA"=>"Non set")
+			"en"=>array("M"=>"Male","F"=>"Female","NA"=>"Non set"),
+			"ca"=>array("M"=>"Masculin","F"=>"Féminin","NA"=>"Non renseigné"),
 		),
 
 			

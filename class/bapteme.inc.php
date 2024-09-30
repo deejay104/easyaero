@@ -54,7 +54,8 @@ class bapteme_class extends objet_core
 		"type"=>array("btm"=>"Baptème","vi"=>"VI"),
 		"nb"=>array(
 			"fr"=>array("1"=>"1","2"=>"2","3"=>"3"),
-			"en"=>array("1"=>"1","2"=>"2","3"=>"3")
+			"en"=>array("1"=>"1","2"=>"2","3"=>"3"),
+			"ca"=>array("1"=>"1","2"=>"2","3"=>"3"),
 		)
 	);
 

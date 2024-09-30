@@ -19,8 +19,8 @@
 		<div class="border-top grid-margin stretch-card">
 			<div class="d-flex ">
 				<div class="ml-4 small">
-					Dernière mise à jour : <label title="{info_historique}">{info_maj}</label><br />
-					Potentiel restant à la prise en charge : {potentiel}
+					{lang_lastupdate} : <label title="{info_historique}">{info_maj}</label><br />
+					{lang_potentiel} : {potentiel}
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="form_uid_debite" class="col-lg-3 col-form-label" title="Choisissez un autre compte à débiter. Par exemple dans le cas d'un baptème, c'est le compte du club qui est débité">Débité (si différent)</label>
+							<label for="form_uid_debite" class="col-lg-3 col-form-label" title="{lang_explainaccount}">{lang_account}</label>
 							<div class="col-lg-6">
 								{form_lstdebite}
 							</div>
@@ -157,8 +157,19 @@
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h4>Saisi de l'horamètre</h4>
-						{aff_horametre}
+						<h4>{lang_sethora}</h4>
+						<div class="form-group row">						
+							<label for="horadebut" class="col-lg-5 col-form-label">{lang_horastart}</label>
+							<div class="col-lg-5"><INPUT id="horadeb" class="form-control form-input"  name="form_horadeb" value="{form_horadeb}" placeholder="0" style='width:150px!important;' type="number" step="0.01" OnChange="calcHorametre();"></div>
+						</div>						
+						<div class="form-group row">				
+							<label for="horafin" class="col-lg-5 col-form-label">{lang_horaend}</label>
+							<div class="col-lg-5"><INPUT id="horafin" class="form-control form-input" name="form_horafin" value="{form_horafin}" placeholder="0" style='width:150px!important;' type="number" step="0.01" OnChange="calcHorametre();"> =&nbsp;<div id='tpshora' style='display:inline-block;'>{tps_hora}</div></div>
+						</div>
+						<div class="form-group row">				
+							<label for="tpsreel" class="col-lg-5 col-form-label">{lang_realtime}</label>
+							<div class="col-lg-5"><INPUT id="tpsreel" class="form-control form-input" type="number" name="form_tpsreel" value="{form_tpsreel}" placeholder="0" style='width:150px!important;' > (en minutes)</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -167,28 +178,28 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="form-group row">
-							<label for="potentiel" class="col-lg-5  col-form-label">Potentiel (fin de vol)</label>
+							<label for="potentiel" class="col-lg-5  col-form-label">{lang_remains}</label>
 							<div class="col-lg-5">{form_potentiel}</div>
 						</div>
 						<div class="form-group row">
-							<label for="tpsvols" class="col-lg-5 col-form-label">Temps de vol (fin de vol)</label>
+							<label for="tpsvols" class="col-lg-5 col-form-label">{lang_elapsetime}</label>
 							<div class="col-lg-5">{form_tpsvol}</div>
 						</div>
 						<div class="form-group row">
-							<label for="potentiel" class="col-lg-5 col-form-label" title="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant">Potentiel en fin de vol (optionel)</label>
+							<label for="potentiel" class="col-lg-5 col-form-label" title="{lang_change_explain}">{lang_changehora}</label>
 							<div class="col-lg-5"><INPUT type="number" class="form-control form-input" name="form_potentielh" value="{form_potentielh}" style='width: 80px!important;'> h <INPUT type="number" class="form-control form-input" name="form_potentielm" value="{form_potentielm}" style='width: 80px!important;'></div>
 						</div>
 						<div class="form-group row">
-							<label for="carburant" class="col-lg-5 col-form-label">Carburant ajouté Avant</label>
-							<div class="col-lg-5"><INPUT type="number" class="form-control form-input" name="form_carbavant" value="{form_carbavant}" style='width: 80px!important;'> L,</div>
+							<label for="carburant" class="col-lg-5 col-form-label">{lang_carbbefore}</label>
+							<div class="col-lg-5"><INPUT type="number" class="form-control form-input" name="form_carbavant" value="{form_carbavant}" style='width: 80px!important;'> {lang_volume},</div>
 						</div>
 						<div class="form-group row">
-							<label for="carburant" class="col-lg-5 col-form-label">Carburant ajouté Après</label>
-							<div class="col-lg-5"> <INPUT type="number" class="form-control form-input" name="form_carbapres" value="{form_carbapres}" style='width: 80px!important;'> L</div>
+							<label for="carburant" class="col-lg-5 col-form-label">{lang_carbafter}</label>
+							<div class="col-lg-5"> <INPUT type="number" class="form-control form-input" name="form_carbapres" value="{form_carbapres}" style='width: 80px!important;'> {lang_volume}</div>
 						</div>
 						<div class="form-group row">
-							<label for="carburant" class="col-lg-5 col-form-label">Prix total Carburant</label>
-							<div class="col-lg-5"><INPUT name="form_prixcarbu" class="form-control form-input" value="{form_prixcarbu}" type="number" style='width: 80px!important;'> €</div>
+							<label for="carburant" class="col-lg-5 col-form-label">{lang_carbprice}</label>
+							<div class="col-lg-5"><INPUT name="form_prixcarbu" class="form-control form-input" value="{form_prixcarbu}" type="number" style='width: 80px!important;'> {lang_devise}</div>
 						</div>
 					</div>
 				</div>
@@ -468,6 +479,38 @@ function checkData(submit=false)
 	});
 }
 
+function calcHorametre()
+{
+	var id=$("#avion").val();
+	var horadeb=$("#horadeb").val();
+	var horafin=$("#horafin").val();
+	
+	$(function() {
+		$.ajax({
+			url:'/api/v1/ressources/gethora?id='+id+'&deb='+horadeb+'&fin='+horafin,
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				$("#tpshora").html(response.aff);
+				if ($("#tpsreel").val()>0)
+				{
+<!-- BEGIN: updateBloc -->
+					$("#tpsreel").val(response.tps);
+<!-- END: updateBloc -->
+				}
+				else
+				{
+					$("#tpsreel").val(response.tps);
+				}
+			},
+			error : function(response)
+			{
+
+			}
+		});
+	});
+}
 
 </script>
 

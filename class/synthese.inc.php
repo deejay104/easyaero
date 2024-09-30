@@ -171,7 +171,7 @@ class synthese_class extends objet_core
 		"themes" => Array("type" => "text"),
 		"bilan_gen" => Array("type" => "text"),
 
-		"mto" => Array("type" => "varchar","len"=>200),
+		"mto" => Array("type" => "varchar","len"=>250),
 
 		"info_1" => Array("type" => "radio", "default" => "NA"),
 		"info_2" => Array("type" => "radio", "default" => "NA"),
@@ -196,38 +196,47 @@ class synthese_class extends objet_core
 		"status"=>array(
 			"fr"=>array('edit'=>'Rédaction','signed'=>'Signé','cancel'=>'Annulé'),
 			"en"=>array('edit'=>'Edit','signed'=>'Signed','cancel'=>'Canceled'),
+			"ca"=>array('edit'=>'Rédaction','signed'=>'Signé','cancel'=>'Annulé'),
 		),
 		"conclusion"=>array(
 			"fr"=>array('ok'=>'Validé','nok'=>'Non Validé'),
 			"en"=>array('ok'=>'Validé','nok'=>'Non Validé'),
+			"ca"=>array('ok'=>'Validé','nok'=>'Non Validé'),
 		),
 		"type" =>array(
 			"fr"=>array('dc'=>'Double Commande','solo'=>'Solo'),	
 			"en"=>array('dc'=>'Double Commande','solo'=>'Solo'),
+			"ca"=>array('dc'=>'Double Commande','solo'=>'Solo'),	
 		),
 		"module" => array(
 			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne'),
-			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne')
+			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne'),
+			"ca"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne'),
 		),
 		"info_1" =>array(
 			"fr"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 			"en"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),
+			"ca"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 		),
 		"info_2" =>array(
 			"fr"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 			"en"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),
+			"ca"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 		),
 		"info_3" =>array(
 			"fr"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 			"en"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),
+			"ca"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 		),
 		"info_4" =>array(
 			"fr"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 			"en"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),
+			"ca"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 		),
 		"info_5" =>array(
 			"fr"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 			"en"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),
+			"ca"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 		),
 	);
 
@@ -430,11 +439,13 @@ class exercice_conf_class extends objet_core
 	protected $tabList=array(
 		"module" => array(
 			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation'),
-			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation')
+			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation'),
+			"ca"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation'),
 		),
 		"type" => array(
 			"fr"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
-			"fr"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
+			"en"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
+			"ca"=>Array('peda'=>'Pédagogique','exercice'=>'Exercice','panne'=>'Panne'),
 		)
 	);
 }
@@ -460,6 +471,7 @@ class exercice_prog_class extends objet_core
 		"progression" =>array(
 			"fr"=>array('E'=>'Etude','A'=>'Acquis'),	
 			"en"=>array('E'=>'Etude','A'=>'Acquis'),
+			"ca"=>array('E'=>'Etude','A'=>'Acquis'),	
 		),
 	);
 }
@@ -490,10 +502,12 @@ class exercice_class extends objet_core
 		"progression" =>array(
 			"fr"=>array('V'=>'Non Vu','E'=>'Etude','A'=>'Acquis'),	
 			"en"=>array('V'=>'Non Vu','E'=>'Etude','A'=>'Acquis'),
+			"ca"=>array('V'=>'Non Vu','E'=>'Etude','A'=>'Acquis'),	
 		),
 		"progref" =>array(
 			"fr"=>array('V'=>'Non Vu','E'=>'Etude','A'=>'Acquis'),	
 			"en"=>array('V'=>'Non Vu','E'=>'Etude','A'=>'Acquis'),
+			"ca"=>array('V'=>'Non Vu','E'=>'Etude','A'=>'Acquis'),	
 		),
 	);
 }
@@ -718,6 +732,7 @@ class refenac_class extends objet_core
 		"module" => array(
 			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
 			"en"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
+			"ca"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','panne'=>'Panne','urgence'=>'Situation d\'urgence'),
 		),
 	);
 }
