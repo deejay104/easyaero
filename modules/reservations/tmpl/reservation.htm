@@ -452,25 +452,6 @@ function checkData(submit=false)
 				$("#"+result.checks[key].field).css("background-color","rgb(249, 229, 224)");
 			}
 		}
-
-/*
-		if (result.instructeur==1)
-		{
-			if (!showNone)
-			{
-				$("#form_uid_instructeur").find('option').get(0).remove();
-				showNone=true;
-			}
-		}
-		else
-		{
-			if (showNone)
-			{
-				$("#form_uid_instructeur").prepend('<option value="0">Aucun</option>');
-				showNone=false;
-			}
-		}
-*/	
 		
 		if ((result.valid==1) && (submit))
 		{

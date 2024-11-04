@@ -184,6 +184,16 @@
 
 	$result["edite"]=$resa->edite;
 
+	// Vérifie si l'utilisateur a le droit de modifier la réservation
+	if ($MyOpt["AllowUpdateAllCalendar"]=="off")
+	{
+		if (($resa->uid_pilote!=$gl_uid) && ($resa->uid_instructeur!=$gl_uid) && (!GetDroit("ModifReservations")))
+		{
+			$result["edite"]="non";
+			$valid=0;
+		}
+	}		
+
 
 	// Vérifie si on doit cocher la case d'acception des conditions
 

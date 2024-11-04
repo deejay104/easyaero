@@ -146,7 +146,7 @@
 	// {
 	  	// $tmpl_hora = new XTemplate (MyRep("horametre.htm"));
 	// }
-	$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
+	//$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
 
 // ---- Initialise les variables
 	$ok_aff=0;
