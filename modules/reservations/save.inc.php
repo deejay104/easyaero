@@ -122,7 +122,18 @@
 			$ok=3;
 		}
 
-		if ($resa["resa"]->edite!='non')
+		if ($MyOpt["AllowUpdateAllCalendar"]=="off")
+		{
+			if (!GetDroit("ModifReservations"))
+			{
+				if (($form_uid_pilote!=$gl_uid) && ($form_uid_instructeur!=$gl_uid))
+				{
+					$ok=3;
+				}
+			}
+		}
+
+		if (($resa["resa"]->edite!='non') && ($ok==1))
 		{
 		  	if ($ok==1)
 			{
@@ -186,16 +197,7 @@
 				$resa["resa"]->horadeb=$form_horadeb;
 				$resa["resa"]->horafin=$form_horafin;
 			}
-		}
-
-		if ($MyOpt["AllowUpdateAllCalendar"]=="off")
-		{
-			if (($resa["resa"]->uid_pilote!=$gl_uid) && ($resa["resa"]->uid_instructeur!=$gl_uid) && (!GetDroit("ModifReservations")))
-			{
-				$ok=3;
-				$msg_err="Modification non autorisée";
-			}
-		}		
+		}	
 	}
 
 // ---- Supprime la réservation

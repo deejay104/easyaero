@@ -436,10 +436,21 @@ function checkData(submit=false)
 		if (result.edite=="oui")
 		{
 			$(".form-input").attr('disabled', false);
+			$("#enregistrer").css("display","inline-block");
 		}
 		else
 		{
 			$(".form-input").attr('disabled', true);
+			$("#enregistrer").css("display","none");
+		}
+
+		if (result.upd_pilote=="non")
+		{
+			$("#form_uid_pilote").attr("disabled",true);
+		}
+		if (result.upd_instructeur=="non")
+		{
+			$("#form_uid_instructeur").attr("disabled",true);
 		}
 
 		for(var key in result.checks)
@@ -455,6 +466,8 @@ function checkData(submit=false)
 		
 		if ((result.valid==1) && (submit))
 		{
+			$("#form_uid_pilote").attr("disabled",false);
+			$("#form_uid_instructeur").attr("disabled",false);
 			reservation.submit();
 		}
 	});

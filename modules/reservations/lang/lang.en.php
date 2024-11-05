@@ -9,6 +9,8 @@
     $tabLang["lang_instructorneeded"]="An instructor is required.";
     $tabLang["lang_forbiden"]="Booking is forbiden";
     $tabLang["lang_forbiden_msg"]="The pilote is not allowed to book a plane";
+    $tabLang["lang_forbiden_other"]="This booking is for another pilot";
+    $tabLang["lang_forbiden_nochange"]="Pilot cannot be changed";
     $tabLang["lang_acceptcond"]="You must accept the flight condition";
     $tabLang["lang_horasaved"]="Flight informations were saved";
 

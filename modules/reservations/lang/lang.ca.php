@@ -9,6 +9,8 @@
     $tabLang["lang_instructorneeded"]="Il n'est pas possible de réserver sans instructeur.";
     $tabLang["lang_forbiden"]="Réservation impossible";
     $tabLang["lang_forbiden_msg"]="Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion";
+    $tabLang["lang_forbiden_other"]="Cette réservation est pour un autre pilote";
+    $tabLang["lang_forbiden_nochange"]="Il n'est pas possible de changer le pilote";
     $tabLang["lang_acceptcond"]="Vous devez accepter les conditions de vol";
     $tabLang["lang_horasaved"]="Les informations du Hobbs ont été sauvegardées";
 

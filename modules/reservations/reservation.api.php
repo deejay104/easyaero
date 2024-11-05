@@ -183,14 +183,39 @@
 	}
 
 	$result["edite"]=$resa->edite;
+	$result["uid_pilote"]=$resa->uid_pilote;
 
 	// Vérifie si l'utilisateur a le droit de modifier la réservation
+	$result["upd_pilote"]="oui";
+	$result["upd_instructeur"]="oui";
 	if ($MyOpt["AllowUpdateAllCalendar"]=="off")
 	{
-		if (($resa->uid_pilote!=$gl_uid) && ($resa->uid_instructeur!=$gl_uid) && (!GetDroit("ModifReservations")))
+		if (GetDroit("ModifReservations"))
+		{
+			$result["upd_pilote"]="oui";
+		}
+		else if ($resa->uid_pilote==0)
+		{
+			$result["upd_pilote"]="non";
+		}
+		else if ($resa->uid_pilote==$gl_uid)
+		{
+			$result["upd_pilote"]="non";
+		}
+		else if ($resa->uid_instructeur==$gl_uid)
+		{
+			$result["upd_pilote"]="non";
+			$result["upd_instructeur"]="non";
+		}
+		else if (($resa->uid_pilote!=$gl_uid) && ($resa->uid_instructeur!=$gl_uid))
 		{
 			$result["edite"]="non";
+			$result["upd_pilote"]="non";
 			$valid=0;
+		}
+		else
+		{
+			$result["upd_pilote"]="non";
 		}
 	}		
 
