@@ -58,11 +58,11 @@
 			"width"=>70
 		),
 		"poste"=>array(
-			"aff"=>"Poste",
+			"aff"=>$tabLang["lang_poste"],
 			"width"=>300
 		),
 		"cout"=>array(
-			"aff"=>"Cout",
+			"aff"=>$tabLang["lang_cost"],
 			"width"=>60
 		),
 		"right"=>array(
@@ -81,8 +81,12 @@
 			"aff"=>$tabLang["lang_delay"],
 			"width"=>90
 		),
+		"document"=>array(
+			"aff"=>$tabLang["lang_document"],
+			"width"=>70
+		),
 		"context"=>array(
-			"aff"=>"Contexte",
+			"aff"=>$tabLang["lang_contexte"],
 			"width"=>110
 		),
 		"action"=>array(
@@ -120,6 +124,8 @@
 		$tabValeur[$i]["recipient"]["aff"]=$ech->aff("recipient","form","form_data[".$id."]");
 		$tabValeur[$i]["delay"]["val"]=$ech->val("delai");
 		$tabValeur[$i]["delay"]["aff"]=$ech->aff("delai","form","form_data[".$id."]");
+		$tabValeur[$i]["document"]["val"]=$ech->val("document");
+		$tabValeur[$i]["document"]["aff"]=$ech->aff("document","form","form_data[".$id."]");
 		
 		$tabValeur[$i]["id"]["val"]=$id;
 		$tabValeur[$i]["action"]["val"]=$id;
@@ -132,7 +138,6 @@
 		$tabValeur[$i]["cout"]["aff"]=$ech->aff("cout","form","form_data[".$id."]");
 		$tabValeur[$i]["context"]["val"]=$ech->val("context");
 		$tabValeur[$i]["context"]["aff"]=$ech->aff("context","form","form_data[".$id."]");
-		
 	}
 
 	if ($order=="") { $order="context"; }

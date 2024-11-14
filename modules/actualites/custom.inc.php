@@ -69,7 +69,7 @@
 
 	  	$tmpl_custom->parse("custom.aff_reservation");
 		
-		
+		// Echeance Avions
 		$lstdte=VerifEcheance($sql,0,"ressources",true);
 	
 		$txt="";
