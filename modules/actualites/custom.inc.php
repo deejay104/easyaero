@@ -57,7 +57,8 @@
 	}  	
 	if (GetModule("aviation"))
 	{
-	  	$tmpl_custom->parse("custom.mod_aviation_detail");
+		// Réservation du jour
+		$tmpl_custom->parse("custom.mod_aviation_detail");
 
 		$debjour=($MyOpt["debjour"]!="") ? $MyOpt["debjour"] : "6";
 		$finjour=($MyOpt["finjour"]!="") ? $MyOpt["finjour"] : "22";
