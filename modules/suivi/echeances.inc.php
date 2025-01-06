@@ -140,6 +140,8 @@
 		$tabTitre["nom"]["width"]=250;
 		$tabTitre["echeance"]["aff"]="Echéance";
 		$tabTitre["echeance"]["width"]=350;
+		$tabTitre["solde"]["aff"]="Solde";
+		$tabTitre["solde"]["width"]=120;
 		$tabTitre["debiter"]["aff"]="<input type='checkbox' id='form_debite' OnClick='selectAll();'> Débiter";
 		$tabTitre["debiter"]["width"]=100;
 
@@ -160,6 +162,11 @@
 				$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
 				$tabValeur[$i]["echeance"]["val"]=$dte->Val();
 				$tabValeur[$i]["echeance"]["aff"]=$dte->Affiche();
+
+				$tabValeur[$i]["solde"]["val"]=$usr->CalcSolde();
+				$tabValeur[$i]["solde"]["aff"]=$usr->AffSolde()."&nbsp;&nbsp;";
+				$tabValeur[$i]["solde"]["align"]="right";
+		
 				$tabValeur[$i]["debiter"]["aff"]="<input type='checkbox' id='form_debite_".$id."' name='form_debite[".$id."]'>";
 
 				$tmpl_x->assign("form_uid",$id);
