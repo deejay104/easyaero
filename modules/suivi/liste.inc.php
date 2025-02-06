@@ -28,6 +28,7 @@
 // ---- Vérifie les variables
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
+	$dte=checkVar("dte","varchar",10,date("Y-m-d"));
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -63,8 +64,8 @@
 		$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
 		$tabValeur[$i]["nom"]["val"]=$usr->nom;
 		$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
-		$tabValeur[$i]["solde"]["val"]=$usr->CalcSolde();
-		$tabValeur[$i]["solde"]["aff"]=$usr->AffSolde()."&nbsp;&nbsp;";
+		$tabValeur[$i]["solde"]["val"]=$usr->CalcSolde($dte);
+		$tabValeur[$i]["solde"]["aff"]=$usr->AffSolde($dte)."&nbsp;&nbsp;";
 		$tabValeur[$i]["solde"]["align"]="right";
 
 		$s=$usr->CalcSoldeTemp();
@@ -87,6 +88,7 @@
 	if ($trie=="") { $trie="d"; }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+	$tmpl_x->assign("form_dte",$dte);
 
 // ---- Affecte les variables d'affichage
 	if (GetModule("aviation"))

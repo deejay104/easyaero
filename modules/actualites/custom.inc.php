@@ -83,12 +83,14 @@
 				{
 					$dte=new echeance_class($d["id"],$sql);
 					$ress=new ress_class($dte->uid,$sql);
-
-					$txt=$dte->Affiche().", du ".$ress->aff("immatriculation");
-					$tmpl_custom->assign("form_echeance_avion", $txt);
-					$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
-
-					$nb++;
+					if ($ress->actif=="oui")
+					{
+						$txt=$dte->Affiche().", du ".$ress->aff("immatriculation");
+						$tmpl_custom->assign("form_echeance_avion", $txt);
+						$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
+	
+						$nb++;	
+					}
 				}
 				else
 				{

@@ -288,16 +288,16 @@ class user_class extends user_core
 		return $ret;
 	}
 	
-	function AffSolde()
+	function AffSolde($dte="")
 	{
-		$s=$this->CalcSolde();
+		$s=$this->CalcSolde($dte);
 		return "<a href=\"index.php?mod=comptes&id=".$this->data["idcpt"]."\">".(($s<0) ? "<FONT color=red><B>".AffMontant($s)."</B></FONT>" : AffMontant($s))."</a>";
 	}
 
-	function CalcSolde()
+	function CalcSolde($dte="")
 	{
 		$sql=$this->sql;
-		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->data["idcpt"]."'";
+		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->data["idcpt"]."'".(($dte!="") ? " AND date_valeur<='".$dte."'" : "");
 		$res=$sql->QueryRow($query);
 
 		$solde=((is_numeric($res["total"])) ? $res["total"] : "0");

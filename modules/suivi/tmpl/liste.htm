@@ -8,6 +8,17 @@
 
 <!-- BEGIN: corps -->
 
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-inline">
+					Afficher les comptes en date du : <input id="form_dte" type="date" class='form-control' name="form_dte" value="{form_dte}"  OnChange="Reload();" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="row">
 	<div class="grid-margin stretch-card">
@@ -18,5 +29,13 @@
 		</div>
 	</div>
 </div>
+
+<script language="JavaScript">
+	function Reload()
+	{
+		 document.location='{path_root}/suivi/liste?dte='+$("#form_dte").val();
+	}
+	
+</script>
 
 <!-- END: corps -->
