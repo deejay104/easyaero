@@ -55,6 +55,8 @@ $MyOptHelp["PosteCredite"]["vacances"]="ID du poste pour le crédit de son compt
 // Coordonnées terrain
 $MyOptTmpl["terrain"]["nom"]="Neuhof";
 $MyOptHelp["terrain"]["nom"]="Nom du terrain d'origine";
+$MyOptTmpl["terrain"]["oaci"]="LFGC";
+$MyOptHelp["terrain"]["oaci"]="Code OACI du terrain d'origine (LOCAL)";
 $MyOptTmpl["terrain"]["longitude"]=7.77750;
 $MyOptHelp["terrain"]["longitude"]="Longitude du terrain (négatif si à l'est)";
 $MyOptTmpl["terrain"]["latitude"]=48.55360;
@@ -141,7 +143,7 @@ $MyOptHelp["tabcolresa"]["maintplan"]="Couleur pour ses maintenance planifiée";
 $MyOptTmpl["updateBloc"]="";
 $MyOptHelp["updateBloc"]="Maintiens le temps bloc égale à celui de l'horametre (on=activé)";
 
-// Unité
+// Terrain
 $MyOptTmpl["oacimetar"]="LFST";
 $MyOptHelp["oacimetar"]="Code OACI du terrain avec METAR le plus proche";
 

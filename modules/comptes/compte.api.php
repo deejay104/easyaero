@@ -60,10 +60,10 @@
 	$totligne=$res["nb"];
 
 	// Calcul le solde du compte au début de l'affichage
-	$query = "SELECT SUM(lignes.montant) AS solde FROM (SELECT montant FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid='".$id."' ".$qs." ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$totligne) AS lignes";
+	$query = "SELECT SUM(lignes.montant) AS solde FROM (SELECT montant FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid='".$id."' ORDER BY date_valeur DESC, id DESC LIMIT ".$ts.",".$totligne.") AS lignes";
 	$res=$sql->QueryRow($query);
 	$solde=$res["solde"];
-
+//$solde=0;
 	
 	// Affiche les lignes
 	$query = "SELECT id,mid,uid,date_valeur,date_creat,mouvement,commentaire,montant,hash,precedent,pointe FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid='".$id."' ".$qs." ORDER BY $order $trie, id DESC LIMIT $ts,$tl";
@@ -155,6 +155,12 @@
 					$tabValeur[$i]["hash"]["aff"]="";
 				}
 			}
+			else if ($d["precedent"]["val"]==0)
+			{
+				$aff="<i class='mdi mdi-lock-plus' title='Première entrée du compte' /></i>";
+				$tabValeur[$i]["hash"]["val"]="";
+				$tabValeur[$i]["hash"]["aff"]="";
+			}
 			else if ($confirm["res"]=="nok")
 			{
 				// $aff="<img src='static/images/icn16_warning.png' title='Cette transaction ou la précédente sont altérées. ID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."' />";
@@ -164,7 +170,7 @@
 			else if ($confirm["res"]=="mvt")
 			{
 				// $aff="<img src='static/images/icn16_warning.png' title=\"Le mouvement n'a pas un total nul. Une des transaction a pu être altérée. Mouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\" />";
-				$aff="<i class='mdi mdi-alert' title='Le mouvement n'a pas un total nul. Une des transaction a pu être altérée. Mouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."' /></i>";
+				$aff="<i class='mdi mdi-alert' title='Le mouvement n a pas un total nul. Une des transaction a pu être altérée. Mouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."' /></i>";
 			}
 			
 			$tabValeur[$i]["signature"]["val"]=$confirm;

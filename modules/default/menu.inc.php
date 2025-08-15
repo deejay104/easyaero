@@ -79,6 +79,7 @@
 				array("nom"=>"Suivi membres","url"=>geturl("aviation","suivivols",""),"droit"=>"AccesSuiviVolsMembres"),
 				array("nom"=>"Suivi annuel","url"=>geturl("aviation","suiviannuel",""),"droit"=>""),
 				array("nom"=>"Livret de progression","url"=>geturl("aviation","syntheses",""),"droit"=>""),
+				array("nom"=>"Terrains","url"=>geturl("aviation","terrains",""),"droit"=>""),
 				array("nom"=>"REX","url"=>geturl("aviation","rex",""),"droit"=>"AccesRex"),
 			)
 		);

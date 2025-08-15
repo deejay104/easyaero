@@ -553,6 +553,55 @@ class user_class extends user_core
 		return AffTelephone($tel);
 	}
 	
+	function ListeTerrains()
+	{
+		global $MyOpt;
+
+		$query ="SELECT nom,COUNT(*) AS nb, MAX(terrain.dte_creat) AS last FROM core_terrain AS terrain ";
+		$query.="LEFT JOIN core_calendrier AS cal ON cal.id=terrain.idresa ";
+		$query.="WHERE terrain.actif='oui' AND cal.uid_pilote=".$this->id." GROUP BY terrain.nom";
+		$sql=$this->sql;
+		$sql->Query($query);
+
+		$lst=array();
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			$lst[$sql->data["nom"]]["nom"]=$sql->data["nom"];
+			$lst[$sql->data["nom"]]["nb"]=$sql->data["nb"];
+			$lst[$sql->data["nom"]]["last"]=$sql->data["last"];
+		}
+
+		$query ="SELECT cal.destination AS nom,COUNT(*) AS nb, MAX(cal.dte_fin) AS last FROM core_calendrier AS cal ";
+		$query.="WHERE cal.actif='oui' AND cal.uid_pilote=".$this->id." GROUP BY cal.destination";
+		$sql=$this->sql;
+		$sql->Query($query);
+
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			$terrain=$sql->data["nom"];
+			if ($terrain=="LOCAL")
+			{
+				$terrain=$MyOpt["terrain"]["oaci"];
+			}
+
+			if (isset($lst[$terrain]))
+			{
+				$lst[$terrain]["nb"]=$lst[$terrain]["nb"]+$sql->data["nb"];
+				$lst[$terrain]["last"]=(date_diff_txt($lst[$terrain]["last"],$sql->data["last"])>0) ? $sql->data["last"] : $lst[$terrain]["last"];	
+			}
+			else
+			{
+				$lst[$terrain]["nom"]=$terrain;
+				$lst[$terrain]["nb"]=$sql->data["nb"];
+				$lst[$terrain]["last"]=$sql->data["last"];	
+			}
+		}
+
+
+		return $lst;
+	}
 }
 
 

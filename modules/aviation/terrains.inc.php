@@ -1,7 +1,7 @@
 <?
 /*
     Easy-Aero
-    Copyright (C) 2018 Matthieu Isorez
+    Copyright (C) 2025 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,11 +20,9 @@
 ?>
 
 <?
-	if (!GetDroit("AccesVols")) { FatalError("Accès non authorisé (AccesVols)"); }
-
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
-	require_once ($appfolder."/class/ressources.inc.php");
+	require_once ($appfolder."/class/navigation.inc.php");
 
 // ---- Vérifie les variables
 	$id=checkVar("id","numeric");
@@ -38,7 +36,7 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche la liste des membres
-	if (GetDroit("ListeVols"))
+	if (GetDroit("ListeTerrains"))
 	{
 		if ($id==0)
 		  { $id=$gl_uid; }
@@ -54,26 +52,31 @@
 // ---- Titre
 
 	$tabTitre=array();
-	$tabTitre["dte_deb"]["aff"]="Date";
-	$tabTitre["dte_deb"]["width"]=($theme=="phone") ? 120 : 250 ;
-	$tabTitre["immat"]["aff"]="Immat";
-	$tabTitre["immat"]["width"]=80;
-	$tabTitre["tpsreel"]["aff"]="Bloc";
-	$tabTitre["tpsreel"]["width"]=70;
-	$tabTitre["temps"]["aff"]="Temps";
-	$tabTitre["temps"]["width"]=70;
-	$tabTitre["cout"]["aff"]="Cout";
-	$tabTitre["cout"]["width"]=100;
-	if ($theme!="phone")
-	{
-		$tabTitre["instructeur"]["aff"]="Instructeur";
-		$tabTitre["instructeur"]["width"]=270;
-		$tabTitre["instructeur"]["mobile"]="no";
-	}
+	$tabTitre["nom"]["aff"]="Terrain";
+	$tabTitre["nom"]["width"]=150 ;
+	$tabTitre["nb"]["aff"]="Nombre";
+	$tabTitre["nb"]["width"]=80;
+	$tabTitre["last"]["aff"]="Dernière visite";
+	$tabTitre["last"]["width"]=150;
 
+// ---- Récupère la liste des terrains
+    $usr=new user_class($id,$sql);
+    $lst=$usr->ListeTerrains();
+
+    $tabValeur=array();
+
+    $i=0;
+    foreach ($lst as $i=>$d)
+    {
+        $tabValeur[$i]["nom"]["val"]=$d["nom"];
+        $tabValeur[$i]["nb"]["val"]=$d["nb"];
+        $tabValeur[$i]["last"]["val"]=$d["last"];
+        $i++;
+    }
 
 // ---- Affiche le tableau
-	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","mesvols","id=".$id."&theme=".$theme),$order,$trie,false,($theme=="phone") ? 16 : 25));
+//	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","mesvols","id=".$id."&theme=".$theme),$order,$trie,false,($theme=="phone") ? 16 : 25));
+$tmpl_x->assign("tab_liste",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 
 // ---- Affecte les variables d'affichage

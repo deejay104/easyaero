@@ -136,6 +136,7 @@ $tabRoles["SupprimeGroupe"]="Supprimer un groupe";
 $tabRoles["EnregistreFacture"]="Droit d'enregistrer une facture";
 
 $tabRoles["ListeVols"]="Autorise l'affichage des vols des membres";
+$tabRoles["ListeTerrains"]="Autorise l'affichage des terrains visités par les des membres";
 $tabRoles["ListeUserSupprime"]="Autorise l'affichage des membres supprimés";
 $tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres désactivés";
 
