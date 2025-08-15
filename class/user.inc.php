@@ -557,8 +557,8 @@ class user_class extends user_core
 	{
 		global $MyOpt;
 
-		$query ="SELECT nom,COUNT(*) AS nb, MAX(terrain.dte_creat) AS last FROM core_terrain AS terrain ";
-		$query.="LEFT JOIN core_calendrier AS cal ON cal.id=terrain.idresa ";
+		$query ="SELECT nom,COUNT(*) AS nb, MAX(terrain.dte_creat) AS last FROM ".$this->tbl."_terrain AS terrain ";
+		$query.="LEFT JOIN ".$this->tbl."_calendrier AS cal ON cal.id=terrain.idresa ";
 		$query.="WHERE terrain.actif='oui' AND cal.uid_pilote=".$this->id." GROUP BY terrain.nom";
 		$sql=$this->sql;
 		$sql->Query($query);
@@ -572,7 +572,7 @@ class user_class extends user_core
 			$lst[$sql->data["nom"]]["last"]=$sql->data["last"];
 		}
 
-		$query ="SELECT cal.destination AS nom,COUNT(*) AS nb, MAX(cal.dte_fin) AS last FROM core_calendrier AS cal ";
+		$query ="SELECT cal.destination AS nom,COUNT(*) AS nb, MAX(cal.dte_fin) AS last FROM ".$this->tbl."_calendrier AS cal ";
 		$query.="WHERE cal.actif='oui' AND cal.uid_pilote=".$this->id." GROUP BY cal.destination";
 		$sql=$this->sql;
 		$sql->Query($query);
