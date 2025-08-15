@@ -75,7 +75,7 @@
 	}
 
 // ---- Affiche la liste	
-	$lst=ListProgressionEnac($sql,$uid,"panne");
+	$lst=ListeProgressionEnac($sql,$uid,"panne");
 
 	$tabTitre=array(
 		"id" => array("aff"=>"#","width"=>40),

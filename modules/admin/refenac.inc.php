@@ -88,7 +88,7 @@
 	$trie=checkVar("trie","varchar",1,"d");
 	
 
-	$lst=ListRefEnac($sql);
+	$lst=ListeRefEnac($sql);
 	
 	$tabValeur=array();
 	foreach($lst as $i=>$d)

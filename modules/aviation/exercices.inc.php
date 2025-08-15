@@ -69,7 +69,7 @@
 	}
 
 // ---- Liste des formations
-	$lst=ListLivret($sql,$uid);
+	$lst=ListeLivret($sql,$uid);
 
 	foreach($lst as $i=>$tmp)
 	{
@@ -100,7 +100,7 @@
 
 
 // ---- Affiche la liste	
-	$lst=ListExercicesProg($sql,$lid,$uid,"peda");
+	$lst=ListeExercicesProg($sql,$lid,$uid,"peda");
 
 	$tabTitre=array(
 		// "id" => array("aff"=>"#","width"=>40),

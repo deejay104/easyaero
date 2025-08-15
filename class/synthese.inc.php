@@ -143,7 +143,7 @@ class livret_class extends objet_core
 	}
 }
 
-function ListLivret($sql,$uid)
+function ListeLivret($sql,$uid)
 {
 	return ListeObjets($sql,"livret",array("id"),array("actif"=>"oui","iduser"=>$uid),array("dte_deb"));
 }
@@ -293,7 +293,7 @@ class synthese_class extends objet_core
 		else if (($key=="idlivret") && ($render=="form"))
 		{
 			$txt=$this->val($key);
-			$lst=ListLivret($this->sql,$this->data["uid_pilote"]);
+			$lst=ListeLivret($this->sql,$this->data["uid_pilote"]);
 
 			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name=\"".$formname."[$key]\" OnChange=\"document.location='".geturl("aviation","synthese","id=".$this->id."&idvol=".$this->val("idvol"))."&lid='+document.getElementById('idlivret').value;\">";
 			foreach($lst as $i=>$tmp)
@@ -403,16 +403,19 @@ class synthese_class extends objet_core
 		
 		return $res["nb"];
 	}
-	
+	function listeTerrain()
+	{
+		return listeTerrain($this->data["idvol"],$this->id);
+	}
 }
 
 
 
-function ListSyntheseVol($sql,$idvol)
+function ListeSyntheseVol($sql,$idvol)
 {
 	return ListeObjets($sql,"synthese",array("id","module","refffa"),array("actif"=>"oui","idvol"=>$idvol));
 }
-function ListMySynthese($sql,$uid,$lid)
+function ListeMySynthese($sql,$uid,$lid)
 {
 	return ListeObjets($sql,"synthese",array("id"),array("actif"=>"oui","uid_pilote"=>$uid,"idlivret"=>$lid));
 }
@@ -450,7 +453,7 @@ class exercice_conf_class extends objet_core
 	);
 }
 
-function ListExercicesConf($sql,$s=array("actif"=>"oui"),$order=array("refffa","id"))
+function ListeExercicesConf($sql,$s=array("actif"=>"oui"),$order=array("refffa","id"))
 {
 	return ListeObjets($sql,"exercice_conf",array("id"),$s,$order);
 }
@@ -477,7 +480,7 @@ class exercice_prog_class extends objet_core
 }
 
 // Liste les progressions pour un exercice
-function ListProgression($sql,$id)
+function ListeProgression($sql,$id)
 {
 	return ListeObjets($sql,"exercice_prog",array("id"),array("actif"=>"oui","idexercice"=>$id),array("refffa","id"));
 }
@@ -512,18 +515,16 @@ class exercice_class extends objet_core
 	);
 }
 
-function ListExercices($sql,$id)
+function ListeExercices($sql,$id)
 {
 	return ListeObjets($sql,"exercice",array("idexercice","progression","progref"),array("actif"=>"oui","idsynthese"=>$id),array("progref DESC","id"));
 }
 
 // Liste des exercices non aquis pour un élève
-function ListExercicesNonAcquis($sql,$uid)
+function ListeExercicesNonAcquis($sql,$uid)
 {
 	global $MyOpt;
 	
-	$q ="SELECT idexercice AS id,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.uid='".$uid."' AND prog.progression='A')>0,'A','E') AS progression,IF((SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.uid='".$uid."' AND prog.progref='A')>0,'A','E') AS progref ";
-
 	$q ="SELECT idexercice AS id FROM ".$MyOpt["tbl"]."_exercice AS exo ";
 	$q.="WHERE actif='oui' AND uid='".$uid."' AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progression='A')=0 AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progref='A')=1 ";
 	$q.="GROUP BY idexercice";
@@ -539,7 +540,7 @@ function ListExercicesNonAcquis($sql,$uid)
 }
 
 // Liste des exercices avec la progression pour un membre
-function ListExercicesProg($sql,$lid,$uid,$type="")
+function ListeExercicesProg($sql,$lid,$uid,$type="")
 {
 	global $MyOpt;
 
@@ -624,7 +625,7 @@ function ListExercicesProg($sql,$lid,$uid,$type="")
 }
 
 // Liste des compétences avec la progression pour un membre
-function ListCompetences($sql,$uid)
+function ListeCompetences($sql,$uid)
 {
 	global $MyOpt;
 	
@@ -710,7 +711,7 @@ class reference_class extends objet_core
 		"theme" => Array("type" => "text"),
 	);
 }
-function ListReference($sql,$fid)
+function ListeReference($sql,$fid)
 {
 	return ListeObjets($sql,"reference",array("id"),array("actif"=>"oui","idformation"=>$fid));
 }
@@ -736,13 +737,13 @@ class refenac_class extends objet_core
 		),
 	);
 }
-function ListRefEnac($sql)
+function ListeRefEnac($sql)
 {
 	return ListeObjets($sql,"refenac",array("id"),array("actif"=>"oui"));
 }
 
 // Liste des exercices avec la progression pour un élève
-function ListProgressionEnac($sql,$uid)
+function ListeProgressionEnac($sql,$uid)
 {
 	global $MyOpt;
 	

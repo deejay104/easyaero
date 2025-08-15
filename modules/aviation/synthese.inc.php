@@ -21,6 +21,7 @@
 
 <?
 	require_once ($appfolder."/class/synthese.inc.php");
+	require_once ($appfolder."/class/navigation.inc.php");
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
@@ -40,6 +41,7 @@
 		$form_comp=checkVar("form_comp","array");
 		$form_compec=checkVar("form_compec","array");
 		$form_compold=checkVar("form_compold","array");
+		$form_terrain=checkVar("form_terrain","array");
 
 		$fiche=new synthese_class($id,$sql);
 		if (count($form_data)>0)
@@ -99,6 +101,54 @@
 				$exo=new exercice_class($i,$sql);
 				$exo->Valid("progression",$s["progression"]);
 				$exo->Save();
+			}
+		}
+
+		if (is_array($form_terrain))
+		{
+			$lst_terrain=$fiche->listeTerrain();
+			$tab_terrain=array();
+			foreach($lst_terrain as $i=>$t)
+			{
+				$tab_terrain[$t]["id"]=$i;
+				$tab_terrain[$t]["old"]=1;
+				$tab_terrain[$t]["new"]=0;
+			}
+
+			foreach($form_terrain as $t=>$d)
+			{
+				$tab_terrain[$t]["new"]=$d;
+				if (!isset($tab_terrain[$t]["id"]))
+				{
+					$tab_terrain[$t]["id"]=0;
+				}
+				if (!isset($tab_terrain[$t]["old"]))
+				{
+					$tab_terrain[$t]["old"]=0;
+				}
+			}
+
+			foreach($tab_terrain as $t=>$d)
+			{
+				if ($d["old"]==$d["new"])
+				{
+					// do nothing - ";
+				}
+				else if (($d["old"]==1) && ($d["new"]==0))
+				{
+					// delete - ";
+					$terrain=new terrain_class($d["id"],$sql);
+					$terrain->Delete();
+				}
+				else if (($d["old"]==0) && ($d["new"]==1))
+				{
+					// : create - ";
+					$terrain=new terrain_class(0,$sql);
+					$terrain->Valid("nom",$t);
+					$terrain->Valid("idresa",$fiche->val("idvol"));
+					$terrain->Valid("idsynthese",$fiche->id);
+					$terrain->Save();
+				}
 			}
 		}
 
@@ -203,7 +253,7 @@
 		{
 			$fiche->Delete();
 			// Supprime les exercices
-			$lst=ListExercices($sql,$id);
+			$lst=ListeExercices($sql,$id);
 			foreach($lst as $i=>$v)
 			{
 				$c_line=new exercice_class($v["id"],$sql);
@@ -285,7 +335,7 @@
 	{
 		if ($lid==0)
 		{
-			$lst=ListLivret($sql,$fiche->val("uid_pilote"));
+			$lst=ListeLivret($sql,$fiche->val("uid_pilote"));
 			foreach($lst as $i=>$tmp)
 			{
 				$lid=$tmp["id"];
@@ -311,8 +361,15 @@
 
 	$fiche->Render("form",$typeaff);
 
+// ---- Affiche les terrains visités
+	$lst_terrain=$fiche->listeTerrain();
+	foreach($lst_terrain as $i=>$t)
+	{
+		$tmpl_x->assign("terrain",$t);
+		$tmpl_x->parse("corps.lst_terrain");
+	}
 // ---- Charge les exercices de la fiche de synthèse
-	$lst=ListExercices($sql,$id);
+	$lst=ListeExercices($sql,$id);
 	foreach($lst as $i=>$v)
 	{
 		$c_conf=new exercice_conf_class($v["idexercice"],$sql);
@@ -369,7 +426,7 @@
 // ---- Charge les exercices non acquis
 	if ($id==0)
 	{
-		$lst=ListExercicesNonAcquis($sql,$resa->uid_pilote);
+		$lst=ListeExercicesNonAcquis($sql,$resa->uid_pilote);
 
 		foreach($lst as $i=>$v)
 		{

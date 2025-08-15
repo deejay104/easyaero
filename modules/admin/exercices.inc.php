@@ -116,7 +116,7 @@
 	if ($order=="") { $order="refffa"; }
 
 	$search=array("actif"=>"oui","idformation"=>$fid);
-	$lst=ListExercicesConf($sql,$search,array($order));
+	$lst=ListeExercicesConf($sql,$search,array($order));
 	$totligne=count($lst);
 	$tl=$totligne;
 	$tabValeur=array();
@@ -146,7 +146,7 @@
 			$tabValeur[$i]["action"]["aff"].="</div>";
 		}
 
-		$lstp=ListProgression($sql,$d["id"]);
+		$lstp=ListeProgression($sql,$d["id"]);
 		$tabValeur[$i]["progression"]["val"]="";
 		foreach($lstp as $ii=>$dd)
 		{

@@ -246,7 +246,9 @@ $tabCustom=Array
 	require_once ($appfolder."/class/navigation.inc.php");
 	$obj=new navpoint_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
-
+	$obj=new terrain_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+	
 	require_once ($appfolder."/class/manifestation.inc.php");
 	$obj=new manip_class(0,$sql);
 	$obj->genSqlTab($tabCustom);

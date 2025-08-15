@@ -89,6 +89,14 @@
 					<h5>METEO DU JOUR</h5>
 					{form_mto}
 				</div>
+
+				<div class="border-top pt-2">
+					<h5>Terrain(s) visité(s)</h5>
+					<INPUT id="terrain" class='form-control form-input' name="form_terrain" value="{form_terrain}">
+					<div id="lst_terrain" class="mt-2"></div>
+					<div id="lst_idterrain" class="d-none"></div>
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -325,8 +333,6 @@
 	$(document).ready(function() {
 	  $(window).keydown(function(event){
 		if(event.keyCode == 13) {
-		  <!-- event.preventDefault(); -->
-		  <!-- return false; -->
 		}
 	  });
 	});
@@ -428,9 +434,6 @@
 			dataType: 'JSON',
 
 			success: function(response) {
-				<!-- $("#affpedagogique").text(""); -->
-				<!-- $("#affexercices").text(""); -->
-				<!-- $("#affpannes").text(""); -->
 				var txtpeda="";
 				var txtexo="";
 				var txtpanne="";
@@ -477,6 +480,45 @@
 		});
    
 	});
+
+	var tab_terrain=[];
+	<!-- BEGIN: lst_terrain -->
+	tab_terrain["{terrain}"]=1;
+	<!-- END: lst_terrain -->
+	affTerrain();
+
+	$("#terrain").autocomplete({
+		source: "{path_root}/api/v1/navigation/getwp?type=Airport",
+		select: function(event, ui) { 
+			tab_terrain[ui.item.value]=1;
+			affTerrain();
+			console.log(tab_terrain);
+			$("#terrain").val("");
+			return false;
+		},
+		delay: 0
+	});
+
+	function affTerrain(code,value)
+	{
+		$("#lst_terrain").html(""); 
+		$("#lst_idterrain").html(""); 
+		for (var key in tab_terrain)
+		{
+			if (tab_terrain[key]>0)
+			{
+				$("#lst_terrain").append("<div class='tagsinput'><span class='tag'>"+key+" <a href='#' onClick='delTerrain(\""+key+"\"); return false;'>x</a></span></div>"); 
+				$("#lst_idterrain").append("<input name='form_terrain["+key+"]' value='"+tab_terrain[key]+"'>"); 
+			}
+		}
+	}
+
+	function delTerrain(terrain)
+	{
+		console.log("remove "+terrain);
+		tab_terrain[terrain]=0;
+		affTerrain();		
+	}
 </script>
 
 

@@ -26,7 +26,7 @@
 		$result["compcat"]=$exo->val("compcat");
 		$result["competence"]=$exo->val("competence");
 		
-		$lstp=ListProgression($sql,$id);
+		$lstp=ListeProgression($sql,$id);
 		$i=1;
 		foreach($lstp as $ii=>$dd)
 		{

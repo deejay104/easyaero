@@ -67,7 +67,7 @@
 	}
 
 // ---- Liste des formations
-	$lst=ListLivret($sql,$uid);
+	$lst=ListeLivret($sql,$uid);
 
 	foreach($lst as $i=>$tmp)
 	{
@@ -120,7 +120,7 @@
 	$livret->Render("form","form");
 	
 // ---- Affiche la liste	
-	$lst=ListMySynthese($sql,$uid,$lid);
+	$lst=ListeMySynthese($sql,$uid,$lid);
 
 	$tabTitre=array(
 		"ress" => array("aff"=>"Avion","width"=>80),

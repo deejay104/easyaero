@@ -44,3 +44,38 @@ function ListWaypoints($sql)
 {
 	return ListeObjets($sql,"navpoints",array("id"),array());
 }
+
+class terrain_class extends objet_core
+{
+	protected $table="terrain";
+	protected $mod="navigation";
+	protected $rub="";
+
+	protected $fields=array(
+		"nom"=>array("type"=>"varchar","index"=>1,"len"=>20),
+		"idresa"=>array("type"=>"number","index"=>1),
+		"idsynthese"=>array("type"=>"number","index"=>1),
+		"type"=>array("type"=>"enum","default"=>"complet"),
+	);
+	protected $tabList=array(
+		"type"=>array("complet"=>"Complet","touche"=>"Touché"),
+	);
+
+}
+
+function listeTerrain($idresa,$idsynthese)
+{
+	global $MyOpt,$sql;
+	
+	$q ="SELECT id,nom FROM ".$MyOpt["tbl"]."_terrain ";
+	$q.="WHERE actif='oui' AND idresa='".$idresa."' AND idsynthese='".$idsynthese."'";
+	$sql->Query($q);
+
+	$lst=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$lst[$sql->data["id"]]=$sql->data["nom"];
+	}
+	return $lst;
+}

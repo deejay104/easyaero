@@ -76,7 +76,7 @@
 	}
 
 // ---- Affiche la liste	
-	$lst=ListCompetences($sql,$uid);
+	$lst=ListeCompetences($sql,$uid);
 
 	$tabTitre=array(
 		"compcat" => array("aff"=>"Catégorie","width"=>200),

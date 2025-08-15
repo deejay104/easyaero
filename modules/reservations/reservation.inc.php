@@ -398,7 +398,7 @@
 	// Liste les fiches de synthèse du vol
 	if ($id>0)
 	{
-		$t=ListSyntheseVol($sql,$id);
+		$t=ListeSyntheseVol($sql,$id);
 
 		if (count($t)>0)
 		{

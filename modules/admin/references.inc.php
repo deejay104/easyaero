@@ -104,7 +104,7 @@
 	$trie=checkVar("trie","varchar",1,"d");
 	
 
-	$lst=ListReference($sql,$fid);
+	$lst=ListeReference($sql,$fid);
 	
 	$tabValeur=array();
 	foreach($lst as $i=>$d)
