@@ -557,9 +557,16 @@ class user_class extends user_core
 	{
 		global $MyOpt;
 
-		$query ="SELECT nom,COUNT(*) AS nb, MAX(terrain.dte_creat) AS last FROM ".$this->tbl."_terrain AS terrain ";
-		$query.="LEFT JOIN ".$this->tbl."_calendrier AS cal ON cal.id=terrain.idresa ";
-		$query.="WHERE terrain.actif='oui' AND cal.uid_pilote=".$this->id." GROUP BY terrain.nom";
+
+		$query ="SELECT terrain, COUNT(*) AS nb, MAX(last) AS last ";
+		$query.="FROM (";
+		$query.="SELECT IF(terrain.nom IS NOT NULL, terrain.nom, cal.destination) AS terrain, cal.destination AS destination,cal.id AS idresa, synthese.id AS idsynthese, terrain.nom, cal.dte_fin AS last ";
+		$query.="FROM ".$this->tbl."_calendrier AS cal ";
+		$query.="LEFT JOIN ".$this->tbl."_synthese AS synthese ON cal.id=synthese.idvol ";
+		$query.="LEFT JOIN ".$this->tbl."_terrain AS terrain ON cal.id=terrain.idresa ";
+		$query.="WHERE cal.actif='oui' AND cal.uid_pilote=1) AS lst ";
+		$query.="GROUP BY terrain";
+
 		$sql=$this->sql;
 		$sql->Query($query);
 
@@ -567,21 +574,9 @@ class user_class extends user_core
 		for($i=0; $i<$sql->rows; $i++)
 		{ 
 			$sql->GetRow($i);
-			$lst[$sql->data["nom"]]["nom"]=$sql->data["nom"];
-			$lst[$sql->data["nom"]]["nb"]=$sql->data["nb"];
-			$lst[$sql->data["nom"]]["last"]=$sql->data["last"];
-		}
 
-		$query ="SELECT cal.destination AS nom,COUNT(*) AS nb, MAX(cal.dte_fin) AS last FROM ".$this->tbl."_calendrier AS cal ";
-		$query.="WHERE cal.actif='oui' AND cal.uid_pilote=".$this->id." GROUP BY cal.destination";
-		$sql=$this->sql;
-		$sql->Query($query);
-
-		for($i=0; $i<$sql->rows; $i++)
-		{ 
-			$sql->GetRow($i);
-			$terrain=$sql->data["nom"];
-			if ($terrain=="LOCAL")
+			$terrain=$sql->data["terrain"];
+			if (($terrain=="LOCAL") || ($terrain==""))
 			{
 				$terrain=$MyOpt["terrain"]["oaci"];
 			}
