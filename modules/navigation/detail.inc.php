@@ -30,6 +30,10 @@
 	$tmpl_x = new XTemplate (MyRep("detail.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+	
+	$id=checkVar("id","numeric");
+	$form_route=checkVar("form_route","varchar");
+
 
 // ---- Ajout du point
 	if (!is_numeric($id))
@@ -47,7 +51,7 @@
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
-	if (($fonc=="Mettre à jour") && ($id>0) )
+	if (($fonc=="Mettre Ã  jour") && ($id>0) )
 	{
 	  	$q="SELECT uid_creat FROM ".$MyOpt["tbl"]."_navigation WHERE id='".$id."' LIMIT 1";
 	  	$res=$sql->QueryRow($q);
@@ -58,7 +62,7 @@
 		  	$sql->Update($q);
 		}
 	}
-	else if (($fonc=="Créer") && ($id==0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if (($fonc=="CrÃ©er") && ($id==0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 			$q="INSERT INTO ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_creat='".$uid."',dte_creat='".now()."',uid_modif='".$uid."',dte_modif='".now()."'";
 			$id=$sql->Insert($q);
@@ -125,9 +129,9 @@ echo $q."'".$fonc."' '".$id."'";
 					$tr=round($d*60/$vs,0);
 
 					$tmpl_x->assign("aff_distance",$d);
-					$tmpl_x->assign("aff_rm",$rv."°");
+					$tmpl_x->assign("aff_rm",$rv."Â°");
 					$tmpl_x->assign("aff_tsv",$t);
-					$tmpl_x->assign("aff_cap",$rv+round(rad2deg($x),0)."°");
+					$tmpl_x->assign("aff_cap",$rv+round(rad2deg($x),0)."Â°");
 					$tmpl_x->assign("aff_tps",$tr);
 
 					$totdis=$totdis+$d;
@@ -161,6 +165,12 @@ echo $q."'".$fonc."' '".$id."'";
 			$tmpl_x->parse("corps.aff_sortable");
 			$tmpl_x->parse("corps.aff_ajout");
 		}
+
+//
+	$tmpl_x->assign("tileLayer_url",'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png');
+	$tmpl_x->assign("map_lat",$MyOpt["terrain"]["latitude"]);
+	$tmpl_x->assign("map_lon",$MyOpt["terrain"]["longitude"]);
+
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

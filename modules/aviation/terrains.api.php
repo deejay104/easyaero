@@ -30,36 +30,16 @@
 	$trie=checkVar("trie","varchar",1,"i");
 	$ts=checkVar("ts","numeric");
 
-// ---- Affiche le menu
-	$aff_menu="";
-	require_once($appfolder."/modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
-
 // ---- Affiche la liste des membres
 	if (GetDroit("ListeTerrains"))
 	{
 		if ($id==0)
 		  { $id=$gl_uid; }
-
-		$tmpl_x->assign("form_lstuser", AffListeMembres($sql,$id,"form_uid_user","","","std","non",array()));
-		$tmpl_x->parse("corps.listeVols");
 	}
 	else
 	{
 		$id=$gl_uid;
 	}
-
-// ---- Titre
-
-	$tabTitre=array();
-	$tabTitre["nom"]["aff"]="OACI";
-	$tabTitre["nom"]["width"]=100 ;
-	$tabTitre["description"]["aff"]="Terrain";
-	$tabTitre["description"]["width"]=150 ;
-	$tabTitre["nb"]["aff"]="Nombre";
-	$tabTitre["nb"]["width"]=80;
-	$tabTitre["last"]["aff"]="Dernière visite";
-	$tabTitre["last"]["width"]=150;
 
 // ---- Récupère la liste des terrains
     $usr=new user_class($id,$sql);
@@ -70,27 +50,15 @@
     $i=0;
     foreach ($lst as $i=>$d)
     {
-        $tabValeur[$i]["nom"]["val"]=$d["nom"];
-        $tabValeur[$i]["description"]["val"]=$d["description"];
-        $tabValeur[$i]["nb"]["val"]=$d["nb"];
-        $tabValeur[$i]["last"]["val"]=$d["last"];
+        $tabValeur["data"][$i]["nom"]=$d["nom"];
+        $tabValeur["data"][$i]["description"]=$d["description"];
+        $tabValeur["data"][$i]["nb"]=$d["nb"];
+        $tabValeur["data"][$i]["last"]=$d["last"];
+        $tabValeur["data"][$i]["latitude"]=$d["latitude"];
+        $tabValeur["data"][$i]["longitude"]=$d["longitude"];
         $i++;
     }
 
-// ---- Affiche le tableau
-    $tmpl_x->assign("tab_liste",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
-
-	$tmpl_x->assign("tileLayer_url",'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png');
-	$tmpl_x->assign("map_lat",$MyOpt["terrain"]["latitude"]);
-	$tmpl_x->assign("map_lon",$MyOpt["terrain"]["longitude"]);
-	
-
-// ---- Affecte les variables d'affichage
-	$tmpl_x->parse("icone");
-	$icone=$tmpl_x->text("icone");
-	$tmpl_x->parse("infos");
-	$infos=$tmpl_x->text("infos");
-	$tmpl_x->parse("corps");
-	$corps=$tmpl_x->text("corps");
-
+    echo json_encode($tabValeur);
+	exit;
 ?>

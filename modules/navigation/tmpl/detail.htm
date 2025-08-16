@@ -47,7 +47,12 @@ $(function() {
   });
 </script>
 
+<link rel="stylesheet" href="/core/external/leaflet/leaflet.css" crossorigin=""/>
+<script type="text/javascript" src="/core/external/leaflet/leaflet.js"></script>
+
+
 <!-- BEGIN: aff_sortable -->
+
 <script type="text/javascript">
 $(function() {
    $( "#waypoint" ).sortable({
@@ -71,18 +76,18 @@ $(function() {
 <form name="form_route" method="post" action="index.php" enctype="multipart/form-data">
 <input type="hidden" name="mod" value="navigation">
 <input type="hidden" name="rub" value="detail">
-<input type="hidden" name="id" value="{form_id}">
+<input type="hidden" name="id" id="id" value="{form_id}">
 <input type="hidden" name="checktime" value="{form_checktime}">
 <div class="entete">
 		<p><label>Titre :</label><input id="form_titre" name="form_titre" value="{form_titre}" size="40"></p>
 		<p><label>Vitesse :</label><input id="form_vitesse" name="form_vitesse" value="{form_vitesse}" size="6"> kt</p>
-		<p><label>Vent :</label><input id="form_vitvent" name="form_vitvent" value="{form_vitvent}" size="6"> kt <input id="form_dirvent" name="form_dirvent" value="{form_dirvent}" size="6"> degrés</p>
+		<p><label>Vent :</label><input id="form_vitvent" name="form_vitvent" value="{form_vitvent}" size="6"> kt <input id="form_dirvent" name="form_dirvent" value="{form_dirvent}" size="6"> degrï¿½s</p>
 
 		<!-- BEGIN: aff_creer -->
-		<p><label></label><input type="submit" name="fonc" value="Créer"></p>
+		<p><label></label><input type="submit" name="fonc" value="CrÃ©er"></p>
 		<!-- END: aff_creer -->
 		<!-- BEGIN: aff_update -->
-		<p><label></label><input type="submit" name="fonc" value="Mettre à jour"></p>
+		<p><label></label><input type="submit" name="fonc" value="Mettre Ã  jour"></p>
 		<!-- END: aff_update -->
 </div>
 <br />
@@ -95,11 +100,11 @@ $(function() {
 			<span style="width:300px; text-align:left;">Description</span>
 			<span></span>
 			<span title="Distance en nautique">Dist</span>
-			<span title="Route vraie en degré">RV</span>
+			<span title="Route vraie en degrÃ©">RV</span>
 			<span title="Temps sans vent en minutes">TSV</span>
 			<span style="width:15px;"></span>
-			<span title="Cap réel en degré">Cap</span>
-			<span title="Temps réel en minutes">Tps</span>
+			<span title="Cap rÃ©el en degrÃ©">Cap</span>
+			<span title="Temps rÃ©el en minutes">Tps</span>
 		</li>
 </ul>
 
@@ -139,10 +144,45 @@ $(function() {
 </ul>
 </td>
 <td>
-	<img src="api.php?mod=navigation&rub=map&nid={form_id}">
+	<div id="statusmap" style="width:400px; height:400px;"></div>
 </td>
 </table>
 </form>
 
+<script>
+	var coordinates = [{map_lat}, {map_lon}];
+	var markerRed=L.layerGroup();
 
+	var osm=L.tileLayer('{tileLayer_url}', {
+			maxZoom: 20,
+			attribution: 'Navigation'
+		});
+
+	var mapOptions = {
+		center: coordinates,
+		zoom: 7,
+		zoomControl: true,
+		editable: false,
+		printable: true,
+		downloadable: false,
+		layers:[osm,markerRed]
+	}
+
+	$(document).ready(function() { 
+		mymap = L.map('statusmap',mapOptions);
+
+		$.get('/api/v1/navigation/map?id='+$("#id").val()).done(function(data)
+		{
+			for (var key in data.data)
+			{
+				if ((data.data[key].latitude!="") && (data.data[key].longitude!=""))
+				{
+					var marker = L.marker([data.data[key].latitude, data.data[key].longitude]).addTo(markerRed);
+				}
+			}
+		});
+
+	});
+
+</script>
 <!-- END: corps -->

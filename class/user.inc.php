@@ -558,13 +558,14 @@ class user_class extends user_core
 		global $MyOpt;
 
 
-		$query ="SELECT terrain, COUNT(*) AS nb, MAX(last) AS last ";
+		$query ="SELECT lst.terrain, point.description, point.lat, point.lon, COUNT(*) AS nb, MAX(lst.last) AS last ";
 		$query.="FROM (";
-		$query.="SELECT IF(terrain.nom IS NOT NULL, terrain.nom, cal.destination) AS terrain, cal.destination AS destination,cal.id AS idresa, synthese.id AS idsynthese, terrain.nom, cal.dte_fin AS last ";
+		$query.="SELECT IF(terrain.nom IS NOT NULL, terrain.nom, IF(cal.destination='LOCAL','LFGC',cal.destination)) AS terrain, cal.destination AS destination,cal.id AS idresa, synthese.id AS idsynthese, terrain.nom, cal.dte_fin AS last ";
 		$query.="FROM ".$this->tbl."_calendrier AS cal ";
 		$query.="LEFT JOIN ".$this->tbl."_synthese AS synthese ON cal.id=synthese.idvol ";
 		$query.="LEFT JOIN ".$this->tbl."_terrain AS terrain ON cal.id=terrain.idresa ";
 		$query.="WHERE cal.actif='oui' AND cal.tpsreel>0 AND cal.uid_pilote=".$this->id.") AS lst ";
+		$query.="LEFT JOIN ".$this->tbl."_navpoints AS point ON lst.terrain=point.nom ";
 		$query.="GROUP BY terrain";
 
 		$sql=$this->sql;
@@ -575,23 +576,12 @@ class user_class extends user_core
 		{ 
 			$sql->GetRow($i);
 
-			$terrain=$sql->data["terrain"];
-			if (($terrain=="LOCAL") || ($terrain==""))
-			{
-				$terrain=$MyOpt["terrain"]["oaci"];
-			}
-
-			if (isset($lst[$terrain]))
-			{
-				$lst[$terrain]["nb"]=$lst[$terrain]["nb"]+$sql->data["nb"];
-				$lst[$terrain]["last"]=(date_diff_txt($lst[$terrain]["last"],$sql->data["last"])>0) ? $sql->data["last"] : $lst[$terrain]["last"];	
-			}
-			else
-			{
-				$lst[$terrain]["nom"]=$terrain;
-				$lst[$terrain]["nb"]=$sql->data["nb"];
-				$lst[$terrain]["last"]=$sql->data["last"];	
-			}
+			$lst[$sql->data["terrain"]]["nom"]=$sql->data["terrain"];
+			$lst[$sql->data["terrain"]]["description"]=$sql->data["description"];
+			$lst[$sql->data["terrain"]]["nb"]=$sql->data["nb"];
+			$lst[$sql->data["terrain"]]["last"]=$sql->data["last"];	
+			$lst[$sql->data["terrain"]]["longitude"]=$sql->data["lon"];	
+			$lst[$sql->data["terrain"]]["latitude"]=$sql->data["lat"];	
 		}
 
 

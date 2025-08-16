@@ -32,6 +32,12 @@
 
 // ---- Affiche la liste
 
+// ---- Vérifie les variables
+	$id=checkVar("id","numeric");
+	$order=checkVar("order","varchar",10,"nb");
+	$trie=checkVar("trie","varchar",1,"i");
+	$ts=checkVar("ts","numeric");
+
 // ---- Liste des ressources
 	$tabTitre=array();
 	$tabTitre["titre"]["aff"]="Titre";
