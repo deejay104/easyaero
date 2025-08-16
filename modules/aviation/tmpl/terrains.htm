@@ -108,7 +108,7 @@
 		{
 			for (var key in data.data)
 			{
-				if ((data.data[key].latitude!="") && (data.data[key].longitude!=""))
+				if ((data.data[key].latitude!=null) && (data.data[key].longitude!=null))
 				{
 					var marker = L.marker([data.data[key].latitude, data.data[key].longitude]).addTo(markerRed);
 				}
