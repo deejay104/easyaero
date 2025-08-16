@@ -560,7 +560,7 @@ class user_class extends user_core
 
 		$query ="SELECT lst.terrain, point.description, point.lat, point.lon, COUNT(*) AS nb, MAX(lst.last) AS last ";
 		$query.="FROM (";
-		$query.="SELECT IF(terrain.nom IS NOT NULL, terrain.nom, IF(cal.destination='LOCAL','LFGC',cal.destination)) AS terrain, cal.destination AS destination,cal.id AS idresa, synthese.id AS idsynthese, terrain.nom, cal.dte_fin AS last ";
+		$query.="SELECT IF(terrain.nom IS NOT NULL, terrain.nom, IF(cal.destination='LOCAL','".$MyOpt["terrain"]["oaci"]."',cal.destination)) AS terrain, cal.destination AS destination,cal.id AS idresa, synthese.id AS idsynthese, terrain.nom, cal.dte_fin AS last ";
 		$query.="FROM ".$this->tbl."_calendrier AS cal ";
 		$query.="LEFT JOIN ".$this->tbl."_synthese AS synthese ON cal.id=synthese.idvol ";
 		$query.="LEFT JOIN ".$this->tbl."_terrain AS terrain ON cal.id=terrain.idresa ";
