@@ -47,7 +47,26 @@ $tabJour["4"]="Jeudi";
 $tabJour["5"]="Vendredi";
 $tabJour["6"]="Samedi";
 
-class facture_class{
+class facture_class
+{
+	public $id=0;
+	public $uid=0;
+	public $dte="";
+	public $dteid="";
+	public $total="";
+	public $paid="";
+	public $email="";
+	public $comment="";
+	public $lignes=array();
+	public $reglements=array();
+
+	public $uid_creat=0;
+	public $dte_creat ="";
+	public $uid_maj=0;
+	public $dte_maj="";
+
+	protected $tbl="";
+	protected $sql="";
 
  	# Constructor
 	function __construct($id=0,$sql=""){

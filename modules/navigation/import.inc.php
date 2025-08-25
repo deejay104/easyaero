@@ -31,6 +31,9 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+	$form_icone=checkVar("form_icone","varchar");
+
+
 // ---- Import des waypoint
 	if (($fonc=="Importer") && (GetDroit("ModifWaypoint")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 //	if ($fonc=="Importer")
@@ -43,22 +46,24 @@
 			$upd=0;
 			$ins=0;
 			foreach($wpt->wpt as $i=>$d)
-			  {
-			  	$q="SELECT nom FROM ".$MyOpt["tbl"]."_navpoints WHERE nom='".strtoupper($d->name)."' LIMIT 1";
+			{
+				$name=strtoupper(substr($d->name,0,4));
+
+			  	$q="SELECT nom FROM ".$MyOpt["tbl"]."_navpoints WHERE nom='".$name."' LIMIT 1";
 			  	$res=$sql->QueryRow($q);
-					if ($res["nom"]!="")
-					  {
-					  	$q="UPDATE ".$MyOpt["tbl"]."_navpoints SET description='".addslashes($d->cmt)."',lat='".$d["lat"]."',lon='".$d["lon"]."',icone='".$form_icone."' WHERE nom='".strtoupper($d->name)."'";
-							$sql->Update($q);
-							$upd=$upd+1;
-						}
-					else
-						{
-					  	$q="INSERT INTO ".$MyOpt["tbl"]."_navpoints SET nom='".strtoupper($d->name)."', description='".addslashes($d->cmt)."',lat='".$d["lat"]."',lon='".$d["lon"]."',icone='".$form_icone."'";
-							$sql->Insert($q);
-							$ins=$ins+1;
-						}
+				if ((isset($res["nom"])) && ($res["nom"]!=""))
+				{
+					$q="UPDATE ".$MyOpt["tbl"]."_navpoints SET description='".addslashes($d->cmt)."',lat='".substr($d["lat"],0,10)."',lon='".substr($d["lon"],0,10)."',icone='".$form_icone."' WHERE nom='".$name."'";
+					$sql->Update($q);
+					$upd=$upd+1;
 				}
+				else
+				{
+					$q="INSERT INTO ".$MyOpt["tbl"]."_navpoints SET nom='".$name."', description='".addslashes($d->cmt)."',lat='".substr($d["lat"],0,10)."',lon='".substr($d["lon"],0,10)."',icone='".$form_icone."'";
+					$sql->Insert($q);
+					$ins=$ins+1;
+				}
+			}
 
 			$tmpl_x->assign("aff_resultat","Insert:".$ins." Update:".$upd);
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;

@@ -3,6 +3,34 @@ require_once ("class/user.inc.php");
 
 class compte_class{
 
+	public $id=0;
+	public $deb=0;
+	public $cre=0;
+	public $ventilation=array();
+	public $montant=0;
+	public $poste=0;
+	public $commentaire="";
+	public $date_valeur="";
+	public $compte="";
+	public $facture="NOFAC";
+	public $rembfact="";
+	public $status="brouillon";
+	public $erreur="";
+	public $mvt=array();
+	public $date_creat="";
+	public $tiers="";
+	public $dte="";
+	public $myuid=0;
+	public $nbmvt=0;
+
+	public $uid_creat=0;
+	public $dte_creat ="";
+	public $uid_maj=0;
+	public $dte_maj="";
+
+	protected $tbl="";
+	protected $sql="";
+
  	# Constructor
 	function __construct($id=0,$sql="")
 	{

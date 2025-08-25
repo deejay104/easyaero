@@ -19,6 +19,8 @@
 
 class user_class extends user_core
 {
+	public $idcpt=0;
+
 	protected $table="utilisateurs";
 	protected $mod="membres";
 	protected $rub="detail";

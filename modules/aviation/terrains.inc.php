@@ -68,7 +68,7 @@
     $tabValeur=array();
 
     $i=0;
-    foreach ($lst as $i=>$d)
+    foreach ($lst as $id=>$d)
     {
         $tabValeur[$i]["nom"]["val"]=$d["nom"];
         $tabValeur[$i]["description"]["val"]=$d["description"];

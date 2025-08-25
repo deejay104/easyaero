@@ -18,6 +18,38 @@
 // Class Reservation
 class resa_class extends objet_core
 {
+	public $id=0;
+	public $tarif="";
+	public $actif="oui";
+	public $reel="oui";
+	public $edite="oui";
+	public $dte_deb="0000-00-00";
+	public $dte_fin="0000-00-00";
+	public $description="";
+	public $horadeb="0";
+	public $horafin="0";
+	public $prix="";
+	public $temps=0;
+	public $tpsestime="";
+	public $tpsreel=0;
+	public $destination="LOCAL";
+	public $nbpersonne=1;
+	public $invite="non";
+	public $carburant="";
+	public $prixcarbu="";
+	public $accept="non";
+	public $carbavant="";
+	public $carbapres="";
+	public $potentiel=0;
+	public $potentielh=0;
+	public $potentielm=0;
+	public $uid_pilote=0;
+	public $uid_debite=0;
+	public $uid_instructeur=0;
+	public $uid_ressource=0;
+
+	protected $horadeb_orig="0";
+
 	protected $table="calendrier";
 	protected $mod="reservations";
 	protected $rub="reservation";
@@ -72,7 +104,6 @@ class resa_class extends objet_core
 
 		$this->sql=$sql;
 		$this->id=0;
-		$this->destination="LOCAL";
 		$this->tarif="";
 		$this->actif="oui";
 		$this->reel="oui";
