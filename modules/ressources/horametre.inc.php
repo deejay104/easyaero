@@ -60,11 +60,11 @@
 	$tabTitre["heure"]["aff"]="Temps de vol";
 	$tabTitre["heure"]["width"]=140;
 
-	$tabTitre["horafin"]["aff"]="Hora Fin";
-	$tabTitre["horafin"]["width"]=110;
-
 	$tabTitre["horadeb"]["aff"]="Hora Début";
 	$tabTitre["horadeb"]["width"]=110;
+
+	$tabTitre["horafin"]["aff"]="Hora Fin";
+	$tabTitre["horafin"]["width"]=110;
 
 	$tabTitre["edite"]["aff"]="Comptabilisé";
 	$tabTitre["edite"]["width"]=110;
