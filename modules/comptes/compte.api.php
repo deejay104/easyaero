@@ -191,7 +191,7 @@
 		$ret["data"][$i]["hash"]=$d["hash"]["aff"];
 		if (GetDroit("AfficheSignatureCompte"))
 		{
-					$ret["data"][$i]["signature"]=$d["signature"]["aff"];
+					$ret["data"][$i]["signature"]=(isset($d["signature"]["aff"])) ? $d["signature"]["aff"] : "";
 		}
 	}
 

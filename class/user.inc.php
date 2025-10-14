@@ -43,7 +43,7 @@ class user_class extends user_core
 		"profession" => Array("type" => "varchar","len"=>50, ),
 		"avatar" => Array("type" => "varchar","len"=>50, ),
 		"lache" => Array("type" => "varchar","len"=>2, ),
-		"type" => Array("type" => "enum", "default" => "pilote", "index" => "1", ),
+		"type" => Array("type" => "enum", "default" => "pilote", "index" => "1"),
 		"decouvert" => Array("type" => "number", "default" => "0", "placeholder"=>1),
 		"tarif" => Array("type" => "number", "default" => "0", "placeholder"=>1 ),
 		"dte_naissance" => Array("type" => "date", "default" => "0000-00-00", ),

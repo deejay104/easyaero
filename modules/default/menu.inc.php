@@ -75,7 +75,6 @@
 			"url"=>geturl("aviation","vols",""),
 			"submenu"=>array(
 				array("nom"=>"Mes vols","url"=>geturl("aviation","vols",""),"droit"=>""),
-				array("nom"=>"Carnet de route","url"=>geturl("aviation","carnet",""),"droit"=>""),
 				array("nom"=>"Suivi membres","url"=>geturl("aviation","suivivols",""),"droit"=>"AccesSuiviVolsMembres"),
 				array("nom"=>"Suivi annuel","url"=>geturl("aviation","suiviannuel",""),"droit"=>""),
 				array("nom"=>"Livret de progression","url"=>geturl("aviation","syntheses",""),"droit"=>""),
@@ -91,6 +90,7 @@
 			"url"=>geturl("ressources","index",""),
 			"submenu"=>array(
 				array("nom"=>"Avions","url"=>geturl("ressources","index",""),"droit"=>"AccesAvions"),
+				array("nom"=>"Carnet de route","url"=>geturl("ressources","carnet",""),"droit"=>""),
 				array("nom"=>"Suivi Horamètres","url"=>geturl("ressources","horametre",""),"droit"=>"AccesSuiviHorametre"),
 				array("nom"=>"Fiches de maintenance","url"=>geturl("ressources","fiche",""),"droit"=>"AccesFichesMaintenance"),
 				array("nom"=>"Fiches à valider","url"=>geturl("ressources","validation",""),"droit"=>"AccesFichesValidation"),
@@ -133,6 +133,13 @@
 		"nom"=>$tabLang["lang_flight"],
 		"droit"=>"AccesVols",
 		"url"=>geturl("aviation","vols",""),
+	);
+	$tabMenuPhone["comptes"]=array(
+		"icone"=>$MyOpt["host"]."/"."static/modules/comptes/img/icn32_titre.png",
+		"icone"=>"mdi-wallet",
+		"nom"=>$tabLang["lang_account"],
+		"droit"=>"AccesCompte",
+		"url"=>geturl("comptes","",""),
 	);
 
 ?>

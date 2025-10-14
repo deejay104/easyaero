@@ -127,6 +127,7 @@
 
 		$tabValeur[$i]["id"]["val"]=$d["id"];
 		$tabValeur[$i]["description"]["val"]=$exo->val("description");
+		$tabValeur[$i]["description"]["aff"]="<a id='edit_".$d["id"]."' href='#'>".$exo->val("description")."</a>";
 		$tabValeur[$i]["type"]["val"]=$exo->val("type");
 		$tabValeur[$i]["type"]["aff"]=$exo->aff("type");
 		$tabValeur[$i]["refffa"]["val"]=$exo->val("refffa");
@@ -140,7 +141,7 @@
 		if (GetDroit("ModifExercice"))
 		{
 			$tabValeur[$i]["action"]["aff"].="<div id='action_".$d["id"]."' style='display:none;'>";
-			$tabValeur[$i]["action"]["aff"].="<a id='edit_".$d["id"]."' href='#'><i class='mdi mdi-pencil'></i></a>";
+			//$tabValeur[$i]["action"]["aff"].="<a id='edit_".$d["id"]."' href='#'><i class='mdi mdi-pencil'></i></a>";
 			// $tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'><index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'><i class='mdi mdi-close'></i></a>";
 			$tabValeur[$i]["action"]["aff"].="<a id='del_".$d["id"]."' href='#'><i class='mdi mdi-close'></i></a>";
 			$tabValeur[$i]["action"]["aff"].="</div>";

@@ -30,7 +30,7 @@ class maint_class extends objet_core
 	protected $fields=array(
 		"uid_ressource" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_atelier" => Array("type" => "number", "default" => "0", "index"=>1),
-		"status" => Array("type" => "enum", "default" => "planifie", "index"=>1),
+		"status" => Array("type" => "enum", "default" => "planifie", "index"=>1, "show"=>"tag"),
 		"dte_deb" => Array("type" => "date", "default" => "now", ),
 		"dte_fin" => Array("type" => "date", "default" => "now", ),
 		"potentiel" => Array("type" => "number", "default" => "0", ),
@@ -41,6 +41,10 @@ class maint_class extends objet_core
 	
 	protected $tabList=array(
 		"status"=>array('planifie'=>'Planifié','confirme'=>'Confirmé','effectue'=>'Effectué','cloture'=>'Cloturé','supprime'=>'Supprimé'),
+	);
+
+	protected $color=array(
+		"status"=>array("planifie"=>"orange","confirme"=>"teal","effectue"=>"green","cloture"=>"gray","supprime"=>"gray-light"),
 	);
 
 	# Constructor

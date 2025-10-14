@@ -36,7 +36,7 @@ class bapteme_class extends objet_core
 		"nb" => Array("type" => "radio", "default"=>1),
 		"dte" => Array("type" => "datetime"),
 		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
-		"status" => Array("type" => "enum", "default"=>"0", "index"=>1 ),
+		"status" => Array("type" => "enum", "default"=>"0", "index"=>1, "show"=>"tag" ),
 		"type" => Array("type" => "enum", "default" => "btm", ),
 		"bonkdo" => Array("type" => "bool", "default" => "non", ),
 		"paye" => Array("type" => "bool", "default" => "non", ),
@@ -59,7 +59,11 @@ class bapteme_class extends objet_core
 		)
 	);
 
-			# Constructor
+	protected $color=array(
+		"status"=>array("0"=>"red","1"=>"orange","2"=>"purple","3"=>"teal","4"=>"green","5"=>"gray","6"=>"gray-light","7"=>"blue"),
+	);
+
+	# Constructor
 	function __construct($id=0,$sql=""){
 		global $MyOpt;
 		global $gl_uid;

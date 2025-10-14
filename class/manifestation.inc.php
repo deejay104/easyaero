@@ -28,7 +28,7 @@ class manip_class extends objet_core
 	protected $fields=array(
 		"titre" => Array("type" => "varchar", "len"=>100, "default"=>"Nouvelle manifestation"),
 		"comment" => Array("type" => "text"),
-		"type" => Array("type" => "multi", "len"=>100, ),
+		"type" => Array("type" => "multi", "len"=>100, "show"=>"tag"),
 		"cout" => Array("type" => "price", "default" => "0.00", ),
 		"facture" => Array("type" => "bool", "default" => "non", ),
 		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
