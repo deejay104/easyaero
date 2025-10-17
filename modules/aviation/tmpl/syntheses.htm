@@ -105,6 +105,16 @@
 		</div>
 	</div>
 </div>
+<div class="row" id="page-exo">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">	
+				{aff_exercices}
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row" id="page-lst">
 	<div class="grid-margin stretch-card">
 		<div class="card">
@@ -118,24 +128,8 @@
 <script>
 $( function() {
 
-
-    <!-- dialog = $( "#dialog-form" ).dialog({ -->
-      <!-- autoOpen: false, -->
-      <!-- height: 600, -->
-      <!-- width: 600, -->
-	  <!-- top: 10, -->
-      <!-- modal: true, -->
-      <!-- buttons: { -->
-        <!-- "Enregistrer": savelivret, -->
-        <!-- Cancel: function() { -->
-          <!-- dialog.dialog( "close" ); -->
-        <!-- } -->
-      <!-- }, -->
-    <!-- }); -->
-
 	$( "#edit" ).on( "click", function() {
 		loadLivret();
-		<!-- dialog.dialog( "open" ); -->
 		$("#dialogForm").css("display","block");
 		$("#dialogForm").css("opacity",100);
 		$("#page-content").css("opacity",0.25);

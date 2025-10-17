@@ -20,6 +20,7 @@
 		$result["idformation"]=$exo->val("idformation");
 		$result["description"]=$exo->val("description");
 		$result["type"]=$exo->val("type");
+		$result["focus"]=$exo->val("focus");
 		$result["module"]=$exo->val("module");
 		$result["refffa"]=$exo->val("refffa");
 		$result["refenac"]=$exo->val("refenac");
@@ -54,6 +55,7 @@
 			$exo->Valid("idformation",checkVar("idformation","numeric"));
 			$exo->Valid("description",checkVar("description","varchar",200));
 			$exo->Valid("type",checkVar("type","varchar",20));
+			$exo->Valid("focus",checkVar("focus","varchar",3));
 			$exo->Valid("module",checkVar("module","varchar",40));
 			$exo->Valid("refffa",checkVar("refffa","varchar",10));
 			$exo->Valid("refenac",checkVar("refenac","numeric"));

@@ -29,7 +29,7 @@
     $tabLang["lang_remains"]="Nombre d'heure approximatif restant avant prochaine maintenance(fin de vol)";
     $tabLang["lang_elapsetime"]="Temps de vol depuis la derniere maintenance (fin de vol)";
     $tabLang["lang_change_explain"]="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant";
-    $tabLang["lang_changehora"]="Potentiel en fin de vol (optionel)";
+    $tabLang["lang_changehora"]="Correction temps de vol (optionel)";
     $tabLang["lang_carbbefore"]="Carburant ajouté Avant";
     $tabLang["lang_carbafter"]="Carburant ajouté Après";
     $tabLang["lang_carbprice"]="Prix total Carburant";

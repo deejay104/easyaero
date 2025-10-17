@@ -203,12 +203,23 @@
 
 	if (count($lstFiche)>0)
 	{
-		if ($maint->data["uid_lastresa"]==0)
-		{
-			$maint->data["uid_lastresa"]=$lstFiche[0];
-		}
-
 		$ii=0;
+		if ($typeaff=="form")
+		{
+			$tabValeur[$ii]["chk"]["aff"]="<input type='radio' name='form_data[uid_lastresa]' ".(($maint->data["uid_lastresa"]==0) ? "checked='checked'" : "")." value='0'>";
+		
+			$tabValeur[$ii]["dtecreat"]["val"]="a0";
+			$tabValeur[$ii]["dtecreat"]["aff"]="Aucun";
+			$tabValeur[$ii]["pilote"]["val"]="";
+			$tabValeur[$ii]["pilote"]["aff"]="-";
+
+			$tabValeur[$ii]["temps"]["val"]=0;
+			$tabValeur[$ii]["temps"]["aff"]="-";
+			$tabValeur[$ii]["tarif"]["val"]="";
+			$tabValeur[$ii]["tarif"]["aff"]="-";
+
+			$ii++;
+		}
 
 		foreach($lstFiche as $i=>$fid)
 		{
@@ -223,7 +234,6 @@
 			{
 				$tabValeur[$ii]["chk"]["aff"]=($resa->id==$maint->data["uid_lastresa"]) ? "<i class='mdi mdi-check'></i>" : "";
 			}
-
 
 			$usr = new user_class($resa->uid_pilote,$sql,false);
 			$tabValeur[$ii]["pilote"]["val"]=$usr->aff("fullname","val");
@@ -251,6 +261,7 @@
 		
 			$ii++;
 		}
+
 	}
 
 	if ($order=="") { $order="dtecreat"; }

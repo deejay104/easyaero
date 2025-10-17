@@ -142,13 +142,13 @@
 			<div id='exo_{aff_id}' class='form-group row form-hover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 				<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
 				<div class="col-lg-5 form-inline">{form_progression}</div>
-				<!-- BEGIN: lst_delete -->
+				<!-- BEGIN: lst_exercice_delete -->
 				<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px; width:20px; font-size:20px;'>
 					<a href="" OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
 				</div>
-				<!-- END: lst_delete -->
+				<!-- END: lst_exercice_delete -->
 			</div>
-			<!-- END: lst_affexercice -->
+			<!-- END: lst_exercice -->
 			<div id="affexercices">
 			</div>
 			<br />
@@ -170,11 +170,11 @@
 				<div id='exo_{aff_id}' class='form-group row form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 					<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
 					<div class="col-lg-5 form-inline">{form_progression}</div>
-					<!-- BEGIN: lst_delete -->
+					<!-- BEGIN: lst_panne_delete -->
 					<div id='del_{aff_id}' style='display:none; float:right; padding-right:4px; padding-top:4px; width:20px; font-size:20px;'>
-						<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></a>
+						<a href='#' class='imgDelete' OnClick='deleteExo({aff_id});return false;'><i class="mdi mdi-close"></i></a>
 					</div>
-					<!-- END: lst_delete -->
+					<!-- END: lst_panne_delete -->
 				</div>
 				<!-- END: lst_panne -->
 				<div id="affpannes">

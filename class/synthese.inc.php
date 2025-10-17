@@ -158,8 +158,8 @@ class synthese_class extends objet_core
 	protected $fields = Array(
 		"idlivret" => Array("type" => "number", "default" => "0", "index" => "1", "nomodif"=>1 ),
 		"idvol" => Array("type" => "number", "default" => "0", "index" => "1" ),
-		"status" => Array("type" => "enum","index"=>1, "default" => "edit"),
-		"conclusion" => Array("type" => "enum","index"=>1, "default" => "ok"),
+		"status" => Array("type" => "enum","index"=>1, "default" => "edit","show"=>"tag"),
+		"conclusion" => Array("type" => "enum","index"=>1, "default" => "ok" ,"show"=>"tag"),
 		"type" => Array("type" => "radio","index"=>1, "default" => "dc"),
 		"uid_pilote" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_instructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
@@ -238,6 +238,11 @@ class synthese_class extends objet_core
 			"en"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),
 			"ca"=>array('NA'=>'N/A','I'=>'Insuffisant','S'=>'Suffisant'),	
 		),
+	);
+
+	protected $color=array(
+		"status"=>array("edit"=>"orange","signed"=>"green","cancel"=>"gray-light"),
+		"conclusion"=>array("nok"=>"red","ok"=>"green"),
 	);
 
 	# Constructor
@@ -422,6 +427,7 @@ function ListeMySynthese($sql,$uid,$lid)
 
 
 
+
 class exercice_conf_class extends objet_core
 {
 	protected $table="exercice_conf";
@@ -430,6 +436,7 @@ class exercice_conf_class extends objet_core
 
 	protected $fields = Array(
 		"idformation" => array("type"=>"number","default"=>0,"index"=>1),
+		"focus" => Array("type"=>"bool", "default"=>"non", "index" => "1", ),
 		"description" => array("type"=>"varchar","len"=>200, "formlen"=>400),
 		"competence" => array("type"=>"varchar","len"=>100, "formlen"=>400),
 		"compcat" => array("type"=>"varchar","len"=>100, "formlen"=>400),
@@ -540,7 +547,7 @@ function ListeExercicesNonAcquis($sql,$uid)
 }
 
 // Liste des exercices avec la progression pour un membre
-function ListeExercicesProg($sql,$lid,$uid,$type="")
+function ListeExercicesProg($sql,$lid,$uid,$type="",$focus="")
 {
 	global $MyOpt;
 
@@ -556,6 +563,10 @@ function ListeExercicesProg($sql,$lid,$uid,$type="")
 	if ($type!="")
 	{
 		$q.=" AND exo.type='".$type."' ";
+	}
+	if ($focus!="")
+	{
+		$q.=" AND exo.focus='".$focus."' ";
 	}
 	$sql->Query($q);
 

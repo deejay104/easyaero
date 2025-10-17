@@ -400,7 +400,7 @@
 		{
 			if ((GetDroit("SupprimeExercice")) && (!$signed))
 			{
-				$tmpl_x->parse("corps.lst_panne.lst_delete");
+				$tmpl_x->parse("corps.lst_panne.lst_panne_delete");
 			}
 			$tmpl_x->parse("corps.lst_panne");
 		}
@@ -408,7 +408,7 @@
 		{
 			if ((GetDroit("SupprimeExercice")) && (!$signed))
 			{
-				$tmpl_x->parse("corps.lst_exercice.lst_delete");
+				$tmpl_x->parse("corps.lst_exercice.lst_exercice_delete");
 			}
 			$tmpl_x->parse("corps.lst_exercice");
 		}

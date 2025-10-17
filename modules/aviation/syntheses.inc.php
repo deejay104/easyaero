@@ -118,8 +118,53 @@
 
 	$livret=new livret_class(0,$sql);
 	$livret->Render("form","form");
-	
-// ---- Affiche la liste	
+
+// ---- Affiche la liste des exercices importants
+	$lst=ListeExercicesProg($sql,$lid,$uid,"peda","oui");
+
+	$tabTitre=array(
+		// "id" => array("aff"=>"#","width"=>40),
+		"exercice" => array("aff"=>"Exercice","width"=>400),
+		"dte" => array("aff"=>"Date","width"=>120),
+		"progression" => array("aff"=>"Progression","width"=>100),
+		"progref" => array("aff"=>"Requis","width"=>100),
+	);
+	$tabValeur=array();
+
+	foreach($lst as $fid=>$d)
+	{	
+		$exo = new exercice_conf_class($fid,$sql);
+
+		$tabValeur[$fid]["id"]["val"]=$fid;
+		$tabValeur[$fid]["exercice"]["val"]=$exo->val("description");
+		$tabValeur[$fid]["exercice"]["aff"]=$exo->aff("description");
+		$tabValeur[$fid]["dte"]["val"]=(strtotime($d["dte_acquis"])>0) ? strtotime($d["dte_acquis"]) : 99999999999 ;
+		$tabValeur[$fid]["dte"]["aff"]=(strtotime($d["dte_acquis"])>0) ? "<a href='".geturl("aviation","synthese","id=".$d["idsynthese"])."'>".sql2date($d["dte_acquis"],"jour")."</a>" : " ";
+		// $tabValeur[$fid]["dte"]["aff"]=$d["dte_acquis"];
+		$tabValeur[$fid]["progression"]["val"]=$d["progression"];
+		$tabValeur[$fid]["progression"]["aff"]="<i class='mdi ".(($d["progression"]=="A") ? "mdi-checkbox-marked-outline" : "mdi-checkbox-blank-outline")."' style='font-size:18px; ".(($d["progression"]=="A") ? "color:green; " : "color:#888888;")."'>";
+		$tabValeur[$fid]["progression"]["align"]="center";
+		$tabValeur[$fid]["progref"]["val"]=$d["progref"];
+		$tabValeur[$fid]["progref"]["aff"]=(($d["progref"]=="A") ? "Acquis" : "Etude");
+		
+		if ((($d["progref"]!=$d["progression"]) && ($d["progref"]=="A")))
+		{
+			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundError"];
+		}
+		else if ((($d["progression"]=="V")|| ($d["progression"]=="")) && ($d["progref"]=="E"))
+		{
+			$tabValeur[$fid]["progression"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundWarning"];
+			$tabValeur[$fid]["progref"]["color"]=$MyOpt["styleColor"]["msgboxBackgroundWarning"];
+		}
+	}
+
+	if ((!isset($order)) || ($order=="")) { $order="dte"; }
+	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
+
+	$tmpl_x->assign("aff_exercices",AfficheTableau($tabValeur,$tabTitre,$order,$trie));	
+
+// ---- Affiche la liste des vols	
 	$lst=ListeMySynthese($sql,$uid,$lid);
 
 	$tabTitre=array(

@@ -59,6 +59,9 @@
 	.fc-event {	color: black; }
 	.fc-event:hover {	color: black; }
 
+	.afficheLegende { line-height:16px; margin: 5px; }
+	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
+
 </style>
 
 <script>
@@ -181,39 +184,40 @@
 
 </script>
 
-	<br />
 
-	<div id='script-warning'>
-		Erreur : <code>api.php</code> doit être accessible.
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+
+				<div id='script-warning'>
+					Erreur : <code>api.php</code> doit être accessible.
+				</div>
+				<div id='loading'>loading...</div>
+				<div id='calendar'></div>
+
+
+				<p style="font-size: 10px; line-height:12px; padding-left:20px; padding-top:5px;">
+				Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
+				</p>
+
+				<p class="afficheLegende">
+					<label style="background-color: #{maintconf}; "></label>
+					<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
+				</p>
+
+				<p class="afficheLegende">
+					<label style="background-color: #{maintplan};"></label>
+					Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
+				</p>
+				<p class="afficheLegende">
+					<label style="background-color: #{meeting};"></label>
+					{lang_event}
+				</p>
+
+			</div>
+		</div>
 	</div>
-
-	<div id='loading'>loading...</div>
-
-	<div id='calendar'></div>
-
-
-<p style="font-size: 10px; line-height:12px; padding-left:20px; padding-top:5px;">
-Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
-</p>
-
-<style>
-.afficheLegende { line-height:16px; margin: 5px; }
-.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
-</style>
-	
-
-<p class="afficheLegende">
-	<label style="background-color: #{maintconf}; "></label>
-	<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
-</p>
-
-<p class="afficheLegende">
-	<label style="background-color: #{maintplan};"></label>
-	Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
-</p>
-<p class="afficheLegende">
-	<label style="background-color: #{meeting};"></label>
-	{lang_event}
-</p>
+</div>
 
 <!-- END: corps -->

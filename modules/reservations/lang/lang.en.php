@@ -29,7 +29,7 @@
     $tabLang["lang_remains"]="Remains (end of flight)";
     $tabLang["lang_elapsetime"]="Air Time (end of flight)";
     $tabLang["lang_change_explain"]="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant";
-    $tabLang["lang_changehora"]="Correct the remaining time (optional)";
+    $tabLang["lang_changehora"]="Correct the air time (optional)";
     $tabLang["lang_carbbefore"]="Gaz added before";
     $tabLang["lang_carbafter"]="Gaz added after";
     $tabLang["lang_carbprice"]="Gaz price";

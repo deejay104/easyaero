@@ -28,6 +28,10 @@
 						<div class="col-lg-5">{form_type}</div>
 					</div>
 					<div class="form-group row">
+						<div class="col-lg-3"><label>Focus</label></div>
+						<div class="col-lg-5">{form_focus}</div>
+					</div>
+					<div class="form-group row">
 						<div class="col-lg-3"><label>Module</label></div>
 						<div class="col-lg-5">{form_module}</div>
 					</div>
@@ -77,8 +81,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 <div class="row">
 	<div class="grid-margin stretch-card">
@@ -145,6 +147,8 @@ $( function() {
 				document.getElementById('compcat').value=response.compcat;
 				document.getElementById('competence').value=response.competence;
 				
+				$("#focus").prop("checked", response.focus === "oui");
+
 				$('#1_refffa')[0].value = response.progression[1].ref;
 				$('#2_refffa')[0].value = response.progression[2].ref;
 				$('#3_refffa')[0].value = response.progression[3].ref;
@@ -182,6 +186,7 @@ $( function() {
 			data["id"]=id;
 			data["idformation"]=document.getElementById('fid').value;
 			data["description"]=document.getElementById('description').value;
+			data["focus"]=$("input[type='checkbox'][name='form_data[focus]']").is(":checked") ? "oui" : "non";
 			data["type"]=document.getElementById('type').value;
 			data["module"]=document.getElementById('module').value;
 			data["refffa"]=document.getElementById('refffa').value;
@@ -243,12 +248,13 @@ $( function() {
 					if (response.result=="OK")
 					{
 						console.log("ok");
-						document.getElementById('msgbox').innerHTML="<div id='msgbox_"+id+"' class='msgbox-std msgbox-ok'>L'exercice a été enregistré</div>";
+						showToast("","L'exercice a été enregistré","ok");
+
 					}
 					else
 					{
 						console.log("nok");
-						document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde ("+response.result+")</div>";
+						showToast("","Erreur lors de la sauvegarde ("+response.result+")","error");
 					}
 				},
 				error : function()
@@ -267,7 +273,7 @@ $( function() {
 		return false;
     });
 	$( "#del_{lst_id}" ).on( "click", function() {
-		ConfirmeClick('/admin/exercices?fonc=delete&id={lst_id}','Voulez-vous supprimer cet exervice ?')		
+		ConfirmeClick('/admin/exercices?fonc=delete&id={lst_id}','Voulez-vous supprimer cet exercice ?')		
 		return false;
     });
 <!-- END: lst_edit -->
