@@ -53,6 +53,7 @@ class resa_class extends objet_core
 	protected $table="calendrier";
 	protected $mod="reservations";
 	protected $rub="reservation";
+	public $pilote_data=array();
 
 	
 	protected $fields=array(

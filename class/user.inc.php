@@ -555,18 +555,20 @@ class user_class extends user_core
 		return AffTelephone($tel);
 	}
 	
-	function ListeTerrains()
+	function ListeTerrains($formation)
 	{
 		global $MyOpt;
 
+
+// Si formation>0 faire la requete sur table synthese puis calendrier
 
 		$query ="SELECT lst.terrain, point.description, point.lat, point.lon, COUNT(*) AS nb, MAX(lst.last) AS last ";
 		$query.="FROM (";
 		$query.="SELECT IF(terrain.nom IS NOT NULL, terrain.nom, IF(cal.destination='LOCAL','".$MyOpt["terrain"]["oaci"]."',cal.destination)) AS terrain, cal.destination AS destination,cal.id AS idresa, synthese.id AS idsynthese, terrain.nom, cal.dte_fin AS last ";
 		$query.="FROM ".$this->tbl."_calendrier AS cal ";
 		$query.="LEFT JOIN ".$this->tbl."_synthese AS synthese ON cal.id=synthese.idvol ";
-		$query.="LEFT JOIN ".$this->tbl."_terrain AS terrain ON cal.id=terrain.idresa ";
-		$query.="WHERE cal.actif='oui' AND cal.tpsreel>0 AND cal.uid_pilote=".$this->id.") AS lst ";
+		$query.="LEFT JOIN ".$this->tbl."_terrain AS terrain ON cal.id=terrain.idresa AND synthese.id=terrain.idsynthese ";
+		$query.="WHERE cal.actif='oui' AND cal.tpsreel>0 AND cal.uid_pilote=".$this->id." ".(($formation>0) ? "AND synthese.idlivret=".$formation." " : "").") AS lst ";
 		$query.="LEFT JOIN ".$this->tbl."_navpoints AS point ON lst.terrain=point.nom ";
 		$query.="GROUP BY terrain";
 

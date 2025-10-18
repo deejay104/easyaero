@@ -20,6 +20,7 @@
 ?>
 
 <?
+	require_once ($appfolder."/class/synthese.inc.php");
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 	require_once ($appfolder."/class/navigation.inc.php");
@@ -29,11 +30,13 @@
 	$order=checkVar("order","varchar",10,"nb");
 	$trie=checkVar("trie","varchar",1,"i");
 	$ts=checkVar("ts","numeric");
+	$lid=checkVar("lid","numeric");
 
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
+	$tmpl_x->assign("url",geturl("aviation","terrains","q=1"));
 
 // ---- Affiche la liste des membres
 	if (GetDroit("ListeTerrains"))
@@ -42,12 +45,46 @@
 		  { $id=$gl_uid; }
 
 		$tmpl_x->assign("form_lstuser", AffListeMembres($sql,$id,"form_uid_user","","","std","non",array()));
-		$tmpl_x->parse("corps.listeVols");
+		$tmpl_x->parse("corps.aff_users");
 	}
 	else
 	{
 		$id=$gl_uid;
 	}
+
+// ---- Liste des formations
+	if ($lid>0)
+	{
+
+		$lst=ListeLivret($sql,$uid);
+
+		foreach($lst as $i=>$tmp)
+		{
+			$res=new livret_class($tmp["id"],$sql);
+
+			$tmpl_x->assign("id_livret", $res->id);
+			$tmpl_x->assign("chk_livret", ($res->id==$lid) ? "selected" : "") ;
+			$tmpl_x->assign("nom_livret", $res->displayDescription());
+			$tmpl_x->parse("corps.aff_livret.lst_livret");
+		}
+		$tmpl_x->parse("corps.aff_livret");
+	}
+	
+
+
+// ---- Menu
+
+	if (($theme!="phone") && ($lid>0))
+	{
+		addPageMenu("","aviation","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",false);
+		addPageMenu("","aviation","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
+		addPageMenu("","aviation","Terrains",geturl("aviation","terrains","lid=".$lid."&id=".$uid),"",true);
+	}
+
 
 // ---- Titre
 
@@ -63,7 +100,7 @@
 
 // ---- Récupère la liste des terrains
     $usr=new user_class($id,$sql);
-    $lst=$usr->ListeTerrains();
+    $lst=$usr->ListeTerrains($lid);
 
     $tabValeur=array();
 

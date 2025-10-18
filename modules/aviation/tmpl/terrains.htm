@@ -13,17 +13,30 @@
 <script type="text/javascript" src="/core/external/leaflet/leaflet.js"></script>
 
 
-<!-- BEGIN: listeVols -->
 <div class="row">
 	<div class="grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">	
-				{form_lstuser}
+			<div class="card-body row">	
+				<div class="col-lg-3">
+					<!-- BEGIN: aff_users -->
+					{form_lstuser}
+					<!-- END: aff_users -->
+				</div>
+
+				<div class="col-lg-3">
+					<!-- BEGIN: aff_livret -->
+					<select id="form_livret" class="form-control form-control-lg" name="form_livret" OnChange="document.location='{url}&id='+$('#form_uid_user').val()+'&lid='+$('#form_livret').val();">
+					<!-- BEGIN: lst_livret -->
+					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
+					<!-- END: lst_livret -->
+					</select>
+					<!-- END: aff_livret -->
+				</div>
+
 			</div>
 		</div>
 	</div>
 </div>
-<!-- END: listeVols -->
 
 
 
@@ -104,7 +117,7 @@
 	$(document).ready(function() { 
 		mymap = L.map('statusmap',mapOptions);
 
-		$.get('/api/v1/aviation/terrains?id='+$("#form_uid_user").val()).done(function(data)
+		$.get('/api/v1/aviation/terrains?id='+$("#form_uid_user").val()+'&formation='+$("#form_livret").val()).done(function(data)
 		{
 			for (var key in data.data)
 			{
