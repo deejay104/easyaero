@@ -31,12 +31,12 @@
 	$trie=checkVar("trie","varchar",1,"i");
 	$ts=checkVar("ts","numeric");
 	$lid=checkVar("lid","numeric");
+	$livret=checkVar("livret","numeric");
 
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
-	$tmpl_x->assign("url",geturl("aviation","terrains","q=1"));
 
 // ---- Affiche la liste des membres
 	if (GetDroit("ListeTerrains"))
@@ -52,28 +52,48 @@
 	}
 
 // ---- Liste des formations
-	if ($lid>0)
+
+	$lst=ListeLivret($sql,$uid);
+
+	$lid2=-1;
+
+	if ((count($lst)>0) && ($livret>0))
 	{
-
-		$lst=ListeLivret($sql,$uid);
-
 		foreach($lst as $i=>$tmp)
 		{
 			$res=new livret_class($tmp["id"],$sql);
-
+	
 			$tmpl_x->assign("id_livret", $res->id);
 			$tmpl_x->assign("chk_livret", ($res->id==$lid) ? "selected" : "") ;
 			$tmpl_x->assign("nom_livret", $res->displayDescription());
 			$tmpl_x->parse("corps.aff_livret.lst_livret");
+
+			if ($lid2==-1)
+			{
+				$lid2=$res->id;
+			}
+			else if ($res->id==$lid)
+			{
+				$lid2=$res->id;
+			}
 		}
+
 		$tmpl_x->parse("corps.aff_livret");
 	}
-	
+	else
+	{
+		$tmpl_x->assign("id_livret", -1);
+		$tmpl_x->assign("chk_livret", "") ;
+		$tmpl_x->assign("nom_livret", "Pas de formation");
+		$tmpl_x->parse("corps.aff_livret.lst_livret");
+		$tmpl_x->parse("corps.aff_livret");
+	}
 
+	$lid=$lid2;
 
 // ---- Menu
 
-	if (($theme!="phone") && ($lid>0))
+	if (($theme!="phone") && ($livret>0))
 	{
 		addPageMenu("","aviation","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
 		addPageMenu("","aviation","Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
@@ -101,7 +121,7 @@
     $usr=new user_class($uid,$sql);
     $lst=$usr->ListeTerrains($lid);
 
-    $tabValeur=array();
+	$tabValeur=array();
 
     $i=0;
     foreach ($lst as $uid=>$d)
@@ -119,7 +139,9 @@
 	$tmpl_x->assign("tileLayer_url",'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png');
 	$tmpl_x->assign("map_lat",$MyOpt["terrain"]["latitude"]);
 	$tmpl_x->assign("map_lon",$MyOpt["terrain"]["longitude"]);
-	
+
+	$tmpl_x->assign("livret",$livret);
+
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

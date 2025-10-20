@@ -25,7 +25,7 @@
 
 				<div class="col-lg-3">
 					<!-- BEGIN: aff_livret -->
-					<select id="form_livret" class="form-control form-control-lg" name="form_livret" OnChange="document.location='{url}&id='+$('#form_uid_user').val()+'&lid='+$('#form_livret').val();">
+					<select id="form_livret" class="form-control form-control-lg" name="form_livret">
 					<!-- BEGIN: lst_livret -->
 					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
 					<!-- END: lst_livret -->
@@ -131,11 +131,12 @@
 	});
 
 	$("#form_uid_user").change(function(){
-		document.location='{path_root}/aviation/terrains?uid='+$("#form_uid_user").val()+"&lid="+$("#form_livret").val();
+		document.location='{path_root}/aviation/terrains?uid='+$("#form_uid_user").val()+"&lid="+$("#form_livret").val()+'&livret={livret}';
 	});
 
-
-
+	$("#form_livret").change(function(){
+		document.location='{path_root}/aviation/terrains?uid='+$("#form_uid_user").val()+"&lid="+$("#form_livret").val()+'&livret={livret}';
+	});
 
 </script>
 

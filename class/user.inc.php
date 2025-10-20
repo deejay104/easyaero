@@ -568,7 +568,7 @@ class user_class extends user_core
 		$query.="FROM ".$this->tbl."_calendrier AS cal ";
 		$query.="LEFT JOIN ".$this->tbl."_synthese AS synthese ON cal.id=synthese.idvol ";
 		$query.="LEFT JOIN ".$this->tbl."_terrain AS terrain ON cal.id=terrain.idresa AND synthese.id=terrain.idsynthese ";
-		$query.="WHERE cal.actif='oui' AND cal.tpsreel>0 AND cal.uid_pilote=".$this->id." ".(($formation>0) ? "AND synthese.idlivret=".$formation." " : "").") AS lst ";
+		$query.="WHERE cal.actif='oui' AND cal.tpsreel>0 AND cal.uid_pilote=".$this->id." ".(($formation==0) ? "" : "AND synthese.idlivret=".$formation." ").") AS lst ";
 		$query.="LEFT JOIN ".$this->tbl."_navpoints AS point ON lst.terrain=point.nom ";
 		$query.="GROUP BY terrain";
 

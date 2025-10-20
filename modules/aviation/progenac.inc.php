@@ -53,7 +53,7 @@
 	addPageMenu("","aviation","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
 	addPageMenu("","aviation","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
 	addPageMenu("","aviation","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",true);
-	addPageMenu("","aviation","Terrains",geturl("aviation","terrains","lid=".$lid."&uid=".$uid),"",false);
+	addPageMenu("","aviation","Terrains",geturl("aviation","terrains","livret=1&lid=".$lid."&uid=".$uid),"",false);
 
 // ---- Change membre
 	$tmpl_x->assign("url",geturl("aviation","progenac","q=1"));
@@ -61,18 +61,8 @@
 // ---- Liste des membres
 	if (GetDroit("AccesSynthese"))
 	{
-			$lst=ListActiveUsers($sql,"std");
-		
-			foreach($lst as $i=>$tmpuid)
-			{
-			  	$resusr=new user_class($tmpuid,$sql);
-	
-				$tmpl_x->assign("id_compte", $resusr->id);
-				$tmpl_x->assign("chk_compte", ($resusr->id==$uid) ? "selected" : "") ;
-				$tmpl_x->assign("nom_compte", $resusr->aff("fullname"));
-				$tmpl_x->parse("corps.users.lst_users");
-			}
-			$tmpl_x->parse("corps.users");
+		$tmpl_x->assign("form_lstuser", AffListeMembres($sql,$uid,"form_id","","","std","non",array()));
+		$tmpl_x->parse("corps.aff_users");
 	}
 
 // ---- Affiche la liste	

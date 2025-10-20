@@ -25,7 +25,7 @@
 	require_once ($appfolder."/class/navigation.inc.php");
 
 // ---- Vérifie les variables
-	$id=checkVar("id","numeric");
+	$uid=checkVar("uid","numeric");
 	$order=checkVar("order","varchar",10,"nb");
 	$trie=checkVar("trie","varchar",1,"i");
 	$ts=checkVar("ts","numeric");
@@ -34,16 +34,16 @@
 // ---- Affiche la liste des membres
 	if (GetDroit("ListeTerrains"))
 	{
-		if ($id==0)
-		  { $id=$gl_uid; }
+		if ($uid==0)
+		  { $uid=$gl_uid; }
 	}
 	else
 	{
-		$id=$gl_uid;
+		$uid=$gl_uid;
 	}
 
 // ---- Récupère la liste des terrains
-    $usr=new user_class($id,$sql);
+    $usr=new user_class($uid,$sql);
     $lst=$usr->ListeTerrains($lid);
 
     $tabValeur=array();

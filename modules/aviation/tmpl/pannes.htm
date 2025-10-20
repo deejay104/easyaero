@@ -13,15 +13,11 @@
 	<div class="grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body row">	
-				<!-- BEGIN: users -->
 				<div class="col-lg-4">
-					<select id="form_id" name="form_id" class="form-control" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value;">
-					<!-- BEGIN: lst_users -->
-					<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-					<!-- END: lst_users -->
-					</select>
+					<!-- BEGIN: users -->
+					{form_lstuser}
+					<!-- END: users -->
 				</div>
-				<!-- END: users -->
 				<div class="col-lg-4">
 					<select id="form_livret" name="form_livret" class="form-control" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
 					<!-- BEGIN: lst_livret -->
@@ -50,4 +46,10 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$("#form_id").change(function(){
+		document.location='{path_root}/aviation/pannes?uid='+$("#form_id").val();
+	});
+</script>
 <!-- END: corps -->
