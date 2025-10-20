@@ -26,7 +26,7 @@
 	require_once ($appfolder."/class/navigation.inc.php");
 
 // ---- Vérifie les variables
-	$id=checkVar("id","numeric");
+	$uid=checkVar("uid","numeric");
 	$order=checkVar("order","varchar",10,"nb");
 	$trie=checkVar("trie","varchar",1,"i");
 	$ts=checkVar("ts","numeric");
@@ -41,15 +41,14 @@
 // ---- Affiche la liste des membres
 	if (GetDroit("ListeTerrains"))
 	{
-		if ($id==0)
-		  { $id=$gl_uid; }
-
-		$tmpl_x->assign("form_lstuser", AffListeMembres($sql,$id,"form_uid_user","","","std","non",array()));
+		if ($uid==0)
+		  { $uid=$gl_uid; }
+		$tmpl_x->assign("form_lstuser", AffListeMembres($sql,$uid,"form_uid_user","","","std","non",array()));
 		$tmpl_x->parse("corps.aff_users");
 	}
 	else
 	{
-		$id=$gl_uid;
+		$uid=$gl_uid;
 	}
 
 // ---- Liste des formations
@@ -99,13 +98,13 @@
 	$tabTitre["last"]["width"]=150;
 
 // ---- Récupère la liste des terrains
-    $usr=new user_class($id,$sql);
+    $usr=new user_class($uid,$sql);
     $lst=$usr->ListeTerrains($lid);
 
     $tabValeur=array();
 
     $i=0;
-    foreach ($lst as $id=>$d)
+    foreach ($lst as $uid=>$d)
     {
         $tabValeur[$i]["nom"]["val"]=$d["nom"];
         $tabValeur[$i]["description"]["val"]=$d["description"];

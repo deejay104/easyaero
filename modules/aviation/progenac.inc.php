@@ -53,7 +53,7 @@
 	addPageMenu("","aviation","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",false);
 	addPageMenu("","aviation","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
 	addPageMenu("","aviation","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",true);
-	addPageMenu("","aviation","Terrains",geturl("aviation","terrains","lid=".$lid."&id=".$uid),"",false);
+	addPageMenu("","aviation","Terrains",geturl("aviation","terrains","lid=".$lid."&uid=".$uid),"",false);
 
 // ---- Change membre
 	$tmpl_x->assign("url",geturl("aviation","progenac","q=1"));

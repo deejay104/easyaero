@@ -29,7 +29,7 @@
 	$order=checkVar("order","varchar",10,"nb");
 	$trie=checkVar("trie","varchar",1,"i");
 	$ts=checkVar("ts","numeric");
-	$formation=checkVar("formation","numeric");
+	$lid=checkVar("lid","numeric");
 
 // ---- Affiche la liste des membres
 	if (GetDroit("ListeTerrains"))
@@ -44,7 +44,7 @@
 
 // ---- Récupère la liste des terrains
     $usr=new user_class($id,$sql);
-    $lst=$usr->ListeTerrains($formation);
+    $lst=$usr->ListeTerrains($lid);
 
     $tabValeur=array();
 

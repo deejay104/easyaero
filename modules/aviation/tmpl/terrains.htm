@@ -117,7 +117,7 @@
 	$(document).ready(function() { 
 		mymap = L.map('statusmap',mapOptions);
 
-		$.get('/api/v1/aviation/terrains?id='+$("#form_uid_user").val()+'&formation='+$("#form_livret").val()).done(function(data)
+		$.get('/api/v1/aviation/terrains?uid='+$("#form_uid_user").val()+'&lid='+$("#form_livret").val()).done(function(data)
 		{
 			for (var key in data.data)
 			{
@@ -131,7 +131,7 @@
 	});
 
 	$("#form_uid_user").change(function(){
-		document.location='{path_root}/aviation/terrains?id='+$("#form_uid_user").val();
+		document.location='{path_root}/aviation/terrains?uid='+$("#form_uid_user").val()+"&lid="+$("#form_livret").val();
 	});
 
 
