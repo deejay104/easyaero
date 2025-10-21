@@ -103,6 +103,10 @@
 			"aff"=>"Compétence",
 			"width"=>200
 		),
+		"focus"=>array(
+			"aff"=>"Focus",
+			"width"=>40
+		),
 		"action"=>array(
 			"aff"=>"",
 			"width"=>40
@@ -133,7 +137,8 @@
 		$tabValeur[$i]["refffa"]["val"]=$exo->val("refffa");
 		$tabValeur[$i]["refenac"]["val"]=$exo->val("refenac");
 		$tabValeur[$i]["compcat"]["val"]=$exo->val("compcat");
-		$tabValeur[$i]["competence"]["val"]=$exo->val("competence");
+		$tabValeur[$i]["focus"]["val"]=$exo->val("focus");
+		$tabValeur[$i]["focus"]["aff"]=$exo->aff("focus");
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
 		$tabValeur[$i]["action"]["aff"] ="";
@@ -141,8 +146,6 @@
 		if (GetDroit("ModifExercice"))
 		{
 			$tabValeur[$i]["action"]["aff"].="<div id='action_".$d["id"]."' style='display:none;'>";
-			//$tabValeur[$i]["action"]["aff"].="<a id='edit_".$d["id"]."' href='#'><i class='mdi mdi-pencil'></i></a>";
-			// $tabValeur[$i]["action"]["aff"].="<a href='index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'><index.php?mod=admin&rub=exercices&fonc=delete&id=".$d["id"]."'><i class='mdi mdi-close'></i></a>";
 			$tabValeur[$i]["action"]["aff"].="<a id='del_".$d["id"]."' href='#'><i class='mdi mdi-close'></i></a>";
 			$tabValeur[$i]["action"]["aff"].="</div>";
 		}
