@@ -120,9 +120,7 @@
 					<!-- END: lst_delete -->
 				</div>
 				<!-- END: lst_pedagogique -->
-
-				<div id="affpedagogique">
-				</div>
+				<div id="affpedagogique"></div>
 				<br />
 				<!-- BEGIN: add_exercicepeda -->
 				<input id="addexercicepeda" class="form-control">
@@ -139,7 +137,7 @@
 
 			<h5>EXERCICES</h5>
 			<!-- BEGIN: lst_exercice -->
-			<div id='exo_{aff_id}' class='form-group row form-hover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+			<div id='exo_{aff_id}' style='{form_color}' class='form-group row form-hover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 				<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
 				<div class="col-lg-5 form-inline">{form_progression}</div>
 				<!-- BEGIN: lst_exercice_delete -->
@@ -167,7 +165,7 @@
 				<h5>PANNES</h5>
 
 				<!-- BEGIN: lst_panne -->
-				<div id='exo_{aff_id}' class='form-group row form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
+				<div id='exo_{aff_id}' style='{form_color}' class='form-group row form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 					<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
 					<div class="col-lg-5 form-inline">{form_progression}</div>
 					<!-- BEGIN: lst_panne_delete -->
@@ -441,10 +439,14 @@
 				{
 					$.each(response, function (index, value) {
 
-						txt="<div id='exo_"+value.id+"' class='form-inline form-large form-hover'><label>"+value.description+"</label> ";
+						txt="<div id='exo_"+value.id+"' class='form-group row form-hover'><label class='col-lg-5 col-form-label'>"+value.description+"</label> ";
+						txt=txt+"<div class='col-lg-5 form-inline'>";
+						txt=txt+"<div class='form-inline'>";
 						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
 						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
 						txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
+						txt=txt+"</div>";
+						txt=txt+"</div>";
 						txt=txt+"</div>";
 
 						if (value.type=="peda")

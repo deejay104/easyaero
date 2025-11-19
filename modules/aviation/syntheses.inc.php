@@ -149,8 +149,8 @@
 		}
 	}
 
-	if ((!isset($order)) || ($order=="")) { $order="dte"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
+	$order="dte";
+	$trie="d";
 
 	$tmpl_x->assign("aff_exercices",AfficheTableau($tabValeur,$tabTitre,$order,$trie));	
 
@@ -197,8 +197,8 @@
 		$tabValeur[$fid]["status"]["val"]=$fiche->aff("status");
 	}
 
-	if ((!isset($order)) || ($order=="")) { $order="dte"; }
-	if ((!isset($trie)) || ($trie=="")) { $trie="i"; }
+	$order="dte";
+	$trie="i";
 
 	// $tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"type=".$type."&dte=".$dte));
 

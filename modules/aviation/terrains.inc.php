@@ -55,7 +55,7 @@
 
 	$lst=ListeLivret($sql,$uid);
 
-	$lid2=-1;
+	$lid2=0;
 
 	if ((count($lst)>0) && ($livret>0))
 	{
@@ -80,16 +80,16 @@
 
 		$tmpl_x->parse("corps.aff_livret");
 	}
-	else
+	else if ($livret>0)
 	{
 		$tmpl_x->assign("id_livret", -1);
 		$tmpl_x->assign("chk_livret", "") ;
 		$tmpl_x->assign("nom_livret", "Pas de formation");
 		$tmpl_x->parse("corps.aff_livret.lst_livret");
 		$tmpl_x->parse("corps.aff_livret");
+		$lid=-1;
 	}
 
-	$lid=$lid2;
 
 // ---- Menu
 

@@ -90,7 +90,7 @@
 					$exo->Valid("progression",$s["progression"]);
 					$exo->Valid("progref",$prog->val("progression"));
 					$exo->Save();
-					$tabok[$prog->val("idexercice")]="ok";
+					$tabok[$i]="ok";
 				}
 			}
 		}
@@ -368,10 +368,55 @@
 		$tmpl_x->assign("terrain",$t);
 		$tmpl_x->parse("corps.lst_terrain");
 	}
+
+
+// ---- Charge les exercices non acquis
+
+    if ($id==0)
+	{
+		$lst=ListeExercicesNonAcquis($sql,$id,$resa->uid_pilote);
+
+		foreach($lst as $i=>$v)
+		{
+			$c_conf=new exercice_conf_class($v["idexercice"],$sql);
+			$c_line=new exercice_class(0,$sql);
+
+			$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
+			$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compold[".$v["idexercice"]."]"));
+
+			if ($v["progref"]!=$v["progression"])
+			{
+				$tmpl_x->assign("form_progref", "<div>(<i class='mdi mdi-alert-circle-outline' style='font-size:16px;'></i> aurait déjà du être Acquis)</div>");
+				$tmpl_x->assign("form_color", "background-color:#".$MyOpt["styleColor"]["msgboxBackgroundError"]);
+			}
+			else
+			{
+				$tmpl_x->assign("form_progref", "");
+				$tmpl_x->assign("form_color", "");
+			}
+
+			if ($c_conf->val("type")=="panne")
+			{
+				$tmpl_x->parse("corps.lst_panne");
+			}
+			else if ($c_conf->val("type")=="exercice")
+			{
+				$tmpl_x->parse("corps.lst_exercice");
+			}
+			else
+			{
+				$tmpl_x->parse("corps.lst_pedagogique");
+			}
+		}
+	}
+
+
 // ---- Charge les exercices de la fiche de synthèse
-	$lst=ListeExercices($sql,$id);
+	$lst=ListeExercices($sql,$id,$resa->uid_pilote);
+
 	foreach($lst as $i=>$v)
 	{
+
 		$c_conf=new exercice_conf_class($v["idexercice"],$sql);
 		$c_line=new exercice_class($v["id"],$sql);
 
@@ -418,27 +463,13 @@
 			{
 				$tmpl_x->parse("corps.lst_pedagogique.lst_delete");
 			}
+			echo $i.":".$c_conf->val("type")."*";
 			$tmpl_x->parse("corps.lst_pedagogique");
 		}
 	}
 
 
-// ---- Charge les exercices non acquis
-	if ($id==0)
-	{
-		$lst=ListeExercicesNonAcquis($sql,$resa->uid_pilote);
 
-		foreach($lst as $i=>$v)
-		{
-			$c_conf=new exercice_conf_class($v["id"],$sql);
-			$c_line=new exercice_class(0,$sql);
-
-			$tmpl_x->assign("aff_exo_description",$c_conf->Aff("description"));
-			$tmpl_x->assign("form_progression",$c_line->Aff("progression",$typeaff,"form_compold[".$v["id"]."]"));
-
-			$tmpl_x->parse("corps.lst_pedagogique");
-		}
-	}
 
 // ---- Calcul totaux
 	$tmpl_x->assign("form_total_att",$fiche->NbAtt($fiche->val("dte_vol")));

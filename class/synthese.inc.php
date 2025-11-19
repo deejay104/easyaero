@@ -522,27 +522,52 @@ class exercice_class extends objet_core
 	);
 }
 
-function ListeExercices($sql,$id)
+function ListeExercices($sql,$id,$uid)
 {
-	return ListeObjets($sql,"exercice",array("idexercice","progression","progref"),array("actif"=>"oui","idsynthese"=>$id),array("progref DESC","id"));
+//function ListeObjets($sql,$table,$champs=array(),$crit=array(),$order=array())
+
+//	return ListeObjets($sql,"exercice",array("idexercice","progression","progref"),array("actif"=>"oui","idsynthese"=>$id),array("progref DESC","id"));
+	global $MyOpt;
+
+	$lst=array();
+
+	$q="SELECT id,idexercice,progression,progref FROM ".$MyOpt["tbl"]."_exercice WHERE actif='oui' AND idsynthese=".$id." ORDER BY progref DESC,id";
+	$sql->Query($q);
+
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$lst[$sql->data["idexercice"]]["id"]=$sql->data["id"];
+		$lst[$sql->data["idexercice"]]["idexercice"]=$sql->data["idexercice"];
+		$lst[$sql->data["idexercice"]]["progression"]=$sql->data["progression"];
+		$lst[$sql->data["idexercice"]]["progref"]=$sql->data["progref"];
+	}
+
+	return $lst;
 }
 
 // Liste des exercices non aquis pour un élève
-function ListeExercicesNonAcquis($sql,$uid)
+function ListeExercicesNonAcquis($sql,$id,$uid)
 {
 	global $MyOpt;
-	
-	$q ="SELECT idexercice AS id FROM ".$MyOpt["tbl"]."_exercice AS exo ";
+
+	$lst=array();
+
+#	$q="SELECT id,idexercice,progression,progref FROM ".$MyOpt["tbl"]."_exercice WHERE actif='oui' AND uid='".$uid."' and idsynthese<>".$id." AND progression='E' AND progref='A' ORDER BY progref DESC,id";
+	$q ="SELECT id,idexercice,progression,progref FROM ".$MyOpt["tbl"]."_exercice AS exo ";
 	$q.="WHERE actif='oui' AND uid='".$uid."' AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progression='A')=0 AND (SELECT COUNT(*) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.idexercice=prog.idexercice AND prog.progref='A')=1 ";
 	$q.="GROUP BY idexercice";
 	$sql->Query($q);
 
-	$lst=array();
 	for($i=0; $i<$sql->rows; $i++)
 	{ 
 		$sql->GetRow($i);
-		$lst[$sql->data["id"]]=$sql->data;
+		$lst[$sql->data["idexercice"]]["id"]=$sql->data["id"];
+		$lst[$sql->data["idexercice"]]["idexercice"]=$sql->data["idexercice"];
+		$lst[$sql->data["idexercice"]]["progression"]=$sql->data["progression"];
+		$lst[$sql->data["idexercice"]]["progref"]=$sql->data["progref"];
 	}
+
 	return $lst;
 }
 
