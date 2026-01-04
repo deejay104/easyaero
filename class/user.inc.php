@@ -46,7 +46,7 @@ class user_class extends user_core
 		"type" => Array("type" => "enum", "default" => "pilote", "index" => "1"),
 		"decouvert" => Array("type" => "number", "default" => "0", "placeholder"=>1),
 		"tarif" => Array("type" => "number", "default" => "0", "placeholder"=>1 ),
-		"dte_naissance" => Array("type" => "date", "default" => "0000-00-00", ),
+		"dte_naissance" => Array("type" => "birthday", "default" => "0000-00-00", ),
 		"dte_inscription" => Array("type" => "date", "default" => "now"),
 		"poids" => Array("type" => "number", "default" => "75", ),
 		"aff_rapide" => Array("type" => "varchar","len"=>1, "default" => "n", ),

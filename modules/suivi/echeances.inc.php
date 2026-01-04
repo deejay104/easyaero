@@ -140,6 +140,8 @@
 		$tabTitre["nom"]["width"]=250;
 		$tabTitre["echeance"]["aff"]="Echéance";
 		$tabTitre["echeance"]["width"]=350;
+		$tabTitre["age"]["aff"]="Date Naissance";
+		$tabTitre["age"]["width"]=120;
 		$tabTitre["solde"]["aff"]="Solde";
 		$tabTitre["solde"]["width"]=120;
 		$tabTitre["debiter"]["aff"]="<input type='checkbox' id='form_debite' OnClick='selectAll();'> Débiter";
@@ -162,6 +164,9 @@
 				$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
 				$tabValeur[$i]["echeance"]["val"]=$dte->Val();
 				$tabValeur[$i]["echeance"]["aff"]=$dte->Affiche();
+
+				$tabValeur[$i]["age"]["val"]=$usr->Val("dte_naissance");
+				$tabValeur[$i]["age"]["aff"]=$usr->Aff("dte_naissance");
 
 				$tabValeur[$i]["solde"]["val"]=$usr->CalcSolde();
 				$tabValeur[$i]["solde"]["aff"]=$usr->AffSolde()."&nbsp;&nbsp;";
