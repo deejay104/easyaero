@@ -219,19 +219,23 @@
     }
 
 
-    $tabActivite[0]["vols"]["val"]=floor($tabActivite[0]["vols"]["val"]/60);
-    $tabActivite[0]["inst"]["val"]=floor($tabActivite[0]["inst"]["val"]/60);
-    $tabActivite[1]["vols"]["val"]=floor($tabActivite[1]["vols"]["val"]/60);
-    $tabActivite[1]["inst"]["val"]=floor($tabActivite[1]["inst"]["val"]/60);
+    $tabActivite[0]["vols"]["val"]=round($tabActivite[0]["vols"]["val"]/60);
+    $tabActivite[0]["inst"]["val"]=round($tabActivite[0]["inst"]["val"]/60);
+    $tabActivite[1]["vols"]["val"]=round($tabActivite[1]["vols"]["val"]/60);
+    $tabActivite[1]["inst"]["val"]=round($tabActivite[1]["inst"]["val"]/60);
 
-    $tabActivite[6]["vols"]["val"]=floor($tabActivite[6]["vols"]["val"]/60);
-    $tabActivite[6]["inst"]["val"]=floor($tabActivite[6]["inst"]["val"]/60);
-    $tabActivite[7]["vols"]["val"]=floor($tabActivite[7]["vols"]["val"]/60);
-    $tabActivite[7]["inst"]["val"]=floor($tabActivite[7]["inst"]["val"]/60);
-    $tabActivite[8]["vols"]["val"]=floor($tabActivite[8]["vols"]["val"]/60);
-    $tabActivite[8]["inst"]["val"]=floor($tabActivite[8]["inst"]["val"]/60);
-    $tabActivite[9]["vols"]["val"]=floor($tabActivite[9]["vols"]["val"]/60);
-    $tabActivite[9]["inst"]["val"]=floor($tabActivite[9]["inst"]["val"]/60);
+    $tabActivite[6]["vols"]["val"]=round($tabActivite[6]["vols"]["val"]/60);
+    $tabActivite[6]["inst"]["val"]=round($tabActivite[6]["inst"]["val"]/60);
+    $tabActivite[7]["vols"]["val"]=round($tabActivite[7]["vols"]["val"]/60);
+    $tabActivite[7]["inst"]["val"]=round($tabActivite[7]["inst"]["val"]/60);
+    $tabActivite[8]["vols"]["val"]=round($tabActivite[8]["vols"]["val"]/60);
+    $tabActivite[8]["inst"]["val"]=round($tabActivite[8]["inst"]["val"]/60);
+
+    $totpil=$tabActivite[0]["vols"]["val"]+$tabActivite[1]["vols"]["val"]-$tabActivite[6]["vols"]["val"]-$tabActivite[7]["vols"]["val"]-$tabActivite[8]["vols"]["val"];
+    $totins=$tabActivite[0]["inst"]["val"]+$tabActivite[1]["inst"]["val"]-$tabActivite[6]["inst"]["val"]-$tabActivite[7]["inst"]["val"]-$tabActivite[8]["inst"]["val"];
+
+    $tabActivite[9]["vols"]["val"]=round($tabActivite[9]["vols"]["val"]/60)." / ".$totpil;
+    $tabActivite[9]["inst"]["val"]=round($tabActivite[9]["inst"]["val"]/60)." / ".$totins;
 
     $query = "SELECT SUM(cal.tpsreel) AS nb FROM `".$MyOpt["tbl"]."_bapteme` AS btm LEFT JOIN ".$MyOpt["tbl"]."_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='btm'";
 	$res=$sql->QueryRow($query);
