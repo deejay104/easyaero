@@ -112,11 +112,6 @@
             $pilot=1;
         }
 
-        $tabActivite[0]["vols"]["val"]=$tabActivite[0]["vols"]["val"]+$usr->NbHeures($dte_deb,$dte_fin,"cdb","local");
-        $tabActivite[0]["inst"]["val"]=$tabActivite[0]["inst"]["val"]+$usr->NbHeures($dte_deb,$dte_fin,"inst","local");
-        $tabActivite[1]["vols"]["val"]=$tabActivite[1]["vols"]["val"]+$usr->NbHeures($dte_deb,$dte_fin,"cdb","nav");
-        $tabActivite[1]["inst"]["val"]=$tabActivite[1]["inst"]["val"]+$usr->NbHeures($dte_deb,$dte_fin,"inst","nav");
-
         if ($pilot==1)
         {
 
@@ -124,38 +119,105 @@
             {
                 $tabValeur[$ii]["nbfemme"]["val"]++;
 
-                if ($age<=21)
-                {
-                    $tabActivite[6]["vols"]["val"]=$tabActivite[6]["vols"]["val"]+$cdb;
-                    $tabActivite[6]["inst"]["val"]=$tabActivite[6]["inst"]["val"]+$ins;
-                }
-                else
-                {
-                    $tabActivite[7]["vols"]["val"]=$tabActivite[7]["vols"]["val"]+$cdb;
-                    $tabActivite[7]["inst"]["val"]=$tabActivite[7]["inst"]["val"]+$ins;
-                }
 
             }
             else
             {
                 $tabValeur[$ii]["nbhomme"]["val"]++;
+            }
+        }
+    }
 
-                if ($age<=21)
-                {
-                    $tabActivite[8]["vols"]["val"]=$tabActivite[8]["vols"]["val"]+$cdb;
-                    $tabActivite[8]["inst"]["val"]=$tabActivite[8]["inst"]["val"]+$ins;
-                }
-                else
-                {
-                    $tabActivite[9]["vols"]["val"]=$tabActivite[9]["vols"]["val"]+$cdb;
-                    $tabActivite[9]["inst"]["val"]=$tabActivite[9]["inst"]["val"]+$ins;
-                }
+    // Rapport des vols
+    $query = "SELECT cal.tpsreel,cal.destination,cal.uid_instructeur, usr.dte_naissance,usr.sexe FROM `".$MyOpt["tbl"]."_calendrier` AS cal LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON cal.uid_pilote=usr.id WHERE cal.actif='oui' AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
+	$sql->Query($query);
+
+    for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+
+        if ($sql->data["destination"]=="LOCAL")
+        {
+            if ($sql->data["uid_instructeur"]>0)
+            {
+                $tabActivite[0]["inst"]["val"]=$tabActivite[0]["inst"]["val"]+$sql->data["tpsreel"];
+    
+            }
+            else
+            {
+                $tabActivite[0]["vols"]["val"]=$tabActivite[0]["vols"]["val"]+$sql->data["tpsreel"];
+            }
+        }
+        else
+        {
+            if ($sql->data["uid_instructeur"]>0)
+            {
+                $tabActivite[1]["inst"]["val"]=$tabActivite[1]["inst"]["val"]+$sql->data["tpsreel"];
+            }
+            else
+            {
+                $tabActivite[1]["vols"]["val"]=$tabActivite[1]["vols"]["val"]+$sql->data["tpsreel"];
             }
         }
 
-        
+        $age=floor(strtotime($dte_deb)-strtotime($sql->data["dte_naissance"]))/(365.25*24*3600);
 
+        if ($sql->data["sexe"]=="F")
+        {
+            if ($age<=21)
+            {
+                if ($sql->data["uid_instructeur"]>0)
+                {
+                    $tabActivite[6]["inst"]["val"]=$tabActivite[6]["inst"]["val"]+$sql->data["tpsreel"];
+        
+                }
+                else
+                {
+                    $tabActivite[6]["vols"]["val"]=$tabActivite[6]["vols"]["val"]+$sql->data["tpsreel"];
+                }
+            }
+            else
+            {
+                if ($sql->data["uid_instructeur"]>0)
+                {
+                    $tabActivite[7]["inst"]["val"]=$tabActivite[7]["inst"]["val"]+$sql->data["tpsreel"];
+        
+                }
+                else
+                {
+                    $tabActivite[7]["vols"]["val"]=$tabActivite[7]["vols"]["val"]+$sql->data["tpsreel"];
+                }
+            }
+        }
+        else
+        {
+            if ($age<=21)
+            {
+                if ($sql->data["uid_instructeur"]>0)
+                {
+                    $tabActivite[8]["inst"]["val"]=$tabActivite[8]["inst"]["val"]+$sql->data["tpsreel"];
+        
+                }
+                else
+                {
+                    $tabActivite[8]["vols"]["val"]=$tabActivite[8]["vols"]["val"]+$sql->data["tpsreel"];
+                }
+            }
+            else
+            {
+                if ($sql->data["uid_instructeur"]>0)
+                {
+                    $tabActivite[9]["inst"]["val"]=$tabActivite[9]["inst"]["val"]+$sql->data["tpsreel"];
+        
+                }
+                else
+                {
+                    $tabActivite[9]["vols"]["val"]=$tabActivite[9]["vols"]["val"]+$sql->data["tpsreel"];
+                }
+            }
+        }
     }
+
 
     $tabActivite[0]["vols"]["val"]=floor($tabActivite[0]["vols"]["val"]/60);
     $tabActivite[0]["inst"]["val"]=floor($tabActivite[0]["inst"]["val"]/60);
