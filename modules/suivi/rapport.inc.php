@@ -164,11 +164,11 @@
     $tabActivite[9]["vols"]["val"]=floor($tabActivite[9]["vols"]["val"]/60);
     $tabActivite[9]["inst"]["val"]=floor($tabActivite[9]["inst"]["val"]/60);
 
-    $query = "SELECT SUM(cal.tpsreel) AS nb FROM `core_bapteme` AS btm LEFT JOIN core_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='btm'";
+    $query = "SELECT SUM(cal.tpsreel) AS nb FROM `".$MyOpt["tbl"]."_bapteme` AS btm LEFT JOIN ".$MyOpt["tbl"]."_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='btm'";
 	$res=$sql->QueryRow($query);
     $tabActivite[4]["vols"]["val"]=floor($res["nb"]/60);
 
-    $query = "SELECT SUM(cal.tpsreel) AS nb FROM `core_bapteme` AS btm LEFT JOIN core_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='vi'";
+    $query = "SELECT SUM(cal.tpsreel) AS nb FROM `".$MyOpt["tbl"]."_bapteme` AS btm LEFT JOIN ".$MyOpt["tbl"]."_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='vi'";
 	$res=$sql->QueryRow($query);
     $tabActivite[4]["inst"]["val"]=floor($res["nb"]/60);
 
