@@ -83,6 +83,7 @@
             $ii=1;
         }
 
+        $pilot=0;
         if ($usr->val("groupe")=="ELE")
         {
             $tabValeur[$ii]["nbeleve"]["val"]++;
@@ -113,36 +114,39 @@
         $tabActivite[1]["vols"]["val"]=$tabActivite[1]["vols"]["val"]+$usr->NbHeures($dte_deb,$dte_fin,"cdb","nav");
         $tabActivite[1]["inst"]["val"]=$tabActivite[1]["inst"]["val"]+$usr->NbHeures($dte_deb,$dte_fin,"inst","nav");
 
-
-        if ($usr->val("sexe")=="F")
+        if ($pilot==1)
         {
-            $tabValeur[$ii]["nbfemme"]["val"]++;
 
-            if ($age<=21)
+            if ($usr->val("sexe")=="F")
             {
-                $tabActivite[6]["vols"]["val"]=$tabActivite[6]["vols"]["val"]+$cdb;
-                $tabActivite[6]["inst"]["val"]=$tabActivite[6]["inst"]["val"]+$ins;
+                $tabValeur[$ii]["nbfemme"]["val"]++;
+
+                if ($age<=21)
+                {
+                    $tabActivite[6]["vols"]["val"]=$tabActivite[6]["vols"]["val"]+$cdb;
+                    $tabActivite[6]["inst"]["val"]=$tabActivite[6]["inst"]["val"]+$ins;
+                }
+                else
+                {
+                    $tabActivite[7]["vols"]["val"]=$tabActivite[7]["vols"]["val"]+$cdb;
+                    $tabActivite[7]["inst"]["val"]=$tabActivite[7]["inst"]["val"]+$ins;
+                }
+
             }
             else
             {
-                $tabActivite[7]["vols"]["val"]=$tabActivite[7]["vols"]["val"]+$cdb;
-                $tabActivite[7]["inst"]["val"]=$tabActivite[7]["inst"]["val"]+$ins;
-            }
+                $tabValeur[$ii]["nbhomme"]["val"]++;
 
-        }
-        else
-        {
-            $tabValeur[$ii]["nbhomme"]["val"]++;
-
-            if ($age<=21)
-            {
-                $tabActivite[8]["vols"]["val"]=$tabActivite[8]["vols"]["val"]+$cdb;
-                $tabActivite[8]["inst"]["val"]=$tabActivite[8]["inst"]["val"]+$ins;
-            }
-            else
-            {
-                $tabActivite[9]["vols"]["val"]=$tabActivite[9]["vols"]["val"]+$cdb;
-                $tabActivite[9]["inst"]["val"]=$tabActivite[9]["inst"]["val"]+$ins;
+                if ($age<=21)
+                {
+                    $tabActivite[8]["vols"]["val"]=$tabActivite[8]["vols"]["val"]+$cdb;
+                    $tabActivite[8]["inst"]["val"]=$tabActivite[8]["inst"]["val"]+$ins;
+                }
+                else
+                {
+                    $tabActivite[9]["vols"]["val"]=$tabActivite[9]["vols"]["val"]+$cdb;
+                    $tabActivite[9]["inst"]["val"]=$tabActivite[9]["inst"]["val"]+$ins;
+                }
             }
         }
 
