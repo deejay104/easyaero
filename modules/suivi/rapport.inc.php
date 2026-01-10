@@ -311,6 +311,12 @@ echo $query;
         }
     }
 
+    foreach($tabAvions as $i=>$d)
+    {
+        $tabAvions[$i]["heures"]["val"]=round($tabAvions[$i]["heures"]["val"]/60);
+        $tabAvions[$i]["inst"]["val"]=round($tabAvions[$i]["inst"]["val"]/60);
+    }
+
 	$tmpl_x->assign("aff_avions",AfficheTableau($tabAvions,$tabTitreAvions,"immat","d",""));
 
     
