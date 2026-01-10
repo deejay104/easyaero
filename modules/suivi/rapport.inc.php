@@ -290,7 +290,7 @@ Heures homme adulte
 
     $tabAvions=array();
 
-    $query = "SELECT res.id,res.immatriculation,cal.temps,cal.uid_instructeur FROM `core_calendrier` AS cal LEFT JOIN core_ressources AS res ON cal.uid_avion=res.id WHERE cal.actif='oui' AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
+    $query = "SELECT res.id,res.immatriculation,cal.temps,cal.uid_instructeur FROM `".$MyOpt["tbl"]."_calendrier` AS cal LEFT JOIN ".$MyOpt["tbl"]."_ressources AS res ON cal.uid_avion=res.id WHERE cal.actif='oui' AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
 echo $query;
     $sql->Query($query);
 
