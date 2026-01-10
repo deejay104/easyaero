@@ -98,8 +98,6 @@
             $tabValeur[$ii]["nbpilote"]["val"]++;
             $pilot=1;
 
-            $tabInstructeur[$iii]["nom"]["val"]=$usr->fullname;
-            $tabInstructeur[$iii]["heures"]["val"]=floor($usr->NbHeures($dte_deb,$dte_fin,"inst")/60);
             $iii++;
         }
         else if ($usr->val("groupe")=="INV")
@@ -114,12 +112,9 @@
 
         if ($pilot==1)
         {
-
             if ($usr->val("sexe")=="F")
             {
                 $tabValeur[$ii]["nbfemme"]["val"]++;
-
-
             }
             else
             {
@@ -129,6 +124,28 @@
     }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,"age","d",""));
+
+    // Rapport instructeur
+    $query = "SELECT cal.uid_instructeur AS id,cal.temps,cal.uid_instructeur, usr.nom,usr.prenom FROM `".$MyOpt["tbl"]."_calendrier` AS cal LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON cal.uid_instructeur=usr.id WHERE cal.actif='oui' AND cal.uid_instructeur>0 AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
+    $sql->Query($query);
+
+    for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+
+        if (!isset($tabInstructeur[$sql->data["id"]]["nom"]))
+        {
+            $tabInstructeur[$sql->data["id"]]["nom"]["val"]=$sql->data["prenom"]." ".$sql->data["nom"];
+            $tabInstructeur[$sql->data["id"]]["heures"]["val"]=0;
+        }
+        $tabInstructeur[$sql->data["id"]]["heures"]["val"]=$tabInstructeur[$sql->data["id"]]["heures"]["val"]+$sql->data["temps"];
+    }
+
+    foreach($tabInstructeur as $i=>$d)
+    {
+        $tabInstructeur[$i]["heures"]["val"]=round($tabInstructeur[$i]["heures"]["val"]/60,1);
+    }
+
 	$tmpl_x->assign("aff_instructeur",AfficheTableau($tabInstructeur,$tabTitreInstructeur,"nom","d",""));
 
 
