@@ -61,7 +61,7 @@
 
 	$query ="SELECT uid_avion AS id, date_format(dte_deb,'%c') AS dte, SUM(temps) AS nb ";
 	$query.="FROM ".$MyOpt["tbl"]."_calendrier ";
-	$query.="WHERE dte_deb>='$dte-01-01' AND dte_deb<'$dte2-01-01' AND temps<>0 ";
+	$query.="WHERE dte_deb>='$dte-01-01' AND dte_deb<'$dte2-01-01' AND temps<>0 AND actif='oui'";
 	$query.="GROUP BY uid_avion, date_format(dte_deb,'%Y%m')";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)

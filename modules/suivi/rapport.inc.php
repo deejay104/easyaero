@@ -129,7 +129,7 @@
     }
 
     // Rapport des vols
-    $query = "SELECT cal.tpsreel,cal.destination,cal.uid_instructeur, usr.dte_naissance,usr.sexe FROM `".$MyOpt["tbl"]."_calendrier` AS cal LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON cal.uid_pilote=usr.id WHERE cal.actif='oui' AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
+    $query = "SELECT cal.temps,cal.destination,cal.uid_instructeur, usr.dte_naissance,usr.sexe FROM `".$MyOpt["tbl"]."_calendrier` AS cal LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON cal.uid_pilote=usr.id WHERE cal.actif='oui' AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
 	$sql->Query($query);
 
     for($i=0; $i<$sql->rows; $i++)
@@ -140,23 +140,23 @@
         {
             if ($sql->data["uid_instructeur"]>0)
             {
-                $tabActivite[0]["inst"]["val"]=$tabActivite[0]["inst"]["val"]+$sql->data["tpsreel"];
+                $tabActivite[0]["inst"]["val"]=$tabActivite[0]["inst"]["val"]+$sql->data["temps"];
     
             }
             else
             {
-                $tabActivite[0]["vols"]["val"]=$tabActivite[0]["vols"]["val"]+$sql->data["tpsreel"];
+                $tabActivite[0]["vols"]["val"]=$tabActivite[0]["vols"]["val"]+$sql->data["temps"];
             }
         }
         else
         {
             if ($sql->data["uid_instructeur"]>0)
             {
-                $tabActivite[1]["inst"]["val"]=$tabActivite[1]["inst"]["val"]+$sql->data["tpsreel"];
+                $tabActivite[1]["inst"]["val"]=$tabActivite[1]["inst"]["val"]+$sql->data["temps"];
             }
             else
             {
-                $tabActivite[1]["vols"]["val"]=$tabActivite[1]["vols"]["val"]+$sql->data["tpsreel"];
+                $tabActivite[1]["vols"]["val"]=$tabActivite[1]["vols"]["val"]+$sql->data["temps"];
             }
         }
 
@@ -168,12 +168,12 @@
             {
                 if ($sql->data["uid_instructeur"]>0)
                 {
-                    $tabActivite[6]["inst"]["val"]=$tabActivite[6]["inst"]["val"]+$sql->data["tpsreel"];
+                    $tabActivite[6]["inst"]["val"]=$tabActivite[6]["inst"]["val"]+$sql->data["temps"];
         
                 }
                 else
                 {
-                    $tabActivite[6]["vols"]["val"]=$tabActivite[6]["vols"]["val"]+$sql->data["tpsreel"];
+                    $tabActivite[6]["vols"]["val"]=$tabActivite[6]["vols"]["val"]+$sql->data["temps"];
                 }
             }
             else
@@ -195,24 +195,24 @@
             {
                 if ($sql->data["uid_instructeur"]>0)
                 {
-                    $tabActivite[8]["inst"]["val"]=$tabActivite[8]["inst"]["val"]+$sql->data["tpsreel"];
+                    $tabActivite[8]["inst"]["val"]=$tabActivite[8]["inst"]["val"]+$sql->data["temps"];
         
                 }
                 else
                 {
-                    $tabActivite[8]["vols"]["val"]=$tabActivite[8]["vols"]["val"]+$sql->data["tpsreel"];
+                    $tabActivite[8]["vols"]["val"]=$tabActivite[8]["vols"]["val"]+$sql->data["temps"];
                 }
             }
             else
             {
                 if ($sql->data["uid_instructeur"]>0)
                 {
-                    $tabActivite[9]["inst"]["val"]=$tabActivite[9]["inst"]["val"]+$sql->data["tpsreel"];
+                    $tabActivite[9]["inst"]["val"]=$tabActivite[9]["inst"]["val"]+$sql->data["temps"];
         
                 }
                 else
                 {
-                    $tabActivite[9]["vols"]["val"]=$tabActivite[9]["vols"]["val"]+$sql->data["tpsreel"];
+                    $tabActivite[9]["vols"]["val"]=$tabActivite[9]["vols"]["val"]+$sql->data["temps"];
                 }
             }
         }
@@ -237,11 +237,11 @@
     $tabActivite[9]["vols"]["val"]=round($tabActivite[9]["vols"]["val"]/60)." / ".$totpil;
     $tabActivite[9]["inst"]["val"]=round($tabActivite[9]["inst"]["val"]/60)." / ".$totins;
 
-    $query = "SELECT SUM(cal.tpsreel) AS nb FROM `".$MyOpt["tbl"]."_bapteme` AS btm LEFT JOIN ".$MyOpt["tbl"]."_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='btm'";
+    $query = "SELECT SUM(cal.temps) AS nb FROM `".$MyOpt["tbl"]."_bapteme` AS btm LEFT JOIN ".$MyOpt["tbl"]."_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='btm'";
 	$res=$sql->QueryRow($query);
     $tabActivite[4]["vols"]["val"]=floor($res["nb"]/60);
 
-    $query = "SELECT SUM(cal.tpsreel) AS nb FROM `".$MyOpt["tbl"]."_bapteme` AS btm LEFT JOIN ".$MyOpt["tbl"]."_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='vi'";
+    $query = "SELECT SUM(cal.temps) AS nb FROM `".$MyOpt["tbl"]."_bapteme` AS btm LEFT JOIN ".$MyOpt["tbl"]."_calendrier AS cal ON btm.id_resa=cal.id WHERE cal.dte_deb>='2025-01-01' AND cal.dte_fin<'2026-01-01' AND cal.actif='oui' AND btm.actif='oui' AND btm.type='vi'";
 	$res=$sql->QueryRow($query);
     $tabActivite[4]["inst"]["val"]=floor($res["nb"]/60);
 
@@ -252,7 +252,7 @@
 
 
 	$query = "SELECT COUNT(*) AS total FROM ".$MyOpt["tbl"]."_calendrier AS cal ";
-	$query.= "WHERE dte_deb>='".$dte_deb."' AND dte_deb<'".$dte_fin."' AND (prix<>0 OR tpsreel<>0) AND actif='oui'";
+	$query.= "WHERE dte_deb>='".$dte_deb."' AND dte_deb<'".$dte_fin."' AND (prix<>0 OR temps<>0) AND actif='oui'";
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("nb_mouvement",$res["total"]);
 
