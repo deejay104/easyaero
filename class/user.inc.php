@@ -337,11 +337,22 @@ class user_class extends user_core
 		return true;
 	}
 	
-	function CalcAge($dte){
+	function CalcAge($dte="")
+	{
 		global $uid;
-		if ($this->dte_naissance!="0000-00-00")
+
+		if ($dte=="")
+		{
+			$now=time();
+		}
+		else
+		{
+			$now=strtotime($dte);
+		}
+
+		if ($this->data["dte_naissance"]!="0000-00-00")
 		  {
-			$age=floor((strtotime($dte)-strtotime($this->dte_naissance))/(365.25*24*3600));
+			$age=floor(($now-strtotime($this->data["dte_naissance"]))/(365.25*24*3600));
 		  }
 		else
 		  {
@@ -417,7 +428,7 @@ class user_class extends user_core
 		  }
 	}
 
-	function NbHeures($dte,$dtef="",$type="")
+	function NbHeures($dte,$dtef="",$type="",$dest="")
 	{
 		if ($type=="cdb")
 		{
@@ -442,7 +453,16 @@ class user_class extends user_core
 		}
 		
 		$sql=$this->sql;
-		$query="SELECT SUM( tpsreel ) AS nb FROM `".$this->tbl."_calendrier` WHERE ".$q." AND dte_deb>='".$dte."' AND dte_deb<'".$dtef."' AND (prix<>0 OR tpsreel<>0) AND actif='oui'";
+		$query="SELECT SUM( tpsreel ) AS nb FROM `".$this->tbl."_calendrier` WHERE ".$q." AND dte_deb>='".$dte."' AND dte_deb<'".$dtef."' AND (prix<>0 OR tpsreel<>0) AND actif='oui' ";
+
+		if ($dest=="local")
+		{
+			$query.="AND destination='LOCAL'";
+		}
+		else if ($dest=="nav")
+		{
+			$query.="AND destination<>'LOCAL'";
+		}
 
 		$res=$sql->QueryRow($query);
 

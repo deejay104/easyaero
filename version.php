@@ -1,6 +1,6 @@
 <?php
 
-$myrev = 598;
+$myrev = 599;
 $version = "4.0 build ".$myrev;
 
 ?>

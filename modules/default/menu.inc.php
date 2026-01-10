@@ -64,6 +64,7 @@
 			array("nom"=>"Comptes membres","url"=>geturl("suivi","liste",""),"droit"=>"AccesSuiviListeComptes"),
 			array("nom"=>"Tableau de bord","url"=>geturl("suivi","tableaubord",""),"droit"=>"AccesSuiviTableauBord"),
 			array("nom"=>"Bilan Comptable","url"=>geturl("suivi","bilan",""),"droit"=>"AccesSuiviBilan"),
+			array("nom"=>"Rapport Annuel","url"=>geturl("suivi","rapport",""),"droit"=>"AccesSuiviRapportAnnuel"),
 		)
 	);
 	if ($MyOpt["module"]["aviation"]=="on")

@@ -1,0 +1,51 @@
+<!-- BEGIN: icone -->
+<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+<FORM name="compte" id="compte" method="post" action="{path_root}/suivi/bilan" enctype="multipart/form-data" OnSubmit="return false;">
+
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+			{aff_tableau}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+			{aff_instructeur}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+                Total des mouvements : {nb_mouvement}<br /><br />
+                {aff_activite}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</FORM>
+
+
+
+<!-- END: corps -->
