@@ -87,6 +87,7 @@
         if ($usr->val("groupe")=="ELE")
         {
             $tabValeur[$ii]["nbeleve"]["val"]++;
+            $pilot=1;
         }
         else if ($usr->val("groupe")=="MEM")
         {
@@ -95,6 +96,7 @@
         else if ($usr->val("groupe")=="INS")
         {
             $tabValeur[$ii]["nbpilote"]["val"]++;
+            $pilot=1;
 
             $tabInstructeur[$iii]["nom"]["val"]=$usr->fullname;
             $tabInstructeur[$iii]["heures"]["val"]=floor($usr->NbHeures($dte_deb,$dte_fin,"inst")/60);
@@ -107,6 +109,7 @@
         else
         {
             $tabValeur[$ii]["nbpilote"]["val"]++;
+            $pilot=1;
         }
 
         $tabActivite[0]["vols"]["val"]=$tabActivite[0]["vols"]["val"]+$usr->NbHeures($dte_deb,$dte_fin,"cdb","local");
