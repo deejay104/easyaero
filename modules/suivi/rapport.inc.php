@@ -128,6 +128,10 @@
         }
     }
 
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,"age","d",""));
+	$tmpl_x->assign("aff_instructeur",AfficheTableau($tabInstructeur,$tabTitreInstructeur,"nom","d",""));
+
+
     // Rapport des vols
     $query = "SELECT cal.temps,cal.destination,cal.uid_instructeur, usr.dte_naissance,usr.sexe FROM `".$MyOpt["tbl"]."_calendrier` AS cal LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON cal.uid_pilote=usr.id WHERE cal.actif='oui' AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
 	$sql->Query($query);
@@ -246,8 +250,6 @@
     $tabActivite[4]["inst"]["val"]=floor($res["nb"]/60);
 
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,"age","d",""));
-	$tmpl_x->assign("aff_instructeur",AfficheTableau($tabInstructeur,$tabTitreInstructeur,"nom","d",""));
 	$tmpl_x->assign("aff_activite",AfficheTableau($tabActivite,$tabTitreActivite,"type","d",""));
 
 
@@ -255,6 +257,9 @@
 	$query.= "WHERE dte_deb>='".$dte_deb."' AND dte_deb<'".$dte_fin."' AND (prix<>0 OR temps<>0) AND actif='oui'";
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("nb_mouvement",$res["total"]);
+    $tmpl_x->assign("nb_pilote",$tabActivite[0]["vols"]["val"]+$tabActivite[1]["vols"]["val"]);
+    $tmpl_x->assign("nb_instruction",$tabActivite[0]["inst"]["val"]+$tabActivite[1]["inst"]["val"]);
+    $tmpl_x->assign("nb_total",$tabActivite[0]["vols"]["val"]+$tabActivite[1]["vols"]["val"]+$tabActivite[0]["inst"]["val"]+$tabActivite[1]["inst"]["val"]);
 
 // ---- Instructeur
 // NB heures double commande
@@ -277,9 +282,39 @@ Heures homme adulte
 
 */
 
+// ---- Avions
+    $tabTitreAvions=array();
+    $tabTitreAvions["immat"]["aff"]="Immatriculation";
+    $tabTitreAvions["heures"]["aff"]="Heures  Totales";
+    $tabTitreAvions["inst"]["aff"]="Instruction";
+
+    $tabAvions=array();
+
+    $query = "SELECT res.id,res.immatriculation,cal.temps,cal.uid_instructeur FROM `core_calendrier` AS cal LEFT JOIN core_ressources AS res ON cal.uid_avion=res.id WHERE cal.actif='oui' AND cal.dte_deb>='".$dte_deb."' AND cal.dte_fin<'".$dte_fin."'";
+echo $query;
+    $sql->Query($query);
+
+    for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+
+        if (!isset($tabAvions[$sql->data["id"]]["immat"]))
+        {
+            $tabAvions[$sql->data["id"]]["immat"]["val"]=$sql->data["immatriculation"];
+            $tabAvions[$sql->data["id"]]["heures"]["val"]=0;
+            $tabAvions[$sql->data["id"]]["inst"]["val"]=0;
+        }
+        $tabAvions[$sql->data["id"]]["heures"]["val"]=$tabAvions[$sql->data["id"]]["heures"]["val"]+$sql->data["temps"];
+        if ($sql->data["uid_instructeur"]>0)
+        {
+            $tabAvions[$sql->data["id"]]["inst"]["val"]=$tabAvions[$sql->data["id"]]["inst"]["val"]+$sql->data["temps"];
+        }
+    }
+
+	$tmpl_x->assign("aff_avions",AfficheTableau($tabAvions,$tabTitreAvions,"immat","d",""));
+
+    
 // ---- Affecte les variables d'affichage
-	if (GetModule("aviation"))
-	  {  	$tmpl_x->parse("infos.vols"); }
 
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");
