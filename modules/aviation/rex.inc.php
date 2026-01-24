@@ -47,6 +47,8 @@
 	$tabTitre["titre"]["width"]=350;
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=100;
+	$tabTitre["risque"]["aff"]="Risque";
+	$tabTitre["risque"]["width"]=150;
 	$tabTitre["categorie"]["aff"]="Catégorie";
 	$tabTitre["categorie"]["width"]=150;
 
@@ -63,6 +65,8 @@
 		$tabValeur[$i]["titre"]["aff"]=$rex->aff("titre");
 		$tabValeur[$i]["status"]["val"]=$rex->val("status");
 		$tabValeur[$i]["status"]["aff"]=$rex->aff("status");
+		$tabValeur[$i]["risque"]["val"]=$rex->val("risque");
+		$tabValeur[$i]["risque"]["aff"]=$rex->aff("risque","list");
 		$tabValeur[$i]["categorie"]["val"]=$rex->val("categorie");
 		$tabValeur[$i]["categorie"]["aff"]=$rex->aff("categorie");
 	}

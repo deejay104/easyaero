@@ -40,7 +40,7 @@ class rex_class extends objet_core
 	// protected $type=array("titre"=>"varchar","status"=>"enum","description"=>"text","commentaire"=>"text","synthese"=>"text","planaction"=>"text","dte_rex"=>"date");
 	protected $fields=array(
 		"titre" => Array("type" => "varchar", "len"=>40 ),
-		"status" => Array("type" => "enum","default"=>"new","index"=>1 ),
+		"status" => Array("type" => "enum","default"=>"new","index"=>1, "show"=>"tag" ),
 		"description" => Array("type" => "text" ),
 		"commentaire" => Array("type" => "text" ),
 		"synthese" => Array("type" => "text" ),
@@ -59,6 +59,11 @@ class rex_class extends objet_core
 
 	protected $tabList=array(
 		"status"=>array('new'=>'Nouveau','inprg'=>'En cours','close'=>'Cloturé','cancel'=>'Annulé'),
+	);
+
+	protected $color=array(
+		"status"=>array("new"=>"red","inprg"=>"orange","close"=>"green","cancel"=>"gray-light"),
+		"risque"=>array("0"=>"gray-light","1"=>"green","2"=>"green","3"=>"yellow","4"=>"orange","5"=>"red"),
 	);
 
 	# Constructor
@@ -105,8 +110,8 @@ class rex_class extends objet_core
 
 		$tabCol[1]="Très Probable";
 		$tabCol[2]="Probable";
-		$tabCol[3]="Très improbable";
-		$tabCol[4]="Improbable";
+		$tabCol[3]="Improbable";
+		$tabCol[4]="Très Improbable";
 		$tabCol[5]="Non défini";
 
 		$tabLig[1]="Accident matériel et corporel";
@@ -125,7 +130,25 @@ class rex_class extends objet_core
 		$tabBg["61"]="#ffff00"; $tabBg["62"]="#00ff00"; $tabBg["63"]="#00ff00"; $tabBg["64"]="#00ff00"; $tabBg["65"]="#ffffff";
 		$tabBg["71"]="#ffffff"; $tabBg["72"]="#ffffff"; $tabBg["73"]="#ffffff"; $tabBg["74"]="#ffffff"; $tabBg["75"]="#ffffff";
 
-		if ($render=="form")
+		$tabRisque["11"]="5"; $tabRisque["12"]="5"; $tabRisque["13"]="5"; $tabRisque["14"]="3"; $tabRisque["15"]="0";
+		$tabRisque["21"]="5"; $tabRisque["22"]="5"; $tabRisque["23"]="5"; $tabRisque["24"]="3"; $tabRisque["25"]="0";
+		$tabRisque["31"]="5"; $tabRisque["32"]="5"; $tabRisque["33"]="4"; $tabRisque["34"]="3"; $tabRisque["35"]="0";
+		$tabRisque["41"]="5"; $tabRisque["42"]="4"; $tabRisque["43"]="3"; $tabRisque["44"]="2"; $tabRisque["45"]="0";
+		$tabRisque["51"]="4"; $tabRisque["52"]="3"; $tabRisque["53"]="3"; $tabRisque["54"]="2"; $tabRisque["55"]="0";
+		$tabRisque["61"]="3"; $tabRisque["62"]="2"; $tabRisque["63"]="2"; $tabRisque["64"]="1"; $tabRisque["65"]="0";
+		$tabRisque["71"]="0"; $tabRisque["72"]="0"; $tabRisque["73"]="0"; $tabRisque["74"]="0"; $tabRisque["75"]="0";
+		$tabRisque[""]="0";
+
+		if ($render=="list")
+		{
+			$txt=$this->val($key);
+			if ($key=="risque")
+			{
+				$txt=$tabRisque[$this->val($key)];
+				$ret="<div class='tagsinput'><span class='tag ".((isset($this->color[$key][$txt])) ? "bg-".$this->color[$key][$txt] : "")."'>".$txt."</span></div>";
+			}
+		}
+		else if ($render=="form")
 		{
 			if ($key=="uid_avion")
 		  	{
@@ -200,7 +223,6 @@ class rex_class extends objet_core
 		return $ret;
 	}
 }
-
 
 
 function ListRex($sql,$fields=array())

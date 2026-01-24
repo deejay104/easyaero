@@ -202,7 +202,7 @@
 
 	if ($poste=="")
 	  {
-		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid=$id AND date_valeur>='".($annee-1)."-01-01' AND date_valeur<='".(($mois=="") ? "$annee-01-01" : ($annee-1)."-".$mois )."' ORDER BY mouvement";
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid=$id AND date_valeur>='".($annee-1)."-01-01' AND date_valeur<'".(($mois=="") ? "$annee-01-01" : ($annee-1)."-".$mois )."' ORDER BY mouvement";
 		$sql->Query($query);
 		$t=array();
 		for($i=0; $i<$sql->rows; $i++)
@@ -213,7 +213,7 @@
 		  	$tabposte=somme($tabposte,$tmp,$t);
 		  }
 
-		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid=$id AND date_valeur>='$annee-01-01' AND date_valeur<='".(($mois=="") ? ($annee+1)."-01-01" : $annee."-".$mois )."' ORDER BY mouvement";
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE uid=$id AND date_valeur>='$annee-01-01' AND date_valeur<'".(($mois=="") ? ($annee+1)."-01-01" : $annee."-".$mois )."' ORDER BY mouvement";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
 		  { 
