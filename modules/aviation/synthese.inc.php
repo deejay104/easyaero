@@ -178,20 +178,25 @@
 	$tmpl_x->assign("prev_idvol",$idvol);
 	$tmpl_x->assign("LineBackgroundHover",$MyOpt["styleColor"]["LineBackgroundHover"]);
 
+// ---- Signature de la synthèse
+	$nonce=checkVar("nonce","varchar");
 
-// ---- Signe
-	if ((($fonc=="Signature Instructeur") || ($fonc=="Sign. Instructeur")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+
+	if ((($fonc=="Signature Instructeur") || ($fonc=="Sign. Instructeur")) && ($fiche->val("nonce_instructeur")=="") && ($fiche->val("nonce_pilote")!=$nonce))
 	{
-		$fiche->Valid("sid_instructeur",$gl_uid);
-		$fiche->Valid("sdte_instructeur",now());
-		$fiche->Valid("status","signed");
 
-		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_instructeur","sdte_instructeur");
+		$fiche->Valid("status","signed");
+		$fiche->Valid("nonce_instructeur",$nonce);
+		$fiche->Valid("sid_instructeur",$gl_uid);
+		$fiche->Valid("sip_instructeur",$_SERVER[$MyOpt["ipfield"]]);
+		$fiche->Valid("sdte_instructeur",now());
+
+		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","status","type","dte_vol","module","nb_att","nb_rmg","tps_theo","sid_instructeur","sdte_instructeur","sip_instructeur","nonce_instructeur");
 		$s=$fiche->sign($t);
-		
 		$fiche->Valid("skey_instructeur",$s);
 		
 		$n=$fiche->Save();
+
 		if ($n>0)
 		{
 			affInformation("Vos données ont été enregistrées.","ok");
@@ -201,14 +206,17 @@
 	
 	if ((($fonc=="Signature Elève") || ($fonc=="Sign. Elève")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
-		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_pilote","sdte_pilote");
-		$s=$fiche->sign($t);
-		
+		$fiche->Valid("status","signed");
+		$fiche->Valid("nonce_pilote",$nonce);
 		$fiche->Valid("sid_pilote",$gl_uid);
 		$fiche->Valid("sdte_pilote",now());
+		$fiche->Valid("sip_pilote",$_SERVER[$MyOpt["ipfield"]]);
 		$fiche->Valid("skey_pilote",$s);
-		$fiche->Valid("status","signed");
-		
+
+		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","status","type","dte_vol","module","nb_att","nb_rmg","tps_theo","sid_pilote","sdte_pilote","sip_pilote","nonce_pilote");
+		$s=$fiche->sign($t);
+		$fiche->Valid("skey_pilote",$s);
+
 		$n=$fiche->Save();
 		if ($n>0)
 		{
@@ -463,7 +471,6 @@
 			{
 				$tmpl_x->parse("corps.lst_pedagogique.lst_delete");
 			}
-			echo $i.":".$c_conf->val("type")."*";
 			$tmpl_x->parse("corps.lst_pedagogique");
 		}
 	}
@@ -480,6 +487,7 @@
 
 // ---- Affiche les paramètres
 
+	$tmpl_x->assign("form_nonce",bin2hex(random_bytes(16)));
 	$tmpl_x->assign("form_idvol",$fiche->val("idvol"));
 	$tmpl_x->assign("form_id_pilote",$fiche->val("uid_pilote"));
 	$tmpl_x->assign("form_id_instructeur",$fiche->val("uid_instructeur"));
@@ -509,12 +517,16 @@
 	}
 	else if ($fiche->val("skey_instructeur")!="") 
 	{
-		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_instructeur","sdte_instructeur");
 		$usr=new user_class($fiche->data["sid_instructeur"],$sql);
 
 		$tmpl_x->assign("form_signinst_name",$usr->aff("fullname"));
 		$tmpl_x->assign("form_signinst_dte",$fiche->aff("sdte_instructeur"));
-		$tmpl_x->assign("form_signinst_key",$fiche->sign($t));
+
+		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","status","type","dte_vol","module","nb_att","nb_rmg","tps_theo","sid_instructeur","sdte_instructeur","sip_instructeur","nonce_instructeur");
+		$hash=$fiche->sign($t);
+
+		$tmpl_x->assign("form_signinst_key",($hash==$fiche->val("skey_instructeur")) ? "mdi-lock-outline" : "mdi-alert-circle-outline");
+		$tmpl_x->assign("form_signinst_style",($hash==$fiche->val("skey_instructeur")) ? "" : "style='color:red;'");
 		
 		$tmpl_x->parse("corps.signedinst"); 
 	}
@@ -525,13 +537,17 @@
 	}
 	else if ($fiche->val("skey_pilote")!="") 
 	{
-		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","lecon","remtech","remnotech","menace","erreur","remnotech","travail","nbatt","sid_pilote","sdte_pilote");
 		$usr=new user_class($fiche->data["sid_pilote"],$sql);
 
 		$tmpl_x->assign("form_signeleve_name",$usr->aff("fullname"));
 		$tmpl_x->assign("form_signeleve_dte",$fiche->aff("sdte_pilote"));
-		$tmpl_x->assign("form_signeleve_key",$fiche->sign($t));
-		
+
+		$t=array("idvol","uid_pilote","uid_instructeur","uid_avion","status","type","dte_vol","module","nb_att","nb_rmg","tps_theo","sid_pilote","sdte_pilote","sip_pilote","nonce_pilote");
+		$hash=$fiche->sign($t);
+
+		$tmpl_x->assign("form_signeleve_key",($hash==$fiche->val("skey_pilote")) ? "mdi-lock-outline" : "mdi-alert-circle-outline");
+		$tmpl_x->assign("form_signeleve_style",($hash==$fiche->val("skey_pilote")) ? "" : "style='color:red;'");
+
 		$tmpl_x->parse("corps.signedeleve"); 
 	}
 	

@@ -15,32 +15,45 @@
 		$q="DELETE FROM ".$MyOpt["tbl"]."_compte WHERE uid=0";
 		$sql->Delete($q);
 				
-		// $query = "SELECT id FROM ".$MyOpt["tbl"]."_compte WHERE uid=0";
-		// $res=$sql->QueryRow($query);
-		// if ($res["id"]>0)
-		// {
-			// echo "Signature déjà effectuée";
-			// return;
-		// }
-
 		$id=checkVar("id","numeric");
-		
-		// Récupère la liste des utilisateurs
-		$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs ".(($id>0) ? "WHERE id=".$id." " : "")." ORDER BY id";
-		// $query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id>=47 ORDER BY id";
-		$sql->Query($query);
-		$tabUser=array();
-		for($i=0; $i<$sql->rows; $i++)
-		{ 
-			$sql->GetRow($i);
-			$tabUser[$i]=$sql->data["id"];
-		}
 		
 		$sql_upd = new mysql_core($mysqluser, $mysqlpassword, $hostname, $db, $port);
 
-		foreach($tabUser as $ii=>$id)
-		{
-			echo "Signature des transactions pour utilisateur id:".$id."\n";
+		// Récupère la liste des utilisateurs
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte ORDER BY id";
+		$sql->Query($query);
+
+		echo "Signature de la table des comptes\n";
+
+		$prev_hash=str_repeat('0', 64);
+		$prev_mid=0;
+
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+
+			$payload = implode('|', [
+				'mid='.$sql->data["mid"],
+				'uid='.$sql->data["uid"],
+				'tiers='.$sql->data['tiers'],
+				'montant='.$sql->data["montant"],
+				'date_valeur='.$sql->data["date_valeur"],
+			]);
+
+			$hash=hash_hmac('sha256', $payload, $hmacKey);
+			$current_mid=$sql->data["mid"];
+			$current_hash = hash('sha256', $prev_hash.'|'.$prev_mid.'|'.$hash.'|'.$current_mid);
+
+			echo "Transaction: ".$sql->data["id"]." Hash:".$current_hash."\n";
+
+			$q="UPDATE ".$MyOpt["tbl"]."_compte SET prevhash='".$prev_hash."',hash='".$current_hash."' WHERE id=".$sql->data["id"];
+			$sql_upd->Update($q);
+
+
+			$prev_hash=$current_hash;
+			$prev_mid=$current_mid;
+	/*
+
 			$q="UPDATE ".$MyOpt["tbl"]."_compte SET precedent='0', signature='',hash='',clepublic='' WHERE uid='".$id."'";
 			$sql->Update($q);
 
@@ -100,6 +113,7 @@
 				$prev_id=$d["id"];
 				$prev_hash=$hash;
 			}
+*/
 		}
 	}
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 
 	$q=array();
 	$q[]="UPDATE `".$MyOpt["tbl"]."_bapteme` SET status=6 WHERE status=4";

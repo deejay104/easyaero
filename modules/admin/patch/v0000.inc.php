@@ -1,11 +1,11 @@
-<?
+<?php
 	$q=array();
 	
 	$query="SELECT id FROM ".$MyOpt["tbl"]."_cron WHERE module='suivi', script='decouvert'";
 	$res=$sql->QueryRow($query);
 	if ($res["id"]==0)
 	{		
-		$q[]="INSERT INTO `".$MyOpt["tbl"]."_cron` SET description='Notification de découvert', module='suivi', script='decouvert', schedule='10080', actif='non'";
+		$q[]="INSERT INTO `".$MyOpt["tbl"]."_cron` SET description='Notification de dï¿½couvert', module='suivi', script='decouvert', schedule='10080', actif='non'";
 	}
 
 	$query="SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE nom='club'";

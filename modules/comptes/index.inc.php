@@ -55,7 +55,6 @@
 	}
 	$cptusr=new user_class($id,$sql);
 
-
 // ---- Affiche le compte demandé
 	if ((!isset($order)) || ($order==""))
 	{ $order="date_valeur"; }

@@ -37,6 +37,7 @@ $tabCustom=Array
 		"facture" => Array("Type" => "varchar(10)", "Index" => "1", ),
 		"rembfact" => Array("Type" => "varchar(10)", "Index" => "1", ),
 		"hash" => Array("Type" => "varchar(64)", ),
+		"prevhash" => Array("Type" => "varchar(64)", ),
 		"signature" => Array("Type" => "varchar(172)", ),
 		"precedent" => Array("Type" => "int(10) unsigned", ),
 		"clepublic" => Array("Type" => "varchar(280)", ),

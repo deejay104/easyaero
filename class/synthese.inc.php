@@ -183,10 +183,14 @@ class synthese_class extends objet_core
 		"nb_rmg" => Array("type" => "number", "default" => "0"),
 		"tps_theo" => Array("type" => "number", "default" => "0"),
 
+		"nonce_pilote" => Array("type" => "varchar", "len" => 32),
 		"sid_pilote" => Array("type" => "number", "default" => 0),
+		"sip_pilote" => Array("type" => "varchar", "len" => 16),
 		"sdte_pilote" => Array("type" => "datetime"),
 		"skey_pilote" => Array("type" => "varchar","len"=>64),
+		"nonce_instructeur" => Array("type" => "varchar", "len" => 32),
 		"sid_instructeur" => Array("type" => "number", "default" => 0),
+		"sip_instructeur" => Array("type" => "varchar", "len" => 16),
 		"sdte_instructeur" => Array("type" => "datetime"),
 		"skey_instructeur" => Array("type" => "varchar","len"=>64),
 	);

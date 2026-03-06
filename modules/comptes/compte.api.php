@@ -147,30 +147,21 @@
 			$aff="";
 			if ($confirm["res"]=="ok")
 			{
-				// $aff="<img src='static/images/icn16_signed.png' title='Signature de la transaction confirmée' />";
-				$aff="<i class='mdi mdi-lock' title='Signature de la transaction confirmée' /></i>";
+				$aff="<i class='mdi mdi-lock-outline' title='Signature de la transaction confirmée' /></i>";
 				if ($fonc!="showhash")
 				{
 					$tabValeur[$i]["hash"]["val"]="";
 					$tabValeur[$i]["hash"]["aff"]="";
 				}
 			}
-			else if ($d["precedent"]["val"]==0)
-			{
-				$aff="<i class='mdi mdi-lock-plus' title='Première entrée du compte' /></i>";
-				$tabValeur[$i]["hash"]["val"]="";
-				$tabValeur[$i]["hash"]["aff"]="";
-			}
 			else if ($confirm["res"]=="nok")
 			{
-				// $aff="<img src='static/images/icn16_warning.png' title='Cette transaction ou la précédente sont altérées. ID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."' />";
-				$aff="<i class='mdi mdi-lock-open' title='Cette transaction ou la précédente sont altérées. ID courant:".$d["lid"]["val"]." ID précédent:".$d["precedent"]["val"]."' /></i>";
+				$aff="<i class='mdi mdi-lock-alert' style='color:red;' title='Cette transaction ou la précédente sont altérées. ID courant:".$d["lid"]["val"]." ID précédent:".$confirm["previd"]."' /></i>";
 				$tabValeur[$i]["hash"]["aff"]="<s>".$tabValeur[$i]["hash"]["val"]."</s><br />".$confirm["hash"];
 			}
 			else if ($confirm["res"]=="mvt")
 			{
-				// $aff="<img src='static/images/icn16_warning.png' title=\"Le mouvement n'a pas un total nul. Une des transaction a pu être altérée. Mouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."\" />";
-				$aff="<i class='mdi mdi-alert' title='Le mouvement n a pas un total nul. Une des transaction a pu être altérée. Mouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."' /></i>";
+				$aff="<i class='mdi mdi-alert' style='color:red;' title='Le mouvement n a pas un total nul. Une des transaction a pu être altérée. Mouvement ID:".$d["mid"]["val"]." Total:".$confirm["total"]."' /></i>";
 			}
 			
 			$tabValeur[$i]["signature"]["val"]=$confirm;

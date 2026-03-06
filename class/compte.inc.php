@@ -239,10 +239,12 @@ class compte_class{
 
 	function Debite()
 	{
+		global $hmacKey;
+
 		$this->erreur="";
 		if ($this->status!="brouillon")
 		{
-			$this->erreur="Cette transaction a déjà été débitée<br>";
+			$this->erreur="Cette transaction a déjà été débitée<br>";
 			return 0;
 		}
 		
@@ -254,28 +256,28 @@ class compte_class{
 		foreach($this->mvt as $i=>$m)
 		{
 			// Récupère la dernière transaction
-			$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte WHERE uid='".$m["uid"]."'";
-			$res=$sql->QueryRow($query);
-			if ($res["maxid"]>0)
-			{
-				$prev_id=$res["maxid"];
-			}
-			else
-			{
-				$prev_id=0;
-			}
-
-			// Charge les données de la transaction précédente
-			$query="SELECT id,hash FROM ".$this->tbl."_compte WHERE id='".$prev_id."'";
-			$res=$sql->QueryRow($query);
-			$prev_hash=(isset($res["hash"])) ? $res["hash"] : "initial";
+			//$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte WHERE uid='".$m["uid"]."'";
+			$query="SELECT mid,hash FROM ".$this->tbl."_compte ORDER BY id DESC LIMIT 1";
+			$res_p=$sql->QueryRow($query);
+			$prev_hash=(isset($res_p["hash"])) ? $res_p["hash"] : str_repeat('0', 64);;
 
 			$montant=number_format($m["montant"],2,'.','');
 			$dte_creat=now();
 
 			$query="SELECT description FROM ".$this->tbl."_mouvement WHERE id='".$m["poste"]."'";
 			$res=$sql->QueryRow($query);
-			
+
+			$payload = implode('|', [
+				'mid='.$this->id,
+				'uid='.$m["uid"],
+				'tiers='.$m['tiers'],
+				'montant='.$montant,
+				'date_valeur='.$this->date_valeur,
+			]);
+
+			$hash=hash_hmac('sha256', $payload, $hmacKey);
+			$current_hash = hash('sha256', $res_p["hash"].'|'.$res_p["mid"].'|'.$hash.'|'.$this->id);
+
 			$query ="INSERT ".$this->tbl."_compte SET ";
 			$query.="mid='".$this->id."', ";
 			$query.="uid='".$m["uid"]."', ";
@@ -288,41 +290,10 @@ class compte_class{
 			$query.="compte='".$this->compte."', ";
 			$query.="facture='".$m["facture"]."', ";
 			$query.="rembfact='".$m["rembfact"]."', ";
+			$query.="hash='".$current_hash."', ";
+			$query.="prevhash='".$prev_hash."', ";
 			$query.="uid_creat=".$this->uid_creat.", date_creat='".$dte_creat."'";
 			$id=$sql->Insert($query);
-
-			// Signe la transaction
-			$key=openssl_pkey_new(array("private_key_bits"=>1024,"private_key_type"=>OPENSSL_KEYTYPE_RSA));
-			openssl_pkey_export($key,$priv_key);
-			$details=openssl_pkey_get_details($key);
-			$public_key=$details["key"];
-			
-			$data =md5($prev_hash."-".$public_key);
-			$data.="-".$prev_id;
-			$data.="-".$id;
-			$data.="-".$m["uid"];
-			$data.="-".$this->id;
-			$data.="-".$montant;
-			$data.="-".$this->date_valeur;
-			$data.="-".$this->uid_creat;
-			$data.="-".$dte_creat;
-
-			$hash=md5($data);
-
-			$sign="";
-			openssl_sign($data,$sign,$priv_key,OPENSSL_ALGO_SHA256);
-
-			$q="UPDATE ".$this->tbl."_compte SET clepublic='".$public_key."',hash='".$hash."', signature='".base64_encode($sign)."', precedent='".$prev_id."' WHERE id='".$id."'";
-			$sql->Update($q);
-
-			// Signe la transaction
-			// $signature=md5($id."_".$m["uid"]."_".$m["tiers"]."_".$montant."_".$this->date_valeur."_".$maxid."_".$precedent);
-
-			// $query="UPDATE ".$this->tbl."_compte SET ";
-			// $query.="signature='".$signature."', ";
-			// $query.="precedent='".$precedent."' ";
-			// $query.="WHERE id='".$id."'";
-			// $sql->Update($query);
 
 			$this->nbmvt++;
 			$totmnt=$totmnt+$montant;
@@ -428,13 +399,14 @@ function AfficheDetailMouvement($id,$mid)
 
 function AfficheSignatureCompte($lid)
 {
-	global $MyOpt,$sql;
+	global $MyOpt,$sql,$hmacKey;
 	
 	$ret=array();
 	$ret["res"]="ok";
 	$ret["hash"]="";
 	$ret["total"]=0;
-	
+	$ret["previd"]=0;
+
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE id='".$lid."'";
 	$res_l=$sql->QueryRow($query);
 
@@ -444,15 +416,28 @@ function AfficheSignatureCompte($lid)
 		return $ret;
 	}
 
-	$query="SELECT id,hash FROM ".$MyOpt["tbl"]."_compte WHERE id='".$res_l["precedent"]."'";
-	$res_p=$sql->QueryRow($query);
-
-	if (!isset($res_p["id"]))
+	if ($res_l["prevhash"]!=str_repeat('0', 64))
 	{
-		$ret["res"]="nok";
-		return $ret;
+		$query="SELECT id,mid,hash FROM ".$MyOpt["tbl"]."_compte WHERE hash='".$res_l["prevhash"]."'";
+		$res_p=$sql->QueryRow($query);
+
+		if (!isset($res_p["mid"]))
+		{
+			$ret["res"]="nok";
+			return $ret;
+		}
+	}
+	else
+	{
+		$res_p=array(
+			"id"=>0,
+			"mid"=>0,
+			"hash"=>str_repeat('0', 64)
+		);
 	}
 
+	$ret["res"]="ok";
+	$ret["previd"]=$res_p["id"];
 
 	if ($res_l["mid"]>0)
 	{
@@ -466,24 +451,25 @@ function AfficheSignatureCompte($lid)
 		}
 	}
 
-	$data =md5($res_p["hash"]."-".$res_l["clepublic"]);
-	$data.="-".$res_l["precedent"];
-	$data.="-".$res_l["id"];
-	$data.="-".$res_l["uid"];
-	$data.="-".$res_l["mid"];
-	$data.="-".$res_l["montant"];
-	$data.="-".$res_l["date_valeur"];
-	$data.="-".$res_l["uid_creat"];
-	$data.="-".$res_l["date_creat"];
-	
-	if (openssl_verify($data, base64_decode($res_l["signature"]), $res_l["clepublic"], "sha256WithRSAEncryption"))
+	$payload = implode('|', [
+		'mid='.$res_l["mid"],
+		'uid='.$res_l["uid"],
+		'tiers='.$res_l["tiers"],
+		'montant='.$res_l["montant"],
+		'date_valeur='.$res_l["date_valeur"],
+	]);
+
+	$hash=hash_hmac('sha256', $payload, $hmacKey);
+	$current_hash = hash('sha256', $res_p["hash"].'|'.$res_p["mid"]. '|'.$hash.'|'.$res_l["mid"]);
+
+	if ($current_hash==$res_l["hash"])
 	{
-		$ret["hash"]=md5($data);
+		$ret["hash"]=$current_hash;
 	}
 	else
 	{
 		$ret["res"]="nok";
-		$ret["hash"]=md5($data);
+		$ret["hash"]=$current_hash;
 	}
 
 	return $ret;

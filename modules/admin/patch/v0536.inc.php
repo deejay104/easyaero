@@ -1,4 +1,4 @@
-<?
+<?php
 	$q=array();
 	$query="SELECT id FROM ".$MyOpt["tbl"]."_formation ORDER BY id";
 	$res=$sql->QueryRow($query);

@@ -1,4 +1,4 @@
-<?
+<?php
 
 	$q=array();
 	$q[]="DELETE FROM `".$MyOpt["tbl"]."_cron` WHERE module='comptabilite' AND scripts='decouvert'";
