@@ -29,26 +29,29 @@
 		$pil = new user_class($livret->val("iduser"),$sql);
 		$inst = new user_class($livret->val("idinstructeur"),$sql);
 
-        $tabValeur[$fid]["name"]["val"]=$pil->val("nom");
-		$tabValeur[$fid]["name"]["aff"]=$pil->aff("nom");
-        $tabValeur[$fid]["surname"]["val"]=$pil->val("prenom");
-		$tabValeur[$fid]["surname"]["aff"]=$pil->aff("prenom");
-		$tabValeur[$fid]["formation"]["val"]=$livret->val("idformation");
-		$tabValeur[$fid]["formation"]["aff"]=$livret->displayDescription();
-		$tabValeur[$fid]["instructeur"]["val"]=$inst->val("fullname");
-		$tabValeur[$fid]["instructeur"]["aff"]=$inst->aff("fullname");
-		$tabValeur[$fid]["status"]["val"]=$livret->val("status");
-		$tabValeur[$fid]["status"]["aff"]=$livret->aff("status");
-		$tabValeur[$fid]["dte_test"]["val"]=$livret->val("dte_test_practice");
-		$tabValeur[$fid]["dte_test"]["aff"]=$livret->aff("dte_test_practice");
-		$tabValeur[$fid]["dte_theory"]["val"]=$livret->val("dte_test_theory");
-		$tabValeur[$fid]["dte_theory"]["aff"]=$livret->aff("dte_test_theory");
-		$tabValeur[$fid]["phase"]["val"]=$livret->val("phase");
-		$tabValeur[$fid]["phase"]["aff"]=$livret->aff("phase");
-		$tabValeur[$fid]["theory"]["val"]=$livret->val("theory");
-		$tabValeur[$fid]["theory"]["aff"]=$livret->aff("theory");
-		$tabValeur[$fid]["ffa"]["val"]=$pil->val("licence");
-		$tabValeur[$fid]["ffa"]["aff"]=$pil->aff("licence");
+        if ($pil->actif!="non")
+        {
+            $tabValeur[$fid]["name"]["val"]=$pil->val("nom");
+            $tabValeur[$fid]["name"]["aff"]=$pil->aff("nom");
+            $tabValeur[$fid]["surname"]["val"]=$pil->val("prenom");
+            $tabValeur[$fid]["surname"]["aff"]=$pil->aff("prenom");
+            $tabValeur[$fid]["formation"]["val"]=$livret->val("idformation");
+            $tabValeur[$fid]["formation"]["aff"]=$livret->displayDescription();
+            $tabValeur[$fid]["instructeur"]["val"]=$inst->val("fullname");
+            $tabValeur[$fid]["instructeur"]["aff"]=$inst->aff("fullname");
+            $tabValeur[$fid]["status"]["val"]=$livret->val("status");
+            $tabValeur[$fid]["status"]["aff"]=$livret->aff("status");
+            $tabValeur[$fid]["dte_test"]["val"]=$livret->val("dte_test_practice");
+            $tabValeur[$fid]["dte_test"]["aff"]=$livret->aff("dte_test_practice");
+            $tabValeur[$fid]["dte_theory"]["val"]=$livret->val("dte_test_theory");
+            $tabValeur[$fid]["dte_theory"]["aff"]=$livret->aff("dte_test_theory");
+            $tabValeur[$fid]["phase"]["val"]=$livret->val("phase");
+            $tabValeur[$fid]["phase"]["aff"]=$livret->aff("phase");
+            $tabValeur[$fid]["theory"]["val"]=$livret->val("theory");
+            $tabValeur[$fid]["theory"]["aff"]=$livret->aff("theory");
+            $tabValeur[$fid]["ffa"]["val"]=$pil->val("licence");
+            $tabValeur[$fid]["ffa"]["aff"]=$pil->aff("licence");
+        }
 	}
 
 	$order="dte";
