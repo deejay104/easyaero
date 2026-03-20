@@ -9,8 +9,8 @@
     $lst=ListeObjets($sql,"livret",array("id"),array("actif"=>"oui"),array("dte_deb"));
 
 	$tabTitre=array(
-		"name" => array("aff"=>"Nom"),
 		"surname" => array("aff"=>"Prénom"),
+		"name" => array("aff"=>"Nom"),
 		"formation" => array("aff"=>"Formation"),
 		"instructeur" => array("aff"=>"Instructeur Référent"),
 		"status" => array("aff"=>"Status"),
@@ -54,8 +54,8 @@
         }
 	}
 
-	$order="dte";
-	$trie="i";
+	$order="name";
+	$trie="d";
 
 	// $tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"type=".$type."&dte=".$dte));
 
