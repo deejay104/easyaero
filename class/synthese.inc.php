@@ -50,11 +50,40 @@ class livret_class extends objet_core
 	protected $fields = Array(
 		"idformation" => Array("type" => "number", "default" => "0", "index" => "1" ),
 		"iduser" => Array("type" => "number", "default" => "0", "index" => "1", ),
+		"idinstructeur" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"dte_deb" => Array("type" => "date"),
 		"dte_fin" => Array("type" => "date"),
+		"dte_test_practice" => Array("type" => "date"),
+		"dte_test_theory" => Array("type" => "date"),
+		"status" => Array("type" => "enum", "default" => "active", "index" => "1", "show"=>"tag"),
+		"phase" => Array("type" => "enum", "default" => "MNA", "index" => "1", "show"=>"tag"),
+		"theory" => Array("type" => "enum", "default" => "no", "index" => "1", "show"=>"tag"),
 		"tpsdc" => Array("type" => "number"),
 		"tpssolo" => Array("type" => "number"),
 		"cr" => Array("type" => "text"),
+	);
+
+	public $tabList=array(
+		"status"=>array(
+			"fr"=>array('active'=>'Actif','active'=>'Actif','standby'=>'Pause','closed'=>'Terminé','canceled'=>'Annulé'),
+			"en"=>array('active'=>'Active','standby'=>'Standby','closed'=>'Closed','canceled'=>'Canceled'),
+			"ca"=>array('active'=>'Actif','standby'=>'Pause','closed'=>'Terminé','canceled'=>'Annulé'),
+		),
+		"phase"=>array(
+			"fr"=>array('MNA'=>'Maniabilité','NAV'=>'Navigation','TST'=>'Test','END'=>'Terminé'),
+			"en"=>array('MNA'=>'Maniabilité','NAV'=>'Navigation','TST'=>'Test','END'=>'End'),
+			"ca"=>array('MNA'=>'Maniabilité','NAV'=>'Navigation','TST'=>'Test','END'=>'Terminé'),
+		),
+		"theory"=>array(
+			"fr"=>array('no'=>'Non inscrit','yes'=>'Inscrit','ok'=>'Test OK'),
+			"ca"=>array('no'=>'Not registered','yes'=>'Registered','ok'=>'Test OK'),
+			"fr"=>array('no'=>'Non inscrit','yes'=>'Inscrit','ok'=>'Test OK'),
+		),
+	);
+	protected $color=array(
+		"status"=>array("active"=>"green","standby"=>"orange","closed"=>"gray","canceled"=>"gray-light"),
+		"phase"=>array("MNA"=>"blue","NAV"=>"purple","TST"=>"gray","END"=>"green"),
+		"theory"=>array("no"=>"red","yes"=>"blue","ok"=>"green"),
 	);
 
 	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")

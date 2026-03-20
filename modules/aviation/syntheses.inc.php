@@ -94,11 +94,20 @@
 	}
 	
 // ---- Information sur la formation
-	$pil=new user_class($uid,$sql);
+	//$pil=new user_class($uid,$sql);
 
+	$ins=new user_class($livret->val("idinstructeur"),$sql);
+	$tmpl_x->assign("idinstructeur",$ins->Aff("fullname"));
+	$tmpl_x->assign("status",$livret->Aff("status"));
 	$tmpl_x->assign("dte_deb",$livret->Aff("dte_deb"));
 	$tmpl_x->assign("dte_fin",$livret->Aff("dte_fin"));
+	$tmpl_x->assign("dte_test_practice",$livret->Aff("dte_test_practice"));
+	$tmpl_x->assign("dte_test_theory",$livret->Aff("dte_test_theory"));
+	$tmpl_x->assign("phase",$livret->Aff("phase"));
+	$tmpl_x->assign("theory",$livret->Aff("theory"));
+
 	$tmpl_x->assign("cr",$livret->Aff("cr","form"));
+
 	$tmpl_x->assign("total_heure_dc",$livret->AffNbHeures("now","dc"));
 	$tmpl_x->assign("total_heure_solo",$livret->AffNbHeures("now","solo"));
 	$tmpl_x->assign("total_att_dc",$livret->NbAtt("now","dc"));
@@ -108,6 +117,9 @@
 
 	$livret=new livret_class(0,$sql);
 	$livret->Render("form","form");
+
+	$tmpl_x->assign("form_idinstructeur", AffListeMembres($sql,$livret->val("idinstructeur"),"idinstructeur","","","std","non",array("TypeInstructeur"),""));
+
 
 // ---- Affiche la liste des exercices importants
 	$lst=ListeExercicesProg($sql,$lid,$uid,"peda","oui");
@@ -186,15 +198,15 @@
 	
 
 		$tabValeur[$fid]["module"]["val"]=$fiche->val("module");
-		$tabValeur[$fid]["module"]["val"]=$fiche->aff("module");
+		$tabValeur[$fid]["module"]["aff"]=$fiche->aff("module");
 		$tabValeur[$fid]["refffa"]["val"]=$fiche->val("refffa");
-		$tabValeur[$fid]["refffa"]["val"]=$fiche->aff("refffa");
+		$tabValeur[$fid]["refffa"]["aff"]=$fiche->aff("refffa");
 		$tabValeur[$fid]["temps"]["val"]=$fiche->temps();
-		$tabValeur[$fid]["temps"]["val"]=AffTemps($fiche->temps());
+		$tabValeur[$fid]["temps"]["aff"]=AffTemps($fiche->temps());
 		$tabValeur[$fid]["conclusion"]["val"]=$fiche->val("conclusion");
-		$tabValeur[$fid]["conclusion"]["val"]=$fiche->aff("conclusion");
+		$tabValeur[$fid]["conclusion"]["aff"]=$fiche->aff("conclusion");
 		$tabValeur[$fid]["status"]["val"]=$fiche->val("status");
-		$tabValeur[$fid]["status"]["val"]=$fiche->aff("status");
+		$tabValeur[$fid]["status"]["aff"]=$fiche->aff("status");
 	}
 
 	$order="dte";

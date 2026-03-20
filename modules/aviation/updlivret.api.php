@@ -19,14 +19,19 @@
 
 		$result["id"]=$id;
 		$result["idformation"]=$livret->val("idformation");
-		$result["showformation"]=$formation->val("description");
 		$result["iduser"]=$livret->val("iduser");
+		$result["idinstructeur"]=$livret->val("idinstructeur");
+		$result["status"]=$livret->val("status");
+		$result["showformation"]=$formation->val("description");
 		$result["dte_deb"]=$livret->val("dte_deb");
 		$result["dte_fin"]=$livret->val("dte_fin");
+		$result["dte_test_practice"]=$livret->val("dte_test_practice");
+		$result["dte_test_theory"]=$livret->val("dte_test_theory");
+		$result["phase"]=$livret->val("phase");
+		$result["theory"]=$livret->val("theory");
 		$result["tpsdc"]=$livret->val("tpsdc");
 		$result["tpssolo"]=$livret->val("tpssolo");
 		$result["cr"]=$livret->val("cr");
-
 	}
 	else if ($fonc=="post")
 	{
@@ -39,8 +44,14 @@
 				$livret->Valid("idformation",checkVar("idformation","numeric"));
 				$livret->Valid("iduser",checkVar("iduser","numeric"));
 			}
+			$livret->Valid("idinstructeur",checkVar("idinstructeur","numeric"));
+			$livret->Valid("status",checkVar("status","varchar"));
 			$livret->Valid("dte_deb",checkVar("dte_deb","date"));
 			$livret->Valid("dte_fin",checkVar("dte_fin","date"));
+			$livret->Valid("dte_test_practice",checkVar("dte_test_practice","date"));
+			$livret->Valid("dte_test_theory",checkVar("dte_test_theory","date"));
+			$livret->Valid("phase",checkVar("phase","varchar"));
+			$livret->Valid("theory",checkVar("theory","varchar"));
 			$livret->Valid("tpsdc",checkVar("tpsdc","numeric"));
 			$livret->Valid("tpssolo",checkVar("tpssolo","numeric"));
 			$livret->Valid("cr",checkVar("cr","text"));

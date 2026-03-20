@@ -7,10 +7,14 @@
 <!-- END: infos -->
 
 
+
+
 <!-- BEGIN: corps -->
 
 <style>
-.form-inline label { min-width: 150px;}
+.form-inline label { min-width: 200px; justify-content:left;}
+.form-inline input { min-width: 200px; }
+.form-inline select { min-width: 198px; margin: 1px; }
 </style>
 
 <div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -26,9 +30,17 @@
 				<div class="row">
 					<input id="livretid" type="hidden" value="0">
 					<div id='editform' class="form-inline"><label>Formation</label>{form_idformation}</div>
-					<div id='showform' class="form-inline"><label>Formation</label><input id='show_idformation' readonly value="" class="form-control" ></div>
+					<div id='showform' class="form-inline"><label>Formation</label><input id='show_idformation' readonly value="" class="form-control form-input" ></div>
+					<div class="form-inline"><label>Instructeur </label>{form_idinstructeur}</div>
+					<div class="form-inline"><label>Status</label>{form_status}</div>
 					<div class="form-inline"><label>Début de la formation</label>{form_dte_deb}</div>
 					<div class="form-inline"><label>Fin de la formation</label>{form_dte_fin}</div>
+					<div class="form-inline"><label>Date du test pratique</label>{form_dte_test_practice}</div>
+					<div class="form-inline"><label>Date du test théorique</label>{form_dte_test_theory}</div>
+
+					<div class="form-inline"><label>Phase</label>{form_phase}</div>
+					<div class="form-inline"><label>Théorie</label>{form_theory}</div>
+
 					<div class="form-inline"><label>Temps initial (DC)</label>{form_tpsdc} (min)</div>
 					<div class="form-inline"><label>Temps initial (Solo)</label>{form_tpssolo} (min)</div>
 				</div>
@@ -72,8 +84,16 @@
 
 			<div class="card-body row">
 				<div class="col-lg-3">
-					Début de formation : {dte_deb}<br />
-					Fin de formation : {dte_fin}<br />
+					<div class="form-inline"><label>Instructeur :</label>{idinstructeur}</div>
+					<div class="form-inline"><label>Status :</label>{status}</div>
+					<div class="form-inline"><label>Début de la formation :</label>{dte_deb}</div>
+					<div class="form-inline"><label>Fin de la formation :</label>{dte_fin}</div>
+					<div class="form-inline"><label>Date du test pratique :</label>{dte_test_practice}</div>
+					<div class="form-inline"><label>Date de test théorique :</label>{dte_test_theory}</div>
+
+					<div class="form-inline"><label>Phase :</label>{phase}</div>
+					<div class="form-inline"><label>Théorique :</label>{theory}</div>
+
 				</div>
 				<div class="col-lg-7">
 					{cr}
@@ -230,13 +250,18 @@ $( function() {
 		data["id"]=document.getElementById('livretid').value;
 		data["idformation"]=document.getElementById('idformation').value;
 		data["iduser"]=document.getElementById('form_id').value;
+		data["idinstructeur"]=document.getElementById('idinstructeur').value;
+		data["status"]=document.getElementById('status').value;
 		data["dte_deb"]=document.getElementById('dte_deb').value;
 		data["dte_fin"]=document.getElementById('dte_fin').value;
+		data["dte_test_practice"]=document.getElementById('dte_test_practice').value;
+		data["dte_test_theory"]=document.getElementById('dte_test_theory').value;
+		data["phase"]=document.getElementById('phase').value;
+		data["theory"]=document.getElementById('theory').value;
 		data["tpsdc"]=document.getElementById('tpsdc').value;
 		data["tpssolo"]=document.getElementById('tpssolo').value;
 		data["cr"]=document.getElementById('cr').value;
-		
-		<!-- console.log(data); -->
+
 		$.ajax({
 			url:'{path_root}/api/v1/aviation/updlivret?fonc=post',
 			type: 'POST',
@@ -277,8 +302,14 @@ $( function() {
 				document.getElementById('editform').style.display="none";
 				document.getElementById('show_idformation').value=response.showformation;
 				document.getElementById('idformation').value=response.idformation;
+				document.getElementById('idinstructeur').value=response.idinstructeur;
+				document.getElementById('status').value=response.status;
 				document.getElementById('dte_deb').value=response.dte_deb;
 				document.getElementById('dte_fin').value=response.dte_fin;
+				document.getElementById('dte_test_practice').value=response.dte_test_practice;
+				document.getElementById('dte_test_theory').value=response.dte_test_theory;
+				document.getElementById('phase').value=response.phase;
+				document.getElementById('theory').value=response.theory;
 				document.getElementById('tpsdc').value=response.tpsdc;
 				document.getElementById('tpssolo').value=response.tpssolo;
 				document.getElementById('cr').value=response.cr;

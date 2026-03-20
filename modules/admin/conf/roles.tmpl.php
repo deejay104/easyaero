@@ -120,7 +120,7 @@ $tabRoles["ModifLivret"]="Modification/Création d'un livret de progression";
 $tabRoles["SupprimeExercice"]="Suppression d'un exercice dans la configuration des livret de progression";
 $tabRoles["SupprimeFormation"]="Suppression d'un livret de progression";
 
-
+$tabRoles["AccesFormations"]="Accès à la page de suivi des formations";
 
 
 $tabRoles["CreeFacture"]="Créer une nouvelle facture";
