@@ -28,6 +28,7 @@
 	require_once ($appfolder."/class/user.inc.php");
 
 // ---- Initialise les variables
+	$id=checkVar("id","numeric");
 	$uid=checkVar("uid","numeric");
 	$lid=checkVar("lid","numeric");
 
@@ -39,6 +40,14 @@
 	{
 		$uid=$gl_uid;
 	}
+
+	if ((GetDroit("AccesSynthese")) && ($id>0) && ($lid==0))
+	{
+		$lid=$id;
+		$livret=new livret_class($lid,$sql);
+		$uid=$livret->val("iduser");
+	}
+
 
 // ---- Affiche le menu
 	$aff_menu="";
