@@ -11,18 +11,17 @@
 <input type="hidden" name="checktime" value="{form_checktime}">
 <input type="hidden" name="mod" value="compte">
 
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
-			<div class="card-body">
-				<div class="form-inline">
-					<!-- BEGIN: compte -->
-						{form_lstusers}
-					<!-- END: compte -->
-
-					<div class="form-control align-middle" style="margin-left:15px; line-height:24px; color: #000000; height:40px;">{lang_total} : {solde_compte}</div>
-					&nbsp;<button id="showhash" class="btn-light form-control">Afficher les signatures</button>
-				</div>
+<div class="info-cartouche-wrap">
+	<div class="info-cartouche">
+		<div class="info-cartouche-icon">
+			<i class="mdi mdi-currency-eur"></i>
+		</div>
+		<div class="info-cartouche-body info-cartouche-large">
+			<div>
+				<span class="label">{lang_account}</span>
+			</div>
+			<div>
+				<label>{lang_total} : {solde_compte}</label><br />
 			</div>
 		</div>
 	</div>
@@ -30,10 +29,17 @@
 
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">
+				<!-- BEGIN: compte -->
+				{form_lstusers}
+				<!-- END: compte -->
+
+				&nbsp;<button id="showhash" class="btn btn-sm btn-outline-primary">Afficher les signatures</button>
+			</div>
 			<div class="card-body">
-			{aff_tableau}
+				{aff_tableau}
 			</div>
 		</div>
 	</div>

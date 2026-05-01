@@ -25,7 +25,6 @@
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
-
 				<h5>Informations générales</h5>
 
 				<div class="form-group row">
@@ -48,9 +47,14 @@
 					<div class="col-lg-5"><label class="col-form-label">Couleur</label></div>
 					<div class="col-lg-7">{form_couleur}</div>
 				</div>
-
-			
 			</div>
+<!-- BEGIN: submit -->
+			<div class="card-body">
+				<INPUT type="submit" name="fonc" class="btn btn-primary" value="Enregistrer" OnClick="return cryptData();">
+				<INPUT type="submit" name="fonc" class="btn btn-light" value="Annuler">
+			</div>
+<!-- END: submit -->
+
 		</div>
 	</div>
 
@@ -190,11 +194,6 @@
 
 
 
-
-<!-- BEGIN: submit -->
-<INPUT type="submit" name="fonc" class="btn btn-primary" value="Enregistrer" OnClick="return cryptData();">
-<INPUT type="submit" name="fonc" class="btn btn-light" value="Annuler">
-<!-- END: submit -->
 
 
 </FORM>

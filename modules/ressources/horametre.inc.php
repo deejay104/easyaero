@@ -161,16 +161,15 @@
 
 		$tabValeur[$i]["horadeb"]["val"]=$resa->horadeb;
 		// $tabValeur[$i]["horadeb"]["aff"]=$resa->horadeb;
-		$tabValeur[$i]["horadeb"]["aff"]=($resa_next->horafin!=$resa->horadeb) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horadeb."</div>" : $resa->horadeb;
+		$tabValeur[$i]["horadeb"]["aff"]="<div class='sticker ".(($resa_next->horafin!=$resa->horadeb) ? "bg-orange" : "")."'>".$resa->horadeb."</div>";
 
 		$tabValeur[$i]["horafin"]["val"]=$resa->horafin;
-		$tabValeur[$i]["horafin"]["aff"]=($resa->horafin!=$horadeb_prec) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$resa->horafin."</div>" : $resa->horafin;
+		$tabValeur[$i]["horafin"]["aff"]="<div class='sticker ".(($resa->horafin!=$horadeb_prec) ? "bg-orange" : "")."'>".$resa->horafin."</div>";
 
 		$c=array("oui"=>"Non","non"=>"Oui");
 
 		$tabValeur[$i]["edite"]["val"]=$resa->edite;
-		$tabValeur[$i]["edite"]["aff"]=(($resa->edite=="oui") && ($resa->tpsreel>0)) ? "<div style='color: #ff0000; background-color: #FFBBAA;'>".$c[$resa->edite]."</div>" : $c[$resa->edite];
-		$tabValeur[$i]["edite"]["align"]="center";
+		$tabValeur[$i]["edite"]["aff"]="<div class='sticker ".((($resa->edite=="oui") && ($resa->tpsreel>0)) ? "bg-orange" : "")."'>".$c[$resa->edite]." ".$resa->tpsreel."</div>";
 
 		$horadeb_prec=$resa->horadeb;
 

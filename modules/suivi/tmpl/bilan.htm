@@ -21,24 +21,16 @@ function Recharge()
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">	
-				<div class="form-inline">
-					Année : 
-					<SELECT id="form_date" class="form-control" name="form_date" OnChange="Recharge();">
+			<div class="card-header">	
+				<span>Année : </span>
+					<SELECT id="form_date" class="form-control ui-datepicker" name="form_date" OnChange="Recharge();">
 					<!-- BEGIN: lst_annee -->
 						<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
 					<!-- END: lst_annee -->
 					</SELECT>
-				</div>
 			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
 			<div class="card-body">
 			{aff_tableau}
 			</div>

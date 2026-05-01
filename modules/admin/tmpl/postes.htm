@@ -10,8 +10,9 @@
 
 
 <div class="row" id="page-content">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">	
+			<div class="card-header">Postes</div>	
 			<div class="card-body">	
 
 				<FORM name="reservation" method="post" action="{path_root}/admin/postes" enctype="multipart/form-data">
@@ -106,9 +107,11 @@
 					<!-- END: lst_mouvement -->
 					</TABLE>
 					<br />
-					<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary" > <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
+					
 				</FORM>
-
+			</div>
+			<div class="card-footer">	
+				<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary" > <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
 			</div>
 		</div>
 	</div>

@@ -65,21 +65,27 @@
 <!-- END: left -->
 
 <!-- BEGIN: right -->
-	<h4>{lang_summary}</h4>
-	<!-- BEGIN: compta -->
-	<div class="form-group">
-		<label class="col-form-label" >{lang_balance}</label>{aff_solde}
+<div class="col-12 grid-margin stretch-card">
+	<div class="card">
+		<div class="card-header">{lang_summary}</div>
+		<div class="card-body">
+			<!-- BEGIN: compta -->
+			<div class="form-group">
+				<label class="col-form-label" >{lang_balance}</label>{aff_solde}
+			</div>
+			<!-- END: compta -->
+			<!-- BEGIN: aviation -->
+			<div class="form-group">
+				<label class="col-form-label" >{lang_flighthour}</label>{aff_voltotal}
+			</div>
+			<div class="form-group">
+				<label class="col-form-label" >{lang_last12month}</label>{aff_vol12mois}
+			</div>
+			<div class="form-group">
+				<label class="col-form-label" >{lang_thisyear}</label>{aff_volannee}
+			</div>
+			<!-- END: aviation -->
+		</div>
 	</div>
-	<!-- END: compta -->
-	<!-- BEGIN: aviation -->
-	<div class="form-group">
-		<label class="col-form-label" >{lang_flighthour}</label>{aff_voltotal}
-	</div>
-	<div class="form-group">
-		<label class="col-form-label" >{lang_last12month}</label>{aff_vol12mois}
-	</div>
-	<div class="form-group">
-		<label class="col-form-label" >{lang_thisyear}</label>{aff_volannee}
-	</div>
-	<!-- END: aviation -->
+</div>
 <!-- END: right -->

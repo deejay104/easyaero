@@ -10,38 +10,33 @@
 <!-- BEGIN: corps -->
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body row">	
-				<div class="col-lg-4">
-					<!-- BEGIN: users -->
-					{form_lstuser}
-					<!-- END: users -->
-				</div>
-				<div class="col-lg-4">
-					<select id="form_livret" name="form_livret" class="form-control" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
+			<div class="card-header">	
+				<!-- BEGIN: users -->
+				{form_lstuser}
+				<!-- END: users -->
+
+				<select id="form_livret" name="form_livret" class="form-control" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
 					<!-- BEGIN: lst_livret -->
 					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
 					<!-- END: lst_livret -->
-					</select>
-				</div>
-				<br />
-				<br />
-				<br />
-				<p>
-				Toutes les pannes/exercices doivent être étudiées<br />
-				Le nombre de vol(s) n'indique que les vols pour lesquels l'exercice a fait l'objet d'un briefing et d'un vol spécifique. L'exercice a pu être exécuté lors d'autres vols non comptabilisés ici.<br />
-				</p>
+				</select>
 			</div>
-		</div>
-	</div>
-</div>
+			<div class="card-body" id="lst">
+				<div class="info-potentiel">
+					<div>
+						<span class="potentiel">
+							<i class="mdi mdi-information-outline"></i>
+							Toutes les pannes/exercices doivent être étudiées
+						</span>
+					</div>
+				</div>	
+				<br />
+				Le nombre de vol(s) n'indique que les vols pour lesquels l'exercice a fait l'objet d'un briefing et d'un vol spécifique. L'exercice a pu être exécuté lors d'autres vols non comptabilisés ici.<br />
 
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
-			<div class="card-body" id="lst">	
-			{aff_tableau}
+				<h4></h4>
+				{aff_tableau}
 			</div>
 		</div>
 	</div>

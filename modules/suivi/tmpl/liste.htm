@@ -9,20 +9,12 @@
 <!-- BEGIN: corps -->
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">
-				<div class="form-inline">
-					Afficher les comptes en date du : <input id="form_dte" type="date" class='form-control' name="form_dte" value="{form_dte}"  OnChange="Reload();" />
-				</div>
+			<div class="card-header">
+				<span>Afficher les comptes en date du :</span>
+				<input id="form_dte" type="date" class='form-control ui-datepicker' name="form_dte" value="{form_dte}"  OnChange="Reload();" />
 			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
 			<div class="card-body">
 			{aff_tableau}
 			</div>

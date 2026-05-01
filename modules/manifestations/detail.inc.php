@@ -197,12 +197,12 @@
 
 		if (($id>0) && (($manip->uid_creat==$gl_uid) || (GetDroit("ModifManifestation"))))
 		{
-			addPageMenu("",$mod,"Modifier",geturl("manifestations","detail","fonc=modifier&id=".$id),"icn32_modifier.png",false);
+			addPageMenu("",$mod,"Modifier",geturl("manifestations","detail","fonc=modifier&id=".$id),"icn32_modifier.png",($fonc=="modifier") ? true : false);
 		}
 
 		if (($id>0) && (($manip->uid_creat==$gl_uid) || (GetDroit("SupprimeManifestation"))))
 		{
-			addPageMenu("",$mod,"Supprimer",geturl("manifestations","detail","fonc=supprimer&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer cette manifestation ?");
+			addPageMenu("",$mod,"Supprimer",geturl("manifestations","detail","fonc=supprimer&id=".$id),"icn32_supprimer.png",false,"Voulez-vous supprimer cette manifestation ?","","outline-danger");
 		}
 
 		if  ( ($manip->data["facture"]=="non") && ((date_diff_txt($manip->data["dte_limite"],date("Y-m-d"))<=0) || ($manip->data["dte_limite"]=="0000-00-00")) )

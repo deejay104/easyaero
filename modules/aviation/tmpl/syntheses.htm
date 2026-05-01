@@ -55,16 +55,17 @@
 </div>
 
 <div class="row" id="page-content">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body row">	
-				<div class="col-lg-3">
-					<!-- BEGIN: users -->
-					{form_lstuser}
-					<!-- END: users -->
-				</div>
+			<div class="card-header">
+				<span>Livret de progression</span>
+				<!-- BEGIN: users -->
+				{form_lstuser}
+				<!-- END: users -->
+			</div>
+			<div class="card-body row">
 
-				<div class="col-lg-3">
+				<div class="col-lg-4">
 					<select id="form_livret" class="form-control form-control-lg" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
 					<!-- BEGIN: lst_livret -->
 					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
@@ -83,7 +84,7 @@
 			</div>
 
 			<div class="card-body row">
-				<div class="col-lg-3">
+				<div class="col-lg-4">
 					<div class="form-inline"><label>Instructeur :</label>{idinstructeur}</div>
 					<div class="form-inline"><label>Status :</label>{status}</div>
 					<div class="form-inline"><label>Début de la formation :</label>{dte_deb}</div>
@@ -126,8 +127,9 @@
 	</div>
 </div>
 <div class="row" id="page-exo">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Suivi de progression</div>
 			<div class="card-body">	
 				{aff_exercices}
 			</div>
@@ -136,7 +138,7 @@
 </div>
 
 <div class="row" id="page-lst">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body" >	
 			{aff_tableau}
@@ -152,34 +154,39 @@ $( function() {
 		loadLivret();
 		$("#dialogForm").css("display","block");
 		$("#dialogForm").css("opacity",100);
-		$("#page-content").css("opacity",0.25);
-		$("#page-lst").css("opacity",0.25);
-    });
+		$(".card").css("opacity",0.25);
+		$(".sidebar").css("opacity",0.25);
+		$(".content-menu").css("opacity",0.25);
+	});
 	$( "#new" ).on( "click", function() {
 		newLivret();
 		$("#dialogForm").css("display","block");
 		$("#dialogForm").css("opacity",100);
-		$("#page-content").css("opacity",0.25);
-		$("#page-lst").css("opacity",0.25);
+		$(".card").css("opacity",0.25);
+		$(".sidebar").css("opacity",0.25);
+		$(".content-menu").css("opacity",0.25);
     });	
 	$( "#close" ).on( "click", function() {
 		$("#dialogForm").css("opacity",0);
 		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
-		$("#page-lst").css("opacity",1);
+		$(".card").css("opacity",1);
+		$(".sidebar").css("opacity",1);
+		$(".content-menu").css("opacity",1);
     });
 	$( "#save" ).on( "click", function() {
 		$("#dialogForm").css("opacity",0);
 		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
-		$("#page-lst").css("opacity",1);
+		$(".card").css("opacity",1);
+		$(".sidebar").css("opacity",1);
+		$(".content-menu").css("opacity",1);
 		savelivret();
     });
 	$( "#cancel" ).on( "click", function() {
 		$("#dialogForm").css("opacity",0);
 		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
-		$("#page-lst").css("opacity",1);
+		$(".card").css("opacity",1);
+		$(".sidebar").css("opacity",1);
+		$(".content-menu").css("opacity",1);
     });
 
 	$("#form_id").change(function(){

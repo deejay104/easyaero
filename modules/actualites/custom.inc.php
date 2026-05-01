@@ -37,16 +37,21 @@
 	$tmpl_custom->assign("nb_mois", $nbmois);
 
 // ---- Affiche les manifestations
+
 	$lstmanip=GetManifestation($sql,date("Y-m-d"),date("Y-m-d",time()+24*3600*30));
 	if ((is_array($lstmanip)) && (count($lstmanip)>0))
 	{
 		foreach($lstmanip as $i=>$did)
-		  {
+		{
 			$manip = new manip_class($did,$sql,$gl_uid);
-			$tmpl_custom->assign("form_manifestation",$manip->Aff("titre")." le ".$manip->Aff("dte_manip"));
+			$tmpl_custom->assign("manif_id",$did);
+			$tmpl_custom->assign("manif_day",date("d",strtotime($manip->Val("dte_manip"))));
+			$tmpl_custom->assign("manif_month",$tabLang["mois"][date("d",strtotime($manip->Val("dte_manip")))]);
+			$tmpl_custom->assign("manif_title",$manip->Aff("titre"));
+			$tmpl_custom->assign("manif_date",$manip->Aff("dte_manip"));
 			$tmpl_custom->parse("custom.manifestation.lst_manifestation");
-		  }
-			$tmpl_custom->parse("custom.manifestation");
+		}
+		$tmpl_custom->parse("custom.manifestation");
 	}
 
 
@@ -85,7 +90,7 @@
 					$ress=new ress_class($dte->uid,$sql);
 					if ($ress->actif=="oui")
 					{
-						$txt=$dte->Affiche().", du ".$ress->aff("immatriculation");
+						$txt=$ress->aff("immatriculation")." :<br />".$dte->Affiche();
 						$tmpl_custom->assign("form_echeance_avion", $txt);
 						$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
 	
@@ -97,6 +102,7 @@
 					if ($d["resa"]=="obligatoire")
 					{
 						$txt="Aucune échéance pour ".$d["description"];
+						$txt=$ress->aff("immatriculation")." :<br />".$dte->Affiche();
 						$tmpl_custom->assign("form_echeance_avion", $txt);
 						$tmpl_custom->parse("custom.aff_echeance_avion.lst_echeance");
 						$nb++;

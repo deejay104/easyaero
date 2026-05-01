@@ -64,13 +64,15 @@
 	$q="SELECT id FROM ".$MyOpt["tbl"]."_prevision WHERE annee='".$dte."' AND mois='".$mois."' AND avion='".$ress."'";
 	$res=$sql->QueryRow($q);
 
-	if ($res["id"]>0)
+	$r="NOK";
+
+	if ((isset($res["id"])) && ($res["id"]>0))
 	{
 		$r=$sql->Edit("prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("heures"=>$var));
 	}
 	else
 	{
-		$r=$sql->Edit("prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("annee"=>$dte,"mois"=>$mois,"avion"=>$ress,"heures"=>$var));
+		$r=$sql->Edit("prevision",$MyOpt["tbl"]."_prevision",0,array("annee"=>$dte,"mois"=>$mois,"avion"=>$ress,"heures"=>$var));
 	}
 
 	if ($r=="NOK")

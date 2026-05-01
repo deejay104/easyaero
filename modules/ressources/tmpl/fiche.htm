@@ -24,29 +24,19 @@
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">
-				<div class="form-inline">
-					Liste des fiches en cours :&nbsp; 
-					<select id="uid_avion" class='form-control' OnChange="var id=document.getElementById('uid_avion').value; document.location='{path_root}/ressources/fiche?uid_avion='+id;">
-						<option value="">Tous</option>
-						<!-- BEGIN: lst_avion -->
-						<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
-						<!-- END: lst_avion -->
-					</select>
-					&nbsp;
-					<a class="btn btn-light" href="{path_root}/ressources/creefiche">Créer</a>
-				</div>
+			<div class="card-header">
+				<span>Liste des fiches en cours :</span>
+				<select id="uid_avion" class='form-control' OnChange="var id=document.getElementById('uid_avion').value; document.location='{path_root}/ressources/fiche?uid_avion='+id;">
+					<option value="">Tous</option>
+					<!-- BEGIN: lst_avion -->
+					<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
+					<!-- END: lst_avion -->
+				</select>
+				&nbsp;
+				<a class="btn btn-outline-primary" href="{path_root}/ressources/creefiche">Créer</a>
 			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
 			<div class="card-body">
 			{aff_tableau}
 			</div>

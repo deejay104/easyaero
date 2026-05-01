@@ -38,11 +38,10 @@
 
 
 <div class="row">
-	<div class="col-md-6 grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Informations</div>
 			<div class="card-body">
-				<h4>Informations</h4>
-
 				<div class="form-group">
 					<label class="col-lg-4 col-form-label">Titre</label>{form_titre}
 				</div>
@@ -70,13 +69,6 @@
 				</div>
 				<!-- END: aff_retour -->
 
-				<!-- BEGIN: submit -->
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary mr-2" name="fonc" value="Enregistrer" />&nbsp;
-					<input type="submit" class="btn btn-light" name="fonc" value="Annuler" />
-				</div>
-				<!-- END: submit -->
-
 				<!-- BEGIN: msg_enregistre -->
 					<!-- BEGIN: lst_enregistre -->
 					{aff_mouvement_detail}
@@ -84,13 +76,21 @@
 				<!-- END: msg_enregistre -->
 
 			</div>
+
+			<!-- BEGIN: submit -->
+			<div class="footer">
+					<input type="submit" class="btn btn-primary mr-2" name="fonc" value="Enregistrer" />&nbsp;
+					<input type="submit" class="btn btn-light" name="fonc" value="Annuler" />
+			</div>
+			<!-- END: submit -->
 		</div>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-md-6 grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Présence</div>
 			<div class="card-body">
 				<!-- BEGIN: participants -->
 					<h4>Participants ({aff_nbok})</h4>
@@ -121,11 +121,10 @@
 
 <!-- BEGIN: autre_manip -->
 <div class="row">
-	<div class="col-md-6 grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Autre(s) manifestation(s) ayant lieu le même jour</div>
 			<div class="card-body">
-				<h4>Autre(s) manifestation(s) ayant lieu le même jour</h4>
-
 				<div class="form-group">
 				<!-- BEGIN: lst_autre_manip -->
 					<div class="form-group">

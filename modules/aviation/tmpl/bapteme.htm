@@ -44,8 +44,8 @@
 <div class="row" id="baptemeDetails">
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Informations</div>
 			<div class="card-body">
-				<h4>Informations</h4>
 				<div class="form-group">
 					<label class="col-form-label">Numéro</label>{form_num}
 				</div>
@@ -80,15 +80,20 @@
 					<label class="col-form-label">Date paiement</label>{form_dte_paye}
 				</div>
 			</div>
+
+			<!-- BEGIN: submit -->
+			<div class="card-footer">
+				<input type="submit" class="btn btn-primary mr-2" name="fonc" id="enregistrer" value="Enregistrer">
+				<input type="submit" class="btn btn-light" name="fonc" id="annuler" value="Annuler">
+			</div>
+			<!-- END: submit -->
 		</div>
 	</div>
 
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Affectation</div>
 			<div class="card-body">
-
-				<h4>Affectation</h4>
-
 				<div class="form-group">
 					<label class="col-form-label">Statut</label>{form_status}
 				</div>
@@ -119,8 +124,8 @@
 <div class="row">
 	<div class="col-md-12 grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Commentaires</div>
 			<div class="card-body">
-				<h4>Commentaires</h4>
 				<div id="comments" class="formulaire">
 				{form_description}
 				</div>
@@ -129,46 +134,50 @@
 	</div>
 </div>
 
-<!-- BEGIN: submit -->
-<div class="row">
-	<div class="col-md-12 grid-margin stretch-card">
-		<div class="card">
-			<div class="card-body">
-				<input type="submit" class="btn btn-primary mr-2" name="fonc" id="enregistrer" value="Enregistrer">
-				<input type="submit" class="btn btn-light" name="fonc" id="annuler" value="Annuler">
-			</div>
-		</div>
-	</div>
-</div>
-<!-- END: submit -->
 
 
 	<!-- BEGIN: info_prendre -->
-	<div class='alert-fill-info alert col-lg-5'>
-		<i class="mdi mdi-alert-circle"></i>
-		Le menu '<u>Prendre</u>' vous affecte le baptème. Son status sera alors changé à affecté. 
+	<div class="info-potentiel">
+		<div>
+		<span class="potentiel">
+			<i class="mdi mdi-information-outline"></i>
+			Le menu '<u>Prendre</u>' vous affecte le baptème. Son status sera alors changé à affecté. 
+		</span>
+		</div>
 	</div>
 	<!-- END: info_prendre -->
 
 	<!-- BEGIN: info_planifier -->
-	<div class='alert-fill-info alert col-lg-5'>
-		<i class="mdi mdi-alert-circle"></i>
-		Le menu '<u>Planifier</u>' vous permet de saisir les informations sur le vol : avion, pilote, la date et l'heure. 
+	<div class="info-potentiel">
+		<div>
+		<span class="potentiel">
+			<i class="mdi mdi-information-outline"></i>
+			Le menu '<u>Planifier</u>' vous permet de saisir les informations sur le vol : avion, pilote, la date et l'heure. 
+		</span>
+		</div>
 	</div>
 	<!-- END: info_planifier -->
 
 	<!-- BEGIN: info_reserver -->
-	<div class='alert-fill-info alert col-lg-5'>
-		<i class="mdi mdi-alert-circle"></i>
-		Le menu '<u>Réserver</u>' vous permet de saisir automatiquement la réservation de l'avion en fonction des données d'affectation saisies dans la fiche de baptème. 
-	</div>
+	<div class="info-potentiel">
+		<div>
+		<span class="potentiel">
+			<i class="mdi mdi-information-outline"></i>
+			Le menu '<u>Réserver</u>' vous permet de saisir automatiquement la réservation de l'avion en fonction des données d'affectation saisies dans la fiche de baptème. 
+		</span>
+		</div>
+	</div>	
 	<!-- END: info_reserver -->
 
 	<!-- BEGIN: info_effectuer -->
-	<div class='alert-fill-info alert col-lg-5'>
-		<i class="mdi mdi-alert-circle"></i>
-				Le menu '<u>Effectué</u>' change le status du baptème à effectué. Il est a utiliser lorsque le baptème a été réalisé.
-	</div>
+	<div class="info-potentiel">
+		<div>
+		<span class="potentiel">
+			<i class="mdi mdi-information-outline"></i>
+			Le menu '<u>Effectué</u>' change le status du baptème à effectué. Il est a utiliser lorsque le baptème a été réalisé.
+		</span>
+		</div>
+	</div>	
 	<!-- END: info_effectuer -->
 
 

@@ -91,33 +91,25 @@
 
 	if (GetDroit("CreeRessource"))
 	{
-		// $tmpl_x->parse("corps.ajout");
-		// addSubMenu("","Ajouter",geturl("ressources","detail","id=0"),"icn32_ajouter.png",false);
 		addPageMenu("","ressources","Ajouter",geturl("ressources","detail","id=0"),"");
 	}	
 
 	if (($id==$gl_uid) || (GetDroit("ModifRessource")))
 	{
-		// $tmpl_x->parse("corps.modification");
-		// addSubMenu("","Modifier",geturl("ressources","detail","id=".$id."&fonc=modifier"),"",false);
-		addPageMenu("","ressources","Modifier",geturl("ressources","detail","id=".$id."&fonc=modifier"),"");
+		addPageMenu("","ressources","Modifier",geturl("ressources","detail","id=".$id."&fonc=modifier"),"",($fonc=="modifier") ? true : false);
 	}
 
 	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="oui"))
 	{
-		// addSubMenu("","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"icn32_desactive.png",false,"Voulez-vous désactiver cet avion ?");
-		addPageMenu("","ressources","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"");
+		addPageMenu("","ressources","Désactiver",geturl("ressources","detail","id=".$id."&fonc=desactive"),"",false,"","","outline-danger");
 	}
 	if ((GetDroit("DesactiveRessource")) && ($ress->data["actif"]=="off"))
 	{
-		// addSubMenu("","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"icn32_desactive.png",false,"Voulez-vous activer cet avion ?");
 		addPageMenu("","ressources","Activer",geturl("ressources","detail","id=".$id."&fonc=active"),"");
 	}
 	if ((GetDroit("SupprimeRessource")) && ($ress->data["actif"]=="off"))
 	{
-		// $tmpl_x->parse("corps.suppression");
-		// addSubMenu("","Supprimer",geturl("ressources","detail","id=".$id."&fonc=delete"),"icn32_supprime.png",false,"Voulez-vous supprimer cet avion ?");
-		addPageMenu("","ressources","Supprimer",geturl("ressources","detail","id=".$id."&fonc=delete"),"Voulez-vous supprimer cet avion ?");
+		addPageMenu("","ressources","Supprimer",geturl("ressources","detail","id=".$id."&fonc=delete"),"Voulez-vous supprimer cet avion ?",false,"","","outline-danger");
 	}	
 	if ((GetDroit("RestoreRessource")) && ($ress->data["actif"]=="non"))
 	{

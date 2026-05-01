@@ -147,11 +147,11 @@
 
 	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat))
 	{
-		addPageMenu("","aviation","Modifier",geturl("aviation","rexdetail","fonc=editer&id=".$id),"",false);
+		addPageMenu("","aviation","Modifier",geturl("aviation","rexdetail","fonc=editer&id=".$id),"",($fonc=="editer") ? true : false);
 	}
 	if (GetDroit("SupprimeRex"))
 	{
-		addPageMenu("","aviation","Supprimer",geturl("aviation","rexdetail","fonc=supprimer&id=".$id),"",false);
+		addPageMenu("","aviation","Supprimer",geturl("aviation","rexdetail","fonc=supprimer&id=".$id),"",false,"","","outline-danger");
 	}	
 	addPageMenu("","aviation","Imprimer",geturl("aviation","rexdetail","fonc=imprimer&id=".$id),"",false);
 	if ((GetDroit("NotifierRex")) && ($rex->data["status"]=="close"))

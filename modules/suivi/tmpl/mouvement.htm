@@ -55,8 +55,9 @@ function AffVentilation()
 
 	<!-- BEGIN: enregistre -->
 	<div class="row">
-		<div class="grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
+				<div class="card-header">Validation Mouvements</div>
 				<div class="card-body">
 					<div class="table-responsive">
 
@@ -80,8 +81,9 @@ function AffVentilation()
 
 	<!-- BEGIN: aff_mouvement -->
 	<div class="row">
-		<div class="grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
+				<div class="card-header">Mouvement(s) en attente de validation</div>
 				<div class="card-body">
 					<div class="table-responsive">
 
@@ -131,8 +133,9 @@ function AffVentilation()
 	  
 	<!-- BEGIN: lst_aff_mouvement -->
 	<div class="row">
-		<div class="grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
+				<div class="card-header">Nouveau Mouvement</div>
 				<div class="card-body">
 				
 					<div class="row">
@@ -165,64 +168,63 @@ function AffVentilation()
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	  
-	<div class="row">
-		<div class="grid-margin stretch-card">
-			<div class="card">
 				<div class="card-body">
 
-						<div class="form-inline">
-							Ventilation du mouvement : &nbsp;
-							<SELECT id="form_ventilation" class='form-control' name="form_ventilation"  OnChange="AffVentilation();">
-							<OPTION value="non">Non</OPTION>
-							<OPTION value="debiteur">Débiteur</OPTION>
-							<OPTION value="crediteur">Créditeur</OPTION>
-							</SELECT>
-						</div>
+					<div class="form-inline">
+						Ventilation du mouvement : &nbsp;
+						<SELECT id="form_ventilation" class='form-control' name="form_ventilation"  OnChange="AffVentilation();">
+						<OPTION value="non">Non</OPTION>
+						<OPTION value="debiteur">Débiteur</OPTION>
+						<OPTION value="crediteur">Créditeur</OPTION>
+						</SELECT>
+					</div>
 
-						<div id="aff_ventilation" style="visibility: hidden; height:0px;">
-							<!-- BEGIN: lst_ventilation -->
-							<div class="row">
-								<div class="col-md-5">
-									<SELECT id="form_poste_ventil[{ventilid}]" class='form-control' name="form_poste_ventil[{ventilid}]" >
-									<!-- BEGIN: lst_mouvement -->
-									<OPTION value="{id_mouvement}" {chk_mvt_ventil}>{nom_mouvement}</OPTION>
-									<!-- END: lst_mouvement -->
-									</SELECT>
-								</div>
-								<div class="col-md-4">
-									<SELECT id="form_tiers_ventil[{ventilid}]" class='form-control' name="form_tiers_ventil[{ventilid}]" >
-									<OPTION value="0">Aucun</OPTION>
-									<!-- BEGIN: lst_tiers -->
-									<OPTION value="{id_tiers}" {chk_tiers_ventil}>{nom_tiers}</OPTION>
-									<!-- END: lst_tiers -->
-									</SELECT>
-								</div>
-								<div class="col-md-2">
-									<INPUT name="form_montant_ventil[{ventilid}]" class='form-control' value="0">
-								</div>
+					<div id="aff_ventilation" style="visibility: hidden; height:0px;">
+						<!-- BEGIN: lst_ventilation -->
+						<div class="row">
+							<div class="col-md-5">
+								<SELECT id="form_poste_ventil[{ventilid}]" class='form-control' name="form_poste_ventil[{ventilid}]" >
+								<!-- BEGIN: lst_mouvement -->
+								<OPTION value="{id_mouvement}" {chk_mvt_ventil}>{nom_mouvement}</OPTION>
+								<!-- END: lst_mouvement -->
+								</SELECT>
 							</div>
-							<!-- END: lst_ventilation -->
+							<div class="col-md-4">
+								<SELECT id="form_tiers_ventil[{ventilid}]" class='form-control' name="form_tiers_ventil[{ventilid}]" >
+								<OPTION value="0">Aucun</OPTION>
+								<!-- BEGIN: lst_tiers -->
+								<OPTION value="{id_tiers}" {chk_tiers_ventil}>{nom_tiers}</OPTION>
+								<!-- END: lst_tiers -->
+								</SELECT>
+							</div>
+							<div class="col-md-2">
+								<INPUT name="form_montant_ventil[{ventilid}]" class='form-control' value="0">
+							</div>
 						</div>
+						<!-- END: lst_ventilation -->
+					</div>
 
-						<div class="form-inline">
-							<label class="form-check-label">
-								<input type="checkbox" name="form_facture" class="form-check-input">
-								Saisir en Facturation
-								<i class="input-helper"></i>
-							</label>
-						</div>
+					<div class="form-inline">
+						<label class="form-check-label">
+							<input type="checkbox" name="form_facture" class="form-check-input">
+							Saisir en Facturation
+							<i class="input-helper"></i>
+						</label>
+					</div>
+
 				</div>
+
+				<div class="card-footer">
+					<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="Enregistrer">
+					<INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler">
+				</div>
+
 			</div>
 		</div>
 	</div>
 	  
    <!-- END: lst_aff_mouvement -->
 
-	<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="Enregistrer"> <INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler">
 
 	<!-- END: aff_mouvement -->
 </FORM>

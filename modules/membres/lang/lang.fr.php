@@ -17,8 +17,8 @@
 	$tabLang["lang_price"]="Tarif instructeur";
 	$tabLang["lang_summary"]="Résumé";
 	$tabLang["lang_balance"]="Solde du compte";
-	$tabLang["lang_flighthour"]="Nombre d'heures de vol";
+	$tabLang["lang_flighthour"]="Total heures de vol";
 	$tabLang["lang_last12month"]="12 derniers mois";
-	$tabLang["lang_thisyear"]="Depuis début d'année";
+	$tabLang["lang_thisyear"]="Cette d'année";
 
 ?>

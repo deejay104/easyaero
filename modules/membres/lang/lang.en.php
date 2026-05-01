@@ -17,7 +17,7 @@
 	$tabLang["lang_price"]="Instructor Price";
 	$tabLang["lang_summary"]="Summary";
 	$tabLang["lang_balance"]="Account balance";
-	$tabLang["lang_flighthour"]="Flight hours";
+	$tabLang["lang_flighthour"]="Total Flight hours";
 	$tabLang["lang_last12month"]="Last 12 months";
 	$tabLang["lang_thisyear"]="This year";
 

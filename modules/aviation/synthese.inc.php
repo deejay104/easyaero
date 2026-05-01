@@ -299,7 +299,7 @@
 	if ($ok)
 	{
 		// addSubMenu("","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"icn32_supprimer.png",false);
-		addPageMenu("","aviation","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"mdi-delete",false);
+		addPageMenu("","aviation","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"mdi-delete",false,"","","outline-danger");
 	}
 
 	// affSubMenu();

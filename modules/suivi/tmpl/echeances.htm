@@ -29,10 +29,10 @@ function selectAll()
 	<INPUT type="hidden" name="form_id" value="{form_id}">
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Echéances</div>
 			<div class="card-body">
-
 				<div class="row">
 					<div class="col-lg-2">
 						<select id="form_id" class='form-control' OnChange="Recharge();">
@@ -51,12 +51,12 @@ function selectAll()
 						Cout : <input type="text" class='form-control' name="form_cout" value="{form_cout}" style="width:80px!important;">
 					</div>
 					<div class="col-lg-2 form-inline">
-						<input type="submit" class="btn btn-light" name="fonc" value="Débiter" style="width:150px!important; margin-left:20px;">
+						<input type="submit" class="btn btn-primary" name="fonc" value="Débiter" style="width:150px!important; margin-left:20px;">
 					</div>
 					<!-- END: aff_debite -->
 
 					<div class="col-lg-2">
-					<input type="submit" class="btn btn-light" name="print" value="Imprimer" style="width:150px!important; margin-left:20px;" onClick="window.print()">
+					<input type="submit" class="btn btn-outline-primary" name="print" value="Imprimer" style="width:150px!important; margin-left:20px;" onClick="window.print()">
 					</div>
 
 				</div>
@@ -68,8 +68,9 @@ function selectAll()
 	
 <!-- BEGIN: aff_visualisation -->
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Débiter les cotisations</div>
 			<div class="card-body">
 				<div class="form-group">
 					<input type="hidden" name="form_date" value="{form_date}">
@@ -78,9 +79,11 @@ function selectAll()
 					{enr_mouvement}
 					<!-- END: lst_visualisation -->
 
-					<input type="submit" class="btn btn-primary" name="fonc" value="Valider">
-					<input type="submit" class="btn btn-light" name="fonc" value="Annuler">
 				</div>
+			</div>
+			<div class="card-footer">
+				<input type="submit" class="btn btn-primary" name="fonc" value="Valider">
+				<input type="submit" class="btn btn-light" name="fonc" value="Annuler">
 			</div>
 		</div>
 	</div>
@@ -88,7 +91,7 @@ function selectAll()
 <!-- END: aff_visualisation -->
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
 			{aff_tableau}

@@ -28,19 +28,16 @@
 	</script>
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body row">
-				<div class="col-lg-2"><label>Indicateurs pour l'année</label></div>
-				<div class="col-lg-1">
-					<select id="dte" name="dte" OnChange="Recharge();" class="form-control">
-						<!-- BEGIN: lst_date -->
-							<option value="{form_dte}" {form_selected}>{form_dte}</option>		
-						<!-- END: lst_date -->
-					</select>
-				</div>
-			</div>
-
+			<div class="card-header">
+				Indicateurs pour l'année :
+                <select id="dte" name="dte" OnChange="Recharge();" class="form-control ui-datepicker">
+                    <!-- BEGIN: lst_date -->
+                        <option value="{form_dte}" {form_selected}>{form_dte}</option>		
+                    <!-- END: lst_date -->
+                </select>            
+            </div>
 			<div class="card-body">
 				{aff_heures}
 			</div>
@@ -50,10 +47,10 @@
 
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Evolution</div>
 			<div class="card-body">
-				<h5>Evolution</h5>
 
 				<div id="chart_total" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>
 				<div id="chart_cumul" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>

@@ -106,7 +106,9 @@
 				{
 					if ($d["resa"]=="obligatoire")
 					{
-						$tabValeur[$i]["echeance"]["aff"].="Aucune échéance pour ".$d["description"]."<br/>";
+						$dte=new echeance_class(0,$sql);
+						//$d["description"]
+						$tabValeur[$i]["echeance"]["aff"].=$dte->Affiche("",$d["description"])."<br/>";
 						$nb++;
 					}
 				}

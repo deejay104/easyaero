@@ -19,8 +19,9 @@ table.dataTable tbody th, table.dataTable tbody td {
 <!-- BEGIN: aff_suivi -->
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Extrait de compte</div>
 			<div class="card-body">
 				<div class="table-responsive">
 					<TABLE class="table table-hover dataTable no-footer">
@@ -62,12 +63,13 @@ table.dataTable tbody th, table.dataTable tbody td {
 							<TD align=right class="tableauBorderLeft"><B><I>{pointe_solde}</I></B></TD>
 					  </TR>
 					</TABLE>
-					<br />
-					<INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">&nbsp;
-					<INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">&nbsp;
-					<INPUT type="submit" class="btn btn-light"  name="fonc" value="Clore">
-
 				</div>
+			</div>
+
+			<div class="card-footer">
+				<INPUT type="submit" class="btn btn-outline-primary" name="fonc" value="Enregistrer">&nbsp;
+				<INPUT type="submit" class="btn btn-primary"  name="fonc" value="Clore">
+				<INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">&nbsp;
 			</div>
 		</div>
 	</div>

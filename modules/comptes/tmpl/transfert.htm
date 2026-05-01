@@ -13,12 +13,27 @@
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
 
-	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
-			<div class="card">
-				<div class="card-body">
-					<h4>{lang_tranfert}</h4>
+	<div class="info-cartouche-wrap">
+		<div class="info-cartouche">
+			<div class="info-cartouche-icon">
+				<i class="mdi mdi-currency-eur "></i>
+			</div>
+			<div class="info-cartouche-body info-cartouche-large">
+				<div>
+					<span class="label">{lang_account}</span>
+				</div>
+				<div>
+					<label>{lang_balance} : {montant_max}</label><br />
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<div class="row">
+		<div class="col grid-margin stretch-card">
+			<div class="card">
+				<div class="card-header">{lang_tranfert}</div>
+				<div class="card-body">
 					<div class="form-group">
 						{lang_tranfertexplain}
 					</div>
@@ -29,7 +44,7 @@
 
 <!-- BEGIN: msg_enregistre -->
 	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
 					<div class="form-group">
@@ -43,50 +58,38 @@
 	</div>
 <!-- END: msg_enregistre -->	
 
+
+
 	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
 					<div class="row">
-
+						<div class="col-md-3">
+							<label>{lang_tiers}</label>
+							{form_lsttiers}
+						</div>
+			
+						<div class="col-md-3">
+							<label>{lang_amount}</label>
+							<INPUT id="form_montant" class='form-control'  name="form_montant" value="" placeholder="0.00">
+						</div>
 					
-							<div class="col-md-3">
-							
-								<label>{lang_tiers}</label>
-								{form_lsttiers}
-							</div>
-				
-							<div class="col-md-3">
-								<label>{lang_amount}</label>
-								<INPUT id="form_montant" class='form-control'  name="form_montant" value="{form_montant}">
-							</div>
-						
-							<div class="col-md-6">
-								<label>{lang_comment}</label>
-								<INPUT id="form_commentaire" class='form-control'  name="form_commentaire" value="{form_commentaire}">
-							</div>
+						<div class="col-md-6">
+							<label>{lang_comment}</label>
+							<INPUT id="form_commentaire" class='form-control'  name="form_commentaire" value="{form_commentaire}">
+						</div>
 					</div>
+				</div>
+
+				<div class="card-footer">
+					<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="{lang_save}">
+					<INPUT type="submit" class="btn btn-light" name="fonc" value="{lang_cancel}">
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
-			<div class="card">
-				<div class="card-body">
-					<div class="form-group">
-					{lang_balance} {montant_max}.
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-
-	<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="{lang_save}"> <INPUT type="submit" class="btn btn-light" name="fonc" value="{lang_cancel}">
 	
 </form>
 

@@ -19,8 +19,8 @@
 <div class="row">
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Informations</div>
 			<div class="card-body">	
-				<h5>Informations</h5>
 
 				<div class="form-group row">
 					<div class="col-lg-4"><label class="col-form-label">Titre</label></div>
@@ -40,13 +40,23 @@
 				</div>
 
 			</div>
+
+<!-- BEGIN: form_submit -->
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-md-3">
+						<input type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">
+						<input type="submit" class="btn btn-light"  name="fonc" value="Annuler">
+					</div>
+				</div>
+			</div>
+<!-- END: form_submit -->
 		</div>
 	</div>
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Classification</div>
 			<div class="card-body">	
-				<h5>Classification</h5>
-
 				<div class="form-group row">
 					<div class="col-lg-3"><label class="col-form-label">Catégorie</label></div>
 					<div class="col-lg-9">{form_categorie}</div>
@@ -86,16 +96,14 @@
 </div>
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Descriptif</div>
 			<div class="card-body">	
-				<h5>Descriptif</h5>
-
 				<h6>Descriptif de l'événement</h6>
 				{form_description}
 				<h6>Commentaire</h6>
 				{form_commentaire}
-
 			</div>
 		</div>
 	</div>
@@ -103,11 +111,10 @@
 
 <!-- BEGIN: evaluation -->
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Evaluation du risque</div>
 			<div class="card-body">	
-				<h5>Evaluation du risque</h5>
-	
 				{form_risque}
 			</div>
 		</div>
@@ -117,14 +124,14 @@
 
 <!-- BEGIN: conclusion -->
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Conclusion</div>
 			<div class="card-body">	
-				<h5>Conclusion</h5>
-				<h6>Synthèse</h6>
+				<h3>Synthèse</h3>
 				{form_synthese}
 		
-				<h6>Plan d'action</h6>
+				<h3>Plan d'action</h3>
 				{form_planaction}
 			</div>
 		</div>
@@ -132,9 +139,5 @@
 </div>
 <!-- END: conclusion -->
 
-<!-- BEGIN: form_submit -->
-	<input type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">
-	<input type="submit" class="btn btn-light"  name="fonc" value="Annuler">
-<!-- END: form_submit -->
 </form>
 <!-- END: corps -->

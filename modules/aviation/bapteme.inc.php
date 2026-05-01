@@ -247,7 +247,7 @@
 	}
 	if (GetDroit("SupprimeBapteme"))
 	{
-		addPageMenu("",$mod,"Supprimer",geturl("aviation","bapteme","fonc=delete&id=".$id),"",false,"Voulez-vous supprimer ce baptème ?");
+		addPageMenu("",$mod,"Supprimer",geturl("aviation","bapteme","fonc=delete&id=".$id),"",false,"Voulez-vous supprimer ce baptème ?","","outline-danger");
 	}
 	if (GetDroit("ModifBapteme"))
 	{

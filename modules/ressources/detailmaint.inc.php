@@ -158,7 +158,7 @@
 		
 	if (GetDroit("SupprimeMaintenance"))
 	{
-		addPageMenu("","ressources","Supprimer la maintenance",geturl("ressources","detailmaint","id=".$id."&fonc=Supprimer"),"",false,"Voulez-vous supprimer cette maintenance ?");
+		addPageMenu("","ressources","Supprimer la maintenance",geturl("ressources","detailmaint","id=".$id."&fonc=Supprimer"),"",false,"Voulez-vous supprimer cette maintenance ?","","outline-danger");
 	}
 
 

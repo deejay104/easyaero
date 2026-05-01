@@ -13,95 +13,94 @@
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
 
-	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
-			<div class="card">
-				<div class="card-body">
-					<h4>{lang_credit}</h4>
+	<div class="info-cartouche-wrap">
+		<div class="info-cartouche">
+			<div class="info-cartouche-icon">
+				<i class="mdi mdi-currency-eur"></i>
+			</div>
+			<div class="info-cartouche-body info-cartouche-large">
+				<div>
+					<span class="label">{lang_account}</span>
+				</div>
+				<div>
+					<label>{lang_balance} : {solde_reel}</label><br />
+					<label>{lang_balanceprev} :{solde_temp}</label>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	
+	<div class="row">
+		<div class="col grid-margin stretch-card">
+			<div class="card">
+				<div class="card-header">{lang_credit}</div>
+				<div class="card-body">
 					<div class="form-group">
 					{lang_creditexplain}
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
-			<div class="card">
-				<div class="card-body">
+
 					<div class="row">
-							<div class="col-md-3">
-								<label>{lang_type}</label>
-								<select id="form_type" class='form-control' name="form_type">
-								<!-- BEGIN: lst_type -->
-									<option value="{form_type}">{form_typename}</option>
-								<!-- END: lst_type -->
-								</select>
-							</div>
-							<div class="col-md-3">
-								<label>{lang_amount}</label>
-								<INPUT id="form_montant" class='form-control'  name="form_montant" value="{form_montant}">
-							</div>
-							<div class="col-md-6">
-								<label>{lang_comment}</label>
-								<INPUT id="form_commentaire" class='form-control'  name="form_commentaire" value="{form_commentaire}">
-							</div>
-					</div>
-					<div class="row">
-						<div class="form-group">
-							{lang_balance} {solde_reel}.<br />
-							{lang_balanceprev} {solde_temp}.<br />
+						<div class="col-md-3">
+							<label>{lang_type}</label>
+							<select id="form_type" class='form-control' name="form_type">
+							<!-- BEGIN: lst_type -->
+								<option value="{form_type}">{form_typename}</option>
+							<!-- END: lst_type -->
+							</select>
+						</div>
+						<div class="col-md-3">
+							<label>{lang_amount}</label>
+							<INPUT id="form_montant" class='form-control'  name="form_montant" value="" placeholder="0.00">
+						</div>
+						<div class="col-md-6">
+							<label>{lang_comment}</label>
+							<INPUT id="form_commentaire" class='form-control'  name="form_commentaire" value="{form_commentaire}">
 						</div>
 					</div>
 				</div>
+
+				<div class="card-footer">
+					<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="{lang_save}">
+					<INPUT type="submit" class="btn btn-light" name="fonc" value="{lang_cancel}">
+				</div>
+
 			</div>
 		</div>
 	</div>
 
 
-	<INPUT type="submit" class="btn btn-primary mr-2" name="fonc" value="{lang_save}"> <INPUT type="submit" class="btn btn-light" name="fonc" value="{lang_cancel}">
-
-	<br />
-	<br />
-	
 	<!-- BEGIN: brouillon -->
 	
 	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
+				<div class="card-header">Mouvement(s) en attente de validation</div>
 				<div class="card-body">
-					<div class="row">
-						<h4>Mouvement(s) en attente de validation</h4>
-
-						<TABLE class="table table-hover">
-							<thead>
-								<tr>
-									<th>Date</th>
-									<th>Poste</th>
-									<th>Montant</th>
-								</tr>
-							</thead>
-							<tbody>
-							<!-- BEGIN: lst_mvt -->
+					<TABLE class="table table-hover">
+						<thead>
 							<tr>
-								<TD>
-									{lst_date}
-								</TD>
-								<TD>
-									{lst_poste}<br />
-									{lst_commentaire}
-								</TD>
-								<TD>
-									{lst_montant}
-								</TD>
-							</TR>
-							<!-- END: lst_mvt -->
-							</tbody>
-						</table>
-					</div>
+								<th>Date</th>
+								<th>Poste</th>
+								<th>Montant</th>
+							</tr>
+						</thead>
+						<tbody>
+						<!-- BEGIN: lst_mvt -->
+						<tr>
+							<TD>
+								{lst_date}
+							</TD>
+							<TD>
+								{lst_poste}<br />
+								{lst_commentaire}
+							</TD>
+							<TD>
+								{lst_montant}
+							</TD>
+						</TR>
+						<!-- END: lst_mvt -->
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

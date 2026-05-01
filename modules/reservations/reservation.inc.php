@@ -382,7 +382,7 @@
 	// Affiche le boutton supprimer
 	if ($resa["resa"]->edite!="non")
 	{
-		addPageMenu("",$mod,"Supprimer",geturl("reservations","save","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?");
+		addPageMenu("",$mod,"Supprimer",geturl("reservations","save","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?","","outline-danger");
 	}
 
 	if ($resa["resa"]->edite=="non")

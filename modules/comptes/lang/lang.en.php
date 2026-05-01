@@ -2,7 +2,7 @@
 	// $tabLang["lang_list"]="Liste";
 	$tabLang["lang_total"]="Account balance";
 
-
+	$tabLang["lang_account"]="Pilot account";
 	$tabLang["lang_myaccount"]="My account";
 	$tabLang["lang_listaccount"]="Account list";
 	$tabLang["lang_transfer"]="Transfer";

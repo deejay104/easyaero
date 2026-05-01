@@ -7,29 +7,22 @@
 
 
 <!-- BEGIN: corps -->
-
+<style>
+	.sticker { height:24px; line-height:24px; border-radius:5px; text-align:center; }
+</style>
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">
-				<div class="form-inline">
-					Avion :&nbsp; 
-					<select id="idavion" class='form-control' name="idavion" OnChange="var id=document.getElementById('idavion').value; document.location='{path_root}/ressources/horametre?id='+id;">
-						<!-- BEGIN: lst_avion -->
-						<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
-						<!-- END: lst_avion -->
-					</select>
-				</div>
+			<div class="card-header">
+				<span>Avion :</span> 
+				<select id="idavion" class='form-control' name="idavion" OnChange="var id=document.getElementById('idavion').value; document.location='{path_root}/ressources/horametre?id='+id;">
+					<!-- BEGIN: lst_avion -->
+					<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
+					<!-- END: lst_avion -->
+				</select>
 			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
 			<div class="card-body">
-			{tab_liste}	
+				{tab_liste}	
 			</div>
 		</div>
 	</div>

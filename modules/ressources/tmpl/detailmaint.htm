@@ -158,24 +158,27 @@
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="id" value="{id}">
 
-<div class="row">
-	<div class="col-md-12 border-top">
-		<div class="d-flex ">
-			<div class="ml-4 small">
-				Dernière mise à jour : {info_maj}
-			</div>
-		</div>
-	</div>
-</div>
-
+    <div class="info-cartouche-wrap">
+      <div class="info-cartouche">
+        <div class="info-cartouche-icon">
+          <i class="mdi mdi-clock-outline"></i>
+        </div>
+        <div class="info-cartouche-body">
+          <div>
+            <span class="label">{lang_lastupdate}</span>
+          </div>
+          <div>
+            <label title="{info_historique}">{info_maj}</label>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <div class="row">
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Informations</div>
 			<div class="card-body">
-
-				<h5>Informations</h5>
-
 				<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Avion</label>
 					<div class="col-lg-7">{form_uid_ressource}</div>
@@ -206,46 +209,49 @@
 					<div class="col-lg-7">{form_potentiel}</div>
 				</div>
 			</div>
+
+			<!-- BEGIN: form_submit -->
+			<div class="card-footer">
+				<!-- BEGIN: aff_bouttons -->
+				<INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">
+				<!-- END: aff_bouttons -->
+				<INPUT type="submit" class="btn btn-light" name="fonc" value="Annuler">
+			</div>
+			<!-- END: form_submit -->
+
 		</div>
 	</div>
 
 	<div class="col-md-6 grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Commentaire</div>
 			<div class="card-body">
-				<h5>Commentaire</h5>
 				{form_commentaire}
 			</div>
 		</div>
 	</div>
 </div>
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Dernier vol effectué avant la maintenance</div>
 			<div class="card-body">
-				<h5>Dernier vol effectué avant la maintenance</h5>
 				{aff_resa}
 			</div>
 		</div>
 	</div>
 </div>
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Liste des fiches associées</div>
 			<div class="card-body">
-				<h5>Liste des fiches associées</h5>
 				{aff_fiche}
 			</div>
 		</div>
 	</div>
 </div>
 	
-<!-- BEGIN: form_submit -->
-	<!-- BEGIN: aff_bouttons -->
-	<INPUT type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">
-	<!-- END: aff_bouttons -->
-
-	<INPUT type="submit" class="btn btn-light" name="fonc" value="Retour">
-<!-- END: form_submit -->
 
 </FORM>
 

@@ -17,11 +17,10 @@
 	<input type="hidden" name="checktime" value="{form_checktime}" />
 
 	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
+				<div class="card-header">Sélection des passagers</div>
 				<div class="card-body">
-					<h4>Sélection des passagers</h4>
-
 					<div class="form-group ">
 					<!-- BEGIN: lst_passager -->
 					<div class="row">
@@ -52,7 +51,8 @@
 						</div>
 						<div class="col-sm-3">{masse_totale} {masse_max}</div>
 					</div>
-
+				</div>
+				<div class="card-footer">
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary mr-2" name="fonc" id="enregistrer" value="Actualiser">
 						<input type="submit" class="btn btn-light mr-2" name="fonc" value="Retour">
@@ -63,10 +63,10 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-10 grid-margin stretch-card">
+		<div class="col grid-margin stretch-card">
 			<div class="card">
+				<div class="card-header">Graphique de centrage et masse</div>
 				<div class="card-body">
-					<h4>Graphique de centrage et masse</h4>
 					<img src="/api/v1/aviation/imgcentrage?id={id}" class="rounded mw-100" />
 				</div>
 			</div>

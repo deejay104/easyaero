@@ -11,11 +11,11 @@
 
 <!-- BEGIN: corps -->
 <style>
-.form-check-label { min-width: 100px!important; }
+	.form-check-label { min-width: 100px!important; }
 
-@media (min-width: 576px) {
-	.form-large label { min-width:500px; }
-}
+	@media (min-width: 576px) {
+		.form-large label { min-width:500px; }
+	}
 </style>
 
 <FORM name="form_detail" method="post" action="{path_root}/aviation/synthese" enctype="multipart/form-data">
@@ -30,21 +30,21 @@
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="nonce" value="{form_nonce}">
 
-<div class="row">
-	<div class="col-md-12 border-top">
-		<div class="d-flex ">
-			<div class="ml-4 small">
-				Dernière mise à  jour : {form_usr_maj} {form_dte_maj}
-			</div>
+
+	<div class="info-potentiel">
+		<div>
+		<span class="potentiel">
+			<i class="mdi mdi-alert-gauge"></i>
+			Dernière mise à jour : {form_usr_maj} {form_dte_maj}
+		</span>
 		</div>
 	</div>
-</div>
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Fiche de synthèse de vol</div>
 			<div class="card-body">	
-				<h5>FICHE DE SYNTHESE DE VOL</h5>
 
 				<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Livret de formation</label><div class="col-lg-6">{form_idlivret}</div>
@@ -72,27 +72,28 @@
 
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Informations du vol</div>
 			<div class="card-body">
 				<div class="">
-					<h5>THEMES</h5>
+					<h4>Thèmes</h4>
 
 					{form_themes}
 				</div>
 	
 				<div class="border-top pt-2">
-					<h5>APPRECIATION GENERALE DU VOL</h5>
+					<h4>Appréciation générale du vol</h4>
 					{form_bilan_gen}
 				</div>
 	
 				<div class="border-top pt-2">
-					<h5>METEO DU JOUR</h5>
+					<h4>Météo du jour</h4>
 					{form_mto}
 				</div>
 
 				<div class="border-top pt-2">
-					<h5>TERRAIN</h5>
+					<h4>Terrains(s)</h4>
 					<INPUT id="terrain" class='form-control form-input' name="form_terrain" value="{form_terrain}">
 					<div id="lst_terrain" class="mt-2"></div>
 					<div id="lst_idterrain" class="d-none"></div>
@@ -105,11 +106,10 @@
 
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Briefing sol : Exercices pedagogiques</div>
 			<div class="card-body">	
-				<h5>BRIEFING SOL : EXERCICES PEDAGOGIQUES</h5>
-
 				<!-- BEGIN: lst_pedagogique -->
 				<div id='exo_{aff_id}' style='{form_color}' class='form-group row form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 					<label class="col-lg-5 col-form-label">{aff_exo_description}{form_progref}</label>
@@ -132,11 +132,10 @@
 	</div>
 </div>
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Exercices</div>
 			<div class="card-body">	
-
-			<h5>EXERCICES</h5>
 			<!-- BEGIN: lst_exercice -->
 			<div id='exo_{aff_id}' style='{form_color}' class='form-group row form-hover'  OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 				<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
@@ -160,11 +159,10 @@
 	</div>
 </div>
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Pannes</div>
 			<div class="card-body">	
-				<h5>PANNES</h5>
-
 				<!-- BEGIN: lst_panne -->
 				<div id='exo_{aff_id}' style='{form_color}' class='form-group row form-hover' OnMouseOver="document.getElementById('del_{aff_id}').style.display='inline-block';" OnMouseOut="document.getElementById('del_{aff_id}').style.display='none';">
 					<label class="col-lg-5 col-form-label">{aff_exo_description}</label>
@@ -190,10 +188,10 @@
 	<br />
 
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">	Non technique / Menace, Erreurs, Situation non désirées</div>
 			<div class="card-body">	
-				<h5>Non technique / Menace, Erreurs, Situation non désirées</h5>
 
 				<div class="form-group row form-hover"><label class="col-lg-5 col-form-label">Gestion de la charge de travail</label><div class="col-lg-5 form-inline">{form_info_1}</div></div>
 				<div class="form-group row form-hover"><label class="col-lg-5 col-form-label">Gestion des automatismes</label><div class="col-lg-5 form-inline">{form_info_2}</div></div>
@@ -205,8 +203,9 @@
 	</div>
 </div>	
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Résumé</div>	
 			<div class="card-body">	
 				<div class="row">
 					<div class="col-md-5 form-group row ">
@@ -232,62 +231,47 @@
 						<label class="col-lg-5 col-form-label">Total Formation théorique</label><div class="col-lg-5 py-2">{form_total_theo}</div>
 					</div>
 				</div>
+				<h4></h4>
 			</div>
+
+
+			<div class="card-body row">
+				<div class="col-lg-4">
+					<b>Date du vol</b><br />
+					{form_dtevol}
+				</div>
+				<div class="col-lg-4">
+					<b>Durée</b><br />
+					{form_duree}
+				</div>
+				<div class="col-lg-4">
+					<b>Cumul DC</b><br />
+					{form_cumuldc}<br />
+					<b>Cumul Solo</b><br />
+					{form_cumulsolo}
+				</div>
+			</div>
+
+
+			<!-- BEGIN: submit -->
+			<div class="card-footer">	
+				<input type="submit" name="fonc" id="enregistrer" class="btn btn-primary mb-2" value="Enregistrer">
+				<input type="submit" name="fonc" id="annuler"  class="btn btn-light ml-2 mb-2"  value="Annuler">
+			</div>
+			<!-- END: submit -->
+
 		</div>
 	</div>
 </div>	
 
 
-<!-- BEGIN: submit -->
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
-			<div class="card-body">	
-				<div class="form-inline">
-					<input type="submit" name="fonc" id="enregistrer" class="btn btn-primary mb-2" value="Enregistrer">
-					<input type="submit" name="fonc" id="annuler"  class="btn btn-light ml-2 mb-2"  value="Annuler">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- END: submit -->
-
-<div class="row">
-	<div class="col-12 grid-margin">
-		<div class="card">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="card-body">
-							<b>Date du vol</b><br />
-							{form_dtevol}
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="card-body">
-							<b>Durée</b><br />
-							{form_duree}
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="card-body">
-							<b>Cumul DC</b><br />
-							{form_cumuldc}<br />
-							<b>Cumul Solo</b><br />
-							{form_cumulsolo}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="row">
 	<div class="col-lg-6 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">	
 				<div class="row"><label class="col-lg-2">Instructeur</label><div class="col-lg-5">{form_instructeur}</div></div>
 				<!-- BEGIN: signinst -->
-				<input type="submit" class="btn btn-light"  name="fonc" value="Signature Instructeur">
+				<input type="submit" class="btn btn-outline-danger"  name="fonc" value="Signature Instructeur">
 				<!-- END: signinst -->
 				<!-- BEGIN: signedinst -->
 				<i class='mdi {form_signinst_key}' {form_signinst_style}/></i> Signé par {form_signinst_name} le {form_signinst_dte}
@@ -301,7 +285,7 @@
 			<div class="card-body">	
 				<div class="row"><label class="col-lg-2">Eleve</label><div class="col-lg-5">{form_eleve}</div></div>
 					<!-- BEGIN: signeleve -->
-					<input type="submit" class="btn btn-light"  name="fonc" value="Signature Elève">
+					<input type="submit" class="btn btn-outline-danger"  name="fonc" value="Signature Elève">
 					<!-- END: signeleve -->
 					<!-- BEGIN: signedeleve -->
 					<i class='mdi {form_signeleve_key}' {form_signeleve_style}/></i> Signé par {form_signeleve_name} le {form_signeleve_dte}<br />

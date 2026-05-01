@@ -13,50 +13,42 @@ table.dataTable tbody th, table.dataTable tbody td {
 </style>
 
 <FORM name="reservation" method="post" action="{path_root}/suivi/vols" enctype="multipart/form-data">
-	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 
 
-	<!-- BEGIN: enregistre -->
+<!-- BEGIN: enregistre -->
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Débiter les vols</div>
 			<div class="card-body">
 				<!-- BEGIN: lst_enregistre -->
 				<input type="hidden" name="form_calid[{form_mvtid}]" value="{form_calid}">
 				{enr_mouvement}
 				<!-- END: lst_enregistre -->
+			</div>
 
-				<div class="formulaireSubmit">
-					<INPUT type="submit" class="btn btn-primary"  name="fonc" value="Valider"> <INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">
-				</div>
+			<div class="card-footer">
+				<INPUT type="submit" class="btn btn-primary"  name="fonc" value="Valider"> <INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">
 			</div>
 		</div>
 	</div>
 </div>
-	<!-- END: enregistre -->
+<!-- END: enregistre -->
 
-	<!-- BEGIN: aff_vols -->
+<!-- BEGIN: aff_vols -->
 <div class="row">
-	<div class="grid-margin stretch-card">
+	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">
-				<div class="form-inline">
-					Avion :&nbsp; 
+			<div class="card-header">
+				<span>Avion :</span> 
 					<SELECT id="idavion" class='form-control' name="idavion" OnChange="Recharge();">
 						<!-- BEGIN: lst_avion -->
 						<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
 						<!-- END: lst_avion -->
 					</SELECT>
-				</div>
 			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="grid-margin stretch-card">
-		<div class="card">
 			<div class="card-body">
 				<div class="table-responsive">
 					<TABLE  class='table table-hover dataTable no-footer'>
@@ -128,14 +120,18 @@ table.dataTable tbody th, table.dataTable tbody td {
 						</TR>
 						<!-- END: lst2_vols -->
 					</TABLE>
-					<br />
-					<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary" > <INPUT type="submit" name="fonc" value="Débiter" class="btn btn-light" > <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
-					<!-- END: aff_vols -->
 				</div>
+			</div>
+
+			<div class="card-footer">
+				<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-outline-primary" >
+				<INPUT type="submit" name="fonc" value="Débiter" class="btn btn-primary" >
+				<INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
 			</div>
 		</div>
 	</div>
 </div>
+<!-- END: aff_vols -->
 
 </FORM>
 
