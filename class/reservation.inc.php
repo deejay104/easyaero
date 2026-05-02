@@ -321,11 +321,11 @@ class resa_class extends objet_core
 		{
 			$query="SELECT dte_fin FROM ".$this->tbl."_calendrier WHERE tpsreel<>0 AND dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 			$reslast=$sql->QueryRow($query);
-			if ($reslast["dte_fin"]=="")
-			  {
+			if ((!isset($reslast["dte_fin"])) || ($reslast["dte_fin"]==""))
+			{
 				$reslast=array();
 				$reslast["dte_fin"]=$respot["dte_fin"];
-			  }
+			}
 
 			$query="SELECT SUM(tpsestime) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$reslast["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND tpsreel=0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
 			$resestim=$sql->QueryRow($query);

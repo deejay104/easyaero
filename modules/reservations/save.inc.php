@@ -61,9 +61,9 @@
 	$form_prixcarbu=checkVar("form_prixcarbu","varchar");
 	
 	$resa["resa"]=new resa_class($id,$sql);
-
+echo $fonc;
 // ---- Vérifie les infos
-	if (($fonc=="enregistrer") || ($fonc=="Actualiser") || ($fonc=="centrage") || ($fonc=="synthese"))
+	if (($fonc=="enregistrer") || ($fonc=="actualiser") || ($fonc=="centrage") || ($fonc=="synthese"))
 	  {
 		$ok=1;
 
@@ -233,8 +233,6 @@
 	  	$ok=3;
 	}
 
-
-
 // ---- Enregistre
 	$affrub="index";
 	$jour=(isset($resa["resa"]->dte_deb)) ? $resa["resa"]->dte_deb : now();
@@ -331,9 +329,9 @@
 			}
 		  	$ok=3;
 		  }
-	  }
+	}
 
-	if ($fonc=="Annuler")  	
+	if ($fonc=="annuler")  	
 	{
 		$ok=0;
 		$affrub=($prev=="scheduler") ? "scheduler" : "index";
