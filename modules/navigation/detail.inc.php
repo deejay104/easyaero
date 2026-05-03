@@ -38,7 +38,13 @@
 // ---- Ajout du point
 	if (!is_numeric($id))
 	  { $id=0; }
-	  
+
+	$form_titre=checkVar("form_titre","varchar");
+	$form_vitesse=checkVar("form_vitesse","numeric");
+	$form_vitvent=checkVar("form_vitvent","numeric");
+	$form_dirvent=checkVar("form_dirvent","numeric");
+
+
 	if (($form_route!="") && ($id>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
 
@@ -74,7 +80,7 @@
 	  	$sql->Delete($q);
 	}
 
-echo $q."'".$fonc."' '".$id."'";
+//echo $q."'".$fonc."' '".$id."'";
 
 // ---- Affiche la route
 	$tmpl_x->assign("form_id",$id);
@@ -103,14 +109,17 @@ echo $q."'".$fonc."' '".$id."'";
 
 	$totdis=0;
 	$tottsv=0;
+	$tottps=0;
 
 	foreach ($tabPoints as $i=>$p)
 	  {
+		if (isset($p["id"]))
+		{
 			$tmpl_x->assign("aff_id",$p["id"]);
 			$tmpl_x->assign("aff_nom",$p["nom"]);
 			$tmpl_x->assign("aff_description",$p["description"]);
 	
-			if (($p["lat1"]!="") && ($p["lat2"]!=""))
+			if ((isset($p["lat1"])) && (isset($p["lat2"])) && ($p["lat1"]!="") && ($p["lat2"]!=""))
 			  {
 					$vp=$res["vitesse"];
 					$vw=$res["vitvent"];
@@ -146,10 +155,10 @@ echo $q."'".$fonc."' '".$id."'";
 					$tmpl_x->parse("corps.lst_point");
 				}
 		}
-
-		$tmpl_x->assign("tot_distance",$totdis);
-		$tmpl_x->assign("tot_tsv",AffHeures($tottsv));
-		$tmpl_x->assign("tot_tps",AffHeures($tottps));
+	}
+	$tmpl_x->assign("tot_distance",$totdis);
+	$tmpl_x->assign("tot_tsv",AffHeures($tottsv));
+	$tmpl_x->assign("tot_tps",AffHeures($tottps));
 
 
 	if ( ($id==0) && (GetDroit("CreeNavigation")) )

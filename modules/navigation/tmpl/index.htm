@@ -3,15 +3,21 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-	<A href="index.php?mod=navigation&rub=detail"><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Créer</A>
+	<A href="index.php?mod=navigation&rub=detail"><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Crï¿½er</A>
 	<A href="index.php?mod=navigation&rub=import"><IMG src="{path_module}/img/icn32_importer.png" border=0 alt="">Importer</A>
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
-	<br /><br />
-
-{aff_tableau}
-
+<div class="row">
+	<div class="col grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Navigations</div>
+			<div class="card-body">
+			{aff_tableau}
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- END: corps -->
