@@ -134,20 +134,6 @@
 		}
 	}
 
-// ---- Charge le template
-
-
-	// if ($resa["resa"]->edite=='non')
-	// {
-		// $tmpl_x = new XTemplate (MyRep("reservation-visu.htm"));
-	  	// $tmpl_hora = new XTemplate (MyRep("horametre-visu.htm"));
-	// }
-	// else
-	// {
-	  	// $tmpl_hora = new XTemplate (MyRep("horametre.htm"));
-	// }
-	//$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
-
 // ---- Initialise les variables
 	$ok_aff=0;
 	$ok_save=0;
