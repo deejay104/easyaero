@@ -100,6 +100,7 @@
 			$afftotal=round($solde,2);
 			$tabValeur[$i]["solde"]["val"]=(($afftotal==0) ? "0" : $afftotal);
 			$tabValeur[$i]["solde"]["aff"]=(($afftotal==0) ? "0,00 ".$MyOpt["devise"] : AffMontant($afftotal))."&nbsp;&nbsp;";
+			$tabValeur[$i]["solde"]["align"]="right";
 			$solde=$solde-$sql->data["montant"];
 		}
 		else
