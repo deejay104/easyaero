@@ -58,12 +58,16 @@
 	$tabTitre["dte_deb"]["width"]=($theme=="phone") ? 120 : 250 ;
 	$tabTitre["immat"]["aff"]="Immat";
 	$tabTitre["immat"]["width"]=80;
+	$tabTitre["immat"]["calign"]="right";
 	$tabTitre["tpsreel"]["aff"]="Bloc";
 	$tabTitre["tpsreel"]["width"]=70;
+	$tabTitre["tpsreel"]["calign"]="right";
 	$tabTitre["temps"]["aff"]="Temps";
 	$tabTitre["temps"]["width"]=70;
+	$tabTitre["temps"]["calign"]="right";
 	$tabTitre["cout"]["aff"]="Cout";
 	$tabTitre["cout"]["width"]=100;
+	$tabTitre["cout"]["calign"]="right";
 	if ($theme!="phone")
 	{
 		$tabTitre["instructeur"]["aff"]="Instructeur";

@@ -48,10 +48,12 @@
 
 		$tabTitre["heure"]["aff"]="Temps de vol";
 		$tabTitre["heure"]["width"]=110;
+		$tabTitre["heure"]["calign"]="right";
 		$tabTitre["carbavant"]["aff"]="Carbu";
 		$tabTitre["carbavant"]["width"]=100;
 		$tabTitre["potentiel"]["aff"]="Total";
 		$tabTitre["potentiel"]["width"]=100;
+		$tabTitre["potentiel"]["calign"]="right";
 	}
 	else
 	{
@@ -83,6 +85,7 @@
 		$tabTitre["carbapres"]["width"]=100;
 		$tabTitre["potentiel"]["aff"]="Potentiel";
 		$tabTitre["potentiel"]["width"]=100;
+		$tabTitre["potentiel"]["calign"]="right";
 		$tabTitre["total"]["aff"]="Total heures de vol";
 		$tabTitre["total"]["width"]=100;
 	}
