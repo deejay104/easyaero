@@ -160,4 +160,7 @@ $MyOptHelp["btm_stripeCle"]="Secret key for Stripe API";
 $MyOptTmpl["btm_stripeWebhook"]="";
 $MyOptHelp["btm_stripeWebhook"]="Webhook secret for Stripe API";
 
+$MyOptTmpl["btm_articles"]="";
+$MyOptHelp["btm_articles"]="Liste des articles pour les baptèmes";
+
 ?>

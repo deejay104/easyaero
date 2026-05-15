@@ -22,11 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 // ──────────────────────────────────────────────────────────────────────────
 $get=checkVar("get", "varchar",10);
 
+
+$prestationsBapteme=json_decode(preg_replace("/'/",'"',$MyOpt["btm_articles"]));
+
 if ($get=="reflist")
 {
     $res=array(
         "status"=>200,
         "data"=>$prestationsBapteme,
+        "raw"=>$MyOpt["btm_articles"],
     );
     echo json_encode($res);     
     exit;
