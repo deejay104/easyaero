@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 $get=checkVar("get", "varchar",10);
 
 
-$prestationsBapteme=json_decode(preg_replace("/'/",'"',$MyOpt["btm_articles"]));
+$prestationsBapteme=json_decode(preg_replace("/'/",'"',$MyOpt["btm_articles"]),true);
 
 if ($get=="reflist")
 {
