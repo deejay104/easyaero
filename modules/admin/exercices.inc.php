@@ -145,10 +145,12 @@
 		
 		if (GetDroit("ModifExercice"))
 		{
-			$tabValeur[$i]["action"]["aff"].="<div id='action_".$d["id"]."' style='display:none;'>";
+			$tabValeur[$i]["action"]["align"]="action";
+			$tabValeur[$i]["action"]["aff"].="<span class='feed-actions'>";
 			$tabValeur[$i]["action"]["aff"].="<a id='del_".$d["id"]."' href='#'><i class='mdi mdi-close'></i></a>";
-			$tabValeur[$i]["action"]["aff"].="</div>";
+			$tabValeur[$i]["action"]["aff"].="</span>";
 		}
+
 
 		$lstp=ListeProgression($sql,$d["id"]);
 		$tabValeur[$i]["progression"]["val"]="";

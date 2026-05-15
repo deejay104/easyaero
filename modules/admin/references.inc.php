@@ -118,7 +118,7 @@
 		$tabValeur[$i]["theme"]["aff"]=$ref->aff("theme","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".geturl("admin","formations","page=references&fonc=delete&fid=".$fid."&id=".$d["id"])."' style='display:none;'><i class='mdi mdi-close mdi-18px'></i></a>";
+		$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='del_".$d["id"]."' href='".geturl("admin","formations","page=references&fonc=delete&fid=".$fid."&id=".$d["id"])."'><i class='mdi mdi-close mdi-18px'></i></a></span>";
 	}
 
 	$ref=new reference_class(0,$sql);	

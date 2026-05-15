@@ -87,7 +87,7 @@
 		$tabValeur[$i]["description"]["aff"]=$ref->aff("description","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".geturl("admin","formations","page=formationslst&fonc=delete&id=".$d["id"])."' style='display:none;'><i class='mdi mdi-close'></i></a>";
+		$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='del_".$d["id"]."' href='".geturl("admin","formations","page=formationslst&fonc=delete&id=".$d["id"])."'><i class='mdi mdi-close'></i></a></span>";
 	}
 
 	$ref=new formation_class(0,$sql);	
@@ -95,7 +95,7 @@
 	$tabValeur[0]["description"]["val"]="";
 	$tabValeur[0]["description"]["aff"]=$ref->aff("description","form","form_data[0]");
 
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"del"));
+	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"action"));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

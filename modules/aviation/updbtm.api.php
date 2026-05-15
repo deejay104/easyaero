@@ -67,7 +67,7 @@ $passagers=checkVar("passagers","numeric");
 $bonkdo=checkVar("bon_cadeau","bool");
 $commentaire=checkVar("commentaire","text");
 
-$montant = $prestationsBapteme[$ref]["tarif"];
+$montant = $prestationsBapteme[$ref]["tarif"]*100;
 $type = $prestationsBapteme[$ref]["type"];
 
 

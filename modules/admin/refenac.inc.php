@@ -106,7 +106,7 @@
 		$tabValeur[$i]["refenac"]["aff"]=$ref->aff("refenac","form","form_data[".$d["id"]."]");
 
 		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<a id='del_".$d["id"]."' href='".geturl("admin","formations","page=refenac&fonc=delete&id=".$d["id"])."' style='display:none;'><i class='mdi mdi-close'></i></a>";
+		$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='del_".$d["id"]."' href='".geturl("admin","formations","page=refenac&fonc=delete&id=".$d["id"])."'><i class='mdi mdi-close'></i></a></span>";
 	}
 
 	$ref=new refenac_class(0,$sql);
@@ -120,7 +120,7 @@
 	$tabValeur[0]["refenac"]["val"]="";
 	$tabValeur[0]["refenac"]["aff"]=$ref->aff("refenac","form","form_data[0]");
 	$tabValeur[0]["action"]["val"]=0;
-	$tabValeur[0]["action"]["aff"]="<div id='del_".$d["id"]."' style='display:none;'></div>";
+	$tabValeur[0]["action"]["aff"]="<span class='feed-actions'></span>";
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"del"));
 
