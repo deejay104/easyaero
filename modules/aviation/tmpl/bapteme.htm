@@ -112,6 +112,11 @@
 				</div>
 				<!-- END: lst_dispo -->
 
+				<h4>Commentaires internes</h4>
+				<div class="formulaire">
+				{form_description}
+				</div>
+
 				<h4>Informations Passagers</h4>
 				<div class="formulaire">
 				{form_passagers}
@@ -124,11 +129,14 @@
 <div class="row">
 	<div class="col-md-12 grid-margin stretch-card">
 		<div class="card">
-			<div class="card-header">Commentaires</div>
+			<div class="card-header">Messages</div>
 			<div class="card-body">
-				<div id="comments" class="formulaire">
-				{form_description}
+				<!-- BEGIN: lst_comment -->
+				<div class="feed-item">
+					<div class="feed-avatar"><img src="/{comment_avatar}" alt="avatar"></div>
+					<div class="feed-body"><div class="feed-title"><div class="feed-meta">{comment_author}<span class="sep">·</span><i class="mdi mdi-clock-outline" style="font-size:.8rem;"></i>{comment_date}</div></div><p class="feed-text">{comment_text}</p></div>
 				</div>
+				<!-- END: lst_comment -->
 			</div>
 		</div>
 	</div>
@@ -209,7 +217,6 @@ function reloadImg() {
 	//var d=new Date("2017-08-28 14:30");
 
 <!-- BEGIN: lst_dispo_reload -->
-	<!-- document.getElementById("imgdispo_{lst_uid_avion}").src="{path_root}/api.php?mod=aviation&rub=disponibilite&id={lst_uid_avion}&resa={id_resa}&deb="+Math.round(d.getTime()/1000)+"&fin="+Math.round(d.getTime()/1000+45*60); -->
 	getAvailability('{lst_uid_avion}','{id_resa}',Math.round(d.getTime()/1000),Math.round(d.getTime()/1000+45*60));
 <!-- END: lst_dispo_reload -->
 
@@ -252,18 +259,18 @@ $( "#cancel" ).on( "click", function() {
 
 $( "#save" ).on( "click", function() {
 	var data={
-		data: {
-			id:{id},
-			description:$("#contentNewComment").val()
+		id:{id},
+		data: {	
+			comment:$("#contentNewComment").val()
 		}
 	};
 
-	$.post( "{path_root}/api/v1/aviation/updbtm", data)
+	$.post( "{path_root}/api/v1/aviation/updcomment", data)
 	.done(function(data) {
 		if (data.status==200)
 		{
 			console.log("ok");
-			$("#comments").append("<p>"+data.description+"</p>")
+			$("#comments").append("<p>"+$("#contentNewComment").val()+"</p>")
 		}
 		else
 		{

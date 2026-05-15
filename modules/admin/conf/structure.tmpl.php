@@ -243,6 +243,8 @@ $tabCustom=Array
 	require_once ($appfolder."/class/bapteme.inc.php");
 	$obj=new bapteme_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
+	$obj=new bapteme_comment_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
 
 	require_once ($appfolder."/class/navigation.inc.php");
 	$obj=new navpoint_class(0,$sql);

@@ -162,6 +162,29 @@ A bientôt
 );
 // *****************************************************************
 
+// *****************************************************************
+$tabMails["btm_confirm"]=Array
+(
+	"titre"=>"",
+	"balise"=>"id,prenom,num,type,prenom,uuid",
+	"mail"=>
+"Bonjour,
+
+Nous avons bien enregistré votre réservation {num} pour un {type}.
+
+Notre équipe vous contactera prochainement pour confirmer la date et l'heure de votre vol.
+
+Pour nous contacter ou pour imprimer le bon cadeau, vous pouvez utiliser le lien suivant :
+".$MyOpt["public_host"]."/order/show?uuid={uuid}
+
+Dans le cas d'un bon cadeau, vous pouvez également faire suivre ce mail à la personne qui bénéficiera du vol.
+
+A bientôt
+L'équipe Polygone 67
+"
+);
+// *****************************************************************
+
 
 // *****************************************************************
 $tabMails["rex_create"]=Array

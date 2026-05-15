@@ -41,16 +41,19 @@ class bapteme_class extends objet_core
 		"bonkdo" => Array("type" => "bool", "default" => "non", ),
 		"paye" => Array("type" => "bool", "default" => "non", ),
 		"dte_paye" => Array("type" => "date" ),
+		"montant" => Array("type" => "numeric" ),
 		"id_pilote" => Array("type" => "number", "index" => "1", ),
 		"id_avion" => Array("type" => "number", "index" => "1", ),
 		"id_resa" => Array("type" => "number", "index"=>1),
 		"description" => Array("type" => "text" ),
 		"passagers" => Array("type" => "text" ),
+		"uuid" => Array("type" => "uuid" ),
+		"stripe_id" => Array("type" => "text" ),   // pi_3TVxtsHECzBV3f1y1FaFaLUM
 	);
 
 	
 	protected $tabList=array(
-		"status"=>array("0"=>"Nouveau","1"=>"Contacté","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé","7"=>"Bon envoyé"),
+		"status"=>array("0"=>"Nouveau","1"=>"Contacté","2"=>"A affecter","3"=>"Affecté","4"=>"Planifié","5"=>"Effectué","6"=>"Annulé","7"=>"Bon envoyé","8"=>"Attente","9"=>"Erreur"),
 		"type"=>array("btm"=>"Baptème","vi"=>"VI"),
 		"nb"=>array(
 			"fr"=>array("1"=>"1","2"=>"2","3"=>"3"),
@@ -60,7 +63,7 @@ class bapteme_class extends objet_core
 	);
 
 	protected $color=array(
-		"status"=>array("0"=>"red","1"=>"orange","2"=>"purple","3"=>"teal","4"=>"green","5"=>"gray","6"=>"gray-light","7"=>"blue"),
+		"status"=>array("0"=>"red","1"=>"orange","2"=>"purple","3"=>"teal","4"=>"green","5"=>"gray","6"=>"gray-light","7"=>"blue","8"=>"gray-light","9"=>"red"),
 	);
 
 	# Constructor
@@ -232,6 +235,24 @@ function TotalBaptemes($sql,$actif=array("oui"),$status=-2,$type="",$crit="")
 
 	return $res["nb"];
 
+}
+
+// Commentaires baptèmes
+class bapteme_comment_class extends objet_core
+{
+	protected $table="bapteme_comment";
+	protected $mod="aviation";
+	protected $rub="baptemes";
+
+	protected $fields = Array(
+		"id_btm" => Array("type" => "numeric" ),
+		"comment" => Array("type" => "text" ),
+	);
+}
+
+function ListBaptemeComment($sql,$id_btm)
+{
+	return ListeObjets($sql,"bapteme_comment",array("id"),array("actif"=>"oui","id_btm"=>$id_btm));
 }
 
 ?>

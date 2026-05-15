@@ -300,6 +300,42 @@
 		// affInformation($msg_confirmation,"ok");
 	// }
 
+// ---- Commentaires
+	$lst=ListBaptemeComment($sql,$btm->id);
+	foreach($lst as $item)
+	{
+		$comment=new bapteme_comment_class($item["id"],$sql);
+
+		if ($comment->uid_creat>0)
+		{
+			$usr=new user_core($comment->uid_creat,$sql);
+			$author=$usr->Val("fullname");
+
+			$lstdoc=ListDocument($sql,$comment->uid_creat,"avatar");
+
+			if (count($lstdoc)>0)
+			{
+				$img=new document_core($lstdoc[0],$sql);
+				$avatar=$img->GenerePath(64,64);
+			}
+			else
+			{
+				$avatar="static/images/icn64_membre.png";
+			}
+		}
+		else
+		{
+			$author="Passager";
+			$avatar="static/images/icn64_membre.png";
+		}
+
+		$tmpl_x->assign("comment_author", $author);
+		$tmpl_x->assign("comment_date", date("d/m/Y H:i",strtotime($comment->dte_creat)));
+		$tmpl_x->assign("comment_text", nl2br($comment->val("comment")));
+		$tmpl_x->assign("comment_avatar", $avatar);
+		$tmpl_x->parse("corps.lst_comment");
+	}
+
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");
