@@ -4,14 +4,16 @@
 //	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 // ── Configuration ──────────────────────────────────────────────────────────
-define('API_SHARED_SECRET',  getenv('API_SHARED_SECRET')  ?: $MyOpt["btm_apiSecret"]);
-define('STRIPE_SECRET_KEY',  getenv('STRIPE_SECRET_KEY')  ?: $MyOpt["btm_stripeSecret"]);
+
+$stripeKey=$MyOpt["btm_stripeCle"];
+$apiSharedSecret=$MyOpt["btm_apiSecret"];
+
 
 // ──────────────────────────────────────────────────────────────────────────
 
 // ── Authentification ──────────────────────────────────────────────────────
 $apiKey = $_SERVER['HTTP_X_API_KEY'] ?? '';
-if ($apiKey !== API_SHARED_SECRET) {
+if ($apiKey !== $apiSharedSecret) {
     http_response_code(401);
     echo json_encode(['status'=>401,'error' => 'Non autorisé']);
     exit();
@@ -90,7 +92,7 @@ $btm->Save();
 // Downloaded from https://github.com/stripe/stripe-php/releases
 require_once "external/stripe-php/init.php";
 
-\Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
+\Stripe\Stripe::setApiKey($stripeKey);
 
 $commandeId=$btm->val("num");
 

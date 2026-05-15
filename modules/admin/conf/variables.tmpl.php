@@ -154,8 +154,8 @@ $MyOptHelp["public_host"]="URL du site public";
 $MyOptTmpl["btm_apiSecret"]="";
 $MyOptHelp["btm_apiSecret"]="Shared secret with public site for API calls";
 
-$MyOptTmpl["btm_stripeSecret"]="";
-$MyOptHelp["btm_stripeSecret"]="Secret key for Stripe API";
+$MyOptTmpl["btm_stripeCle"]="";
+$MyOptHelp["btm_stripeCle"]="Secret key for Stripe API";
 
 $MyOptTmpl["btm_stripeWebhook"]="";
 $MyOptHelp["btm_stripeWebhook"]="Webhook secret for Stripe API";
