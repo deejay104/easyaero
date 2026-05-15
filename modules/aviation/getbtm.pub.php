@@ -30,7 +30,6 @@ if ($get=="reflist")
     $res=array(
         "status"=>200,
         "data"=>$prestationsBapteme,
-        "raw"=>$MyOpt["btm_articles"],
     );
     echo json_encode($res);     
     exit;

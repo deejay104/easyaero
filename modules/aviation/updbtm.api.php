@@ -50,6 +50,8 @@ $commentaire = trim($body['commentaire'] ?? '');
 
 $ref=checkVar("ref","varchar",10);
 
+$prestationsBapteme=json_decode(preg_replace("/'/",'"',$MyOpt["btm_articles"]));
+
 if (!isset($prestationsBapteme[$ref]["tarif"]))
 {
 	http_response_code(404);
