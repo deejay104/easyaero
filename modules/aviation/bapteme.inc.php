@@ -118,9 +118,9 @@
 		$resa->uid_ressource=$btm->data["id_avion"];
 		$resa->destination="LOCAL";
 		$resa->nbpersonne=$btm->data["nb"];
-		$resa->tpsestime="20";
+		$resa->tpsestime="30";
 		$resa->dte_deb=sql2date($btm->data["dte"]);
-		$resa->dte_fin=date("d/m/Y H:i:s",strtotime($btm->data["dte"])+60*45);
+		$resa->dte_fin=date("d/m/Y H:i:s",strtotime($btm->data["dte"])+60*60);
 		$resa->tpsreel="";
 		$resa->horadeb="";
 		$resa->horafin="";
