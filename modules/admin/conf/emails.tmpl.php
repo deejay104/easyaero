@@ -166,11 +166,11 @@ A bientôt
 $tabMails["btm_confirm"]=Array
 (
 	"titre"=>"",
-	"balise"=>"id,prenom,num,type,prenom,uuid",
+	"balise"=>"id,prenom,num,type,uuid",
 	"mail"=>
 "Bonjour,
 
-Nous avons bien enregistré votre réservation {num} pour un {type}.
+Nous avons bien enregistré votre réservation #{num} pour un {type}.
 
 Notre équipe vous contactera prochainement pour confirmer la date et l'heure de votre vol.
 
@@ -184,6 +184,28 @@ L'équipe Polygone 67
 "
 );
 // *****************************************************************
+
+
+// *****************************************************************
+$tabMails["btm_comment"]=Array
+(
+	"titre"=>"",
+	"balise"=>"id,prenom,num,type,uuid",
+	"mail"=>
+"Bonjour,
+
+Un nouveau message a été ajouté à votre réservation #{num}.
+
+Veuillez le consulter dès que possible pour ne pas manquer d'informations importantes concernant votre {type} :
+".$MyOpt["public_host"]."/order/show?uuid={uuid}
+
+A bientôt
+L'équipe Polygone 67
+"
+);
+// *****************************************************************
+
+
 
 
 // *****************************************************************

@@ -130,7 +130,7 @@
 	<div class="col-md-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-header">Messages</div>
-			<div class="card-body">
+			<div id="comments" class="card-body">
 				<!-- BEGIN: lst_comment -->
 				<div class="feed-item">
 					<div class="feed-avatar"><img src="/{comment_avatar}" alt="avatar"></div>
@@ -270,7 +270,13 @@ $( "#save" ).on( "click", function() {
 		if (data.status==200)
 		{
 			console.log("ok");
-			$("#comments").append("<p>"+$("#contentNewComment").val()+"</p>")
+
+			txt  = '<div class="feed-item"><div class="feed-avatar"><img src="/'+data.avatar+'" alt="avatar"></div>';
+			txt += '<div class="feed-body"><div class="feed-title"><div class="feed-meta">'+data.author+'<span class="sep">·</span><i class="mdi mdi-clock-outline" style="font-size:.8rem;"></i>'+data.dte_create+'</div></div>';
+			txt += '<p class="feed-text">'+$("#contentNewComment").val()+'</p></div>';
+			txt += '</div>';
+			
+			$("#comments").append(txt);
 		}
 		else
 		{
