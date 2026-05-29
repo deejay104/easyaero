@@ -32,7 +32,7 @@
 	$msg_confirmation="";
 
 // ---- Sauvegarde
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="Enregistrer")
 	{
 		$rex=new rex_class($id,$sql);
 		if (count($form_data)>0)
@@ -71,7 +71,14 @@
 		
 			}
 		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /aviation/rexdetail?id='.$id, true, 303);
+    	exit;
+	}
+// ---- Annuler
+	if ($fonc=="Annuler")
+	{
+		header('Location: /aviation/rexdetail?id='.$id, true, 303);
+		exit;
 	}
 
 // ---- Notifier
@@ -91,8 +98,8 @@
 	{
 		$rex=new rex_class($id,$sql);
 		$rex->Delete();
-		$affrub="rex";
-		return;
+		header('Location: /aviation/rex', true, 303);
+    	exit;
 	}
 	
 // ---- Affiche le menu

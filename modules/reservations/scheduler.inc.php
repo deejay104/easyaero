@@ -61,20 +61,17 @@
 
 // ---- Affichage pour la journée
 
-
 	if ($start!="")
 	{
-		$caltime=time();
-		$_SESSION["caltime"]=$caltime;
-	}
-	else if (isset($_SESSION["caltime"]))
-	{
-		$caltime=$_SESSION["caltime"];
+		if ($start=="today")
+		{
+			$start=date("Y-m-d");
+		}
+		$caltime=strtotime($start);
 	}
 	else
 	{
 		$caltime=time();
-		$_SESSION["caltime"]=$caltime;
 	}
 	
 	if ($theme=="phone")

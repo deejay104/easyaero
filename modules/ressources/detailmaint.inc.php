@@ -27,6 +27,7 @@
 
 // ---- Vérifie les variables
 	$id=checkVar("id","numeric");
+	$update=checkVar("update","numeric");
 	$uid_ressource=checkVar("uid_ressource","numeric");
 	$form_data=checkVar("form_data","array");
 	$form_fiche=checkVar("form_fiche","array");
@@ -70,7 +71,7 @@
 		}
 	}
 
-	if (GetDroit("ModifMaintenance") && ($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if (GetDroit("ModifMaintenance") && ($fonc=="Enregistrer") )
 	{
 		$ok=$maint->Save();
 		if ($ok<>1)
@@ -111,21 +112,30 @@
 
 		if ($msg_erreur=="")
 		{
-			$msg_ok="Enregistrement effectué.";
-			affInformation($msg_ok,"ok");
+			header('Location: /ressources/detailmaint?id='.$id.'&update=1', true, 303);
+			exit;
 		}
+	}
+	else if ($fonc=="Annuler")
+	{
+		header('Location: /ressources/liste', true, 303);
+		exit;
 	}
 	else if (GetDroit("SupprimeMaintenance") && ($fonc=="Supprimer"))
 	{
 	  	$msg_erreur=$maint->Delete();
-		$mod="ressources";
-		$affrub="liste";
-		return;
+		header('Location: /ressources/liste', true, 303);
+		exit;
 	}
 
+	if ($update==1)
+	{
+		$msg_ok="Enregistrement effectué.";
+		affInformation($msg_ok,"ok");
+	}
 
 // ---- Ajout d'un atelier
-	if (GetDroit("CreeAtelier") && ($fonc=="ajoutatelier") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( (GetDroit("CreeAtelier")) && ($fonc=="ajoutatelier") )
 	{
 		$atelier=new atelier_class(0,$sql);
 		
@@ -142,7 +152,8 @@
 			affInformation($msg_ok,"ok");
 		}
 		
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;		
+		header('Location: /ressources/detailmaint?id='.$id.'&update=1', true, 303);
+		exit;
 	}
 
 
@@ -163,7 +174,6 @@
 
 
 // ---- Charge les templates
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("id", $maint->id);
 
 	if (($maint->data["status"]!="cloture") && ($maint->actif=="oui") && (GetDroit("ModifMaintenance")))

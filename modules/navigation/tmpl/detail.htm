@@ -32,7 +32,7 @@
 <input type="hidden" name="mod" value="navigation">
 <input type="hidden" name="rub" value="detail">
 <input type="hidden" name="id" id="id" value="{form_id}">
-<input type="hidden" name="checktime" value="{form_checktime}">
+
 <div class="row">
 	<div class="col grid-margin stretch-card">
 		<div class="card">
@@ -90,7 +90,7 @@
 							<li id="id_{aff_id}">
 								<label>{aff_nom}</label>
 								<span style="width:300px; text-align:left;">{aff_description}</span>
-								<span><a href="index.php?mod=navigation&rub=detail&id={form_id}&fonc=supprimer&idpoint={aff_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" /></a></span>
+								<span class="feed-actions"><a href="/navigation/detail?id={form_id}&fonc=supprimer&idpoint={aff_id}"><i class="mdi mdi-delete"></i></a></span>
 								<div >{aff_distance}</div>
 								<div>{aff_rm}</div>
 								<div>{aff_tsv}</div>

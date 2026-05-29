@@ -37,9 +37,6 @@
 	$order=checkVar("order","varchar");
 	$trie=checkVar("trie","varchar");
 
-	
-// ---- Charge les templates
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Supprime une fiche
 	$delid=checkVar("delid","numeric");

@@ -31,7 +31,7 @@
 	$tmpl_x->assign("url",geturl("admin","formations","page=formationslst"));
 
 // ---- Enregistre les modifications
-	if (($fonc=="Enregistrer") && (GetDroit("ModifFormation")) && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( ($fonc=="Enregistrer") && (GetDroit("ModifFormation")) && (is_array($form_data)) )
 	{
 	  	foreach($form_data as $id=>$d)
 	  	{
@@ -42,7 +42,8 @@
 				$ref->Save();
 			}
 		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /admin/formations?page=formationslst', true, 303);
+    	exit;
 	}
 
 // ---- Supprime une formation
@@ -54,6 +55,8 @@
 			$exo=new formation_class($id,$sql);
 			$exo->Delete();
 		}
+		header('Location: /admin/formations?page=formationslst', true, 303);
+    	exit;
 	}
 
 // ---- Affiche le menu

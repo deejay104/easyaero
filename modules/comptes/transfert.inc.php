@@ -52,7 +52,7 @@
 		affInformation($tabLang["lang_transferhigh"],"error");
 	}
 	
-	else if (($fonc==$tabLang["lang_save"]) && ($form_tiers>0) && ($val>0) && ($MyOpt["id_PosteTransfert"]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if ( ($fonc==$tabLang["lang_save"]) && ($form_tiers>0) && ($val>0) && ($MyOpt["id_PosteTransfert"]>0) )
 	{
 		$res=new user_class($form_tiers,$sql);
 		
@@ -94,7 +94,8 @@
 
 		$tmpl_x->parse("corps.msg_enregistre");
 		
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /comptes/transfert', true, 303);
+    	exit;
 	}
 	else if ($MyOpt["id_PosteTransfert"]==0)
 	{

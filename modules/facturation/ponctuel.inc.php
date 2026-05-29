@@ -1,6 +1,6 @@
 <?
 // ---------------------------------------------------------------------------------------------
-//   Saisie d'une présence ponctuelle
+//   Saisie d'une prï¿½sence ponctuelle
 //     ($Author: miniroot $)
 //     ($Date: 2014-09-16 21:09:58 +0200 (mar., 16 sept. 2014) $)
 //     ($Revision: 435 $)
@@ -28,15 +28,13 @@
 ?>
 
 <?
-	if (!GetDroit("AccesPresence")) { FatalError("Accès non autorisé (AccesPresence)"); }
+	if (!GetDroit("AccesPresence")) { FatalError("Accï¿½s non autorisï¿½ (AccesPresence)"); }
 
 	require_once ("class/abonnement.inc.php");
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("ponctuel.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-// ---- Initialise les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Rempli le tableau des plages horaires
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_plage";
@@ -53,7 +51,7 @@
 		$tabPlage[$sql->data["plage"]]["jour"][$sql->data["jour"]]=1;
 	  }
 
-// ---- Récupère la liste des mouvements
+// ---- Rï¿½cupï¿½re la liste des mouvements
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement ORDER BY ordre,description";
 	$sql->Query($query);
 	$tabPoste=array();
@@ -72,7 +70,7 @@
 	$msg_result="";
 	if ($fonc=="Enregistrer")
 	{
-		// Vérifie la date
+		// Vï¿½rifie la date
 		$dte=date2sql($form_dte);
 		if (date2sql($form_dte)=="nok")
 		  {
@@ -95,7 +93,7 @@
 		  }
 
 
-		// Défini le type de jour pour la présence
+		// Dï¿½fini le type de jour pour la prï¿½sence
 		$todayNum=date("w",$dtedeb);
 		$query="SELECT id FROM ".$MyOpt["tbl"]."_vacances WHERE dtedeb<='$dte' AND dtefin>='$dte'";
 		$resvac=$sql->QueryRow($query);
@@ -108,7 +106,7 @@
 
 		$usr = new user_class($form_uid,$sql);
 
-		if ((is_array($form_poste)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+		if (is_array($form_poste))
 		{
 			$f="";
 			for ($d=$dtedeb; $d<=$dteend; $d=$d+86400)
@@ -126,7 +124,7 @@
 	
 						if ($res["j".$todayNum]=="")
 						  {
-						  	$msg_result.="Pas de type de présence défini pour le ".$tabJour[$todayNum]."<br \>";
+						  	$msg_result.="Pas de type de prï¿½sence dï¿½fini pour le ".$tabJour[$todayNum]."<br \>";
 						  }
 	
 	
@@ -158,7 +156,7 @@
 						  		$query.="tiers='".$cre."', ";
 						  		$query.="montant='".(-$res["montant"])."', ";
 						  		$query.="mouvement='".addslashes($res["description"])."', ";
-						  		$query.="commentaire='Présence ponctuelle le ".$form_dte."', ";
+						  		$query.="commentaire='Prï¿½sence ponctuelle le ".$form_dte."', ";
 						  		$query.="date_valeur='".$dte."', ";
 						  		$query.="dte='".date("Ym",strtotime($dte))."', ";
 						  		$query.="compte='".$res["compte"]."', ";
@@ -170,7 +168,7 @@
 						  		$query.="tiers='".$deb."', ";
 						  		$query.="montant='".($res["montant"])."', ";
 						  		$query.="mouvement='".addslashes($res["description"])."', ";
-						  		$query.="commentaire='Présence ponctuelle le ".$form_dte."', ";
+						  		$query.="commentaire='Prï¿½sence ponctuelle le ".$form_dte."', ";
 						  		$query.="date_valeur='".$dte."', ";
 						  		$query.="dte='".date("Ym",strtotime($dte))."', ";
 						  		$query.="compte='".$res["compte"]."', ";
@@ -210,11 +208,11 @@
 				}
 			  	$f="ok";
 			  }
-			$msg_result.="<font color=\"green\"><b>La présence ponctuelle a été enregistrée.</b></font><br />";
+			$msg_result.="<font color=\"green\"><b>La prï¿½sence ponctuelle a ï¿½tï¿½ enregistrï¿½e.</b></font><br />";
 		}
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-
+		header('Location: /facturation', true, 303);
+    	exit;
 		$form_poste=array();
 	}
 

@@ -51,7 +51,7 @@
 	}
 
 // ---- Débiter nouvelle entrée
-	if (($fonc=="debite") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="debite")
 	{
 		$dest=checkVar("ddest","varchar");
 		$taxe=checkVar("dtaxe","varchar");

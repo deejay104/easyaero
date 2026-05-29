@@ -1,9 +1,9 @@
 <?
 // ---------------------------------------------------------------------------------------------
-//   Saisie des présences
+//   Saisie des prï¿½sences
 // ---------------------------------------------------------------------------------------------
 //   Variables  : 
-//	$dte - Jour à traiter
+//	$dte - Jour ï¿½ traiter
 // ---------------------------------------------------------------------------------------------
 /*
     SoceIt v2.2 ($Revision: 413 $)
@@ -26,7 +26,7 @@
 ?>
 
 <?
-	if (!GetDroit("AccesVacances")) { FatalError("Accès non autorisé (AccesVacances)"); }
+	if (!GetDroit("AccesVacances")) { FatalError("AccÃ¨s non autorisÃ© (AccesVacances)"); }
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("vacances.htm"));
@@ -36,18 +36,17 @@
 
 // ---- Enregistre
 
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	if ($fonc=="Enregistrer")
+	{
 		$query="INSERT INTO ".$MyOpt["tbl"]."_vacances SET dtedeb='".date2sql($form_dtedeb)."', dtefin='".date2sql($form_dtefin)."', comment='".addslashes($form_comment)."'";
 		$sql->Insert($query);
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
-
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
+		header('Location: /facturation', true, 303);
+    	exit;
+	}
 
 // ---- Liste des vacances
 	$tabTitre=array();
-	$tabTitre["dtedeb"]["aff"]="Début";
+	$tabTitre["dtedeb"]["aff"]="Dï¿½but";
 	$tabTitre["dtedeb"]["width"]=100;
 	$tabTitre["dtefin"]["aff"]="Fin";
 	$tabTitre["dtefin"]["width"]=100;
@@ -56,7 +55,7 @@
 	$tabTitre["comment"]["width"]=400;
 
 
-	// Charger la table des présences
+	// Charger la table des prï¿½sences
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_vacances";
 	$sql->Query($query);
 	$tabValeur=array();

@@ -28,7 +28,7 @@
 	$form_data=checkVar("form_data","array");
 
 // ---- Enregistre les modifications
-	if (($fonc=="Enregistrer") && (is_array($form_data)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( ($fonc=="Enregistrer") && (is_array($form_data)) )
 	{
 	  	foreach($form_data as $id=>$d)
 	  	{
@@ -43,7 +43,8 @@
 				$ref->Save();
 			}
 		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /admin/formations?page=exercices', true, 303);
+    	exit;
 	}
 
 // ---- Supprime une référence
@@ -55,6 +56,8 @@
 			$ref=new refenac_class($id,$sql);
 			$ref->Delete();
 		}
+		header('Location: /admin/formations?page=exercices', true, 303);
+    	exit;
 	}
 
 

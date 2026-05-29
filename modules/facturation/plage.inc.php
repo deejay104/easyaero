@@ -1,9 +1,9 @@
 <?
 // ---------------------------------------------------------------------------------------------
-//   Saisie des présences
+//   Saisie des prï¿½sences
 // ---------------------------------------------------------------------------------------------
 //   Variables  : 
-//	$dte - Jour à traiter
+//	$dte - Jour ï¿½ traiter
 // ---------------------------------------------------------------------------------------------
 /*
     SoceIt v2.2 ($Revision: 413 $)
@@ -26,7 +26,7 @@
 ?>
 
 <?
-	if (!GetDroit("AccesPlage")) { FatalError("Accès non autorisé (AccesPlage)"); }
+	if (!GetDroit("AccesPlage")) { FatalError("Accï¿½s non autorisï¿½ (AccesPlage)"); }
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("plage.htm"));
@@ -36,7 +36,7 @@
 
 // ---- Enregistre
 
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="Enregistrer")
 	  {
 		$query ="INSERT INTO ".$MyOpt["tbl"]."_plage SET ";
 		$query.="id='".substr($form_jour,0,1).substr($form_plage,0,1)."', ";
@@ -48,8 +48,9 @@
 		$query.="deb='".substr($form_deb,0,2)."', ";
 		$query.="fin='".substr($form_fin,0,2)."'";
 		$sql->Insert($query);
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
+		header('Location: /facturation', true, 303);
+    	exit;
+	}
 
 // ---- Supprime
 	if ($fonc=="del")
@@ -58,7 +59,6 @@
 	  	$sql->Delete($query);
 	  }
 
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Liste des vacances
 	$tabTitre=array();
@@ -74,7 +74,7 @@
 	$tabTitre["libelle"]["aff"]="Libelle";
 	$tabTitre["libelle"]["width"]=200;
 
-	$tabTitre["deb"]["aff"]="Début";
+	$tabTitre["deb"]["aff"]="Dï¿½but";
 	$tabTitre["deb"]["width"]=60;
 	$tabTitre["fin"]["aff"]="Fin";
 	$tabTitre["fin"]["width"]=60;

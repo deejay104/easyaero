@@ -79,7 +79,7 @@ class maint_class extends objet_core
 			{
 				$lst=GetActiveAteliers($sql);
 
-				$ret="<select name='".$formname."[".$key."]' class='form-control'  OnChange='document.maintenance.submit();'>";
+				$ret="<select name='".$formname."[".$key."]' class='form-control'>";
 
 				foreach($lst as $i=>$aid)
 				{

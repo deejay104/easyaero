@@ -31,7 +31,7 @@
 	$form_poste=checkVar("form_poste","array");
 
 // ---- Enregistre les modifications
-	if (($fonc=="Enregistrer") && (is_array($form_poste)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( ($fonc=="Enregistrer") && (is_array($form_poste)) )
 	{
 		$form_poste=checkVar("form_poste","array");
 		$form_ordre=checkVar("form_ordre","array");
@@ -55,7 +55,8 @@
 				$sql->Edit("mouvement",$MyOpt["tbl"]."_mouvement",$id,$t);
 			}
 	  	}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /admin/postes', true, 303);
+    	exit;
 	}
 
 // ---- Supprime un poste
@@ -66,6 +67,8 @@
 		{
 			$sql->Edit("mouvement",$MyOpt["tbl"]."_mouvement",$id,array("actif"=>"non"));		
 		}
+		header('Location: /admin/postes', true, 303);
+    	exit;			
 	}
 
 // ---- Affiche la page demandée

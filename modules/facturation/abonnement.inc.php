@@ -27,7 +27,7 @@
 ?>
 
 <?
-	if (!GetDroit("AccesAbonnements")) { FatalError("Accès non authorisé (AccesAbonnements)"); }
+	if (!GetDroit("AccesAbonnements")) { FatalError("Accï¿½s non authorisï¿½ (AccesAbonnements)"); }
 
 	require_once ("class/abonnement.inc.php");
 
@@ -41,10 +41,7 @@
 	  	$mode="";
 	  }
 
-// ---- Initialise les variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
-// ---- Récupère la liste des mouvements
+// ---- Rï¿½cupï¿½re la liste des mouvements
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement ORDER BY ordre,description";
 	$sql->Query($query);
 	$tabPoste=array();
@@ -59,7 +56,7 @@
 	$myColor[1]="F7F7F7";
 	$col=1;
 
-// ---- Affiche l'abonnement demandé
+// ---- Affiche l'abonnement demandï¿½
 	if (!is_numeric($id))
 	  { $id=0; }
 	$abo = new abonnement_class($id,$sql);
@@ -69,7 +66,7 @@
 
 	$tot=0;
 
-// ---- Mets à jour les lignes en cas de refresh
+// ---- Mets ï¿½ jour les lignes en cas de refresh
 // && ($fonc=="Enregistrer"))
 	if (($mode=="edit") || ($mode=="copy"))
 	  {
@@ -112,7 +109,7 @@
 	  }
 
 // ---- Sauvegarde
-	if (($fonc=="Enregistrer") && ($mode=="edit") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if (($fonc=="Enregistrer") && ($mode=="edit") )
 	  {
 		$id=$abo->Save();
 		
@@ -125,9 +122,10 @@
 			$mode="";
 		  }
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /facturation', true, 303);
+    	exit;
 	  }
-	else if (($fonc=="Enregistrer") && ($mode=="copy") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if (($fonc=="Enregistrer") && ($mode=="copy") )
 	  {
 		$id=$abo->Copy();
 
@@ -143,7 +141,8 @@
 			$mode="";
 		  }
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /facturation', true, 303);
+    	exit;
 	  }
 
 	else if ($fonc=="desactive")
@@ -200,7 +199,7 @@
 				$sql->Insert($query);			
 			  }
 		
-			$tmpl_x->assign("msg_confirmation", "L'imputation sur le compte a été faites.");
+			$tmpl_x->assign("msg_confirmation", "L'imputation sur le compte a ï¿½tï¿½ faites.");
 			$tmpl_x->assign("msg_type", "msgok");
 		  }
 		else

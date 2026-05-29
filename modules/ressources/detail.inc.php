@@ -29,6 +29,7 @@
 
 // ---- Initialisation des variables
   	$id=checkVar("id","numeric");
+  	$update=checkVar("update","numeric");
 	$form_data=checkVar("form_data","array");
 
 	$msg_erreur="";
@@ -41,13 +42,13 @@
 
 // ---- Modifie les infos
 	if (($fonc=="modifier") && GetDroit("ModifRessource"))
-	  {
+	{
 		$typeaff="form";
-	  }
+	}
 	else
-	  {
+	{
 		$typeaff="html";
-	  }
+	}
 
 // ---- Charge la ressource
 
@@ -68,11 +69,12 @@
 // ---- Supprimer la ressource
 	if (($fonc=="delete") && ($id>0) && (GetDroit("SupprimeRessource")))
 	{
-			$ress->Delete();
-			$affrub="index";
-			// include("modules/ressources/index.inc.php");
-			return;
+		$ress->Delete();
+		header('Location: /ressources', true, 303);
+    	exit;
 	}
+
+
 
 // ---- Active la ressource
 	if (($fonc=="active") && ($id>0) && (GetDroit("DesactiveRessource")))
@@ -120,13 +122,8 @@
 
 
 // ---- Sauvegarde les infos
-	if (($fonc=="Enregistrer") && (isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( ($fonc=="Enregistrer") && (GetDroit("ModifRessourceSauve")) )
 	{
-			$typeaff="html";
-	}
-
-	if (($fonc=="Enregistrer") && (GetDroit("ModifRessourceSauve")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
 		// Sauvegarde les données
 		if (count($form_data)>0)
 		{
@@ -179,11 +176,20 @@
 			}
 		}
 		
+		header('Location: /ressources/detail?id='.$id.'&update=1', true, 303);
+    	exit;
+	}
+
+	if ($fonc=="Annuler")
+	{
+		header('Location: /ressources/detail?id='.$id, true, 303);
+    	exit;
+	}
+
+	if ($update==1)
+	{
 		$msg_confirmation.="Vos données ont été enregistrées.<BR>";
-
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
-
+	}
 	
 // ---- Affiche les infos
 	$ress = new ress_class($id,$sql);

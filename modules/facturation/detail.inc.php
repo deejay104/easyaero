@@ -46,7 +46,7 @@
 
 
 // ---- Création d'une facture
-	if (($fonc=="Enregistrer") && GetDroit("EnregistreFacture") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if (($fonc=="Enregistrer") && GetDroit("EnregistreFacture"))
 	{
 		$fac = new facture_class(0,$sql);
 		// Enregistre les valeurs
@@ -70,7 +70,8 @@
 		$fac->Save();
 		$facid=$fac->id;
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /facturation', true, 303);
+    	exit;
 	}
 
 // ---- Masque une ligne
@@ -126,7 +127,7 @@
 	$fac->ChargeReglements();
 
 // ---- Paiement d'une facture
-	if ((($fonc=="Chèque") || ($fonc=="Virement") || ($fonc=="Prélèvement") || ($fonc=="Compte")) && ($facid!="") && GetDroit("PayerFacture") && (!isset($_SESSION['tab_checkpost'][$checktime])) )
+	if ((($fonc=="Chèque") || ($fonc=="Virement") || ($fonc=="Prélèvement") || ($fonc=="Compte")) && ($facid!="") && GetDroit("PayerFacture") )
 	{
 		$restant=$fac->Restant();
 
@@ -208,7 +209,8 @@
 			}
 
 
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
+			header('Location: /facturation', true, 303);
+			exit;
 		}
 		else
 		{

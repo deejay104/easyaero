@@ -7,6 +7,7 @@
 
 <!-- BEGIN: corps -->
 
+<FORM name="reservation" method="post" action="{path_root}/admin/comptes" enctype="multipart/form-data">
 
 <div class="row" id="page-content">
 	<div class="col grid-margin stretch-card">
@@ -14,8 +15,6 @@
 			<div class="card-header">Définition des Comptes</div>	
 			<div class="card-body">	
 
-				<FORM name="reservation" method="post" action="{path_root}/admin/comptes" enctype="multipart/form-data">
-				<INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 				<TABLE class="tableauAff tableauAffLight">
 				  <TR>
@@ -41,7 +40,6 @@
 				</TABLE>
 				<br />
 				
-				</FORM>
 			</div>
 			<div class="card-footer">	
 				<INPUT type="submit" name="fonc" class="btn btn-primary" value="Enregistrer"> <INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">
@@ -50,6 +48,6 @@
 	</div>
 </div>
 
-
+</FORM>
 
 <!-- END: corps -->

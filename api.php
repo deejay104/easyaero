@@ -1,4 +1,5 @@
 <?php
+	$MyOpt=array();
 	if (file_exists("config/config.inc.php"))
 	{
 		require ("config/config.inc.php");

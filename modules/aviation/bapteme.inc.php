@@ -43,18 +43,21 @@
 
 
 // ---- Sauvegarde les infos
-	if (($fonc=="Enregistrer") && (($id=="") || ($id==0)) && ((GetDroit("CreeBapteme"))) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-			$btm->Create();
-			$id=$btm->id;
-	  }
-	else if (($fonc=="Enregistrer") && ($id=="") && (isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
-			$mod="aviation";
-			$affrub="baptemes";
-	  }
+	if ( ($fonc=="Enregistrer") && ($id==0) && ((GetDroit("CreeBapteme"))) )
+	{
+		$btm->Create();
+		$id=$btm->id;
 
-	if (($fonc=="Enregistrer") && ((GetMyId($btm->uid_creat)) || (GetDroit("ModifBapteme"))) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+		//header('Location: /aviation/bapteme?id='.$id, true, 303);
+    	//exit;
+	}
+	else if (($fonc=="Enregistrer") && ($id==0) )
+	{
+		header('Location: /aviation/baptemes', true, 303);
+    	exit;
+	}
+
+	if ( ($fonc=="Enregistrer") && ((GetMyId($btm->uid_creat)) || (GetDroit("ModifBapteme"))) )
 	{
 		if (count($form_data)>0)
 		{
@@ -82,9 +85,10 @@
 		}
 		affInformation("Vos données ont été enregistrées","ok");
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /aviation/bapteme?id='.$id, true, 303);
+    	exit;
 	}
-	else if (($fonc=="Enregistrer") && (($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if ( ($fonc=="Enregistrer") && (($btm->data["status"]==2) || ($btm->data["status"]==3) || ($btm->data["status"]==4)) )
 	{
 		$btm->Valid("id_pilote",$form_data["id_pilote"],false);
 		$btm->Valid("id_avion",$form_data["id_avion"],false);
@@ -96,13 +100,19 @@
 		$btm->Save();
 		affInformation("Vos données ont été enregistrées","ok");
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /aviation/bapteme?id='.$id, true, 303);
+    	exit;
 	}
 
 	if (($fonc=="Annuler") && ($id==0))
 	{
-			$mod="aviation";
-			$affrub="baptemes";
+		header('Location: /aviation/baptemes', true, 303);
+    	exit;
+	}
+	else if (($fonc=="Annuler") && ($id>0))
+	{
+		header('Location: /aviation/bapteme?id='.$id, true, 303);
+    	exit;
 	}
 
 // ---- Réserve l'avion
@@ -178,6 +188,8 @@
 		$btm->Delete();
 		$mod="aviation";
 		$affrub="baptemes";
+		header('Location: /aviation/baptemes', true, 303);
+    	exit;
 	}
 
 
@@ -278,10 +290,10 @@
 
 // ---- Liste des dispos
 	$lst=ListeRessources($sql,array("oui"));
-	foreach($lst as $i=>$id)
+	foreach($lst as $i=>$rid)
 	{
-		$ress = new ress_class($id,$sql);
-		$tmpl_x->assign("lst_uid_avion", $id);
+		$ress = new ress_class($rid,$sql);
+		$tmpl_x->assign("lst_uid_avion", $rid);
 		$tmpl_x->assign("dispo_immat", $ress->val("immatriculation"));
 		$tmpl_x->parse("corps.lst_dispo");
 		$tmpl_x->parse("corps.lst_dispo_reload");
@@ -289,51 +301,44 @@
 	}
 
 
-// ---- Messages
-	// if ($msg_erreur!="")
-	// {
-		// affInformation($msg_erreur,"error");
-	// }		
-
-	// if ($msg_confirmation!="")
-	// {
-		// affInformation($msg_confirmation,"ok");
-	// }
-
 // ---- Commentaires
-	$lst=ListBaptemeComment($sql,$btm->id);
-	foreach($lst as $item)
+	if ($id>0)
 	{
-		$comment=new bapteme_comment_class($item["id"],$sql);
-
-		if ($comment->uid_creat>0)
+		echo "OK".$id;
+		$lst=ListBaptemeComment($sql,$btm->id);
+		foreach($lst as $item)
 		{
-			$usr=new user_core($comment->uid_creat,$sql);
-			$author=$usr->Val("fullname");
+			$comment=new bapteme_comment_class($item["id"],$sql);
 
-			$lstdoc=ListDocument($sql,$comment->uid_creat,"avatar");
-
-			if (count($lstdoc)>0)
+			if ($comment->uid_creat>0)
 			{
-				$img=new document_core($lstdoc[0],$sql);
-				$avatar=$img->GenerePath(64,64);
+				$usr=new user_core($comment->uid_creat,$sql);
+				$author=$usr->Val("fullname");
+
+				$lstdoc=ListDocument($sql,$comment->uid_creat,"avatar");
+
+				if (count($lstdoc)>0)
+				{
+					$img=new document_core($lstdoc[0],$sql);
+					$avatar=$img->GenerePath(64,64);
+				}
+				else
+				{
+					$avatar="static/images/icn64_membre.png";
+				}
 			}
 			else
 			{
+				$author="Passager";
 				$avatar="static/images/icn64_membre.png";
 			}
-		}
-		else
-		{
-			$author="Passager";
-			$avatar="static/images/icn64_membre.png";
-		}
 
-		$tmpl_x->assign("comment_author", $author);
-		$tmpl_x->assign("comment_date", date("d/m/Y H:i",strtotime($comment->dte_creat)));
-		$tmpl_x->assign("comment_text", nl2br($comment->val("comment")));
-		$tmpl_x->assign("comment_avatar", $avatar);
-		$tmpl_x->parse("corps.lst_comment");
+			$tmpl_x->assign("comment_author", $author);
+			$tmpl_x->assign("comment_date", date("d/m/Y H:i",strtotime($comment->dte_creat)));
+			$tmpl_x->assign("comment_text", nl2br($comment->val("comment")));
+			$tmpl_x->assign("comment_avatar", $avatar);
+			$tmpl_x->parse("corps.lst_comment");
+		}
 	}
 
 // ---- Affecte les variables d'affichage

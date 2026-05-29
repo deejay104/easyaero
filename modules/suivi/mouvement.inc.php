@@ -42,7 +42,7 @@
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 	
 // ---- Enregistre le mouvement
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="Enregistrer")
 	{
 		$form_montant=checkVar("form_montant","varchar");
 		$form_ventilation=checkVar("form_ventilation","varchar");
@@ -103,8 +103,6 @@
 			$tmpl_x->parse("corps.enregistre.lst_visualisation");
 		}
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-
 		if ($msg_result!="")
 		{
 			affInformation($msg_result,"error");
@@ -125,7 +123,7 @@
 
 
 // ---- Enregistre les opérations
-	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if ($fonc=="Valider")
 	{
 		$form_mid=checkVar("form_mid","array");
 		$form_montant=checkVar("form_montant","varchar");

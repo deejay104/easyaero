@@ -78,16 +78,10 @@
 			$start=date("Y-m-d");
 		}
 		$caltime=strtotime($start);
-		$_SESSION["caltime"]=$caltime;
-	}
-	else if (isset($_SESSION["caltime"]))
-	{
-		$caltime=$_SESSION["caltime"];
 	}
 	else
 	{
 		$caltime=time();
-		$_SESSION["caltime"]=$caltime;
 	}
 	
 	if ($theme=="phone")

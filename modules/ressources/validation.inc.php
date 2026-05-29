@@ -41,7 +41,7 @@
 // ---- Enregistre
 	$msg_erreur="";
 
-	if ((GetDroit("ValideFichesMaintenance")) && ($fonc=="Accepter") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( (GetDroit("ValideFichesMaintenance")) && ($fonc=="Accepter") )
 	{
 		foreach($form_valid as $fid=>$k)
 		{
@@ -50,8 +50,10 @@
 			$fiche->data["traite"]="non";
 			$fiche->Save();
 		}	
+		header('Location: /ressources/validation', true, 303);
+    	exit;
 	}
-	else if ((GetDroit("RefuserFicheMaintenance")) && ($fonc=="Refuser") && (is_array($form_valid)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if ( (GetDroit("RefuserFicheMaintenance")) && ($fonc=="Refuser") && (is_array($form_valid)) )
 	{
 		foreach($form_valid as $fid=>$k)
 		{
@@ -60,72 +62,68 @@
 			$fiche->data["traite"]="ref";
 			$fiche->Save();	
 		}
+		header('Location: /ressources/validation', true, 303);
+    	exit;
 	}
 
- 
-	if (($fonc!="") && ($msg_erreur==""))
-	{
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	}
 
 
 // ---- Charge les templates
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$tmpl_x->assign("msg_erreur", $msg_erreur);
 
 // ---- Affiche la liste des opérations à valider
-		$tabTitre=array();
-		$tabTitre["valid"]["aff"]=" ";
-		$tabTitre["valid"]["width"]=30;
-		$tabTitre["ress"]["aff"]="Avion";
-		$tabTitre["ress"]["width"]=100;
-		$tabTitre["auteur"]["aff"]="Auteur";
-		$tabTitre["auteur"]["width"]=150;
-		$tabTitre["dtecreat"]["aff"]="Date";
-		$tabTitre["dtecreat"]["width"]=120;
-		$tabTitre["description"]["aff"]="Description";
-		$tabTitre["description"]["width"]=400;
-	
-		$lstFiche=GetValideFiche($sql,$uid_avion);
-		if (count($lstFiche)>0)
-		{
-			foreach($lstFiche as $i=>$id)
-			{
-				$fiche = new fichemaint_class($id,$sql,false);
+	$tabTitre=array();
+	$tabTitre["valid"]["aff"]=" ";
+	$tabTitre["valid"]["width"]=30;
+	$tabTitre["ress"]["aff"]="Avion";
+	$tabTitre["ress"]["width"]=100;
+	$tabTitre["auteur"]["aff"]="Auteur";
+	$tabTitre["auteur"]["width"]=150;
+	$tabTitre["dtecreat"]["aff"]="Date";
+	$tabTitre["dtecreat"]["width"]=120;
+	$tabTitre["description"]["aff"]="Description";
+	$tabTitre["description"]["width"]=400;
 
-				$tabValeur[$i]["valid"]["val"]="";
-				$tabValeur[$i]["valid"]["aff"]="<input type='checkbox' name='form_valid[".$id."]'>";
-
-				$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
-				$tabValeur[$i]["ress"]["val"]=$ress->val("immatriculation");
-				$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
-				
-				$usr = new user_class($fiche->uid_creat,$sql,false);
-				$tabValeur[$i]["auteur"]["val"]=$usr->Aff("fullname","val");
-				$tabValeur[$i]["auteur"]["aff"]=$usr->Aff("fullname");
-				$tabValeur[$i]["dtecreat"]["val"]=strtotime($fiche->aff("dte_creat"));
-				$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
-				$tabValeur[$i]["description"]["val"]=$fiche->data["description"];
-				$tabValeur[$i]["description"]["aff"]=$fiche->aff("description","val");
-		
-			}
-		}
-		else
+	$lstFiche=GetValideFiche($sql,$uid_avion);
+	if (count($lstFiche)>0)
+	{
+		foreach($lstFiche as $i=>$id)
 		{
-			$i=0;
-			$tabValeur[$i]["ress"]["val"]="";
-			$tabValeur[$i]["ress"]["aff"]="";
-			$tabValeur[$i]["auteur"]["val"]="";
-			$tabValeur[$i]["auteur"]["aff"]="";
-			$tabValeur[$i]["dtecreat"]["val"]="";
-			$tabValeur[$i]["dtecreat"]["aff"]="";
-			$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
-			$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
-		}
-		if ($order=="") { $order="ress"; }
-		if ($trie=="") { $trie="d"; }
+			$fiche = new fichemaint_class($id,$sql,false);
+
+			$tabValeur[$i]["valid"]["val"]="";
+			$tabValeur[$i]["valid"]["aff"]="<input type='checkbox' name='form_valid[".$id."]'>";
+
+			$ress = new ress_class($fiche->data["uid_avion"],$sql,false);
+			$tabValeur[$i]["ress"]["val"]=$ress->val("immatriculation");
+			$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
+			
+			$usr = new user_class($fiche->uid_creat,$sql,false);
+			$tabValeur[$i]["auteur"]["val"]=$usr->Aff("fullname","val");
+			$tabValeur[$i]["auteur"]["aff"]=$usr->Aff("fullname");
+			$tabValeur[$i]["dtecreat"]["val"]=strtotime($fiche->aff("dte_creat"));
+			$tabValeur[$i]["dtecreat"]["aff"]=sql2date($fiche->dte_creat,"jour");
+			$tabValeur[$i]["description"]["val"]=$fiche->data["description"];
+			$tabValeur[$i]["description"]["aff"]=$fiche->aff("description","val");
 	
-		$tmpl_x->assign("aff_tabavalider",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+		}
+	}
+	else
+	{
+		$i=0;
+		$tabValeur[$i]["ress"]["val"]="";
+		$tabValeur[$i]["ress"]["aff"]="";
+		$tabValeur[$i]["auteur"]["val"]="";
+		$tabValeur[$i]["auteur"]["aff"]="";
+		$tabValeur[$i]["dtecreat"]["val"]="";
+		$tabValeur[$i]["dtecreat"]["aff"]="";
+		$tabValeur[$i]["description"]["val"]="-Aucune fiche en cours-";
+		$tabValeur[$i]["description"]["aff"]="-Aucune fiche en cours-";
+	}
+	if ($order=="") { $order="ress"; }
+	if ($trie=="") { $trie="d"; }
+
+	$tmpl_x->assign("aff_tabavalider",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 	if (GetDroit("ValideFichesMaintenance"))
 	{

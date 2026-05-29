@@ -61,7 +61,7 @@
 	$form_prixcarbu=checkVar("form_prixcarbu","varchar");
 	
 	$resa["resa"]=new resa_class($id,$sql);
-echo $fonc;
+
 // ---- Vérifie les infos
 	if (($fonc=="enregistrer") || ($fonc=="actualiser") || ($fonc=="centrage") || ($fonc=="synthese"))
 	  {
@@ -226,7 +226,9 @@ echo $fonc;
 
 		$ress=$resa["resa"]->uid_ressource;
 		$resa["resa"]->Delete();
-		$affrub="index";
+
+		header('Location: /reservations/'.(($prev=="scheduler") ? "scheduler" : ""), true, 303);
+    	exit;
 	}
 	else
 	{
@@ -237,7 +239,7 @@ echo $fonc;
 	$affrub="index";
 	$jour=(isset($resa["resa"]->dte_deb)) ? $resa["resa"]->dte_deb : now();
 	$msg_err2=array();
-	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($ok==1)
 	{
 		$msg_err2=$resa["resa"]->Save();
 
@@ -315,42 +317,38 @@ echo $fonc;
 			}
 			
 			// Valide la page
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
-			$affrub=($prev=="scheduler") ? "scheduler" : "index";
-			$ress=$form_uid_ress;
+
 			$ok=0;
+
 		}
 		else
-		  {
+		{
 		  	// $msg_err.=$msg_err2;
 			foreach($msg_err2 as $m)
 			{
 				affInformation($m["txt"],$m["status"]);
 			}
 		  	$ok=3;
-		  }
+		}
 	}
 
 	if ($fonc=="annuler")  	
 	{
-		$ok=0;
-		$affrub=($prev=="scheduler") ? "scheduler" : "index";
-		$ress=$form_uid_ress;
+		header('Location: /reservations/'.(($prev=="scheduler") ? "scheduler" : "").'?start='.extractDate($resa["resa"]->dte_deb), true, 303);
+    	exit;
 	}
 	else if ($fonc=="centrage")  	
 	{
 		$ok=0;
-		$idvol=$id;
-		$mod="aviation";
-		$affrub="centrage";
+		header('Location: /aviation/centrage?id='.$id, true, 303);
+    	exit;
+
 	}
 	else if ($fonc=="synthese")  	
 	{
 		$ok=0;
-		$mod="aviation";
-		$_REQUEST["id"]=0;
-		$_REQUEST["idvol"]=$id;
-		$affrub="synthese";
+		header('Location: /aviation/synthese?id=0&idvol='.$id, true, 303);
+    	exit;
 	}
 	else if ($fonc=="Actualiser")  	
 	{
@@ -359,7 +357,13 @@ echo $fonc;
 	}
 	else if ($ok>1)
 	{
-	  	$affrub="reservation";
+		header('Location: /reservations?start='.extractDate($resa["resa"]->dte_deb), true, 303);
+    	exit;
+	}
+	else
+	{
+		header('Location: /reservations/'.(($prev=="scheduler") ? "scheduler" : "").'?start='.extractDate($resa["resa"]->dte_deb), true, 303);
+		exit;
 	}
 
 ?>

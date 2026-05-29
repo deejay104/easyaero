@@ -28,6 +28,8 @@
 
 // ---- Initialise les variables
 
+	$update=checkVar("update","numeric");
+
 	$form_tiers=checkVar("form_tiers","numeric");
 	$form_montant=checkVar("form_montant","numeric");
 	$form_commentaire=checkVar("form_commentaire","varchar");
@@ -48,7 +50,7 @@
 	$usr=new user_class($gl_uid,$sql);
 	$val=abs($form_montant);
 
-	if (($fonc==$tabLang["lang_save"]) && ($val>0) && ($MyOpt["PosteCredite"][$form_type]>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( ($fonc==$tabLang["lang_save"]) && ($val>0) && ($MyOpt["PosteCredite"][$form_type]>0) )
 	{
 		$ret="";
 		$dte=date("Y-m-d");
@@ -76,11 +78,15 @@
 		}
 		else
 		{
-			affInformation("Votre compte a été autorisé pour un crédit de ".AffMontant($val).". Cette somme sera crédité définitivement sur votre compte après validation par le trésorier.","ok");
+			header('Location: /comptes/credite?update='.$val, true, 303);
+			exit;
 		}
-
 		
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+	}
+
+	if ($update>0)
+	{
+		affInformation("Votre compte a été autorisé pour un crédit de ".AffMontant($update).". Cette somme sera crédité définitivement sur votre compte après validation par le trésorier.","ok");
 	}
 
 // ---- Affiche les types

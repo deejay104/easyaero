@@ -3,20 +3,20 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-	Liste des présents
+	Liste des prï¿½sents
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
 <br />
-<a href="index.php?mod=presence.php?dtey={dtey}&dtem={dtem}">-Tableau des présences-</a>&nbsp;
-<a href="index.php?mod=facturation&rub=ponctuel">-Présence ponctuelle-</a>&nbsp;
+<a href="index.php?mod=presence.php?dtey={dtey}&dtem={dtem}">-Tableau des prï¿½sences-</a>&nbsp;
+<a href="index.php?mod=facturation&rub=ponctuel">-Prï¿½sence ponctuelle-</a>&nbsp;
 <a href="index.php?mod=facturation&rub=vacances">-Vacances-</a>
 
 
 <form name="presence" method="post" action="index.php" enctype="multipart/form-data">
-	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	
 	<INPUT type="hidden" name="mod" value="facturation">
 	<INPUT type="hidden" name="rub" value="presence">
 	<INPUT type="hidden" name="dte" value="{dte}">
@@ -24,7 +24,7 @@
 <table>
 <tr bgcolor="#000000"><td colspan=3><img src="images/rien.gif"></td></tr>
 <tr>
-<td width=100 align=center><a href="index.php?mod=facturation&rub=presence&dte={dte_prec}">-Précédent-</a></td>
+<td width=100 align=center><a href="index.php?mod=facturation&rub=presence&dte={dte_prec}">-Prï¿½cï¿½dent-</a></td>
 <td width=520 align=center><font size=5px>{dte_txt}</font></td>
 <td width=100 align=center><a href="index.php?mod=facturation&rub=presence&dte={dte_suiv}">-Suivant-</a></td>
 </tr>

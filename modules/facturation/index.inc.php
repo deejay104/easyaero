@@ -40,7 +40,6 @@
 // index.php?mod=facturation&rub=detail&uid={id_user}&facid=
 
 // ---- Initialise les variables
-	// $tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	$dte=checkVar("dte","varchar",6);
 	$uid=checkVar("uid","numeric");
 	$ts=checkVar("ts","numeric");

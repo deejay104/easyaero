@@ -32,8 +32,8 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Enregistre les tarifs
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	if ($fonc=="Enregistrer")
+	{
 		$idavion=checkVar("idavion","numeric");
 		$tarif_code=checkVar("tarif_code","array");
 		$tarif_pilote=checkVar("tarif_pilote","array");
@@ -90,6 +90,9 @@
 
 			}
 		}
+
+		header('Location: /admin/tarifs', true, 303);
+    	exit;
 	}
 // ---- Supprime un tarif
 	if ($fonc=="delete")
@@ -100,12 +103,16 @@
 			$query="DELETE FROM ".$MyOpt["tbl"]."_tarifs WHERE id='$id'";
 			$sql->Delete($query);
 		}
+		header('Location: /admin/tarifs', true, 303);
+    	exit;
 	}
 
 
 // ---- Affiche les modules
 	if (GetModule("aviation"))
-	  {  	$tmpl_x->parse("corps.vols"); }
+	{
+		$tmpl_x->parse("corps.vols");
+	}
 
 // ---- Affiche la liste des avions
 	$lst=ListeRessources($sql,array("oui","off"));
@@ -137,7 +144,7 @@
 	$sql->Query($query);
 	$ress="";
 	for($i=0; $i<$sql->rows; $i++)
-	  { 
+	{ 
 		$sql->GetRow($i);
 
 		$tmpl_x->assign("id_tarifs", $sql->data["id"]);
@@ -167,7 +174,7 @@
 		}
 		  
 	  	$tmpl_x->parse("corps.aff_tarifs.lst_tarifs");
-	  }
+	}
 	$tmpl_x->assign("form_page", "tarifs");
 
 	foreach($tabMvt as $id=>$d)

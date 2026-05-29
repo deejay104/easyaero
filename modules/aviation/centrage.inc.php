@@ -22,26 +22,25 @@
 <?php
 	require_once ($appfolder."/class/user.inc.php");
 
-
-// ---- Vérifie si l'on veut quitter la page
-	if ($fonc=="Retour")  	
-	{
-		$mod="reservations";
-		$affrub="reservation";
-	}
-
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("centrage.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
-
 // ---- Initialisation des variables
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 	$id=checkVar("id","numeric",0,isset($idvol) ? $idvol : 0);
 	$form_passager_pilote=checkVar("form_passager_pilote","array");
 	$form_passager_poids=checkVar("form_passager_poids","array");
 	$maj=checkVar("maj","numeric");
 	
+
+
+
+// ---- Vérifie si l'on veut quitter la page
+	if ($fonc=="Retour")  	
+	{
+		header('Location: /reservations/reservation?id='.$id, true, 303);
+    	exit;
+	}
+
+// ---- Charge le template
+	$tmpl_x = new XTemplate (MyRep("centrage.htm"));
+	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
 	if (!is_numeric($id)) { FatalError("Les paramètres de la page sont incorrectes."); }
@@ -205,25 +204,23 @@
 			$tmpl_x->assign("passager_poids", "");
 		}
 		$tmpl_x->parse("corps.lst_passager");
-	  }
+	}
 
 	$tmpl_x->assign("masse_totale", $tot);
 
 	if ($tot<=$resavion["massemax"])
-	  {
+	{
 		$tmpl_x->assign("masse_max", $MyOpt["unitPoids"]." <font color=\"green\"> &lt; ".$resavion["massemax"]." ".$MyOpt["unitPoids"]."</font>");
-	  }
+	}
 	else
-	  {
+	{
 		$tmpl_x->assign("masse_max", $MyOpt["unitPoids"]." <font color=\"red\"> &gt; ".$resavion["massemax"]." ".$MyOpt["unitPoids"]."</font>");
-	  }
+	}
 
 
 // ---- Enregistre les données
-
-
 	foreach($tabplace as $k=>$v)
-	  {
+	{
 		if ($v["idenr"]>0)
 		  {
 		  	$query="UPDATE ".$MyOpt["tbl"]."_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place=$k, poids='".$v["poids"]."', uid_modif='$uid', dte_modif='".now()."' WHERE id='".$v["idenr"]."'";
@@ -238,16 +235,14 @@
 			$sql->Insert($query);
 		  	//echo $query."<br>\n";
 		  }
-	  }
+	}
 
 // ---- Affecte les variables d'affichage
-	if ($fonc!="Retour")
-	{
-		$tmpl_x->parse("icone");
-		$icone=$tmpl_x->text("icone");
-		$tmpl_x->parse("infos");
-		$infos=$tmpl_x->text("infos");
-		$tmpl_x->parse("corps");
-		$corps=$tmpl_x->text("corps");
-	}
+	$tmpl_x->parse("icone");
+	$icone=$tmpl_x->text("icone");
+	$tmpl_x->parse("infos");
+	$infos=$tmpl_x->text("infos");
+	$tmpl_x->parse("corps");
+	$corps=$tmpl_x->text("corps");
+
 ?>

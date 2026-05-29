@@ -29,46 +29,44 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("import.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 	$form_icone=checkVar("form_icone","varchar");
 
 
 // ---- Import des waypoint
-	if (($fonc=="Importer") && (GetDroit("ModifWaypoint")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-//	if ($fonc=="Importer")
-	  {
-			//Charge le GPX
-			$data = implode("",file($_FILES["form_gpx"]["tmp_name"]));
+	if ( ($fonc=="Importer") && (GetDroit("ModifWaypoint")) )
+	{
+		//Charge le GPX
+		$data = implode("",file($_FILES["form_gpx"]["tmp_name"]));
 
-			$wpt = new SimpleXMLElement($data);
+		$wpt = new SimpleXMLElement($data);
 
-			$upd=0;
-			$ins=0;
-			foreach($wpt->wpt as $i=>$d)
+		$upd=0;
+		$ins=0;
+		foreach($wpt->wpt as $i=>$d)
+		{
+			$name=strtoupper(substr($d->name,0,4));
+
+			$q="SELECT nom FROM ".$MyOpt["tbl"]."_navpoints WHERE nom='".$name."' LIMIT 1";
+			$res=$sql->QueryRow($q);
+			if ((isset($res["nom"])) && ($res["nom"]!=""))
 			{
-				$name=strtoupper(substr($d->name,0,4));
-
-			  	$q="SELECT nom FROM ".$MyOpt["tbl"]."_navpoints WHERE nom='".$name."' LIMIT 1";
-			  	$res=$sql->QueryRow($q);
-				if ((isset($res["nom"])) && ($res["nom"]!=""))
-				{
-					$q="UPDATE ".$MyOpt["tbl"]."_navpoints SET description='".addslashes($d->cmt)."',lat='".substr($d["lat"],0,10)."',lon='".substr($d["lon"],0,10)."',icone='".$form_icone."' WHERE nom='".$name."'";
-					$sql->Update($q);
-					$upd=$upd+1;
-				}
-				else
-				{
-					$q="INSERT INTO ".$MyOpt["tbl"]."_navpoints SET nom='".$name."', description='".addslashes($d->cmt)."',lat='".substr($d["lat"],0,10)."',lon='".substr($d["lon"],0,10)."',icone='".$form_icone."'";
-					$sql->Insert($q);
-					$ins=$ins+1;
-				}
+				$q="UPDATE ".$MyOpt["tbl"]."_navpoints SET description='".addslashes($d->cmt)."',lat='".substr($d["lat"],0,10)."',lon='".substr($d["lon"],0,10)."',icone='".$form_icone."' WHERE nom='".$name."'";
+				$sql->Update($q);
+				$upd=$upd+1;
 			}
-
-			$tmpl_x->assign("aff_resultat","Insert:".$ins." Update:".$upd);
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
-		
+			else
+			{
+				$q="INSERT INTO ".$MyOpt["tbl"]."_navpoints SET nom='".$name."', description='".addslashes($d->cmt)."',lat='".substr($d["lat"],0,10)."',lon='".substr($d["lon"],0,10)."',icone='".$form_icone."'";
+				$sql->Insert($q);
+				$ins=$ins+1;
+			}
 		}
+
+		$tmpl_x->assign("aff_resultat","Insert:".$ins." Update:".$upd);
+		header('Location: /navigation', true, 303);
+    	exit;
+	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

@@ -2,7 +2,7 @@
 	<img src="{path_module}/img/icn48_presence.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	Saisie d'une présence ponctuelle
+	Saisie d'une prï¿½sence ponctuelle
 <!-- END: infos -->
 
 
@@ -14,8 +14,8 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","Fï¿½vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Dï¿½cembre"],
+			prevText: "Prï¿½cï¿½dent",
 			nextText: "Suivant"
 		});
 		$("#form_dte_end").datepicker({
@@ -23,20 +23,20 @@
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
+			monthNames: ["Janvier","Fï¿½vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Dï¿½cembre"],
+			prevText: "Prï¿½cï¿½dent",
 			nextText: "Suivant"
 		});
 	});
 </script>
 
-<a href="index.php?mod=facturation&rub=presence">-Tableau des présences-</a>&nbsp;
-<a href="index.php?mod=facturation&rub=presence">-Saisie présences-</a>&nbsp;
+<a href="index.php?mod=facturation&rub=presence">-Tableau des prï¿½sences-</a>&nbsp;
+<a href="index.php?mod=facturation&rub=presence">-Saisie prï¿½sences-</a>&nbsp;
 <a href="index.php?mod=facturation&rub=vacances">-Vacances-</a>
 
 <form name="abonnement" method="post" action="index.php" enctype="multipart/form-data">
 
-	<input type="hidden" name="checktime" value="{form_checktime}">
+	
 	<input type="hidden" name="mod" value="facturation">
 	<input type="hidden" name="rub" value="ponctuel">
 	<input type="hidden" name="mode" value="{mode}">
@@ -57,7 +57,7 @@
 	</select>
 	<br />
 
-	Date de présence du <input name="form_dte" id="form_dte" value="{form_dte}" size="8"> au  <input name="form_dte_end" id="form_dte_end" value="{form_dte_end}" size="8"> (optionnel)<br />
+	Date de prï¿½sence du <input name="form_dte" id="form_dte" value="{form_dte}" size="8"> au  <input name="form_dte_end" id="form_dte_end" value="{form_dte_end}" size="8"> (optionnel)<br />
 	<br />
 	{msg_result}
 	<br />
@@ -83,14 +83,14 @@
 	<!-- END: lst_modif_poste -->
 
 	</td>
-	<td>{poste_montant} €
+	<td>{poste_montant} ï¿½
 	<input type="hidden" name="form_montant[{ligne_id}]" value="{poste_montant}"></td>
 	<td>&nbsp;</td>
 </tr>
 <!-- END: lst_ligne -->
 
 <tr bgcolor='black'><td height='1' colspan='5'><img src='images/rien.gif' height=1 alt=''></td></tr>
-<tr height=30 bgcolor='#DDDDDD'><td>&nbsp;</td><td><b>&nbsp;</b></td><td align="right"><b>Total</b>&nbsp;:&nbsp;&nbsp;</td><td><b>{form_total} €</b></td><td>&nbsp;</td></tr>
+<tr height=30 bgcolor='#DDDDDD'><td>&nbsp;</td><td><b>&nbsp;</b></td><td align="right"><b>Total</b>&nbsp;:&nbsp;&nbsp;</td><td><b>{form_total} ï¿½</b></td><td>&nbsp;</td></tr>
 <tr bgcolor='black'><td height='1' colspan='5'><img src='images/rien.gif' height=1 alt=''></td></tr>
 
 </table>

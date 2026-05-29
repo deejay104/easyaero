@@ -29,23 +29,19 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("detail.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-	
+
+
 	$id=checkVar("id","numeric");
+	$idpoint=checkVar("idpoint","numeric");
 	$form_route=checkVar("form_route","varchar");
-
-
-// ---- Ajout du point
-	if (!is_numeric($id))
-	  { $id=0; }
-
 	$form_titre=checkVar("form_titre","varchar");
 	$form_vitesse=checkVar("form_vitesse","numeric");
 	$form_vitvent=checkVar("form_vitvent","numeric");
 	$form_dirvent=checkVar("form_dirvent","numeric");
 
 
-	if (($form_route!="") && ($id>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+// ---- Ajout du point
+	if ( ($form_route!="") && ($id>0) )
 	{
 
 	  	$q="SELECT MAX(ordre) AS max FROM ".$MyOpt["tbl"]."_navroute WHERE idnav='".$id."' LIMIT 1";
@@ -54,7 +50,8 @@
 		$query="INSERT INTO ".$MyOpt["tbl"]."_navroute SET idnav='".$id."', nom='".strtoupper($form_route)."', ordre='".($res["max"]+1)."'";
 		$sql->Insert($query);
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /navigation/detail?id='.$id, true, 303);
+    	exit;
 	}
 
 	if (($fonc=="Mettre à jour") && ($id>0) )
@@ -68,16 +65,19 @@
 		  	$sql->Update($q);
 		}
 	}
-	else if (($fonc=="Créer") && ($id==0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if ( ($fonc=="Créer") && ($id==0) )
 	{
 			$q="INSERT INTO ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_creat='".$uid."',dte_creat='".now()."',uid_modif='".$uid."',dte_modif='".now()."'";
 			$id=$sql->Insert($q);
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
+			header('Location: /navigation', true, 303);
+    		exit;
 	}
 	else if (($fonc=="supprimer") && ($idpoint>0))
 	{
 	  	$q="DELETE FROM ".$MyOpt["tbl"]."_navroute WHERE id='".$idpoint."'";
 	  	$sql->Delete($q);
+		header('Location: /navigation/detail?id='.$id, true, 303);
+		exit;
 	}
 
 //echo $q."'".$fonc."' '".$id."'";

@@ -29,7 +29,7 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Enregistre les modifications
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="Enregistrer")
 	{
 		$form_numcpt=checkVar("form_numcpt","array");
 		$form_description=checkVar("form_description","array");
@@ -41,7 +41,8 @@
 				$sql->Edit("numcompte",$MyOpt["tbl"]."_numcompte",$id,array("numcpt"=>$num,"description"=>$form_description[$id]));
 			}
 		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /admin/comptes', true, 303);
+    	exit;
 	}
 
 // ---- Supprime un poste
@@ -52,6 +53,8 @@
 		{
 			$sql->Edit("numcompte",$MyOpt["tbl"]."_numcompte",$id,array("actif"=>"non"));		
 		}
+		header('Location: /admin/comptes', true, 303);
+    	exit;
 	}
 
 // ---- Affiche la page demandée

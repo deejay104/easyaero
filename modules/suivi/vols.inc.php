@@ -52,7 +52,7 @@
 	}
 
 // ---- Valide les vols à enregistrer
-	if ((($fonc=="Enregistrer") || ($fonc=="Débiter")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( (($fonc=="Enregistrer") || ($fonc=="Débiter")) )
 	{
 		$form_tarif=checkVar("form_tarif","array");
 		$form_horadeb=checkVar("form_horadeb","array");
@@ -174,12 +174,14 @@
 						$pc=0;
 						if ($tabTarif[$uid_a][$form_tarif[$k]]["reduction"]>0)
 						{
-							// $pc=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$uid_a][$form_tarif[$k]]["reduction"])/60,2);
 							$pc=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$uid_a][$form_tarif[$k]]["reduction"])/60,2);
 						}
 
-					  	if (!isset($_SESSION['tab_checkpost'][$checktime]))
-						{
+// Créer un token a usage unique pour la validation du POST
+// Vérifier si le token n'a pas été utilisé
+// invalider le token
+//					  	if ($validpost)
+//						{
 							$res=new resa_class(0,$sql);
 							$res->uid_pilote=$uid_p;
 							$res->uid_debite=0;
@@ -196,7 +198,7 @@
 							$res->horadeb=$horadeb;
 							$res->horafin=$horafin;
 							$msg_result=$res->Save();
-						}
+//						}
 
 						if ($fonc=="Débiter")
 						{
@@ -206,8 +208,6 @@
 				}
 			}
 		}
-
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
 		if ((is_array($msg_result)) && (count($msg_result)>0))
 		{
@@ -229,7 +229,7 @@
 	}
 
 // ---- Enregistre les opérations
-	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if ($fonc=="Valider")
 	{
 		$form_calid=checkVar("form_calid","array");
 		$form_mid=checkVar("form_mid","array");
@@ -265,8 +265,6 @@
 			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 
 		}
-
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
 		$tmpl_x->assign("form_page", "vols");
 	}

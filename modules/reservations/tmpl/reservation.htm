@@ -34,7 +34,7 @@
 <FORM name="reservation" method="post" action="/reservations/save" enctype="multipart/form-data">
 	<INPUT type="hidden" id="id" name="id" value="{id}">
 	<INPUT type="hidden" name="prev" value="{prev}">
-	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	
 	<INPUT type="hidden" name="fonc" id="fonc" value="">
 
 	<!-- BEGIN: aff_reservation -->
@@ -404,7 +404,6 @@ $("#destination").autocomplete({
 function checkData(submit=false)
 {
 	console.log("check data");
-	console.log($("#checktime").val());
 	
 	var data={};
 	data.id=$("#id").val();

@@ -38,8 +38,8 @@
 	$msg_ok="";
 	$msg_erreur="";
 	$affrub="";
-	if (($fonc=="Enregistrer") && ($form_avion>0) && ($form_description!="") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	if (($fonc=="Enregistrer") && ($form_avion>0) && ($form_description!="") )
+	{
 		$fiche=new fichemaint_class(0,$sql);
 
 		$msg_erreur="";
@@ -49,39 +49,35 @@
 
 		if ($fiche->id>0)
 		{
-		  	$_SESSION['tab_checkpost'][$checktime]=$checktime;
 		  	$form_description="";
 		  	$msg_ok="Fiche créée.<BR>";
-			$affrub="fiche";
+			header('Location: /ressources/fiche', true, 303);
+			exit;
 		}
 		else
 		{
 		  	$msg_erreur.="Erreur lors de l'enregistrement !<BR>";
 		}
-
-	  }
+	}
 	else if (($fonc=="Enregistrer") && ($form_avion>0) && ($form_description==""))
-	  {
+	{
 		$msg_erreur="Il faut saisir une description pour l'incident !<BR>";
-	  }
+	}
 	else if ($fonc=="Retour")
-	  {
-	  	$form_description="";
-	  	$affrub="fiche";
-		return;
-	  }
+	{
+		header('Location: /ressources/fiche', true, 303);
+		exit;
+	}
 	else
-	  {
+	{
 	  	$form_description="";
-	  }
+	}
 
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
-// ---- Charge les templates
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Messages
 	if ($msg_erreur!="")

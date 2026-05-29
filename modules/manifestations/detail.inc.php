@@ -35,7 +35,7 @@
 // ---- Sauvegarde
 	$manip=new manip_class($id,$sql);
 
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="Enregistrer")
 	{
 		if (count($form_data)>0)
 		{
@@ -52,12 +52,13 @@
 			$id=$manip->id;
 		}
 		
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /manifestations/detail?id='.$id, true, 303);
+    	exit;
 	}
 
 // ---- Facture la manifestation aux participants
 	if (($fonc=="facture") && ($id>0) && GetDroit("FactureManips"))
-	  {
+	{
 		$query="SELECT * FROM ".$MyOpt["tbl"]."_manips WHERE id='$id'";
 		$res=$sql->QueryRow($query);
 
@@ -120,7 +121,7 @@
 		}
 
 		$tmpl_x->parse("corps.msg_enregistre");
-	  }
+	}
 
 // ---- Suppression
 
@@ -129,7 +130,8 @@
 		$manip->Delete();
 		$query= "DELETE FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='".$id."'";
 		$sql->Delete($query);
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /manifestations', true, 303);
+    	exit;
 	}
 
 // ---- Inscription à la manifestation
@@ -156,6 +158,9 @@
 			$query="INSERT INTO ".$MyOpt["tbl"]."_participants SET idmanip='$id', idusr='$idusr', participe='Y', nb='1', uid_creat='$uid', dte_creat='".now()."'";
 			$sql->Insert($query);
 		}
+
+		header('Location: /manifestations/detail?id='.$id, true, 303);
+    	exit;
 	}
 	elseif (($fonc=="nok") && ($id>0))
 	{
@@ -163,6 +168,8 @@
 		$sql->Delete($query);
 		$query="INSERT INTO ".$MyOpt["tbl"]."_participants SET idmanip='$id', idusr='$idusr', participe='N', uid_creat='$uid', dte_creat='".now()."'";
 		$sql->Insert($query);
+		header('Location: /manifestations/detail?id='.$id, true, 303);
+    	exit;
 	}
 
 // ---- Affiche les infos
@@ -324,25 +331,10 @@
 
 // ---- Affecte les variables d'affichage
 
-	if ($fonc=="supprimer")
-	{
-	  	$affrub="index";
-	}	
-	else if ($fonc=="Annuler")
-	{
-	  	$affrub="index";
-	}
-	else if (($id==0) && (!GetDroit("CreeManifestation")))
-	{
-	  	$affrub="index";
-	}
-	else
-	{
-		$tmpl_x->parse("icone");
-		$icone=$tmpl_x->text("icone");
-		$tmpl_x->parse("infos");
-		$infos=$tmpl_x->text("infos");
-		$tmpl_x->parse("corps");
-		$corps=$tmpl_x->text("corps");
-	}
+	$tmpl_x->parse("icone");
+	$icone=$tmpl_x->text("icone");
+	$tmpl_x->parse("infos");
+	$infos=$tmpl_x->text("infos");
+	$tmpl_x->parse("corps");
+	$corps=$tmpl_x->text("corps");
 ?>

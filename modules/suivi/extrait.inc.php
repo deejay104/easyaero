@@ -31,7 +31,7 @@
 
 
 // ---- Enregistre le suivi
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="Enregistrer")
 	{
 		$form_releve=checkVar("form_releve","array");
 		$tabmaj=array();
@@ -54,12 +54,15 @@
 			$query="UPDATE ".$MyOpt["tbl"]."_compte SET pointe='$p' WHERE id='$k'";
 			$sql->Update($query);
 		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /suivi/extrait', true, 303);
+    	exit;
 	}
-	else if (($fonc=="Clore") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	else if ($fonc=="Clore")
 	{
 		$query="UPDATE ".$MyOpt["tbl"]."_compte SET pointe='R' WHERE pointe='P' AND uid='".$MyOpt["uid_banque"]."'";
 		$sql->Update($query);
+		header('Location: /suivi/extrait', true, 303);
+    	exit;
 	}
 
 

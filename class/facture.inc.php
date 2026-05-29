@@ -238,8 +238,6 @@ class facture_class
 
 		$tmpl_pdf = new XTemplate (MyRep("facture.htm"));
 	
-	// ---- Initialise les variables
-		$tmpl_pdf->assign("form_checktime",$_SESSION['checkpost']);
 	
 	// ---- Affiche la facture demandée
 		$tmpl_pdf->assign("id_facture",$this->id);

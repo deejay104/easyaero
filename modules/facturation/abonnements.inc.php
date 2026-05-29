@@ -28,7 +28,7 @@
 ?>
 
 <?
-	if (!GetDroit("AccesAbonnements")) { FatalError("Accès non authorisé (AccesAbonnements)"); }
+	if (!GetDroit("AccesAbonnements")) { FatalError("Accï¿½s non authorisï¿½ (AccesAbonnements)"); }
 
 	require_once ("class/abonnement.inc.php");
 
@@ -36,14 +36,10 @@
 	$tmpl_x = new XTemplate (MyRep("abonnements.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-// ---- Initialise les variables
-
-	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-
 
 // ---- Affiche la liste des abonnements
 
-	// Définition des variables
+	// Dï¿½finition des variables
 	$myColor[50]="F0F0F0";
 	$myColor[60]="F7F7F7";
 	if (!is_numeric($start))
@@ -51,13 +47,13 @@
 
 	// Entete du tableau d'affichage
 	$tabTitre=array();
-	$tabTitre["num"]["aff"]="Numéro";
+	$tabTitre["num"]["aff"]="Numï¿½ro";
 	$tabTitre["num"]["width"]=85;
-	$tabTitre["prenom"]["aff"]="Prénom";
+	$tabTitre["prenom"]["aff"]="Prï¿½nom";
 	$tabTitre["prenom"]["width"]=100;
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=150;
-	$tabTitre["dte"]["aff"]="Période";
+	$tabTitre["dte"]["aff"]="Pï¿½riode";
 	$tabTitre["dte"]["width"]=300;
 	$tabTitre["actif"]["aff"]="Actif";
 	$tabTitre["actif"]["width"]=50;

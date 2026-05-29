@@ -31,11 +31,12 @@
 	$uid=checkVar("uid","numeric");
 	$lid=checkVar("lid","numeric");
 	$idvol=checkVar("idvol","numeric");
+	$update=checkVar("update","numeric");
 
 // ---- Enregistrer
 	$msg_erreur="";
 	$msg_confirmation="";
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ($fonc=="Enregistrer")
 	{
 		$form_data=checkVar("form_data","array");
 		$form_comp=checkVar("form_comp","array");
@@ -152,12 +153,13 @@
 			}
 		}
 
-		if ($n>0)
-		{
-			affInformation("Vos données ont été enregistrées.","ok");
-		}
+		header('Location: /aviation/synthese?id='.$id.'&uid='.$uid.'&update=1', true, 303);
+    	exit;
+	}
 
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+	if ($update>0)
+	{
+		affInformation("Vos données ont été enregistrées.","ok");
 	}
 
 // ---- Charge la fiche de synthèse
@@ -182,7 +184,7 @@
 	$nonce=checkVar("nonce","varchar");
 
 
-	if ((($fonc=="Signature Instructeur") || ($fonc=="Sign. Instructeur")) && ($fiche->val("nonce_instructeur")=="") && ($fiche->val("nonce_pilote")!=$nonce))
+	if (($fonc=="Signature Instructeur") && ($fiche->val("nonce_instructeur")=="") )
 	{
 
 		$fiche->Valid("status","signed");
@@ -197,14 +199,11 @@
 		
 		$n=$fiche->Save();
 
-		if ($n>0)
-		{
-			affInformation("Vos données ont été enregistrées.","ok");
-		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		header('Location: /aviation/synthese?id='.$id.'&uid='.$uid.'&update=1', true, 303);
+    	exit;
 	}
 	
-	if ((($fonc=="Signature Elève") || ($fonc=="Sign. Elève")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	if ( ($fonc=="Signature Elève")  && ($fiche->val("nonce_pilote")!=$nonce) )
 	{
 		$fiche->Valid("status","signed");
 		$fiche->Valid("nonce_pilote",$nonce);
@@ -218,11 +217,9 @@
 		$fiche->Valid("skey_pilote",$s);
 
 		$n=$fiche->Save();
-		if ($n>0)
-		{
-			affInformation("Vos données ont été enregistrées.","ok");
-		}
-		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+
+		header('Location: /aviation/synthese?id='.$id.'&uid='.$uid.'&update=1', true, 303);
+    	exit;
 	}
 
 
