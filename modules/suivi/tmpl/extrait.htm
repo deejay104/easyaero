@@ -8,9 +8,15 @@
 
 <!-- BEGIN: corps -->
 <style>
-table.dataTable tbody th, table.dataTable tbody td {
-    padding: 2px 4px;
-}
+	table.dataTable tbody th, table.dataTable tbody td {
+		padding: 2px 4px;
+	}
+
+	.table-thinline td { line-height: 12px!important; }
+	.bor-left { border-left: 1px solid var(--p67-primary); }
+	.bor-large-top { border-top: 2px solid var(--p67-primary); }
+	.bor-large-bottom { border-bottom: 2px solid var(--p67-primary); }
+	.txt-light { color: var(--p67-primary); }
 </style>
 
 <FORM name="reservation" method="post" action="{path_root}/suivi/extrait" enctype="multipart/form-data">
@@ -35,7 +41,7 @@ table.dataTable tbody th, table.dataTable tbody td {
 							<th width=10>&nbsp;</th>
 							<th width=110 style="text-align:center;">Relevé</th>
 						</tr>
-						<TR class="tableauTitre">
+						<TR class="bor-large-bottom t-header">
 							<td colspan=4 align="right"><I>Ancien solde</I>&nbsp;</td>
 							<td align="right" class="tableauBorderLeft"><I>{ancien_debit}</I></td>
 							<td align="right"><I>{ancien_credit}</I></td>
@@ -55,7 +61,7 @@ table.dataTable tbody th, table.dataTable tbody td {
 						<TD align=center class="tableauBorderLeft"><INPUT type="checkbox" name="form_releve[{id_suivi}]" {chk_suivi}></TD>
 					  </TR>
 					<!-- END: lst_suivi -->
-					  <TR class="tableauBas">
+					  <TR class="bor-large-top t-header">
 							<TD colspan=4 align=right><B><I>Solde</I></B>&nbsp;</TD>
 							<TD align="right" class="tableauBorderLeft"><B><I>{nouveau_debit}</I></B></TD>
 							<TD align="right"><B><I>{nouveau_credit}</I></B></TD>
