@@ -46,7 +46,7 @@
 	$check_token=0;
 	if ($form_token!="")
 	{
-		$check_token=verifyToken($form_token,"token_post");
+		$check_token=verifyToken($form_token,"token_post",true);
 		if ($check_token<1)
 		{
 			$fonc="";
