@@ -24,7 +24,7 @@
     $tabLang["lang_explainaccount"]="Choose another account to bill this flight";
     $tabLang["lang_account"]="Accounted (if différent)";
 
-    $tabLang["lang_sethora"]="Hoobs";
+    $tabLang["lang_sethora"]="Hobbs";
 
     $tabLang["lang_remains"]="Remains (end of flight)";
     $tabLang["lang_elapsetime"]="Air Time (end of flight)";
