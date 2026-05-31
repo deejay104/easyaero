@@ -31,6 +31,7 @@
 	$form_commentaire=checkVar("form_commentaire","varchar");
 	$form_date=checkVar("form_date","date");
 	$form_facture=checkVar("form_facture","varchar");
+	$form_token=checkVar("token","varchar");
 	
 // ---- Affiche le menu
 	$aff_menu="";
@@ -40,7 +41,18 @@
 // ---- Initialise les variables
 
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
-	
+
+// ---- Vérifie le token
+	$check_token=0;
+	if ($form_token!="")
+	{
+		$check_token=verifyToken($form_token,"token_post");
+		if ($check_token<1)
+		{
+			$fonc="";
+		}
+	}
+
 // ---- Enregistre le mouvement
 	if ($fonc=="Enregistrer")
 	{
@@ -115,6 +127,7 @@
 		  	$tmpl_x->assign("form_commentaire", $form_commentaire);
 		  	$tmpl_x->assign("form_montant", $form_montant);
 		  	$tmpl_x->assign("form_tiers", $form_tiers);
+			$tmpl_x->assign("post_token", generateToken($gl_uid,5,$base="token_post"));
 
 		  	$tmpl_x->assign("msg_resultat", "");
 			$tmpl_x->parse("corps.enregistre");
@@ -306,7 +319,9 @@
 		$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement");
 
 		$tmpl_x->assign("form_page", "mvt");
-	  	$tmpl_x->parse("corps.aff_mouvement");
+		$tmpl_x->assign("post_token", generateToken($gl_uid,5,$base="token_post"));
+
+		$tmpl_x->parse("corps.aff_mouvement");
 	}
 
 

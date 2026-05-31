@@ -194,10 +194,12 @@
 	$taboldposte=array();
 
 	$mois="";
-	if ((isset($show)) && (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/",$show)))
+	if (isset($show))
 	{
 		$tmpl_x->assign("form_mois", $show);
-	  	$mois=preg_replace("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/","$2-$1",$show);
+	  	//$mois=preg_replace("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/","$2-$1",$show);
+		$mois=date("m-d",strtotime($show));
+echo $mois;
 	}
 
 	if ($poste=="")
