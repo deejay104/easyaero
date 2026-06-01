@@ -43,6 +43,7 @@
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 
 // ---- Vérifie le token
+
 	$check_token=0;
 	if ($form_token!="")
 	{
@@ -52,6 +53,7 @@
 			$fonc="";
 		}
 	}
+
 
 // ---- Enregistre le mouvement
 	if ($fonc=="Enregistrer")
@@ -299,7 +301,7 @@
 		$dte=$form_date;
 		if ($dte=="0000-00-00")
 		{
-			$dte=date("d/m/Y");
+			$dte=date("Y-m-d");
 		}
 
 		$m=(($form_montant<>0) ? $form_montant : $montant);

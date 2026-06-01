@@ -76,30 +76,37 @@
 		$form_cout=checkVar("form_cout","varchar");
 		$form_debite=checkVar("form_debite","array");
 
-		$tmpl_x->assign("form_date",$form_date);
-
-		$mvt = new compte_class(0,$sql);
-		$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
-		$tmpl_x->parse("corps.aff_visualisation.lst_visualisation");
-
-		foreach ($form_debite as $id=>$d)
+		if ($form_date!="")
 		{
-			$dte = new echeance_class($id,$sql,0);
-			$usr = new user_class($dte->uid,$sql,false);
+			$tmpl_x->assign("form_date",$form_date);
+
 			$mvt = new compte_class(0,$sql);
-
-			$mvt->Generate($usr->idcpt,$form_poste,$form_commentaire." jusqu'au ".sql2date($form_date),date("Y-m-d"),$form_cout,array());
-			$mvt->Save();
-
-			$tmpl_x->assign("form_mvtid",$mvt->id);
-			$tmpl_x->assign("form_dteid",$id);
-			$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
+			$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
 			$tmpl_x->parse("corps.aff_visualisation.lst_visualisation");
-			
-
+	
+			foreach ($form_debite as $id=>$d)
+			{
+				$dte = new echeance_class($id,$sql,0);
+				$usr = new user_class($dte->uid,$sql,false);
+				$mvt = new compte_class(0,$sql);
+	
+				$mvt->Generate($usr->idcpt,$form_poste,$form_commentaire." jusqu'au ".sql2date($form_date),date("Y-m-d"),$form_cout,array());
+				$mvt->Save();
+	
+				$tmpl_x->assign("form_mvtid",$mvt->id);
+				$tmpl_x->assign("form_dteid",$id);
+				$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
+				$tmpl_x->parse("corps.aff_visualisation.lst_visualisation");
+				
+	
+			}
+			$tmpl_x->parse("corps.aff_visualisation");
+			$save=true;
 		}
-		$tmpl_x->parse("corps.aff_visualisation");
-		$save=true;
+		else
+		{
+			affInformation("Aucune date d'échéance spécifiée","error");
+		}
 	}
 
 // ---- Enregistre le débit des échéances
@@ -108,26 +115,32 @@
 		$form_date=checkVar("form_date","varchar");
 		$form_mid=checkVar("form_mid","array");
 		$form_dteid=checkVar("form_dteid","array");
-		$ret="";
-		$nbmvt=0;
-		$ok=0;
-		foreach ($form_mid as $id=>$d)
-		{			
-			$mvt = new compte_class($id,$sql);
-			$nbmvt=$nbmvt+$mvt->Debite();
-			
-			if ($mvt->erreur!="")
-			{
-				$ret.=$mvt->erreur;
-				$ok=1;
+		if ($form_date!="")
+		{
+			$ret="";
+			$nbmvt=0;
+			$ok=0;
+			foreach ($form_mid as $id=>$d)
+			{			
+				$mvt = new compte_class($id,$sql);
+				$nbmvt=$nbmvt+$mvt->Debite();
+				
+				if ($mvt->erreur!="")
+				{
+					$ret.=$mvt->erreur;
+					$ok=1;
+				}
+				
+				$dte = new echeance_class($form_dteid[$id],$sql,0);
+				$dte->dte_echeance=$form_date;
+				$dte->Save();
 			}
-			
-			$dte = new echeance_class($form_dteid[$id],$sql,0);
-			$dte->dte_echeance=$form_date;
-			$dte->Save();
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 		}
-
-		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
+		else
+		{
+			affInformation("Aucune date d'échéance spécifiée","error");
+		}
 	}
 	
 // ---- Liste des échéances

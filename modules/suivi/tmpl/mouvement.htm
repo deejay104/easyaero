@@ -8,18 +8,6 @@
 
 
 <!-- BEGIN: corps -->
-<script type="text/javascript">
-	$(function() {
-		$("#form_date").datepicker({
-			dateFormat: "dd/mm/yy",
-			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-			prevText: "Précédent",
-			nextText: "Suivant"
-		});
-	});
-</script>
 
 <script language="JavaScript">
 function Recharge()
@@ -141,7 +129,7 @@ function AffVentilation()
 				
 					<div class="row">
 						<div class="col-md-2">
-							<INPUT type="text" class='form-control' name="form_date" id="form_date" value="{date_mouvement}">
+							<INPUT type="date" class='form-control' name="form_date" id="form_date" value="{date_mouvement}">
 						</div>
 						<div class="col-md-5">
 							<SELECT id="form_poste" class='form-control' name="form_poste" OnChange="Recharge();" >

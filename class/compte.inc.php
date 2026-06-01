@@ -322,7 +322,7 @@ class compte_class{
 	{
 		$sql=$this->sql;
 		$txt ="<input type='hidden' name='form_mid[".$this->id."]' value='ok'>";
-		$txt.="<table class='table table-hover'>";
+		$txt.="<table class='table table-hover datatable'>";
 
 		$tabcol=array();
 		$tabcol[0]="fafafa";
@@ -337,12 +337,12 @@ class compte_class{
 			$deb = new user_class($d["uid"],$sql,false);
 
 			// $txt.="<tr style='background-color: #fafafa;'>";
-			$txt.="<tr style='background-color: #".$tabcol[$c].";'>";
+			$txt.="<tr>";
 			$txt.="<td width='120'>".sql2date($this->date_valeur)."</td>";
 			$txt.="<td width='350'>".$res["description"]."</td>";
 			$txt.="<td width='350'>".$this->commentaire."</td>";
 			$txt.="<td width='200'>".$deb->aff("fullname")."</td>";
-			$txt.="<td width='100' style='border-left:1px solid black; text-align:right; padding-right:10px;'>".AffMontant($d["montant"])."</td>";
+			$txt.="<td width='100' class='bor-left dt-right'>".AffMontant($d["montant"])."</td>";
 			$txt.="</tr>";
 			$c=1-$c;
 		// $txt.="<tr>";
@@ -361,13 +361,13 @@ class compte_class{
 	
 	function AfficheEntete()
 	{
-		$txt ="<table class='table'>";
-		$txt.="<tr>";
+		$txt ="<table class='table table-hover datatable' style='margin-bottom:0px!important'>";
+		$txt.="<tr class='t-header'>";
 		$txt.="<th width=120>Date</th>";
 		$txt.="<th width=350>Poste</th>";
 		$txt.="<th width=350>Commentaire</th>";
 		$txt.="<th width=200>Membre</th>";
-		$txt.="<th width=100 style='border-left:1px solid black; text-align:right; padding-right:10px;'>Montant</th>";
+		$txt.="<th width=100 class='bor-left'>Montant</th>";
 		$txt.="</tr>";
 		$txt.="</table>";
 

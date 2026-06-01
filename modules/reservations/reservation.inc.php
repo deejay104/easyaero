@@ -285,12 +285,12 @@
 	  }
 	else
 	  {
-		$tmpl_x->assign("form_dte_deb", sql2date($resa["resa"]->dte_deb,"jour"));
-		$tmpl_x->assign("form_dte_debsql", date2sql($resa["resa"]->dte_deb));
+		$tmpl_x->assign("form_dte_deb", extractDate($resa["resa"]->dte_deb));
+		$tmpl_x->assign("form_dte_debsql", $resa["resa"]->dte_deb);
 		$tmpl_x->assign("form_hor_deb", sql2date($resa["resa"]->dte_deb,"heure"));
 
 		// $tmpl_x->assign("form_dte_fin", sql2date($resa["resa"]->dte_fin,"jour"));
-		$tmpl_x->assign("form_dte_fin", sql2date($resa["resa"]->dte_fin,"jour"));
+		$tmpl_x->assign("form_dte_fin", extractDate($resa["resa"]->dte_fin));
 		$tmpl_x->assign("form_dte_finsql", date2sql($resa["resa"]->dte_fin));
 		$tmpl_x->assign("form_hor_fin", sql2date($resa["resa"]->dte_fin,"heure"));
 	  }

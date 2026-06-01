@@ -1,4 +1,4 @@
-<?
+<?php
 /*
     Easy-Aero
     Copyright (C) 2018 Matthieu Isorez
@@ -46,7 +46,7 @@
 			$manip = new manip_class($did,$sql,$gl_uid);
 			$tmpl_custom->assign("manif_id",$did);
 			$tmpl_custom->assign("manif_day",date("d",strtotime($manip->Val("dte_manip"))));
-			$tmpl_custom->assign("manif_month",$tabLang["mois"][date("d",strtotime($manip->Val("dte_manip")))]);
+			$tmpl_custom->assign("manif_month",$tabLang["mois"][date("m",strtotime($manip->Val("dte_manip")))]);
 			$tmpl_custom->assign("manif_title",$manip->Aff("titre"));
 			$tmpl_custom->assign("manif_date",$manip->Aff("dte_manip"));
 			$tmpl_custom->parse("custom.manifestation.lst_manifestation");

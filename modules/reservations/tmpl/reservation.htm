@@ -139,13 +139,13 @@
 							<div class="form-group row">
 								<label for="form_dte_deb" class="col-lg-3 col-form-label">Du</label>
 								<div class="col-lg-7">
-									<INPUT id="dte_deb" class='form-control form-input' name="form_dte_deb" value="{form_dte_deb}" style='width: 130px!important;' > à <INPUT name="form_hor_deb" class='form-control form-input' type="time" id="hor_deb" value="{form_hor_deb}" style='width: 130px!important;'> <FONT color=red>{msg_dtedeb}</FONT>
+									<INPUT id="dte_deb" type="date" class='form-control form-input' name="form_dte_deb" value="{form_dte_deb}" style='width: 150px!important;' > à <INPUT name="form_hor_deb" class='form-control form-input' type="time" id="hor_deb" value="{form_hor_deb}" style='width: 80px!important;'> <FONT color=red>{msg_dtedeb}</FONT>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="form_dte_fin" class="col-lg-3 col-form-label">Au</label>
 								<div class="col-lg-7">
-									<INPUT id="dte_fin" class='form-control form-input' name="form_dte_fin" value="{form_dte_fin}" style='width: 130px!important;'> à <INPUT name="form_hor_fin" class='form-control form-input' type="time" id="hor_fin" value="{form_hor_fin}" style='width: 130px!important;'> <FONT color=red>{msg_dtefin}</FONT>
+									<INPUT id="dte_fin" type="date" class='form-control form-input' name="form_dte_fin" value="{form_dte_fin}" style='width: 150px!important;'> à <INPUT name="form_hor_fin" class='form-control form-input' type="time" id="hor_fin" value="{form_hor_fin}" style='width: 80px!important;'> <FONT color=red>{msg_dtefin}</FONT>
 								</div>
 							</div>
 
@@ -301,6 +301,23 @@ $("#form_uid_instructeur").change(function(){
 	checkData();
 	checkDispo();
 });
+$("#dte_deb").change(function(){
+	checkData();
+	checkDispo();
+});
+$("#hor_deb").change(function(){
+	checkData();
+	checkDispo();
+});
+$("#dte_fin").change(function(){
+	checkData();
+	checkDispo();
+});
+$("#hor_fin").change(function(){
+	checkData();
+	checkDispo();
+});
+
 
 $("#enregistrer").click(function(){
 	$("#fonc").val("enregistrer");
@@ -326,53 +343,21 @@ function goCentrage()
 	r=checkData(true);
 }
 
-$("#dte_deb").datepicker({
-	dateFormat: "dd/mm/yy",
-	dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-	monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-	prevText: "Précédent",
-	nextText: "Suivant",
-	onSelect: function(dateText) {
 
-	}
-});
-
-$("#dte_fin").datepicker({
-	dateFormat: "dd/mm/yy",
-	dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-	monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
-	prevText: "Précédent",
-	nextText: "Suivant"
-});
-
-$("#dte_deb").change(function(){
-	checkDispo();
-});
-$("#hor_deb").change(function(){
-	checkDispo();
-});
-$("#dte_fin").change(function(){
-	checkDispo();
-});
-$("#hor_fin").change(function(){
-	checkDispo();
-});
 
 function checkDispo()
 {
 		var mid=$("#form_uid_instructeur").val();
+
 		var deb_j=$("#dte_deb").val();
 		var deb_h=$("#hor_deb").val();
-		var tdeb=deb_j.split("/");
-		console.log("deb="+tdeb[2]+"-"+tdeb[1]+"-"+tdeb[0]+" "+deb_h);
-		var deb=new Date(tdeb[2]+"-"+tdeb[1]+"-"+tdeb[0]+" "+deb_h);
+		console.log("deb="+deb_j+" "+deb_h);
+		var deb=new Date(deb_j+" "+deb_h);
+
 		var fin_j=$("#dte_fin").val();
 		var fin_h=$("#hor_fin").val();
-		var tfin=fin_j.split("/");
-		console.log("fin="+tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
-		var fin=new Date(tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
+		console.log("fin="+fin_j+" "+fin_h);
+		var fin=new Date(fin_j+" "+fin_h);
 
 		//document.getElementById("imgdispo").src="{path_root}/api.php?mod=membres&rub=checkdispo&mid="+mid+"&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000+45*60);
 		$.get("/api/v1/membres/checkdispo?mid="+mid+"&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000) ).done(function(data)
@@ -421,7 +406,6 @@ function checkData(submit=false)
 	data.hor_deb=$("#hor_deb").val();
 	data.dte_fin=$("#dte_fin").val();
 	data.hor_fin=$("#hor_fin").val();
-	data.hor_fin=$("#hor_fin").val();
 
 	data.description=$("#description").val();
 	data.horadeb=$("#horadeb").val();
@@ -442,9 +426,10 @@ function checkData(submit=false)
 	}
 
 	var ret=true;
+	var type="check";
 	if (submit)
 	{
-		var type="submit";
+		type="submit";
 	}
 	$.post( "/api/v1/reservations/reservation?fonc="+type, data )
 	.done(function(result) {
