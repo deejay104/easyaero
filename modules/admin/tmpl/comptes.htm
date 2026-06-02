@@ -10,42 +10,37 @@
 <FORM name="reservation" method="post" action="{path_root}/admin/comptes" enctype="multipart/form-data">
 
 <div class="row" id="page-content">
-	<div class="col grid-margin stretch-card">
 		<div class="card">	
 			<div class="card-header">Définition des Comptes</div>	
 			<div class="card-body">	
 
 
-				<TABLE class="tableauAff tableauAffLight">
-				  <TR>
-					<th width="110">Compte</th>
-					<th width="410">Description</th>
-					<th width="24">&nbsp;</th>
-				  </TR>
+				<TABLE class="table table-hover datatable">
+				  	<TR class="t-header">
+						<th width="110">Compte</th>
+						<th width="410">Description</th>
+						<th width="24">&nbsp;</th>
+				  	</TR>
 
 				<!-- BEGIN: lst_mouvement -->
-				<tr OnMouseOver="document.getElementById('del_{form_id}').style.display='block';" OnMouseOut="document.getElementById('del_{form_id}').style.display='none';">
-					<TD>
-						<INPUT type="text" name="form_numcpt[{form_id}]" class="form-control" value="{form_numcpt}" maxlength="10">
-					</TD>
-					<TD>
-						<INPUT type="text" name="form_description[{form_id}]" class="form-control" value="{form_description}">
-					</TD>
-					<TD>
-						<a id='del_{form_id}' href="{path_root}/admin/comptes?fonc=delete&id={form_id}" style='display:none;'><i class="mdi mdi-close" style="font-size:18px;"></i></a>
-					</TD>
-
-				  </TR>
+					<tr class="action">
+						<TD>
+							<INPUT type="text" name="form_numcpt[{form_id}]" class="form-control" value="{form_numcpt}" maxlength="10">
+						</TD>
+						<TD>
+							<INPUT type="text" name="form_description[{form_id}]" class="form-control" value="{form_description}">
+						</TD>
+						<TD>
+							<div style='width:32px;'><span class="feed-actions"><a href="{path_root}/admin/comptes?fonc=delete&id={form_id}"><i class="mdi mdi-close"></i></a></span></div>
+						</TD>
+				  	</TR>
 				<!-- END: lst_mouvement -->
 				</TABLE>
-				<br />
-				
 			</div>
 			<div class="card-footer">	
 				<INPUT type="submit" name="fonc" class="btn btn-primary" value="Enregistrer"> <INPUT type="submit" class="btn btn-light"  name="fonc" value="Annuler">
 			</div>
 		</div>
-	</div>
 </div>
 
 </FORM>

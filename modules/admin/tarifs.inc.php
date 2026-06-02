@@ -162,8 +162,13 @@
 		if ($ress!=strtoupper($sql->data["immatriculation"]))
 		{
 	  		$tmpl_x->parse("corps.aff_tarifs.lst_tarifs.lst_espace");
+			$tmpl_x->assign("aff_espace", "bor-large-bottom");
 	  		$ress=strtoupper($sql->data["immatriculation"]);
 	  	}
+		else
+		{
+			$tmpl_x->assign("aff_espace", "");
+		}
 
 		foreach($tabMvt as $id=>$d)
 		{

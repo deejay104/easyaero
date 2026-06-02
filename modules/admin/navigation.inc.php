@@ -106,7 +106,7 @@
 		$tabValeur[$i]["taxe"]["aff"]="<div id='taxe_".$sql->data["id"]."'>".$sql->data["taxe"]."</div>";
 
 		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
-		$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='edit_".$sql->data["id"]."' href='#'><i class='mdi mdi-pen'></i></a></span>";
+		$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='edit_".$sql->data["id"]."' href='#'><i class='mdi mdi-pencil'></i></a></span>";
 
 		$tmpl_x->assign("lst_id",$sql->data["id"]);
 		$tmpl_x->parse("corps.lst_edit");

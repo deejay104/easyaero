@@ -304,7 +304,6 @@
 // ---- Commentaires
 	if ($id>0)
 	{
-		echo "OK".$id;
 		$lst=ListBaptemeComment($sql,$btm->id);
 		foreach($lst as $item)
 		{

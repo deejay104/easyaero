@@ -43,16 +43,16 @@ function update(id,mois,ress)
 <div class="row" id="page-content">
 	<div class="col grid-margin stretch-card">
 		<div class="card">	
-			<div class="card-body">	
-
+			<div class="card-header">	
 				<select id="dte" name="form_dte" class="form-control" OnChange="document.location='{path_root}/admin/previsions?dte='+document.getElementById('dte').value;">
 				<!-- BEGIN: lst_annee -->
 					<option value="{form_dte}" {form_selected}>{form_dte}</option>		
 				<!-- END: lst_annee -->
-				</select><br /><br />
-
-				<table class="tableauAff">
-					<tr>
+				</select>
+			</div>
+			<div class="card-body">	
+				<table class="table table-hover datatable">
+					<tr class="t-header">
 						<th width='150'>Mois</th>{aff_lst_ress}
 					</tr>
 					<!-- BEGIN: lst_mois -->

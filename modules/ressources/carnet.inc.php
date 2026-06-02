@@ -117,7 +117,6 @@
 	}
 
 // ---- Affiche le tableau
-	// $tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne,false,false));
 	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi("aviation","vols","carnet","id=".$id."&theme=".$theme),$order,$trie,false,($theme=="phone") ? 16 : 25));
 
 

@@ -11,7 +11,6 @@
 <script language="JavaScript">
 function Recharge()
 {
-	<!-- document.location="index.php?mod=aviation&rub=baptemes&form_status="+form_status.value+"&scale=yes"; -->
 	$('#tbl_baptemes').DataTable().ajax.url("/api/v1/aviation/baptemes?status="+$('#form_status').val()+"&type="+$('#form_type').val());
 	$('#tbl_baptemes').DataTable().ajax.reload();
 }

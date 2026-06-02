@@ -56,6 +56,14 @@
     	exit;
 	}
 
+// ---- Sauvegarde
+	if ($fonc=="Annuler")
+	{
+		header('Location: /manifestations/detail?id='.$id, true, 303);
+    	exit;
+	}
+
+
 // ---- Facture la manifestation aux participants
 	if (($fonc=="facture") && ($id>0) && GetDroit("FactureManips"))
 	{

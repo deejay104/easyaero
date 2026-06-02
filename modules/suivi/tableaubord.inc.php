@@ -199,7 +199,6 @@
 		$tmpl_x->assign("form_mois", $show);
 	  	//$mois=preg_replace("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/","$2-$1",$show);
 		$mois=date("m-d",strtotime($show));
-echo $mois;
 	}
 
 	if ($poste=="")

@@ -11,20 +11,18 @@
 
 
 <div class="row" id="page-content">
-	<div class="col grid-margin stretch-card">
-		<div class="card">	
-			<div class="card-header">Postes</div>	
-			<div class="card-body">	
-				<TABLE class="tableauAff tableauAffLight">
-					<TR>
-					<th width=20>&nbsp;</th>
-					<th>Ordre</th>
+	<div class="card">	
+		<div class="card-header">Postes</div>	
+		<div class="card-body">	
+			<TABLE class="table table-hover datatable">
+				<TR class="t-header">
+					<th width="50">Ordre</th>
 					<th width="410">Poste</th>
 					<th width="90">Compte</th>
 					<th width="90">Débiteur</th>
 					<th width="90">Créditeur</th>
 					<th width="90">Montant</th>
-				<!-- BEGIN: aff_jour -->
+					<!-- BEGIN: aff_jour -->
 					<th align='center'>Di</th>
 					<th align='center'>Lu</th>
 					<th align='center'>Ma</th>
@@ -33,13 +31,12 @@
 					<th align='center'>Ve</th>
 					<th align='center'>Sa</th>
 					<th align='center'>Vac</th>
-				<!-- END: aff_jour -->
+					<!-- END: aff_jour -->
 					<th width="24">&nbsp;</th>
-					</TR>
+				</TR>
 
 				<!-- BEGIN: lst_mouvement -->
-				<tr OnMouseOver="document.getElementById('del_{form_id}').style.display='block';" OnMouseOut="document.getElementById('del_{form_id}').style.display='none';">
-					<TD width=20>&nbsp;</TD>
+				<tr class="action">
 					<TD>
 						<INPUT type="text" name="form_ordre[{form_id}]" class="form-control" value="{ordre_poste}" maxlength="4">
 					</TD>
@@ -96,22 +93,19 @@
 					<TD>
 						<INPUT type="text" name="form_j7[{form_id}]" class="form-control" value="{j7_poste}">
 					</TD>
-				<!-- END: aff_jour_ligne -->
+					<!-- END: aff_jour_ligne -->
 					<TD>
-						<a id='del_{form_id}' href="{path_root}/admin/postes?fonc=delete&id={form_id}" style='display:none;'><i class="mdi mdi-close" style="font-size:18px;"></i></a>
+						<div style='width:32px;'><span class="feed-actions"><a href="{path_root}/admin/postes?fonc=delete&id={form_id}"><i class="mdi mdi-close"></i></a></span></div>
 					</TD>
-					
-					</TR>
+				</TR>
 				<!-- END: lst_mouvement -->
-				</TABLE>
-				<br />
-					
-			</div>
-			<div class="card-footer">	
-				<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary" > <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
-			</div>
+			</TABLE>
+		</div>
+		<div class="card-footer">	
+			<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary" > <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
 		</div>
 	</div>
+
 </div>
 
 

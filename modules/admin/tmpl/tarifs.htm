@@ -13,75 +13,74 @@
 <div class="row" id="page-content">
 	<div class="col grid-margin stretch-card">
 		<div class="card">	
+			<div class="card-header">Définition des Tarifs</div>	
 			<div class="card-body">	
 			<!-- BEGIN: aff_tarifs -->
-				<div class="table-responsive">	
-				<TABLE class="tableauAff tableauAffLight" >
-					<TR>
-					<th width=100><B>Avion</B></th>
-					<th width=40><B>Code</B></th>
-					<th width=160><B>Nom</B></th>
-					<th width=160><B>Aff. Réservation</B></th>
-					<th width=250><B>Poste</B></th>
-					<th width=70><B>Pilote</B></th>
-					<th width=70><B>Instructeur</B></th>
-					<th width=70><B>Réduction (min)</B></th>
-					<th width=70><B>Défaut Pilote</B></th>
-					<th width=70><B>Défaut Instructeur</B></th>
-					<th width=24>&nbsp;</TD>
+				<TABLE class="table table-hover datatable" >
+					<TR class="t-header">
+						<th width=100><B>Avion</B></th>
+						<th width=40><B>Code</B></th>
+						<th width=160><B>Nom</B></th>
+						<th width=160><B>Aff. Réservation</B></th>
+						<th width=250><B>Poste</B></th>
+						<th width=70><B>Pilote</B></th>
+						<th width=70><B>Instructeur</B></th>
+						<th width=70><B>Réduction (min)</B></th>
+						<th width=70><B>Défaut Pilote</B></th>
+						<th width=70><B>Défaut Instructeur</B></th>
+						<th width=32>&nbsp;</TD>
 					</TR>
 
-				<!-- BEGIN: lst_tarifs -->
-					<TR OnMouseOver="document.getElementById('del_{id_tarifs}').style.display='block';" OnMouseOut="document.getElementById('del_{id_tarifs}').style.display='none';" <!-- BEGIN: lst_espace -->style='border-top: 1px solid #000000; padding-top:5px;'<!-- END: lst_espace --> >
-					<TD>{tarif_immat}</TD>
-					<TD><INPUT type="text" name="tarif_code[{id_tarifs}]" class="form-control" value="{tarif_code}" size=2></TD>
-					<TD><INPUT type="text" name="tarif_nom[{id_tarifs}]" class="form-control" value="{tarif_nom}" size=20></TD>
-					<TD><INPUT type="text" name="tarif_reservation[{id_tarifs}]" class="form-control" value="{tarif_reservation}" size=20></TD>
-					<td>
-						<select name="tarif_poste[{id_tarifs}]" class="form-control">
-							<option value="0">Poste avion</option>
-						<!-- BEGIN: lst_poste -->
-							<option value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</option>
-						<!-- END: lst_poste -->
-						</select>
-					</td>
-					<TD><INPUT type="text" name="tarif_pilote[{id_tarifs}]" class="form-control" value="{tarif_pilote}" size=6></TD>
-					<TD><INPUT type="text" name="tarif_instructeur[{id_tarifs}]" class="form-control" value="{tarif_instructeur}" size=6></TD>
-					<TD><INPUT type="text" name="tarif_reduction[{id_tarifs}]" class="form-control" value="{tarif_reduction}" size=5></TD>
-					<TD><INPUT type="radio" name="tarif_defaut_pil[{id_avion}]" value="{id_tarifs}" {tarif_defautpil_selected} size=5></TD>
-					<TD><INPUT type="radio" name="tarif_defaut_ins[{id_avion}]" value="{id_tarifs}" {tarif_defautins_selected} size=5></TD>
-					<TD><a id='del_{id_tarifs}' href="/admin/tarifs?fonc=delete&id={id_tarifs}" style='display:none;'><i class="mdi mdi-close" style="font-size:18px;"></i></a></TD>
+					<!-- BEGIN: lst_tarifs -->
+					<TR class="{aff_espace} action">
+						<TD>{tarif_immat}</TD>
+						<TD><INPUT type="text" name="tarif_code[{id_tarifs}]" class="form-control" value="{tarif_code}" size=2></TD>
+						<TD><INPUT type="text" name="tarif_nom[{id_tarifs}]" class="form-control" value="{tarif_nom}" size=20></TD>
+						<TD><INPUT type="text" name="tarif_reservation[{id_tarifs}]" class="form-control" value="{tarif_reservation}" size=20></TD>
+						<td>
+							<select name="tarif_poste[{id_tarifs}]" class="form-control">
+								<option value="0">Poste avion</option>
+							<!-- BEGIN: lst_poste -->
+								<option value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</option>
+							<!-- END: lst_poste -->
+							</select>
+						</td>
+						<TD><INPUT type="text" name="tarif_pilote[{id_tarifs}]" class="form-control" value="{tarif_pilote}" size=6></TD>
+						<TD><INPUT type="text" name="tarif_instructeur[{id_tarifs}]" class="form-control" value="{tarif_instructeur}" size=6></TD>
+						<TD><INPUT type="text" name="tarif_reduction[{id_tarifs}]" class="form-control" value="{tarif_reduction}" size=5></TD>
+						<TD><INPUT type="radio" name="tarif_defaut_pil[{id_avion}]" value="{id_tarifs}" {tarif_defautpil_selected} size=5></TD>
+						<TD><INPUT type="radio" name="tarif_defaut_ins[{id_avion}]" value="{id_tarifs}" {tarif_defautins_selected} size=5></TD>
+						<TD><div style='width:32px;'></div><span class="feed-actions" ><a href="/admin/tarifs?fonc=delete&id={id_tarifs}"><i class="mdi mdi-close"></i></a></span></div></TD>
 					</TR>
-				<!-- END: lst_tarifs -->
-					<TR style='border-top: 1px solid #000000; height:35px;'>
-					<TD>
-						<SELECT id="idavion" name="idavion" class="form-control" >
-						<!-- BEGIN: lst_avion -->
-							<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
-						<!-- END: lst_avion -->
-						</SELECT>
-					</TD>
-					<TD><INPUT type="text" name="tarif_code[0]" class="form-control" value="" size=2></TD>
-					<TD><INPUT type="text" name="tarif_nom[0]" class="form-control" value="" size=20></TD>
-					<TD><INPUT type="text" name="tarif_reservation[0]" class="form-control"  value="" size=20></TD>
-					<td>
-						<select name="tarif_poste[0]" class="form-control" >
-							<option value="0">Poste avion</option>
-						<!-- BEGIN: lst_poste -->
-							<option value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</option>
-						<!-- END: lst_poste -->
-						</select>
-					</td>
-					<TD><INPUT type="text" name="tarif_pilote[0]" class="form-control" value="0" size=6></TD>
-					<TD><INPUT type="text" name="tarif_instructeur[0]" class="form-control" value="0" size=6></TD>
-					<TD><INPUT type="text" name="tarif_reduction[0]" class="form-control" value="0" size=5></TD>
-					<TD>&nbsp;</TD>
-					<TD>&nbsp;</TD>
-					<TD>&nbsp;</TD>
+					<!-- END: lst_tarifs -->
+					<TR class="bor-large-top">
+						<TD>
+							<SELECT id="idavion" name="idavion" class="form-control" >
+							<!-- BEGIN: lst_avion -->
+								<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
+							<!-- END: lst_avion -->
+							</SELECT>
+						</TD>
+						<TD><INPUT type="text" name="tarif_code[0]" class="form-control" value="" size=2></TD>
+						<TD><INPUT type="text" name="tarif_nom[0]" class="form-control" value="" size=20></TD>
+						<TD><INPUT type="text" name="tarif_reservation[0]" class="form-control"  value="" size=20></TD>
+						<td>
+							<select name="tarif_poste[0]" class="form-control" >
+								<option value="0">Poste avion</option>
+							<!-- BEGIN: lst_poste -->
+								<option value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</option>
+							<!-- END: lst_poste -->
+							</select>
+						</td>
+						<TD><INPUT type="text" name="tarif_pilote[0]" class="form-control" value="0" size=6></TD>
+						<TD><INPUT type="text" name="tarif_instructeur[0]" class="form-control" value="0" size=6></TD>
+						<TD><INPUT type="text" name="tarif_reduction[0]" class="form-control" value="0" size=5></TD>
+						<TD>&nbsp;</TD>
+						<TD>&nbsp;</TD>
+						<TD>&nbsp;</TD>
 					</TR>
 				</TABLE>
-				
-				</div>
+
 			<!-- END: aff_tarifs -->
 			</div>
 			<div class="card-footer">	

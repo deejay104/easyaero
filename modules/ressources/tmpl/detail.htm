@@ -22,192 +22,164 @@
 
 
 <div class="row">
-	<div class="col-md-6 grid-margin stretch-card">
-		<div class="row flex-grow">
+	<div class="col-md-6 grid-margin stretch-card flex-column">
+		<div class="card">
 
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
+			<div class="card-header">
+				Informations générales
+			</div>
+			<div class="card-body">
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Immatriculation</label></div>
+					<div class="col-lg-7">{form_immatriculation}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Nom</label></div>
+					<div class="col-lg-7">{form_nom}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Marque</label></div>
+					<div class="col-lg-7">{form_marque}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Modèle</label></div>
+					<div class="col-lg-7">{form_modele}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Couleur</label></div>
+					<div class="col-lg-7">{form_couleur}</div>
+				</div>
 
-					<div class="card-header">
-						Informations générales
-					</div>
-					<div class="card-body">
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Immatriculation</label></div>
-							<div class="col-lg-7">{form_immatriculation}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Nom</label></div>
-							<div class="col-lg-7">{form_nom}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Marque</label></div>
-							<div class="col-lg-7">{form_marque}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Modèle</label></div>
-							<div class="col-lg-7">{form_modele}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Couleur</label></div>
-							<div class="col-lg-7">{form_couleur}</div>
-						</div>
+				<div class="form-group">
+					<h4>Description</h4>
+					{form_description}
+				</div>
+				
+			</div>
+			<!-- BEGIN: submit -->
+			<div class="card-footer">
+				<INPUT type="submit" name="fonc" class="btn btn-primary" value="Enregistrer" OnClick="return cryptData();">
+				<INPUT type="submit" name="fonc" class="btn btn-light" value="Annuler">
+			</div>
+			<!-- END: submit -->
 
-						<div class="form-group">
-							<h4>Description</h4>
-							{form_description}
-						</div>
-						
-					</div>
-		<!-- BEGIN: submit -->
-					<div class="card-footer">
-						<INPUT type="submit" name="fonc" class="btn btn-primary" value="Enregistrer" OnClick="return cryptData();">
-						<INPUT type="submit" name="fonc" class="btn btn-light" value="Annuler">
-					</div>
-		<!-- END: submit -->
+		</div>
 
+		<div class="card">
+			<div class="card-header">
+				Caractéristiques
+			</div>
+			<div class="card-body">
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Poste</label></div>
+					<div class="col-lg-7">{form_poste}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Type horamètre</label></div>
+					<div class="col-lg-7">{form_typehora}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Type gauge</label></div>
+					<div class="col-lg-7">{form_typegauge}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Avertissement potentiel</label></div>
+					<div class="col-lg-7">{form_alertpotentiel}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Potentiel Maximum</label></div>
+					<div class="col-lg-7">{form_maxpotentiel}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Nb de place</label></div>
+					<div class="col-lg-7">{form_places}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Puissance</label></div>
+					<div class="col-lg-7">{form_puissance}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Masse max.</label></div>
+					<div class="col-lg-7">{form_massemax}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-5"><label class="col-form-label">Vitesse croisière</label></div>
+					<div class="col-lg-7">{form_vitesse}</div>
 				</div>
 			</div>
-
-
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-header">
-						Caractéristiques
-					</div>
-					<div class="card-body">
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Poste</label></div>
-							<div class="col-lg-7">{form_poste}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Type horamètre</label></div>
-							<div class="col-lg-7">{form_typehora}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Type gauge</label></div>
-							<div class="col-lg-7">{form_typegauge}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Avertissement potentiel</label></div>
-							<div class="col-lg-7">{form_alertpotentiel}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Potentiel Maximum</label></div>
-							<div class="col-lg-7">{form_maxpotentiel}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Nb de place</label></div>
-							<div class="col-lg-7">{form_places}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Puissance</label></div>
-							<div class="col-lg-7">{form_puissance}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Masse max.</label></div>
-							<div class="col-lg-7">{form_massemax}</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-lg-5"><label class="col-form-label">Vitesse croisière</label></div>
-							<div class="col-lg-7">{form_vitesse}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
 
-	<div class="col-md-6 grid-margin stretch-card">
-		<div class="row flex-grow">
+	<div class="col-md-6 grid-margin stretch-card flex-column">
+		<div class="card">
+			<div class="card-header">
+				{lang_documents}
+			</div>
+			<div class="card-body">
+				<!-- BEGIN: lst_document -->
+				{form_document}
+				<!-- END: lst_document -->
+			</div>
+		</div>
 
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-header">
-						{lang_documents}
-					</div>
-					<div class="card-body">
-						<!-- BEGIN: lst_document -->
-						{form_document}
-						<!-- END: lst_document -->
-					</div>
-				</div>
+		<div class="card">
+			<div class="card-header">
+				{lang_deadline}
+			</div>
+			<div class="card-body">
+			<!-- BEGIN: lst_echeance -->
+			<p>{form_echeance}</p>
+			<!-- END: lst_echeance -->
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				Maintenance
 			</div>
 
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-header">
-						{lang_deadline}
-					</div>
-					<div class="card-body">
-					<!-- BEGIN: lst_echeance -->
-					<p>{form_echeance}</p>
-					<!-- END: lst_echeance -->
-					</div>
+			<div class="card-body">
+				<div class="form-group">
+					<label class="col-form-label">Temps de vol</label>{aff_tpsvol}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Potentiel</label>{aff_tpspot}
+				</div>
+				<div class="form-group">
+					<label class="col-form-label">Prochaine maintenance</label>{aff_dtemaint}
 				</div>
 			</div>
+		</div>
 
-
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-header">
-						Maintenance
-					</div>
-		
-					<div class="card-body">
-						<div class="form-group">
-							<label class="col-form-label">Temps de vol</label>{aff_tpsvol}
-						</div>
-						<div class="form-group">
-							<label class="col-form-label">Potentiel</label>{aff_tpspot}
-						</div>
-						<div class="form-group">
-							<label class="col-form-label">Prochaine maintenance</label>{aff_dtemaint}
-						</div>
-					</div>
-				</div>
+		<div class="card">
+			<div class="card-header">
+				Masse et centrage
 			</div>
-
-
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-header">
-						Masse et centrage
-					</div>
-					<div class="card-body">
-						<img src="{path_root}/api.php?mod=aviation&rub=imgcentrage&rid={id}" style="max-width:100%;"/>
-					</div>
-				</div>
+			<div class="card-body">
+				<img src="{path_root}/api.php?mod=aviation&rub=imgcentrage&rid={id}" style="max-width:100%;"/>
 			</div>
+		</div>
 
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-header">
-						Paramètres
-					</div>
-					<div class="card-body">
-						<!-- BEGIN: parametres -->
-						<div class="formulaire">
-							<p>
-								<label>Tolérance</label>
-								{form_tolerance}
-							</p>
-						</div>
-						<div class="formulaire">
-						{form_centrage}
-						</div>
-						<!-- END: parametres -->
-					</div>
+		<div class="card">
+			<div class="card-header">
+				Paramètres
+			</div>
+			<div class="card-body">
+				<!-- BEGIN: parametres -->
+				<div class="formulaire">
+					<p>
+						<label>Tolérance</label>
+						{form_tolerance}
+					</p>
 				</div>
+				<div class="formulaire">
+				{form_centrage}
+				</div>
+				<!-- END: parametres -->
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
 
 
 </FORM>
