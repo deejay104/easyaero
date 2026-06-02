@@ -57,13 +57,19 @@
 
 	// foreach($usrcus->data as $k=>$v)
 	foreach($usrcus->getFields() as $k=>$v)
-	  { $tmpl_custom->assign("form_$k", $usrcus->aff($k,$typeaff)); }
+	{
+		$tmpl_custom->assign("form_$k", $usrcus->aff($k,$typeaff));
+	}
 
 	if (((GetDroit("ModifUserDecouvert")) || (GetMyId($id))) && (GetModule("compta")))
-	  { $tmpl_custom->parse("left.decouvert"); }
+	{
+		$tmpl_custom->parse("left.decouvert");
+	}
 
 	if ((((GetDroit("ModifUserTarif")) || (GetMyId($id))) && (GetModule("compta"))) && (GetModule("aviation")))
-	  { $tmpl_custom->parse("left.tarif"); }
+	{
+		$tmpl_custom->parse("left.tarif");
+	}
   
   	if (GetModule("aviation"))
 	{

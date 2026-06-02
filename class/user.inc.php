@@ -265,7 +265,9 @@ class user_class extends user_core
 					foreach($this->data[$key] as $avion)
 					{
 						if ($avion["idlache"]>0)
-						{ $ret.=$avion["avion"]->aff("immatriculation")." <font size=1><i>(par ".$avion["usr"]->aff("fullname").")</i></font><br />"; }
+						{ 
+							$ret.="<i class='mdi mdi-airplane'></i> ".$avion["avion"]->aff("immatriculation")." <font size=1><i>(par ".$avion["usr"]->aff("fullname").")</i></font><br />";
+						}
 					}
 				}
 				if ($ret=="") { $ret="Aucun"; }
