@@ -167,7 +167,7 @@
 				$resa["resa"]->tpsestime=$form_tpsestime;
 				$resa["resa"]->dte_deb="$form_dte_deb $form_hor_deb";
 				$resa["resa"]->dte_fin="$form_dte_fin $form_hor_fin";
-				$resa["resa"]->tpsreel=$form_tpsreel;
+				$resa["resa"]->tpsreel=(getInt($form_tpsreel)<0) ? 0 : getInt($form_tpsreel);
 				$resa["resa"]->horadeb=$form_horadeb;
 				$resa["resa"]->horafin=$form_horafin;
 				$resa["resa"]->potentielh=$form_potentielh;
@@ -193,7 +193,7 @@
 				$resa["resa"]->dte_deb=sql2date($resa["resa"]->dte_deb);
 				$resa["resa"]->dte_fin=sql2date($resa["resa"]->dte_fin);
 
-				$resa["resa"]->tpsreel=$form_tpsreel;
+				$resa["resa"]->tpsreel=(getInt($form_tpsreel)<0) ? 0 : getInt($form_tpsreel);
 				$resa["resa"]->horadeb=$form_horadeb;
 				$resa["resa"]->horafin=$form_horafin;
 			}

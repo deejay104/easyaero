@@ -190,19 +190,19 @@ class ress_class extends objet_core
 			{
 				$tfin[3]=$tfin[3]."0";
 			}
-			$t=round((intval($tfin[1])-intval($tdeb[1]))*60+(intval($tfin[3])-intval($tdeb[3])));
+			$t=round((getInt($tfin[1])-getInt($tdeb[1]))*60+(getInt($tfin[3])-getInt($tdeb[3])));
 		}
 		else if ($this->data["typehora"]=="dix")
 		{
-			$t=round(($tfin[1]-$tdeb[1])*60+($tfin[3]-$tdeb[3])*6);
+			$t=round((getInt($tfin[1])-getInt($tdeb[1]))*60+(getInt($tfin[3])-getInt($tdeb[3]))*6);
 		}
 		else if ($this->data["typehora"]=="cen")
 		{
-			$t=round((($tfin[1]-$tdeb[1])*100+($tfin[3]-$tdeb[3]))*60/100);
+			$t=round(((getInt($tfin[1])-getInt($tdeb[1]))*100+(getInt($tfin[3])-getInt($tdeb[3])))*60/100);
 		}
 		else
 		{
-			$t=($fin-$deb)*60;
+			$t=(getInt($fin)-getInt($deb))*60;
 		}
 
 		return $t;

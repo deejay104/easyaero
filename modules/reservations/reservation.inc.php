@@ -308,7 +308,7 @@
 	// Affiche l'horamètre
 	$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 	$t=$resr->CalcHorametre($resa["resa"]->horadeb,$resa["resa"]->horafin);
-	
+
 	$tmpl_x->assign("tps_hora", (($t>0) ? AffTemps($t) : "0h 00"));
 
 	if ($MyOpt["updateBloc"]=="on")
