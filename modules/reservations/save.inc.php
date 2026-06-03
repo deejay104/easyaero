@@ -46,9 +46,9 @@
 	$form_tpsestime=checkVar("form_tpsestime","numeric");
 	$form_nbpersonne=checkVar("form_nbpersonne","numeric");
 	$form_invite=checkVar("form_invite","varchar");
-	$form_dte_deb=checkVar("form_dte_deb","varchar");
+	$form_dte_deb=checkVar("form_dte_deb","date");
 	$form_hor_deb=checkVar("form_hor_deb","varchar");
-	$form_dte_fin=checkVar("form_dte_fin","varchar");
+	$form_dte_fin=checkVar("form_dte_fin","date");
 	$form_hor_fin=checkVar("form_hor_fin","varchar");
 	$form_description=checkVar("form_description","text");
 	$form_horadeb=checkVar("form_horadeb","varchar");
@@ -61,6 +61,11 @@
 	$form_prixcarbu=checkVar("form_prixcarbu","varchar");
 	
 	$resa["resa"]=new resa_class($id,$sql);
+
+	if ($form_uid_pilote==0)
+	{
+		$form_uid_pilote=$gl_uid;
+	}
 
 // ---- Vérifie les infos
 	if (($fonc=="enregistrer") || ($fonc=="actualiser") || ($fonc=="centrage") || ($fonc=="synthese"))
@@ -137,11 +142,11 @@
 		{
 		  	if ($ok==1)
 			{
-				if ($resa["resa"]->dte_deb!=date2sql($form_dte_deb)." ".$form_hor_deb.":00")
+				if ($resa["resa"]->dte_deb!=$form_dte_deb." ".$form_hor_deb.":00")
 				{
 					$notif=true;
 				}
-				if ($resa["resa"]->dte_fin!=date2sql($form_dte_fin)." ".$form_hor_fin.":00")
+				if ($resa["resa"]->dte_fin!=$form_dte_fin." ".$form_hor_fin.":00")
 				{
 					$notif=true;
 				}
@@ -190,8 +195,8 @@
 			{
 				$ok=1;
 
-				$resa["resa"]->dte_deb=sql2date($resa["resa"]->dte_deb);
-				$resa["resa"]->dte_fin=sql2date($resa["resa"]->dte_fin);
+//				$resa["resa"]->dte_deb=$resa["resa"]->dte_deb;
+//				$resa["resa"]->dte_fin=$resa["resa"]->dte_fin;
 
 				$resa["resa"]->tpsreel=(getInt($form_tpsreel)<0) ? 0 : getInt($form_tpsreel);
 				$resa["resa"]->horadeb=$form_horadeb;
@@ -238,6 +243,7 @@
 // ---- Enregistre
 	$affrub="index";
 	$jour=(isset($resa["resa"]->dte_deb)) ? $resa["resa"]->dte_deb : now();
+
 	$msg_err2=array();
 	if ($ok==1)
 	{
