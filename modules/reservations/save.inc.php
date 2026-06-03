@@ -357,8 +357,9 @@
 	}
 	else if ($ok>1)
 	{
-		header('Location: /reservations?start='.extractDate($resa["resa"]->dte_deb), true, 303);
-    	exit;
+		//header('Location: /reservations?start='.extractDate($resa["resa"]->dte_deb), true, 303);
+    	//exit;
+		$affrub="reservation";
 	}
 	else
 	{
