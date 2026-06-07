@@ -121,25 +121,6 @@ $commentaire = trim($body['commentaire'] ?? '');
 		exit();
 	}
 
-// ── Notification de la création d'un nouveau baptème ─────────────────────
-	$tabvar=array(
-		"id"=>$btm->id,
-		"num"=>$btm->Aff("num"),
-		"type"=>$btm->Aff("type"),
-	);
-	$tabUser=array();
-	$lst=ListActiveUsers($sql,"",array("NotifBapteme"),"non");
-
-	foreach($lst as $i=>$id)
-	{
-		$usr = new user_class($id,$sql,false,true);
-		if ($usr->data["mail"]!="")
-		{
-			$res["mail"]=SendMailFromFile("noreply@easy-aero.fr",$usr->data["mail"],"","",$tabvar,"btm_create");
-		}
-	}
-
-
 // ── Réponse au site public ────────────────────────────────────────────────
 	http_response_code(200);
 	echo json_encode([

@@ -60,7 +60,8 @@ switch ($event->type) {
     // ✅ Paiement réussi
     case 'payment_intent.succeeded':
         updateCommande($intent->id, 2, $intent);
-        envoyerConfirmation($intent);
+        confirmClient($intent);
+        notifyTeam($intent);
         break;
 
     // ❌ Paiement échoué
@@ -120,7 +121,7 @@ function updateCommande(string $piId, string $status, object $intent): void
 /**
  * Envoie un e-mail de confirmation au client.
  */
-function envoyerConfirmation(object $intent): void
+function confirmClient(object $intent): void
 {
     global $sql;
 
@@ -156,6 +157,39 @@ function envoyerConfirmation(object $intent): void
     }
 }
 
+function notifyTeam(object $intent): void
+{
+    global $sql;
 
+    try {
+        $btm = new bapteme_class(0,$sql);
+        $btm->loadFromField(array("stripe_id"=>$intent->id));
+
+        if ($btm->id==0) 
+        {
+            return;
+        }
+
+        // ── Notification de la création d'un nouveau baptème ─────────────────────
+        $tabvar=array(
+            "id"=>$btm->id,
+            "num"=>$btm->Aff("num"),
+            "type"=>$btm->Aff("type"),
+        );
+        $tabUser=array();
+        $lst=ListActiveUsers($sql,"",array("NotifBapteme"),"non");
+
+        foreach($lst as $i=>$id)
+        {
+            $usr = new user_class($id,$sql,false,true);
+            if ($usr->data["mail"]!="")
+            {
+                $res["mail"]=SendMailFromFile("noreply@easy-aero.fr",$usr->data["mail"],"","",$tabvar,"btm_create");
+            }
+        }
+    } catch (Exception $e) {
+        error_log('[webhook.php] notofyTeam error: ' . $e->getMessage());
+    }
+}
 
 ?>
