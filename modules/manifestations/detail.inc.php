@@ -35,7 +35,7 @@
 // ---- Sauvegarde
 	$manip=new manip_class($id,$sql);
 
-	if ($fonc=="Enregistrer")
+	if (($fonc=="Enregistrer") && ($form_data["titre"]!=""))
 	{
 		if (count($form_data)>0)
 		{
@@ -54,6 +54,10 @@
 		
 		header('Location: /manifestations/detail?id='.$id, true, 303);
     	exit;
+	}
+	else if ($fonc=="Enregistrer")
+	{
+		affInformation("Le titre est vide","warning");
 	}
 
 // ---- Sauvegarde
@@ -98,12 +102,12 @@
 			$val=$res["cout"]*$v["nb"];
 			$dte=date("Y-m-d");
 
-			$form_commentaire=addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)";
+			$form_commentaire=addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".AffMontant($res["cout"]).")";
 			
 			$mvt = new compte_class(0,$sql);
 			$mvt->Generate($v["idcpt"],$MyOpt["id_PosteManip"],$form_commentaire,date("Y-m-d"),$val,array());
 			$mvt->Save();
-			$nbmvt=$nbmvt+$mvt->Debite();
+			$nbmvt=getInt($nbmvt)+getInt($mvt->Debite());
 
 			// A voir si cette partie est nécessaire ?
 			$tmpl_x->assign("aff_mouvement_detail", $mvt->Affiche());
@@ -186,6 +190,7 @@
 		$fh=date("O",floor($jstart)/1000+4*3600)/100;
 		$dte=date("Y-m-d",floor($jstart)/1000-$fh*3600);
 		$manip->Valid("dte_manip",$dte);
+		$manip->Valid("dte_limite",$dte);
 	}
 
 	$typeaff="html";
@@ -197,7 +202,6 @@
 	{
 		$typeaff="form";
 	}
-
 	
 	$manip->Render("form",$typeaff);
 	$tmpl_x->assign("aff_id_manip",$id);

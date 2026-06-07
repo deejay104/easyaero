@@ -106,7 +106,7 @@
 	$s=$s+$usr->CalcSoldeTemp();
 	$tmpl_x->assign("solde_temp",AffMontant($s));
 
-//	$tmpl_x->assign("form_montant", "0.00");
+	$tmpl_x->assign("form_montant", AffMontant("0.00"));
 	$tmpl_x->assign("form_commentaire", "Crédit compte ".$usr->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 

@@ -57,8 +57,8 @@ ul.ui-autocomplete {
 									<!-- END: lst_pilote -->
 								</SELECT>
 							</TD>
-							<TD><input id="dest_0" value=""  class="form-control"></TD>
-							<TD><input id="taxe_0" value="0.00"  class="form-control"></TD>
+							<TD><input id="dest_0" value="" class="form-control"></TD>
+							<TD><input id="taxe_0" value="" placeholder="{form_montant}" class="form-control"></TD>
 						</TR>
 					</TABLE>
 					</form>
@@ -192,7 +192,7 @@ $( "#cancel" ).on( "click", function() {
 function OpenDialog()
 {
 	document.getElementById("dest_0").value="";
-	document.getElementById("taxe_0").value="0.00";
+	document.getElementById("taxe_0").value="";
 	$("#dialogForm").css("display","block");
 	$("#dialogForm").css("opacity",100);
 	$(".card").css("opacity",0.25);

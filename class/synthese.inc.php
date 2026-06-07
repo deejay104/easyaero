@@ -301,7 +301,7 @@ class synthese_class extends objet_core
 			$metar = curl_exec($curl);
 			curl_close($curl);
 	
-			$this->fields["mto"]["default"]=$metar;
+			$this->fields["mto"]["defaultnew"]=$metar;
 		}
 
 		parent::__construct($id,$sql);

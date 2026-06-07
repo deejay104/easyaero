@@ -308,6 +308,7 @@
 		$tmpl_x->assign("date_mouvement", $dte);
 		$tmpl_x->assign("placeholder_montant", $m);
 		$tmpl_x->assign("form_montant", (($m<>0) ? $m : ""));
+		$tmpl_x->assign("default_montant", AffMontant("0.00"));
 		$tmpl_x->assign("form_commentaire", $form_commentaire);
 
 		$tmpl_x->AUTORESET=0;

@@ -28,7 +28,7 @@ class bapteme_class extends objet_core
 	// protected $type=array("nom"=>"varchar","telephone"=>"tel","mail"=>"email","dte"=>"datetime","nb"=>"enum","type"=>"enum","status"=>"enum","paye"=>"bool","dte_paye"=>"date","description"=>"text");
 
 	protected $fields=array(
-		"num" => Array("type" => "varchar", "len"=>20,"readonly"=>1 ),
+		"num" => Array("type" => "varchar", "len"=>20,"readonly"=>1,"default"=>"000000" ),
 		"nom" => Array("type" => "varchar", "len"=>50 ),
 		"passager" => Array("type" => "varchar", "len"=>50 ),
 		"telephone" => Array("type" => "tel" ),
@@ -72,11 +72,17 @@ class bapteme_class extends objet_core
 		global $gl_uid;
 
 		parent::__construct($id,$sql);
+	}
 
-		if ($this->data["num"]=="")
+	function Create()
+	{
+		global $MyOpt;
+		$id=parent::Create();
+
+		if (($this->data["num"]=="") || ($this->data["num"]=="000000"))
 		{
-			$res["num"]="xxxxxx";
-
+			$sql=$this->sql;
+			$res=array("num"=>"000000");
 			while((isset($res["num"])) && ($res["num"]!=""))
 			{
 				$this->data["num"]=mt_rand(100000, 999999);
@@ -85,7 +91,9 @@ class bapteme_class extends objet_core
 				$res=$sql->QueryRow($query);
 			}
 		}
+
 	}
+
 
 	function getid($num)
 	{

@@ -134,7 +134,7 @@
 	{
 		$ret=array();
 		$ret["title"]=$tabLang["lang_nomoney"];
-		$ret["message"]="Solde du compte ".$solde." €.<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+		$ret["message"]="Solde du compte ".AffMontant($solde).".<br />Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 		$ret["status"]="error";
 		$ret["field"]="";
 		$result["checks"][]=$ret;

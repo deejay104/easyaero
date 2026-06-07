@@ -106,7 +106,7 @@
 // ---- Affiche la liste des membres
 	$tmpl_x->assign("form_lsttiers", AffListeMembres($sql,$gl_uid,"form_tiers","","","std","non",array()));
 
-	$tmpl_x->assign("form_montant", "0.00");
+	$tmpl_x->assign("form_montant", AffMontant("0.00"));
 	$tmpl_x->assign("form_commentaire", $tabLang["lang_postcomment"]." ".$myuser->val("fullname"));
 	$tmpl_x->assign("FormulaireBackgroundNormal", $MyOpt["styleColor"]["FormulaireBackgroundNormal"]);
 	

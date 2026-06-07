@@ -331,7 +331,7 @@
 
 	$tmpl_x->assign("form_carbavant", $resa["resa"]->carbavant);
 	$tmpl_x->assign("form_carbapres", $resa["resa"]->carbapres);
-	$tmpl_x->assign("form_prixcarbu", ($resa["resa"]->prixcarbu>0) ? $resa["resa"]->prixcarbu : "0");
+	$tmpl_x->assign("form_prixcarbu", ($resa["resa"]->prixcarbu>0) ? $resa["resa"]->prixcarbu : "");
 
 
 	$tmpl_x->assign("lang_devise", $MyOpt["devise"]);

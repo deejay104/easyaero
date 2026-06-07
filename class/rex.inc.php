@@ -89,10 +89,10 @@ class rex_class extends objet_core
 			$metar = curl_exec($curl);
 			curl_close($curl);
 	
-			$this->fields["mto"]["default"]=$metar;
+			$this->fields["mto"]["defaultnew"]=$metar;
 		}		
 
-		$this->fields["dte_rex"]["default"]=date("Y-m-d");
+		$this->fields["dte_rex"]["defaultnew"]=date("Y-m-d");
 
 		parent::__construct($id,$sql);
 	}	

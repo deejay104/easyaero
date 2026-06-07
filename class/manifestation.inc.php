@@ -26,8 +26,8 @@ class manip_class extends objet_core
 	// protected $type=array("titre"=>"varchar","dte_manip"=>"date","dte_limite"=>"date","facture"=>"bool","comment"=>"text","type"=>"multi","cout"=>"price");
 	
 	protected $fields=array(
-		"titre" => Array("type" => "varchar", "len"=>100, "default"=>"Nouvelle manifestation"),
-		"comment" => Array("type" => "text"),
+		"titre" => Array("type" => "varchar", "len"=>100, "placeholder"=>"Nouvelle manifestation"),
+		"comment" => Array("type" => "text", "placeholder"=>"Quel est le programme ?"),
 		"type" => Array("type" => "multi", "len"=>100, "show"=>"tag"),
 		"cout" => Array("type" => "price", "default" => "0.00", ),
 		"facture" => Array("type" => "bool", "default" => "non", ),

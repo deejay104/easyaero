@@ -31,10 +31,10 @@ class ress_class extends objet_core
 
 	protected $fields=array
 	(
-		"nom" => Array("type" => "varchar", "len"=>20),
-		"immatriculation" => Array("type" => "uppercase", "len"=>6 ),
-		"marque" => Array("type" => "uppercase", "len"=>20 ),
-		"modele" => Array("type" => "uppercase", "len"=>20 ),
+		"nom" => Array("type" => "varchar", "len"=>20, "placeholder"=>"Cessna 172 / F-BTXX"),
+		"immatriculation" => Array("type" => "uppercase", "len"=>6, "placeholder"=>"F-BTXX"),
+		"marque" => Array("type" => "uppercase", "len"=>20, "placeholder"=>"Cessna" ),
+		"modele" => Array("type" => "uppercase", "len"=>20, "placeholder"=>"172" ),
 		"couleur" => Array("type" => "uppercase", "len"=>6 ),
 		"actif" => Array("type" => "enum", "default" => "oui", "index"=>1),
 		"poste" => Array("type" => "number", "index" => "1", ),
@@ -48,11 +48,11 @@ class ress_class extends objet_core
 		"typehora" => Array("type" => "enum", "default" => "min", ),
 		"typegauge" => Array("type" => "enum", "default" => "L", ),
 		"description" => Array("type" => "text", ),
-		"places" => Array("type" => "number", "default" => "0", ),
+		"places" => Array("type" => "number", "default" => "2", ),
 		"puissance" => Array("type" => "number", "default" => "0", ),
 		"charge" => Array("type" => "number", "default" => "0", ),
 		"massemax" => Array("type" => "number", "default" => "0", ),
-		"vitesse" => Array("type" => "number", "default" => "0", ),
+		"vitesse" => Array("type" => "number", "default" => "0", "placeholder"=>"100"),
 		"autonomie" => Array("type" => "number", "default" => "0", ),
 		"tolerance" => Array("type" => "varchar", ),
 		"centrage" => Array("type" => "text", ),

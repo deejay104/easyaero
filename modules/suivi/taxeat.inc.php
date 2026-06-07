@@ -137,7 +137,9 @@
 		$tabVols[$i]["resa"]=$sql->data["id"];
 		$tabVols[$i]["nav"]=$sql->data["idnav"];
 	}
-		$tmpl_x->assign("today", date("Y-m-d"));
+
+	$tmpl_x->assign("today", date("Y-m-d"));
+	$tmpl_x->assign("form_montant", AffMontant(0));
 
 
 	foreach ($tabVols as $i=>$id)
@@ -157,7 +159,6 @@
 
 		$tmpl_x->parse("corps.lst_vols");
 		$tmpl_x->parse("corps.lst_vols_search");
-
 	}
 	
 	
