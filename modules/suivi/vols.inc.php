@@ -282,6 +282,8 @@
 				$mvt->Annule();
 			}
 		}
+		header('Location: /suivi/vols', true, 303);
+    	exit;
 	}
 
 // ---- Affiche la page demandée
@@ -426,7 +428,7 @@
 			{ $horadeb_prec=$resa["resa"]->horadeb; }
 			
 			$tmpl_x->assign("idresa", $id);
-			$tmpl_x->assign("horadeb",  " <INPUT type=\"text\" id=\"form_horadeb_".$id."\" class='form-control' name=\"form_horadeb[".$id."]\" value=\"".$resa["resa"]->horadeb."\" style='width:80px; ".(($resa["resa"]->horadeb!=$horadeb_prec) ? "color: #ff0000; background-color: #FFBBAA;" : "")."' OnChange=\"calcHorametre(".$id.");\">");
+			$tmpl_x->assign("horadeb",  " <INPUT type=\"text\" id=\"form_horadeb_".$id."\" class='form-control' name=\"form_horadeb[".$id."]\" value=\"".(($resa["resa"]->horadeb!="0") ? $resa["resa"]->horadeb : "")."\" style='width:80px; placeholder='0000.0' ".(($resa["resa"]->horadeb!=$horadeb_prec) ? "color: #ff0000; background-color: #FFBBAA;" : "")."' OnChange=\"calcHorametre(".$id.");\">");
 			$horadeb_prec=$resa["resa"]->horafin;
 
 			$alerttps="";
@@ -440,9 +442,9 @@
 				$alerttbl=((abs($tps-$tbl)>1.2*$tps) ? "color: #ff0000; background-color: #FFBBAA;" : "");
 			}
 
-			$tmpl_x->assign("horafin", "<INPUT type=\"text\" id=\"form_horafin_".$id."\" class='form-control' name=\"form_horafin[".$id."]\" value=\"".$resa["resa"]->horafin."\" style='width:80px;' OnChange=\"calcHorametre(".$id.");\">");
-			$tmpl_x->assign("temps_vols", " <INPUT type=\"text\" id=\"form_tempsresa_".$id."\" class='form-control' name=\"form_tempsresa[".$id."]\" value=\"".$tps."\" style='width:50px;".$alerttps."'>");
-			$tmpl_x->assign("bloc_vols", " <INPUT type=\"text\" id=\"form_blocresa_".$id."\" class='form-control' name=\"form_blocresa[".$id."]\" value=\"".$tbl."\" style='width:50px;".$alerttbl."' >");
+			$tmpl_x->assign("horafin", "<INPUT type=\"text\" id=\"form_horafin_".$id."\" class='form-control' name=\"form_horafin[".$id."]\" value=\"".(($resa["resa"]->horafin!="0") ? $resa["resa"]->horafin : "")."\" style='width:80px;' placeholder='0000.0' OnChange=\"calcHorametre(".$id.");\">");
+			$tmpl_x->assign("temps_vols", " <INPUT type=\"text\" id=\"form_tempsresa_".$id."\" class='form-control' name=\"form_tempsresa[".$id."]\" value=\"".(($tps!="0") ? $tps : "")."\" placeholder='00' style='width:50px;".$alerttps."'>");
+			$tmpl_x->assign("bloc_vols", " <INPUT type=\"text\" id=\"form_blocresa_".$id."\" class='form-control' name=\"form_blocresa[".$id."]\" value=\"".(($tbl!="0") ? $tbl : "")."\" placeholder='00' style='width:50px;".$alerttbl."' >");
 
 			$tmpl_x->assign("destination_vols", $resa["resa"]->destination);
 			
