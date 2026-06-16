@@ -27,6 +27,7 @@
     $tabLang["lang_sethora"]="Hobbs";
 
     $tabLang["lang_remains"]="Remains (end of flight)";
+    $tabLang["lang_notes"]="Notes for next flight";
     $tabLang["lang_elapsetime"]="Air Time (end of flight)";
     $tabLang["lang_change_explain"]="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant";
     $tabLang["lang_changehora"]="Correct the air time (optional)";

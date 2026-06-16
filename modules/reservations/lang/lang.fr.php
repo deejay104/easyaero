@@ -27,6 +27,7 @@
     $tabLang["lang_sethora"]="Saisi de l'horamètre";
 
     $tabLang["lang_remains"]="Potentiel (fin de vol)";
+    $tabLang["lang_notes"]="Note pour le prochain vol";
     $tabLang["lang_elapsetime"]="Temps de vol (fin de vol)";
     $tabLang["lang_change_explain"]="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant";
     $tabLang["lang_changehora"]="Correction temps de vol (optionel)";

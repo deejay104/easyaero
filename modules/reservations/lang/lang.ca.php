@@ -27,6 +27,7 @@
     $tabLang["lang_sethora"]="Après le vol - Saisi du HOBBS";
 
     $tabLang["lang_remains"]="Nombre d'heure approximatif restant avant prochaine maintenance(fin de vol)";
+    $tabLang["lang_notes"]="Note prochain vol";
     $tabLang["lang_elapsetime"]="Temps de vol depuis la derniere maintenance (fin de vol)";
     $tabLang["lang_change_explain"]="Correction du temps de vol effectué depuis la dernière maintenance, afin de pouvoir ajuster le potentiel restant";
     $tabLang["lang_changehora"]="Correction temps de vol (optionel)";

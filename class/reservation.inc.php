@@ -83,6 +83,7 @@ class resa_class extends objet_core
 		"carbavant" => Array("type" => "number"),
 		"carbapres" => Array("type" => "number"),
 		"prixcarbu" => Array("type" => "varchar", "len"=>8 ),
+		"notes" => Array("type" => "text", "row"=>1, "placeholder"=>"Laisser un message au pilote du prochain vol."),
 		"reel" => Array("type" => "bool", "default" => "oui", "index"=>1),
 		"edite" => Array("type" => "bool", "default" => "non", "index"=>1),
 		"dte_maj" => Array("type" => "datetime" ),
@@ -581,6 +582,7 @@ class resa_class extends objet_core
 			"tpsreel"=>$this->tpsreel,
 			"horadeb"=>$this->horadeb,
 			"horafin"=>$this->horafin,
+			"notes"=>$this->data["notes"],
 			"potentiel"=>$this->potentiel,
 			"carbavant"=>$this->carbavant,
 			"carbapres"=>$this->carbapres,
@@ -640,7 +642,17 @@ class resa_class extends objet_core
 		  }
 	
 		return $res;
-	}	
+	}
+
+	function GetLastNote()
+	{
+		$sql=$this->sql;
+		$query="SELECT notes FROM ".$this->tbl."_calendrier WHERE actif='oui' AND dte_deb<'".$this->dte_deb."' ORDER BY dte_deb DESC LIMIT 0,1";
+		$res=$sql->QueryRow($query);
+
+		$txt="";
+		return $res["notes"];
+	}
 }
 
 

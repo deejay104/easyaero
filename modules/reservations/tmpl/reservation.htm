@@ -22,6 +22,25 @@
         </div>
       </div>
     </div>
+
+	<!-- BEGIN: aff_note -->
+    <div class="info-cartouche-wrap">
+      <div class="info-cartouche bg-gradient-warning-light">
+        <div class="info-cartouche-icon bg-gradient-warning">
+          <i class="mdi mdi-note-outline"></i>
+        </div>
+        <div class="info-cartouche-body">
+          <div>
+            <span class="label">Note du pilote précédent</span>
+          </div>
+          <div>
+            <label>{form_last_note}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- END: aff_note -->
+
 	<div class="info-potentiel">
 		<div>
 		<span class="potentiel">
@@ -191,6 +210,10 @@
 			<div class="card">
 				<div class="card-header">Informations complémentaires</div>
 				<div class="card-body">
+					<div class="form-group row">
+						<label for="potentiel" class="col-lg-5  col-form-label">{lang_notes}</label>
+						<div class="col-lg-5">{form_notes}</div>
+					</div>
 					<div class="form-group row">
 						<label for="potentiel" class="col-lg-5  col-form-label">{lang_remains}</label>
 						<div class="col-lg-5">{form_potentiel}</div>

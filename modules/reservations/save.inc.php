@@ -59,7 +59,10 @@
 	$form_carbavant=checkVar("form_carbavant","varchar");
 	$form_carbapres=checkVar("form_carbapres","varchar");
 	$form_prixcarbu=checkVar("form_prixcarbu","varchar");
-	
+
+	$form_data=checkVar("form_data","array");
+
+
 	$resa["resa"]=new resa_class($id,$sql);
 
 	if ($form_uid_pilote==0)
@@ -176,6 +179,8 @@
 				{
 					$resa["resa"]->Valid("taxe",$form_data["taxe"]);
 				}
+
+				$resa["resa"]->Valid("notes",$form_data["notes"]);
 
 			}
 

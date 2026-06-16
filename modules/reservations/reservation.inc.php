@@ -187,6 +187,15 @@
 	$resa["resa"]->Render("form","form");
 
 // **************************************
+	// Get notes froms last flight
+	$note=$resa["resa"]->GetLastNote();
+	if ($note!="")
+	{
+		$tmpl_x->assign("form_last_note", $note);
+		$tmpl_x->parse("corps.aff_note");
+	}
+
+// **************************************
 	
 	$tmpl_x->assign("form_uid_ress", $resa["resa"]->uid_ressource);
 

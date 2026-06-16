@@ -33,6 +33,19 @@
 	$idvol=checkVar("idvol","numeric");
 	$update=checkVar("update","numeric");
 
+// ---- Annuler
+	if ($fonc=="Annuler")
+	{
+		if ($idvol>0)
+		{
+			header('Location: /reservations/reservation?id='.$idvol, true, 303);
+	    	exit;
+		}
+		$fiche=new synthese_class($id,$sql);
+		header('Location: /aviation/syntheses?uid='.$fiche->val("uid_pilote"), true, 303);
+		exit;
+	}
+
 // ---- Enregistrer
 	$msg_erreur="";
 	$msg_confirmation="";
@@ -153,7 +166,7 @@
 			}
 		}
 
-		header('Location: /aviation/synthese?id='.$id.'&uid='.$uid.'&update=1', true, 303);
+		header('Location: /aviation/synthese?id='.$id.'&uid='.$fiche->val("uid_pilote").'&update=1', true, 303);
     	exit;
 	}
 
@@ -264,8 +277,8 @@
 				$c_line=new exercice_class($v["id"],$sql);
 				$c_line->Delete();
 			}
-			$mod="aviation";
-			$affrub="syntheses";
+			header('Location: /aviation/syntheses?uid='.$fiche->val("uid_pilote"), true, 303);
+			exit;
 		}
 	}
 
