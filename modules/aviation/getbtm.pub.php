@@ -1,9 +1,4 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
 
 // ── Authentification ──────────────────────────────────────────────────────
 $apiKey = $_SERVER['HTTP_X_API_KEY'] ?? '';

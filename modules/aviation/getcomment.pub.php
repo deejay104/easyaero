@@ -1,11 +1,5 @@
 <?php
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: https://www.polygone67.com');
-header('Access-Control-Allow-Methods: GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
-
 define('API_SHARED_SECRET',  getenv('API_SHARED_SECRET')  ?: $MyOpt["btm_apiSecret"]);
 
 // ── Authentification ──────────────────────────────────────────────────────
