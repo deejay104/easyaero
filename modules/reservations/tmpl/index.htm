@@ -35,6 +35,17 @@
 	.afficheLegende { line-height:16px; margin: 5px; }
 	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
 
+	.fc-blocked {
+		background-image: repeating-linear-gradient(
+			45deg,
+			rgba(0,0,0,0.25),
+			rgba(0,0,0,0.25) 3px,
+			transparent 3px,
+			transparent 10px
+		) !important;
+		opacity: 0.5;
+	}
+
 </style>
 
 <script>
@@ -191,9 +202,18 @@
 					showToast("","L'API n'est pas accessible","error");
 				}
 			},
+
 			eventRender: function( event, element, view ) {
 				var title = element.find( '.fc-title' );
 				title.html( title.text() );
+			},
+
+			eventClassNames: function(arg) {
+				console.log(arg.event);
+				if (arg.event.extendedProps.blocked) {
+					return ['event-blocked'];
+				}
+				return [];
 			},
 
 			viewRender: function(view,element) {
@@ -235,7 +255,7 @@ console.log(view.name+" "+oldView);
 			    $(this).css('z-index', 8);
 			    $('.calendarDesc').remove();
 			},
-	<!-- END: aff_tooltips -->
+			<!-- END: aff_tooltips -->
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);

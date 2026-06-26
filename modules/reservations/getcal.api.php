@@ -79,11 +79,12 @@
 				if ($resa["resa"]->val("blocker")=="oui")
 				{
 					$t.=$resa["ress"]->val("immatriculation")."<br />Bloqué";
-					$col="bbbbbb";
+					$desc=$resa["ress"]->val("immatriculation")." bloqué de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");
+					$input_arrays[$ii]["className"]=array("fc-blocked"); 
 				}
 				else
 				{
-					if ($d<15)
+					if ($d<7)
 					{
 						$t.=$resa["ress"]->val("immatriculation")." : \n";
 					}
@@ -96,6 +97,7 @@
 					{
 						$t.=" <i class='mdi mdi-account-multiple mdi-18px'></i>";
 					}
+					$desc=$resa["ress"]->val("immatriculation")." de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->id>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");
 				}
 
 				$input_arrays[$ii]["title"]=$t;
@@ -104,9 +106,10 @@
 
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
 				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
-				$input_arrays[$ii]["description"]=$resa["ress"]->val("immatriculation")." de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->id>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");
+				$input_arrays[$ii]["description"]=$desc;
 				$input_arrays[$ii]["editable"]=($resa["resa"]->edite=='non') ? false : true;
-				if ($col!="") { $input_arrays[$ii]["color"]='#'.$col; }
+				$input_arrays[$ii]["color"]=($col!="") ? '#'.$col : "#dddddd"; 
+				$input_arrays[$ii]["blocked"]=($resa["resa"]->val("blocker")=="oui") ? true : false; 
 				$ii=$ii+1;
 			}
 		}
