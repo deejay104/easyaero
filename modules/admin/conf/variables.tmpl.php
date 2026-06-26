@@ -147,9 +147,6 @@ $MyOptHelp["updateBloc"]="Maintiens le temps bloc égale à celui de l'horametre
 $MyOptTmpl["oacimetar"]="LFST";
 $MyOptHelp["oacimetar"]="Code OACI du terrain avec METAR le plus proche";
 
-// Baptème
-$MyOptTmpl["public_host"]="https://www.polygone67.com";
-$MyOptHelp["public_host"]="URL du site public";
 
 $MyOptTmpl["btm_apiSecret"]="";
 $MyOptHelp["btm_apiSecret"]="Shared secret with public site for API calls";
