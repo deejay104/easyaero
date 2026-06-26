@@ -338,7 +338,7 @@
 		$query = "SELECT id ";
 		$query.= "FROM ".$MyOpt["tbl"]."_calendrier ";
 		// $query.= "WHERE dte_deb>='$dte' AND dte_deb<'".now()."' AND actif='oui' AND prix=0 AND uid_avion='$idavion' ORDER BY dte_deb,horadeb";
-		$query.= "WHERE dte_deb<'".now()."' AND actif='oui' AND edite='oui' AND uid_avion='".$idavion."' ORDER BY dte_deb,horadeb";
+		$query.= "WHERE dte_deb<'".now()."' AND actif='oui' AND edite='oui' AND blocker='non' AND uid_avion='".$idavion."' ORDER BY dte_deb,horadeb";
 		$sql->Query($query);
 		$tvols=array();
 		for($i=0; $i<$sql->rows; $i++)

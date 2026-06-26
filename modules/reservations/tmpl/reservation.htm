@@ -152,6 +152,21 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="form-group row {form_hide}"</div>
+						<label for="invite" class="col-lg-3 col-form-label" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Bloqueur</label>
+						<div class="col-lg-7">
+							<div class="form-inline">
+								<div class="form-check">
+									<label class="form-check-label"><input type="radio" class="form-check-input form-input" name="form_data[blocker]" value="non" {chk_blocker_non}>Non<i class="input-helper"></i></label>&nbsp;
+								</div>
+								<div class="form-check">
+									<label class="form-check-label"><input type="radio" class="form-check-input form-input" name="form_data[blocker]" value="oui" {chk_blocker_oui}>Oui<i class="input-helper"></i></label>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 
 					<div class="form-group row">
 						<label for="form_dte_deb" class="col-lg-3 col-form-label">Du</label>
@@ -285,12 +300,9 @@
 		</div>
 	</div>
 	<!-- END: aff_syntheses -->
+
+<!-- END: aff_reservation -->
 </FORM>
-
-
-
-	<!-- END: aff_reservation -->
-
 
 <script>
 

@@ -34,14 +34,14 @@
 	{
 		$lstres[]=$ress;
 	}
-	
+
+	$d=floor(date_diff_txt($start,$end)/86400);
+	$affnom=($d<=7) ? "fullname" : "initiales";
+
 	// Affichage des réservations	
 	foreach ($lstres as $i=>$rid)
 	{
 		$tresa=GetReservation($sql,$start,$end,$rid);
-
-		$d=floor(date_diff_txt($start,$end)/86400);
-		$affnom=($d<=7) ? "fullname" : "initiales";
 
 		if (is_array($tresa))
 		{
@@ -74,7 +74,34 @@
 	
 				$input_arrays[$ii]["id"]=$resa["resa"]->id;
 				$input_arrays[$ii]["resourceId"]=$resa["resa"]->uid_ressource;
-				$input_arrays[$ii]["title"]=(($d==1) ? $resa["ress"]->val("immatriculation")." : \n" : "").$resa["pilote"]->val($affnom).(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->val($affnom)) : "").(($resa["resa"]->invite=="oui") ? " <i class='mdi mdi-account-multiple mdi-18px'></i>" : "");
+
+				$t="";
+				if ($resa["resa"]->val("blocker")=="oui")
+				{
+					$t.=$resa["ress"]->val("immatriculation")."<br />Bloqué";
+					$col="bbbbbb";
+				}
+				else
+				{
+					if ($d<15)
+					{
+						$t.=$resa["ress"]->val("immatriculation")." : \n";
+					}
+					$t.=$resa["pilote"]->val($affnom);					
+					if ($resa["instructeur"]->id>0)
+					{
+						$t.="<br />+ ".$resa["instructeur"]->val($affnom);
+					}
+					if ($resa["resa"]->invite=="oui")
+					{
+						$t.=" <i class='mdi mdi-account-multiple mdi-18px'></i>";
+					}
+				}
+
+				$input_arrays[$ii]["title"]=$t;
+
+//				$input_arrays[$ii]["title"]=(($d==1) ? $resa["ress"]->val("immatriculation")." : \n" : "").$resa["pilote"]->val($affnom).(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->val($affnom)) : "").(($resa["resa"]->invite=="oui") ? " <i class='mdi mdi-account-multiple mdi-18px'></i>" : "");
+
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
 				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
 				$input_arrays[$ii]["description"]=$resa["ress"]->val("immatriculation")." de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->id>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");

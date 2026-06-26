@@ -181,6 +181,7 @@
 				}
 
 				$resa["resa"]->Valid("notes",$form_data["notes"]);
+				$resa["resa"]->Valid("blocker",$form_data["blocker"]);
 
 			}
 

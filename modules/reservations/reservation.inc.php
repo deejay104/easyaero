@@ -280,7 +280,18 @@
 		$tmpl_x->assign("chk_pob", ($resa["resa"]->nbpersonne==$i) ? "checked='checked'" : "");
 		$tmpl_x->parse("corps.aff_reservation.lst_pob");
 	}
-	
+
+	// Invitation aux membres
+	$tmpl_x->assign("chk_invite_".$resa["resa"]->invite, "checked='checked'");
+
+	// Blocker
+	$tmpl_x->assign("chk_blocker_".$resa["resa"]->val("blocker"), "checked='checked'");
+	if (!GetDroit("ModifResaBlocker"))
+	{
+		$tmpl_x->assign("form_hide", "d-none");
+	}
+
+
 	// Horaires
 	if ($ok==2)
 	  {
@@ -306,13 +317,11 @@
 
 	$tmpl_x->assign("form_destination", $resa["resa"]->destination);
 	$tmpl_x->assign("form_nbpassager", $resa["resa"]->nbpersonne);
-	$tmpl_x->assign("chk_invite_".$resa["resa"]->invite, "checked='checked'");
-
 	$tmpl_x->assign("form_tpsestime", $resa["resa"]->tpsestime);
-
 	$tmpl_x->assign("form_tpsreel", ($resa["resa"]->tpsreel>0) ? $resa["resa"]->tpsreel : "");
 	$tmpl_x->assign("form_horadeb", ($resa["resa"]->horadeb>0) ? $resa["resa"]->horadeb : "" );
 	$tmpl_x->assign("form_horafin", ($resa["resa"]->horafin>0) ? $resa["resa"]->horafin : "");
+
 
 	// Affiche l'horamètre
 	$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
@@ -346,19 +355,6 @@
 	$tmpl_x->assign("lang_devise", $MyOpt["devise"]);
 	$tmpl_x->assign("lang_volume", $MyOpt["unitVol"]);
 
-	// Texte d'acceptation
-	// if ($MyOpt["ChkValidResa"]=="on")
-	// {
-		// {
-			// $tmpl_x->parse("corps.aff_reservation.aff_chkreservation_ok");
-		// }
-		// else
-		// {
-			// $tmpl_x->assign("TxtValidResa", $MyOpt["TxtValidResa"]);
-			// $tmpl_x->parse("corps.aff_reservation.aff_chkreservation");
-		// }
-	// }
-
 	$tmpl_x->assign("TxtValidResa", $MyOpt["TxtValidResa"]);
 
 
@@ -367,25 +363,9 @@
 		$tmpl_x->parse("corps.aff_reservation.aff_enregistrer");
 	}
 
-// ---- Menu
 
 
-	// Affiche le boutton supprimer
-	if ($resa["resa"]->edite!="non")
-	{
-		addPageMenu("",$mod,"Supprimer",geturl("reservations","save","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?","","outline-danger");
-	}
-
-	if ($resa["resa"]->edite=="non")
-	{
-		addPageMenu("",$mod,"Devis de masse",geturl("aviation","centrage","id=".$id),"",false,"","");
-	}
-	else
-	{
-		addPageMenu("",$mod,"Devis de masse",geturl("reservations","reservation#",""),"",false,"","goCentrage();");
-	}
-
-	
+// ---- Fiches de synthèse	
 	// Liste les fiches de synthèse du vol
 	if ($id>0)
 	{
@@ -413,6 +393,24 @@
 				addPageMenu("",$mod,"Ajouter Synthèse",geturl("aviation","synthese","id=0&idvol=".$id),"",false,"","");
 			}
 		}
+	}
+
+// ---- Menu
+
+
+	// Affiche le boutton supprimer
+	if ($resa["resa"]->edite!="non")
+	{
+		addPageMenu("",$mod,"Supprimer",geturl("reservations","save","fonc=delete&id=".$id),"mdi-delete",false,"Souhaitez-vous supprimer cette réservation ?","","outline-danger");
+	}
+
+	if ($resa["resa"]->edite=="non")
+	{
+		addPageMenu("",$mod,"Devis de masse",geturl("aviation","centrage","id=".$id),"",false,"","");
+	}
+	else
+	{
+		addPageMenu("",$mod,"Devis de masse",geturl("reservations","reservation#",""),"",false,"","goCentrage();");
 	}
 
 // ---- Affichage		

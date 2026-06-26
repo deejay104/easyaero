@@ -78,6 +78,7 @@ $tabRoles["ModifUserDisponibilite"]="Modifier les disponibilités";
 $tabRoles["ModifUserDteInscription"]="Modifier la date d'inscription";
 
 $tabRoles["ModifReservations"]="Autorise la modification de toutes les réservations";
+$tabRoles["ModifResaBlocker"]="Autorise à définir une réservation comme un bloqueur";
 
 
 $tabRoles["CreeRessource"]="Créer une nouvelle ressource (avion)";

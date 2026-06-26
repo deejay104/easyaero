@@ -86,6 +86,7 @@ class resa_class extends objet_core
 		"notes" => Array("type" => "text", "row"=>1, "placeholder"=>"Laisser un message au pilote du prochain vol."),
 		"reel" => Array("type" => "bool", "default" => "oui", "index"=>1),
 		"edite" => Array("type" => "bool", "default" => "non", "index"=>1),
+		"blocker" => Array("type" => "bool", "default" => "non"),
 		"dte_maj" => Array("type" => "datetime" ),
 		"uid_maj" => Array("type" => "number" ),
 		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
@@ -411,7 +412,7 @@ class resa_class extends objet_core
 		if (!is_numeric($this->tpsestime))
 	  	  { $this->tpsestime=0; }
 
-		if ($this->tpsestime==0)
+		if (($this->tpsestime==0) && ($this->val("blocker")=="non"))
 		{
 			$ret[]=array("txt"=>"Vous devez saisir un temps de vol estimé","status"=>"info","field"=>"tpsestime");
 		}
@@ -583,6 +584,7 @@ class resa_class extends objet_core
 			"horadeb"=>$this->horadeb,
 			"horafin"=>$this->horafin,
 			"notes"=>$this->data["notes"],
+			"blocker"=>$this->data["blocker"],
 			"potentiel"=>$this->potentiel,
 			"carbavant"=>$this->carbavant,
 			"carbapres"=>$this->carbapres,
