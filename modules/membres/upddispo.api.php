@@ -3,41 +3,49 @@
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
+	if ( (!GetDroit("AccesDisponibilites")) && (!GetMyId($id)) )
+	  { apiError(401,"Accès non autorisé (AccesDisponibilites)"); }
+
 // ---- Vérifie les paramètres
-	// Short-circuit if the client did not give us a date range.
-	if (!isset($_GET['jstart']) || !isset($_GET['jend'])) {
-		die("Please provide a date range.");
-	}
 
-	$jstart=$_GET['jstart'];
-	$jend=$_GET['jend'];
+	$id=checkVar("id","numeric");
+	$mid=checkVar("mid","numeric");
+	$jstart=checkVar('jstart','numeric');
+	$jend=checkVar('jend','numeric');
 
-	$fh=date("O",floor($jstart)/1000+4*3600)/100;
-	$jstart=date("Y-m-d H:i:s",floor($jstart)/1000-$fh*3600);
-	$fh=date("O",floor($jend)/1000+4*3600)/100;
-	$jend=date("Y-m-d H:i:s",floor($jend)/1000-$fh*3600);
-	$id=(!is_numeric($_GET['id'])) ? 0 : $_GET["id"];
-	$mid=(!is_numeric($_GET['mid'])) ? 0 : $_GET["mid"];
-
-	if (($id==0) && ($mid==0))
+	if ($fonc=="delete")
 	{
-		die("Error with variables.");
+		$t=array(
+			"actif"=>"non",
+		);	
 	}
-
-	$t=array(
-		"dte_deb"=>$jstart,
-		"dte_fin"=>$jend,
-		"uid_maj"=>$gl_uid,
-		"dte_maj"=>now()
-	);
-	
+	else
+	{
+		$t=array(
+			"dte_deb"=>date("Y-m-d H:i:s",$jstart),
+			"dte_fin"=>date("Y-m-d H:i:s",$jend),
+		);
+		
+	}
 	if ($mid>0)
 	{
 		$t["uid"]=$mid;
 	}
+
+	$t["uid_maj"]=$gl_uid;
+	$t["dte_maj"]=now();
+
 	
-	$sql->Edit("disponibilite",$MyOpt["tbl"]."_disponibilite",$id,$t);
+	$id=$sql->Edit("disponibilite",$MyOpt["tbl"]."_disponibilite",$id,$t);
 
-	echo json_encode(array('updated' => true));
+	$r=array();
+	$r["status"]=200;
+	$r["id"]=$id;
+	$r["eventId"]=$id;
+	$r["tz"]=date_default_timezone_get();
+	$r["start"]=date("Y-m-d H:i:s",$jstart);
+	$r["end"]=date("Y-m-d H:i:s",$jend);
 
+
+	echo json_encode($r);
 ?>

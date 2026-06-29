@@ -9,27 +9,12 @@
 
 <!-- BEGIN: corps -->
 
-<link href='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
-
-<script src='{path_root}/{path_core}/external/fullcalendar/lib/moment.min.js'></script>
-<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.js'></script>
-<script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
-
 <style>
 	#loading {
 		display: none;
 		position: absolute;
 		top: 10px;
 		right: 10px;
-	}
-
-	#calendar {
-	}
-	.calendarDesc {
-		background: white;
-		border: 1px solid #cccccc;
-		padding:10px;
-		border-radius: 2px;
 	}
 
 	.afficheLegende { line-height:16px; margin: 5px; }
@@ -46,124 +31,195 @@
 		opacity: 0.5;
 	}
 
+	.fc-tooltip {
+		position: absolute;
+		background: var(--p67-form-bg);
+		color: var(--p67-text);
+		padding: 5px 10px;
+		border: 1px solid var(--p67-border);
+		border-radius: 4px;
+		font-size: 12px;
+		pointer-events: none;
+		z-index: 9999;
+		white-space: nowrap;
+	}
+
 </style>
+
+<div class="row">
+	<div class="col grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">
+				<span>{TexteTitre}</span>
+				&nbsp;
+				<select id="ress" name="ress" class="form-control" OnChange="Recharge();">
+					<option value="0">Tous</OPTION>
+					<!-- BEGIN: lst_ress -->
+					<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
+					<!-- END: lst_ress -->
+				</select>
+			</div>
+
+			<div class="card-body">
+
+				<div id='calendar' style='min-height: 620px;'></div>
+				<p style="font-size: 10px; line-height:12px;">
+				Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
+				</p>
+					
+				<table>
+				<tr>
+					<td>
+						<p class="afficheLegende">
+							<label style="background-color: #{maintconf}; "></label>
+							{lang_maintconfirmed}
+						</p>
+
+						<p class="afficheLegende">
+							<label style="background-color: #{maintplan};"></label>
+							{lang_maintscheduled}
+						</p>
+						<p class="afficheLegende">
+							<label style="background-color: #{meeting};"></label>
+							{lang_event}
+						</p>
+					</td>
+					<td>
+
+					<!-- BEGIN: lst_couleur -->
+					<p class="afficheLegende" style="width:180px; padding-left:20px;">
+						<label style="background-color: #{couleur_col}; "></label>
+						<span>{couleur_nom}</span>
+					</p>
+					<!-- END: lst_couleur -->
+					</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v6.js'></script>
+
 
 <script>
 
-	var ns4=document.layers
-	var ie4=document.all
-	var ns6=document.getElementById&&!document.all
-
 	function Recharge()
-	  {
-		if (ns6)
-		  {
-		  	var a = document.getElementById("ress").value;
-		  	document.location="{path_root}/reservations/index?ress="+a+"&jour={form_jour}";
-		  }
-		else
-		  {
-		  	<!-- document.location='{path_root}/reservations/index?ress='+ress.value+'&jour={form_jour}'; -->
-		  }
-	  }
+	{
+		var a = document.getElementById("ress").value;
+		document.location="{path_root}/reservations/index?ress="+a+"&jour={form_jour}";
+	}
 
 	var oldView="old";
 	
-	$(document).ready(function() { showCalendar(); });
-	
-	function showCalendar() {
-		$('#calendar').fullCalendar({
-			defaultDate: '{form_jour}',
-			defaultView: '{defaultView}',
+	document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+			initialDate: '{form_jour}',
+			initialView: '{defaultView}',
 			timeZone: '{timezone}', 
 			locale: 'fr',
-			lang: 'fr',
-			defaultEventMinutes: 60,
-			timeFormat: 'H:mm',
+			defaultTimedEventDuration: 60,
+			eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
 			editable: true,
-			eventLimit: true,
 			selectable: true,
-			selectHelper: true,
-			minTime: '{form_debjour}:00:00',
-			maxTime: '{form_finjour}:00:00',
+			selectMirror: true,
+			slotMinTime: '{form_debjour}:00:00',
+			slotMaxTime: '{form_finjour}:00:00',
 			scrollTime: '{form_debjour}:00:00',
-			axisFormat: 'HH:mm',
 			contentHeight: 'auto',
 			slotEventOverlap: false,
 			allDaySlot: false,
 
-		
-			header: {
-				left: 'prev,next today',
+			buttonText: {
+				today:  "Aujourd'hui",
+				month:  "Mois",
+				week:   "Semaine",
+				day:    "Jour",
+				list:   "Liste"
+			},
+
+			headerToolbar: {
+				left: 'prev,next,today',
 				center: 'title',
 				right: '{headerListe}'
 			},
 
 			businessHours:
-		    {
-			   start: '0:00', // a start time (10am in this example)
-			   end: '23:59', // an end time (12pm in this example)
-			   dow: [ 1,2,3,4,5 ]
+			{
+				daysOfWeek: [1, 2, 3, 4, 5], // Lun-Ven
+				startTime: '00:00',
+				endTime: '24:00'
 			},
 			views: {
 				agendaDay: {
-					type: 'timeline',
+					type: 'timeGrid',
 					duration: { days: 1 },
 					buttonText: 'Jour',
 					dateIncrement: { days: 1 },
-					eventLimit: 5,
-					titleFormat: 'dddd, Do MMMM YYYY'
+					dayMaxEvents: 5,
 				},
 				agendaWeek: {
-					type: 'agenda',
+					type: 'timeGrid',
 					duration: { weeks: 1 },
 					buttonText: 'Semaine',
-					columnFormat: 'DD',
+					dayHeaderFormat: { weekday: 'short', day: 'numeric', omitCommas: true },
 					dateIncrement: { weeks: 1 },
-					eventLimit: 5
+					dayMaxEvents: 5
 				},
 				agendaTwoWeeks: {
-					type: 'agenda',
+					type: 'timeGrid',
 					duration: { weeks: 2 },
 					buttonText: '2 Semaines',
-					columnFormat: 'DD',
+					dayHeaderFormat: { day: 'numeric', omitCommas: true },
 					dateIncrement: { weeks: 1 },
-					eventLimit: 5
+					dayMaxEvents: 5
 				},
 				agendaFourWeeks: {
-					type: 'agenda',
+					type: 'timeGrid',
 					duration: {weeks: 4},
 					buttonText: '4 Semaines',
-					columnFormat: 'DD',
+					dayHeaderFormat: { day: 'numeric',  omitCommas: true },
 					dateIncrement: { weeks: 1 },
-					eventLimit: 3
+					dayMaxEvents: 3
 				},
 				agendaMonth: {
-					type: 'month',
+					type: 'dayGridMonth',
 					buttonText: 'Mois',
-					eventLimit: 5,
+					dayMaxEvents: 5,
 					height: 700
 				}
 			},
 
-			select: function(start, end) {
-				document.location="{path_root}/reservations/reservation?ress={form_ress}"+"&jstart="+start+"&jend="+end;
+			select: function(event) {
+				dteStart=new Date(event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+				document.location="{path_root}/reservations/reservation?ress={form_ress}"+"&jstart="+timeStart+"&jend="+timeEnd;
 			},
 
-			eventClick: function(event, element) {
-				document.location="{path_root}/reservations/reservation?id="+event.id;
+			eventClick: function(event) {
+				document.location="{path_root}/reservations/reservation?id="+event.event.extendedProps.eventId;
 			},
 
-			eventResize: function(event, dayDelta, revertFunc) {
+			eventResize: function(event) {
+				e=event.event.extendedProps;
+				dteStart=new Date(event.event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+
 				$.ajax({
-					url: '{path_root}/api/v1/reservations/updatecal?id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					url: '{path_root}/api/v1/reservations/updatecal?id='+e.eventId+'&jstart='+timeStart+'&jend='+timeEnd,
 					dataType: 'JSON',
 					success : function(response)
 					{
 						if (response.status!=200)
 						{
-//							document.getElementById('msgbox').innerHTML="<div id='msgbox' class='msgbox-std msgbox-error'>"+response.value+"</div>";
-//							console.log(response.value);
 							showToast("Mise à jour",response.value,"error");
 							revertFunc();
 						}
@@ -177,8 +233,14 @@
 			},
 			eventDrop: function(event,dayDelta,revertFunc) {
 				console.log("drop");
+				e=event.event.extendedProps;
+				dteStart=new Date(event.event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+
 				$.ajax({
-					url: '{path_root}/api/v1/reservations/updatecal?id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta,
+					url: '{path_root}/api/v1/reservations/updatecal?id='+e.eventId+'&jstart='+timeStart+'&jend='+timeEnd,
 					dataType: 'JSON',
 					success : function(response)
 					{
@@ -208,115 +270,34 @@
 				title.html( title.text() );
 			},
 
-			eventClassNames: function(arg) {
-				console.log(arg.event);
-				if (arg.event.extendedProps.blocked) {
-					return ['event-blocked'];
-				}
-				return [];
-			},
-
-			viewRender: function(view,element) {
-				var d = new Date();
-				var strDate = moment().format("YYYY-MM-DD");
-console.log(view.name+" "+oldView);
-
-				if ((view.type=="agendaDay") && (oldView!=view.type))
-				{
-					$('#calendar').fullCalendar('gotoDate', strDate);
-				}
-				else if ((view.type=="agendaWeek") && (oldView!=view.type))
-				{
-					$('#calendar').fullCalendar('gotoDate', strDate);
-				}
-				else if (oldView!=view.type)
-				{
-					$('#calendar').fullCalendar('gotoDate', '{form_jour}');
-				}
-				oldView=view.name;
-
-			},
 
 			<!-- BEGIN: aff_tooltips -->
-			eventMouseover: function(event, jsEvent) {
-			    var tooltip = '<div class="calendarDesc" style="position:absolute;z-index:10001;left:0px;top:0px;display:none">' + event.description + '</div>';
-			    $("body").append(tooltip);
-			    $(this).mouseover(function(e) {
-			        $(this).css('z-index', 10000);
-			        $('.calendarDesc').fadeIn('500');
-			        $('.calendarDesc').fadeTo('10', 1.9);
-			        $('.calendarDesc').css('display', 'visible');
-			    }).mousemove(function(e) {
-			        $('.calendarDesc').css('top', e.pageY + 10);
-			        $('.calendarDesc').css('left', e.pageX + 20);
-			    });
+
+			eventDidMount: function(info) {
+				//var txt = '<div id="CalendarDesc" class="calendarDesc" style="position:absolute;z-index:10001;left:0px;top:0px;display:block">' + event.event.extendedProps.description + '</div>';
+
+				const tooltip = document.createElement('div');
+				tooltip.className = 'fc-tooltip';
+				tooltip.innerHTML = info.event.extendedProps.description;
+				info.el.addEventListener('mouseenter', () => {
+					document.body.appendChild(tooltip);
+					const rect = info.el.getBoundingClientRect();
+					tooltip.style.left = rect.left + 'px';
+					tooltip.style.top  = (rect.top - tooltip.offsetHeight - 5) + window.scrollY + 'px';
+				});
+
+				info.el.addEventListener('mouseleave', () => tooltip.remove());
 			},
-			eventMouseout: function(event, jsEvent) {
-			    $(this).css('z-index', 8);
-			    $('.calendarDesc').remove();
-			},
+
 			<!-- END: aff_tooltips -->
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);
 			}
 		});
+		calendar.render();
+	});
+
 		
-	}
-
 </script>
-
-<div class="row">
-	<div class="col grid-margin stretch-card">
-		<div class="card">
-			<div class="card-header">
-				<span>{TexteTitre}</span>
-				&nbsp;
-				<select id="ress" name="ress" class="form-control" OnChange="Recharge();">
-					<option value="0">Tous</OPTION>
-					<!-- BEGIN: lst_ress -->
-					<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
-					<!-- END: lst_ress -->
-				</select>
-			</div>
-
-			<div class="card-body">
-
-				<div id='calendar' style='min-height: 620px;'></div>
-				<p style="font-size: 10px; line-height:12px;">
-				Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
-				</p>
-					
-				<table>
-				<tr>
-					<td>
-						<p class="afficheLegende">
-							<label style="background-color: #{maintconf}; "></label>
-							<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
-						</p>
-
-						<p class="afficheLegende">
-							<label style="background-color: #{maintplan};"></label>
-							Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
-						</p>
-						<p class="afficheLegende">
-							<label style="background-color: #{meeting};"></label>
-							{lang_event}
-						</p>
-					</td>
-					<td>
-
-					<!-- BEGIN: lst_couleur -->
-					<p class="afficheLegende" style="width:180px; padding-left:20px;">
-						<label style="background-color: #{couleur_col}; "></label>
-						<span>{couleur_nom}</span>
-					</p>
-					<!-- END: lst_couleur -->
-					</td>
-				</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-</div>
 <!-- END: corps -->

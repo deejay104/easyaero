@@ -13,9 +13,7 @@
 
 	// Short-circuit if the client did not give us a date range.
 	if (!isset($_GET['start']) || !isset($_GET['end'])) {
-		$input_arrays["error"]="Please provide a date range";
-		echo json_encode($input_arrays);
-		exit;
+		apiError(500,"Please provide a date range");
 	}
 
 	$start=checkVar("start","varchar");
@@ -73,13 +71,14 @@
 				}
 	
 				$input_arrays[$ii]["id"]=$resa["resa"]->id;
+				$input_arrays[$ii]["eventId"]=$resa["resa"]->id;
 				$input_arrays[$ii]["resourceId"]=$resa["resa"]->uid_ressource;
 
 				$t="";
 				if ($resa["resa"]->val("blocker")=="oui")
 				{
-					$t.=$resa["ress"]->val("immatriculation")."<br />Bloqué";
-					$desc=$resa["ress"]->val("immatriculation")." bloqué de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");
+					$t.=$resa["ress"]->val("immatriculation")."\nBloqué";
+					$desc=$resa["ress"]->val("immatriculation")." bloqué de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."\n".(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");
 					$input_arrays[$ii]["className"]=array("fc-blocked"); 
 				}
 				else
@@ -91,7 +90,7 @@
 					$t.=$resa["pilote"]->val($affnom);					
 					if ($resa["instructeur"]->id>0)
 					{
-						$t.="<br />+ ".$resa["instructeur"]->val($affnom);
+						$t.="\n+ ".$resa["instructeur"]->val($affnom);
 					}
 					if ($resa["resa"]->invite=="oui")
 					{
@@ -104,11 +103,13 @@
 
 //				$input_arrays[$ii]["title"]=(($d==1) ? $resa["ress"]->val("immatriculation")." : \n" : "").$resa["pilote"]->val($affnom).(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->val($affnom)) : "").(($resa["resa"]->invite=="oui") ? " <i class='mdi mdi-account-multiple mdi-18px'></i>" : "");
 
+				$input_arrays[$ii]["type"]="calendar";
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
 				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
 				$input_arrays[$ii]["description"]=$desc;
 				$input_arrays[$ii]["editable"]=($resa["resa"]->edite=='non') ? false : true;
 				$input_arrays[$ii]["color"]=($col!="") ? '#'.$col : "#dddddd"; 
+				$input_arrays[$ii]["textColor"]="#000000"; 
 				$input_arrays[$ii]["blocked"]=($resa["resa"]->val("blocker")=="oui") ? true : false; 
 				$ii=$ii+1;
 			}
@@ -125,11 +126,12 @@
 			$m=new manip_class($r,$sql);
 
 			$input_arrays[$ii]["id"]="M".$m->id;
+			$input_arrays[$ii]["type"]="event";
 			$input_arrays[$ii]["title"]=$m->data["titre"];
 			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_manip"]." 00:00:00"));
 			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_manip"]." 23:59:59"));
 			$input_arrays[$ii]["color"]='#'.$MyOpt["tabcolresa"]["meeting"];
-			$input_arrays[$ii]["rendering"]='background';
+			$input_arrays[$ii]["display"]='background';
 			$ii=$ii+1;
 		}
 	}
@@ -144,11 +146,12 @@
 			$m=new maint_class($r,$sql);
 
 			$input_arrays[$ii]["id"]="M".$m->id;
+			$input_arrays[$ii]["type"]="maintenance";
 			$input_arrays[$ii]["title"]="Maintenance";
 			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_deb"]));
 			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_fin"])+86400);
 			$input_arrays[$ii]["color"]='#'.(($m->data["status"]>1) ? $MyOpt["tabcolresa"]["maintconf"] : $MyOpt["tabcolresa"]["maintplan"]);
-			$input_arrays[$ii]["rendering"]='background';
+			$input_arrays[$ii]["display"]='background';
 
 			$ii=$ii+1;
 		}
@@ -159,19 +162,22 @@
 	{
 			$tabcs=CalculSoleil($i,-$MyOpt["terrain"]["longitude"],$MyOpt["terrain"]["latitude"]);
 
-			$input_arrays[$ii]["title"]="morning";
+			$input_arrays[$ii]["type"]="sun";
+			$input_arrays[$ii]["title"]="";
+			$input_arrays[$ii]["descriptio "]="morning";
 			$input_arrays[$ii]["start"]=date("c",strtotime(date("Y-m-d 00:00:00",$i+$tabcs["ls"]-30*60)));
 			$input_arrays[$ii]["end"]=date("c",$i+$tabcs["ls"]-30*60);
 			$input_arrays[$ii]["color"]='gray';
-			$input_arrays[$ii]["rendering"]='background';
+			$input_arrays[$ii]["display"]='background';
 			$ii=$ii+1;
 
-			$input_arrays[$ii]["title"]="evening";
+			$input_arrays[$ii]["type"]="sun";
+			$input_arrays[$ii]["title"]="";
+			$input_arrays[$ii]["description"]="evening";
 			$input_arrays[$ii]["start"]=date("c",$i+$tabcs["cs"]+30*60);
 			$input_arrays[$ii]["end"]=date("c",strtotime(date("Y-m-d 23:59:59",$i+$tabcs["cs"]+30*60)));
-
 			$input_arrays[$ii]["color"]='gray';
-			$input_arrays[$ii]["rendering"]='background';
+			$input_arrays[$ii]["display"]='background';
 			$ii=$ii+1;
 	}
 

@@ -47,8 +47,8 @@
 			$tmpl_custom->assign("manif_id",$did);
 			$tmpl_custom->assign("manif_day",date("d",strtotime($manip->Val("dte_manip"))));
 			$tmpl_custom->assign("manif_month",$tabLang["mois"][date("m",strtotime($manip->Val("dte_manip")))]);
-			$tmpl_custom->assign("manif_title",$manip->Aff("titre"));
-			$tmpl_custom->assign("manif_date",$manip->Aff("dte_manip"));
+			$tmpl_custom->assign("manif_title",$manip->Val("titre"));
+			$tmpl_custom->assign("manif_date",$manip->Val("dte_manip"));
 			$tmpl_custom->parse("custom.manifestation.lst_manifestation");
 		}
 		$tmpl_custom->parse("custom.manifestation");
@@ -63,15 +63,8 @@
 	if (GetModule("aviation"))
 	{
 		// Réservation du jour
-		$tmpl_custom->parse("custom.mod_aviation_detail");
-
-		$debjour=($MyOpt["debjour"]!="") ? $MyOpt["debjour"] : "6";
-		$finjour=($MyOpt["finjour"]!="") ? $MyOpt["finjour"] : "22";
-
-		$tmpl_custom->assign("form_jour",date("Y-m-d"));
-		$tmpl_custom->assign("defaultView","agendaDay");
-		$tmpl_custom->assign("form_debjour",$debjour);
-		$tmpl_custom->assign("form_finjour",$finjour);
+		$tmpl_custom->assign("dte_start", date("Y-m-d 00:00:00"));
+		$tmpl_custom->assign("dte_end", date("Y-m-d 23:59:59"));
 
 	  	$tmpl_custom->parse("custom.aff_reservation");
 		

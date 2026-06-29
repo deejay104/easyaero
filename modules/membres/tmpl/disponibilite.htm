@@ -8,122 +8,11 @@
 
 
 <!-- BEGIN: corps -->
-
-<link href='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
-
-<script src='{path_root}/{path_core}/external/fullcalendar/lib/moment.min.js'></script>
-<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.min.js'></script>
-<script src='{path_root}/{path_core}/external/fullcalendar/locale/fr.js'></script>
-
 <style>
 
-.fc-body { 
-	background-color:#{backcolor};
-}
-.fc-event { 
-	background-color:#{eventcolor};
-}
+	.fc-v-event .fc-event-main { color: var(--p67-primary); }
 
 </style>
-
-<script>
-
-	$(document).ready(function() {
-		$('#calendar').fullCalendar({
-			defaultView: '{defaultView}',
-			defaultDate: '{form_jour}',
-			defaultEventMinutes: 60,
-			timeFormat: 'H:mm',
-			lang: 'fr',
-			editable: true,
-			eventLimit: true,
-			selectable: true,
-			selectHelper: true,
-			minTime: '{form_debjour}:00:00',
-			maxTime: '{form_finjour}:00:00',
-			scrollTime: '{form_debjour}:00:00',
-			axisFormat: 'HH:mm',
-			contentHeight: 'auto',
-			allDaySlot: false,
-			slotEventOverlap: false,
-			eventOverlap: false, // will cause the event to take up entire resource height
-			selectOverlap: false,
-			
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: '{headerListe}'
-			},
-
-			businessHours:
-		    {
-			   start: '0:00', // a start time (10am in this example)
-			   end: '23:59', // an end time (12pm in this example)
-			   dow: [ 1,2,3,4,5 ]
-			},
-
-			views: {
-				agendaTwoWeeks: {
-					type: 'agenda',
-					duration: {weeks: 2},
-					buttonText: '2 Semaines',
-					columnFormat: 'DD',
-					eventLimit: 5
-				},
-				agendaFourWeeks: {
-					type: 'agenda',
-					duration: {weeks: 4},
-					buttonText: '4 Semaines',
-					columnFormat: 'DD',
-					eventLimit: 3
-				},
-				agendaHeightWeeks: {
-					type: 'agenda',
-					duration: {weeks: 8},
-					buttonText: '2 mois',
-					columnFormat: 'DD',
-					eventLimit: 3
-				}
-			},
-
-			select: function(start, end, allDay) {
-				$.ajax({ 
-					url: "{path_root}/api.php?mod=membres&rub=upddispo&fonc=select&id=0&mid={mid}&jstart="+start+"&jend="+end,
-					error:function(e) {
-						console.log(e.responseText);
-					}
-				});
-				$('#calendar').fullCalendar('unselect');
-				$('#calendar').fullCalendar('refetchEvents');
-			},
-
-			eventClick: function(event, element) {
-				//document.location="api.php?rub=uptdispo&id="+event.id;
-				$.ajax({ url: "{path_root}/api.php?mod=membres&rub=upddispo&fonc=click&id="+event.id });
-			},
-
-			eventResize: function(event, dayDelta, minuteDelta ) {
-				$.ajax({ url: '{path_root}/api.php?mod=membres&rub=upddispo&fonc=resize&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
-			},
-			eventDrop: function(event,dayDelta,minuteDelta) {
-				$.ajax({ url: '{path_root}/api.php?mod=membres&rub=upddispo&fonc=drop&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
-			},
-
-			events: {
-				url: '{path_root}/api.php?mod=membres&rub=getdispo&mid={mid}',
-				error: function() {
-					showToast("","L'API n'est pas accessible","error");
-				}
-			},
-
-			loading: function(bool) {
-				$('#loading').toggle(bool);
-			}
-		});
-		
-	});
-
-</script>
 
 <div class="row">
 	<div class="col grid-margin stretch-card">
@@ -137,5 +26,197 @@
 		</div>
 	</div>
 </div>
+
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v6.js'></script>
+
+<script>
+
+	document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+			initialView: '{defaultView}',
+			initialDate: '{form_jour}',
+			defaultTimedEventDuration: 60,
+			eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
+			locale: 'fr',
+			editable: true,
+			selectable: true,
+			selectHelper: true,
+			slotMinTime: '{form_debjour}:00:00',
+			slotMaxTime: '{form_finjour}:00:00',
+			scrollTime: '{form_debjour}:00:00',
+			contentHeight: 'auto',
+			allDaySlot: false,
+			slotEventOverlap: false,
+
+			buttonText: {
+				today:  "Aujourd'hui",
+				month:  "Mois",
+				week:   "Semaine",
+				day:    "Jour",
+				list:   "Liste"
+			},
+
+			headerToolbar: {
+				left: 'prev,next,today',
+				center: 'title',
+				right: '{headerListe}'
+			},
+
+			businessHours:
+			{
+				daysOfWeek: [1, 2, 3, 4, 5], // Lun-Ven
+				startTime: '00:00',
+				endTime: '24:00'
+			},
+
+			views: {
+				agendaWeek: {
+					type: 'timeGrid',
+					duration: {weeks: 1},
+					buttonText: 'Semaine',
+					dayHeaderFormat: { weekday: 'short', day: 'numeric', omitCommas: true },
+				},
+				agendaTwoWeeks: {
+					type: 'timeGrid',
+					duration: {weeks: 2},
+					buttonText: '2 Semaines',
+					dayHeaderFormat: { weekday: 'short', day: 'numeric', omitCommas: true },
+				},
+				agendaFourWeeks: {
+					type: 'timeGrid',
+					duration: {weeks: 4},
+					buttonText: '4 Semaines',
+					dayHeaderFormat: { day: 'numeric', omitCommas: true },
+				},
+				agendaHeightWeeks: {
+					type: 'timeGrid',
+					duration: {weeks: 8},
+					buttonText: '2 mois',
+					dayHeaderFormat: { day: 'numeric', omitCommas: true },
+				}
+			},
+			eventClick: function(event) {
+				var is_confirmed = confirm("Voulez-vous supprimer cette disponibilité ?");
+				if (is_confirmed)
+				{ 
+					console.log("delete:"+event.event.extendedProps.eventId);	
+					$.ajax({
+						url: '{path_root}/api/v1/membres/upddispo?fonc=delete&id='+event.event.extendedProps.eventId,
+						dataType: 'JSON',
+						success : function(response)
+						{
+							if (response.status!=200)
+							{
+								showToast("Mise à jour",response.error,"error");
+							}
+							else
+							{
+								event.event.remove();
+							}
+						},
+						error : function(response)
+						{
+							console.log(response);
+						}
+					});
+				}
+			},
+			select: function(event) {
+				dteStart=new Date(event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+
+				$.ajax({
+					url: '{path_root}/api/v1/membres/upddispo?fonc=select&id=0&mid={mid}&&jstart='+timeStart+'&jend='+timeEnd,
+					
+					dataType: 'JSON',
+					success : function(response)
+					{
+						if (response.status!=200)
+						{
+							showToast("Mise à jour",response.error,"error");
+						}
+						calendar.addEvent({
+							id: response.id,
+							title: '',
+							start: response.start,
+							end: response.end,
+							color: '#{eventcolor}'
+						});
+					},
+					error : function(response)
+					{
+						console.log(response);
+					}
+				});
+
+			},
+			eventDrop: function(event) {
+console.log("drop");
+				e=event.event.extendedProps;
+				dteStart=new Date(event.event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+
+				$.ajax({
+					url: '{path_root}/api/v1/membres/upddispo?fonc=drop&id='+e.eventId+'&jstart='+timeStart+'&jend='+timeEnd,
+					dataType: 'JSON',
+					success : function(response)
+					{
+						if (response.status!=200)
+						{
+							showToast("Mise à jour",response.error,"error");
+						}
+					},
+					error : function(response)
+					{
+						console.log(response);
+					}
+				});
+			},
+			eventResize: function(event) {
+				e=event.event.extendedProps;
+				dteStart=new Date(event.event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+
+				$.ajax({
+					url: '{path_root}/api/v1/membres/upddispo?fonc=resize&id='+e.eventId+'&jstart='+timeStart+'&jend='+timeEnd,
+					dataType: 'JSON',
+					success : function(response)
+					{
+						if (response.status!=200)
+						{
+							showToast("Mise à jour",response.error,"error");
+							revertFunc();
+						}
+					},
+					error : function(response)
+					{
+						console.log(response);
+						revertFunc();
+					}
+				});
+			},
+
+			events: {
+				url: '{path_root}/api/v1/membres/getdispo?mid={mid}',
+				error: function() {
+					showToast("","L'API n'est pas accessible","error");
+				}
+			},
+
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
+		calendar.render();
+	});
+
+</script>
 
 <!-- END: corps -->

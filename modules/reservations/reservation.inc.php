@@ -63,17 +63,8 @@
 		$dte_deb=$jour." ".$heure.":00:00";
 		$dte_fin=$jour." ".($heure+1).":00:00";
 
-		if ((isset($jstart)) && ($jstart>0))
-		{
-			$fh=date("O",floor($jstart)/1000+4*3600)/100;
-			$dte_deb=date("Y-m-d H:i:s",floor($jstart)/1000-$fh*3600);
-		}
-			
-		if ((isset($jend)) && ($jend>0))
-		  {
-				$fh=date("O",floor($jend)/1000+4*3600)/100;
-				$dte_fin=date("Y-m-d H:i:s",floor($jend)/1000-$fh*3600);
-		  }
+		$dte_deb=date("Y-m-d H:i:s",$jstart);
+		$dte_fin=date("Y-m-d H:i:s",$jend);
 
 		$resa["resa"]=new resa_class(0,$sql);
 

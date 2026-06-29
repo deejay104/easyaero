@@ -35,6 +35,8 @@
     $tabLang["lang_carbafter"]="Carburant ajouté Après";
     $tabLang["lang_carbprice"]="Prix total Carburant";
 
+    $tabLang["lang_maintconfirmed"]="Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible";
+    $tabLang["lang_maintscheduled"]="Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol";
     $tabLang["lang_event"]="Une manifestation est prévue ce jour là.";
 
 ?>

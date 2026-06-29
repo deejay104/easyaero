@@ -4,42 +4,25 @@
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 // ---- Vérifie les paramètres
-	// Short-circuit if the client did not give us a date range.
-	if (!isset($_GET['jstart']) || !isset($_GET['jend'])) {
-		die("Please provide a date range.");
-	}
-
-	$jstart=$_GET['jstart'];
-	$jend=$_GET['jend'];
-
-	$fh=date("O",floor($jstart)/1000+4*3600)/100;
-	$jstart=date("Y-m-d H:i:s",floor($jstart)/1000-$fh*3600);
-	$fh=date("O",floor($jend)/1000+4*3600)/100;
-	$jend=date("Y-m-d H:i:s",floor($jend)/1000-$fh*3600);
-	
-	if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-		die("Please provide an event id.");
-	}
-
-	$id=$_GET['id'];
+	$id=checkVar("id","numeric");
 	$ress=checkVar("ress","numeric");
+	$jstart=checkVar('jstart','numeric');
+	$jend=checkVar('jend','numeric');
 
-	// $query="SELECT edite FROM ".$MyOpt["tbl"]."_calendrier WHERE id='".$id."'";
-	// $res=$sql->QueryRow($query);
 
-	// if ($res["edite"]=='oui')
-	// {	
-		// $query="UPDATE ".$MyOpt["tbl"]."_calendrier SET dte_deb='".$jstart."',dte_fin='".$jend."'".(($ress>0) ? ",uid_avion='".$ress."'" : "")." WHERE id='".$id."'";
-		// error_log($query);
-		// $sql->Update($query);
-	// }
+	if ($id==0) {
+		$input_arrays["error"]="Please provide an event id.";
+		echo json_encode($input_arrays);
+		exit;
+	}
+
 	require_once ($appfolder."/class/reservation.inc.php");
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
 	$resa=new resa_class($id,$sql);
-	$resa->dte_deb=$jstart;
-	$resa->dte_fin=$jend;
+	$resa->dte_deb=date("Y-m-d H:i:s",$jstart);
+	$resa->dte_fin=date("Y-m-d H:i:s",$jend);
 	if ($ress>0)
 	{
 		$resa->uid_ressource=$ress;
@@ -47,6 +30,9 @@
 
 	$r=array();
 	$r["status"]=200;
+	$r["tz"]=date_default_timezone_get();
+	$r["start"]=date("Y-m-d H:i:s",$jstart);
+	$r["end"]=date("Y-m-d H:i:s",$jend);
 
 	if ($MyOpt["AllowUpdateAllCalendar"]=="off")
 	{

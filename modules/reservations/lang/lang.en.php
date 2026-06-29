@@ -21,8 +21,9 @@
     $tabLang["lang_lastupdate"]="Last updated";
     $tabLang["lang_potentiel"]="Remaining flight time";
 
+
     $tabLang["lang_explainaccount"]="Choose another account to bill this flight";
-    $tabLang["lang_account"]="Accounted (if différent)";
+    $tabLang["lang_account"]="Accounted (if different)";
 
     $tabLang["lang_sethora"]="Hobbs";
 
@@ -35,6 +36,8 @@
     $tabLang["lang_carbafter"]="Gaz added after";
     $tabLang["lang_carbprice"]="Gaz price";
 
+    $tabLang["lang_maintconfirmed"]="A Maintenance is confirmed for this day, the plane may not be available";
+    $tabLang["lang_maintscheduled"]="A Maintenance is scheduled for this day, check the availabilty before booking";
     $tabLang["lang_event"]="An event is scheduled for this day.";
 
 ?>

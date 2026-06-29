@@ -25,25 +25,22 @@
 	if ( (!GetDroit("AccesDisponibilites")) && (!GetMyId($id)) )
 	  { FatalError("Accès non autorisé (AccesDisponibilites)"); }
 
+// ---- Affiche le menu
   	require_once ($appfolder."/class/user.inc.php");
 
-  	if ($id>0)
-	{ 
-		$usr = new user_class($id,$sql,((GetMyId($id)) ? true : false));
+	$usr = new user_class($id,$sql,((GetMyId($id)) ? true : false));
 
-		if ($usr->data["disponibilite"]=="dispo")
-		{
-			$tmpl_x->assign("backcolor",$MyOpt["styleColor"]["msgboxBackgroundOk"]);
-			$tmpl_x->assign("eventcolor",$MyOpt["styleColor"]["msgboxBackgroundError"]);
-		}
-		else
-		{
-			$tmpl_x->assign("backcolor",$MyOpt["styleColor"]["msgboxBackgroundError"]);
-			$tmpl_x->assign("eventcolor",$MyOpt["styleColor"]["msgboxBackgroundOk"]);
-		}
+	if ($usr->data["disponibilite"]=="dispo")
+	{
+		$tmpl_x->assign("backcolor",$MyOpt["styleColor"]["msgboxBackgroundOk"]);
+		$tmpl_x->assign("eventcolor",$MyOpt["styleColor"]["msgboxBackgroundError"]);
+	}
+	else
+	{
+		$tmpl_x->assign("backcolor",$MyOpt["styleColor"]["msgboxBackgroundError"]);
+		$tmpl_x->assign("eventcolor",$MyOpt["styleColor"]["msgboxBackgroundOk"]);
 	}
 
-// ---- Affiche le menu
 	$aff_menu="";
 	require_once("modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
@@ -63,7 +60,7 @@
 	$tmpl_x->assign("mid",$id);
 
 	$tmpl_x->assign("defaultView","agendaFourWeeks");
-	$tmpl_x->assign("headerListe","agendaHeightWeeks,agendaFourWeeks,agendaTwoWeeks,agendaWeek,agendaDay");
+	$tmpl_x->assign("headerListe","agendaHeightWeeks,agendaFourWeeks,agendaTwoWeeks,agendaWeek");
 	$tmpl_x->assign("TexteTitre","Calendrier pour");
 	// $tmpl_x->parse("corps.aff_tooltips");
 	$tmpl_x->assign("form_jour",$jour);

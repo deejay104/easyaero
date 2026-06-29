@@ -25,7 +25,6 @@
 // ---- Vérifie les variables
 	$id=checkVar("id","numeric");
 	$jstart=checkVar("jstart","numeric");
-	$jstart=checkVar("jstart","numeric");
 	$idusr=checkVar("idusr","numeric");
 	$form_data=checkVar("form_data","array");
 	
@@ -63,7 +62,15 @@
 // ---- Sauvegarde
 	if ($fonc=="Annuler")
 	{
-		header('Location: /manifestations/detail?id='.$id, true, 303);
+		if ($id==0)
+		{
+			header('Location: /manifestations', true, 303);
+		}
+		else
+		{
+			header('Location: /manifestations/detail?id='.$id, true, 303);
+		}
+
     	exit;
 	}
 
@@ -187,8 +194,7 @@
 // ---- Affiche les infos
 	if ($jstart>0)
 	{
-		$fh=date("O",floor($jstart)/1000+4*3600)/100;
-		$dte=date("Y-m-d",floor($jstart)/1000-$fh*3600);
+		$dte=date("Y-m-d H:i:s",$jstart);
 		$manip->Valid("dte_manip",$dte);
 		$manip->Valid("dte_limite",$dte);
 	}
