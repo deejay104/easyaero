@@ -62,7 +62,8 @@
 	$tmpl_x->assign("defaultView","agendaFourWeeks");
 	$tmpl_x->assign("headerListe","agendaHeightWeeks,agendaFourWeeks,agendaTwoWeeks,agendaWeek");
 	$tmpl_x->assign("TexteTitre","Calendrier pour");
-	// $tmpl_x->parse("corps.aff_tooltips");
+	$tmpl_x->assign("weekFirstDay",$MyOpt["weekFirstDay"]);
+	$tmpl_x->assign("timezone",$MyOpt["timezone"]);
 	$tmpl_x->assign("form_jour",$jour);
 
 	$tmpl_x->assign("form_debjour",$debjour);

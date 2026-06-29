@@ -25,6 +25,8 @@
 	$dte=($dte!="") ? $dte : date("Y-m-01");
 
 	$tmpl_x->assign("form_jour",$dte);
+	$tmpl_x->assign("timezone",$MyOpt["timezone"]);
+	$tmpl_x->assign("weekFirstDay",$MyOpt["weekFirstDay"]);
 
 
 // ---- Affecte les variables d'affichage

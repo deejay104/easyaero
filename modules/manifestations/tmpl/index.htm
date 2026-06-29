@@ -33,6 +33,7 @@
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
 			initialDate: '{form_jour}',
+			timeZone: '{timezone}', 
 			locale: 'fr',
 			height: 700,
 			editable: true,
@@ -40,7 +41,8 @@
 			contentHeight: 'auto',
 			dayMaxEvents: 4,
 			displayEventTime: false,
-
+			firstDay: {weekFirstDay},
+			
 			headerToolbar: {
 				left: 'prev,next,today',
 				center: 'title',

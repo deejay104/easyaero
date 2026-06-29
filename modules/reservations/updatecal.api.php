@@ -11,9 +11,7 @@
 
 
 	if ($id==0) {
-		$input_arrays["error"]="Please provide an event id.";
-		echo json_encode($input_arrays);
-		exit;
+		apiError(500,"Please provide an event id.");
 	}
 
 	require_once ($appfolder."/class/reservation.inc.php");
