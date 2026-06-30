@@ -59,9 +59,13 @@
   	if (GetModule("compta"))
 	{
 	  	$tmpl_custom->parse("custom.mod_compta_detail");
-	}  	
+	} 
+
+
 	if (GetModule("aviation"))
 	{
+		$tmpl_custom->assign("gl_uid", $gl_uid);
+
 		// Réservation du jour
 		$tmpl_custom->assign("dte_start", date("Y-m-d 00:00:00"));
 		$tmpl_custom->assign("dte_end", date("Y-m-d 23:59:59"));
