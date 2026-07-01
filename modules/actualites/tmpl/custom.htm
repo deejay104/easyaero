@@ -74,7 +74,7 @@
 			success: function(response) {
 				$("#loading").addClass("d-none");
 
-				var txt="";
+				var nb=0;
 				$.each(response, function (index, value) {
 					if (value.type=="calendar")
 					{
@@ -97,10 +97,24 @@
 						txt+='</div>';
 
 						$("#calendar").append(txt);
-
+						nb++;
 					}
-
 				});
+
+				
+				if (nb==0)
+				{
+					txt ='<div class="manif-item">';
+					txt+='<div class="manif-date-badge">';
+					txt+='<span class=""><i class="mdi mdi-large mdi-airplane"></i></span>';
+					txt+='</div>';
+					txt+='<div>';
+					txt+="<p style='font-size:0.83rem; font-weight:500; color:#2d3748;'>Aucune réservation pour aujourd'hui</p>";
+					txt+='</div>';
+					txt+='</div>';
+					$("#calendar").append(txt);
+				}
+
 			}
 
 		});

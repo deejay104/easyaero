@@ -1,3 +1,24 @@
 <!-- BEGIN: custom -->
 
+<!-- BEGIN: manifestation -->
+<!-- Prochaines manifestations -->
+<div id="card-echeance" class="sidebar-section">
+	<div class="sidebar-section-title">
+		<i class="mdi mdi-calendar-text"></i> {lang_nextmeeting}
+	</div>
+	<!-- BEGIN: lst_manifestation -->
+	<div class="manif-item">
+		<div class="manif-date-badge">
+			<span class="day">{manif_day}</span>
+			<span>{manif_month}</span>
+		</div>
+		<div>
+			<a href="{path_root}/manifestations/detail?id={manif_id}" style="font-size:0.83rem; font-weight:500; color:#2d3748;">{manif_title}</a>
+			<div style="font-size:0.75rem; color:#718096;">{manif_date}</div>
+		</div>
+	</div>
+	<!-- END: lst_manifestation -->	
+ </div>
+<!-- END: manifestation -->
+
 <!-- END: custom -->

@@ -41,7 +41,7 @@
 		{
 			$result["dispo"]="nok";
 			$result["text"]="Occupé";
-			$result["icon"]="mdi-close-box-outline";
+			$result["icon"]="mdi-alarm-off";
 		}
 	}
 	else

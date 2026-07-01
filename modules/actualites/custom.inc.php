@@ -66,12 +66,6 @@
 	{
 		$tmpl_custom->assign("gl_uid", $gl_uid);
 
-		// Réservation du jour
-		$tmpl_custom->assign("dte_start", date("Y-m-d 00:00:00"));
-		$tmpl_custom->assign("dte_end", date("Y-m-d 23:59:59"));
-
-	  	$tmpl_custom->parse("custom.aff_reservation");
-		
 		// Echeance Avions
 		$lstdte=VerifEcheance($sql,0,"ressources",true);
 	
@@ -112,7 +106,15 @@
 		{
 			$tmpl_custom->parse("custom.aff_echeance_avion");
 		}
-	
+
+		
+		// Réservation du jour
+		$tmpl_custom->assign("dte_start", date("Y-m-d 00:00:00"));
+		$tmpl_custom->assign("dte_end", date("Y-m-d 23:59:59"));
+
+	  	$tmpl_custom->parse("custom.aff_reservation");
+		
+
 	}
 	
 // ---- Affiche la page
