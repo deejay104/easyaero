@@ -62,27 +62,6 @@
 
 	});
 
-	$( function() {
-		$(document).tooltip({
-			hide: { duration:0 },
-			show: { duration:0 },
-			position: {
-				my: "center bottom-8",
-				at: "center top-2",
-				using: function( position, feedback ) {
-					$( this ).css( position );
-					$( "<div>" )
-						.addClass( "arrow" )
-						.addClass( feedback.vertical )
-						.addClass( feedback.horizontal )
-						.appendTo( this );
-				}
-			},
-			content: function () {
-				return $(this).prop('title');
-			}
-		});
-	});
 
   
 </script>
