@@ -41,7 +41,10 @@
 		font-size: 12px;
 		pointer-events: none;
 		z-index: 9999;
-		white-space: nowrap;
+		max-width: 300px;
+		word-wrap: break-word;   /* coupe les mots trop longs */
+		overflow-wrap: break-word; /* équivalent moderne */
+		white-space: normal;     /* autorise le retour à la ligne */
 	}
 
 </style>
@@ -287,7 +290,7 @@
 					tooltip.style.top  = (rect.top - tooltip.offsetHeight - 5) + window.scrollY + 'px';
 				});
 
-				info.el.addEventListener('mouseleave', () => tooltip.remove());
+				//info.el.addEventListener('mouseleave', () => tooltip.remove());
 			},
 
 			<!-- END: aff_tooltips -->
