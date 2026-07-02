@@ -87,7 +87,6 @@ class rex_class extends objet_core
 			]);
 			
 			$metar = curl_exec($curl);
-			curl_close($curl);
 	
 			$this->fields["mto"]["defaultnew"]=$metar;
 		}		

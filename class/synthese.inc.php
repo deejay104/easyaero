@@ -299,7 +299,6 @@ class synthese_class extends objet_core
 			]);
 			
 			$metar = curl_exec($curl);
-			curl_close($curl);
 	
 			$this->fields["mto"]["defaultnew"]=$metar;
 		}
@@ -351,7 +350,7 @@ class synthese_class extends objet_core
 		{
 			$txt=$this->val($key);
 			$res=new livret_class($txt,$this->sql);
-			$ret="<div class='py-2'>".$res->displayDescription()."</div>";
+			$ret="<div>".$res->displayDescription()."</div>";
 		}
 		else if (($key=="uid_pilote") && ($render=="form"))
 		{
@@ -369,23 +368,23 @@ class synthese_class extends objet_core
 		{
 			$txt=$this->val($key);
 			$res=new user_class($txt,$this->sql);
-			$ret="<div class='py-2'>".$res->val("fullname")."</div>";
+			$ret="<div>".$res->val("fullname")."</div>";
 		}
 		else if (($key=="module") && ($render!="form"))
 		{
-			$ret="<div class='py-2'>".$ret."</div>";
+			$ret="<div>".$ret."</div>";
 		}		
 		else if (($key=="refffa") && ($render!="form"))
 		{
-			$ret="<div class='py-2'>".$ret."</div>";
+			$ret="<div>".$ret."</div>";
 		}
 		else if (($key=="type") && ($render!="form"))
 		{
-			$ret="<div class='py-2'>".$ret."</div>";
+			$ret="<div>".$ret."</div>";
 		}	
 		else if (($key=="conclusion") && ($render!="form"))
 		{
-			$ret="<div class='py-2'>".$ret."</div>";
+			$ret="<div>".$ret."</div>";
 		}
 
 		return $ret;
