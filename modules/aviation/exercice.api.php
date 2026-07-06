@@ -54,7 +54,7 @@
 		{
 			$query="SELECT prog.id,prog.refffa,exo.description,exo.module,prog.progression, exo.type FROM ".$MyOpt["tbl"]."_exercice_conf AS exo ";
 			$query.="LEFT JOIN ".$MyOpt["tbl"]."_exercice_prog AS prog ON exo.id=prog.idexercice ";
-			$query.="WHERE prog.refffa='".$ref."' AND exo.actif='oui' ".(($type!="") ? "AND type='".$type."'" : "");
+			$query.="WHERE ".(($idformation>0) ? "exo.idformation='".$idformation."' AND" : "")." prog.refffa='".$ref."' AND exo.actif='oui' ".(($type!="") ? "AND type='".$type."'" : "");
 			$query.="ORDER BY prog.progression DESC, prog.id";
 		}
 		$sql->Query($query);

@@ -392,9 +392,7 @@ class user_class extends user_core
 		}
 		
 		$query = "SELECT * FROM ".$this->tbl."_disponibilite AS dispo ";
-		$query.= "WHERE uid='".$this->id."' ";
-		$query.= "AND dte_deb<='".$fin."' ";
-		$query.= "AND dte_fin>='".$deb."' ";
+		$query.= "WHERE uid='".$this->id."' AND actif='oui' AND dte_deb<='".$fin."' AND dte_fin>='".$deb."' ";
 
 		$sql=$this->sql;
 		$sql->Query($query);
