@@ -319,7 +319,7 @@
 	});
 	
 	$("#addexercicepeda").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/peda",
+		source: "{path_root}/api/v1/aviation/exercice/peda?idformation={form_idformation}",
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -348,7 +348,7 @@
 	});
 
 	$("#addexercice").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/exercice",
+		source: "{path_root}/api/v1/aviation/exercice/exercice?idformation={form_idformation}",
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -378,7 +378,7 @@
 	});
 
 	$("#addpanne").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/panne",
+		source: "{path_root}/api/v1/aviation/exercice/panne?idformation={form_idformation}",
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;

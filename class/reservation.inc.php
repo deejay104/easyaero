@@ -649,7 +649,7 @@ class resa_class extends objet_core
 	function GetLastNote()
 	{
 		$sql=$this->sql;
-		$query="SELECT notes FROM ".$this->tbl."_calendrier WHERE actif='oui' AND dte_deb<'".$this->dte_deb."' ORDER BY dte_deb DESC LIMIT 0,1";
+		$query="SELECT notes FROM ".$this->tbl."_calendrier WHERE actif='oui' AND uid_avion='".$this->uid_ressource."' AND dte_deb<'".$this->dte_deb."' ORDER BY dte_deb DESC LIMIT 0,1";
 		$res=$sql->QueryRow($query);
 
 		$txt="";

@@ -6,6 +6,7 @@
 	require_once ($appfolder."/class/synthese.inc.php");
 
 	$id=checkVar("id","numeric");
+	$idformation=checkVar("idformation","numeric");
 	$ref=checkVar("ref","varchar");
 	$term=checkVar("term","varchar");
 	$fonc=checkVar("fonc","varchar",10);
@@ -44,10 +45,9 @@
 		
 		if ($term!="")
 		{
-			$query="SELECT id,description,'A' FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE (module LIKE '%".$term."%' OR refffa LIKE '%".$term."%' OR description LIKE '%".$term."%') AND actif='oui'";
 
 			$query ="SELECT prog.id,prog.refffa, exo.description,exo.module,progression, exo.type FROM ".$MyOpt["tbl"]."_exercice_conf AS exo LEFT JOIN ".$MyOpt["tbl"]."_exercice_prog AS prog ON exo.id=prog.idexercice ";
-			$query.="WHERE (exo.description LIKE '%".$term."%' OR prog.refffa LIKE '%".$term."%') AND exo.actif='oui' ".(($type!="") ? "AND type='".$type."'" : "");
+			$query.="WHERE ".(($idformation>0) ? "exo.idformation='".$idformation."' AND" : "")." (exo.description LIKE '%".$term."%' OR prog.refffa LIKE '%".$term."%') AND exo.actif='oui' ".(($type!="") ? "AND type='".$type."'" : "");
 			// $query.="GROUP BY exo.id";
 		}
 		else

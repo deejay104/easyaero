@@ -79,6 +79,7 @@ $tabCustom=Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"uid" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
+		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1),
 		"dte_deb" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 		"dte_fin" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => 0, ),
@@ -100,7 +101,7 @@ $tabCustom=Array
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"id_avion" => Array("Type" => "smallint(5) unsigned", "Index" => "1", ),
 		"uid_pilote" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
+		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1 ),
 		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),
@@ -125,7 +126,7 @@ $tabCustom=Array
 		"debiteur" => Array("Type" => "char(3)", "Default" => "0", ),
 		"crediteur" => Array("Type" => "char(3)", "Default" => "0", ),
 		"montant" => Array("Type" => "decimal(10,2)", "Default" => "0.00", ),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
+		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1  ),
 		"j0" => Array("Type" => "char(1)", ),
 		"j1" => Array("Type" => "char(1)", "Default" => "N", ),
 		"j2" => Array("Type" => "char(1)", "Default" => "N", ),
@@ -160,7 +161,7 @@ $tabCustom=Array
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"numcpt" => Array("Type" => "varchar(10)", "Index" => "1", ),
 		"description" => Array("Type" => "varchar(40)"),
-		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
+		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", "Index"=>1  ),
 	),
 	"participants" => Array
 	(

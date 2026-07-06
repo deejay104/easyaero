@@ -496,6 +496,7 @@
 	$tmpl_x->assign("form_cumulsolo",$livret->AffNbHeures($fiche->val("dte_vol"),"solo"));
 
 // ---- Affiche les paramètres
+	$tmpl_x->assign("form_idformation",$livret->val("idformation"));
 
 	$tmpl_x->assign("form_nonce",bin2hex(random_bytes(16)));
 	$tmpl_x->assign("form_idvol",$fiche->val("idvol"));
