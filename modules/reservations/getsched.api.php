@@ -117,7 +117,7 @@
 	// Affiche la disponibilité des instructeurs
 	$q ="SELECT dispo.id,dispo.uid,dispo.dte_deb,dispo.dte_fin,usr.disponibilite FROM ".$MyOpt["tbl"]."_disponibilite AS dispo ";
 	$q.="LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON dispo.uid=usr.id ";
-	$q.="WHERE dispo.dte_fin>='".$start." 00:00:00' AND dispo.dte_deb<='".$end." 00:00:00'";
+	$q.="WHERE dispo.actif='oui' AND dispo.dte_fin>='".$start." 00:00:00' AND dispo.dte_deb<='".$end." 00:00:00'";
 	$sql->Query($q);
 	for($i=0; $i<$sql->rows; $i++)
 	{
