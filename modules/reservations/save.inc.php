@@ -336,7 +336,9 @@
 
 	if ($fonc=="annuler")  	
 	{
-		header('Location: /reservations/'.(($prev=="scheduler") ? "scheduler" : "").'?start='.extractDate($form_dte_deb), true, 303);
+		$dte=($resa["resa"]->dte_deb!="0000-00-00") ? $resa["resa"]->dte_deb : $form_dte_deb;
+echo $dte."**".extractDate($dte);
+				header('Location: /reservations/'.(($prev=="scheduler") ? "scheduler" : "").'?start='.extractDate($dte), true, 303);
     	exit;
 	}
 	else if ($fonc=="centrage")  	

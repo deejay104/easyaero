@@ -65,7 +65,7 @@
 			},
 
 			eventClick: function(event, element) {
-				document.location="{path_root}/manifestations/detail?id="+event.id;
+				document.location="{path_root}/manifestations/detail?id="+event.event.extendedProps.eventId;
 			},
 
 			/*
@@ -135,7 +135,7 @@
 
 
 			events: {
-				url: '{path_root}/api.php?mod=manifestations&rub=getcal',
+				url: '{path_root}/api/v1/manifestations/getcal',
 				error: function() {
 						$('#script-warning').show();
 					}

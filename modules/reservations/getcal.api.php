@@ -128,6 +128,7 @@
 			$input_arrays[$ii]["id"]="M".$m->id;
 			$input_arrays[$ii]["type"]="event";
 			$input_arrays[$ii]["title"]=$m->data["titre"];
+			$input_arrays[$ii]["description"]="Manifestation : ".$m->data["comment"];
 			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_manip"]." 00:00:00"));
 			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_manip"]." 23:59:59"));
 			$input_arrays[$ii]["color"]='#'.$MyOpt["tabcolresa"]["meeting"];
@@ -148,6 +149,7 @@
 			$input_arrays[$ii]["id"]="M".$m->id;
 			$input_arrays[$ii]["type"]="maintenance";
 			$input_arrays[$ii]["title"]="Maintenance";
+			$input_arrays[$ii]["description"]="Maintenance du ".sql2time($m->data["dte_deb"],"nosec")." au ".sql2time($m->data["dte_fin"],"nosec");
 			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_deb"]));
 			$input_arrays[$ii]["end"]=date("c",strtotime($m->data["dte_fin"])+86400);
 			$input_arrays[$ii]["color"]='#'.(($m->data["status"]>1) ? $MyOpt["tabcolresa"]["maintconf"] : $MyOpt["tabcolresa"]["maintplan"]);
@@ -164,7 +166,7 @@
 
 			$input_arrays[$ii]["type"]="sun";
 			$input_arrays[$ii]["title"]="";
-			$input_arrays[$ii]["descriptio "]="morning";
+			$input_arrays[$ii]["description"]="Jour aéronautique";
 			$input_arrays[$ii]["start"]=date("c",strtotime(date("Y-m-d 00:00:00",$i+$tabcs["ls"]-30*60)));
 			$input_arrays[$ii]["end"]=date("c",$i+$tabcs["ls"]-30*60);
 			$input_arrays[$ii]["color"]='gray';
@@ -173,7 +175,7 @@
 
 			$input_arrays[$ii]["type"]="sun";
 			$input_arrays[$ii]["title"]="";
-			$input_arrays[$ii]["description"]="evening";
+			$input_arrays[$ii]["description"]="Nuit aéronautique";
 			$input_arrays[$ii]["start"]=date("c",$i+$tabcs["cs"]+30*60);
 			$input_arrays[$ii]["end"]=date("c",strtotime(date("Y-m-d 23:59:59",$i+$tabcs["cs"]+30*60)));
 			$input_arrays[$ii]["color"]='gray';
