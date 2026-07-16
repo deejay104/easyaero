@@ -58,6 +58,8 @@
 	
 	if ($theme!="phone")
 	{
+		$tabTitre["type"]["aff"]="Type";
+		$tabTitre["type"]["width"]=100;
 		$tabTitre["cout"]["aff"]="Cout";
 		$tabTitre["cout"]["width"]=100;
 		$tabTitre["atelier"]["aff"]="Atelier";
@@ -86,6 +88,8 @@
 			$tabValeur[$i]["status"]["aff"]=$maint->aff("status");
 			$tabValeur[$i]["cout"]["val"]=$maint->val("cout");
 			$tabValeur[$i]["cout"]["aff"]=$maint->aff("cout");
+			$tabValeur[$i]["type"]["val"]=$maint->val("type");
+			$tabValeur[$i]["type"]["aff"]=$maint->aff("type");
 
 			$tabValeur[$i]["atelier"]["val"]=$maint->val("uid_atelier");
 			$tabValeur[$i]["atelier"]["aff"]=$maint->aff("uid_atelier");

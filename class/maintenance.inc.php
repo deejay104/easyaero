@@ -31,6 +31,7 @@ class maint_class extends objet_core
 		"uid_ressource" => Array("type" => "number", "default" => "0", "index" => "1", ),
 		"uid_atelier" => Array("type" => "number", "default" => "0", "index"=>1),
 		"status" => Array("type" => "enum", "default" => "planifie", "index"=>1, "show"=>"tag"),
+		"type" => Array("type" => "enum", "default" => "50", "index"=>1),
 		"dte_deb" => Array("type" => "date", "default" => "now", ),
 		"dte_fin" => Array("type" => "date", "default" => "now", ),
 		"potentiel" => Array("type" => "number", "default" => "0", ),
@@ -41,6 +42,7 @@ class maint_class extends objet_core
 	
 	protected $tabList=array(
 		"status"=>array('planifie'=>'Planifié','confirme'=>'Confirmé','effectue'=>'Effectué','cloture'=>'Cloturé','supprime'=>'Supprimé'),
+		"type"=>array('50'=>'50h','100'=>'100h','200'=>'200h'),
 	);
 
 	protected $color=array(
