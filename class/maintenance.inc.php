@@ -42,7 +42,7 @@ class maint_class extends objet_core
 	
 	protected $tabList=array(
 		"status"=>array('planifie'=>'Planifié','confirme'=>'Confirmé','effectue'=>'Effectué','cloture'=>'Cloturé','supprime'=>'Supprimé'),
-		"type"=>array('50'=>'50h','100'=>'100h','200'=>'200h'),
+		"type"=>array('50'=>'50h','100'=>'100h','200'=>'200h','rgm'=>'RG Moteur','rge'=>'RG Hélice','autre'=>'Autre'),
 	);
 
 	protected $color=array(
