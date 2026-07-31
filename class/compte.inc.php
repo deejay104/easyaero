@@ -239,8 +239,6 @@ class compte_class{
 
 	function Debite()
 	{
-		global $hmacKey;
-
 		$this->erreur="";
 		if ($this->status!="brouillon")
 		{
@@ -275,7 +273,7 @@ class compte_class{
 				'date_valeur='.$this->date_valeur,
 			]);
 
-			$hash=hash_hmac('sha256', $payload, $hmacKey);
+			$hash=hash_hmac('sha256', $payload, HMAC_KEY);
 			$current_hash = hash('sha256', $res_p["hash"].'|'.$res_p["mid"].'|'.$hash.'|'.$this->id);
 
 			$query ="INSERT ".$this->tbl."_compte SET ";
@@ -399,7 +397,7 @@ function AfficheDetailMouvement($id,$mid)
 
 function AfficheSignatureCompte($lid)
 {
-	global $MyOpt,$sql,$hmacKey;
+	global $MyOpt,$sql;
 	
 	$ret=array();
 	$ret["res"]="ok";
@@ -459,7 +457,7 @@ function AfficheSignatureCompte($lid)
 		'date_valeur='.$res_l["date_valeur"],
 	]);
 
-	$hash=hash_hmac('sha256', $payload, $hmacKey);
+	$hash=hash_hmac('sha256', $payload, HMAC_KEY);
 	$current_hash = hash('sha256', $res_p["hash"].'|'.$res_p["mid"]. '|'.$hash.'|'.$res_l["mid"]);
 
 	if ($current_hash==$res_l["hash"])

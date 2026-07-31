@@ -40,7 +40,7 @@
 				'date_valeur='.$sql->data["date_valeur"],
 			]);
 
-			$hash=hash_hmac('sha256', $payload, $hmacKey);
+			$hash=hash_hmac('sha256', $payload, HMAC_KEY);
 			$current_mid=$sql->data["mid"];
 			$current_hash = hash('sha256', $prev_hash.'|'.$prev_mid.'|'.$hash.'|'.$current_mid);
 

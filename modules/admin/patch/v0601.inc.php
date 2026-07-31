@@ -21,7 +21,7 @@
 			$payload.="|".$k."=".((isset($sql->data[$k])) ? $sql->data[$k] : 'null');
 		}
 
-		$hmachash=hash_hmac('sha256', $payload, $hmacKey);
+		$hmachash=hash_hmac('sha256', $payload, HMAC_KEY);
 		$hash=hash('sha256', $hmachash);
 
         $q[]="UPDATE `".$MyOpt["tbl"]."_synthese` SET nonce_instructeur='".$nonce."', sip_instructeur='null', skey_instructeur='".$hash."' WHERE id='".$sql->data["id"]."'";
@@ -55,7 +55,7 @@
 			$payload.="|".$k."=".((isset($sql->data[$k])) ? $sql->data[$k] : 'null');
 		}
 
-		$hmachash=hash_hmac('sha256', $payload, $hmacKey);
+		$hmachash=hash_hmac('sha256', $payload, HMAC_KEY);
 		$hash=hash('sha256', $hmachash);
 
         $q[]="UPDATE `".$MyOpt["tbl"]."_synthese` SET nonce_pilote='".$nonce."', sip_pilote='null', skey_pilote='".$hash."' WHERE id='".$sql->data["id"]."'";
