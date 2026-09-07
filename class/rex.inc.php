@@ -39,7 +39,7 @@ class rex_class extends objet_core
 	protected $droit=array("status"=>"ModifRexStatus","planaction"=>"ModifRexSynthese","synthese"=>"ModifRexSynthese");
 	// protected $type=array("titre"=>"varchar","status"=>"enum","description"=>"text","commentaire"=>"text","synthese"=>"text","planaction"=>"text","dte_rex"=>"date");
 	protected $fields=array(
-		"titre" => Array("type" => "varchar", "len"=>40 ),
+		"titre" => Array("type" => "varchar", "len"=>100 ),
 		"status" => Array("type" => "enum","default"=>"new","index"=>1, "show"=>"tag" ),
 		"description" => Array("type" => "text" ),
 		"commentaire" => Array("type" => "text" ),
