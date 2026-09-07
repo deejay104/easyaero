@@ -52,9 +52,9 @@ class rex_class extends objet_core
 		"phase" => Array("type" => "varchar","len"=>30 ),
 		"typevol" => Array("type" => "varchar","len"=>30 ),
 		"typeevt" => Array("type" => "varchar","len"=>30),
-		"uid_avion" => Array("type" => "number", "Index"=>1 ),
+		"uid_avion" => Array("type" => "number", "index"=>1 ),
 		"risque" => Array("type" => "varchar","len"=>2 ),
-		"dte_rex" => Array("type" => "date", "default" => "0000-00-00" ),
+		"dte_rex" => Array("type" => "date", "default" => "now" ),
 	);
 
 	protected $tabList=array(
@@ -90,8 +90,6 @@ class rex_class extends objet_core
 	
 			$this->fields["mto"]["defaultnew"]=$metar;
 		}		
-
-		$this->fields["dte_rex"]["defaultnew"]=date("Y-m-d");
 
 		parent::__construct($id,$sql);
 	}	
