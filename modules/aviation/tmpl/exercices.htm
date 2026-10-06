@@ -16,7 +16,7 @@
 				<!-- BEGIN: users -->
 				{form_lstuser}
 				<!-- END: users -->
-				<select id="form_livret" name="form_livret" class="form-control"  OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
+				<select id="form_livret" name="form_livret" class="form-control">
 					<!-- BEGIN: lst_livret -->
 					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
 					<!-- END: lst_livret -->
@@ -40,6 +40,15 @@
 <script>
 	$("#form_id").change(function(){
 		document.location='{path_root}/aviation/exercices?uid='+$("#form_id").val();
+	});
+	$("#form_livret").change(function(){
+		//document.location='{path_root}/aviation/syntheses?uid='+$("#form_id").val();
+		uid=0;
+		if ($("#form_id").val())
+		{
+			uid=$("#form_id").val();
+		}
+		document.location='{url}&uid='+uid+'&lid='+$("#form_livret").val();
 	});
 </script>
 <!-- END: corps -->

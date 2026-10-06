@@ -66,7 +66,7 @@
 			<div class="card-body row">
 
 				<div class="col-lg-4">
-					<select id="form_livret" class="form-control form-control-lg" name="form_livret" OnChange="document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+document.getElementById('form_livret').value;">
+					<select id="form_livret" class="form-control form-control-lg" name="form_livret">
 					<!-- BEGIN: lst_livret -->
 					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
 					<!-- END: lst_livret -->
@@ -191,6 +191,15 @@ $( function() {
 
 	$("#form_id").change(function(){
 		document.location='{path_root}/aviation/syntheses?uid='+$("#form_id").val();
+	});
+	$("#form_livret").change(function(){
+		//document.location='{path_root}/aviation/syntheses?uid='+$("#form_id").val();
+		uid=0;
+		if ($("#form_id").val())
+		{
+			uid=$("#form_id").val();
+		}
+		document.location='{url}&uid='+uid+'&lid='+$("#form_livret").val();
 	});
 
 	var timer=null;
