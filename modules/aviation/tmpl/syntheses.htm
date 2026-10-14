@@ -12,9 +12,30 @@
 <!-- BEGIN: corps -->
 
 <style>
+.card-body .form-inline { height: 30px; }
+.modal-body .form-inline { height: 38px; }
 .form-inline label { min-width: 200px; justify-content:left;}
-.form-inline input { min-width: 200px; }
+.form-inline input { min-width: 200px; max-width: 200px; }
 .form-inline select { min-width: 198px; margin: 1px; }
+
+.upload-zone {
+  border: 2px dashed var(--p67-primary-border);
+  background: var(--p67-primary-light);
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  color: var(--p67-text-muted);
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--p67-primary);
+  background: #e4edfa;
+  color: var(--p67-primary);
+}
+.upload-zone .mdi { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+.upload-zone p  { margin: 0; font-size: 0.85rem; font-weight: 500; }
+.upload-zone small { font-size: 0.75rem; }
+
 </style>
 
 <div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -43,67 +64,100 @@
 
 					<div class="form-inline"><label>Temps initial (DC)</label>{form_tpsdc} (min)</div>
 					<div class="form-inline"><label>Temps initial (Solo)</label>{form_tpssolo} (min)</div>
-				</div>
-				<br />
-				<div class="form-inline"><label></label>
-					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
-					<button class="btn btn-light" id="cancel">Annuler</button>
+					<div class="form-inline" style="height:90px; margin-top:5px;margin-bottom:15px;">
+						<label></label>
+						<div>
+							<div id="newContentFile" class="upload-zone">
+							<label for="newFile" style="cursor:pointer; margin:0; width:100%; display:block;">
+								<i class="mdi mdi-cloud-upload-outline"></i>
+								<p>Déposer un fichier ici ou cliquer pour parcourir votre disque</p>
+							</label>
+							<input id="newFile" type="file" style="display:none">
+							<div style="text-align:center; font-size:0.82rem; color:var(--p67-text-muted); margin-top:6px; display:none;" id="newContentText"></div>
+							</div>
+						</div>						
+					</div>
+					<div class="form-inline"><label></label>
+						<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+						<button class="btn btn-light" id="cancel">Annuler</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<!-- BEGIN: users -->
+<div class="row">
+		<div class="card">
+		<div class="card-body">
+			{form_lstuser}
+		</div>
+		</div>
+</div>
+<!-- END: users -->
+
 <div class="row" id="page-content">
-	<div class="col grid-margin stretch-card">
+	<div class="col-md-6 grid-margin stretch-card flex-column">
 		<div class="card">
 			<div class="card-header">
 				<span>Livret de progression</span>
-				<!-- BEGIN: users -->
-				{form_lstuser}
-				<!-- END: users -->
 			</div>
-			<div class="card-body row">
-
-				<div class="col-lg-4">
+			<div class="card-body">
 					<select id="form_livret" class="form-control form-control-lg" name="form_livret">
 					<!-- BEGIN: lst_livret -->
 					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
 					<!-- END: lst_livret -->
 					</select>
-				</div>
-
-				<div class="col-lg-3">
 					<!-- BEGIN: aff_editer -->
 					<span class="noMobile">
 						<button id="edit" type="button" class="btn btn-light" data-toggle="modal" data-target="#dialogForm">Editer</button>
 						<button id="new" type="button" class="btn btn-light" data-toggle="modal" data-target="#dialogForm">Nouveau</button>
 					</span>
 					<!-- END: aff_editer -->
-				</div>
-			</div>
-
-			<div class="card-body row">
-				<div class="col-lg-4">
-					<div class="form-inline"><label>Instructeur :</label>{idinstructeur}</div>
-					<div class="form-inline"><label>Status :</label>{status}</div>
-					<div class="form-inline"><label>Début de la formation :</label>{dte_deb}</div>
-					<div class="form-inline"><label>Fin de la formation :</label>{dte_fin}</div>
-					<div class="form-inline"><label>Date du test pratique :</label>{dte_test_practice}</div>
-					<div class="form-inline"><label>Date de test théorique :</label>{dte_test_theory}</div>
-
-					<div class="form-inline"><label>Phase :</label>{phase}</div>
-					<div class="form-inline"><label>Théorique :</label>{theory}</div>
-
-				</div>
-				<div class="col-lg-7">
-					{cr}
-				</div>
 			</div>
 
 			<div class="card-body">
-				<table class='formulaire'>
-					<tr class='formulaireTitre'>
+				<div class="form-inline"><label>Instructeur :</label>{idinstructeur}</div>
+				<div class="form-inline"><label>Status :</label>{status}</div>
+				<div class="form-inline"><label>Début de la formation :</label>{dte_deb}</div>
+				<div class="form-inline"><label>Fin de la formation :</label>{dte_fin}</div>
+				<div class="form-inline"><label>Date du test pratique :</label>{dte_test_practice}</div>
+				<div class="form-inline"><label>Date de test théorique :</label>{dte_test_theory}</div>
+
+				<div class="form-inline"><label>Phase :</label>{phase}</div>
+				<div class="form-inline"><label>Théorique :</label>{theory}</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 grid-margin stretch-card flex-column">
+		<div class="card">
+			<div class="card-header">
+				Commentaires
+			</div>
+			<div class="card-body">
+				{cr}
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				Documents
+			</div>
+			<div class="card-body">
+				{lst_documents}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" id="page-exo">
+	<div class="col grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Suivi de progression</div>
+
+			<div class="card-body">
+				<table class='table table-hover dataTable'>
+					<tr class='t-header'>
 						<th width=200>&nbsp;</th>
 						<th width=200>Total Heures</th>
 						<th width=200>Total Atterrissage</th>
@@ -123,13 +177,7 @@
 					</tr>
 				</table>
 			</div>
-		</div>
-	</div>
-</div>
-<div class="row" id="page-exo">
-	<div class="col grid-margin stretch-card">
-		<div class="card">
-			<div class="card-header">Suivi de progression</div>
+
 			<div class="card-body">	
 				{aff_exercices}
 			</div>
@@ -140,6 +188,7 @@
 <div class="row" id="page-lst">
 	<div class="col grid-margin stretch-card">
 		<div class="card">
+			<div class="card-header">Liste des vols</div>
 			<div class="card-body" >	
 			{aff_tableau}
 			</div>
@@ -214,10 +263,9 @@ $( function() {
 	          { key = e.which;  } //firefox
 	
 		if (key==13)
-		 { 
-		 	<!-- document.forms["recherche"].submit();  -->
+		{ 
 			return false;
-	 	 }
+		}
 
 		if (timer) {
 			window.clearTimeout(timer);
@@ -287,14 +335,7 @@ $( function() {
 			{
 				if (response.result=="OK")
 				{
-					console.log("ok");
-					console.log(response);
 					document.location='{url}&uid='+document.getElementById('form_id').value+'&lid='+response.id;
-				}
-				else
-				{
-					console.log("nok");
-					document.getElementById('msgbox').innerHTML="<div class='msgbox-std msgbox-error'>Erreur lors de la sauvegarde ("+response.result+")</div>";
 				}
 			},
 			error : function()
@@ -349,5 +390,42 @@ $( function() {
 		$("#cr").val("");
 	}
 });
+
+
+$('html').on('dragover drop', function(e) { e.preventDefault(); e.stopPropagation(); });
+
+$('#newContentFile')
+	.on('dragenter dragover', function() { $(this).addClass('drag-over'); })
+	.on('dragleave',          function() { $(this).removeClass('drag-over'); })
+	.on('drop', function(e) {
+		$(this).removeClass('drag-over');
+		e.stopPropagation(); e.preventDefault();
+		var fd = new FormData();
+		fd.append('file', e.originalEvent.dataTransfer.files[0]);
+		uploadData(fd);
+	});
+
+$('#newFile').on('change', function() {
+    var fd = new FormData();
+    fd.append('file', this.files[0]);
+	uploadData(fd);
+});
+
+function uploadData(fd)
+{
+	$.ajax({
+		url: '{path_root}/api.php?mod=aviation&rub=updlivret&fonc=file&id='+document.getElementById('form_livret').value,
+		type: 'POST',
+		data: fd,
+		processData: false,
+		contentType: false,
+		success: function(response) {
+			console.log("ok");
+			showToast("","Fichier envoyé","ok");
+
+		}
+	});
+}
+
 </script>
 <!-- END: corps -->

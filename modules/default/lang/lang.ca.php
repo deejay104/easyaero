@@ -9,6 +9,7 @@
 	$tabLang["lang_plane"]="Suivi des Avions";
 	$tabLang["lang_rex"]="REX";
 	$tabLang["lang_followup"]="Indicateurs";
+	$tabLang["lang_safety"]="Sécurité";
 
 	$tabLang["lang_transfer"]="Transfèrer";
 	$tabLang["lang_credit"]="Créditer";

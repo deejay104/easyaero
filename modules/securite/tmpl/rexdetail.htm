@@ -11,7 +11,7 @@
 
 <!-- <p class="lastupdate">Dernière mise à jour : {info_maj}</p> -->
 
-<FORM name="rex" method="post" action="{path_root}/aviation/rexdetail" enctype="multipart/form-data">
+<FORM name="rex" method="post" action="{path_root}/securite/rexdetail" enctype="multipart/form-data">
 	
 	<INPUT type="hidden" name="id" value="{id}">
 
@@ -115,7 +115,16 @@
 		<div class="card">
 			<div class="card-header">Evaluation du risque</div>
 			<div class="card-body">	
-				{form_risque}
+				<div class="form-group row">
+					<div class="col-lg-3">
+						<div>
+							<label class="col-form-label">Probabilité</label>{form_probability}
+							<label class="col-form-label">Gravité</label>{form_gravity}
+						</div>
+					</div>
+					<div class="col-lg-1"></div>
+					<div class="col-lg-4">{form_risk}</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -81,7 +81,6 @@
 				array("nom"=>"Livret de progression","url"=>geturl("aviation","syntheses",""),"droit"=>""),
 				array("nom"=>"Suivi formations","url"=>geturl("aviation","formations",""),"droit"=>"AccesFormations"),
 				array("nom"=>"Terrains","url"=>geturl("aviation","terrains",""),"droit"=>""),
-				array("nom"=>"REX","url"=>geturl("aviation","rex",""),"droit"=>"AccesRex"),
 			)
 		);
 		$tabMenu["suiviavions"]=array(
@@ -99,8 +98,18 @@
 				array("nom"=>"Maintenances","url"=>geturl("ressources","liste",""),"droit"=>"AccesMaintenances")
 			)
 		);
+		$tabMenu["securite"]=array(
+			"icone"=>"mdi-alert",
+			"nom"=>$tabLang["lang_safety"],
+			"droit"=>"AccesSecurite",
+			"url"=>geturl("securite","rex",""),
+			"submenu"=>array(
+				array("nom"=>"REX","url"=>geturl("securite","rex",""),"droit"=>"AccesRex"),
+				array("nom"=>"Evénements","url"=>geturl("securite","events",""),"droit"=>"AccesEvents"),
+			)
+		);
 
-
+		/*
 		$tabMenu["rex"]=array(
 			"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_rex.png",
 			"icone"=>"mdi-alert",
@@ -108,6 +117,7 @@
 			"droit"=>"AccesRex",
 			"url"=>geturl("aviation","rex",""),
 		);
+		*/
 		$tabMenu["indicateurs"]=array(
 			"icone"=>$MyOpt["host"]."/"."static/modules/aviation/img/icn32_indicateurs.png",
 			"icone"=>"mdi-trending-up",

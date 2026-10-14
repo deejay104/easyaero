@@ -284,6 +284,10 @@ $tabCustom=Array
 	$obj=new rex_class(0,$sql);
 	$obj->genSqlTab($tabCustom);
 
+	require_once ($appfolder."/class/evenement.inc.php");
+	$obj=new event_class(0,$sql);
+	$obj->genSqlTab($tabCustom);
+
 	require_once ($appfolder."/class/synthese.inc.php");
 
 	$obj=new formation_class(0,$sql);

@@ -36,7 +36,7 @@
 // ---- Affiche le sous-menu
 	if (GetDroit("CreeRex"))
 	{
-		addPageMenu($corefolder,$mod,"Créer",geturl("aviation","rexdetail","id=0"),"",false);
+		addPageMenu($corefolder,$mod,"Créer",geturl("securite","rexdetail","id=0"),"",false);
 	}
 
 // ---- Liste des ressources
@@ -47,6 +47,8 @@
 	$tabTitre["titre"]["width"]=350;
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=100;
+	$tabTitre["risk"]["aff"]="Risque";
+	$tabTitre["risk"]["width"]=150;
 	$tabTitre["risque"]["aff"]="Risque";
 	$tabTitre["risque"]["width"]=150;
 	$tabTitre["categorie"]["aff"]="Catégorie";
@@ -65,6 +67,8 @@
 		$tabValeur[$i]["titre"]["aff"]=$rex->aff("titre");
 		$tabValeur[$i]["status"]["val"]=$rex->val("status");
 		$tabValeur[$i]["status"]["aff"]=$rex->aff("status");
+		$tabValeur[$i]["risk"]["val"]=$rex->val("risk");
+		$tabValeur[$i]["risk"]["aff"]=$rex->aff("risk","list");
 		$tabValeur[$i]["risque"]["val"]=$rex->val("risque");
 		$tabValeur[$i]["risque"]["aff"]=$rex->aff("risque","list");
 		$tabValeur[$i]["categorie"]["val"]=$rex->val("categorie");

@@ -101,6 +101,8 @@ $tabRoles["ModifWaypoint"]="Import de waypoints";
 $tabRoles["ModifNavigation"]="Modification d'une navigation";
 $tabRoles["ModifWeb"]="Modification de la partie publique";
 
+$tabRoles["AccesSecurite"]="Accès au menu sécurité";
+
 $tabRoles["AccesRex"]="Accès à la liste des REX";
 $tabRoles["CreeRex"]="Création d'un REX";
 $tabRoles["ModifRex"]="Modification des REX";
@@ -108,6 +110,11 @@ $tabRoles["ModifRexAll"]="Modification REX e tous les champs";
 $tabRoles["ModifRexSynthese"]="Modification de la synthèse d'un REX";
 $tabRoles["ModifRexStatus"]="Modication du status d'un REX";
 $tabRoles["SupprimeRex"]="Suppression d'un REX";
+
+$tabRoles["AccesEvents"]="Accès à la liste des évenements";
+$tabRoles["CreeEvent"]="Création d'un évenement";
+$tabRoles["ModifEvent"]="Modification d'un évenement";
+$tabRoles["ModifEventStatus"]="Modification du status d'un évenement";
 
 
 $tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";

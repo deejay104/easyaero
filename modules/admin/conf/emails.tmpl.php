@@ -219,7 +219,7 @@ $tabMails["rex_create"]=Array
 Un nouveau REX a été enregistré.
 
 Détail :
-".$MyOpt["host"]."/aviation/rexdetail?id={id}
+".$MyOpt["host"]."/securite/rexdetail?id={id}
 
 A bientôt
 "

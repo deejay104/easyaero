@@ -9,6 +9,7 @@
 	$tabLang["lang_plane"]="Planes";
 	$tabLang["lang_rex"]="REX";
 	$tabLang["lang_followup"]="Follow-up";
+	$tabLang["lang_safety"]="Safety";
 
 	$tabLang["lang_transfer"]="Transfer";
 	$tabLang["lang_credit"]="Credit";

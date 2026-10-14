@@ -33,7 +33,7 @@ $tabValeurRex["cancel"]="Annulé";
 class rex_class extends objet_core
 {
 	protected $table="rex";
-	protected $mod="aviation";
+	protected $mod="securite";
 	protected $rub="rexdetail";
 
 	protected $droit=array("status"=>"ModifRexStatus","planaction"=>"ModifRexSynthese","synthese"=>"ModifRexSynthese");
@@ -54,16 +54,22 @@ class rex_class extends objet_core
 		"typeevt" => Array("type" => "varchar","len"=>30),
 		"uid_avion" => Array("type" => "number", "index"=>1 ),
 		"risque" => Array("type" => "varchar","len"=>2 ),
+		"probability" => Array("type" => "enum","default"=>"0"),
+		"gravity" => Array("type" => "enum","default"=>"0"),
+		"risk" => Array("type" => "number"),
 		"dte_rex" => Array("type" => "date", "default" => "now" ),
 	);
 
 	protected $tabList=array(
 		"status"=>array('new'=>'Nouveau','inprg'=>'En cours','close'=>'Cloturé','cancel'=>'Annulé'),
+		"probability"=>array(0=>'Non défini',1=>'Faible',2=>'Moyenne',3=>'Elevée'),
+		"gravity"=>array(0=>'Non défini',1=>'Faible',2=>'Moyenne',3=>'Elevée'),
 	);
 
 	protected $color=array(
 		"status"=>array("new"=>"red","inprg"=>"orange","close"=>"green","cancel"=>"gray-light"),
 		"risque"=>array("0"=>"gray-light","1"=>"green","2"=>"green","3"=>"yellow","4"=>"orange","5"=>"red"),
+		"risk"=>array("0"=>"gray-light","1"=>"green","2"=>"green","3"=>"orange","4"=>"orange","6"=>"red","9"=>"red"),
 	);
 
 	# Constructor
@@ -94,47 +100,103 @@ class rex_class extends objet_core
 		parent::__construct($id,$sql);
 	}	
 
+	function save()
+	{
+		$this->data["risk"]=$this->data["gravity"]*$this->data["probability"];
+		return parent::save();
+	}
 	
 	function aff($key,$typeaff="html",$formname="form_data",&$render="",$formid="")
 	{
 		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 		$sql=$this->sql;
 
-		// Variables
-		$tabCol=array();
-		$tabLig=array();
-		$tabBg=array();
+		if (($this->data["risk"]==0) && ($this->data["risque"]>0))
+		{
+			$tabRisque["11"]="3"; $tabRisque["12"]="2"; $tabRisque["13"]="1"; $tabRisque["14"]="1"; $tabRisque["15"]="1";
+			$tabRisque["21"]="3"; $tabRisque["22"]="2"; $tabRisque["23"]="1"; $tabRisque["24"]="1"; $tabRisque["25"]="1";
+			$tabRisque["31"]="3"; $tabRisque["32"]="2"; $tabRisque["33"]="1"; $tabRisque["34"]="1"; $tabRisque["35"]="1";
+			$tabRisque["41"]="3"; $tabRisque["42"]="2"; $tabRisque["43"]="1"; $tabRisque["44"]="1"; $tabRisque["45"]="1";
+			$tabRisque["51"]="3"; $tabRisque["52"]="2"; $tabRisque["53"]="1"; $tabRisque["54"]="1"; $tabRisque["55"]="1";
+			$tabRisque["61"]="3"; $tabRisque["62"]="2"; $tabRisque["63"]="1"; $tabRisque["64"]="1"; $tabRisque["65"]="1";
+			$tabRisque["71"]="3"; $tabRisque["72"]="2"; $tabRisque["73"]="1"; $tabRisque["74"]="1"; $tabRisque["75"]="1";
+			$tabRisque["00"]="0";
+			$this->data["probability"]=$tabRisque[$this->data["risque"]];
 
-		$tabCol[1]="Très Probable";
-		$tabCol[2]="Probable";
-		$tabCol[3]="Improbable";
-		$tabCol[4]="Très Improbable";
-		$tabCol[5]="Non défini";
+			$tabRisque["11"]="3"; $tabRisque["12"]="3"; $tabRisque["13"]="3"; $tabRisque["14"]="3"; $tabRisque["15"]="3";
+			$tabRisque["21"]="3"; $tabRisque["22"]="3"; $tabRisque["23"]="3"; $tabRisque["24"]="3"; $tabRisque["25"]="3";
+			$tabRisque["31"]="2"; $tabRisque["32"]="2"; $tabRisque["33"]="2"; $tabRisque["34"]="3"; $tabRisque["35"]="3";
+			$tabRisque["41"]="2"; $tabRisque["42"]="2"; $tabRisque["43"]="2"; $tabRisque["44"]="2"; $tabRisque["45"]="2";
+			$tabRisque["51"]="1"; $tabRisque["52"]="1"; $tabRisque["53"]="1"; $tabRisque["54"]="2"; $tabRisque["55"]="2";
+			$tabRisque["61"]="1"; $tabRisque["62"]="1"; $tabRisque["63"]="1"; $tabRisque["64"]="1"; $tabRisque["65"]="1";
+			$tabRisque["71"]="1"; $tabRisque["72"]="1"; $tabRisque["73"]="1"; $tabRisque["74"]="1"; $tabRisque["75"]="1";
+			$tabRisque["00"]="0";
+			$this->data["gravity"]=$tabRisque[$this->data["risque"]];
+		}
 
-		$tabLig[1]="Accident matériel et corporel";
-		$tabLig[2]="Accident corporel";
-		$tabLig[3]="Accident matériel";
-		$tabLig[4]="Incident grave";
-		$tabLig[5]="Incident";
-		$tabLig[6]="Annomalie";
-		$tabLig[7]="Non défini";
+		if ($key=="risk")
+		{
+			// Variables
+			$tabProb=array();
+			$tabGrav=array();
+			$tabBg=array();
 
-		$tabBg["11"]="#ff0000"; $tabBg["12"]="#ff0000"; $tabBg["13"]="#ff0000"; $tabBg["14"]="#ffff00"; $tabBg["15"]="#ffffff";
-		$tabBg["21"]="#ff0000"; $tabBg["22"]="#ff0000"; $tabBg["23"]="#ff0000"; $tabBg["24"]="#ffff00"; $tabBg["25"]="#ffffff";
-		$tabBg["31"]="#ff0000"; $tabBg["32"]="#ff0000"; $tabBg["33"]="#ffc529"; $tabBg["34"]="#ffff00"; $tabBg["35"]="#ffffff";
-		$tabBg["41"]="#ff0000"; $tabBg["42"]="#ffc529"; $tabBg["43"]="#ffff00"; $tabBg["44"]="#00ff00"; $tabBg["45"]="#ffffff";
-		$tabBg["51"]="#ffc529"; $tabBg["52"]="#ffff00"; $tabBg["53"]="#ffff00"; $tabBg["54"]="#00ff00"; $tabBg["55"]="#ffffff";
-		$tabBg["61"]="#ffff00"; $tabBg["62"]="#00ff00"; $tabBg["63"]="#00ff00"; $tabBg["64"]="#00ff00"; $tabBg["65"]="#ffffff";
-		$tabBg["71"]="#ffffff"; $tabBg["72"]="#ffffff"; $tabBg["73"]="#ffffff"; $tabBg["74"]="#ffffff"; $tabBg["75"]="#ffffff";
+			$tabProb[1]="Faible";
+			$tabProb[2]="Moyenne";
+			$tabProb[3]="Elevé";
 
-		$tabRisque["11"]="5"; $tabRisque["12"]="5"; $tabRisque["13"]="5"; $tabRisque["14"]="3"; $tabRisque["15"]="0";
-		$tabRisque["21"]="5"; $tabRisque["22"]="5"; $tabRisque["23"]="5"; $tabRisque["24"]="3"; $tabRisque["25"]="0";
-		$tabRisque["31"]="5"; $tabRisque["32"]="5"; $tabRisque["33"]="4"; $tabRisque["34"]="3"; $tabRisque["35"]="0";
-		$tabRisque["41"]="5"; $tabRisque["42"]="4"; $tabRisque["43"]="3"; $tabRisque["44"]="2"; $tabRisque["45"]="0";
-		$tabRisque["51"]="4"; $tabRisque["52"]="3"; $tabRisque["53"]="3"; $tabRisque["54"]="2"; $tabRisque["55"]="0";
-		$tabRisque["61"]="3"; $tabRisque["62"]="2"; $tabRisque["63"]="2"; $tabRisque["64"]="1"; $tabRisque["65"]="0";
-		$tabRisque["71"]="0"; $tabRisque["72"]="0"; $tabRisque["73"]="0"; $tabRisque["74"]="0"; $tabRisque["75"]="0";
-		$tabRisque[""]="0";
+			$tabGrav[1]="Faible";
+			$tabGrav[2]="Moyenne";
+			$tabGrav[3]="Elevée";
+
+			$tabBg["0"]="#888888";
+			$tabBg["1"]="#00ff00"; $tabBg["2"]="#00ff00"; $tabBg["3"]="#ffc529";
+			$tabBg["2"]="#00ff00"; $tabBg["4"]="#ffc529"; $tabBg["6"]="#ff0000";
+			$tabBg["3"]="#ffc529"; $tabBg["6"]="#ff0000"; $tabBg["9"]="#ff0000";
+			if ($render=="form")
+			{
+				$render="html";
+			}
+		}
+
+		if ($key=="risque")
+		{
+			// Variables legacy
+			$tabCol=array();
+			$tabLig=array();
+			$tabBg=array();
+	
+			$tabCol[1]="Très Probable";
+			$tabCol[2]="Probable";
+			$tabCol[3]="Improbable";
+			$tabCol[4]="Très Improbable";
+			$tabCol[5]="Non défini";
+	
+			$tabLig[1]="Accident matériel et corporel";
+			$tabLig[2]="Accident corporel";
+			$tabLig[3]="Accident matériel";
+			$tabLig[4]="Incident grave";
+			$tabLig[5]="Incident";
+			$tabLig[6]="Annomalie";
+			$tabLig[7]="Non défini";
+	
+			$tabBg["11"]="#ff0000"; $tabBg["12"]="#ff0000"; $tabBg["13"]="#ff0000"; $tabBg["14"]="#ffff00"; $tabBg["15"]="#ffffff";
+			$tabBg["21"]="#ff0000"; $tabBg["22"]="#ff0000"; $tabBg["23"]="#ff0000"; $tabBg["24"]="#ffff00"; $tabBg["25"]="#ffffff";
+			$tabBg["31"]="#ff0000"; $tabBg["32"]="#ff0000"; $tabBg["33"]="#ffc529"; $tabBg["34"]="#ffff00"; $tabBg["35"]="#ffffff";
+			$tabBg["41"]="#ff0000"; $tabBg["42"]="#ffc529"; $tabBg["43"]="#ffff00"; $tabBg["44"]="#00ff00"; $tabBg["45"]="#ffffff";
+			$tabBg["51"]="#ffc529"; $tabBg["52"]="#ffff00"; $tabBg["53"]="#ffff00"; $tabBg["54"]="#00ff00"; $tabBg["55"]="#ffffff";
+			$tabBg["61"]="#ffff00"; $tabBg["62"]="#00ff00"; $tabBg["63"]="#00ff00"; $tabBg["64"]="#00ff00"; $tabBg["65"]="#ffffff";
+			$tabBg["71"]="#ffffff"; $tabBg["72"]="#ffffff"; $tabBg["73"]="#ffffff"; $tabBg["74"]="#ffffff"; $tabBg["75"]="#ffffff";
+	
+			$tabRisque["11"]="5"; $tabRisque["12"]="5"; $tabRisque["13"]="5"; $tabRisque["14"]="3"; $tabRisque["15"]="0";
+			$tabRisque["21"]="5"; $tabRisque["22"]="5"; $tabRisque["23"]="5"; $tabRisque["24"]="3"; $tabRisque["25"]="0";
+			$tabRisque["31"]="5"; $tabRisque["32"]="5"; $tabRisque["33"]="4"; $tabRisque["34"]="3"; $tabRisque["35"]="0";
+			$tabRisque["41"]="5"; $tabRisque["42"]="4"; $tabRisque["43"]="3"; $tabRisque["44"]="2"; $tabRisque["45"]="0";
+			$tabRisque["51"]="4"; $tabRisque["52"]="3"; $tabRisque["53"]="3"; $tabRisque["54"]="2"; $tabRisque["55"]="0";
+			$tabRisque["61"]="3"; $tabRisque["62"]="2"; $tabRisque["63"]="2"; $tabRisque["64"]="1"; $tabRisque["65"]="0";
+			$tabRisque["71"]="0"; $tabRisque["72"]="0"; $tabRisque["73"]="0"; $tabRisque["74"]="0"; $tabRisque["75"]="0";
+			$tabRisque[""]="0";
+		}
 
 		if ($render=="list")
 		{
@@ -143,6 +205,11 @@ class rex_class extends objet_core
 			{
 				$txt=$tabRisque[$this->val($key)];
 				$ret="<div class='tagsinput'><span class='tag ".((isset($this->color[$key][$txt])) ? "bg-".$this->color[$key][$txt] : "")."'>".$txt."</span></div>";
+			}
+			else if ($key=="risk")
+			{
+				$risk=$this->data["probability"]*$this->data["gravity"];
+				$ret="<div class='tagsinput'><span class='tag ".((isset($this->color[$key][$risk])) ? "bg-".$this->color[$key][$risk] : "")."'>".$risk."</span></div>";
 			}
 		}
 		else if ($render=="form")
@@ -209,6 +276,31 @@ class rex_class extends objet_core
 					foreach($tabCol as $c=>$cn)
 					{
 						$ret.="<td style='background-color:".$tabBg[$l.$c].";'>".(($this->data[$key]==$l.$c) ? "x" : "")."</td>";
+					}
+					$ret.="</tr>";
+				}
+
+				$ret.="</table>";
+			}
+			else if ($key=="risk")
+			{
+				$ret ="<style>.risqueREX th { width:140px; } td { width:140px; text-align: center; border: 1px solid #000000; font-weight: bold; }</style>";
+
+				$ret.="<table class='risqueREX' style='margin-top:35px;'>";
+				$ret.="<tr><th></th>";
+				foreach($tabGrav as $i=>$d)
+				{
+					$ret.="<th>".$d."</th>";
+				}
+				$ret.="</tr>";
+
+				$risk=$this->data["probability"].$this->data["gravity"];
+				foreach($tabProb as $l=>$ln)
+				{
+					$ret.="<tr><th>".$ln."</th>";
+					foreach($tabGrav as $c=>$cn)
+					{
+						$ret.="<td style='background-color:".$tabBg[$l*$c].";'>".(($risk==$l.$c) ? "<i class='mdi mdi-checkbox-blank-circle'></i>" : "")."</td>";
 					}
 					$ret.="</tr>";
 				}

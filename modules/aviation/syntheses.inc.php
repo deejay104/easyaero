@@ -129,6 +129,30 @@
 
 	$tmpl_x->assign("form_idinstructeur", AffListeMembres($sql,$livret->val("idinstructeur"),"idinstructeur","","","std","non",array("TypeInstructeur"),""));
 
+// ---- Affiche les documents
+
+	if ( (GetMyId($uid)) || (GetDroit("AccesSynthese")) )
+	{
+
+		$txt="";
+		if ($lid>0)
+		{
+			$lstdoc=ListDocument($sql,$lid,"synthese");
+		
+			if (is_array($lstdoc))
+			{
+
+				foreach($lstdoc as $i=>$did)
+				{
+					$doc = new document_core($did,$sql);
+					$doc->editmode="std";
+					$txt.=$doc->Affiche("large","name");
+				}
+			}
+		}
+		$tmpl_x->assign("lst_documents",$txt);
+
+	}
 
 // ---- Affiche la liste des exercices importants
 	$lst=ListeExercicesProg($sql,$lid,$uid,"peda","oui");

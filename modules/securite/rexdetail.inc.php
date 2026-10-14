@@ -71,13 +71,13 @@
 		
 			}
 		}
-		header('Location: /aviation/rexdetail?id='.$id, true, 303);
+		header('Location: /securite/rexdetail?id='.$id, true, 303);
     	exit;
 	}
 // ---- Annuler
 	if ($fonc=="Annuler")
 	{
-		header('Location: /aviation/rexdetail?id='.$id, true, 303);
+		header('Location: /securite/rexdetail?id='.$id, true, 303);
 		exit;
 	}
 
@@ -98,7 +98,7 @@
 	{
 		$rex=new rex_class($id,$sql);
 		$rex->Delete();
-		header('Location: /aviation/rex', true, 303);
+		header('Location: /securite/rex', true, 303);
     	exit;
 	}
 	
@@ -150,20 +150,20 @@
 		affInformation($msg_confirmation,"ok");
 	}
 
-	addPageMenu("","aviation","Liste",geturl("aviation","rex",""),"mdi-keyboard-backspace",false);
+	addPageMenu("","securite","Liste",geturl("securite","rex",""),"mdi-keyboard-backspace",false);
 
 	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat))
 	{
-		addPageMenu("","aviation","Modifier",geturl("aviation","rexdetail","fonc=editer&id=".$id),"",($fonc=="editer") ? true : false);
+		addPageMenu("","securite","Modifier",geturl("securite","rexdetail","fonc=editer&id=".$id),"",($fonc=="editer") ? true : false);
 	}
 	if (GetDroit("SupprimeRex"))
 	{
-		addPageMenu("","aviation","Supprimer",geturl("aviation","rexdetail","fonc=supprimer&id=".$id),"",false,"","","outline-danger");
+		addPageMenu("","securite","Supprimer",geturl("securite","rexdetail","fonc=supprimer&id=".$id),"",false,"","","outline-danger");
 	}	
-	addPageMenu("","aviation","Imprimer",geturl("aviation","rexdetail","fonc=imprimer&id=".$id),"",false);
+	addPageMenu("","securite","Imprimer",geturl("securite","rexdetail","fonc=imprimer&id=".$id),"",false);
 	if ((GetDroit("NotifierRex")) && ($rex->data["status"]=="close"))
 	{
-		addPageMenu("","aviation","Notifier",geturl("aviation","rexdetail","fonc=notifier&id=".$id),"",false);
+		addPageMenu("","securite","Notifier",geturl("securite","rexdetail","fonc=notifier&id=".$id),"",false);
 	}
 
 // ---- Infos de dernières maj

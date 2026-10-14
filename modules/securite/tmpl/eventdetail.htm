@@ -1,0 +1,115 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<!-- <p class="lastupdate">Dernière mise à jour : {info_maj}</p> -->
+
+<FORM name="rex" method="post" action="{path_root}/securite/eventdetail" enctype="multipart/form-data">
+	
+	<INPUT type="hidden" name="id" value="{id}">
+
+<div class="info-cartouche-wrap">
+	<div class="info-cartouche">
+		<div class="info-cartouche-icon">
+			<i class="mdi mdi-clock-outline"></i>
+		</div>
+		<div class="info-cartouche-body">
+			<div>
+				<span class="label">{lang_lastupdate}</span>
+			</div>
+			<div>
+				<label title="{info_historique}">{info_maj}</label>
+			</div>
+		</div>
+	</div>
+</div>
+	  
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Informations</div>
+			<div class="card-body">	
+
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Titre</label></div>
+					<div class="col-lg-8">{form_title}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Status</label></div>
+					<div class="col-lg-8">{form_status}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Date de création</label></div>
+					<div class="col-lg-8">{form_dte_event}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Date attendue</label></div>
+					<div class="col-lg-8">{form_dte_due}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Date cloture</label></div>
+					<div class="col-lg-8">{form_dte_close}</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Dernière modification</label></div>
+					<div class="col-lg-8">{form_dte_maj}</div>
+				</div>
+			</div>
+			<div class="card-body">	
+				<div class="form-group row">
+					<h3>Evaluation du risque</h3>
+					<div class="col-lg-3">
+						<div>
+							<label class="col-form-label">Probabilité</label>{form_probability}
+							<label class="col-form-label">Gravité</label>{form_gravity}
+						</div>
+					</div>
+					<div class="col-lg-1">
+					</div>
+					<div class="col-lg-4">{form_risk}</div>
+				</div>
+			</div>
+
+			<div class="card-body">	
+				<div class="form-group row">
+					<h3>Description</h3>
+					{form_description}
+				</div>
+			</div>
+
+
+<!-- BEGIN: form_submit -->
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-lg-7">
+						<input type="submit" class="btn btn-primary" name="fonc" value="Enregistrer">
+						<input type="submit" class="btn btn-light"  name="fonc" value="Annuler">
+					</div>
+				</div>
+			</div>
+<!-- END: form_submit -->
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Actions de résolution</div>
+			<div class="card-body">	
+				<div class="form-group row">
+				{form_action}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+</form>
+<!-- END: corps -->

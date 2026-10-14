@@ -4,6 +4,7 @@
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 	require_once ($appfolder."/class/synthese.inc.php");
+	require_once ("class/document.inc.php");
 
 // ---- Variable
 	$id=checkVar("id","numeric");
@@ -57,6 +58,7 @@
 			$livret->Valid("cr",checkVar("cr","text"));
 			$livret->Save();
 
+
 			$result["id"]=$livret->id;
 			if ($livret->id>0)
 			{
@@ -67,9 +69,25 @@
 			{
 				$result["status"]=500;
 				$result["result"]="Error";
-			}				
+			}
 		}
-	}	
+	}
+	else if ($fonc=="file")
+	{
+		$id=checkVar("id","numeric");
+
+		$doc = new document_core(0,$sql,"synthese");
+		$r=$doc->Save($id,$_FILES["file"]["name"],$_FILES["file"]["tmp_name"]);
+
+		$result["id"]=$doc->id;
+		$result["status"]=200;
+		$result["type"]=$doc->type;
+		$result["title"]=$doc->name;
+		$result["docid"]=$doc->id;
+		$result["link"]=$doc->Affiche();
+		$result["author"]=$myuser->fullname;
+		$result["created"]=now();
+	}
 	else if (($fonc=="cr") && ($id>0))
 	{
 		if (GetDroit("ModifLivret"))
