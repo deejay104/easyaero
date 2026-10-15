@@ -163,20 +163,21 @@ function ListeBaptemes($sql,$actif=array("oui"),$status=-2,$type="",$search="",$
 		$c.=")";
 	}
 
-	$query = "SELECT id FROM ".$MyOpt["tbl"]."_bapteme WHERE ($txt) AND ($st) ".$c;
+	$query = "SELECT id, id_pilote AS pilote, id_resa AS resa, dte AS date FROM ".$MyOpt["tbl"]."_bapteme WHERE ($txt) AND ($st) ".$c;
 
 	if ((isset($order)) && (count($order)>0))
 	{
-		$query.=" ORDER BY ".$order["name"]." ".$order["dir"].",id";
+		$query.=" ORDER BY ".(($order["name"]!="") ? $order["name"]." ".$order["dir"]."," : "")."id";
 	}
 
 	if (($ts>0) || ($tl>0))
 	{
 		$query.=" LIMIT ".$ts.",".$tl;
 	}
+//echo $query;
 
 	$sql->Query($query);
-// echo $query;
+ 
 	$res=array();
 	for($i=0; $i<$sql->rows; $i++)
 	{ 

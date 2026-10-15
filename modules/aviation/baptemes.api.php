@@ -33,8 +33,8 @@
 	}
 
 	$order=array();
-	$order["name"]=$c[$s[0]["column"]]["data"];
-	$order["dir"]=$s[0]["dir"];
+	$order["name"]=(isset($s[0]["column"])) ? $c[$s[0]["column"]]["data"] ?? "" : "";
+	$order["dir"]=$s[0]["dir"] ?? "";
 
 	$tot=TotalBaptemes($sql,array("oui"),$form_status,$form_type,$crit);
 	$ret["recordsTotal"]=$tot;
