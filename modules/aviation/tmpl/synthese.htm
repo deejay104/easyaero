@@ -24,7 +24,6 @@
 	<INPUT type="hidden" name="uid" value="{prev_uid}">
 	<INPUT type="hidden" name="form_data[idvol]" value="{form_idvol}">
 	<INPUT type="hidden" name="form_data[uid_pilote]" value="{form_id_pilote}">
-	<INPUT type="hidden" name="form_data[uid_instructeur]" value="{form_id_instructeur}">
 	<INPUT type="hidden" name="form_data[uid_avion]" value="{form_id_avion}">
 	<INPUT type="hidden" name="form_data[dte_vol]" value="{form_dte_vol}">
 	
@@ -53,16 +52,19 @@
 					<label class="col-lg-3 col-form-label">Eleve</label><div class="col-lg-6">{form_uid_pilote}</div>
 				</div>
 				<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Instructeur</label><div class="col-lg-6">{form_uid_instructeur}</div>
+				</div>
+				<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Module</label><div class="col-lg-6">{form_module}</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Référence du programme</label><div class="col-lg-6">{form_refffa}</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">Type de vol</label><div class="col-lg-6">{form_type}</div>
+					<label class="col-lg-3 col-form-label">Type de scéance</label><div class="col-lg-6">{form_type}</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-lg-3 col-form-label">Conclusion du vol</label><div class="col-lg-6">{form_conclusion}</div>
+					<label class="col-lg-3 col-form-label">Conclusion de la scéance</label><div class="col-lg-6">{form_conclusion}</div>
 				</div>
 
 			</div>
@@ -74,7 +76,7 @@
 <div class="row">
 	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-header">Informations du vol</div>
+			<div class="card-header">Informations de la scéance</div>
 			<div class="card-body">
 				<div class="">
 					<h4>Thèmes</h4>
@@ -83,7 +85,7 @@
 				</div>
 	
 				<div class="border-top pt-2">
-					<h4>Appréciation générale du vol</h4>
+					<h4>Appréciation générale de la scéance</h4>
 					{form_bilan_gen}
 				</div>
 	
@@ -236,15 +238,19 @@
 
 
 			<div class="card-body row">
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<b>Date du vol</b><br />
 					{form_dtevol}
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-3">
+					<b>Immatriculation</b><br />
+					{form_immat}
+				</div>
+				<div class="col-lg-3">
 					<b>Durée</b><br />
 					{form_duree}
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<b>Cumul DC</b><br />
 					{form_cumuldc}<br />
 					<b>Cumul Solo</b><br />

@@ -218,13 +218,26 @@
 	{
 		$fiche = new synthese_class($fid,$sql);
 		$resa=new resa_class($fiche->val("idvol"),$sql);
-		$ress=new ress_class($fiche->val("uid_avion"),$sql);
 		$inst=new user_class($fiche->val("uid_instructeur"),$sql);
-		
-		$tabValeur[$fid]["ress"]["val"]=$ress->val("immatriculation");
-		$tabValeur[$fid]["ress"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".$ress->val("immatriculation")."</a>";
-		$tabValeur[$fid]["dte"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$fid]["dte"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".sql2date($resa->dte_deb,"jour")."</a>";
+
+		if ($fiche->val("uid_avion")>0)
+		{
+			$ress=new ress_class($fiche->val("uid_avion"),$sql);
+			$tabValeur[$fid]["ress"]["val"]=$ress->val("immatriculation");
+			$tabValeur[$fid]["ress"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".$ress->val("immatriculation")."</a>";	
+			$tabValeur[$fid]["temps"]["val"]=$fiche->temps();
+			$tabValeur[$fid]["temps"]["aff"]=AffTemps($fiche->temps());
+			}
+		else
+		{
+			$tabValeur[$fid]["ress"]["val"]="Briefing";
+			$tabValeur[$fid]["ress"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>Briefing</a>";	
+			$tabValeur[$fid]["temps"]["val"]=$fiche->val("tps_theo");
+			$tabValeur[$fid]["temps"]["aff"]=AffTemps($fiche->val("tps_theo"));
+		}
+
+		$tabValeur[$fid]["dte"]["val"]=strtotime($fiche->val("dte_vol"));
+		$tabValeur[$fid]["dte"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".sql2date($fiche->val("dte_vol"),"jour")."</a>";
 		
 		$tabValeur[$fid]["inst"]["val"]=$inst->val("fullname");
 		$tabValeur[$fid]["inst"]["aff"]="<a href='".$MyOpt["host"]."/aviation/synthese?id=".$fid."&uid=".$uid."'>".$inst->val("fullname")."</a>";
@@ -234,8 +247,6 @@
 		$tabValeur[$fid]["module"]["aff"]=$fiche->aff("module");
 		$tabValeur[$fid]["refffa"]["val"]=$fiche->val("refffa");
 		$tabValeur[$fid]["refffa"]["aff"]=$fiche->aff("refffa");
-		$tabValeur[$fid]["temps"]["val"]=$fiche->temps();
-		$tabValeur[$fid]["temps"]["aff"]=AffTemps($fiche->temps());
 		$tabValeur[$fid]["conclusion"]["val"]=$fiche->val("conclusion");
 		$tabValeur[$fid]["conclusion"]["aff"]=$fiche->aff("conclusion");
 		$tabValeur[$fid]["status"]["val"]=$fiche->val("status");

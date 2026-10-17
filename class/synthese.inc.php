@@ -237,9 +237,9 @@ class synthese_class extends objet_core
 			"ca"=>array('ok'=>'Validé','nok'=>'Non Validé'),
 		),
 		"type" =>array(
-			"fr"=>array('dc'=>'Double Commande','solo'=>'Solo'),	
-			"en"=>array('dc'=>'Double Commande','solo'=>'Solo'),
-			"ca"=>array('dc'=>'Double Commande','solo'=>'Solo'),	
+			"fr"=>array('dc'=>'Double Commande','solo'=>'Solo','briefing'=>'Briefing'),	
+			"en"=>array('dc'=>'Double Commande','solo'=>'Solo','briefing'=>'Briefing'),
+			"ca"=>array('dc'=>'Double Commande','solo'=>'Solo','briefing'=>'Briefing'),	
 		),
 		"module" => array(
 			"fr"=>Array('maniabilite'=>'Maniabilité','navigation'=>'Navigation','avance'=>'Navigation avancée','evaluation'=>'Vol d\'évaluation','solo'=>'Solo Supervisé','prorogation'=>'Prorogation','panne'=>'Panne'),
@@ -310,81 +310,125 @@ class synthese_class extends objet_core
 	{
 		$ret=parent::aff($key,$typeaff,$formname,$render,$formid);
 
-		if (($key=="refffa") && ($render=="form"))
+		if ($render=="form")
 		{
-			$txt=$this->val($key);
-
-			$livret=new livret_class($this->data["idlivret"],$this->sql);
-			$fid=$livret->val("idformation");
-
-			$t=ListeObjets($this->sql,"reference",array("id","refffa"),array("actif"=>"oui","idformation"=>($fid>0)?$fid:0),array("refffa"));
-			
-			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name=\"".$formname."[$key]\">";
-			$ret.="<option value=\"\" ".(($txt=="") ? "selected" : "").">Aucun</option>";
-			foreach($t as $k=>$v)
+			if ($key=="refffa")
 			{
-				$ret.="<option value=\"".$v["refffa"]."\" ".(($txt==$v["refffa"]) ? "selected" : "").">".$v["refffa"]."</option>";
-			}
-			$ret.="</select>";			
-		}
-		else if (($key=="idlivret") && ($render=="form"))
-		{
-			$txt=$this->val($key);
-			$lst=ListeLivret($this->sql,$this->data["uid_pilote"]);
+				$txt=$this->val($key);
 
-			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name=\"".$formname."[$key]\" OnChange=\"document.location='".geturl("aviation","synthese","id=".$this->id."&idvol=".$this->val("idvol"))."&lid='+document.getElementById('idlivret').value;\">";
-			foreach($lst as $i=>$tmp)
-			{
-				$res=new livret_class($tmp["id"],$this->sql);
-				$ret.="<option value=\"".$tmp["id"]."\" ".(($txt==$tmp["id"]) ? "selected" : "").">".$res->displayDescription()."</option>";
+				$livret=new livret_class($this->data["idlivret"],$this->sql);
+				$fid=$livret->val("idformation");
+
+				$t=ListeObjets($this->sql,"reference",array("id","refffa"),array("actif"=>"oui","idformation"=>($fid>0)?$fid:0),array("refffa"));
+				
+				$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name=\"".$formname."[$key]\">";
+				$ret.="<option value=\"\" ".(($txt=="") ? "selected" : "").">Aucun</option>";
+				foreach($t as $k=>$v)
+				{
+					$ret.="<option value=\"".$v["refffa"]."\" ".(($txt==$v["refffa"]) ? "selected" : "").">".$v["refffa"]."</option>";
+				}
+				$ret.="</select>";			
 			}
-			$ret.="</select>";			
-		}		
-		else if (($key=="idlivret") && ($render=="read"))
-		{
-			$txt=$this->val($key);
-			$res=new livret_class($txt,$this->sql);
-			$ret="<input readonly class='form-control' value=\"".$res->displayDescription()."\">";
+			else if ($key=="idlivret")
+			{
+				$txt=$this->val($key);
+				$lst=ListeLivret($this->sql,$this->data["uid_pilote"]);
+
+				$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name=\"".$formname."[$key]\" OnChange=\"document.location='".geturl("aviation","synthese","id=".$this->id."&idvol=".$this->val("idvol"))."&lid='+document.getElementById('idlivret').value;\">";
+				foreach($lst as $i=>$tmp)
+				{
+					$res=new livret_class($tmp["id"],$this->sql);
+					$ret.="<option value=\"".$tmp["id"]."\" ".(($txt==$tmp["id"]) ? "selected" : "").">".$res->displayDescription()."</option>";
+				}
+				$ret.="</select>";			
+			}
+			else if ($key=="uid_pilote")
+			{
+				$txt=$this->val($key);
+				$res=new user_class($txt,$this->sql);
+				$ret="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
+			}		
+			else if ($key=="uid_instructeur")
+			{
+				if ($this->data["uid_instructeur"]>0)
+				{
+					$txt=$this->val($key);
+					$res=new user_class($txt,$this->sql);
+					$ret ="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
+					$ret.="<INPUT type='hidden' name='form_data[uid_instructeur]' value='".$txt."'>";
+
+				}
+				else
+				{
+					$sql=$this->sql;
+					$query="SELECT idinstructeur FROM ".$this->tbl."_livret WHERE id=".$this->data["idlivret"]."";
+					$res=$sql->QueryRow($query);
+					$ret=AffListeMembres($this->sql,$res["idinstructeur"] ?? 0,"form_data[uid_instructeur]","","","std","non",array("TypeInstructeur"),"");
+				}
+			}		
+	
 		}
-		else if (($key=="idlivret") && ($render!="form"))
+		else if ($render=="read")
 		{
-			$txt=$this->val($key);
-			$res=new livret_class($txt,$this->sql);
-			$ret="<div>".$res->displayDescription()."</div>";
+			if ($key=="idlivret")
+			{
+				$txt=$this->val($key);
+				$res=new livret_class($txt,$this->sql);
+				$ret="<input readonly class='form-control' value=\"".$res->displayDescription()."\">";
+			}
+			else if ($key=="uid_pilote")
+			{
+				$txt=$this->val($key);
+				$res=new user_class($txt,$this->sql);
+				$ret="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
+			}
+			else if ($key=="uid_instructeur")
+			{
+				$txt=$this->val($key);
+				$res=new user_class($txt,$this->sql);
+				$ret="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
+			}
 		}
-		else if (($key=="uid_pilote") && ($render=="form"))
+		else
 		{
-			$txt=$this->val($key);
-			$res=new user_class($txt,$this->sql);
-			$ret="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
-		}		
-		else if (($key=="uid_pilote") && ($render=="read"))
-		{
-			$txt=$this->val($key);
-			$res=new user_class($txt,$this->sql);
-			$ret="<input readonly class='form-control' value=\"".$res->val("fullname")."\">";
+			if ($key=="idlivret")
+			{
+				$txt=$this->val($key);
+				$res=new livret_class($txt,$this->sql);
+				$ret="<div>".$res->displayDescription()."</div>";
+			}
+			else if ($key=="uid_pilote")
+			{
+				$txt=$this->val($key);
+				$res=new user_class($txt,$this->sql);
+				$ret="<div>".$res->val("fullname")."</div>";
+			}
+			else if ($key=="uid_instructeur")
+			{
+				$txt=$this->val($key);
+				$res=new user_class($txt,$this->sql);
+				$ret="<div>".$res->val("fullname")."</div>";
+			}
 		}
-		else if (($key=="uid_pilote") && ($render!="form"))
+
+		if  ($render!="form")
 		{
-			$txt=$this->val($key);
-			$res=new user_class($txt,$this->sql);
-			$ret="<div>".$res->val("fullname")."</div>";
-		}
-		else if (($key=="module") && ($render!="form"))
-		{
-			$ret="<div>".$ret."</div>";
-		}		
-		else if (($key=="refffa") && ($render!="form"))
-		{
-			$ret="<div>".$ret."</div>";
-		}
-		else if (($key=="type") && ($render!="form"))
-		{
-			$ret="<div>".$ret."</div>";
-		}	
-		else if (($key=="conclusion") && ($render!="form"))
-		{
-			$ret="<div>".$ret."</div>";
+			if ($key=="module")
+			{
+				$ret="<div>".$ret."</div>";
+			}	
+			else if ($key=="refffa")
+			{
+				$ret="<div>".$ret."</div>";
+			}
+			else if ($key=="type")
+			{
+				$ret="<div>".$ret."</div>";
+			}	
+			else if ($key=="conclusion")
+			{
+				$ret="<div>".$ret."</div>";
+			}
 		}
 
 		return $ret;
@@ -400,7 +444,7 @@ class synthese_class extends objet_core
 		$query="SELECT tpsreel FROM ".$this->tbl."_calendrier AS cal WHERE id=".$this->data["idvol"]."";
 		$res=$sql->QueryRow($query);
 		
-		return $res["tpsreel"];
+		return $res["tpsreel"] ?? 0;
 	}
 	function NbAtt()
 	{

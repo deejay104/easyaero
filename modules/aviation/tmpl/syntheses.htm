@@ -188,7 +188,8 @@
 <div class="row" id="page-lst">
 	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-header">Liste des vols</div>
+			<div class="card-header">Liste des séances <button id="addbrief" type="button" class="btn btn-light">Ajouter</button>
+			</div>
 			<div class="card-body" >	
 			{aff_tableau}
 			</div>
@@ -236,6 +237,10 @@ $( function() {
 		$(".card").css("opacity",1);
 		$(".sidebar").css("opacity",1);
 		$(".content-menu").css("opacity",1);
+    });
+
+	$( "#addbrief" ).on( "click", function() {
+		document.location='{path_root}/aviation/synthese?id=0&idvol=0&uid='+$("#form_id").val()+'&lid='+$("#form_livret").val();
     });
 
 	$("#form_id").change(function(){

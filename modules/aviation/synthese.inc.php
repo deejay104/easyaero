@@ -183,6 +183,110 @@
 		FatalError("Accès non autorisé (AccesSynthese)");
 	}
 
+	if ($fiche->val("idlivret")==0)
+	{
+		if ($lid==0)
+		{
+			$lst=ListeLivret($sql,$fiche->val("uid_pilote"));
+			foreach($lst as $i=>$tmp)
+			{
+				$lid=$tmp["id"];
+			}
+		}
+		$fiche->valid("idlivret",$lid);
+	}	
+
+// ---- Supprimer
+	if ( ($fonc=="supprimer") && ($id>0) )
+	{
+		if ($ok==true)
+		{
+			$fiche->Delete();
+			// Supprime les exercices
+			$lst=ListeExercices($sql,$id);
+			foreach($lst as $i=>$v)
+			{
+				$c_line=new exercice_class($v["id"],$sql);
+				$c_line->Delete();
+			}
+			header('Location: /aviation/syntheses?uid='.$fiche->val("uid_pilote"), true, 303);
+			exit;
+		}
+	}
+
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require($appfolder."/modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
+
+// ---- Affiche le sous-menu
+
+	if ($idvol>0)
+	{
+		// addSubMenu("","Retour",geturl("reservations","reservation","id=".$idvol),"icn32_retour.png",false);
+		addPageMenu("","aviation","Retour",geturl("reservations","reservation","id=".$idvol),"mdi-keyboard-backspace",false);
+
+	}
+	else if ($uid>0)
+	{
+		// addSubMenu("","Retour",geturl("aviation","syntheses","uid=".$uid),"icn32_retour.png",false);
+		addPageMenu("","aviation","Retour",geturl("aviation","syntheses","uid=".$uid."&lid=".$lid),"mdi-keyboard-backspace",false);
+	}
+	else
+	{
+		// addSubMenu("","Retour",geturl("aviation","syntheses",""),"icn32_retour.png",false);
+		addPageMenu("","aviation","Retour",geturl("aviation","syntheses",""),"mdi-keyboard-backspace",false);
+	}
+
+	// affSubMenu();
+
+// ---- Informations Users
+
+	if (($fiche->val("idvol")==0) && ($idvol>0))
+	{
+		$fiche->Valid("idvol",$idvol);
+	}
+
+	if ($fiche->val("idvol")>0)
+	{
+		$resa=new resa_class($fiche->val("idvol"),$sql);
+
+		if ($fiche->val("uid_pilote")==0)
+		{
+			$fiche->valid("uid_pilote",$resa->uid_pilote);
+		}
+		if ($fiche->val("uid_instructeur")==0)
+		{
+			$fiche->valid("uid_instructeur",$resa->uid_instructeur);
+		}
+		if ($fiche->val("uid_avion")==0)
+		{
+			$fiche->valid("uid_avion",$resa->uid_ressource);
+		}
+		if ($fiche->val("dte_vol")=="0000-00-00 00:00:00")
+		{
+			$fiche->valid("dte_vol",$resa->dte_deb);
+		}	
+	}
+	else
+	{
+		$fiche->valid("uid_avion",0);
+		if ($fiche->val("uid_pilote")==0)
+		{
+			$fiche->valid("uid_pilote",$uid);
+		}
+		if ($fiche->val("dte_vol")=="0000-00-00 00:00:00")
+		{
+			$fiche->valid("dte_vol",now());
+		}
+	}
+
+	$pil=new user_class($fiche->val("uid_pilote"),$sql);
+	$ins=new user_class($fiche->val("uid_instructeur"),$sql);
+	$livret=new livret_class($fiche->val("idlivret"),$sql);
+
 	if ($uid==0)
 	{
 		$uid=$fiche->val("uid_pilote");
@@ -191,11 +295,9 @@
 	$tmpl_x->assign("form_id",$id);
 	$tmpl_x->assign("prev_uid",$uid);
 	$tmpl_x->assign("prev_idvol",$idvol);
-	$tmpl_x->assign("LineBackgroundHover",$MyOpt["styleColor"]["LineBackgroundHover"]);
 
 // ---- Signature de la synthèse
 	$nonce=checkVar("nonce","varchar");
-
 
 	if (($fonc=="Signature Instructeur") && ($fiche->val("nonce_instructeur")=="") )
 	{
@@ -262,106 +364,11 @@
 		$ok=true;
 	}
 
-
-
-// ---- Supprimer
-	if ( ($fonc=="supprimer") && ($id>0) )
-	{
-		if ($ok==true)
-		{
-			$fiche->Delete();
-			// Supprime les exercices
-			$lst=ListeExercices($sql,$id);
-			foreach($lst as $i=>$v)
-			{
-				$c_line=new exercice_class($v["id"],$sql);
-				$c_line->Delete();
-			}
-			header('Location: /aviation/syntheses?uid='.$fiche->val("uid_pilote"), true, 303);
-			exit;
-		}
-	}
-
-// ---- Affiche le menu
-	$aff_menu="";
-	require($appfolder."/modules/".$mod."/menu.inc.php");
-	$tmpl_x->assign("aff_menu",$aff_menu);
-
-
-// ---- Affiche le sous-menu
-
-	if ($idvol>0)
-	{
-		// addSubMenu("","Retour",geturl("reservations","reservation","id=".$idvol),"icn32_retour.png",false);
-		addPageMenu("","aviation","Retour",geturl("reservations","reservation","id=".$idvol),"mdi-keyboard-backspace",false);
-
-	}
-	else if ($uid>0)
-	{
-		// addSubMenu("","Retour",geturl("aviation","syntheses","uid=".$uid),"icn32_retour.png",false);
-		addPageMenu("","aviation","Retour",geturl("aviation","syntheses","uid=".$uid),"mdi-keyboard-backspace",false);
-	}
-	else
-	{
-		// addSubMenu("","Retour",geturl("aviation","syntheses",""),"icn32_retour.png",false);
-		addPageMenu("","aviation","Retour",geturl("aviation","syntheses",""),"mdi-keyboard-backspace",false);
-	}
 	if ($ok)
 	{
 		// addSubMenu("","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"icn32_supprimer.png",false);
 		addPageMenu("","aviation","Supprimer",geturl("aviation","synthese","fonc=supprimer&id=".$id."&uid=".$uid."&idvol=".$idvol),"mdi-delete",false,"","","outline-danger");
 	}
-
-	// affSubMenu();
-
-// ---- Informations Users
-	if ($fiche->val("idvol")==0)
-	{
-		if ($idvol==0)
-		{
-			FatalError("L'id du vol est vide");
-		}
-		else
-		{
-			$fiche->Valid("idvol",$idvol);
-		}
-	}
-
-	$resa=new resa_class($fiche->val("idvol"),$sql);
-
-	if ($fiche->val("uid_pilote")==0)
-	{
-		$fiche->valid("uid_pilote",$resa->uid_pilote);
-	}
-	if ($fiche->val("uid_instructeur")==0)
-	{
-		$fiche->valid("uid_instructeur",$resa->uid_instructeur);
-	}
-	if ($fiche->val("uid_avion")==0)
-	{
-		$fiche->valid("uid_avion",$resa->uid_ressource);
-	}
-	if ($fiche->val("dte_vol")=="0000-00-00 00:00:00")
-	{
-		$fiche->valid("dte_vol",$resa->dte_deb);
-	}
-
-	$pil=new user_class($fiche->val("uid_pilote"),$sql);
-	$ins=new user_class($fiche->val("uid_instructeur"),$sql);
-
-	if ($fiche->val("idlivret")==0)
-	{
-		if ($lid==0)
-		{
-			$lst=ListeLivret($sql,$fiche->val("uid_pilote"));
-			foreach($lst as $i=>$tmp)
-			{
-				$lid=$tmp["id"];
-			}
-		}
-		$fiche->valid("idlivret",$lid);
-	}
-	$livret=new livret_class($fiche->val("idlivret"),$sql);
 
 // ---- Affiche la fiche
 	
@@ -390,9 +397,9 @@
 
 // ---- Charge les exercices non acquis
 
-    if ($id==0)
+    if (($id==0) && ($fiche->val("idvol")>0))
 	{
-		$lst=ListeExercicesNonAcquis($sql,$id,$resa->uid_pilote);
+		$lst=ListeExercicesNonAcquis($sql,$id,$fiche->val("uid_pilote"));
 
 		foreach($lst as $i=>$v)
 		{
@@ -430,7 +437,7 @@
 
 
 // ---- Charge les exercices de la fiche de synthèse
-	$lst=ListeExercices($sql,$id,$resa->uid_pilote);
+	$lst=ListeExercices($sql,$id,$fiche->val("uid_pilote"));
 
 	foreach($lst as $i=>$v)
 	{
@@ -510,9 +517,9 @@
 	$tmpl_x->assign("form_dtevol",$fiche->aff("dte_vol"));
 	$tmpl_x->assign("form_duree",AffTemps($fiche->temps()));
 
-	$ress=new ress_class($resa->uid_ressource,$sql);
+	$ress=new ress_class($fiche->val("uid_avion"),$sql);
 	$tmpl_x->assign("form_immat",$ress->Aff("immatriculation"));
-
+	
 		
 	if ($typeaff=="form")
 	{
