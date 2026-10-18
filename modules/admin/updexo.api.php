@@ -6,15 +6,16 @@
 	require_once ($appfolder."/class/synthese.inc.php");
 
 // ---- Variable
-	$id=checkVar("id","numeric");
-	$fonc=checkVar("fonc","varchar");
+	$id=checkVar("id","numeric",0,-1);
+	$fid=checkVar("fid","numeric");
 
 // ---- 
 	$result=array();
 
-	if (($fonc=="get") && (is_numeric($id)))
-	{
+    if (($_SERVER['REQUEST_METHOD']=="GET") && ($id>=0))
+    {
 		$exo=new exercice_conf_class($id,$sql);
+        $result=$exo->export();
 
 		$result["id"]=$id;
 		$result["idformation"]=$exo->val("idformation");
@@ -46,7 +47,7 @@
 			$i=$i+1;
 		}
 	}
-	else if ($fonc=="post")
+	else if ($_SERVER['REQUEST_METHOD']=="POST")
 	{
 		if (GetDroit("ModifExercice"))
 		{
@@ -86,9 +87,94 @@
 			}
 
 			$result["result"]="OK";
+			$result["status"]=200;
 		}
 	}
+	else if ($_SERVER['REQUEST_METHOD']=="GET")
+	{		
+        $c=checkVar("columns","array");
+        $s=checkVar("order","array");
+        $draw=checkVar("draw","numeric");
+        $ts=checkVar("start","numeric");
+        $tl=checkVar("length","numeric");
+        $search=checkVar("search","array");
+
 		
+		$col=array();
+		$qs="";
+		foreach($c as $i=>$d)
+		{
+			$col[$d["name"]]=$d["data"];
+		}
+
+		// error_log(print_r($col,true));
+		$order="refffa";
+		$trie="desc";
+		if ((isset($s[0]["column"])))
+		{
+			$order=$c[$s[0]["column"]]["data"];
+		}
+		if (isset($s[0]["dir"]))
+		{
+			$trie=($s[0]["dir"]=="asc") ? "asc" : "desc";
+		}
 	
+		$search=array("actif"=>"oui","idformation"=>$fid);
+		$lst=ListeExercicesConf($sql,$search,array($order." ".$trie,"id"));
+		$totligne=count($lst);
+		$tl=$totligne;
+
+        $result["draw"]=$draw;
+        $result["recordsTotal"]=count($lst);
+        $result["recordsFiltered"]=count($lst);
+        $result["data"]=array();
+
+		$c=0;
+		foreach($lst as $i=>$d)
+		{
+			$exo=new exercice_conf_class($d["id"],$sql);
+
+			$result["data"][$c]["id"]=$d["id"];
+			$result["data"][$c]["description"]=$exo->val("description");
+			$result["data"][$c]["description_click"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->val("description")."</a>";
+			$result["data"][$c]["type"]=$exo->aff("type");
+			$result["data"][$c]["refffa"]=$exo->val("refffa");
+			$result["data"][$c]["refenac"]=$exo->val("refenac");
+			$result["data"][$c]["compcat"]=$exo->val("compcat");
+			$result["data"][$c]["competence"]=$exo->val("competence");
+			$result["data"][$c]["focus"]=$exo->aff("focus");
+			$result["data"][$c]["action"]="";
+
+			$result["data"][$c]["progression"]="";
+
+			$lstp=ListeProgression($sql,$d["id"]);
+			$tabValeur[$i]["progression"]["val"]="";
+			$s="";
+			foreach($lstp as $ii=>$dd)
+			{
+				$prog=new exercice_prog_class($dd["id"],$sql);
+	
+				$result["data"][$c]["progression"].=$s.$prog->val("refffa").": ".$prog->val("progression");
+				$s=" / ";
+			}
+			$c++;
+		}
+		$result["status"]=200;
+
+	}
+	else if ($_SERVER['REQUEST_METHOD']=="DELETE")
+	{
+		$result["status"]=200;
+		if (GetDroit("SupprimeExercice"))
+		{
+			$id=checkVar("id","numeric");
+			if ($id>0)
+			{
+				$exo=new exercice_conf_class($id,$sql);
+				$exo->Delete();
+			}
+		}
+	}
+
 	echo json_encode($result);
 ?>

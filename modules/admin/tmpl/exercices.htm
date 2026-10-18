@@ -6,7 +6,9 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
-
+<style>
+	.form-width { width:unset!important;}
+</style>
 <div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -74,36 +76,31 @@
 				</div>
 				<br />
 				<div class="form-inline"><label></label>
-					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
-					<button class="btn btn-light" id="cancel">Annuler</button>
+					<button class="btn btn-primary" id="save">Enregistrer</button>
+					<button class="btn btn-light" id="cancel">Annuler</button>&nbsp;&nbsp;
+					<button class="btn btn-outline-danger" id="delete">Supprimer</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="row">
-	<div class="col grid-margin stretch-card">
-		<div class="card">	
-			<div class="card-body row">	
-
-				<div class="col-lg-1 form-inline"><label>Formation :</label></div>
-				<div class="col-lg-2">
-					<select id="fid" name="fid" class="form-control" OnChange="document.location='{url}&fid='+document.getElementById('fid').value;">
-					<!-- BEGIN: lst_formation -->
-					<option value="{id_formation}" {chk_formation}>{nom_formation}</OPTION>
-					<!-- END: lst_formation -->
-					</select>
-				</div>
-				<div class="col-lg-2"><button id="edit_new" class="btn btn-outline-primary">Ajouter</button></div>
-			</div>
-		</div>
-	</div>
-</div>
 
 <div class="row" id="page-content">
 	<div class="col grid-margin stretch-card">
 		<div class="card">	
+			<div class="card-header">	
+				Formation : 
+				<select id="fid" name="fid" class="form-control form-width" OnChange="document.location='{url}&fid='+document.getElementById('fid').value;">
+					<!-- BEGIN: lst_formation -->
+					<option value="{id_formation}" {chk_formation}>{nom_formation}</OPTION>
+					<!-- END: lst_formation -->
+				</select> 
+				<!-- BEGIN: btn_ajouter -->
+					<button id="edit_new" class="btn btn-light">Ajouter</button>
+				<!-- END: btn_ajouter -->
+				</div>
+
 			<div class="card-body">	
 				{aff_tableau}
 			</div>
@@ -113,7 +110,10 @@
 
 
 <script>
-$( function() {
+	$( "#edit_new" ).on( "click", function() {
+		loadExercice(0);
+    });
+
 	$( "#close" ).on( "click", function() {
 		$("#dialogForm").css("opacity",0);
 		$("#dialogForm").css("display","none");
@@ -130,11 +130,32 @@ $( function() {
 		$("#dialogForm").css("display","none");
 		$("#page-content").css("opacity",1);
 	});
+	$( "#delete" ).on( "click", function() {
+		//ConfirmeClick('/admin/exercices?fonc=delete&id='+$('#form_id').val(),'Voulez-vous supprimer cet exercice ?')		
+		$.ajax({
+			type: 'DELETE',
+			url: '{path_root}/api/v1/admin/updexo?id='+$('#form_id').val(),
+			dataType: 'JSON',
+
+			success: function(response) {
+				$('#lstexo').DataTable().ajax.reload(null, false);
+				
+				$("#dialogForm").css("opacity",0);
+				$("#dialogForm").css("display","none");
+				$("#page-content").css("opacity",1);
+
+			},
+			error: function(response) {
+				console.log("error");
+				console.log(response);
+			}
+		}); 
+	});
 
 	function loadExercice(id) {
 		$.ajax({
 			type: 'GET',
-			url: '{path_root}/api/v1/admin/updexo?fonc=get&id='+id,
+			url: '{path_root}/api/v1/admin/updexo?id='+id,
 			dataType: 'JSON',
 
 			success: function(response) {
@@ -239,17 +260,17 @@ $( function() {
 			}
 
 			$.ajax({
-				url:'{path_root}/api/v1/admin/updexo?fonc=post',
+				url:'{path_root}/api/v1/admin/updexo',
 				type: 'POST',
 				data: data,
 				dataType: 'JSON',
 				success: function(response)
 				{
-					if (response.result=="OK")
+					if (response.status==200)
 					{
 						console.log("ok");
 						showToast("","L'exercice a été enregistré","ok");
-
+						$('#lstexo').DataTable().ajax.reload(null, false);
 					}
 					else
 					{
@@ -267,22 +288,6 @@ $( function() {
 		return valid;
     }
 
-<!-- BEGIN: lst_edit -->
-	$( "#edit_{lst_id}" ).on( "click", function() {
-		loadExercice({lst_id});
-		return false;
-    });
-	$( "#del_{lst_id}" ).on( "click", function() {
-		ConfirmeClick('/admin/exercices?fonc=delete&id={lst_id}','Voulez-vous supprimer cet exercice ?')		
-		return false;
-    });
-<!-- END: lst_edit -->
-
-
-	$( "#edit_new" ).on( "click", function() {
-		loadExercice(0);
-    });
-});
 </script>
 
 <!-- END: corps -->

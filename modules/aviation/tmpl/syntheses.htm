@@ -355,12 +355,12 @@ $( function() {
 	function loadLivret() {
 		$.ajax({
 			type: 'GET',
-			url: '{path_root}/api.php?mod=aviation&rub=updlivret&fonc=get&id='+document.getElementById('form_livret').value,
+			url: '{path_root}/api/v1/aviation/updlivret?fonc=get&id='+document.getElementById('form_livret').value,
 			dataType: 'JSON',
 
 			success: function(response) {
 				document.getElementById('livretid').value=response.id;
-				document.getElementById('showform').style.display="inline-";
+				document.getElementById('showform').style.display="flex";
 				document.getElementById('editform').style.display="none";
 				document.getElementById('show_idformation').value=response.showformation;
 				document.getElementById('idformation').value=response.idformation;

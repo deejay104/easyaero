@@ -26,18 +26,40 @@
 class formation_class extends objet_core
 {
 	protected $table="formation";
-	protected $mod="aviation";
-	protected $rub="syntheses";
+	protected $mod="";
+	protected $rub="";
 
 	protected $fields = Array(
 		"description" => Array("type" => "varchar", "len"=>20 ),
+		"version" => Array("type" => "numeric", "default"=>1, "readonly"=>1 ),
+		"status" => Array("type" => "enum", "default"=>"draft" ),
 	);
 
+	protected $tabList=array(
+		"status"=>array(
+			"fr"=>array('draft'=>'Brouillon','active'=>'Actif','closed'=>'Cloture','archived'=>'Archivé'),
+			"en"=>array('draft'=>'Draft','active'=>'Active','closed'=>'Closed','archived'=>'Archived'),
+			"ca"=>array('draft'=>'Brouillon','active'=>'Actif','closed'=>'Cloture','archived'=>'Archivé'),
+		),
+	);
+
+	function EnCours()
+	{
+		$sql=$this->sql;
+		$query ="SELECT COUNT(*) AS nb FROM ".$this->tbl."_livret WHERE idformation='".$this->id."' AND actif='oui' AND status IN ('active','standby')";
+		$res=$sql->QueryRow($query);
+		return $res["nb"];	
+	}
 }
 
-function ListFormation($sql)
+function ListFormation($sql,$status="")
 {
-	return ListeObjets($sql,"formation",array("id"),array("actif"=>"oui"));
+	$crit=array("actif"=>"oui");
+	if ($status!="")
+	{
+		$crit["status"]=$status;
+	}
+	return ListeObjets($sql,"formation",array("id"),$crit);
 }
 
 
@@ -65,7 +87,7 @@ class livret_class extends objet_core
 
 	public $tabList=array(
 		"status"=>array(
-			"fr"=>array('active'=>'Actif','active'=>'Actif','standby'=>'Pause','closed'=>'Terminé','canceled'=>'Annulé'),
+			"fr"=>array('active'=>'Actif','standby'=>'Pause','closed'=>'Terminé','canceled'=>'Annulé'),
 			"en"=>array('active'=>'Active','standby'=>'Standby','closed'=>'Closed','canceled'=>'Canceled'),
 			"ca"=>array('active'=>'Actif','standby'=>'Pause','closed'=>'Terminé','canceled'=>'Annulé'),
 		),
@@ -102,23 +124,29 @@ class livret_class extends objet_core
 		if (($key=="idformation") && ($typeaff=="form"))
 		{
 			$txt=$this->val($key);
-			$lst=ListFormation($this->sql);
+			$lst=ListFormation($this->sql,"active");
 
 			$ret ="<select id='".(($formid!="") ? $formid : "").$key."' class='form-control' name='".$formname."[".$key."]'>";
 			foreach($lst as $i=>$tmp)
 			{
 				$res=new formation_class($tmp["id"],$this->sql);
-				$ret.="<option value=\"".$tmp["id"]."\" ".(($txt==$tmp["id"]) ? "selected" : "").">".$res->val("description")."</option>";
+				$ret.="<option value=\"".$tmp["id"]."\" ".(($txt==$tmp["id"]) ? "selected" : "").">".$res->val("description")." (v".$res->val("version").")</option>";
 			}
 			$ret.="</select>";			
 		}
 		return $ret;
 	}
 
-	function displayDescription()
+	function displayDescription($aff="")
 	{
 		$r=new formation_class($this->data["idformation"],$this->sql);
-		return $r->val("description")." (".sql2date($this->val("dte_deb")).")";
+		$txt=$r->val("description")." (v".$r->val("version").") - ".sql2date($this->val("dte_deb"));
+
+		if ($aff="link")
+		{
+			$txt="<a href='".geturl("aviation","syntheses","id=".$this->id)."'>".$txt."</a>";
+		}
+		return $txt;
 	}
 
 	function NbHeures($dte,$type)
@@ -735,12 +763,17 @@ function ListeExercicesProg($sql,$lid,$uid,$type="",$focus="")
 }
 
 // Liste des compétences avec la progression pour un membre
-function ListeCompetences($sql,$uid)
+function ListeCompetences($sql,$uid,$lid)
 {
 	global $MyOpt;
-	
+
+	$q ="SELECT idformation FROM ".$MyOpt["tbl"]."_livret WHERE id='".$lid."'";
+	$res=$sql->QueryRow($q);
+	$fid=$res["idformation"];
+
+
 	$q ="SELECT id ";
-	$q.="FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE actif='oui' AND exo.competence<>''";
+	$q.="FROM ".$MyOpt["tbl"]."_exercice_conf AS exo WHERE actif='oui' AND exo.competence<>'' AND idformation='".$fid."'";
 	$sql->Query($q);
 
 	// ,(SELECT MAX(dte_maj) FROM ".$MyOpt["tbl"]."_exercice AS prog WHERE exo.id=prog.idexercice AND prog.uid='".$uid."') AS dte_acquis,

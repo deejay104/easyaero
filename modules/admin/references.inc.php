@@ -45,7 +45,7 @@
 				$ref->Save();
 			}
 		}
-		header('Location: /admin/formations?page=references', true, 303);
+		header('Location: /admin/formations?page=references&fid='.$fid, true, 303);
     	exit;
 	}
 
@@ -65,6 +65,7 @@
 // ---- Liste des formations
 	$lst=ListFormation($sql);
 
+	$formation=new formation_class(0,$sql);
 	foreach($lst as $i=>$tmp)
 	{
 		$res=new formation_class($tmp["id"],$sql);
@@ -74,9 +75,14 @@
 			$fid=$res->id;
 		}
 
+		if ($res->id==$fid)
+		{
+			$formation=$res;
+		}
+
 		$tmpl_x->assign("id_formation", $res->id);
 		$tmpl_x->assign("chk_formation", ($res->id==$fid) ? "selected" : "") ;
-		$tmpl_x->assign("nom_formation", $res->val("description"));
+		$tmpl_x->assign("nom_formation", $res->val("description")." (v".$res->val("version").")");
 		$tmpl_x->parse("corps.lst_formation");
 	}
 	
@@ -113,20 +119,31 @@
 
 		$tabValeur[$i]["id"]["val"]=$d["id"];
 		$tabValeur[$i]["refffa"]["val"]=$ref->val("refffa");
-		$tabValeur[$i]["refffa"]["aff"]=$ref->aff("refffa","form","form_data[".$d["id"]."]");
+		$tabValeur[$i]["refffa"]["aff"]=$ref->aff("refffa",($formation->val("status")=="draft") ? "form" : "read","form_data[".$d["id"]."]");
 		$tabValeur[$i]["theme"]["val"]=$ref->val("theme");
 		$tabValeur[$i]["theme"]["aff"]=$ref->aff("theme","form","form_data[".$d["id"]."]");
 
-		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='del_".$d["id"]."' href='".geturl("admin","formations","page=references&fonc=delete&fid=".$fid."&id=".$d["id"])."'><i class='mdi mdi-close mdi-18px'></i></a></span>";
+		if ($formation->val("status")=="draft")
+		{
+			$tabValeur[$i]["action"]["val"]=$d["id"];
+			$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='del_".$d["id"]."' href='".geturl("admin","formations","page=references&fonc=delete&fid=".$fid."&id=".$d["id"])."'><i class='mdi mdi-close mdi-18px'></i></a></span>";
+		}
+		else
+		{
+			$tabValeur[$i]["action"]["val"]="";
+			$tabValeur[$i]["action"]["aff"]="";
+		}
 	}
 
-	$ref=new reference_class(0,$sql);	
-	$tabValeur[0]["id"]["val"]=0;
-	$tabValeur[0]["refffa"]["val"]="";
-	$tabValeur[0]["refffa"]["aff"]=$ref->aff("refffa","form","form_data[0]");
-	$tabValeur[0]["theme"]["val"]="";
-	$tabValeur[0]["theme"]["aff"]=$ref->aff("theme","form","form_data[0]");
+	if ($formation->val("status")=="draft")
+	{
+		$ref=new reference_class(0,$sql);	
+		$tabValeur[0]["id"]["val"]=0;
+		$tabValeur[0]["refffa"]["val"]="";
+		$tabValeur[0]["refffa"]["aff"]=$ref->aff("refffa","form","form_data[0]");
+		$tabValeur[0]["theme"]["val"]="";
+		$tabValeur[0]["theme"]["aff"]=$ref->aff("theme","form","form_data[0]");	
+	}
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"del"));
 

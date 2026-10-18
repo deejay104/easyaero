@@ -36,24 +36,13 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 
-// ---- Supprime un poste
-	if (($fonc=="delete") && (GetDroit("SupprimeExercice")))
-	{
-		$id=checkVar("id","numeric");
-		if ($id>0)
-		{
-			$exo=new exercice_conf_class($id,$sql);
-			$exo->Delete();
-		}
-	}
-
-
 // ---- Liste des formations
 			// addPageMenu("",$mod,"Ajouter","#","",false);
 
 // ---- Liste des formations
 	$lst=ListFormation($sql);
 
+	$formation=new formation_class(0,$sql);
 	foreach($lst as $i=>$tmp)
 	{
 		$res=new formation_class($tmp["id"],$sql);
@@ -62,20 +51,28 @@
 		{
 			$fid=$res->id;
 		}
-
+		if ($res->id==$fid)
+		{
+			$formation=$res;
+		}
 		$tmpl_x->assign("id_formation", $res->id);
 		$tmpl_x->assign("chk_formation", ($res->id==$fid) ? "selected" : "") ;
-		$tmpl_x->assign("nom_formation", $res->val("description"));
+		$tmpl_x->assign("nom_formation", $res->val("description")." (v".$res->val("version").")");
 		$tmpl_x->parse("corps.lst_formation");
 	}
-	
+
+	if ($formation->val("status")=="draft")
+	{
+		$tmpl_x->parse("corps.btn_ajouter");
+	}
+
 // ---- Affiche la page demandée
 	$tabTitre=array(
 		"id"=>array(
 			"aff"=>"#id",
 			"width"=>40
 		),
-		"description"=>array(
+		"description_click"=>array(
 			"aff"=>"Description",
 			"width"=>400
 		),
@@ -107,13 +104,11 @@
 			"aff"=>"Focus",
 			"width"=>40
 		),
-		"action"=>array(
-			"aff"=>"",
-			"width"=>40
-		),
 	);
 	$order=checkVar("order","varchar",15,"refffa");
 	$trie=checkVar("trie","varchar",1,"d");
+
+	/*
 	$ts=checkVar("ts","numeric");
 	$tabsearch=checkVar("tabsearch","array");
 	
@@ -140,17 +135,20 @@
 		$tabValeur[$i]["focus"]["val"]=$exo->val("focus");
 		$tabValeur[$i]["focus"]["aff"]=$exo->aff("focus");
 
-		$tabValeur[$i]["action"]["val"]=$sql->data["id"];
-		$tabValeur[$i]["action"]["aff"] ="";
-		
-		if (GetDroit("ModifExercice"))
-		{
-			$tabValeur[$i]["action"]["align"]="action";
-			$tabValeur[$i]["action"]["aff"].="<span class='feed-actions'>";
-			$tabValeur[$i]["action"]["aff"].="<a id='del_".$d["id"]."' href='#'><i class='mdi mdi-close'></i></a>";
-			$tabValeur[$i]["action"]["aff"].="</span>";
-		}
+		$tabValeur[$i]["action"]["val"]="";
+		$tabValeur[$i]["action"]["aff"]="";
 
+		if ($formation->val("status")=="draft")
+		{
+			if (GetDroit("ModifExercice"))
+			{
+				$tabValeur[$i]["action"]["val"]=$sql->data["id"];
+				$tabValeur[$i]["action"]["align"]="action";
+				$tabValeur[$i]["action"]["aff"].="<span class='feed-actions'>";
+				$tabValeur[$i]["action"]["aff"].="<a id='del_".$d["id"]."' href='#'><i class='mdi mdi-close'></i></a>";
+				$tabValeur[$i]["action"]["aff"].="</span>";
+			}
+		}
 
 		$lstp=ListeProgression($sql,$d["id"]);
 		$tabValeur[$i]["progression"]["val"]="";
@@ -165,17 +163,20 @@
 	}
 
 // function AfficheTableau($tabValeur,$tabTitre=array(),$order="",$trie="",$url="",$start=0,$limit=-1,$nbline=0,$showicon="")
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,$totligne,"action"));
-
+//	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,$totligne,"action"));
+*/
+	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"updexo","","fid=".$fid),$order,$trie,"",25,"lstexo"));
 
 
 	$exo=new exercice_conf_class(0,$sql);
-	$exo->Render("form","form");
+	$exo->Render("form",($formation->val("status")=="draft") ? "form" : "read");
+	$tmpl_x->assign("form_focus",$exo->aff("focus","form"));
+
 	$prog=new exercice_prog_class(0,$sql);
-	$prog->Render("form_1","form","form_prog_1","1_");
-	$prog->Render("form_2","form","form_prog_2","2_");
-	$prog->Render("form_3","form","form_prog_3","3_");
-	$prog->Render("form_4","form","form_prog_4","4_");
+	$prog->Render("form_1",($formation->val("status")=="draft") ? "form" : "read","form_prog_1","1_");
+	$prog->Render("form_2",($formation->val("status")=="draft") ? "form" : "read","form_prog_2","2_");
+	$prog->Render("form_3",($formation->val("status")=="draft") ? "form" : "read","form_prog_3","3_");
+	$prog->Render("form_4",($formation->val("status")=="draft") ? "form" : "read","form_prog_4","4_");
 
 
 // ---- Affecte les variables d'affichage

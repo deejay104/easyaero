@@ -66,8 +66,27 @@
 		$tmpl_x->parse("corps.users");
 	}
 
+
+// ---- Liste des formations
+	$lst=ListeLivret($sql,$uid);
+
+	foreach($lst as $i=>$tmp)
+	{
+		$res=new livret_class($tmp["id"],$sql);
+
+		if ($lid==0)
+		{
+			$lid=$res->id;
+		}
+
+		$tmpl_x->assign("id_livret", $res->id);
+		$tmpl_x->assign("chk_livret", ($res->id==$lid) ? "selected" : "") ;
+		$tmpl_x->assign("nom_livret", $res->displayDescription());
+		$tmpl_x->parse("corps.lst_livret");
+	}
+
 // ---- Affiche la liste	
-	$lst=ListeCompetences($sql,$uid);
+	$lst=ListeCompetences($sql,$uid,$lid);
 
 	$tabTitre=array(
 		"compcat" => array("aff"=>"Catégorie","width"=>200),

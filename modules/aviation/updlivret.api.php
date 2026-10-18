@@ -23,7 +23,7 @@
 		$result["iduser"]=$livret->val("iduser");
 		$result["idinstructeur"]=$livret->val("idinstructeur");
 		$result["status"]=$livret->val("status");
-		$result["showformation"]=$formation->val("description");
+		$result["showformation"]=$formation->val("description")." (v".$formation->val("version").")";
 		$result["dte_deb"]=$livret->val("dte_deb");
 		$result["dte_fin"]=$livret->val("dte_fin");
 		$result["dte_test_practice"]=$livret->val("dte_test_practice");

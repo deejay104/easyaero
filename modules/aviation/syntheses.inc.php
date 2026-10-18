@@ -64,7 +64,7 @@
 		$tmpl_x->parse("corps.users");
 	}
 
-// ---- Liste des formations
+// ---- Liste des livrets
 	$lst=ListeLivret($sql,$uid);
 
 	foreach($lst as $i=>$tmp)

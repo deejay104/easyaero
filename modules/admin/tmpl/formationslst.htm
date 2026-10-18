@@ -6,22 +6,177 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
-
-<FORM id="form_tableau" method="post" action="{path_root}/admin/formations" enctype="multipart/form-data">
-	<INPUT type="hidden" name="page" value="formationslst">
-
-	<div class="row" id="page-content">
-		<div class="col grid-margin stretch-card">
-			<div class="card">	
-				<div class="card-body">	
-					{aff_tableau}
+<style>
+	.card-body .form-inline { height: 30px; }
+	.modal-body .form-inline { height: 38px; }
+	.form-inline label { min-width: 200px; justify-content:left;}
+	.form-inline input { min-width: 200px; max-width: 200px; }
+	.form-inline select { min-width: 198px; margin: 1px; }
+</style>
+	
+<div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Définition d'une formation</h5>
+				<button id='close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<input id="id" type="hidden">
+				<div class="row">
+					<div class="form-inline"><label>Formation</label>{form_description}</div>
+					<div class="form-inline"><label>Version </label>{form_version}</div>
+					<div class="form-inline"><label>Status</label>{form_status}</div>
 				</div>
-				<div class="card-footer">	
-					<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary"> <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div id="button">
+						<button class="btn btn-light" id="duplicate">Nouvelle version</button>&nbsp;
+						<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+						<button class="btn btn-light" id="cancel">Annuler</button>	
+					</div>
+					<div id="working" class="d-none">
+						Copie en cours...
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</FORM>
+</div>
+
+<div class="row" id="page-content">
+	<div class="col grid-margin stretch-card">
+		<div class="card">	
+			<div class="card-header">	
+				Liste des formations <button id="new" type="button" class="btn btn-light" onclick="editFormation(0);">Ajouter</button>
+			</div>
+			<div class="card-body">	
+				{aff_tableau}
+			</div>
+			<div class="card-footer">	
+				<INPUT type="submit" name="fonc" value="Enregistrer" class="btn btn-primary"> <INPUT type="submit" name="fonc" value="Annuler" class="btn btn-light">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function editFormation(id)
+	{
+		console.log("edit:"+id);
+		$.ajax({
+			type: 'GET',
+			url: '{path_root}/api/v1/admin/formationlst?id='+id,
+			dataType: 'JSON',
+
+			success: function(response) {
+				
+				$('#id').val(id);
+				$('#description').val(response.data.description);
+				$('#version').val(response.data.version);
+				$('#status').val(response.data.status);
+
+				if (response.data.description!="")
+				{
+					$('#description').prop('disabled', true);
+				}
+				else
+				{
+					$('#description').prop('disabled', false);
+				}
+
+				$("#dialogForm").css("display","block");
+				$("#dialogForm").css("opacity",100);
+				$(".card").css("opacity",0.25);
+				$(".sidebar").css("opacity",0.25);
+				$(".content-menu").css("opacity",0.25);
+
+			},
+			error: function(response) {
+				console.log("error");
+				console.log(response);
+			}
+		});  
+
+	}
+
+	$( "#close" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$(".card").css("opacity",1);
+		$(".sidebar").css("opacity",1);
+		$(".content-menu").css("opacity",1);
+    });
+	$( "#save" ).on( "click", function() {
+
+		data = {};
+		data["id"]=$('#id').val();
+		data["data"]={};
+		data["data"]["description"]=$('#description').val();
+		data["data"]["status"]=$('#status').val();
+
+		$.ajax({
+			url: '{path_root}/api/v1/admin/formationlst?id='+$('#id').val(),
+			type: 'POST',
+			data: data,
+			dataType: 'JSON',
+
+			success: function(response) {
+				$("#dialogForm").css("opacity",0);
+				$("#dialogForm").css("display","none");
+				$(".card").css("opacity",1);
+				$(".sidebar").css("opacity",1);
+				$(".content-menu").css("opacity",1);
+				showToast("","Formation mise à jour","ok");
+				console.log("reload");
+				$('#lstformation').DataTable().ajax.reload(null, false);
+			},
+			error: function(response) {
+				console.log("error");
+				console.log(response);
+			}
+		});  
+
+	});
+	$( "#cancel" ).on( "click", function() {
+		$("#dialogForm").css("opacity",0);
+		$("#dialogForm").css("display","none");
+		$(".card").css("opacity",1);
+		$(".sidebar").css("opacity",1);
+		$(".content-menu").css("opacity",1);
+    });
+
+	$( "#duplicate" ).on( "click", function() {
+		$("#button").css("display","none");
+		$("#working").removeClass("d-none");
+
+
+		$.ajax({
+			url: '{path_root}/api/v1/admin/formationlst?id='+$('#id').val(),
+			type: 'PATCH',
+			dataType: 'JSON',
+
+			success: function(response) {
+				$("#dialogForm").css("opacity",0);
+				$("#dialogForm").css("display","none");
+				$(".card").css("opacity",1);
+				$(".sidebar").css("opacity",1);
+				$(".content-menu").css("opacity",1);
+				$("#working").addClass("d-none");
+				showToast("","Formation dupliquée","ok");
+				console.log("reload");
+				$('#lstformation').DataTable().ajax.reload(null, false);
+			},
+			error: function(response) {
+				console.log("error");
+				console.log(response);
+			}
+		});  
+	});
+
+</script>
 
 <!-- END: corps -->

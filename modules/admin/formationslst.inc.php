@@ -69,36 +69,25 @@
 		"description"=>array(
 			"aff"=>"Description",
 		),
-		"action"=>array(
-			"aff"=>"",
-			"width"=>24
+		"version"=>array(
+			"aff"=>"Version",
+		),
+		"status"=>array(
+			"aff"=>"Status",
+		),
+		"encours"=>array(
+			"aff"=>"En cours",
 		),
 	);
 	$order=checkVar("order","varchar",10,"refffa");	
 	$trie=checkVar("trie","varchar",1,"d");
 	
 
-	$lst=ListFormation($sql);
-	
-	$tabValeur=array();
-	foreach($lst as $i=>$d)
-	{
-		$ref=new formation_class($d["id"],$sql);
+	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"formationlst","",""),$order,$trie,"",25,"lstformation"));
 
-		$tabValeur[$i]["id"]["val"]=$d["id"];
-		$tabValeur[$i]["description"]["val"]=$ref->val("description");
-		$tabValeur[$i]["description"]["aff"]=$ref->aff("description","form","form_data[".$d["id"]."]");
 
-		$tabValeur[$i]["action"]["val"]=$d["id"];
-		$tabValeur[$i]["action"]["aff"]="<span class='feed-actions'><a id='del_".$d["id"]."' href='".geturl("admin","formations","page=formationslst&fonc=delete&id=".$d["id"])."'><i class='mdi mdi-close'></i></a></span>";
-	}
-
-	$ref=new formation_class(0,$sql);	
-	$tabValeur[0]["id"]["val"]=0;
-	$tabValeur[0]["description"]["val"]="";
-	$tabValeur[0]["description"]["aff"]=$ref->aff("description","form","form_data[0]");
-
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,0,"action"));
+	$formation=new formation_class(0,$sql);
+	$formation->render("form","form");
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

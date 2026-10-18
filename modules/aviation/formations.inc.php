@@ -36,7 +36,7 @@
             $tabValeur[$fid]["surname"]["val"]=$pil->val("prenom");
             $tabValeur[$fid]["surname"]["aff"]=$pil->aff("prenom");
             $tabValeur[$fid]["formation"]["val"]=$livret->val("idformation");
-            $tabValeur[$fid]["formation"]["aff"]=$livret->displayDescription();
+            $tabValeur[$fid]["formation"]["aff"]=$livret->displayDescription("aff");
             $tabValeur[$fid]["instructeur"]["val"]=$inst->val("fullname");
             $tabValeur[$fid]["instructeur"]["aff"]=$inst->aff("fullname");
             $tabValeur[$fid]["status"]["val"]=$livret->val("status");

@@ -16,6 +16,12 @@
 				<!-- BEGIN: users -->
 				{form_lstuser}
 				<!-- END: users -->
+
+				<select id="form_livret" name="form_livret" class="form-control">
+					<!-- BEGIN: lst_livret -->
+					<option value="{id_livret}" {chk_livret}>{nom_livret}</OPTION>
+					<!-- END: lst_livret -->
+				</select>
 			</div>
 			<div class="card-body" id="lst">	
 			Suivi de la progression format CBT - Les items sont validés quand les exercices et/ou exercices pédagogiques correspondants sont notés ACQUIS lors des vols
@@ -29,6 +35,14 @@
 <script>
 	$("#form_id").change(function(){
 		document.location='{path_root}/aviation/competences?uid='+$("#form_id").val();
+	});
+	$("#form_livret").change(function(){
+		uid=0;
+		if ($("#form_id").val())
+		{
+			uid=$("#form_id").val();
+		}
+		document.location='{url}&uid='+uid+'&lid='+$("#form_livret").val();
 	});
 </script>
 <!-- END: corps -->
