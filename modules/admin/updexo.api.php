@@ -1,7 +1,10 @@
 <?php
 // ---- Refuse l'accès en direct
 	if ((!isset($token)) || ($token==""))
-	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+	{ header("HTTP/1.0 401 Unauthorized"); exit; }
+
+	if (!GetDroit("AccesConfigExercices"))
+	{ header("HTTP/1.0 401 Unauthorized"); exit; }
 
 	require_once ($appfolder."/class/synthese.inc.php");
 

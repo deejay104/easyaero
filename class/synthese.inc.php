@@ -142,7 +142,7 @@ class livret_class extends objet_core
 		$r=new formation_class($this->data["idformation"],$this->sql);
 		$txt=$r->val("description")." (v".$r->val("version").") - ".sql2date($this->val("dte_deb"));
 
-		if ($aff="link")
+		if ($aff=="link")
 		{
 			$txt="<a href='".geturl("aviation","syntheses","id=".$this->id)."'>".$txt."</a>";
 		}

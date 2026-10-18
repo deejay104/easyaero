@@ -4,7 +4,11 @@
     if ((!isset($token)) || ($token==""))
     { header("HTTP/1.0 401 Unauthorized"); exit; }
 
+    if (!GetDroit("ModifFormation"))
+    { header("HTTP/1.0 401 Unauthorized"); exit; }
+
     require_once ($appfolder."/class/synthese.inc.php");
+
 
 // ---- Variable
     $id=checkVar("id","numeric");

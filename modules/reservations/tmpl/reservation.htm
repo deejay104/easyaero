@@ -188,6 +188,12 @@
 						</div>
 					</div>
 
+					<div id="affAcceptCondition" class="form-group" style="display:block; text-align:justify; background-color:#fff8f8">
+						<label class="col-lg-1"><input id="accept" type="checkbox" name="form_accept" value="oui"></label>
+						<div class="col-lg-10"><p>{TxtValidResa}</p></div>
+					</div>
+	
+
 				</div>
 
 				<div class="card-footer">
@@ -255,17 +261,17 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
-	<div id="affAcceptCondition" class="row" style="display:none;">
-		<div class="card" id="ValidResa">
-			<div class="card-body">
-				<div class="form-group row">
-					<label class="col-lg-1 col-form-label"><input id="accept" type="checkbox" name="form_accept" value="oui"></label>
-					<div class="col-lg-9">{TxtValidResa}</div>
+			<!-- BEGIN: aff_syntheses -->
+			<div class="card">
+				<div class="card-header">Fiche(s) de synthèse</div>
+				<div class="card-body">
+					<!-- BEGIN: lst_synthese -->
+					<a href='/aviation/synthese?idvol={id}&id={sid}'><i class="mdi mdi-file-cloud"></i> Fiche de synthèse {synt_refffa} </a> {synt_status}</a><br />
+					<!-- END: lst_synthese -->
 				</div>
 			</div>
+			<!-- END: aff_syntheses -->
 		</div>
 	</div>
 
@@ -286,20 +292,7 @@
 <!-- END: test -->
 
 
-	<!-- BEGIN: aff_syntheses -->
-	<div class="row">
-		<div class="col-md-12 grid-margin stretch-card">
-			<div class="card">
-				<div class="card-header">Fiche(s) de synthèse</div>
-				<div class="card-body">
-					<!-- BEGIN: lst_synthese -->
-					<a href='/aviation/synthese?idvol={id}&id={sid}'><i class="mdi mdi-file-cloud"></i> Fiche de synthèse {synt_refffa} </a> {synt_status}</a><br />
-					<!-- END: lst_synthese -->
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END: aff_syntheses -->
+
 
 <!-- END: aff_reservation -->
 </FORM>
@@ -459,7 +452,7 @@ function checkData(submit=false)
 	.done(function(result) {
 		if (result.chkreservation==1)
 		{
-			$("#affAcceptCondition").css("display","block");
+			$("#affAcceptCondition").css("display","flex");
 		}
 		else
 		{
