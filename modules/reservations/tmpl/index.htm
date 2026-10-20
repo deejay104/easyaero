@@ -8,46 +8,11 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v713.js'></script>
+<link href='{path_root}/{path_core}/external/fullcalendar/skeleton.v713.css' rel='stylesheet' />
+<link href='{path_root}/{path_core}/external/fullcalendar/custom.css' rel='stylesheet' />
 
-<style>
-	#loading {
-		display: none;
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
 
-	.afficheLegende { line-height:16px; margin: 5px; }
-	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
-
-	.fc-blocked {
-		background-image: repeating-linear-gradient(
-			45deg,
-			rgba(0,0,0,0.25),
-			rgba(0,0,0,0.25) 3px,
-			transparent 3px,
-			transparent 10px
-		) !important;
-		opacity: 0.5;
-	}
-
-	.fc-tooltip {
-		position: absolute;
-		background: var(--p67-form-bg);
-		color: var(--p67-text);
-		padding: 5px 10px;
-		border: 1px solid var(--p67-border);
-		border-radius: 4px;
-		font-size: 12px;
-		pointer-events: none;
-		z-index: 9999;
-		max-width: 300px;
-		word-wrap: break-word;   /* coupe les mots trop longs */
-		overflow-wrap: break-word; /* équivalent moderne */
-		white-space: normal;     /* autorise le retour à la ligne */
-	}
-
-</style>
 
 <div class="row">
 	<div class="col grid-margin stretch-card">
@@ -105,7 +70,6 @@
 
 
 
-<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v6.js'></script>
 
 
 <script>
@@ -133,18 +97,16 @@
 			slotMinTime: '{form_debjour}:00:00',
 			slotMaxTime: '{form_finjour}:00:00',
 			scrollTime: '{form_debjour}:00:00',
-			contentHeight: 'auto',
 			slotEventOverlap: false,
 			allDaySlot: false,
 			firstDay: {weekFirstDay},
+			dayCellClass:   (info) => info.isToday ? 'fc-day-today' : '',
+			dayLaneClass:   (info) => info.isToday ? 'fc-day-today' : '',
+			height: 'calc(100vh - 400px)', // 120px = ce qui se trouve au-dessus du calendrier dans votre page
+			expandRows: true,
+			slotMinHeight: 20,
+			slotMinWidht: 20,
 
-			buttonText: {
-				today:  "Aujourd'hui",
-				month:  "Mois",
-				week:   "Semaine",
-				day:    "Jour",
-				list:   "Liste"
-			},
 
 			headerToolbar: {
 				left: 'prev,next,today',
@@ -162,14 +124,12 @@
 				agendaDay: {
 					type: 'timeGrid',
 					duration: { days: 1 },
-					buttonText: 'Jour',
 					dateIncrement: { days: 1 },
 					dayMaxEvents: 5,
 				},
 				agendaWeek: {
 					type: 'timeGrid',
 					duration: { weeks: 1 },
-					buttonText: 'Semaine',
 					dayHeaderFormat: { weekday: 'short', day: 'numeric', omitCommas: true },
 					dateIncrement: { weeks: 1 },
 					dayMaxEvents: 5
@@ -177,7 +137,6 @@
 				agendaTwoWeeks: {
 					type: 'timeGrid',
 					duration: { weeks: 2 },
-					buttonText: '2 Semaines',
 					dayHeaderFormat: { day: 'numeric', omitCommas: true },
 					dateIncrement: { weeks: 1 },
 					dayMaxEvents: 5
@@ -185,16 +144,38 @@
 				agendaFourWeeks: {
 					type: 'timeGrid',
 					duration: {weeks: 4},
-					buttonText: '4 Semaines',
 					dayHeaderFormat: { day: 'numeric',  omitCommas: true },
 					dateIncrement: { weeks: 1 },
 					dayMaxEvents: 3
 				},
 				agendaMonth: {
 					type: 'dayGridMonth',
-					buttonText: 'Mois',
 					dayMaxEvents: 5,
 					height: 700
+				}
+			},
+			buttons: {
+				agendaDay: {
+					text: 'Jour',
+				},
+				agendaWeek: {
+					text: 'Semaine',
+				},
+				agendaTwoWeeks: {
+					text: '2 Semaines',
+				},
+				agendaFourWeeks: {
+					text: '4 Semaines',
+				},
+				agendaMonth: {
+					text: 'Mois',
+				}
+			},
+
+			events: {
+				url: '{path_root}/api/v1/reservations/getcal?ress={form_ress}',
+				error: function() {
+					showToast("","L'API n'est pas accessible","error");
 				}
 			},
 
@@ -205,11 +186,9 @@
 				timeEnd=Math.floor(dteEnd.getTime() / 1000);
 				document.location="{path_root}/reservations/reservation?ress={form_ress}"+"&jstart="+timeStart+"&jend="+timeEnd;
 			},
-
 			eventClick: function(event) {
 				document.location="{path_root}/reservations/reservation?id="+event.event.extendedProps.eventId;
 			},
-
 			eventResize: function(event) {
 				e=event.event.extendedProps;
 				dteStart=new Date(event.event.startStr);
@@ -261,19 +240,6 @@
 					}
 				});
 			},
-
-			events: {
-				url: '{path_root}/api/v1/reservations/getcal?ress={form_ress}',
-				error: function() {
-					showToast("","L'API n'est pas accessible","error");
-				}
-			},
-
-			eventRender: function( event, element, view ) {
-				var title = element.find( '.fc-title' );
-				title.html( title.text() );
-			},
-
 
 			<!-- BEGIN: aff_tooltips -->
 

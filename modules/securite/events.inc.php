@@ -42,13 +42,15 @@
 // ---- Liste des ressources
 	$tabTitre=array();
 	$tabTitre["dte"]["aff"]="Date";
-	$tabTitre["dte"]["width"]=150;
+	$tabTitre["dte"]["width"]=100;
 	$tabTitre["title"]["aff"]="Titre";
 	$tabTitre["title"]["width"]=350;
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=100;
 	$tabTitre["risk"]["aff"]="Risque";
-	$tabTitre["risk"]["width"]=150;
+	$tabTitre["risk"]["width"]=70;
+	$tabTitre["duedate"]["aff"]="Date attendue";
+	$tabTitre["duedate"]["width"]=100;
 
 	$lst=ListEvents($sql,array());
 
@@ -65,6 +67,8 @@
 		$tabValeur[$i]["status"]["aff"]=$event->aff("status");
 		$tabValeur[$i]["risk"]["val"]=$event->val("risk");
 		$tabValeur[$i]["risk"]["aff"]=$event->aff("risk","list");
+		$tabValeur[$i]["duedate"]["val"]=$event->val("dte_due");
+		$tabValeur[$i]["duedate"]["aff"]=$event->aff("dte_due","list");
 	}
 
 	if ($order=="") { $order="dte"; }

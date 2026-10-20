@@ -15,6 +15,12 @@
 
 </style>
 
+
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v713.js'></script>
+<link href='{path_root}/{path_core}/external/fullcalendar/skeleton.v713.css' rel='stylesheet' />
+<link href='{path_root}/{path_core}/external/fullcalendar/custom.css' rel='stylesheet' />
+
+
 <div class="row">
 	<div class="col grid-margin stretch-card">
 		<div class="card">
@@ -27,8 +33,6 @@
 		</div>
 	</div>
 </div>
-
-<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v6.js'></script>
 
 <script>
 
@@ -99,6 +103,21 @@
 					dayHeaderFormat: { day: 'numeric', omitCommas: true },
 				}
 			},
+			buttons: {
+				agendaWeek: {
+					text: 'Semaine',
+				},
+				agendaTwoWeeks: {
+					text: '2 Semaines',
+				},
+				agendaFourWeeks: {
+					text: '4 Semaines',
+				},
+				agendaHeightWeeks: {
+					text: '8 Semaines',
+				}
+			},
+
 			eventClick: function(event) {
 				var is_confirmed = confirm("Voulez-vous supprimer cette disponibilité ?");
 				if (is_confirmed)

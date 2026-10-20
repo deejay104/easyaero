@@ -46,9 +46,9 @@ class event_class extends objet_core
 		"probability" => Array("type" => "enum","default"=>"0"),
 		"gravity" => Array("type" => "enum","default"=>"0"),
 		"risk" => Array("type" => "number"),
-		"dte_event" => Array("type" => "date", "default" => "now" ),
-		"dte_due" => Array("type" => "date" ),
-		"dte_close" => Array("type" => "date" ),
+		"dte_event" => Array("type" => "date", "default" => "now", "readonly"=>1 ),
+		"dte_due" => Array("type" => "date", "readonly"=>1 ),
+		"dte_close" => Array("type" => "date", "readonly"=>1 ),
 		"action" => Array("type" => "text" ),
 	);
 
@@ -66,6 +66,22 @@ class event_class extends objet_core
 	function save()
 	{
 		$this->data["risk"]=$this->data["gravity"]*$this->data["probability"];
+
+		// Calcul de la date d'attendu
+		$tabDelay["0"]=365;
+		$tabDelay["1"]=180; $tabDelay["2"]=180; $tabDelay["3"]=90;
+		$tabDelay["2"]=180; $tabDelay["4"]=90; $tabDelay["6"]=30;
+		$tabDelay["3"]=90; $tabDelay["6"]=30; $tabDelay["9"]=30;
+
+		$date = strtotime($this->data["dte_event"]);
+		$date = $date+3600*24*$tabDelay[$this->data["risk"]];  // gère aussi les valeurs négatives
+		$this->data["dte_due"]=date("Y-m-d",$date);
+
+		if (($this->data["status"]=="close") && ($this->data["dte_close"]=="0000-00-00"))
+		{
+			$this->data["dte_close"]=now();
+		}
+
 		return parent::save();
 	}
 
@@ -107,6 +123,41 @@ class event_class extends objet_core
 			{
 				$risk=$this->data["probability"]*$this->data["gravity"];
 				$ret="<div class='tagsinput'><span class='tag ".((isset($this->color[$key][$risk])) ? "bg-".$this->color[$key][$risk] : "")."'>".$risk."</span></div>";
+			}
+			else if ($key=="dte_due")
+			{
+				$tabIcon=array(
+					"none"=>array(
+						"icon"=>"mdi-checkbox-blank-circle-outline",
+						"color"=>"warning",
+						"background"=>"warning-bg",
+					),
+					0=>array(
+						"icon"=>"mdi-checkbox-marked-circle",
+						"color"=>"green",
+						"background"=>"success-bg",
+					),
+					1=>array(
+						"icon"=>"mdi-check-decagram",
+						"color"=>"orange",
+						"background"=>"warning-bg",
+					),
+					2=>array(
+						"icon"=>"mdi-alert-circle",
+						"color"=>"red",
+						"background"=>"danger-bg",
+					)
+				);
+	
+				$chkDate=TestDate($this->data["dte_due"]);
+
+				if ($this->data["dte_due"]!="0000-00-00")
+				{
+					$chkDate=0;
+				}
+
+				$ret="<div class='tagsinput'><span class='tag ".((isset($tabIcon[$chkDate])) ? "bg-".$tabIcon[$chkDate]["color"] : "")."'><i class='mdi ".((isset($tabIcon[$chkDate])) ? $tabIcon[$chkDate]["icon"] : "")."'></i> ".sql2date($txt,"jour")."</span></div>";
+			
 			}
 		}
 		else

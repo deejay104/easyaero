@@ -43,7 +43,7 @@
 			$msg_confirmation.="Vos données ont été enregistrées.<BR>";
 		}
         $event->Save();
-		header('Location: /securite/eventdetail?id='.$id, true, 303);
+		header('Location: /securite/eventdetail?id='.$event->id, true, 303);
     	exit;
 	}
 // ---- Annuler

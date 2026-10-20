@@ -7,6 +7,9 @@
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v713.js'></script>
+<link href='{path_root}/{path_core}/external/fullcalendar/skeleton.v713.css' rel='stylesheet' />
+<link href='{path_root}/{path_core}/external/fullcalendar/custom.css' rel='stylesheet' />
 
 <div class="row">
 	<div class="col grid-margin stretch-card">
@@ -25,8 +28,6 @@
 	</div>
 </div>
 
-<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v6.js'></script>
-
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -42,7 +43,12 @@
 			dayMaxEvents: 4,
 			displayEventTime: false,
 			firstDay: {weekFirstDay},
-			
+			dayCellClass:   (info) => info.isToday ? 'fc-day-today' : '',
+			dayLaneClass:   (info) => info.isToday ? 'fc-day-today' : '',
+			contentHeight: 900,
+			slotMinHeight: 10,
+			eventMinHeight: 10,	
+
 			headerToolbar: {
 				left: 'prev,next,today',
 				center: 'title',

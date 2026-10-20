@@ -100,6 +100,7 @@
 	$tmpl_x->assign("form_ress",$ress);
 	$tmpl_x->assign("form_jour",$jour);
 
+	$tmpl_x->assign("timezone",$MyOpt["timezone"]);
 	$tmpl_x->assign("form_debjour",$debjour);
 	$tmpl_x->assign("form_finjour",$finjour);
 	$tmpl_x->assign("terrain_nom",$MyOpt["terrain"]["nom"]);	

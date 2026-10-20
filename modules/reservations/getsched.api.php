@@ -70,6 +70,7 @@
 				}
 	
 				$input_arrays[$ii]["id"]=$resa["resa"]->id;
+				$input_arrays[$ii]["eventId"]=$resa["resa"]->id;
 				$input_arrays[$ii]["resourceId"]=$resa["resa"]->uid_ressource;
 				$input_arrays[$ii]["title"]=$resa["pilote"]->val($affnom).(($resa["instructeur"]->id>0) ? " + ".($resa["instructeur"]->val($affnom)) : "").(($resa["resa"]->invite=="oui") ? " <img src='static/modules/reservations/img/icn16_invite.png'>" : "");
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
@@ -81,6 +82,7 @@
 
 
 				$input_arrays[$ii]["id"]="R".$resa["resa"]->id;
+				$input_arrays[$ii]["eventId"]=$resa["resa"]->id;
 				$input_arrays[$ii]["resourceId"]="I".$resa["resa"]->uid_instructeur;
 				$input_arrays[$ii]["title"]="Instruction";
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
@@ -103,6 +105,7 @@
 			$m=new maint_class($r,$sql);
 
 			$input_arrays[$ii]["id"]="M".$m->id;
+			$input_arrays[$ii]["eventId"]="M".$m->id;
 			$input_arrays[$ii]["resourceId"]=$m->data["uid_ressource"];
 			$input_arrays[$ii]["title"]="Maintenance";
 			$input_arrays[$ii]["start"]=date("c",strtotime($m->data["dte_deb"]));
@@ -122,13 +125,17 @@
 	for($i=0; $i<$sql->rows; $i++)
 	{
 		$sql->GetRow($i);
-		$input_arrays[$ii]["id"]=$sql->data["id"];
+		$input_arrays[$ii]["id"]="D".$sql->data["id"];
+		//$input_arrays[$ii]["eventId"]=$sql->data["id"];
 		$input_arrays[$ii]["resourceId"]="I".$sql->data["uid"];
-		$input_arrays[$ii]["title"]=($sql->data["disponibilite"]=="dispo") ? "Occupé" : "Disponible";
+		$input_arrays[$ii]["title"]=($sql->data["disponibilite"]=="dispo") ? "Absent" : "Présent";
 		$input_arrays[$ii]["start"]=date("c",strtotime($sql->data["dte_deb"]));
 		$input_arrays[$ii]["end"]=date("c",strtotime($sql->data["dte_fin"]));
 		$input_arrays[$ii]["description"]=($sql->data["disponibilite"]=="dispo") ? "L'instructeur n'est pas disponible durant ce créneau" : "L'instructeur est disponible";
 		$input_arrays[$ii]["editable"]=false;
+		$input_arrays[$ii]["resourceEditable"]=false;
+		$input_arrays[$ii]["interactive"]=false;
+		$input_arrays[$ii]["display"]='background';
 
 		$input_arrays[$ii]["color"]='#'.(($sql->data["disponibilite"]=="dispo") ? $MyOpt["styleColor"]["msgboxBackgroundError"] : $MyOpt["styleColor"]["msgboxBackgroundOk"]);
 
@@ -154,13 +161,6 @@
 		$input_arrays[$ii]["rendering"]='background';
 		$ii=$ii+1;
 	}
-
-	$input_arrays[$ii]["title"]="";
-	$input_arrays[$ii]["resourceId"]="S";
-	$input_arrays[$ii]["start"]=date("c",(strtotime($start)/86400)*86400);
-	$input_arrays[$ii]["end"]=date("c",(strtotime($start)/86400)*86400+86400);
-	$input_arrays[$ii]["color"]='#dddddd';
-	$input_arrays[$ii]["rendering"]='background';
 
 	
 	// Send JSON to the client.

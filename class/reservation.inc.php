@@ -653,7 +653,7 @@ class resa_class extends objet_core
 		$res=$sql->QueryRow($query);
 
 		$txt="";
-		return $res["notes"];
+		return $res["notes"] ?? '';
 	}
 }
 

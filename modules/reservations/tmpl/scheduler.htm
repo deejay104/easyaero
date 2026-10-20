@@ -5,7 +5,6 @@
 <!-- BEGIN: infos -->
 <!-- END: infos -->
 
-<!-- BEGIN: corps -->
 
 <SCRIPT language="JavaScript">
 	var ns4=document.layers
@@ -40,98 +39,7 @@
 
 
 
-<style>
-	#script-warning {
-		display: none;
-		background: #eee;
-		border-bottom: 1px solid #ddd;
-		padding: 0 10px;
-		line-height: 40px;
-		text-align: center;
-		font-weight: bold;
-		font-size: 12px;
-		color: red;
-	}
 
-	#loading {
-		display: none;
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
-	.fc-event {	color: black; }
-	.fc-event:hover {	color: black; }
-
-	.afficheLegende { line-height:16px; margin: 5px; }
-	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
-
-	.calendarDesc {
-		position: absolute;
-		background: var(--p67-form-bg);
-		color: var(--p67-text);
-		padding: 5px 10px;
-		border: 1px solid var(--p67-border);
-		border-radius: 4px;
-		font-size: 12px;
-		pointer-events: none;
-		z-index: 9999;
-		white-space: nowrap;
-	}
-
-</style>
-
-<script>
-	var oldView="old";
-	
-	$(document).ready(function() {
-		$('#calendar').fullCalendar({
-			schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-			defaultDate: '{form_jour}',
-			defaultView: 'timelineDay',
-			locale: 'fr',
-			lang: 'fr',
-			defaultEventMinutes: 60,
-			timeFormat: 'H:mm',
-			editable: true,
-			eventLimit: true,
-			selectable: true,
-			selectHelper: true,
-			minTime: '{form_debjour}:00:00',
-			maxTime: '{form_finjour}:00:00',
-			scrollTime: '{form_debjour}:00:00',
-			axisFormat: 'HH:mm',
-			contentHeight: 'auto',
-			slotWidth: '40px',
-			slotEventOverlap: false,
-			eventOverlap: false, // will cause the event to take up entire resource height
-			allDaySlot: false,
-			resourceAreaWidth: '20%',
-			resourceColumns: [
-				{
-					labelText: 'Avion / Instructeur',
-					field: 'title'
-				},
-				{
-					labelText: 'Potentiel',
-					field: 'potentiel',
-					width: '80px',
-					render: function( event, element, view ) {
-						var title = element.find( '.fc-cell-text' );
-						title.html( title.text() );
-					}
-				}
-			],
-
-			resources: [
-			<!-- BEGIN: lst_ress -->
-				{ id: '{id_ress}', title: '{nom_ress}', potentiel:'{pot_ress}' },
-			<!-- END: lst_ress -->
-				{ id: 'S', title: '-----'},
-			<!-- BEGIN: lst_inst -->
-				{ id: '{id_inst}', title: '{nom_inst}'},
-			<!-- END: lst_inst -->
-			],
-		
 			header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -142,12 +50,7 @@
 				titleFormat: 'dddd, Do MMMM YYYY'
 			  }
 			},
-			events: {
-				url: '{path_root}/api/v1/reservations/getsched',
-				error: function() {
-					$('#script-warning').show();
-				}
-			},
+
 
 			select: function(start, end, jsEvent, view, resource) {
 				document.location="{path_root}/reservations/reservation?prev=scheduler&jstart="+start+"&jend="+end+"&ress="+resource.id;
@@ -194,11 +97,59 @@
 			loading: function(bool) {
 				$('#loading').toggle(bool);
 			}
-		});
-		
-	});
 
-</script>
+
+
+
+<!-- BEGIN: corps -->
+
+<script src='{path_root}/{path_core}/external/fullcalendar/fullcalendar.v713.js'></script>
+<script src='{path_root}/{path_core}/external/fullcalendar/scheduler.v713.js'></script>
+<link href='{path_root}/{path_core}/external/fullcalendar/skeleton.v713.css' rel='stylesheet' />
+<link href='{path_root}/{path_core}/external/fullcalendar/custom.css' rel='stylesheet' />
+
+
+
+
+<style>
+	#script-warning {
+		display: none;
+		background: #eee;
+		border-bottom: 1px solid #ddd;
+		padding: 0 10px;
+		line-height: 40px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: red;
+	}
+
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	.fc-event {	color: black; }
+	.fc-event:hover {	color: black; }
+
+	.afficheLegende { line-height:16px; margin: 5px; }
+	.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
+
+	.calendarDesc {
+		position: absolute;
+		background: var(--p67-form-bg);
+		color: var(--p67-text);
+		padding: 5px 10px;
+		border: 1px solid var(--p67-border);
+		border-radius: 4px;
+		font-size: 12px;
+		pointer-events: none;
+		z-index: 9999;
+		white-space: nowrap;
+	}
+
+</style>
 
 
 <div class="row">
@@ -235,5 +186,150 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+	var oldView="old";
+	
+	document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+			schedulerLicenseKey: "CC-Attribution-NonCommercial-NoDerivatives",
+			initialView: 'resourceTimelineDay',
+			locale: 'fr',
+			timeZone: '{timezone}', 
+			defaultEventMinutes: 60,
+			headerToolbar: {
+				start: 'prev,next today',
+				center: 'title',
+				end: 'resourceTimelineDay'
+			},
+            eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
+            slotHeaderFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
+			initialDate: '{form_jour}T0{form_debjour}:00:00Z',
+
+			slotMinTime: '{form_debjour}:00:00',
+			slotMaxTime: '{form_finjour}:00:00',
+
+			editable: true,
+			eventLimit: true,
+			selectable: true,
+			selectHelper: true,
+			contentHeight: 'auto',
+
+			slotMinHeight: 20,
+			slotMinWidht: 20,
+			slotEventOverlap: false,
+			buttons: {
+				resourceTimelineDay: {
+					text: 'Jour',
+				},
+			},
+
+			resourceGroupField: 'type',
+			resourceAreaWidth: '20%',
+			resourceColumns: [
+				{
+					headerContent: 'Avion / Instructeur',
+					field: 'title'
+				},
+				{
+					headerContent: 'Potentiel',
+					field: 'potentiel',
+					width: '80px',
+					render: function( event, element, view ) {
+						var title = element.find( '.fc-cell-text' );
+						title.html( title.text() );
+					}
+				}
+			],
+
+			resources: [
+				<!-- BEGIN: lst_ress -->{ id: '{id_ress}', type:'Avion', title: '{nom_ress}', potentiel:'{pot_ress}' },<!-- END: lst_ress -->
+				<!-- BEGIN: lst_inst -->{ id: '{id_inst}', type:'Instructeur', title: '{nom_inst}'},<!-- END: lst_inst -->
+			],
+			events: {
+				url: '{path_root}/api/v1/reservations/getsched',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+
+
+			
+			eventRender: function( event, element, view ) {
+				var title = element.find( '.fc-title' );
+				title.html( title.text() );
+			},
+			select: function(event) {
+				dteStart=new Date(event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+				document.location="{path_root}/reservations/reservation?ress={form_ress}"+"&jstart="+timeStart+"&jend="+timeEnd;
+			},
+			eventClick: function(event) {
+				document.location="{path_root}/reservations/reservation?id="+event.event.extendedProps.eventId;
+			},
+			eventResize: function(event) {
+				e=event.event.extendedProps;
+				dteStart=new Date(event.event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+
+				$.ajax({
+					url: '{path_root}/api/v1/reservations/updatecal?id='+e.eventId+'&jstart='+timeStart+'&jend='+timeEnd,
+					dataType: 'JSON',
+					success : function(response)
+					{
+						if (response.status!=200)
+						{
+							showToast("Mise à jour",response.value,"error");
+							revertFunc();
+						}
+					},
+					error : function(response)
+					{
+						console.log(response);
+						revertFunc();
+					}
+				});
+			},
+			eventDrop: function(event,dayDelta,revertFunc) {
+				console.log("drop");
+				console.log(event);
+				e=event.event.extendedProps;
+				dteStart=new Date(event.event.startStr);
+				timeStart=Math.floor(dteStart.getTime() / 1000);
+				dteEnd=new Date(event.event.endStr);
+				timeEnd=Math.floor(dteEnd.getTime() / 1000);
+
+				$.ajax({
+					url: '{path_root}/api/v1/reservations/updatecal?id='+e.eventId+'&jstart='+timeStart+'&jend='+timeEnd,
+					dataType: 'JSON',
+					success : function(response)
+					{
+						if (response.status!=200)
+						{
+							showToast("Mise à jour",response.value,"error");
+							revertFunc();
+						}
+					},
+					error : function(response)
+					{
+						console.log(response);
+						revertFunc();
+					}
+				});
+			},
+
+		});
+		calendar.render();
+	});
+
+</script>
+
+
 
 <!-- END: corps -->
