@@ -20,7 +20,7 @@
 
 <FORM name="form_detail" method="post" action="{path_root}/aviation/synthese" enctype="multipart/form-data">
 	<INPUT type="hidden" name="id" value="{form_id}">
-	<INPUT type="hidden" name="idvol" value="{prev_idvol}">
+	<INPUT type="hidden" id="idvol" name="idvol" value="{prev_idvol}">
 	<INPUT type="hidden" name="uid" value="{prev_uid}">
 	<INPUT type="hidden" name="form_data[idvol]" value="{form_idvol}">
 	<INPUT type="hidden" name="form_data[uid_pilote]" value="{form_id_pilote}">
@@ -322,6 +322,15 @@
 		if(event.keyCode == 13) {
 		}
 	  });
+
+	  if ($("#idvol").val()==0)
+	  {
+		$("#type_dc").attr('disabled', true);
+		$("#type_dc").attr('checked', false);
+		$("#type_solo").attr('disabled', true);
+		$("#type_solo").attr('checked', false);
+		$("#type_briefing").attr('checked', true);
+	  }
 	});
 	
 	$("#addexercicepeda").autocomplete({

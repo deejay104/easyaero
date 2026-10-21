@@ -15,10 +15,10 @@
 
   RewriteRule ^api/v1/([a-z]*)/([a-z]*)$ /api.php?ver=1&mod=$1&rub=$2 [L]
 
-  RewriteRule ^api/v1/([a-z]*)/([a-z]*)/([a-z]*)$ /api.php?ver=1&mod=$1&rub=$2&fonc=$3 [QSA,L]
-  RewriteRule ^api/v1/([a-z]*)/([a-z]*)$ /api.php?ver=1&mod=$1&rub=$2 [QSA,L]
+  RewriteRule ^api/v1/([a-z]*)/([a-z0-9_]*)/([a-z]*)$ /api.php?ver=1&mod=$1&rub=$2&fonc=$3 [QSA,L]
+  RewriteRule ^api/v1/([a-z]*)/([a-z0-9_]*)$ /api.php?ver=1&mod=$1&rub=$2 [QSA,L]
 
-  RewriteRule ^pub/v1/([a-z]*)/([a-z]*)$ /api.php?ver=1&c=public&mod=$1&rub=$2 [QSA,L]
+  RewriteRule ^pub/v1/([a-z]*)/([a-z0-9_]*)$ /api.php?ver=1&c=public&mod=$1&rub=$2 [QSA,L]
 
   RewriteRule ^([a-z]*)/([a-z]*)/([a-z]*)$ /index.php?mod=$1&rub=$3 [QSA,L]
   RewriteRule ^([a-z]*)/([a-z]*)$ /index.php?mod=$1&rub=$2 [QSA,L]

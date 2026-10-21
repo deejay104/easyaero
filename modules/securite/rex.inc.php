@@ -47,10 +47,10 @@
 	$tabTitre["titre"]["width"]=350;
 	$tabTitre["status"]["aff"]="Status";
 	$tabTitre["status"]["width"]=100;
+	$tabTitre["risque"]["aff"]="Impact";
+	$tabTitre["risque"]["width"]=150;
 	$tabTitre["risk"]["aff"]="Risque";
 	$tabTitre["risk"]["width"]=150;
-	$tabTitre["risque"]["aff"]="Risque";
-	$tabTitre["risque"]["width"]=150;
 	$tabTitre["categorie"]["aff"]="Catégorie";
 	$tabTitre["categorie"]["width"]=150;
 

@@ -32,6 +32,23 @@
 	</div>
 </div>
 
+<!-- BEGIN: aff_enac -->
+<div class="row">
+	<div class="col grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">	
+				Progression ENAC
+			</div>
+			<div class="card-body" id="lst">	
+				Suivi de la progression format ENAC - Les items sont validés quand les exercices et/ou exercices pédagogiques correspondants sont notés ACQUIS lors des vols
+				<h4></h4>				
+				{aff_tableau_enac}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: aff_enac -->
+
 <script>
 	$("#form_id").change(function(){
 		document.location='{path_root}/aviation/competences?uid='+$("#form_id").val();

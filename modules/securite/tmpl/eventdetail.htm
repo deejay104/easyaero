@@ -42,6 +42,10 @@
 					<div class="col-lg-8">{form_title}</div>
 				</div>
 				<div class="form-group row">
+					<div class="col-lg-4"><label class="col-form-label">Responsable</label></div>
+					<div class="col-lg-8">{form_owner}</div>
+				</div>
+				<div class="form-group row">
 					<div class="col-lg-4"><label class="col-form-label">Status</label></div>
 					<div class="col-lg-8">{form_status}</div>
 				</div>
@@ -108,4 +112,18 @@
 </div>
 	
 </form>
+
+<script>
+	$("#probability").change(function(){
+		$(".riskgrid").html("");
+		$("#risk_"+$("#probability").val()+$("#gravity").val()).html("<i class='mdi mdi-checkbox-blank-circle'></i>");
+	});
+
+	$("#gravity").change(function(){
+		$(".riskgrid").html("");
+		$("#risk_"+$("#probability").val()+$("#gravity").val()).html("<i class='mdi mdi-checkbox-blank-circle'></i>");
+	});
+
+</script>
+
 <!-- END: corps -->

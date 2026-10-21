@@ -116,7 +116,14 @@ class event_class extends objet_core
 			}
 		}
 
-		if ($render=="list")
+		if ($render=="form")
+		{
+			if ($key=="owner")
+			{
+				$ret=AffListeMembres($sql,$this->val("owner"),"form_data[owner]","","","std","non",array("OwnerEvent"));
+			}
+		}
+		else if ($render=="list")
 		{
 			$txt=$this->val($key);
 			if ($key=="risk")
@@ -166,7 +173,7 @@ class event_class extends objet_core
 			{
 				$ret ="<style>.risqueREX th { width:140px; } td { width:140px; text-align: center; border: 1px solid #000000; font-weight: bold; }</style>";
 
-				$ret.="<table class='risqueREX' style='margin-top:35px;'>";
+				$ret.="<table class='risqueREX' style='margin-top:5px;'>";
 				$ret.="<tr><th></th>";
 				foreach($tabGrav as $i=>$d)
 				{
@@ -181,13 +188,20 @@ class event_class extends objet_core
 					$ret.="<tr><th>".$ln."</th>";
 					foreach($tabGrav as $c=>$cn)
 					{
-						$ret.="<td style='background-color:".$tabBg[$l*$c].";'>".(($risk==$l.$c) ? "<i class='mdi mdi-checkbox-blank-circle'></i>" : "")."</td>";
+						$ret.="<td style='background-color:".$tabBg[$l*$c].";'><div id='risk_".$l.$c."' class='riskgrid'>".(($risk==$l.$c) ? "<i class='mdi mdi-checkbox-blank-circle'></i>" : "")."</div></td>";
 					}
 					$ret.="</tr>";
 				}
 
 				$ret.="</table>";
 			}
+			else if ($key=="owner")
+			{
+				$txt=$this->val($key);
+				$res=new user_class($txt,$this->sql);
+				$ret="<div>".$res->aff("fullname")."</div>";
+			}
+
 		}
 
 

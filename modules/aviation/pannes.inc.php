@@ -82,11 +82,15 @@
 	addPageMenu("","aviation","Formations",geturl("aviation","syntheses","lid=".$lid."&uid=".$uid),"",false);
 	addPageMenu("","aviation","Pédagogique",geturl("aviation","exercices","lid=".$lid."&uid=".$uid),"",false);
 	addPageMenu("","aviation","Pannes",geturl("aviation","pannes","type=panne&lid=".$lid."&&uid=".$uid),"",($type=="panne") ? true : false);
-	addPageMenu("","aviation","Exercices",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",($type=="exercice") ? true : false);
+	addPageMenu("","aviation","Exercices Spécifiques",geturl("aviation","pannes","type=exercice&lid=".$lid."&uid=".$uid),"",($type=="exercice") ? true : false);
 	addPageMenu("","aviation","Progression CBT",geturl("aviation","competences","lid=".$lid."&uid=".$uid),"",false);
-	addPageMenu("","aviation","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
+	//addPageMenu("","aviation","Progression ENAC",geturl("aviation","progenac","lid=".$lid."&uid=".$uid),"",false);
 	addPageMenu("","aviation","Terrains",geturl("aviation","terrains","livret=1&lid=".$lid."&uid=".$uid),"",false);
 
+	if ($type!="exercice")
+	{
+		$tmpl_x->parse("corps.aff_notification");	
+	}
 
 // ---- Affiche la liste	
 

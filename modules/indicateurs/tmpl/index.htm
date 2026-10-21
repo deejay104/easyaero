@@ -1,0 +1,1171 @@
+<!-- BEGIN: icone -->
+<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+
+<!-- À GARDER : seuls styles propres à la page -->
+<style>
+  [v-cloak] { display: none; }
+  #indicateurs-app .progress { height: 6px; }
+  #indicateurs-app .ind-flotte td { vertical-align: middle; }
+  #indicateurs-app .ind-flotte .ind-barre { min-width: 140px; }
+  .col-lg-3 { padding-right: 10px; padding-left: 10px; }
+</style>
+</head>
+<body>
+<div class="container-fluid py-4">
+
+  
+
+
+
+<!-- ======================= Début du contenu à intégrer ======================= -->
+<div id="indicateurs-app" v-cloak>
+
+<!-- Indicateurs club -->
+<div class="row">
+	<div class="col-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+				<span>Indicateurs</span>
+				<div class="d-flex align-items-center">
+					<label for="ind-annee" class="small text-muted mb-0 me-2 mr-2">Année</label>
+					<select id="ind-annee" class="form-control form-control-sm" style="width: auto" v-model.number="annee">
+						<option v-for="a in annees" :key="a" :value="a">{{ a }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="card-body">
+				<bloc-etat :bloc="club" :annee="annee">
+					<div class="row" v-if="kpi">
+						<div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
+							<p class="text-muted small mb-1">Heures de vol</p>
+							<p class="h3 mb-1">{{ kpi.heuresTxt }}</p>
+							<p class="small mb-2" v-if="kpi.heuresVar">
+								<span :class="kpi.heuresVar.classe">{{ kpi.heuresVar.txt }}</span>
+								<span class="text-muted">{{ libelleComparaison }}</span>
+							</p>
+							<template v-if="kpi.objectifPct !== null">
+								<div class="progress" role="progressbar" :aria-valuenow="Math.round(kpi.objectifPct)" aria-valuemin="0" aria-valuemax="100" aria-label="Avancement vers l'objectif">
+									<div class="progress-bar" :style="{ width: kpi.objectifLargeur }"></div>
+								</div>
+								<p class="small text-muted mt-1 mb-0">{{ kpi.objectifTxt }}</p>
+							</template>
+						</div>
+						<div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
+							<p class="text-muted small mb-1">Nombre de vols</p>
+							<p class="h3 mb-1">{{ kpi.volsTxt }}</p>
+							<p class="small mb-2" v-if="kpi.volsVar">
+								<span :class="kpi.volsVar.classe">{{ kpi.volsVar.txt }}</span>
+								<span class="text-muted">{{ libelleComparaison }}</span>
+							</p>
+							<p class="small text-muted mb-0" v-if="kpi.dureeMoyenne">Durée moyenne d’un vol : {{ kpi.dureeMoyenne }}</p>
+						</div>
+						<div class="col-sm-6 col-lg-3 mb-3 mb-sm-0">
+							<p class="text-muted small mb-1">Membres actifs</p>
+							<p class="h3 mb-1">{{ kpi.totalMembresTxt }}</p>
+							<e-chart v-if="optMembres" :option="optMembres" hauteur="64px"></e-chart>
+						</div>
+						<div class="col-sm-6 col-lg-3">
+							<p class="text-muted small mb-1">Disponibilité flotte</p>
+							<p class="h3 mb-1">{{ kpi.dispoTxt }}</p>
+							<template v-if="kpi.dispo !== null">
+								<div class="progress" role="progressbar" :aria-valuenow="Math.round(kpi.dispo)" aria-valuemin="0" aria-valuemax="100" aria-label="Disponibilité de la flotte">
+									<div class="progress-bar bg-success" :style="{ width: kpi.dispoLargeur }"></div>
+								</div>
+								<p class="small text-muted mt-1 mb-0">{{ kpi.joursMaintenance }} jours-avion de maintenance, {{ kpi.nbAvions }} avions</p>
+							</template>
+						</div>
+					</div>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Activité -->
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Heures de vols</div>
+			<div class="card-body">
+				<bloc-etat :bloc="heuresMois" :annee="annee">
+					<e-chart :option="optHeuresMois" hauteur="300px"></e-chart>
+					<p class="small text-muted mt-2 mb-0" v-if="estAnneeCourante">Le mois en cours (bleu clair) est arrêté au {{ dateReferenceTxt }}.</p>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Cumul et objectif</div>
+			<div class="card-body">
+				<bloc-etat :bloc="heuresMois" :annee="annee">
+					<e-chart :option="optCumul" hauteur="300px"></e-chart>
+				</bloc-etat>
+			</div>
+			<div class="card-footer small" v-if="cumul" :class="{ 'text-danger': cumul.sousObjectif }">{{ cumul.resume }}</div>
+		</div>
+	</div>
+</div>
+
+<!-- Flotte -->
+<div class="row">
+	<div class="col-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Flotte</div>
+			<div class="card-body">
+				<bloc-etat :bloc="flotte" :annee="annee">
+					<div class="table-responsive">
+						<table class="table ind-flotte mb-0">
+							<thead>
+								<tr>
+									<th scope="col">Avion</th>
+									<th scope="col">Heures {{ annee }}</th>
+									<th scope="col" v-if="estAnneeCourante">Prochaine visite</th>
+									<th scope="col" v-if="estAnneeCourante">Statut</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="a in lignesFlotte" :key="a.id">
+									<td>
+										<strong>{{ a.immat }}</strong>
+										<div class="small text-muted">{{ a.type }}</div>
+									</td>
+									<td class="ind-barre">
+										<div class="d-flex justify-content-between small mb-1">
+											<strong>{{ a.heuresTxt }}</strong>
+											<span class="text-muted">{{ a.partTxt }}</span>
+										</div>
+										<div class="progress"><div class="progress-bar" :style="{ width: a.largeurHeures }"></div></div>
+									</td>
+									<td class="ind-barre" v-if="estAnneeCourante">
+										<div class="d-flex justify-content-between small mb-1">
+											<strong>{{ a.visite }}</strong>
+											<span>{{ a.niveauTxt }}</span>
+										</div>
+										<div class="progress" v-if="a.largeurReste"><div class="progress-bar" :class="a.classeReste" :style="{ width: a.largeurReste }"></div></div>
+										<div class="small text-muted mt-1">{{ a.resteTxt }}<template v-if="a.dateEstimee"> · {{ a.dateEstimee }}</template></div>
+									</td>
+									<td v-if="estAnneeCourante">
+										<span :class="a.classeStatut">{{ a.statutTxt }}</span>
+										<div class="small text-muted mt-1" v-if="a.statutDetail">{{ a.statutDetail }}</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Pilotes -->
+<div class="row">
+	<div class="col-lg-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Heures par type de vol</div>
+			<div class="card-body">
+				<bloc-etat :bloc="typesVol" :annee="annee">
+					<e-chart :option="optTypesVol" hauteur="300px"></e-chart>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Parcours des élèves</div>
+			<div class="card-body">
+				<bloc-etat :bloc="parcours" :annee="annee">
+					<e-chart :option="optParcours" hauteur="300px"></e-chart>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Membres par âge</div>
+			<div class="card-body">
+				<bloc-etat :bloc="ages" :annee="annee">
+					<e-chart :option="optAges" hauteur="300px"></e-chart>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Planning -->
+<div class="row">
+	<div class="col-lg-7 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Taux de réservation des avions</div>
+			<div class="card-body">
+				<bloc-etat :bloc="reservations" :annee="annee">
+					<e-chart :option="optReservations" hauteur="360px"></e-chart>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-5 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Durée des vols</div>
+			<div class="card-body">
+				<bloc-etat :bloc="durees" :annee="annee">
+					<e-chart :option="optDurees" hauteur="300px"></e-chart>
+				</bloc-etat>
+			</div>
+			<div class="card-footer small" v-if="optDurees">{{ dureesResume }}</div>
+		</div>
+	</div>
+</div>
+
+<!-- Échéances (année en cours uniquement) -->
+<div class="row" v-if="estAnneeCourante">
+	<div class="col-lg-8 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Échéances à venir</div>
+			<div class="card-body">
+				<bloc-etat :bloc="echeancesAvions" :annee="annee">
+					<e-chart :option="optEcheances" :hauteur="hauteurEcheances"></e-chart>
+				</bloc-etat>
+			</div>
+			<div class="card-footer small">
+				<span class="badge badge-danger bg-danger">Urgent</span>
+				<span class="badge badge-warning bg-warning text-dark">À planifier</span>
+				<span class="badge badge-success bg-success">En ordre</span>
+				<span class="text-muted ms-2 ml-2">sur les {{ horizon }} prochains jours</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Pilotes et comptes</div>
+			<div class="card-body">
+				<bloc-etat :bloc="echeancesPilotes" :annee="annee">
+					<ul class="list-unstyled mb-0">
+						<li v-for="a in alertesPilotes" :key="a.code" class="d-flex align-items-center mb-3">
+							<span class="h3 mb-0 me-3 mr-3">{{ a.nb }}</span>
+							<span class="flex-grow-1 small">{{ a.libelle }}</span>
+							<span :class="a.classe">{{ a.niveauTxt }}</span>
+						</li>
+					</ul>
+				</bloc-etat>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+
+
+</div>
+
+
+<script src='{path_root}/{path_core}/external/vuejs/vue.global.v3544.js'></script>
+<script src='{path_root}/{path_core}/external/echarts/echarts.v610.js'></script>
+
+
+<script>
+/*
+ * Easy-Aero — page « Indicateurs »
+ * Vue 3 (version « global », sans compilation) + Apache ECharts.
+ *
+ * À charger APRÈS : vue.global.prod.js et echarts.min.js
+ * Données : /api/v1/indicateur/<nom>  (contrat détaillé dans API-indicateurs.md)
+ * Démo : si indicateurs-demo.js est chargé avant ce fichier, aucune requête n'est faite.
+ */
+(function () {
+  'use strict';
+
+  // ---------------------------------------------------------------------------
+  // Réglages
+  // ---------------------------------------------------------------------------
+  const CONFIG = {
+    apiBase: '/api/v1/indicateurs/',
+    horizonEcheances: 90,         // jours affichés dans « Échéances à venir »
+    visiteUrgenteHeures: 10,      // potentiel restant (h) sous lequel une visite est « urgente »
+    visiteAPlanifierRatio: 0.3,   // part du potentiel restant sous laquelle elle est « à planifier »
+    echeanceUrgenteJours: 7,      // utilisés seulement si l'API ne renvoie pas « niveau »
+    echeanceAPlanifierJours: 30,
+    retardMaxJours: 30            // recul maximal de l'axe pour les échéances dépassées
+  };
+
+  const C = {
+    annee: '#2a78d6',
+    anneePartielle: '#86b6ef',
+    n1: '#c9c6bc',
+    n1Ligne: '#a3a199',
+    objectif: '#eb6834',
+    serie: ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#6250d6'],
+    rampe: ['#cde2fb', '#86b6ef', '#2a78d6', '#184f95', '#0d366b'],
+    parcours: ['#104281', '#1c5cab', '#2a78d6', '#5598e7', '#86b6ef'],
+    ok: '#0ca30c',
+    aPlanifier: '#fab219',
+    urgent: '#d03b3b',
+    texte: '#52514e',
+    texteFort: '#1f1f1d',
+    grille: '#e6e4dd',
+    axe: '#c3c2b7'
+  };
+
+  const MOIS = ['Janv.', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'];
+  const JOURS = ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.'];
+  const JOURS_LONG = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  const LIB_NIVEAU = { urgent: 'Urgent', a_planifier: 'À planifier', ok: 'En ordre', maintenance: 'En visite' };
+  const JOUR_MS = 86400000;
+
+  // ---------------------------------------------------------------------------
+  // Outils
+  // ---------------------------------------------------------------------------
+  const nf0 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+  const nf1 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 1 });
+  const num = (v) => (v === null || v === undefined || v === '' || isNaN(Number(v))) ? null : Number(v);
+  const somme = (t) => t.reduce((s, v) => s + (v || 0), 0);
+  const arrondi1 = (v) => Math.round(v * 10) / 10;
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // Les lectures de dates et de créneaux n'utilisent volontairement aucune expression régulière :
+  // un moteur de gabarits côté serveur peut modifier ces motifs sans provoquer d'erreur visible.
+  const estChiffre = (c) => c >= '0' && c <= '9';
+  // Groupes de chiffres d'une chaîne : "2026-10-26 14:30" donne ["2026", "10", "26", "14", "30"]
+  const groupesChiffres = (s) => {
+    const groupes = [];
+    let courant = '';
+    for (const c of String(s)) {
+      if (estChiffre(c)) courant += c;
+      else if (courant) { groupes.push(courant); courant = ''; }
+    }
+    if (courant) groupes.push(courant);
+    return groupes;
+  };
+  // Dates acceptées : 2026-10-26, 2026-10-26 14:30:00, 2026-10-26T14:30:00, 26/10/2026, 26-10-2026,
+  // 26.10.2026, horodatage Unix (secondes ou millisecondes). Renvoie le jour à minuit, heure locale, ou null.
+  const parseDate = (s) => {
+    if (s === null || s === undefined || s === '') return null;
+    if (s instanceof Date) return isNaN(s) ? null : new Date(s.getFullYear(), s.getMonth(), s.getDate());
+    const g = groupesChiffres(s);
+    if (g.length === 1 && g[0].length >= 9 && g[0].length <= 13) {
+      const d = new Date(g[0].length > 10 ? +g[0] : +g[0] * 1000);
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+    if (g.length < 3) return null;
+    let annee;
+    let mois;
+    let jour;
+    if (g[0].length === 4) { annee = +g[0]; mois = +g[1]; jour = +g[2]; }        // 2026-10-26
+    else if (g[2].length === 4) { annee = +g[2]; mois = +g[1]; jour = +g[0]; }   // 26/10/2026
+    else return null;
+    if (mois < 1 || mois > 12 || jour < 1 || jour > 31) return null;
+    return new Date(annee, mois - 1, jour);
+  };
+  const aujourdhui = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+  const dateCourte = (d) => d ? d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
+  const dateLongue = (d) => d ? d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+  const signe = (v) => (v >= 0 ? '+' : '−') + nf0.format(Math.abs(v));
+  const variation = (v, ref) => {
+    if (v === null || !ref) return null;
+    const p = (v / ref - 1) * 100;
+    return { txt: (p >= 0 ? '+' : '−') + nf1.format(Math.abs(p)) + ' %', classe: p >= 0 ? 'text-success' : 'text-danger' };
+  };
+  const duree = (min) => min < 60 ? min + ' min' : Math.floor(min / 60) + ' h ' + String(min % 60).padStart(2, '0');
+  // "08-10" ou "08h-10h" donne "8–10 h"
+  const creneauLisible = (c) => {
+    const g = groupesChiffres(c);
+    return g.length === 2 ? (+g[0]) + '–' + (+g[1]) + ' h' : String(c);
+  };
+  const parOrdre = (a, b) => (num(a.ordre) || 0) - (num(b.ordre) || 0);
+
+  // Répartition des membres actifs, catégories paramétrables côté club.
+  // Accepte un objet { "Libellé": nombre } (ordre d'envoi conservé : il fixe les couleurs)
+  // ou un tableau [{ "libelle": "...", "nb": ... }].
+  // Au-delà de 6 catégories, les plus petites sont regroupées dans « Autres catégories ».
+  function repartitionMembres(brut) {
+    let t = [];
+    if (Array.isArray(brut)) {
+      t = brut.map((x) => ({ nom: String(x.libelle), nb: num(x.nb) || 0 }));
+    } else if (brut && typeof brut === 'object') {
+      t = Object.keys(brut).map((cle) => ({ nom: cle, nb: num(brut[cle]) || 0 }));
+    }
+    const max = 6;
+    if (t.length > max) {
+      const gardees = new Set(t.slice().sort((a, b) => b.nb - a.nb).slice(0, max - 1));
+      const reste = t.filter((x) => !gardees.has(x));
+      t = t.filter((x) => gardees.has(x)).concat([{ nom: 'Autres catégories', nb: somme(reste.map((x) => x.nb)) }]);
+    }
+    return t;
+  }
+
+  // Briques communes des options ECharts
+  const axeValeur = (extra) => Object.assign({
+    type: 'value',
+    axisLabel: { color: C.texte },
+    splitLine: { lineStyle: { color: C.grille } }
+  }, extra);
+  const axeCategorie = (data, extra) => Object.assign({
+    type: 'category',
+    data: data,
+    axisTick: { show: false },
+    axisLine: { lineStyle: { color: C.axe } },
+    axisLabel: { color: C.texte }
+  }, extra);
+  const legende = (extra) => Object.assign({
+    top: 0, right: 0, itemWidth: 12, itemHeight: 10, textStyle: { color: C.texte }
+  }, extra);
+  // Infobulle « par axe » qui ignore les valeurs vides
+  const infobulleAxe = (unite) => ({
+    trigger: 'axis',
+    axisPointer: { type: 'shadow' },
+    formatter: (params) => {
+      const lignes = params
+        .filter((p) => p.value !== null && p.value !== undefined && p.value !== '-')
+        .map((p) => p.marker + ' ' + esc(p.seriesName) + ' : <strong>' + nf1.format(p.value) + ' ' + unite + '</strong>');
+      return lignes.length ? esc(params[0].axisValueLabel) + '<br>' + lignes.join('<br>') : '';
+    }
+  });
+
+  // ---------------------------------------------------------------------------
+  // Accès à l'API
+  // ---------------------------------------------------------------------------
+  async function appelApi(nom, params) {
+    if (typeof window.INDICATEURS_DEMO === 'function') return window.INDICATEURS_DEMO(nom, params || {});
+    const qs = params ? new URLSearchParams(params).toString() : '';
+    const rep = await fetch(CONFIG.apiBase + encodeURIComponent(nom) + (qs ? '?' + qs : ''), {
+      headers: { Accept: 'application/json' },
+      credentials: 'same-origin'
+    });
+    if (rep.status === 404) return { data: null, empty: true, status: 200 }; // indicateur pas encore développé
+    if (!rep.ok) throw new Error('HTTP ' + rep.status);
+    const json = await rep.json();
+    if (json.status !== undefined && Number(json.status) !== 200) {
+      if (Number(json.status) === 404) return { data: null, empty: true, status: 200 };
+      throw new Error('statut ' + json.status);
+    }
+    return json;
+  }
+  async function liste(nom, params) {
+    const j = await appelApi(nom, params);
+    return Array.isArray(j.data) ? j.data : [];
+  }
+  async function enregistrement(nom, id) {
+    const j = await appelApi(nom, { id: id });
+    return (j.empty === true || !j.data) ? null : j.data;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Composants
+  // ---------------------------------------------------------------------------
+
+  // <e-chart :option="..." hauteur="300px"></e-chart>
+  const EChart = {
+    props: {
+      option: { type: Object, default: null },
+      hauteur: { type: String, default: '300px' }
+    },
+    template: '<div ref="zone" :style="{ display: \'block\', width: \'100%\', height: hauteur }"></div>',
+    mounted() {
+      // Propriétés posées sur l'instance (non réactives) : ECharts ne doit pas être observé par Vue.
+      this.graphique = echarts.init(this.$refs.zone);
+      this.police = getComputedStyle(this.$refs.zone).fontFamily;
+      this.appliquer(this.option);
+      this.observateur = new ResizeObserver(() => this.graphique && this.graphique.resize());
+      this.observateur.observe(this.$refs.zone);
+    },
+    watch: {
+      option(o) { this.appliquer(o); }
+    },
+    methods: {
+      appliquer(o) {
+        if (!this.graphique) return;
+        if (!o) { this.graphique.clear(); return; }
+        try {
+          this.graphique.setOption(Object.assign({ textStyle: { fontFamily: this.police } }, o), true);
+        } catch (e) {
+          // echarts.min.js n'affiche presque jamais d'erreur : on la remonte nous-mêmes
+          console.error('[Indicateurs] ECharts n’a pas pu dessiner ce graphique :', e, o);
+        }
+      }
+    },
+    beforeUnmount() {
+      if (this.observateur) this.observateur.disconnect();
+      if (this.graphique) this.graphique.dispose();
+    }
+  };
+
+  // <bloc-etat :bloc="flotte" :annee="annee"> contenu affiché quand les données sont là </bloc-etat>
+  const BlocEtat = {
+    props: { bloc: { type: Object, required: true }, annee: { type: [Number, String], default: '' } },
+    computed: {
+      vide() {
+        const d = this.bloc.donnees;
+        return d === null || d === undefined || (Array.isArray(d) && d.length === 0);
+      }
+    },
+    template:
+      // largeur forcée : le cadre garde toute la largeur même si le thème met .card-body en flex
+      '<div style="width: 100%">' +
+      '<p v-if="bloc.charge" class="text-muted small mb-0">Chargement…</p>' +
+      '<p v-else-if="bloc.erreur" class="text-danger small mb-0">Impossible de charger ces données ({{ bloc.erreur }}).</p>' +
+      '<p v-else-if="vide" class="text-muted small mb-0">Données non disponibles pour {{ annee }}.</p>' +
+      '<slot v-else></slot>' +
+      '</div>'
+  };
+
+  // ---------------------------------------------------------------------------
+  // Application
+  // ---------------------------------------------------------------------------
+  const etat = () => ({ charge: false, erreur: null, donnees: null });
+
+  const app = {
+    data() {
+      return {
+        annees: [],
+        annee: null,
+        anneeEnCours: null,
+        club: etat(),
+        heuresMois: etat(),
+        flotte: etat(),
+        typesVol: etat(),
+        parcours: etat(),
+        ages: etat(),
+        reservations: etat(),
+        durees: etat(),
+        echeancesAvions: etat(),
+        echeancesPilotes: etat()
+      };
+    },
+
+    computed: {
+      horizon() {
+        return CONFIG.horizonEcheances;
+      },
+      estAnneeCourante() {
+        return this.annee !== null && Number(this.annee) === Number(this.anneeEnCours);
+      },
+      libelleComparaison() {
+        return 'vs ' + (this.annee - 1) + (this.estAnneeCourante ? ' à date' : '');
+      },
+      // Date à laquelle les chiffres sont arrêtés (fournie par l'API « club », sinon aujourd'hui / 31 décembre)
+      dateReference() {
+        const d = this.club.donnees && parseDate(this.club.donnees.date_reference);
+        if (d) return d;
+        return this.estAnneeCourante ? aujourdhui() : new Date(this.annee, 11, 31);
+      },
+      dateReferenceTxt() {
+        return this.dateReference.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+      },
+      moisReference() {
+        return this.dateReference.getFullYear() === Number(this.annee) ? this.dateReference.getMonth() + 1 : 12;
+      },
+
+      // ----- Indicateurs club -----
+      kpi() {
+        const d = this.club.donnees;
+        if (!d) return null;
+        const heures = num(d.heures_vol);
+        const heuresN1 = num(d.heures_vol_n1);
+        const vols = num(d.nb_vols);
+        const objectif = num(d.objectif_heures);
+        const membres = repartitionMembres(d.membres);
+        const jm = num(d.jours_maintenance);
+        const jp = num(d.jours_periode);
+        const na = num(d.nb_avions);
+        const dispo = (jm !== null && jp && na) ? Math.max(0, Math.min(100, (1 - jm / (jp * na)) * 100)) : null;
+        const objectifPct = (heures !== null && objectif) ? heures / objectif * 100 : null;
+        return {
+          heures: heures,
+          heuresN1: heuresN1,
+          objectif: objectif,
+          heuresTxt: heures === null ? '—' : nf0.format(heures) + ' h',
+          heuresVar: variation(heures, heuresN1),
+          objectifPct: objectifPct,
+          objectifLargeur: objectifPct === null ? '0%' : Math.min(100, objectifPct) + '%',
+          objectifTxt: objectifPct === null ? '' : nf0.format(objectifPct) + ' % de l’objectif de ' + nf0.format(objectif) + ' h',
+          volsTxt: vols === null ? '—' : nf0.format(vols),
+          volsVar: variation(vols, num(d.nb_vols_n1)),
+          dureeMoyenne: (heures && vols) ? duree(Math.round(heures * 60 / vols)) : null,
+          membres: membres,
+          totalMembres: somme(membres.map((m) => m.nb)),
+          totalMembresTxt: membres.length ? nf0.format(somme(membres.map((m) => m.nb))) : '—',
+          dispo: dispo,
+          dispoTxt: dispo === null ? '—' : nf0.format(dispo) + ' %',
+          dispoLargeur: dispo === null ? '0%' : dispo + '%',
+          joursMaintenance: jm,
+          nbAvions: na
+        };
+      },
+      optMembres() {
+        const k = this.kpi;
+        if (!k || !k.totalMembres) return null;
+        return {
+          color: C.serie,
+          animation: false,
+          tooltip: { trigger: 'item', formatter: (p) => esc(p.seriesName) + ' : <strong>' + p.value + '</strong>' },
+          legend: {
+            bottom: 0, left: 0, itemWidth: 10, itemHeight: 10, itemGap: 10,
+            textStyle: { color: C.texte, fontSize: 11 },
+            formatter: (nom) => { const m = k.membres.find((x) => x.nom === nom); return nom + ' ' + (m ? m.nb : ''); }
+          },
+          grid: { left: 0, right: 0, top: 2, height: 14 },
+          xAxis: { type: 'value', show: false, max: k.totalMembres },
+          yAxis: { type: 'category', show: false, data: ['membres'] },
+          series: k.membres.map((m) => ({
+            name: m.nom, type: 'bar', stack: 'membres', barWidth: 14, data: [m.nb],
+            itemStyle: { borderColor: '#fff', borderWidth: 1 }
+          }))
+        };
+      },
+
+      // ----- Activité -----
+      parMois() {
+        const t = Array.from({ length: 12 }, () => ({ h: null, h1: null }));
+        (this.heuresMois.donnees || []).forEach((r) => {
+          const m = num(r.mois);
+          if (m >= 1 && m <= 12) t[m - 1] = { h: num(r.heures), h1: num(r.heures_n1) };
+        });
+        return t;
+      },
+      optHeuresMois() {
+        const d = this.heuresMois.donnees;
+        if (!d || !d.length) return null;
+        const pm = this.parMois;
+        const mEnCours = this.estAnneeCourante ? this.moisReference : 0;
+        const series = [];
+        if (pm.some((m) => m.h1 !== null)) {
+          series.push({
+            name: String(this.annee - 1), type: 'bar', barMaxWidth: 18, barGap: '15%',
+            data: pm.map((m) => m.h1),
+            itemStyle: { color: C.n1, borderRadius: [4, 4, 0, 0] }
+          });
+        }
+        series.push({
+          name: String(this.annee), type: 'bar', barMaxWidth: 18,
+          data: pm.map((m, i) => m.h === null ? null
+            : (i + 1 === mEnCours ? { value: m.h, itemStyle: { color: C.anneePartielle } } : m.h)),
+          itemStyle: { color: C.annee, borderRadius: [4, 4, 0, 0] }
+        });
+        return {
+          tooltip: infobulleAxe('h'),
+          legend: legende(),
+          grid: { left: 4, right: 4, top: 32, bottom: 4, containLabel: true },
+          xAxis: axeCategorie(MOIS),
+          yAxis: axeValeur(),
+          series: series
+        };
+      },
+      cumul() {
+        const d = this.heuresMois.donnees;
+        if (!d || !d.length) return null;
+        const pm = this.parMois;
+        const courante = this.estAnneeCourante;
+        const mRef = courante ? this.moisReference : 12;
+        let s = 0;
+        let s1 = 0;
+        const n = [];
+        const n1 = [];
+        pm.forEach((m, i) => {
+          if (m.h1 !== null) { s1 += m.h1; n1.push(arrondi1(s1)); } else n1.push(null);
+          if (i < mRef) { s += m.h || 0; n.push(arrondi1(s)); } else n.push(null);
+        });
+        const aDesN1 = pm.some((m) => m.h1 !== null);
+        const obj = this.kpi ? this.kpi.objectif : null;
+        let proj = null;
+        let fin = s;
+
+        // Projection : le reste de l'année suit le profil de l'année précédente,
+        // corrigé du rapport « heures à date / heures N-1 à date ».
+        if (courante && aDesN1) {
+          const k = this.kpi;
+          let ratio = (k && k.heures && k.heuresN1) ? k.heures / k.heuresN1 : null;
+          if (!ratio) ratio = (mRef > 1 && n1[mRef - 2]) ? n[mRef - 2] / n1[mRef - 2] : 1;
+          const dr = this.dateReference;
+          const joursMois = new Date(dr.getFullYear(), mRef, 0).getDate();
+          const resteMois = Math.max(0, (joursMois - dr.getDate()) / joursMois);
+          proj = Array(12).fill(null);
+          let p = s;
+          proj[mRef - 1] = arrondi1(p);
+          p += (pm[mRef - 1].h1 || 0) * resteMois * ratio;
+          for (let i = mRef; i < 12; i++) {
+            p += (pm[i].h1 || 0) * ratio;
+            proj[i] = arrondi1(p);
+          }
+          fin = p;
+        }
+
+        let resume;
+        if (courante) {
+          resume = proj
+            ? 'Projection au 31 décembre : ' + nf0.format(fin) + ' h' + (obj ? ' (' + signe(fin - obj) + ' h par rapport à l’objectif)' : '')
+            : 'Cumul au ' + this.dateReferenceTxt + ' : ' + nf0.format(s) + ' h';
+        } else {
+          resume = 'Total ' + this.annee + ' : ' + nf0.format(s) + ' h' + (obj ? ' (' + nf0.format(s / obj * 100) + ' % de l’objectif de ' + nf0.format(obj) + ' h)' : '');
+        }
+        return { n: n, n1: n1, proj: proj, fin: fin, total: s, obj: obj, resume: resume, sousObjectif: obj ? fin < obj : false };
+      },
+      optCumul() {
+        const c = this.cumul;
+        if (!c) return null;
+        const series = [];
+        if (c.n1.some((v) => v !== null)) {
+          series.push({
+            name: String(this.annee - 1), type: 'line', data: c.n1, symbol: 'none', z: 1,
+            lineStyle: { color: C.n1Ligne, width: 2 }, itemStyle: { color: C.n1Ligne }
+          });
+        }
+        series.push({
+          name: String(this.annee), type: 'line', data: c.n, symbol: 'circle', symbolSize: 6, z: 3,
+          lineStyle: { color: C.annee, width: 3 }, itemStyle: { color: C.annee },
+          markLine: c.obj ? {
+            symbol: 'none', silent: true,
+            lineStyle: { color: C.objectif, type: 'dashed', width: 2 },
+            label: { formatter: 'Objectif ' + nf0.format(c.obj) + ' h', position: 'insideStartTop', color: C.texteFort },
+            data: [{ yAxis: c.obj }]
+          } : undefined
+        });
+        if (c.proj) {
+          series.push({
+            name: 'Projection', type: 'line', data: c.proj, symbol: 'none', z: 2,
+            lineStyle: { color: C.annee, width: 2, type: 'dashed' }, itemStyle: { color: C.annee }
+          });
+        }
+        return {
+          tooltip: Object.assign(infobulleAxe('h'), { axisPointer: { type: 'line' } }),
+          legend: legende({ itemWidth: 18, itemHeight: 8 }),
+          grid: { left: 4, right: 12, top: 32, bottom: 4, containLabel: true },
+          xAxis: axeCategorie(MOIS, { boundaryGap: false }),
+          yAxis: axeValeur({ max: (v) => Math.ceil(Math.max(v.max, c.obj || 0) * 1.05 / 100) * 100 }),
+          series: series
+        };
+      },
+
+      // ----- Flotte -----
+      lignesFlotte() {
+        const d = this.flotte.donnees || [];
+        const heures = d.map((a) => num(a.heures) || 0);
+        const max = Math.max(1, ...heures);
+        const total = somme(heures);
+        return d.map((a, i) => {
+          const h = heures[i];
+          const reste = num(a.visite_potentiel_restant);
+          const itv = num(a.visite_intervalle);
+          const statut = String(a.statut || '').toLowerCase();
+          let niveau = null;
+          if (statut === 'maintenance') niveau = 'maintenance';
+          else if (reste !== null) {
+            niveau = reste < CONFIG.visiteUrgenteHeures ? 'urgent'
+              : ((itv && reste / itv < CONFIG.visiteAPlanifierRatio) ? 'a_planifier' : 'ok');
+          }
+          const dateEst = parseDate(a.visite_date_estimee);
+          return {
+            id: a.id,
+            immat: a.immatriculation,
+            type: a.type || '',
+            heuresTxt: nf0.format(h) + ' h',
+            partTxt: total ? nf0.format(h / total * 100) + ' % de la flotte' : '',
+            largeurHeures: (h / max * 100) + '%',
+            visite: a.visite_libelle || '—',
+            resteTxt: niveau === 'maintenance' ? 'Visite en cours'
+              : (reste !== null ? nf1.format(reste) + ' h restantes' + (itv ? ' sur ' + nf0.format(itv) + ' h' : '') : ''),
+            largeurReste: niveau === 'maintenance' ? '100%'
+              : ((reste !== null && itv) ? Math.max(2, Math.min(100, reste / itv * 100)) + '%' : null),
+            classeReste: { urgent: 'bg-danger', a_planifier: 'bg-warning', ok: 'bg-success', maintenance: 'bg-secondary' }[niveau] || 'bg-secondary',
+            niveauTxt: LIB_NIVEAU[niveau] || '',
+            dateEstimee: dateEst ? 'vers le ' + dateCourte(dateEst) : '',
+            statutTxt: { disponible: 'Disponible', maintenance: 'En maintenance', indisponible: 'Indisponible' }[statut] || (a.statut || '—'),
+            classeStatut: 'badge ' + ({
+              disponible: 'badge-success bg-success',
+              maintenance: 'badge-secondary bg-secondary',
+              indisponible: 'badge-danger bg-danger'
+            }[statut] || 'badge-light bg-light text-dark'),
+            statutDetail: a.statut_detail || ''
+          };
+        });
+      },
+
+      // ----- Pilotes -----
+      optTypesVol() {
+        const d = this.typesVol.donnees;
+        if (!d || !d.length) return null;
+        const data = d.map((t) => ({ name: t.libelle, value: num(t.heures) || 0 }));
+        const total = somme(data.map((x) => x.value));
+        return {
+          color: C.serie,
+          tooltip: { trigger: 'item', formatter: (p) => esc(p.name) + '<br><strong>' + nf1.format(p.value) + ' h</strong> (' + nf0.format(p.percent) + ' %)' },
+          title: {
+            text: nf0.format(total) + ' h', subtext: 'au total', left: 'center', top: '30%',
+            textStyle: { fontSize: 20, fontWeight: 700, color: C.texteFort },
+            subtextStyle: { color: C.texte }
+          },
+          legend: {
+            bottom: 0, left: 'center', itemWidth: 10, itemHeight: 10, textStyle: { color: C.texte },
+            formatter: (nom) => { const t = data.find((x) => x.name === nom); return nom + '  ' + (t && total ? nf0.format(t.value / total * 100) + ' %' : ''); }
+          },
+          series: [{
+            type: 'pie', radius: ['48%', '72%'], center: ['50%', '40%'],
+            label: { show: false }, labelLine: { show: false },
+            itemStyle: { borderColor: '#fff', borderWidth: 2 },
+            data: data
+          }]
+        };
+      },
+      optParcours() {
+        const d = (this.parcours.donnees || []).slice().sort(parOrdre);
+        if (!d.length) return null;
+        const premier = num(d[0].nb) || 0;
+        return {
+          tooltip: { trigger: 'item', formatter: (p) => esc(p.name) + ' : <strong>' + p.value + ' élèves</strong>' },
+          grid: { left: 4, right: 70, top: 4, bottom: 4, containLabel: true },
+          xAxis: { type: 'value', show: false, max: premier || null },
+          yAxis: axeCategorie(d.map((e) => e.libelle), { inverse: true, axisLine: { show: false } }),
+          series: [{
+            type: 'bar', barWidth: '60%',
+            data: d.map((e, i) => ({
+              value: num(e.nb) || 0,
+              itemStyle: { color: C.parcours[Math.min(i, C.parcours.length - 1)], borderRadius: [0, 4, 4, 0] }
+            })),
+            label: {
+              show: true, position: 'right', color: C.texteFort,
+              formatter: (p) => premier ? p.value + '  (' + Math.round(p.value / premier * 100) + ' %)' : String(p.value)
+            }
+          }]
+        };
+      },
+      optAges() {
+        const d = (this.ages.donnees || []).slice().sort(parOrdre);
+        if (!d.length) return null;
+        return {
+          tooltip: { trigger: 'item', formatter: (p) => esc(p.name) + ' : <strong>' + p.value + ' membres</strong>' },
+          grid: { left: 4, right: 4, top: 24, bottom: 4, containLabel: true },
+          xAxis: axeCategorie(d.map((g) => g.tranche)),
+          yAxis: axeValeur({ minInterval: 1 }),
+          series: [{
+            type: 'bar', barWidth: '55%', data: d.map((g) => num(g.nb) || 0),
+            itemStyle: { color: C.annee, borderRadius: [4, 4, 0, 0] },
+            label: { show: true, position: 'top', color: C.texteFort }
+          }]
+        };
+      },
+
+      // ----- Planning -----
+      optReservations() {
+        const d = this.reservations.donnees;
+        if (!d || !d.length) return null;
+        const creneaux = Array.from(new Set(d.map((r) => String(r.creneau))))
+          .sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+        const data = d.map((r) => {
+          const v = num(r.taux) || 0;
+          return {
+            value: [creneaux.indexOf(String(r.creneau)), (num(r.jour) || 1) - 1, v],
+            label: { color: v > 50 ? '#ffffff' : '#0b0b0b' }
+          };
+        });
+        return {
+          tooltip: {
+            trigger: 'item',
+            formatter: (p) => esc(JOURS_LONG[p.value[1]]) + ', ' + esc(creneauLisible(creneaux[p.value[0]])) + '<br><strong>' + nf0.format(p.value[2]) + ' %</strong> des créneaux réservés'
+          },
+          grid: { left: 4, right: 4, top: 4, bottom: 44, containLabel: true },
+          xAxis: axeCategorie(creneaux.map(creneauLisible), { axisLine: { show: false } }),
+          yAxis: axeCategorie(JOURS, { inverse: true, axisLine: { show: false } }),
+          visualMap: {
+            min: 0, max: 100, orient: 'horizontal', left: 'center', bottom: 0,
+            itemWidth: 12, itemHeight: 180, text: ['Complet', 'Libre'],
+            inRange: { color: C.rampe }, textStyle: { color: C.texte }
+          },
+          series: [{
+            type: 'heatmap', data: data,
+            label: { show: true, fontSize: 11, formatter: (p) => Math.round(p.value[2]) + ' %' },
+            itemStyle: { borderColor: '#fff', borderWidth: 3, borderRadius: 4 },
+            emphasis: { itemStyle: { borderColor: C.texteFort, borderWidth: 2 } }
+          }]
+        };
+      },
+      // ----- Durée des vols -----
+      // Part des vols par tranche de durée ; l'année précédente est comparée en pourcentage
+      // (l'année en cours est incomplète, les nombres bruts ne sont pas comparables).
+      tranchesDurees() {
+        const d = (this.durees.donnees || []).slice().sort(parOrdre);
+        const totalNb = somme(d.map((t) => num(t.nb) || 0));
+        const totalMin = somme(d.map((t) => num(t.minutes) || 0));
+        const totalN1 = somme(d.map((t) => num(t.nb_n1) || 0));
+        return {
+          totalNb: totalNb,
+          totalMin: totalMin,
+          aDesN1: totalN1 > 0,
+          lignes: d.map((t) => {
+            const nb = num(t.nb) || 0;
+            const min = num(t.minutes);
+            const n1 = num(t.nb_n1);
+            return {
+              tranche: String(t.tranche),
+              nb: nb,
+              pctVols: totalNb ? nb / totalNb * 100 : 0,
+              pctHeures: (min !== null && totalMin) ? min / totalMin * 100 : null,
+              nbN1: n1,
+              pctN1: (n1 !== null && totalN1) ? n1 / totalN1 * 100 : null
+            };
+          })
+        };
+      },
+      dureesResume() {
+        const t = this.tranchesDurees;
+        if (!t.totalNb) return '';
+        let txt = nf0.format(t.totalNb) + ' vols';
+        if (t.totalMin) txt += ' · durée moyenne ' + duree(Math.round(t.totalMin / t.totalNb));
+        const derniere = t.lignes[t.lignes.length - 1];
+        if (derniere && derniere.pctHeures !== null) {
+          txt += ' · ' + derniere.tranche + ' : ' + nf0.format(derniere.pctVols) + ' % des vols, ' +
+            nf0.format(derniere.pctHeures) + ' % des heures';
+        }
+        return txt;
+      },
+      optDurees() {
+        const t = this.tranchesDurees;
+        if (!t.lignes.length || !t.totalNb) return null;
+        const annee = this.annee;
+        const series = [];
+        if (t.aDesN1) {
+          series.push({
+            name: String(annee - 1), type: 'bar', barMaxWidth: 28, barGap: '15%',
+            data: t.lignes.map((l) => l.pctN1 === null ? null : arrondi1(l.pctN1)),
+            itemStyle: { color: C.n1, borderRadius: [4, 4, 0, 0] }
+          });
+        }
+        series.push({
+          name: String(annee), type: 'bar', barMaxWidth: 28,
+          data: t.lignes.map((l) => arrondi1(l.pctVols)),
+          itemStyle: { color: C.annee, borderRadius: [4, 4, 0, 0] },
+          label: { show: true, position: 'top', color: C.texteFort, formatter: (p) => nf0.format(p.value) + ' %' }
+        });
+        return {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'shadow' },
+            formatter: (params) => {
+              const l = t.lignes[params[0].dataIndex];
+              let html = '<strong>' + esc(l.tranche) + '</strong><br>' + annee + ' : ' + nf0.format(l.nb) + ' vols (' + nf0.format(l.pctVols) + ' %)';
+              if (l.pctHeures !== null) html += ', ' + nf0.format(l.pctHeures) + ' % des heures';
+              if (l.nbN1 !== null && l.pctN1 !== null) html += '<br>' + (annee - 1) + ' : ' + nf0.format(l.nbN1) + ' vols (' + nf0.format(l.pctN1) + ' %)';
+              return html;
+            }
+          },
+          legend: legende(),
+          grid: { left: 4, right: 4, top: 44, bottom: 4, containLabel: true },
+          xAxis: axeCategorie(t.lignes.map((l) => l.tranche)),
+          yAxis: axeValeur({ axisLabel: { color: C.texte, formatter: (v) => v + ' %' } }),
+          series: series
+        };
+      },
+
+      // ----- Échéances -----
+      echeances() {
+        const auj = aujourdhui();
+        return (this.echeancesAvions.donnees || []).map((e) => {
+          const date = parseDate(e.date);
+          if (!date) return null;
+          const jours = Math.round((date - auj) / JOUR_MS);
+          const niveau = jours < 0 ? 'urgent'
+            : (e.niveau || (jours <= CONFIG.echeanceUrgenteJours ? 'urgent' : (jours <= CONFIG.echeanceAPlanifierJours ? 'a_planifier' : 'ok')));
+          return {
+            immat: e.immatriculation,
+            libelle: e.libelle + (jours < 0 ? ' (en retard de ' + (-jours) + ' j)' : ''),
+            date: date,
+            jours: jours,
+            niveau: niveau,
+            estimee: String(e.estimee) === '1'
+          };
+        }).filter((e) => e && e.jours <= CONFIG.horizonEcheances).sort((a, b) => a.date - b.date);
+      },
+      hauteurEcheances() {
+        const n = new Set(this.echeances.map((e) => e.immat)).size;
+        return Math.max(160, n * 46 + 56) + 'px';
+      },
+      optEcheances() {
+        const ev = this.echeances;
+        if (!ev.length) return null;
+        const auj = aujourdhui();
+        const fin = new Date(auj.getTime() + CONFIG.horizonEcheances * JOUR_MS);
+        // L'axe commence quelques jours avant aujourd'hui, ou avant l'échéance en retard la plus ancienne
+        // (au plus CONFIG.retardMaxJours) : aucun point ne tombe sur le bord du graphique.
+        const plusAncienne = Math.min(auj.getTime(), ...ev.map((e) => e.date.getTime()));
+        const debut = new Date(Math.max(plusAncienne - 3 * JOUR_MS, auj.getTime() - CONFIG.retardMaxJours * JOUR_MS));
+        const immats = Array.from(new Set(ev.map((e) => e.immat)));
+        const couleur = { urgent: C.urgent, a_planifier: C.aPlanifier, ok: C.ok };
+        const symbole = { urgent: 'circle', a_planifier: 'triangle', ok: 'roundRect' };
+        return {
+          tooltip: {
+            trigger: 'item',
+            formatter: (p) => {
+              const e = p.data.ev;
+              return '<strong>' + esc(e.immat) + '</strong> · ' + esc(e.libelle) + '<br>' +
+                esc(dateLongue(e.date)) + (e.estimee ? ' (date estimée)' : '') +
+                (e.jours >= 0 ? ', dans ' + e.jours + ' j' : '') + '<br>' + esc(LIB_NIVEAU[e.niveau] || '');
+            }
+          },
+          grid: { left: 4, right: 24, top: 28, bottom: 4, containLabel: true },
+          xAxis: {
+            type: 'time', min: debut.getTime(), max: fin.getTime(),
+            axisLabel: { color: C.texte, hideOverlap: true, formatter: (v) => dateCourte(new Date(v)) },
+            axisLine: { lineStyle: { color: C.axe } },
+            splitLine: { show: true, lineStyle: { color: C.grille } }
+          },
+          yAxis: axeCategorie(immats, { inverse: true, axisLine: { show: false }, axisLabel: { color: C.texteFort, fontWeight: 600 } }),
+          series: [{
+            type: 'scatter', symbolSize: 14,
+            clip: false, // ne jamais masquer un point proche du bord
+            data: ev.map((e) => ({
+              // une échéance très en retard est posée au début de l'axe
+              value: [Math.max(e.date.getTime(), debut.getTime() + JOUR_MS), e.immat],
+              ev: e,
+              symbol: symbole[e.niveau] || 'circle',
+              itemStyle: { color: couleur[e.niveau] || C.ok, borderColor: '#fff', borderWidth: 2 },
+              label: { position: (e.date - debut) / (fin - debut) > 0.6 ? 'left' : 'right' }
+            })),
+            label: { show: true, formatter: (p) => p.data.ev.libelle, color: C.texteFort, fontSize: 11 },
+            markLine: {
+              symbol: 'none', silent: true,
+              lineStyle: { color: C.texteFort, type: 'solid', width: 1 },
+              label: { formatter: 'Aujourd’hui', position: 'end', color: C.texte },
+              data: [{ xAxis: auj.getTime() }]
+            }
+          }]
+        };
+      },
+      alertesPilotes() {
+        return (this.echeancesPilotes.donnees || []).map((a) => {
+          const niveau = a.niveau || 'a_planifier';
+          return {
+            code: a.code,
+            libelle: a.libelle,
+            nb: num(a.nb) || 0,
+            niveauTxt: LIB_NIVEAU[niveau] || '',
+            classe: 'badge ' + ({ urgent: 'badge-danger bg-danger', a_planifier: 'badge-warning bg-warning text-dark', ok: 'badge-success bg-success' }[niveau] || 'badge-secondary bg-secondary')
+          };
+        });
+      }
+    },
+
+    watch: {
+      annee(v) { if (v) this.chargerTout(); }
+    },
+
+    async mounted() {
+      let annees = [];
+      try {
+        annees = (await liste('annees'))
+          .map((a) => ({ annee: num(a.annee), enCours: String(a.en_cours) === '1' }))
+          .filter((a) => a.annee);
+      } catch (e) {
+        // pas de liste : on se rabat sur l'année civile
+      }
+      if (!annees.length) annees = [{ annee: new Date().getFullYear(), enCours: true }];
+      annees.sort((a, b) => b.annee - a.annee);
+      const courante = annees.find((a) => a.enCours) || annees[0];
+      this.anneeEnCours = courante.annee;
+      this.annees = annees.map((a) => a.annee);
+      this.annee = courante.annee; // déclenche chargerTout()
+    },
+
+    methods: {
+      chargerTout() {
+        const p = { annee: this.annee };
+        this.charger('club', () => enregistrement('club', this.annee));
+        this.charger('heuresMois', () => liste('heures_mois', p));
+        this.charger('flotte', () => liste('flotte', p));
+        this.charger('typesVol', () => liste('heures_type_vol', p));
+        this.charger('parcours', () => liste('parcours_eleves', p));
+        this.charger('ages', () => liste('membres_age', p));
+        this.charger('reservations', () => liste('reservations', p));
+        this.charger('durees', () => liste('durees_vol', p));
+        if (this.estAnneeCourante) {
+          this.charger('echeancesAvions', () => liste('echeances_avions', { horizon: CONFIG.horizonEcheances }));
+          this.charger('echeancesPilotes', () => liste('echeances_pilotes'));
+        }
+      },
+      // Charge un bloc ; une réponse arrivée après un changement d'année est ignorée.
+      async charger(cle, appel) {
+        const bloc = this[cle];
+        const annee = this.annee;
+        bloc.charge = true;
+        bloc.erreur = null;
+        bloc.donnees = null;
+        try {
+          const d = await appel();
+          if (annee === this.annee) bloc.donnees = d;
+        } catch (e) {
+          if (annee === this.annee) bloc.erreur = e && e.message ? e.message : String(e);
+        } finally {
+          if (annee === this.annee) bloc.charge = false;
+        }
+      }
+    }
+  };
+
+  // Exposé pour les tests et le débogage
+  window.EasyAeroIndicateurs = { CONFIG: CONFIG, app: app, components: { EChart: EChart, BlocEtat: BlocEtat } };
+
+  // Diagnostic à lancer dans la console du navigateur : EasyAeroIndicateurs.diagnostic()
+  window.EasyAeroIndicateurs.diagnostic = function () {
+    const vm = window.EasyAeroIndicateurs.vm;
+    if (!vm) { console.warn('[Indicateurs] application non montée (élément #indicateurs-app introuvable ?)'); return; }
+    const copie = (v) => JSON.parse(JSON.stringify(v === undefined ? null : v));
+    console.log('[Indicateurs] année affichée', vm.annee, '| année en cours', vm.anneeEnCours, '| aujourd’hui', aujourdhui().toLocaleDateString('fr-FR'));
+    console.table(['club', 'heuresMois', 'flotte', 'typesVol', 'parcours', 'ages', 'reservations', 'durees', 'echeancesAvions', 'echeancesPilotes']
+      .map((b) => ({
+        bloc: b,
+        chargement: vm[b].charge,
+        erreur: vm[b].erreur,
+        lignes: Array.isArray(vm[b].donnees) ? vm[b].donnees.length : (vm[b].donnees ? 'objet' : 0)
+      })));
+    console.log('[Indicateurs] échéances reçues : ' + JSON.stringify(vm.echeancesAvions.donnees));
+    const auj = aujourdhui();
+    console.table((vm.echeancesAvions.donnees || []).map((e) => {
+      const d = parseDate(e.date);
+      const jours = d ? Math.round((d - auj) / JOUR_MS) : null;
+      return {
+        immatriculation: e.immatriculation,
+        'champ date reçu': JSON.stringify(e.date),
+        'date lue': d ? d.toLocaleDateString('fr-FR') : 'illisible',
+        jours: jours,
+        retenue: d ? (jours <= CONFIG.horizonEcheances ? 'oui' : 'non : au-delà de ' + CONFIG.horizonEcheances + ' j') : 'non : date illisible'
+      };
+    }));
+    console.table(Array.from(document.querySelectorAll('#indicateurs-app [_echarts_instance_]')).map((el) => {
+      const g = window.echarts && window.echarts.getInstanceByDom(el);
+      const titre = el.closest('.card') && el.closest('.card').querySelector('.card-header');
+      return {
+        carte: titre ? titre.textContent.trim() : '?',
+        largeur: el.clientWidth,
+        hauteur: el.clientHeight,
+        series: g ? (g.getOption().series || []).length : 'pas d’instance'
+      };
+    }));
+  };
+
+  // ---------------------------------------------------------------------------
+  // Démarrage
+  // ---------------------------------------------------------------------------
+  if (typeof document !== 'undefined' && window.Vue && document.getElementById('indicateurs-app')) {
+    const vueApp = window.Vue.createApp(app);
+    vueApp.component('e-chart', EChart);
+    vueApp.component('bloc-etat', BlocEtat);
+    // Si le moteur de gabarits côté serveur utilise déjà {{ }} (Twig, Blade…), décommenter :
+    // vueApp.config.compilerOptions.delimiters = ['[[', ']]'];
+    // Instance accessible depuis la console : EasyAeroIndicateurs.vm.optEcheances, .echeances…
+    window.EasyAeroIndicateurs.vm = vueApp.mount('#indicateurs-app');
+    console.info('[Indicateurs] Vue ' + window.Vue.version + ' · ECharts ' + (window.echarts ? window.echarts.version : 'absent'));
+  }
+})();
+
+
+</script>
+
+<!-- END: corps -->

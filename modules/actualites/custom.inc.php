@@ -75,10 +75,10 @@
 		{
 			foreach($lstdte as $ii=>$d)
 			{
+				$dte=new echeance_class($d["id"],$sql);
+				$ress=new ress_class($dte->uid,$sql);
 				if ($d["id"]>0)
 				{
-					$dte=new echeance_class($d["id"],$sql);
-					$ress=new ress_class($dte->uid,$sql);
 					if ($ress->actif=="oui")
 					{
 						$txt=$ress->aff("immatriculation")." :<br />".$dte->Affiche();

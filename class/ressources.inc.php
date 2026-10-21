@@ -228,6 +228,17 @@ class ress_class extends objet_core
 		  }
 	}
 
+	function TempsPeriode($dte_deb,$dte_fin)
+	{ 
+		global $MyOpt;
+		$sql=$this->sql;
+
+		$query ="SELECT uid_avion, SUM(temps) AS tps FROM `".$MyOpt["tbl"]."_calendrier` WHERE actif='oui' AND dte_deb>='".$dte_deb."' AND dte_deb<='".$dte_fin."' AND uid_avion='".$this->id."'";
+		$res=$sql->QueryRow($query);
+
+		return $res["tps"] ?? 0;
+	}
+
 	function TempsVols($affvol="")
 	{ global $MyOpt;
 		$sql=$this->sql;

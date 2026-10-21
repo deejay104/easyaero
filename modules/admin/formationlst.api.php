@@ -66,6 +66,7 @@
         $formation=new formation_class($id,$sql);
         $formation->Valid("description",$data["description"]);
         $formation->Valid("status",$data["status"]);
+        $formation->Valid("enac",$data["enac"]);
         $formation->Save();
 
         $result=array("status"=>200);
@@ -78,6 +79,7 @@
         $formation_dst->Valid("description",$formation_src->val("description"));
         $formation_dst->Valid("version",$formation_src->val("version")+1);
         $formation_dst->Valid("status",'draft');
+        $formation_dst->Valid("enac",$formation_src->val("enac"));
         $formation_dst->Save();
 
         $formation_src->Valid("status",'closed');

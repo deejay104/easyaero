@@ -123,7 +123,7 @@
 			"icone"=>"mdi-trending-up",
 			"nom"=>$tabLang["lang_followup"],
 			"droit"=>"AccesIndicateurs",
-			"url"=>geturl("aviation","indicateurs",""),
+			"url"=>geturl("indicateurs","index",""),
 		);
 	}
 // ---- Phone

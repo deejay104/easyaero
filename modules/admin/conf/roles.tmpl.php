@@ -115,6 +115,7 @@ $tabRoles["AccesEvents"]="Accès à la liste des évenements";
 $tabRoles["CreeEvent"]="Création d'un évenement";
 $tabRoles["ModifEvent"]="Modification d'un évenement";
 $tabRoles["ModifEventStatus"]="Modification du status d'un évenement";
+$tabRoles["OwnerEvent"]="Autorisé à être responsable d'un event";
 
 
 $tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";

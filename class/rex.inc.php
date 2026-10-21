@@ -54,9 +54,9 @@ class rex_class extends objet_core
 		"typeevt" => Array("type" => "varchar","len"=>30),
 		"uid_avion" => Array("type" => "number", "index"=>1 ),
 		"risque" => Array("type" => "varchar","len"=>2 ),
-		"probability" => Array("type" => "enum","default"=>"0"),
-		"gravity" => Array("type" => "enum","default"=>"0"),
-		"risk" => Array("type" => "number"),
+		"probability" => Array("type" => "enum","default"=>"0","readonly"=>1),
+		"gravity" => Array("type" => "enum","default"=>"0","readonly"=>1),
+		"risk" => Array("type" => "number","readonly"=>1),
 		"dte_rex" => Array("type" => "date", "default" => "now" ),
 	);
 
@@ -286,7 +286,7 @@ class rex_class extends objet_core
 			{
 				$ret ="<style>.risqueREX th { width:140px; } td { width:140px; text-align: center; border: 1px solid #000000; font-weight: bold; }</style>";
 
-				$ret.="<table class='risqueREX' style='margin-top:35px;'>";
+				$ret.="<table class='risqueREX' style='margin-top:5px;'>";
 				$ret.="<tr><th></th>";
 				foreach($tabGrav as $i=>$d)
 				{

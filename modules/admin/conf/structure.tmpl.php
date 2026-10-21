@@ -64,7 +64,7 @@ $tabCustom=Array
 	),
 	"conso" => Array
 	(
-		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"idvol" => Array("Type" => "mediumint(8) unsigned", "Default" => "0", "Index" => "1", ),
 		"idavion" => Array("Type" => "smallint(5) unsigned", "Default" => "0", "Index" => "1", ),
 		"quantite" => Array("Type" => "float", "Default" => "0", ),
@@ -107,7 +107,7 @@ $tabCustom=Array
 	),
 	"masses" => Array
 	(
-		"id" => Array("Type" => "mediumint(8) unsigned", "Index" => "PRIMARY", ),
+		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"uid_vol" => Array("Type" => "mediumint(8) unsigned", "Index" => "1", ),
 		"uid_pilote" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"uid_place" => Array("Type" => "tinyint(3) unsigned", ),

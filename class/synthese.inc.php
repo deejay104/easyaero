@@ -33,6 +33,7 @@ class formation_class extends objet_core
 		"description" => Array("type" => "varchar", "len"=>20 ),
 		"version" => Array("type" => "numeric", "default"=>1, "readonly"=>1 ),
 		"status" => Array("type" => "enum", "default"=>"draft" ),
+		"enac" => Array("type" => "bool", "default"=>"non" ),
 	);
 
 	protected $tabList=array(
@@ -265,7 +266,7 @@ class synthese_class extends objet_core
 			"ca"=>array('ok'=>'Validé','nok'=>'Non Validé'),
 		),
 		"type" =>array(
-			"fr"=>array('dc'=>'Double Commande','solo'=>'Solo','briefing'=>'Briefing'),	
+			"fr"=>array('dc'=>'Double Commande','solo'=>'Solo','briefing'=>'Formation théorique de proximité'),	
 			"en"=>array('dc'=>'Double Commande','solo'=>'Solo','briefing'=>'Briefing'),
 			"ca"=>array('dc'=>'Double Commande','solo'=>'Solo','briefing'=>'Briefing'),	
 		),
@@ -302,7 +303,7 @@ class synthese_class extends objet_core
 	);
 
 	protected $color=array(
-		"status"=>array("edit"=>"orange","signed"=>"green","cancel"=>"gray-light"),
+		"status"=>array("edit"=>"orange","signed"=>"white","cancel"=>"white"),
 		"conclusion"=>array("nok"=>"red","ok"=>"green"),
 	);
 
