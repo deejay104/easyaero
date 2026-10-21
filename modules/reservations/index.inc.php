@@ -97,7 +97,7 @@
 
 		$tmpl_x->assign("defaultView","agendaTwoWeeks");
 		$tmpl_x->assign("headerListe","agendaMonth,agendaFourWeeks,agendaTwoWeeks,agendaWeek,agendaDay");
-		$tmpl_x->assign("TexteTitre","Calendrier pour");
+		$tmpl_x->assign("TexteTitre","Calendrier des réservations");
 		$tmpl_x->parse("corps.aff_tooltips");
 	}
 

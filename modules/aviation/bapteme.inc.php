@@ -217,11 +217,11 @@
 	$btm->Render("form",$typeaff);
 
 	$tmpl_x->assign("form_num", $btm->aff("num",$typeaff));
-	$tmpl_x->assign("dte_creat", $btm->aff("dte_creat",$typeaff));
-	$tmpl_x->assign("uid_avion", $btm->data["id_avion"]);
-	$tmpl_x->assign("id_resa", $btm->data["id_resa"]);
-	$tmpl_x->assign("deb", strtotime($btm->data["dte"]));
-	$tmpl_x->assign("fin", strtotime($btm->data["dte"])+45*60);
+	$tmpl_x->assign("dte_creat", $btm->aff("dte_creat","$typeaff"));
+	$tmpl_x->assign("uid_avion", $btm->val("id_avion"));
+	$tmpl_x->assign("id_resa", $btm->val("id_resa"));
+	$tmpl_x->assign("deb", strtotime($btm->val("dte")));
+	$tmpl_x->assign("fin", strtotime($btm->val("dte"))+60*60);
 
 // ---- Menu
 	$ress = new ress_class($btm->data["id_avion"],$sql);

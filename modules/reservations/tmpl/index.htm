@@ -17,15 +17,17 @@
 <div class="row">
 	<div class="col grid-margin stretch-card">
 		<div class="card">
-			<div class="card-header">
+			<div class="card-header d-flex flex-wrap justify-content-between align-items-center">
 				<span>{TexteTitre}</span>
-				&nbsp;
-				<select id="ress" name="ress" class="form-control" OnChange="Recharge();">
-					<option value="0">Tous</OPTION>
-					<!-- BEGIN: lst_ress -->
-					<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
-					<!-- END: lst_ress -->
-				</select>
+				<div class="d-flex align-items-center">
+					<label for="ind-annee" class="small text-muted mb-0 me-2 mr-2">Avion</label>
+					<select id="ress" name="ress" class="form-control" OnChange="Recharge();">
+						<option value="0">Tous</OPTION>
+						<!-- BEGIN: lst_ress -->
+						<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
+						<!-- END: lst_ress -->
+					</select>
+				</div>
 			</div>
 
 			<div class="card-body">

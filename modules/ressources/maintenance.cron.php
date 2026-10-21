@@ -37,7 +37,7 @@
 	{
 		$ress = new ress_class($id,$sql,false);
 		$tpspot=$ress->Potentiel();
-myPrint($ress->Aff("immatriculation")." ".$ress->data["actif"]);	
+	
 		if (time()-strtotime($ress->val("notifmaint"))>7*24*3600)
 		{
 			if (floor($tpspot/60)<$ress->data["alertpotentiel"])

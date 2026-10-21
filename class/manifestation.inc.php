@@ -33,7 +33,7 @@ class manip_class extends objet_core
 		"facture" => Array("type" => "bool", "default" => "non", ),
 		"actif" => Array("type" => "bool", "default" => "oui", "index"=>1),
 		"dte_manip" => Array("type" => "date", "default"=>"now"),
-		"dte_limite" => Array("type" => "date", "default"=>"0000-00-00"),
+		"dte_limite" => Array("type" => "date"),
 		"test" => Array("type" => "date", "default"=>"0000-00-00")
 	);
 	

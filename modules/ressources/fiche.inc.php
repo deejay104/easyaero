@@ -29,8 +29,11 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche le sous-menu
-	addSubMenu("","Créer",geturl("ressources","fichemaint",""),"icn32_ajouter.png",false,"");
-	affSubMenu();
+//	addSubMenu("","Créer",geturl("ressources","fichemaint",""),"icn32_ajouter.png",false,"");
+//	affSubMenu();
+// <a class="btn btn-outline-primary" href="{path_root}/ressources/creefiche">Créer</a>
+
+	addPageMenu("","ressources","Créer une fiche",geturl("ressources","creefiche",""),"");
 
 // ---- Vérification des données
 	$uid_avion=checkVar("uid_avion","numeric");
