@@ -87,7 +87,7 @@ $tabCustom=Array
 	),
 	"factures" => Array
 	(
-		"id" => Array("Type" => "varchar(10)", "Index" => "PRIMARY", ),
+		"id" => Array("Type" => "varchar(10)", "Index" => 1,"Default"=>"NULL" ),
 		"uid" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"dteid" => Array("Type" => "varchar(6)", "Index" => "1", ),
 		"dte" => Array("Type" => "date", ),
@@ -221,12 +221,14 @@ $tabCustom=Array
 		"defaut_pil" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
 		"defaut_ins" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
 	),
+	/*
 	"type" => Array
 	(
 		"id" => Array("Type" => "varchar(2)", "Index" => "PRIMARY", ),
 		"nom" => Array("Type" => "varchar(50)", ),
 		"libelle" => Array("Type" => "varchar(50)", ),
 	),
+	*/
 	"vacances" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
