@@ -11,6 +11,7 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 	require_once ("class/echeance.inc.php");
 	require_once ($appfolder."/class/echeance.inc.php");
+	require_once ($appfolder."/class/maintenance.inc.php");
 
 // ---- Affiche les données avions
 
@@ -59,11 +60,13 @@
     $query ="SELECT uid_ressource,type FROM ".$MyOpt["tbl"]."_maintenance WHERE actif='oui' AND dte_deb<'".now()."' AND dte_fin>'".now()."'";
 	$sql->Query($query);
 
+    $maint=new maint_class(0,$sql);
     for($i=0; $i<$sql->rows; $i++)
 	{ 
 		$sql->GetRow($i);
         $avions[$sql->data["uid_ressource"]]["statut"]="maintenance";
-		$avions[$sql->data["uid_ressource"]]["visite_libelle"]=$sql->data["type"]."h";
+        $maint->valid("type",$sql->data["type"]);
+		$avions[$sql->data["uid_ressource"]]["visite_libelle"]=strip_tags($maint->aff("type"));
     }
 
 // ---- Result
