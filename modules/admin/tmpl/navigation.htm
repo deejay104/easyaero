@@ -11,21 +11,16 @@
 <script>
 $( function() {
 	$( "#close" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
-	});
-	$( "#save" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
-		saveNavpoint();
+		$('#dialogForm').modal('hide');
 	});
 	$( "#cancel" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
+		$('#dialogForm').modal('hide');
 	});
+	$( "#save" ).on( "click", function() {
+		$('#dialogForm').modal('hide');
+		saveNavpoint();
+	});
+
 	function loadNavpoint(id) {
 		$.ajax({
 			type: 'GET',
@@ -40,9 +35,7 @@ $( function() {
 				document.getElementById('form_lat').value=response[0].lat;
 				document.getElementById('form_lon').value=response[0].lon;
 
-				$("#dialogForm").css("display","block");
-				$("#dialogForm").css("opacity",100);
-				$("#page-content").css("opacity",0.25);
+				$('#dialogForm').modal('show');
 
 			},
 			error: function(response) {
@@ -131,36 +124,24 @@ $( function() {
 				</button>
 			</div>
 			<div class="modal-body">
+
+				<input id="form_id" type="hidden" value="" />
+
 				<div class="row">
-
-					<input id="form_id" type="hidden" value="" />
-
-					<div class="form-group row">
-						<div class="col-lg-1"><label>Nom</label></div>
-						<div class="col-lg-4"><input id="form_nom" class="form-control" value=""></div>
-					</div>
-					<div class="form-group row">
-						<div class="col-lg-1"><label>Description</label></div>
-						<div class="col-lg-4"><input id="form_description" class="form-control" value=""></div>
-					</div>		
-					<div class="form-group row">
-						<div class="col-lg-1"><label>Taxe</label></div>
-						<div class="col-lg-4"><input id="form_taxe" class="form-control" value=""></div>
-					</div>
-					<div class="form-group row">
-						<div class="col-lg-1"><label>Longitude</label></div>
-						<div class="col-lg-4"><input id="form_lon" class="form-control" value=""></div>
-					</div>
-					<div class="form-group row">
-						<div class="col-lg-1"><label>Latitude</label></div>
-						<div class="col-lg-4"><input id="form_lat" class="form-control" value=""></div>
-					</div>
-					
+					<div class="form-inline"><label>Nom</label><input id="form_nom" class="form-control form-input" value=""></div>
+					<div class="form-inline"><label>Description</label><input id="form_description" class="form-control form-input" value=""></div>
+					<div class="form-inline"><label>Taxe</label><input id="form_taxe" class="form-control form-input" value=""></div>
+					<div class="form-inline"><label>Longitude</label><input id="form_lon" class="form-control form-input" value=""></div>
+					<div class="form-inline"><label>Latitude</label><input id="form_lat" class="form-control form-input" value=""></div>
 				</div>
-				<br />
-				<div class="form-inline"><label></label>
-					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
-					<button class="btn btn-light" id="cancel">Annuler</button>
+			</div>
+					
+			<div class="modal-footer">
+				<div class="row">
+					<div>
+						<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+						<button class="btn btn-light" id="cancel">Annuler</button>
+					</div>
 				</div>
 			</div>
 		</div>

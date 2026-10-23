@@ -11,6 +11,36 @@
 
 <!-- <p class="lastupdate">Dernière mise à jour : {info_maj}</p> -->
 
+
+<div id='addComment' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Ajouter un commentaire</h5>
+				<button id='close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="form-group row">
+						<label class="col-lg-2  col-form-label">Commentaire</label>
+						<div class="col-lg-7"><textarea id='contentNewComment' class='form-control' rows=5></textarea></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-2  col-form-label"></label>
+						<div class="col-lg-7">
+							<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+							<button class="btn btn-light" id="cancel">Annuler</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <FORM name="rex" method="post" action="{path_root}/securite/eventdetail" enctype="multipart/form-data">
 	
 	<INPUT type="hidden" name="id" value="{id}">
@@ -98,6 +128,7 @@
 		</div>
 	</div>
 </div>
+
 <div class="row">
 	<div class="grid-margin stretch-card">
 		<div class="card">
@@ -110,7 +141,25 @@
 		</div>
 	</div>
 </div>
-	
+
+
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-header">Commentaires</div>
+			<div id="comments" class="card-body">
+				<!-- BEGIN: lst_comment -->
+				<div class="feed-item">
+					<div class="feed-avatar"><img src="/{comment_avatar}" alt="avatar"></div>
+					<div class="feed-body"><div class="feed-title"><div class="feed-meta">{comment_author}<span class="sep">·</span><i class="mdi mdi-clock-outline" style="font-size:.8rem;"></i>{comment_date}</div></div><p class="feed-text">{comment_text}</p></div>
+				</div>
+				<!-- END: lst_comment -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
 </form>
 
 <script>
@@ -122,6 +171,61 @@
 	$("#gravity").change(function(){
 		$(".riskgrid").html("");
 		$("#risk_"+$("#probability").val()+$("#gravity").val()).html("<i class='mdi mdi-checkbox-blank-circle'></i>");
+	});
+
+
+
+	function addComment()
+	{
+		console.log("add comment");
+
+		$("#contentNewComment").val("");
+		$('#addComment').modal('show');
+	}
+
+	$( "#cancel" ).on( "click", function() {
+		$('#addComment').modal('hide');
+	});
+
+	$( "#save" ).on( "click", function() {
+		var data={
+			id:{id},
+			data: {	
+				comment:$("#contentNewComment").val()
+			}
+		};
+
+		$.post( "{path_root}/api/v1/securite/comment", data)
+		.done(function(data) {
+			if (data.status==200)
+			{
+				console.log("ok");
+
+				txt  = '<div class="feed-item"><div class="feed-avatar"><img src="/'+data.avatar+'" alt="avatar"></div>';
+				txt += '<div class="feed-body"><div class="feed-title"><div class="feed-meta">'+data.author+'<span class="sep">·</span><i class="mdi mdi-clock-outline" style="font-size:.8rem;"></i>'+data.dte_create+'</div></div>';
+				txt += '<p class="feed-text">'+$("#contentNewComment").val()+'</p></div>';
+				txt += '</div>';
+				
+				$("#comments").append(txt);
+			}
+			else
+			{
+				console.log("NOK");
+			}			
+		})
+		.fail(function(data) {
+				console.log("Error");
+		});
+
+		$('#addComment').modal('hide');
+
+
+	});
+
+	$( "#close" ).on( "click", function() {
+		$('#addComment').modal('hide');
+
+
 	});
 
 </script>

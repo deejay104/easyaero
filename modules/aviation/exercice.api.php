@@ -3,6 +3,10 @@
 	if ((!isset($token)) || ($token==""))
 	  { header("HTTP/1.0 401 Unauthorized"); exit; }
   
+	if (!GetDroit("ModifSynthese"))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+
+// ----
 	require_once ($appfolder."/class/synthese.inc.php");
 
 	$id=checkVar("id","numeric");

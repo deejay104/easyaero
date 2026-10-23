@@ -63,10 +63,13 @@ ul.ui-autocomplete {
 					</TABLE>
 					</form>
 				</div>
-				<br />
-				<div class="form-inline"><label></label>
-					<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
-					<button class="btn btn-light" id="cancel">Annuler</button>
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div>
+						<button class="btn btn-primary" id="save">Enregistrer</button>&nbsp;
+						<button class="btn btn-light" id="cancel">Annuler</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -167,37 +170,22 @@ ul.ui-autocomplete {
 
 
 $( "#close" ).on( "click", function() {
-	$("#dialogForm").css("opacity",0);
-	$("#dialogForm").css("display","none");
-	$(".card").css("opacity",1);
-	$(".sidebar").css("opacity",1);
-	$(".content-menu").css("opacity",1);
+	$('#dialogForm').modal('hide');
+
 });
 $( "#save" ).on( "click", function() {
-	$("#dialogForm").css("opacity",0);
-	$("#dialogForm").css("display","none");
-	$(".card").css("opacity",1);
-	$(".sidebar").css("opacity",1);
-	$(".content-menu").css("opacity",1);
+	$('#dialogForm').modal('hide');
 	SubmitDialog();
 });
 $( "#cancel" ).on( "click", function() {
-	$("#dialogForm").css("opacity",0);
-	$("#dialogForm").css("display","none");
-	$(".card").css("opacity",1);
-	$(".sidebar").css("opacity",1);
-	$(".content-menu").css("opacity",1);
+	$('#dialogForm').modal('hide');
 });
 
 function OpenDialog()
 {
 	document.getElementById("dest_0").value="";
 	document.getElementById("taxe_0").value="";
-	$("#dialogForm").css("display","block");
-	$("#dialogForm").css("opacity",100);
-	$(".card").css("opacity",0.25);
-	$(".sidebar").css("opacity",0.25);
-	$(".content-menu").css("opacity",0.25);
+	$('#dialogForm').modal('show');
 }
 
 function SubmitDialog()
@@ -207,7 +195,6 @@ function SubmitDialog()
 	document.getElementById("dia_taxe").value=document.getElementById("taxe_0").value;
 	document.getElementById("dia_pilote").value=document.getElementById("pilote_0").value;
 	document.getElementById("debite").submit();
-	dialog.dialog( "close" );
 }
 function ShowLine(id)
 {

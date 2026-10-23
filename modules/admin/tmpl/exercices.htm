@@ -55,30 +55,33 @@
 					</div>
 					<div class="form-group row">
 						<div class="col-lg-3"><label>Progression</label></div>
-						<div class="col-lg-2">{form_1_refffa}</div>
-						<div class="col-lg-3">{form_1_progression}<input type="hidden" id="1_prog_id" /></div>
+						<div class="col-lg-2" style="margin-right:10px;">{form_1_refffa}</div>
+						<div class="col-lg-3">{form_1_progression} <input type="hidden" id="1_prog_id" /></div>
 					</div>
 					<div class="form-group row">
 						<div class="col-lg-3"><label></label></div>
-						<div class="col-lg-2">{form_2_refffa}</div>
-						<div class="col-lg-3">{form_2_progression}<input type="hidden" id="2_prog_id" /></div>
+						<div class="col-lg-2" style="margin-right:10px;">{form_2_refffa}</div>
+						<div class="col-lg-3">{form_2_progression} <input type="hidden" id="2_prog_id" /></div>
 					</div>
 					<div class="form-group row">
 						<div class="col-lg-3"><label></label></div>
-						<div class="col-lg-2">{form_3_refffa}</div>
-						<div class="col-lg-3">{form_3_progression}<input type="hidden" id="3_prog_id" /></div>
+						<div class="col-lg-2" style="margin-right:10px;">{form_3_refffa}</div>
+						<div class="col-lg-3">{form_3_progression} <input type="hidden" id="3_prog_id" /></div>
 					</div>
 					<div class="form-group row">
 						<div class="col-lg-3"><label></label></div>
-						<div class="col-lg-2">{form_4_refffa}</div>
-						<div class="col-lg-3">{form_4_progression}<input type="hidden" id="4_prog_id" /></div>
+						<div class="col-lg-2" style="margin-right:10px;">{form_4_refffa}</div>
+						<div class="col-lg-3">{form_4_progression} <input type="hidden" id="4_prog_id" /></div>
 					</div>
 				</div>
-				<br />
-				<div class="form-inline"><label></label>
-					<button class="btn btn-primary" id="save">Enregistrer</button>
-					<button class="btn btn-light" id="cancel">Annuler</button>&nbsp;&nbsp;
-					<button class="btn btn-outline-danger" id="delete">Supprimer</button>
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div>
+						<button class="btn btn-primary" id="save">Enregistrer</button>
+						<button class="btn btn-light" id="cancel">Annuler</button>&nbsp;&nbsp;
+						<button class="btn btn-outline-danger" id="delete">Supprimer</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -115,20 +118,14 @@
     });
 
 	$( "#close" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
-	});
-	$( "#save" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
-		saveExercice();
+		$('#dialogForm').modal('hide');
 	});
 	$( "#cancel" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$("#page-content").css("opacity",1);
+		$('#dialogForm').modal('hide');
+	});
+	$( "#save" ).on( "click", function() {
+		$('#dialogForm').modal('hide');
+		saveExercice();
 	});
 	$( "#delete" ).on( "click", function() {
 		//ConfirmeClick('/admin/exercices?fonc=delete&id='+$('#form_id').val(),'Voulez-vous supprimer cet exercice ?')		
@@ -140,9 +137,7 @@
 			success: function(response) {
 				$('#lstexo').DataTable().ajax.reload(null, false);
 				
-				$("#dialogForm").css("opacity",0);
-				$("#dialogForm").css("display","none");
-				$("#page-content").css("opacity",1);
+				$('#dialogForm').modal('hide');
 
 			},
 			error: function(response) {
@@ -185,9 +180,7 @@
 				$('#3_progression_'+response.progression[3].val)[0].checked = true;
 				$('#4_progression_'+response.progression[4].val)[0].checked = true;
 
-				$("#dialogForm").css("display","block");
-				$("#dialogForm").css("opacity",100);
-				$("#page-content").css("opacity",0.25);
+				$('#dialogForm').modal('show');
 
 			},
 			error: function(response) {

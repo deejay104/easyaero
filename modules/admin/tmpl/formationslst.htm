@@ -9,9 +9,6 @@
 <style>
 	.card-body .form-inline { height: 30px; }
 	.modal-body .form-inline { height: 38px; }
-	.form-inline label { min-width: 200px; justify-content:left;}
-	.form-inline input { min-width: 200px; max-width: 200px; }
-	.form-inline select { min-width: 198px; margin: 1px; }
 </style>
 	
 <div class="modal fade" id="dialogForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -104,11 +101,7 @@
 					$('#description').prop('disabled', false);
 				}
 
-				$("#dialogForm").css("display","block");
-				$("#dialogForm").css("opacity",100);
-				$(".card").css("opacity",0.25);
-				$(".sidebar").css("opacity",0.25);
-				$(".content-menu").css("opacity",0.25);
+				$('#dialogForm').modal('show');
 
 			},
 			error: function(response) {
@@ -120,11 +113,7 @@
 	}
 
 	$( "#close" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$(".card").css("opacity",1);
-		$(".sidebar").css("opacity",1);
-		$(".content-menu").css("opacity",1);
+		$('#dialogForm').modal('hide');
     });
 	$( "#save" ).on( "click", function() {
 
@@ -149,11 +138,7 @@
 			dataType: 'JSON',
 
 			success: function(response) {
-				$("#dialogForm").css("opacity",0);
-				$("#dialogForm").css("display","none");
-				$(".card").css("opacity",1);
-				$(".sidebar").css("opacity",1);
-				$(".content-menu").css("opacity",1);
+				$('#dialogForm').modal('hide');
 				showToast("","Formation mise à jour","ok");
 				console.log("reload");
 				$('#lstformation').DataTable().ajax.reload(null, false);
@@ -166,11 +151,7 @@
 
 	});
 	$( "#cancel" ).on( "click", function() {
-		$("#dialogForm").css("opacity",0);
-		$("#dialogForm").css("display","none");
-		$(".card").css("opacity",1);
-		$(".sidebar").css("opacity",1);
-		$(".content-menu").css("opacity",1);
+		$('#dialogForm').modal('hide');
     });
 
 	$( "#duplicate" ).on( "click", function() {
@@ -184,11 +165,7 @@
 			dataType: 'JSON',
 
 			success: function(response) {
-				$("#dialogForm").css("opacity",0);
-				$("#dialogForm").css("display","none");
-				$(".card").css("opacity",1);
-				$(".sidebar").css("opacity",1);
-				$(".content-menu").css("opacity",1);
+				$('#dialogForm').modal('hide');
 				$("#working").addClass("d-none");
 				showToast("","Formation dupliquée","ok");
 				console.log("reload");

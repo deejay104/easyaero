@@ -37,7 +37,7 @@ class user_class extends user_core
 		"tel_bureau" => Array("type" => "tel", ),
 		"adresse1" => Array("type" => "varchar","len"=>255, ),
 		"adresse2" => Array("type" => "varchar","len"=>255, ),
-		"ville" => Array("type" => "varchar","len"=>100, ),
+		"ville" => Array("type" => "uppercase","len"=>100, ),
 		"codepostal" => Array("type" => "varchar","len"=>10, ),
 		"zone" => Array("type" => "varchar","len"=>3, ),
 		"profession" => Array("type" => "varchar","len"=>50, ),

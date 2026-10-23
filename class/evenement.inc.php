@@ -233,5 +233,26 @@ function ListEvents($sql,$fields=array())
 	return $lst;
 }
 
+
+
+
+// Commentaires événements
+class event_comment_class extends objet_core
+{
+	protected $table="evenement_comment";
+	protected $mod="securite";
+	protected $rub="eventdetail";
+
+	protected $fields = Array(
+		"id_event" => Array("type" => "numeric" ),
+		"comment" => Array("type" => "text" ),
+	);
+}
+
+function ListEvenementComment($sql,$id_event)
+{
+	return ListeObjets($sql,"evenement_comment",array("id"),array("actif"=>"oui","id_event"=>$id_event));
+}
+
   
 ?>

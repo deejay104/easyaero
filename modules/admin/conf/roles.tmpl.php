@@ -119,7 +119,8 @@ $tabRoles["OwnerEvent"]="Autorisé à être responsable d'un event";
 
 
 $tabRoles["AccesSynthese"]="Accès à toutes les fiches de synthèse de vol";
-$tabRoles["CreeSynthese"]="Création d'un fiche de synthèse de vol";
+$tabRoles["CreeSynthese"]="Création d'une fiche de synthèse de vol";
+$tabRoles["ModifSynthese"]="Modification d'une fiche de synthèse de vol";
 $tabRoles["SupprimeSynthese"]="Suppression d'une fiche de synthèse de vol";
 $tabRoles["SignSynthese"]="Signature Instructeur d'une fiche de synthèse de vol";
 $tabRoles["ModifExercice"]="Modification des exercices dans la configuration des livret de progression";

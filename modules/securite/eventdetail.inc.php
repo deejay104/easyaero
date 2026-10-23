@@ -31,7 +31,7 @@
 	$msg_confirmation="";
 
 // ---- Sauvegarde
-	if ($fonc=="Enregistrer")
+	if (($fonc=="Enregistrer") && (GetDroit("ModifEvent")))
 	{
 		$event=new event_class($id,$sql);
 		if (count($form_data)>0)
@@ -68,6 +68,7 @@
 */
 
 // ---- Suppression
+	/*
 	if ($fonc=="supprimer")
 	{
 		$event=new event_class($id,$sql);
@@ -75,7 +76,7 @@
 		header('Location: /securite/events', true, 303);
     	exit;
 	}
-	
+	*/
 // ---- Affiche le menu
 	$aff_menu="";
 	require_once($appfolder."/modules/".$mod."/menu.inc.php");
@@ -85,7 +86,7 @@
 // ---- Type d'affichage
 
 	$typeaff="aff";
-	if (($id==0) || ($fonc=="editer"))
+	if ( (($id==0) || ($fonc=="editer")) && (GetDroit("ModifEvent")) )
 	{
 		$typeaff="form";
 		$tmpl_x->parse("corps.form_submit");
@@ -116,22 +117,60 @@
 		affInformation($msg_confirmation,"ok");
 	}
 
+// ---- Menus
 	addPageMenu("","securite","Liste",geturl("securite","events",""),"mdi-keyboard-backspace",false);
 
 	if (GetDroit("ModifEvent"))
 	{
 		addPageMenu("","securite","Modifier",geturl("securite","eventdetail","fonc=editer&id=".$id),"",($fonc=="editer") ? true : false);
 	}
+	/*
 	if (GetDroit("SupprimeEvent"))
 	{
 		addPageMenu("","securite","Supprimer",geturl("securite","eventdetail","fonc=supprimer&id=".$id),"",false,"","","outline-danger");
 	}	
-	addPageMenu("","securite","Imprimer",geturl("securite","eventdetail","fonc=imprimer&id=".$id),"",false);
-
+	*/
+	if (GetDroit("ModifBapteme"))
+	{
+		addPageMenu("",$mod,"Commentaire","","",false,"","addComment()");
+	}
 
 // ---- Infos de dernières maj
 	$usrmaj = new user_class($event->uid_maj,$sql);
 	$tmpl_x->assign("form_dte_maj", sql2date($event->dte_maj,"jour"));
+
+
+
+// ---- Commentaires
+	if ($id>0)
+	{
+		$lst=ListEvenementComment($sql,$event->id);
+		foreach($lst as $item)
+		{
+			$comment=new event_comment_class($item["id"],$sql);
+
+			$usr=new user_core($comment->uid_creat,$sql);
+			$author=$usr->Val("fullname");
+
+			$lstdoc=ListDocument($sql,$comment->uid_creat,"avatar");
+
+			if (count($lstdoc)>0)
+			{
+				$img=new document_core($lstdoc[0],$sql);
+				$avatar=$img->GenerePath(64,64);
+			}
+			else
+			{
+				$avatar="static/images/icn64_membre.png";
+			}
+
+			$tmpl_x->assign("comment_author", $author);
+			$tmpl_x->assign("comment_date", date("d/m/Y H:i",strtotime($comment->dte_creat)));
+			$tmpl_x->assign("comment_text", nl2br($comment->val("comment")));
+			$tmpl_x->assign("comment_avatar", $avatar);
+			$tmpl_x->parse("corps.lst_comment");
+		}
+	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

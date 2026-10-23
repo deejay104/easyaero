@@ -36,29 +36,17 @@
 	 
 
 		$( "#ajouter" ).on( "click", function() {
-			$("#dialogForm").css("display","block");
-			$("#dialogForm").css("opacity",100);
-			$("#page-content").css("opacity",0.25);
-			$("#page-lst").css("opacity",0.25);
+			$('#dialogForm').modal('show');
 		});
 		$( "#close" ).on( "click", function() {
-			$("#dialogForm").css("opacity",0);
-			$("#dialogForm").css("display","none");
-			$("#page-content").css("opacity",1);
-			$("#page-lst").css("opacity",1);
-		});
-		$( "#save" ).on( "click", function() {
-			$("#dialogForm").css("opacity",0);
-			$("#dialogForm").css("display","none");
-			$("#page-content").css("opacity",1);
-			$("#page-lst").css("opacity",1);
-			addFlight();
+			$('#dialogForm').modal('hide');
 		});
 		$( "#cancel" ).on( "click", function() {
-			$("#dialogForm").css("opacity",0);
-			$("#dialogForm").css("display","none");
-			$("#page-content").css("opacity",1);
-			$("#page-lst").css("opacity",1);
+			$('#dialogForm').modal('hide');
+		});
+		$( "#save" ).on( "click", function() {
+			$('#dialogForm').modal('hide');
+			addFlight();
 		});
 
 	});

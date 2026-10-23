@@ -49,7 +49,7 @@
 // ---- Enregistrer
 	$msg_erreur="";
 	$msg_confirmation="";
-	if ($fonc=="Enregistrer")
+	if (($fonc=="Enregistrer") && (GetDroit("ModifSynthese")))
 	{
 		$form_data=checkVar("form_data","array");
 		$form_comp=checkVar("form_comp","array");
@@ -289,7 +289,7 @@
 
 	$tmpl_x->assign("form_id",$id);
 	$tmpl_x->assign("prev_uid",$uid);
-	$tmpl_x->assign("prev_idvol",$idvol);
+	$tmpl_x->assign("prev_idvol",$fiche->val("idvol"));
 
 // ---- Signature de la synthèse
 	$nonce=checkVar("nonce","varchar");
