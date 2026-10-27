@@ -47,10 +47,10 @@
 
             $result["data"][$ii]["id"]=$d["id"];
 /*
-            $result["data"][$i]["description"]="<div onclick='editFormation(".$d["id"].");return false;'>".$ref->aff("description")."</div>";
-            $result["data"][$i]["version"]="<div onclick='editFormation(".$d["id"].");return false;'>".$ref->aff("version")."</div>";
-            $result["data"][$i]["status"]="<div onclick='editFormation(".$d["id"].");return false;'>".$ref->aff("status")."</div>";
-            $result["data"][$i]["encours"]="<div onclick='editFormation(".$d["id"].");return false;'>".$ref->EnCours()."</div>";
+            $result["data"][$ii]["description"]=$ref->val("description");
+            $result["data"][$ii]["version"]=$ref->val("version");
+            $result["data"][$ii]["status"]=$ref->val("status");
+            $result["data"][$ii]["encours"]=$ref->EnCours();
 */
             $result["data"][$ii]["description"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("description")."</a>";
             $result["data"][$ii]["version"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("version")."</a>";

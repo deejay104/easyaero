@@ -4,6 +4,23 @@
 	require_once ($appfolder."/class/synthese.inc.php");
 	require_once ($appfolder."/class/user.inc.php");
 
+// ----
+	$crit=checkVar("crit","varchar",20,"actif");
+
+	$tabCrit=array(
+		"actif"=>"oui",
+		"disabled"=>"off",
+		"archived"=>"non",
+		"all"=>"",
+	);
+	$crit=$tabCrit[$crit] ?? "";
+
+// ---- Menus
+
+	addPageMenu("","aviation","Actif",geturl("aviation","formations","crit=actif"),"",($crit=="oui"));
+	addPageMenu("","aviation","Désactivé",geturl("aviation","formations","crit=disabled"),"",($crit=="off"));
+	addPageMenu("","aviation","Supprimé",geturl("aviation","formations","crit=archived"),"",($crit=="non"));
+	addPageMenu("","aviation","Tous",geturl("aviation","formations","crit=all"),"",($crit==""));
 
 // ---- Récupère la liste des formations
     $lst=ListeObjets($sql,"livret",array("id"),array("actif"=>"oui"),array("dte_deb"));
@@ -19,7 +36,6 @@
 		"theory" => array("aff"=>"E-Learning"),
 		"dte_theory" => array("aff"=>"Date Théorique"),
 		"ffa" => array("aff"=>"FFA"),
-//		"status" => array("aff"=>"Status","width"=>100, "mobile"=>"no"),
 	);
 
 	$tabValeur=array();
@@ -29,29 +45,30 @@
 		$pil = new user_class($livret->val("iduser"),$sql);
 		$inst = new user_class($livret->val("idinstructeur"),$sql);
 
-        if ($pil->actif!="non")
-        {
-            $tabValeur[$fid]["name"]["val"]=$pil->val("nom");
-            $tabValeur[$fid]["name"]["aff"]=$pil->aff("nom");
-            $tabValeur[$fid]["surname"]["val"]=$pil->val("prenom");
-            $tabValeur[$fid]["surname"]["aff"]=$pil->aff("prenom");
-            $tabValeur[$fid]["formation"]["val"]=$livret->val("idformation");
-            $tabValeur[$fid]["formation"]["aff"]=$livret->displayDescription("link");
-            $tabValeur[$fid]["instructeur"]["val"]=$inst->val("fullname");
-            $tabValeur[$fid]["instructeur"]["aff"]=$inst->aff("fullname");
-            $tabValeur[$fid]["status"]["val"]=$livret->val("status");
-            $tabValeur[$fid]["status"]["aff"]=$livret->aff("status");
-            $tabValeur[$fid]["dte_test"]["val"]=$livret->val("dte_test_practice");
-            $tabValeur[$fid]["dte_test"]["aff"]=$livret->aff("dte_test_practice");
-            $tabValeur[$fid]["dte_theory"]["val"]=$livret->val("dte_test_theory");
-            $tabValeur[$fid]["dte_theory"]["aff"]=$livret->aff("dte_test_theory");
-            $tabValeur[$fid]["phase"]["val"]=$livret->val("phase");
-            $tabValeur[$fid]["phase"]["aff"]=$livret->aff("phase");
-            $tabValeur[$fid]["theory"]["val"]=$livret->val("theory");
-            $tabValeur[$fid]["theory"]["aff"]=$livret->aff("theory");
-            $tabValeur[$fid]["ffa"]["val"]=$pil->val("licence");
-            $tabValeur[$fid]["ffa"]["aff"]=$pil->aff("licence");
-        }
+		if (($crit!="") && ($pil->actif!=$crit))
+		{
+			continue;
+		}
+		$tabValeur[$fid]["name"]["val"]=$pil->val("nom");
+		$tabValeur[$fid]["name"]["aff"]=$pil->aff("nom");
+		$tabValeur[$fid]["surname"]["val"]=$pil->val("prenom");
+		$tabValeur[$fid]["surname"]["aff"]=$pil->aff("prenom");
+		$tabValeur[$fid]["formation"]["val"]=$livret->val("idformation");
+		$tabValeur[$fid]["formation"]["aff"]=$livret->displayDescription("link");
+		$tabValeur[$fid]["instructeur"]["val"]=$inst->val("fullname");
+		$tabValeur[$fid]["instructeur"]["aff"]=$inst->aff("fullname");
+		$tabValeur[$fid]["status"]["val"]=$livret->val("status");
+		$tabValeur[$fid]["status"]["aff"]=$livret->aff("status");
+		$tabValeur[$fid]["dte_test"]["val"]=$livret->val("dte_test_practice");
+		$tabValeur[$fid]["dte_test"]["aff"]=$livret->aff("dte_test_practice");
+		$tabValeur[$fid]["dte_theory"]["val"]=$livret->val("dte_test_theory");
+		$tabValeur[$fid]["dte_theory"]["aff"]=$livret->aff("dte_test_theory");
+		$tabValeur[$fid]["phase"]["val"]=$livret->val("phase");
+		$tabValeur[$fid]["phase"]["aff"]=$livret->aff("phase");
+		$tabValeur[$fid]["theory"]["val"]=$livret->val("theory");
+		$tabValeur[$fid]["theory"]["aff"]=$livret->aff("theory");
+		$tabValeur[$fid]["ffa"]["val"]=$pil->val("licence");
+		$tabValeur[$fid]["ffa"]["aff"]=$pil->aff("licence");
 	}
 
 	$order="name";
