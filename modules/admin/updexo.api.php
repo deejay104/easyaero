@@ -99,7 +99,7 @@
         $s=checkVar("order","array");
         $draw=checkVar("draw","numeric");
         $ts=checkVar("start","numeric");
-        $tl=checkVar("length","numeric");
+        $tl=checkVar("length","numeric",25);
         $search=checkVar("search","array");
 
 		
@@ -122,47 +122,58 @@
 			$trie=($s[0]["dir"]=="asc") ? "asc" : "desc";
 		}
 	
-		$search=array("actif"=>"oui","idformation"=>$fid);
-		$lst=ListeExercicesConf($sql,$search,array($order." ".$trie,"id"));
-		$totligne=count($lst);
-		$tl=$totligne;
+		$crit=array("actif"=>"oui","idformation"=>$fid);
+		$lst=ListeExercicesConf($sql,$crit,array($order." ".$trie,"id"));
 
         $result["draw"]=$draw;
         $result["recordsTotal"]=count($lst);
-        $result["recordsFiltered"]=count($lst);
         $result["data"]=array();
 
 		$c=0;
+		$ii=0;
 		foreach($lst as $i=>$d)
 		{
 			$exo=new exercice_conf_class($d["id"],$sql);
 
-			$result["data"][$c]["id"]=$d["id"];
-			$result["data"][$c]["description"]=$exo->val("description");
-			$result["data"][$c]["description_click"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->val("description")."</a>";
-			$result["data"][$c]["type"]=$exo->aff("type");
-			$result["data"][$c]["refffa"]=$exo->val("refffa");
-			$result["data"][$c]["refenac"]=$exo->val("refenac");
-			$result["data"][$c]["compcat"]=$exo->val("compcat");
-			$result["data"][$c]["competence"]=$exo->val("competence");
-			$result["data"][$c]["focus"]=$exo->aff("focus");
-			$result["data"][$c]["action"]="";
-
-			$result["data"][$c]["progression"]="";
-
-			$lstp=ListeProgression($sql,$d["id"]);
-			$tabValeur[$i]["progression"]["val"]="";
-			$s="";
-			foreach($lstp as $ii=>$dd)
+			if (($exo->search($search["value"])) && ($ii>=$ts) && ($c<$tl))
 			{
-				$prog=new exercice_prog_class($dd["id"],$sql);
-	
-				$result["data"][$c]["progression"].=$s.$prog->val("refffa").": ".$prog->val("progression");
-				$s=" / ";
+				$result["data"][$c]["id"]=$d["id"];
+				$result["data"][$c]["description"]=$exo->val("description");
+				$result["data"][$c]["type"]=$exo->aff("type");
+				$result["data"][$c]["refffa"]=$exo->val("refffa");
+				$result["data"][$c]["refenac"]=$exo->val("refenac");
+				$result["data"][$c]["compcat"]=$exo->val("compcat");
+				$result["data"][$c]["competence"]=$exo->val("competence");
+				$result["data"][$c]["focus"]=$exo->aff("focus");
+				$result["data"][$c]["action"]="";
+
+				$result["data"][$c]["progression"]="";
+
+				$lstp=ListeProgression($sql,$d["id"]);
+				$tabValeur[$i]["progression"]["val"]="";
+				$s="";
+				foreach($lstp as $ii=>$dd)
+				{
+					$prog=new exercice_prog_class($dd["id"],$sql);
+		
+					$result["data"][$c]["progression"].=$s.$prog->val("refffa").": ".$prog->val("progression");
+					$s=" / ";
+				}
+
+				$result["data"][$c]["_link"]["id"]="<a onclick='loadExercice(".$d["id"].");'>".$d["id"]."</a>";
+				$result["data"][$c]["_link"]["description"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("description")."</a>";
+				$result["data"][$c]["_link"]["type"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("type")."</a>";
+				$result["data"][$c]["_link"]["refffa"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("refffa")."</a>";
+				$result["data"][$c]["_link"]["progression"]="<a onclick='loadExercice(".$d["id"].");'>".$result["data"][$c]["progression"]."</a>";
+				$result["data"][$c]["_link"]["refenac"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("refenac")."</a>";
+
+
+				$c++;
 			}
-			$c++;
+			$ii++;
 		}
 		$result["status"]=200;
+        $result["recordsFiltered"]=$c;
 
 	}
 	else if ($_SERVER['REQUEST_METHOD']=="DELETE")

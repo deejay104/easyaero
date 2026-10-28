@@ -51,74 +51,55 @@
 	foreach($lstusr as $i=>$id)
 	  {
 		$btm = new bapteme_class($id,$sql);
-		$tabValeur[$i]["num"]["val"]=$btm->val("num");
-		$tabValeur[$i]["num"]["aff"]=$btm->aff("num","html");
-		$tabValeur[$i]["nom"]["val"]=$btm->val("nom");
-		$tabValeur[$i]["nom"]["aff"]=$btm->aff("nom","html");
-		$tabValeur[$i]["nb"]["val"]=$btm->val("nb");
-		$tabValeur[$i]["nb"]["aff"]=$btm->aff("nb","html");
-		$tabValeur[$i]["dte_creat"]["val"]=$btm->dte_creat;
-		$tabValeur[$i]["dte_creat"]["aff"]=$btm->aff("dte_creat","html");
-		$tabValeur[$i]["status"]["val"]=$btm->val("status");
-		$tabValeur[$i]["status"]["aff"]=$btm->aff("status","html");
 
-		$tabValeur[$i]["line1"]["val"]="<line>";
+		$ret["data"][$i]=array();
+		$ret["data"][$i]["id"]=$i;
+		$ret["data"][$i]["num"]=$btm->val("num","html");
+		$ret["data"][$i]["nom"]=$btm->val("nom","html");
+		$ret["data"][$i]["nb"]=$btm->val("nb","html");
+		$ret["data"][$i]["dte_creat"]=$btm->val("dte_creat","html");
+		$ret["data"][$i]["status"]=$btm->val("status");
+		$ret["data"][$i]["paye"]=($btm->val("dte_paye")!="0000-00-00") ? $btm->val("dte_paye") : $btm->val("paye");
+		$ret["data"][$i]["date"]=strtotime($btm->data["dte"]);
+		$ret["data"][$i]["type"]=$btm->val("type");
+		$ret["data"][$i]["bonkdo"]=$btm->val("bonkdo");
 
-			if ($btm->val("dte_paye")!="0000-00-00")
+
+		$ret["data"][$i]["_link"]["num"]=$btm->aff("num","html");
+		$ret["data"][$i]["_link"]["nom"]=$btm->aff("nom","html");
+		$ret["data"][$i]["_link"]["nb"]=$btm->aff("nb","html");
+		$ret["data"][$i]["_link"]["dte_creat"]=$btm->aff("dte_creat","html");
+		$ret["data"][$i]["_link"]["status"]=$btm->aff("status");
+		$ret["data"][$i]["_link"]["paye"]=($btm->val("dte_paye")!="0000-00-00") ? $btm->aff("dte_paye") : $btm->aff("paye");
+		$ret["data"][$i]["_link"]["date"]=($btm->val("dte")!='0000-00-00 00:00:00') ? $btm->aff("dte","html") : "-";
+		$ret["data"][$i]["_link"]["type"]=$btm->aff("type");
+		$ret["data"][$i]["_link"]["bonkdo"]=$btm->aff("bonkdo");
+
+
+		if ($btm->val("id_pilote")>0)
 		{
-			$tabValeur[$i]["paye"]["val"]=$btm->val("dte_paye");
-			$tabValeur[$i]["paye"]["aff"]=$btm->aff("dte_paye","html");
+			$usr = new user_class($btm->val("id_pilote"),$sql,true);
+			$ret["data"][$i]["pilote"]=$usr->val("fullname");
+			$ret["data"][$i]["_link"]["pilote"]=$usr->Aff("fullname");
 		}
 		else
 		{
-			$tabValeur[$i]["paye"]["val"]=$btm->val("paye");
-			$tabValeur[$i]["paye"]["aff"]=$btm->aff("paye","html");
+		  	$ret["data"][$i]["pilote"]="-";
 		}
-
-		$tabValeur[$i]["date"]["val"]=strtotime($btm->data["dte"]);
-		$tabValeur[$i]["date"]["aff"]=($btm->data["dte"]!='0000-00-00 00:00:00') ? $btm->aff("dte","html") : "-";
-
-		$usr = new user_class($btm->data["id_pilote"],$sql,true);
-
-		$tabValeur[$i]["pilote"]["val"]=$btm->val("id_pilote");
-		$tabValeur[$i]["pilote"]["aff"]=($btm->data["id_pilote"]>0) ? $usr->Aff("fullname") : "-";
-
-		if ($btm->data["id_avion"]>0)
+		if ($btm->val("id_avion")>0)
 		{
-			$ress = new ress_class($btm->data["id_avion"],$sql);
-			$tabValeur[$i]["resa"]["val"]=$ress->val("immatriculation");
-			$tabValeur[$i]["resa"]["aff"]=$ress->aff("immatriculation");
+			$ress = new ress_class($btm->val("id_avion"),$sql);
+			$ret["data"][$i]["resa"]=$ress->val("immatriculation");
+			$ret["data"][$i]["_link"]["resa"]=$ress->aff("immatriculation");
 		}
 		else
 		{
-		  	$tabValeur[$i]["resa"]["val"]="-";
-			$tabValeur[$i]["resa"]["aff"]="-";
+		  	$ret["data"][$i]["resa"]="-";
 		}
-		$tabValeur[$i]["type"]["val"]=$btm->val("type");
-		$tabValeur[$i]["type"]["aff"]=$btm->aff("type","html");
-		$tabValeur[$i]["bonkdo"]["val"]=$btm->val("bonkdo");
-		$tabValeur[$i]["bonkdo"]["aff"]=$btm->aff("bonkdo","html");
+
 
 	  }
 
-	foreach($tabValeur as $i=>$d)
-	{
-		$ret["data"][$i]=array();
-		$ret["data"][$i]["id"]=$i;
-		$ret["data"][$i]["num"]=$d["num"]["aff"];
-		$ret["data"][$i]["nom"]=$d["nom"]["aff"];
-		$ret["data"][$i]["nb"]=$d["nb"]["aff"];
-		$ret["data"][$i]["dte_creat"]=$d["dte_creat"]["aff"];
-		$ret["data"][$i]["status"]=$d["status"]["aff"];
-		$ret["data"][$i]["line1"]="<line>";
-		$ret["data"][$i]["paye"]=$d["paye"]["aff"];
-		$ret["data"][$i]["date"]=$d["date"]["aff"];
-		$ret["data"][$i]["pilote"]=$d["pilote"]["aff"];
-		$ret["data"][$i]["resa"]=$d["resa"]["aff"];
-		$ret["data"][$i]["type"]=$d["type"]["aff"];
-		$ret["data"][$i]["bonkdo"]=$d["bonkdo"]["aff"];
-
-	}
 
 	echo json_encode($ret);
 	

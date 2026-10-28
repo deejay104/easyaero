@@ -79,15 +79,21 @@
 
 		$tabTitre["heure"]["aff"]="Temps de vol";
 		$tabTitre["heure"]["width"]=110;
+
 		$tabTitre["carbavant"]["aff"]="Carburant Avant";
 		$tabTitre["carbavant"]["width"]=100;
+		$tabTitre["carbavant"]["order"]="no";
 		$tabTitre["carbapres"]["aff"]="Carburant Après";
 		$tabTitre["carbapres"]["width"]=100;
+		$tabTitre["carbapres"]["order"]="no";
 		$tabTitre["potentiel"]["aff"]="Potentiel";
 		$tabTitre["potentiel"]["width"]=100;
 		$tabTitre["potentiel"]["calign"]="right";
+		$tabTitre["potentiel"]["order"]="no";
 		$tabTitre["total"]["aff"]="Total heures de vol";
 		$tabTitre["total"]["width"]=100;
+		$tabTitre["total"]["order"]="no";
+		
 	}
 		
 
@@ -117,7 +123,7 @@
 	}
 
 // ---- Affiche le tableau
-	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi("aviation","vols","carnet","id=".$id."&theme=".$theme),$order,$trie,false,($theme=="phone") ? 16 : 25));
+	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi("aviation","vols","carnet","id=".$id."&theme=".$theme),$order,$trie,true,($theme=="phone") ? 16 : 25));
 
 
 // ---- Affecte les variables d'affichage

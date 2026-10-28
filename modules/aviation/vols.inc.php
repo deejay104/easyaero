@@ -77,7 +77,7 @@
 
 
 // ---- Affiche le tableau
-	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","mesvols","id=".$id."&theme=".$theme),$order,$trie,false,($theme=="phone") ? 16 : 25));
+	$tmpl_x->assign("tab_liste",AfficheTableauRemote($tabTitre,geturlapi($mod,"vols","mesvols","id=".$id."&theme=".$theme),$order,$trie,true,($theme=="phone") ? 16 : 25));
 
 
 // ---- Affecte les variables d'affichage

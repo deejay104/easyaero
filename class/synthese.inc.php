@@ -53,14 +53,14 @@ class formation_class extends objet_core
 	}
 }
 
-function ListFormation($sql,$status="")
+function ListFormation($sql,$status="",$order=array())
 {
 	$crit=array("actif"=>"oui");
 	if ($status!="")
 	{
 		$crit["status"]=$status;
 	}
-	return ListeObjets($sql,"formation",array("id"),$crit);
+	return ListeObjets($sql,"formation",array("id"),$crit,$order);
 }
 
 

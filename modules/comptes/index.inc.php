@@ -99,6 +99,7 @@
 	$tabTitre["solde"]["aff"]=$tabLang["lang_balance"];
 	$tabTitre["solde"]["width"]=110;
 	$tabTitre["solde"]["calign"]="right";
+	$tabTitre["solde"]["order"]="no";
 
 	if ($theme!="phone")
 	{

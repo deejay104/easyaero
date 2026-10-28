@@ -81,7 +81,7 @@
 	$trie=checkVar("trie","varchar",1,"d");
 	
 
-	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"formationlst","",""),$order,$trie,"",25,"lstformation"));
+	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"formationlst","",""),$order,$trie,true,25,"lstformation"));
 
 
 	$formation=new formation_class(0,$sql);

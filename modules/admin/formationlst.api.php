@@ -32,8 +32,19 @@
         $tl=checkVar("length","numeric");
         $search=checkVar("search","array");
 
+        $order="description";
+        $trie="asc";
+        if ((isset($s[0]["column"])))
+        {
+            $order=$c[$s[0]["column"]]["data"];
+        }
+        if (isset($s[0]["dir"]))
+        {
+            $trie=($s[0]["dir"]=="asc") ? "asc" : "desc";
+        }
+
         
-        $lst=ListFormation($sql);
+        $lst=ListFormation($sql,"",array($order." ".$trie));
 
         $result["draw"]=$draw;
         $result["recordsTotal"]=count($lst);
@@ -45,18 +56,21 @@
         {
             $ref=new formation_class($d["id"],$sql);
 
-            $result["data"][$ii]["id"]=$d["id"];
-/*
-            $result["data"][$ii]["description"]=$ref->val("description");
-            $result["data"][$ii]["version"]=$ref->val("version");
-            $result["data"][$ii]["status"]=$ref->val("status");
-            $result["data"][$ii]["encours"]=$ref->EnCours();
-*/
-            $result["data"][$ii]["description"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("description")."</a>";
-            $result["data"][$ii]["version"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("version")."</a>";
-            $result["data"][$ii]["status"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("status")."</a>";
-            $result["data"][$ii]["encours"]="<a onclick='editFormation(".$d["id"].");'>".$ref->EnCours()."</a>";
-            $ii++;
+            if ($ref->search($search["value"]))
+			{
+                $result["data"][$ii]["id"]=$d["id"];
+
+                $result["data"][$ii]["description"]=$ref->val("description");
+                $result["data"][$ii]["version"]=$ref->val("version");
+                $result["data"][$ii]["status"]=$ref->val("status");
+                $result["data"][$ii]["encours"]=$ref->EnCours();
+
+                $result["data"][$ii]["_link"]["description"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("description")."</a>";
+                $result["data"][$ii]["_link"]["version"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("version")."</a>";
+                $result["data"][$ii]["_link"]["status"]="<a onclick='editFormation(".$d["id"].");'>".$ref->aff("status")."</a>";
+                $result["data"][$ii]["_link"]["encours"]="<a onclick='editFormation(".$d["id"].");'>".$ref->EnCours()."</a>";
+                $ii++;
+            }
         }
 
     }

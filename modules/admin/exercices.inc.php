@@ -72,7 +72,7 @@
 			"aff"=>"#id",
 			"width"=>40
 		),
-		"description_click"=>array(
+		"description"=>array(
 			"aff"=>"Description",
 			"width"=>400
 		),
@@ -108,64 +108,7 @@
 	$order=checkVar("order","varchar",15,"refffa");
 	$trie=checkVar("trie","varchar",1,"d");
 
-	/*
-	$ts=checkVar("ts","numeric");
-	$tabsearch=checkVar("tabsearch","array");
-	
-	if ($order=="") { $order="refffa"; }
-
-	$search=array("actif"=>"oui","idformation"=>$fid);
-	$lst=ListeExercicesConf($sql,$search,array($order));
-	$totligne=count($lst);
-	$tl=$totligne;
-	$tabValeur=array();
-
-	foreach($lst as $i=>$d)
-	{
-		$exo=new exercice_conf_class($d["id"],$sql);
-
-		$tabValeur[$i]["id"]["val"]=$d["id"];
-		$tabValeur[$i]["description"]["val"]=$exo->val("description");
-		$tabValeur[$i]["description"]["aff"]="<a id='edit_".$d["id"]."' href='#'>".$exo->val("description")."</a>";
-		$tabValeur[$i]["type"]["val"]=$exo->val("type");
-		$tabValeur[$i]["type"]["aff"]=$exo->aff("type");
-		$tabValeur[$i]["refffa"]["val"]=$exo->val("refffa");
-		$tabValeur[$i]["refenac"]["val"]=$exo->val("refenac");
-		$tabValeur[$i]["compcat"]["val"]=$exo->val("compcat");
-		$tabValeur[$i]["focus"]["val"]=$exo->val("focus");
-		$tabValeur[$i]["focus"]["aff"]=$exo->aff("focus");
-
-		$tabValeur[$i]["action"]["val"]="";
-		$tabValeur[$i]["action"]["aff"]="";
-
-		if ($formation->val("status")=="draft")
-		{
-			if (GetDroit("ModifExercice"))
-			{
-				$tabValeur[$i]["action"]["val"]=$sql->data["id"];
-				$tabValeur[$i]["action"]["align"]="action";
-				$tabValeur[$i]["action"]["aff"].="<span class='feed-actions'>";
-				$tabValeur[$i]["action"]["aff"].="<a id='del_".$d["id"]."' href='#'><i class='mdi mdi-close'></i></a>";
-				$tabValeur[$i]["action"]["aff"].="</span>";
-			}
-		}
-
-		$lstp=ListeProgression($sql,$d["id"]);
-		$tabValeur[$i]["progression"]["val"]="";
-		foreach($lstp as $ii=>$dd)
-		{
-			$prog=new exercice_prog_class($dd["id"],$sql);
-
-			$tabValeur[$i]["progression"]["val"].=$prog->val("refffa").": ".$prog->val("progression")." / ";
-		}
-		$tmpl_x->assign("lst_id",$d["id"]);
-		$tmpl_x->parse("corps.lst_edit");
-	}
-
-// function AfficheTableau($tabValeur,$tabTitre=array(),$order="",$trie="",$url="",$start=0,$limit=-1,$nbline=0,$showicon="")
-//	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"",0,-1,$totligne,"action"));
-*/
-	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"updexo","","fid=".$fid),$order,$trie,"",25,"lstexo"));
+	$tmpl_x->assign("aff_tableau",AfficheTableauRemote($tabTitre,geturlapi($mod,"updexo","","fid=".$fid),$order,$trie,true,25,"lstexo"));
 
 
 	$exo=new exercice_conf_class(0,$sql);

@@ -14,7 +14,8 @@
 	require_once ($appfolder."/class/ressources.inc.php");
 
 	$c=checkVar("columns","array");
-	$s=checkVar("order","array");
+	$o=checkVar("order","array");
+	$search=checkVar("search","array");
 
 
 	$draw=checkVar("draw","numeric");
@@ -29,14 +30,21 @@
 		"temps"=>"temps",
 		"cout"=>"prix",
 		"instructeur"=>"uid_instructeur",
+		"heure_deb"=>"dte_deb",
+		"heure_fin"=>"dte_fin",
+		"tarif"=>"tarif",
+		"dest"=>"destination",
+		"heure"=>"tpsreel",
+		"nom"=>"uid_pilote",	
 	);
 
-	$order="";
-	if (isset($taborder[$c[$s[0]["column"]]["data"]]))
+	if (!isset($o[0]))
 	{
-		$order=$taborder[$c[$s[0]["column"]]["data"]];
+		$o=array(0=>array("column"=>0,"dir"=>"desc"));
 	}
-	$trie=($s[0]["dir"]=="asc") ? "asc" : "desc";
+
+	$order=$taborder[$c[$o[0]["column"]]["data"]] ?? "";
+	$trie=($o[0]["dir"]=="asc") ? "asc" : "desc";
 
 // ---- Mes Vols
 	if ($fonc=="mesvols")
@@ -49,7 +57,9 @@
 		
 		$ret["draw"]=$draw;
 		$ret["recordsTotal"]=$totligne;
-		$ret["recordsFiltered"]=$totligne;
+		$ret["recordsFiltered"]=0;
+		$ret["order"]=$order;
+		$ret["trie"]=$trie;
 		$ret["data"]=array();
 
 		$ii=0;
@@ -92,20 +102,29 @@
 			}
 
 
-			$ret["data"][$ii]=array();
-			$ret["data"][$ii]["id"]=$ii;
-			$ret["data"][$ii]["dte_deb"]="<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($dte,ENT_QUOTES,"utf-8")."</a>";
-			$ret["data"][$ii]["immat"]=$ress->aff("immatriculation");
-			$ret["data"][$ii]["tpsreel"]=$resa->AffTempsReel();
-			$ret["data"][$ii]["temps"]=$resa->AffTemps();
-			$ret["data"][$ii]["cout"]=$resa->AffPrix();
+			$tab=array();
+			$tab["id"]=$ii;
+			$tab["dte_deb"]=htmlentities($dte,ENT_QUOTES,"utf-8");
+			$tab["immat"]=$ress->val("immatriculation");
+			$tab["tpsreel"]=$resa->AffTempsReel();
+			$tab["temps"]=$resa->AffTemps();
+			$tab["cout"]=$resa->AffPrix();
+			$tab["instructeur"]=$resa->uid_instructeur;
 
-			if ($theme!="phone")
+
+			if (CheckSearch($tab,$search["value"]))
 			{
-				$ret["data"][$ii]["instructeur"]=$ins;
+				$ret["data"][$ii]=$tab;
+
+				$ret["data"][$ii]["_link"]["dte_deb"]="<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($dte,ENT_QUOTES,"utf-8")."</a>";
+				$ret["data"][$ii]["_link"]["immat"]=$ress->aff("immatriculation");
+				$ret["data"][$ii]["_link"]["instructeur"]=$ins;
+				$ii++;
 			}
-			$ii=$ii+1;
 		}
+
+		$ret["recordsFiltered"]=$ii;
+
 	}
 // ---- Carnet de vols
 	else if ($fonc=="carnet")
@@ -117,7 +136,9 @@
 
 		$ret["draw"]=$draw;
 		$ret["recordsTotal"]=$totligne;
-		$ret["recordsFiltered"]=$totligne;
+		$ret["recordsFiltered"]=0;
+		$ret["order"]=$order;
+		$ret["trie"]=$trie;
 		$ret["data"]=array();
 
 
@@ -140,36 +161,37 @@
 			else
 			  { $dte=$t1; }
 
-			if ($theme!="phone")
+			$tab=array();
+			$tab["id"]=$ii;
+			$tab["dte_deb"]=htmlentities($t1,ENT_QUOTES,"utf-8");
+			$tab["nom"]=$usrpil->val("fullname").(($resa->uid_instructeur>0) ? " / ".$usrinst->val("fullname") : "");
+			$tab["tarif"]=$resa->tarif;
+			$tab["dest"]=$resa->destination;
+			$tab["heure_deb"]=htmlentities(sql2time($resa->dte_deb,"nosec"),ENT_QUOTES,"utf-8");
+			$tab["heure_fin"]=htmlentities(sql2time($resa->dte_fin,"nosec"),ENT_QUOTES,"utf-8");
+			$tab["heure"]=$resa->AffTempsReel();
+			$tab["carbavant"]=($resa->carbavant>0) ? $resa->carbavant."L" : "-";
+			$tab["carbapres"]=($resa->carbapres>0) ? $resa->carbapres."L" : "-";
+			$tab["potentiel"]=$resa->AffPotentiel("fin");
+			$tab["total"]=$resa->AffTempsVols("fin");
+
+
+			if (CheckSearch($tab,$search["value"]))
 			{
-				$ret["data"][$ii]=array();
-				$ret["data"][$ii]["id"]=$ii;
-				$ret["data"][$ii]["dte_deb"]="<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($t1,ENT_QUOTES,"utf-8")."</a>";
-				$ret["data"][$ii]["nom"]=$usrpil->Aff("fullname").(($resa->uid_instructeur>0) ? " / ".$usrinst->Aff("fullname") : "");
-				$ret["data"][$ii]["tarif"]=$resa->tarif;
-				$ret["data"][$ii]["dest"]=$resa->destination;
-				$ret["data"][$ii]["heure_deb"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".htmlentities(sql2time($resa->dte_deb,"nosec"),ENT_QUOTES,"utf-8")."</a>";
-				$ret["data"][$ii]["heure_fin"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".htmlentities(sql2time($resa->dte_fin,"nosec"),ENT_QUOTES,"utf-8")."</a>";
-				$ret["data"][$ii]["heure"]=$resa->AffTempsReel();
-				$ret["data"][$ii]["carbavant"]=($resa->carbavant>0) ? $resa->carbavant."L" : " ";
-				$ret["data"][$ii]["carbapres"]=($resa->carbapres>0) ? $resa->carbapres."L" : " ";
-				$ret["data"][$ii]["potentiel"]=$resa->AffPotentiel("fin");
-				$ret["data"][$ii]["total"]=$resa->AffTempsVols("fin");
+				$ret["data"][$ii]=$tab;
+
+				$ret["data"][$ii]["_link"]["dte_deb"]="<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($t1,ENT_QUOTES,"utf-8")."</a>";
+
+				$ret["data"][$ii]["_link"]["nom"]=$usrpil->Aff("fullname").(($resa->uid_instructeur>0) ? " / ".$usrinst->Aff("fullname") : "");
+				$ret["data"][$ii]["_link"]["tarif"]="<a href='".geturl("reservations","reservation","id=".$rid)."'>".$resa->tarif."</a>";
+				$ret["data"][$ii]["_link"]["dest"]="<a href='".geturl("reservations","reservation","id=".$rid)."'>".$resa->destination."</a>";
+
+				$ii++;
 			}
-			else
-			{
-				$ret["data"][$ii]=array();
-				$ret["data"][$ii]["id"]=$ii;
-				$ret["data"][$ii]["dte_deb"]="<a href='".geturl("reservations","reservation","id=".$rid)."'>".htmlentities($t1,ENT_QUOTES,"utf-8")."</a>";
-				$ret["data"][$ii]["nom"]=$usrpil->Aff("fullname");
-				$ret["data"][$ii]["heure"]=$resa->AffTempsReel();
-				$ret["data"][$ii]["carbavant"]=($resa->carbavant>0) ? $resa->carbavant."L" : (($resa->carbapres>0) ? $resa->carbapres."L" : " ");
-				$ret["data"][$ii]["potentiel"]=$resa->AffPotentiel("fin");
-			}
-			$ii=$ii+1;
 
 		}
-	
+		$ret["recordsFiltered"]=$ii;
+
 	}
 	
 	
