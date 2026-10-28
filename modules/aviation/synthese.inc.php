@@ -183,19 +183,6 @@
 		FatalError("Accès non autorisé (AccesSynthese)");
 	}
 
-	if ($fiche->val("idlivret")==0)
-	{
-		if ($lid==0)
-		{
-			$lst=ListeLivret($sql,$fiche->val("uid_pilote"));
-			foreach($lst as $i=>$tmp)
-			{
-				$lid=$tmp["id"];
-			}
-		}
-		$fiche->valid("idlivret",$lid);
-	}	
-
 // ---- Supprimer
 	if ( ($fonc=="supprimer") && ($id>0) )
 	{
@@ -278,14 +265,30 @@
 		}
 	}
 
-	$pil=new user_class($fiche->val("uid_pilote"),$sql);
-	$ins=new user_class($fiche->val("uid_instructeur"),$sql);
-	$livret=new livret_class($fiche->val("idlivret"),$sql);
-
 	if ($uid==0)
 	{
 		$uid=$fiche->val("uid_pilote");
 	}
+
+	if ($fiche->val("idlivret")==0)
+	{
+		if ($lid==0)
+		{
+			$lst=ListeLivret($sql,$fiche->val("uid_pilote"));
+			foreach($lst as $i=>$tmp)
+			{
+				$lid=$tmp["id"];
+				break;				
+			}
+		}
+		$fiche->valid("idlivret",$lid);
+	}	
+
+
+	$pil=new user_class($fiche->val("uid_pilote"),$sql);
+	$ins=new user_class($fiche->val("uid_instructeur"),$sql);
+	$livret=new livret_class($fiche->val("idlivret"),$sql);
+
 
 	$tmpl_x->assign("form_id",$id);
 	$tmpl_x->assign("prev_uid",$uid);
