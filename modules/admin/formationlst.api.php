@@ -72,6 +72,7 @@
                 $ii++;
             }
         }
+        $result["recordsFiltered"]=$ii;
 
     }
     else if ($_SERVER['REQUEST_METHOD']=="POST")

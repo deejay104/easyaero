@@ -130,50 +130,54 @@
         $result["data"]=array();
 
 		$c=0;
-		$ii=0;
+		$tot=0;
+		$filt=0;
 		foreach($lst as $i=>$d)
 		{
 			$exo=new exercice_conf_class($d["id"],$sql);
 
-			if (($exo->search($search["value"])) && ($ii>=$ts) && ($c<$tl))
+			if ($exo->search($search["value"]))
 			{
-				$result["data"][$c]["id"]=$d["id"];
-				$result["data"][$c]["description"]=$exo->val("description");
-				$result["data"][$c]["type"]=$exo->aff("type");
-				$result["data"][$c]["refffa"]=$exo->val("refffa");
-				$result["data"][$c]["refenac"]=$exo->val("refenac");
-				$result["data"][$c]["compcat"]=$exo->val("compcat");
-				$result["data"][$c]["competence"]=$exo->val("competence");
-				$result["data"][$c]["focus"]=$exo->aff("focus");
-				$result["data"][$c]["action"]="";
+				$filt++;
 
-				$result["data"][$c]["progression"]="";
-
-				$lstp=ListeProgression($sql,$d["id"]);
-				$tabValeur[$i]["progression"]["val"]="";
-				$s="";
-				foreach($lstp as $ii=>$dd)
+				if (($tot>=$ts) && ($c<$tl))
 				{
-					$prog=new exercice_prog_class($dd["id"],$sql);
-		
-					$result["data"][$c]["progression"].=$s.$prog->val("refffa").": ".$prog->val("progression");
-					$s=" / ";
+					$result["data"][$c]["id"]=$d["id"];
+					$result["data"][$c]["description"]=$exo->val("description");
+					$result["data"][$c]["type"]=$exo->aff("type");
+					$result["data"][$c]["refffa"]=$exo->val("refffa");
+					$result["data"][$c]["refenac"]=$exo->val("refenac");
+					$result["data"][$c]["compcat"]=$exo->val("compcat");
+					$result["data"][$c]["competence"]=$exo->val("competence");
+					$result["data"][$c]["focus"]=$exo->aff("focus");
+					$result["data"][$c]["action"]="";
+
+					$result["data"][$c]["progression"]="";
+
+					$lstp=ListeProgression($sql,$d["id"]);
+					$tabValeur[$i]["progression"]["val"]="";
+					$s="";
+					foreach($lstp as $ii=>$dd)
+					{
+						$prog=new exercice_prog_class($dd["id"],$sql);
+			
+						$result["data"][$c]["progression"].=$s.$prog->val("refffa").": ".$prog->val("progression");
+						$s=" / ";
+					}
+
+					$result["data"][$c]["_link"]["id"]="<a onclick='loadExercice(".$d["id"].");'>".$d["id"]."</a>";
+					$result["data"][$c]["_link"]["description"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("description")."</a>";
+					$result["data"][$c]["_link"]["type"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("type")."</a>";
+					$result["data"][$c]["_link"]["refffa"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("refffa")."</a>";
+					$result["data"][$c]["_link"]["progression"]="<a onclick='loadExercice(".$d["id"].");'>".$result["data"][$c]["progression"]."</a>";
+					$result["data"][$c]["_link"]["refenac"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("refenac")."</a>";
+					$c++;
 				}
-
-				$result["data"][$c]["_link"]["id"]="<a onclick='loadExercice(".$d["id"].");'>".$d["id"]."</a>";
-				$result["data"][$c]["_link"]["description"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("description")."</a>";
-				$result["data"][$c]["_link"]["type"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("type")."</a>";
-				$result["data"][$c]["_link"]["refffa"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("refffa")."</a>";
-				$result["data"][$c]["_link"]["progression"]="<a onclick='loadExercice(".$d["id"].");'>".$result["data"][$c]["progression"]."</a>";
-				$result["data"][$c]["_link"]["refenac"]="<a onclick='loadExercice(".$d["id"].");'>".$exo->aff("refenac")."</a>";
-
-
-				$c++;
 			}
-			$ii++;
+			$tot++;
 		}
 		$result["status"]=200;
-        $result["recordsFiltered"]=$c;
+        $result["recordsFiltered"]=$filt;
 
 	}
 	else if ($_SERVER['REQUEST_METHOD']=="DELETE")
