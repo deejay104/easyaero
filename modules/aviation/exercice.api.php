@@ -62,6 +62,9 @@
 			$query.="ORDER BY prog.progression DESC, prog.id";
 		}
 		$sql->Query($query);
+		$ret["query"]=$query;
+
+		$ret["data"]=array();
 
 		for($i=0; $i<$sql->rows; $i++)
 		{ 
@@ -74,7 +77,8 @@
 			$r["type"]=htmlentities($sql->data["type"],ENT_HTML5,"UTF-8");
 			$r["module"]=htmlentities($sql->data["module"],ENT_HTML5,"UTF-8");
 			$r["progression"]=$sql->data["progression"];
-			array_push($ret,$r);
+
+			$ret["data"][]=$r;
 		}
 	}
 	// Send JSON to the client.

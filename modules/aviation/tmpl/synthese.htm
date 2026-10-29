@@ -21,6 +21,7 @@
 <FORM name="form_detail" method="post" action="{path_root}/aviation/synthese" enctype="multipart/form-data">
 	<INPUT type="hidden" name="id" value="{form_id}">
 	<INPUT type="hidden" id="idvol" name="idvol" value="{prev_idvol}">
+	<INPUT type="hidden" id="idformation" name="idvol" value="{form_idformation}">
 	<INPUT type="hidden" name="uid" value="{prev_uid}">
 	<INPUT type="hidden" name="form_data[idvol]" value="{form_idvol}">
 	<INPUT type="hidden" name="form_data[uid_pilote]" value="{form_id_pilote}">
@@ -334,7 +335,7 @@
 	});
 	
 	$("#addexercicepeda").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/peda?idformation={form_idformation}",
+		source: "{path_root}/api/v1/aviation/exercice/peda?idformation="+$("#idformation").val(),
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -363,7 +364,7 @@
 	});
 
 	$("#addexercice").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/exercice?idformation={form_idformation}",
+		source: "{path_root}/api/v1/aviation/exercice/exercice?idformation="+$("#idformation").val(),
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -393,7 +394,7 @@
 	});
 
 	$("#addpanne").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/panne?idformation={form_idformation}",
+		source: "{path_root}/api/v1/aviation/exercice/panne?idformation="+$("#idformation").val(),
 		select: function(event, ui) {
 			var txt="";
 			value=ui.item;
@@ -423,19 +424,20 @@
 
 	$("#refffa").change(function() {
 		var ref=$("#refffa").val();
+		$("#themes").text("");
 
 		$.ajax({
 			type: "GET",
-			url: "{path_root}/api/v1/aviation/exercice?ref="+ref,
+			url: "{path_root}/api/v1/aviation/exercice?ref="+ref+"&idformation="+$("#idformation").val(),
 			dataType: 'JSON',
 
 			success: function(response) {
 				var txtpeda="";
 				var txtexo="";
 				var txtpanne="";
-				if (response.length>0)
+				if (response.data.length>0)
 				{
-					$.each(response, function (index, value) {
+					$.each(response.data, function (index, value) {
 
 						txt="<div id='exo_"+value.id+"' class='form-group row form-hover'><label class='col-lg-5 col-form-label'>"+value.description+"</label> ";
 						txt=txt+"<div class='col-lg-5 form-inline'>";
@@ -469,12 +471,11 @@
 
 		$.ajax({
 			type: "GET",
-			url: "{path_root}/api/v1/aviation/exercice/theme?ref="+ref,
+			url: "{path_root}/api/v1/aviation/exercice/theme?ref="+ref+"&idformation="+$("#idformation").val(),
 			dataType: 'JSON',
 
 			success: function(response) {
 				var txt="";
-				$("#themes").text("");
 				$("#themes").text(response.theme);
 			}
 		});
