@@ -335,92 +335,97 @@
 	});
 	
 	$("#addexercicepeda").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/peda?idformation="+$("#idformation").val(),
+		source: function (request, response) {
+			$.ajax({
+				url: "{path_root}/api/v1/aviation/exercice/peda?idformation="+$("#idformation").val(),
+				dataType: "json",
+				data: { term: request.term },
+				success: function (data) {
+					response($.map(data.data, function (item) {
+						return item;
+					}));
+				},
+				error: function () {
+					response([]); // toujours appeler response, sinon le widget reste bloqué
+				}
+			});
+		},
 		select: function(event, ui) {
-			var txt="";
-			value=ui.item;
-			console.log(value);
-			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
-			txt=txt+"</div>";
-			
-			if (value.type=="panne")
-			{
-				$("#affpannes").append(txt);
-			}
-			else if (value.type=="exercice")
-			{
-				$("#affexercices").append(txt);
-			}
-			else
-			{
-				$("#affpedagogique").append(txt);
-			}
+			addExercice(ui.item);
 			ui.item.value="";
 		},
 		delay: 200
 	});
 
 	$("#addexercice").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/exercice?idformation="+$("#idformation").val(),
+		source: function (request, response) {
+			$.ajax({
+				url: "{path_root}/api/v1/aviation/exercice/exercice?idformation="+$("#idformation").val(),
+				dataType: "json",
+				data: { term: request.term },
+				success: function (data) {
+					response($.map(data.data, function (item) {
+						return item;
+					}));
+				},
+				error: function () {
+					response([]); // toujours appeler response, sinon le widget reste bloqué
+				}
+			});
+		},
 		select: function(event, ui) {
-			var txt="";
-			value=ui.item;
-			console.log(value);
-
-			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
-			txt=txt+"</div>";
-			
-			if (value.type=="panne")
-			{
-				$("#affpannes").append(txt);
-			}
-			else if (value.type=="exercice")
-			{
-				$("#affexercices").append(txt);
-			}
-			else
-			{
-				$("#affpedagogique").append(txt);
-			}
+			addExercice(ui.item);
 			ui.item.value="";
 		},
 		delay: 200
 	});
 
 	$("#addpanne").autocomplete({
-		source: "{path_root}/api/v1/aviation/exercice/panne?idformation="+$("#idformation").val(),
+		source: function (request, response) {
+			$.ajax({
+				url: "{path_root}/api/v1/aviation/exercice/panne?idformation="+$("#idformation").val(),
+				dataType: "json",
+				data: { term: request.term },
+				success: function (data) {
+					response($.map(data.data, function (item) {
+						return item;
+					}));
+				},
+				error: function () {
+					response([]); // toujours appeler response, sinon le widget reste bloqué
+				}
+			});
+		},
 		select: function(event, ui) {
-			var txt="";
-			value=ui.item;
-			console.log(value);
-			txt=txt+"<div class='form-inline form-large'><label>"+value.description+"</label> ";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
-			txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
-			txt=txt+"</div>";
-			
-			if (value.type=="panne")
-			{
-				$("#affpannes").append(txt);
-			}
-			else if (value.type=="exercice")
-			{
-				$("#affexercices").append(txt);
-			}
-			else
-			{
-				$("#affpedagogique").append(txt);
-			}
+			addExercice(ui.item);
 			ui.item.value="";
 		},
 		delay: 200
 	});
+
+	function addExercice(value)
+	{
+		console.log(value);
+		txt="<div class='form-inline form-large'><label>"+value.description+"</label> ";
+		txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='V' "+((value.progression=='V') ? "checked" : "")+">Non Vu<i class='input-helper'></i></label></div>";
+		txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='E' "+((value.progression=='E') ? "checked" : "")+">Etude<i class='input-helper'></i></label></div>";
+		txt=txt+"<div class='form-check'><label class='form-check-label'><input type='radio' class='form-check-input' name='form_comp["+value.id+"][progression]' value='A' "+((value.progression=='A') ? "checked" : "")+">Acquis<i class='input-helper'></i></label></div>";
+		txt=txt+"</div>";
+		
+		if (value.type=="panne")
+		{
+			$("#affpannes").append(txt);
+		}
+		else if (value.type=="exercice")
+		{
+			$("#affexercices").append(txt);
+		}
+		else
+		{
+			$("#affpedagogique").append(txt);
+		}
+
+	}
 
 	$("#refffa").change(function() {
 		var ref=$("#refffa").val();
@@ -435,6 +440,8 @@
 				var txtpeda="";
 				var txtexo="";
 				var txtpanne="";
+				$("#themes").text(response.theme);
+
 				if (response.data.length>0)
 				{
 					$.each(response.data, function (index, value) {
@@ -468,7 +475,7 @@
 				$("#affpannes").html(txtpanne);
 			}
 		});
-
+/*
 		$.ajax({
 			type: "GET",
 			url: "{path_root}/api/v1/aviation/exercice/theme?ref="+ref+"&idformation="+$("#idformation").val(),
@@ -479,7 +486,8 @@
 				$("#themes").text(response.theme);
 			}
 		});
-   
+  */ 
+
 	});
 
 	var tab_terrain=[];

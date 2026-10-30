@@ -16,14 +16,6 @@
 	$fonc=checkVar("fonc","varchar",10);
 	$ret=array();
 
-	if ($fonc=="theme")
-	{
-		$query="SELECT * FROM ".$MyOpt["tbl"]."_reference AS ref ";
-		$query.="WHERE refffa='".$ref."' AND actif='oui' ";
-		$res=$sql->QueryRow($query);
-		$ret["refffa"]=$res["refffa"];
-		$ret["theme"]=$res["theme"];
-	}
 	if ($fonc=="delete")
 	{
 		$exo=new exercice_class($id,$sql);
@@ -33,6 +25,13 @@
 	}
 	else
 	{
+		if ($idformation==0)
+	  	  { header("HTTP/1.0 422 missing parameters"); exit; }
+		if (($ref=="") && ($term==""))
+	  	  { header("HTTP/1.0 422 missing parameters"); exit; }
+
+
+
 		$type="";
 		if ($fonc=="peda")
 		{
@@ -47,22 +46,20 @@
 			$type="panne";
 		}
 		
+		$query ="SELECT prog.id,prog.refffa, exo.description,exo.module,progression, exo.type FROM ".$MyOpt["tbl"]."_exercice_conf AS exo ";
+		$query.="LEFT JOIN ".$MyOpt["tbl"]."_exercice_prog AS prog ON exo.id=prog.idexercice ";
+
 		if ($term!="")
 		{
-
-			$query ="SELECT prog.id,prog.refffa, exo.description,exo.module,progression, exo.type FROM ".$MyOpt["tbl"]."_exercice_conf AS exo LEFT JOIN ".$MyOpt["tbl"]."_exercice_prog AS prog ON exo.id=prog.idexercice ";
 			$query.="WHERE ".(($idformation>0) ? "exo.idformation='".$idformation."' AND" : "")." (exo.description LIKE '%".$term."%' OR prog.refffa LIKE '%".$term."%') AND exo.actif='oui' ".(($type!="") ? "AND type='".$type."'" : "");
-			// $query.="GROUP BY exo.id";
 		}
 		else
 		{
-			$query="SELECT prog.id,prog.refffa,exo.description,exo.module,prog.progression, exo.type FROM ".$MyOpt["tbl"]."_exercice_conf AS exo ";
-			$query.="LEFT JOIN ".$MyOpt["tbl"]."_exercice_prog AS prog ON exo.id=prog.idexercice ";
 			$query.="WHERE ".(($idformation>0) ? "exo.idformation='".$idformation."' AND" : "")." prog.refffa='".$ref."' AND exo.actif='oui' ".(($type!="") ? "AND type='".$type."'" : "");
-			$query.="ORDER BY prog.progression DESC, prog.id";
 		}
+		$query.="ORDER BY prog.progression DESC, prog.id";
+
 		$sql->Query($query);
-		$ret["query"]=$query;
 
 		$ret["data"]=array();
 
@@ -80,7 +77,20 @@
 
 			$ret["data"][]=$r;
 		}
+
+		if ($ref!="")
+		{
+			$query="SELECT * FROM ".$MyOpt["tbl"]."_reference AS ref ";
+			$query.="WHERE refffa='".$ref."' AND idformation='".$idformation."' AND actif='oui' ";
+
+			$res=$sql->QueryRow($query);
+			$ret["refffa"]=$res["refffa"];
+			$ret["theme"]=$res["theme"];
+
+		}
+
 	}
+
 	// Send JSON to the client.
 	echo json_encode($ret);
 
