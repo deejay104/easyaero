@@ -47,18 +47,6 @@
 	}
 
 // ---- Enregistrer
-	// Vérifie le token
-	$form_token=checkVar("token","varchar");
-	$check_token=0;
-	if ($form_token!="")
-	{
-		$check_token=verifyToken($form_token,"token_post",true);
-		if ($check_token<1)
-		{
-			$fonc="";
-		}
-	}
-
 	$msg_erreur="";
 	$msg_confirmation="";
 	if (($fonc=="Enregistrer") && (GetDroit("ModifSynthese")))
@@ -68,7 +56,20 @@
 		$form_compec=checkVar("form_compec","array");
 		$form_compold=checkVar("form_compold","array");
 		$form_terrain=checkVar("form_terrain","array");
+		$form_token=checkVar("token","varchar");
 
+		// Vérifie le token
+		$check_token=0;
+		if ($form_token!="")
+		{
+			$check_token=verifyToken($form_token,"token_post",true);
+			if ($check_token<1)
+			{
+				$fonc="";
+			}
+		}
+
+		// Charge la fiche et met à jour les données
 		$fiche=new synthese_class($id,$sql);
 		if (count($form_data)>0)
 		{
