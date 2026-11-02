@@ -197,21 +197,18 @@
 	}
 
 // ---- Supprimer
-	if ( ($fonc=="supprimer") && ($id>0) )
+	if ( ($fonc=="supprimer") && ($id>0)  && (GetDroit("ModifSynthese")) )
 	{
-		if ($ok==true)
+		$fiche->Delete();
+		// Supprime les exercices
+		$lst=ListeExercices($sql,$id);
+		foreach($lst as $i=>$v)
 		{
-			$fiche->Delete();
-			// Supprime les exercices
-			$lst=ListeExercices($sql,$id);
-			foreach($lst as $i=>$v)
-			{
-				$c_line=new exercice_class($v["id"],$sql);
-				$c_line->Delete();
-			}
-			header('Location: /aviation/syntheses?uid='.$fiche->val("uid_pilote"), true, 303);
-			exit;
+			$c_line=new exercice_class($v["id"],$sql);
+			$c_line->Delete();
 		}
+		header('Location: /aviation/syntheses?uid='.$fiche->val("uid_pilote"), true, 303);
+		exit;
 	}
 
 
