@@ -47,6 +47,18 @@
 	}
 
 // ---- Enregistrer
+	// Vérifie le token
+	$form_token=checkVar("token","varchar");
+	$check_token=0;
+	if ($form_token!="")
+	{
+		$check_token=verifyToken($form_token,"token_post",true);
+		if ($check_token<1)
+		{
+			$fonc="";
+		}
+	}
+
 	$msg_erreur="";
 	$msg_confirmation="";
 	if (($fonc=="Enregistrer") && (GetDroit("ModifSynthese")))
@@ -517,7 +529,8 @@
 	$ress=new ress_class($fiche->val("uid_avion"),$sql);
 	$tmpl_x->assign("form_immat",$ress->Aff("immatriculation"));
 	
-		
+	$tmpl_x->assign("post_token", generateToken($gl_uid,5,$base="token_post"));
+	
 	if ($typeaff=="form")
 	{
 		$tmpl_x->parse("corps.aff_addcomp");
