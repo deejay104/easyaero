@@ -444,7 +444,7 @@
 
 
 // ---- Charge les exercices de la fiche de synthèse
-	$lst=ListeExercices($sql,$id,$fiche->val("uid_pilote"));
+	$lst=ListeExercices($sql,$id);
 
 	foreach($lst as $i=>$v)
 	{

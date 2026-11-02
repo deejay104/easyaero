@@ -625,7 +625,7 @@ class exercice_class extends objet_core
 	);
 }
 
-function ListeExercices($sql,$id,$uid)
+function ListeExercices($sql,$id)
 {
 //function ListeObjets($sql,$table,$champs=array(),$crit=array(),$order=array())
 
