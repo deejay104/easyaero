@@ -88,10 +88,6 @@ $tabRoles["ModifRessourceParametres"]="Modification des paramètres d'une ressou
 $tabRoles["DesactiveRessource"]="Désactive une ressource (avion)";
 $tabRoles["SupprimeRessource"]="Supprimer une ressource (avion)";
 
-$tabRoles["ModifParents"]="Modifier les parents";
-$tabRoles["ModifMessage"]="Modification d'un message dans le module document";
-$tabRoles["ModifClasseur"]="Modification d'un classeur dans le module document";
-
 $tabRoles["ModifFamilleCree"]="Créer une famille";
 
 $tabRoles["ModifForum"]="Modifier la liste de forum (et suppression)";
