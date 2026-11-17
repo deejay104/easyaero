@@ -79,7 +79,7 @@
 				{
 					$t.=$resa["ress"]->val("immatriculation")."\nBloqué";
 					$desc=$resa["ress"]->val("immatriculation")." bloqué de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."\n".(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : "");
-					$input_arrays[$ii]["className"]=array("fc-blocked"); 
+					$input_arrays[$ii]["className"]="fc-blocked"; 
 				}
 				else
 				{

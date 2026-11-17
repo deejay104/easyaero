@@ -35,6 +35,8 @@
 	if ($fonc=="Enregistrer")
 	{
 		$rex=new rex_class($id,$sql);
+		$old_status=$rex->val("status");
+
 		if (count($form_data)>0)
 		{
 			foreach($form_data as $k=>$v)
@@ -67,8 +69,20 @@
 						$msg_confirmation.=$usr->data["mail"].", ";
 
 					}
+				}	
+			}
+
+			if (($rex->val("status")=="inprg") && ($rex->val("status")!=$old_status))
+			{
+				// Notification utilisateur	
+				$tabvar["id"]=$id;
+
+				$usr = new user_class($rex->uid_creat,$sql,false,true);
+				if ($usr->data["mail"]!="")
+				{
+					$tabMail[]=$usr->data["mail"];
+					SendMailFromFile("",$usr->data["mail"],array(),"",$tabvar,"rex_inprg","");
 				}
-		
 			}
 		}
 		header('Location: /securite/rexdetail?id='.$id, true, 303);
@@ -108,22 +122,32 @@
 	$tmpl_x->assign("aff_menu",$aff_menu);
 	
 
+// Charge les informations
+	$rex=new rex_class($id,$sql);
+	$tmpl_x->assign("id",$id);
+
 // ---- Type d'affichage
 
 	$typeaff="aff";
-	if (($id==0) || ($fonc=="editer"))
+	if ( ($id==0) || ( ($fonc=="editer") && ((GetDroit("ModifRex")) || (($gl_uid==$rex->uid_creat) && ($rex->val("status")=="new"))) ) )
 	{
 		$typeaff="form";
 		$tmpl_x->parse("corps.form_submit");
 	}
 
 // ---- Affiche les informations
-	$rex=new rex_class($id,$sql);
-	$tmpl_x->assign("id",$id);
 
 	foreach($rex->data as $k=>$v)
 	{
-		$tmpl_x->assign("form_".$k,$rex->Aff($k,$typeaff));
+		if (($k=="status") && (!GetDroit("ModifRex")))
+		{
+			$tmpl_x->assign("form_".$k,$rex->Aff($k,"read"));
+		}
+		else
+		{
+			$tmpl_x->assign("form_".$k,$rex->Aff($k,$typeaff));
+		}
+
 	}
 	
 	$ress=new ress_class($rex->data["uid_avion"],$sql);
@@ -136,6 +160,7 @@
 	}
 	if ((GetDroit("ModifRexSynthese")) || ($rex->val("status")!="new"))
 	{
+		$tmpl_x->parse("corps.aff_risque");
 		$tmpl_x->parse("corps.conclusion");
 	}
 
@@ -152,7 +177,7 @@
 
 	addPageMenu("","securite","Liste",geturl("securite","rex",""),"mdi-keyboard-backspace",false);
 
-	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->uid_creat))
+	if ((GetDroit("ModifRex")) || (($gl_uid==$rex->uid_creat) && ($rex->val("status")=="new")) )
 	{
 		addPageMenu("","securite","Modifier",geturl("securite","rexdetail","fonc=editer&id=".$id),"",($fonc=="editer") ? true : false);
 	}

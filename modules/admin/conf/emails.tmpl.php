@@ -76,22 +76,6 @@ Le Trésorier"
 	);
 // *****************************************************************
 
-// *****************************************************************
-	$tabMails["rex"]=Array
-	(
-		"titre"=>"",
-		"balise"=>"url,editeur",
-		"mail"=>
-"Bonjour,
-
-Un nouveau REX a été publié. Je t'invite à en prendre connaissance.
-{url}
-
-A bientôt
-{editeur}
-"
-	);
-// *****************************************************************
 
 // *****************************************************************
 	$tabMails["invite"]=Array
@@ -212,7 +196,7 @@ L'équipe Polygone 67
 $tabMails["rex_create"]=Array
 (
 	"titre"=>"Nouveau REX",
-	"balise"=>"id,num,type",
+	"balise"=>"id",
 	"mail"=>
 "Bonjour,
 
@@ -224,6 +208,27 @@ Détail :
 A bientôt
 "
 );
+// *****************************************************************
+
+
+
+// *****************************************************************
+	$tabMails["rex_inprg"]=Array
+	(
+		"titre"=>"REX pris en compte",
+		"balise"=>"id",
+		"mail"=>
+"Bonjour,
+
+Le REX que tu as créé a été pris en compte. Sont analyse est en cours.
+
+Détail :
+".$MyOpt["host"]."/securite/rexdetail?id={id}
+
+A bientôt
+
+"
+	);
 // *****************************************************************
 
 
